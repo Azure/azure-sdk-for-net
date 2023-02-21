@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Automanage.Samples
             {
                 Properties = new ConfigurationProfileAssignmentProperties()
                 {
-                    ConfigurationProfile = "/providers/Microsoft.Automanage/bestPractices/AzureBestPracticesProduction",
+                    ConfigurationProfile = new ResourceIdentifier("/providers/Microsoft.Automanage/bestPractices/AzureBestPracticesProduction"),
                 },
             };
             ArmOperation<AutomanageHciClusterConfigurationProfileAssignmentResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, configurationProfileAssignmentName, data);

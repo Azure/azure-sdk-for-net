@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Automanage.Samples
             {
                 Properties = new ConfigurationProfileAssignmentProperties()
                 {
-                    ConfigurationProfile = "/providers/Microsoft.Automanage/bestPractices/AzureBestPracticesProduction",
+                    ConfigurationProfile = new ResourceIdentifier("/providers/Microsoft.Automanage/bestPractices/AzureBestPracticesProduction"),
                 },
             };
             ArmOperation<AutomanageHcrpConfigurationProfileAssignmentResource> lro = await automanageHcrpConfigurationProfileAssignment.UpdateAsync(WaitUntil.Completed, data);

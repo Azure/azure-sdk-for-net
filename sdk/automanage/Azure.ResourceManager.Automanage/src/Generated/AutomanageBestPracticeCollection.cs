@@ -20,28 +20,28 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.Automanage
 {
     /// <summary>
-    /// A class representing a collection of <see cref="BestPracticeResource" /> and their operations.
-    /// Each <see cref="BestPracticeResource" /> in the collection will belong to the same instance of <see cref="TenantResource" />.
-    /// To get a <see cref="BestPracticeCollection" /> instance call the GetBestPractices method from an instance of <see cref="TenantResource" />.
+    /// A class representing a collection of <see cref="AutomanageBestPracticeResource" /> and their operations.
+    /// Each <see cref="AutomanageBestPracticeResource" /> in the collection will belong to the same instance of <see cref="TenantResource" />.
+    /// To get an <see cref="AutomanageBestPracticeCollection" /> instance call the GetAutomanageBestPractices method from an instance of <see cref="TenantResource" />.
     /// </summary>
-    public partial class BestPracticeCollection : ArmCollection, IEnumerable<BestPracticeResource>, IAsyncEnumerable<BestPracticeResource>
+    public partial class AutomanageBestPracticeCollection : ArmCollection, IEnumerable<AutomanageBestPracticeResource>, IAsyncEnumerable<AutomanageBestPracticeResource>
     {
-        private readonly ClientDiagnostics _bestPracticeClientDiagnostics;
-        private readonly BestPracticesRestOperations _bestPracticeRestClient;
+        private readonly ClientDiagnostics _automanageBestPracticeBestPracticesClientDiagnostics;
+        private readonly BestPracticesRestOperations _automanageBestPracticeBestPracticesRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="BestPracticeCollection"/> class for mocking. </summary>
-        protected BestPracticeCollection()
+        /// <summary> Initializes a new instance of the <see cref="AutomanageBestPracticeCollection"/> class for mocking. </summary>
+        protected AutomanageBestPracticeCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="BestPracticeCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="AutomanageBestPracticeCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
-        internal BestPracticeCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal AutomanageBestPracticeCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _bestPracticeClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Automanage", BestPracticeResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(BestPracticeResource.ResourceType, out string bestPracticeApiVersion);
-            _bestPracticeRestClient = new BestPracticesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, bestPracticeApiVersion);
+            _automanageBestPracticeBestPracticesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Automanage", AutomanageBestPracticeResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(AutomanageBestPracticeResource.ResourceType, out string automanageBestPracticeBestPracticesApiVersion);
+            _automanageBestPracticeBestPracticesRestClient = new BestPracticesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, automanageBestPracticeBestPracticesApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -70,18 +70,18 @@ namespace Azure.ResourceManager.Automanage
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="bestPracticeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="bestPracticeName"/> is null. </exception>
-        public virtual async Task<Response<BestPracticeResource>> GetAsync(string bestPracticeName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AutomanageBestPracticeResource>> GetAsync(string bestPracticeName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(bestPracticeName, nameof(bestPracticeName));
 
-            using var scope = _bestPracticeClientDiagnostics.CreateScope("BestPracticeCollection.Get");
+            using var scope = _automanageBestPracticeBestPracticesClientDiagnostics.CreateScope("AutomanageBestPracticeCollection.Get");
             scope.Start();
             try
             {
-                var response = await _bestPracticeRestClient.GetAsync(bestPracticeName, cancellationToken).ConfigureAwait(false);
+                var response = await _automanageBestPracticeBestPracticesRestClient.GetAsync(bestPracticeName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new BestPracticeResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new AutomanageBestPracticeResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -107,18 +107,18 @@ namespace Azure.ResourceManager.Automanage
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="bestPracticeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="bestPracticeName"/> is null. </exception>
-        public virtual Response<BestPracticeResource> Get(string bestPracticeName, CancellationToken cancellationToken = default)
+        public virtual Response<AutomanageBestPracticeResource> Get(string bestPracticeName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(bestPracticeName, nameof(bestPracticeName));
 
-            using var scope = _bestPracticeClientDiagnostics.CreateScope("BestPracticeCollection.Get");
+            using var scope = _automanageBestPracticeBestPracticesClientDiagnostics.CreateScope("AutomanageBestPracticeCollection.Get");
             scope.Start();
             try
             {
-                var response = _bestPracticeRestClient.Get(bestPracticeName, cancellationToken);
+                var response = _automanageBestPracticeBestPracticesRestClient.Get(bestPracticeName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new BestPracticeResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new AutomanageBestPracticeResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -141,11 +141,11 @@ namespace Azure.ResourceManager.Automanage
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="BestPracticeResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<BestPracticeResource> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="AutomanageBestPracticeResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<AutomanageBestPracticeResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _bestPracticeRestClient.CreateListByTenantRequest();
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new BestPracticeResource(Client, BestPracticeData.DeserializeBestPracticeData(e)), _bestPracticeClientDiagnostics, Pipeline, "BestPracticeCollection.GetAll", "value", null, cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _automanageBestPracticeBestPracticesRestClient.CreateListByTenantRequest();
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new AutomanageBestPracticeResource(Client, AutomanageBestPracticeData.DeserializeAutomanageBestPracticeData(e)), _automanageBestPracticeBestPracticesClientDiagnostics, Pipeline, "AutomanageBestPracticeCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -162,11 +162,11 @@ namespace Azure.ResourceManager.Automanage
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="BestPracticeResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<BestPracticeResource> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="AutomanageBestPracticeResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<AutomanageBestPracticeResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _bestPracticeRestClient.CreateListByTenantRequest();
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new BestPracticeResource(Client, BestPracticeData.DeserializeBestPracticeData(e)), _bestPracticeClientDiagnostics, Pipeline, "BestPracticeCollection.GetAll", "value", null, cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _automanageBestPracticeBestPracticesRestClient.CreateListByTenantRequest();
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new AutomanageBestPracticeResource(Client, AutomanageBestPracticeData.DeserializeAutomanageBestPracticeData(e)), _automanageBestPracticeBestPracticesClientDiagnostics, Pipeline, "AutomanageBestPracticeCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -190,11 +190,11 @@ namespace Azure.ResourceManager.Automanage
         {
             Argument.AssertNotNullOrEmpty(bestPracticeName, nameof(bestPracticeName));
 
-            using var scope = _bestPracticeClientDiagnostics.CreateScope("BestPracticeCollection.Exists");
+            using var scope = _automanageBestPracticeBestPracticesClientDiagnostics.CreateScope("AutomanageBestPracticeCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _bestPracticeRestClient.GetAsync(bestPracticeName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _automanageBestPracticeBestPracticesRestClient.GetAsync(bestPracticeName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -225,11 +225,11 @@ namespace Azure.ResourceManager.Automanage
         {
             Argument.AssertNotNullOrEmpty(bestPracticeName, nameof(bestPracticeName));
 
-            using var scope = _bestPracticeClientDiagnostics.CreateScope("BestPracticeCollection.Exists");
+            using var scope = _automanageBestPracticeBestPracticesClientDiagnostics.CreateScope("AutomanageBestPracticeCollection.Exists");
             scope.Start();
             try
             {
-                var response = _bestPracticeRestClient.Get(bestPracticeName, cancellationToken: cancellationToken);
+                var response = _automanageBestPracticeBestPracticesRestClient.Get(bestPracticeName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.Automanage
             }
         }
 
-        IEnumerator<BestPracticeResource> IEnumerable<BestPracticeResource>.GetEnumerator()
+        IEnumerator<AutomanageBestPracticeResource> IEnumerable<AutomanageBestPracticeResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.Automanage
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<BestPracticeResource> IAsyncEnumerable<BestPracticeResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<AutomanageBestPracticeResource> IAsyncEnumerable<AutomanageBestPracticeResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

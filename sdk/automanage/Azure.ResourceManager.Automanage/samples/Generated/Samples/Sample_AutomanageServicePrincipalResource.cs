@@ -14,7 +14,7 @@ using Azure.ResourceManager.Automanage;
 
 namespace Azure.ResourceManager.Automanage.Samples
 {
-    public partial class Sample_ServicePrincipalResource
+    public partial class Sample_AutomanageServicePrincipalResource
     {
         // Get service principal
         [NUnit.Framework.Test]
@@ -29,18 +29,18 @@ namespace Azure.ResourceManager.Automanage.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ServicePrincipalResource created on azure
-            // for more information of creating ServicePrincipalResource, please refer to the document of ServicePrincipalResource
+            // this example assumes you already have this AutomanageServicePrincipalResource created on azure
+            // for more information of creating AutomanageServicePrincipalResource, please refer to the document of AutomanageServicePrincipalResource
             string subscriptionId = "mySubscriptionId";
-            ResourceIdentifier servicePrincipalResourceId = ServicePrincipalResource.CreateResourceIdentifier(subscriptionId);
-            ServicePrincipalResource servicePrincipal = client.GetServicePrincipalResource(servicePrincipalResourceId);
+            ResourceIdentifier automanageServicePrincipalResourceId = AutomanageServicePrincipalResource.CreateResourceIdentifier(subscriptionId);
+            AutomanageServicePrincipalResource automanageServicePrincipal = client.GetAutomanageServicePrincipalResource(automanageServicePrincipalResourceId);
 
             // invoke the operation
-            ServicePrincipalResource result = await servicePrincipal.GetAsync();
+            AutomanageServicePrincipalResource result = await automanageServicePrincipal.GetAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            ServicePrincipalData resourceData = result.Data;
+            AutomanageServicePrincipalData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }

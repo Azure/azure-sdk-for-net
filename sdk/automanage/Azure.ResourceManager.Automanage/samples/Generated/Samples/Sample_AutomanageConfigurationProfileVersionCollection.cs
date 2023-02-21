@@ -16,7 +16,7 @@ using Azure.ResourceManager.Automanage;
 
 namespace Azure.ResourceManager.Automanage.Samples
 {
-    public partial class Sample_ConfigurationProfileVersionCollection
+    public partial class Sample_AutomanageConfigurationProfileVersionCollection
     {
         // Create or update configuration profile version
         [NUnit.Framework.Test]
@@ -39,12 +39,12 @@ namespace Azure.ResourceManager.Automanage.Samples
             ResourceIdentifier configurationProfileResourceId = ConfigurationProfileResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, configurationProfileName);
             ConfigurationProfileResource configurationProfile = client.GetConfigurationProfileResource(configurationProfileResourceId);
 
-            // get the collection of this ConfigurationProfileVersionResource
-            ConfigurationProfileVersionCollection collection = configurationProfile.GetConfigurationProfileVersions();
+            // get the collection of this AutomanageConfigurationProfileVersionResource
+            AutomanageConfigurationProfileVersionCollection collection = configurationProfile.GetAutomanageConfigurationProfileVersions();
 
             // invoke the operation
             string versionName = "version1";
-            ConfigurationProfileData data = new ConfigurationProfileData(new AzureLocation("East US"))
+            AutomanageConfigurationProfileData data = new AutomanageConfigurationProfileData(new AzureLocation("East US"))
             {
                 Configuration = BinaryData.FromObjectAsJson(new Dictionary<string, object>()
                 {
@@ -63,12 +63,12 @@ namespace Azure.ResourceManager.Automanage.Samples
 ["Organization"] = "Administration",
 },
             };
-            ArmOperation<ConfigurationProfileVersionResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, versionName, data);
-            ConfigurationProfileVersionResource result = lro.Value;
+            ArmOperation<AutomanageConfigurationProfileVersionResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, versionName, data);
+            AutomanageConfigurationProfileVersionResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            ConfigurationProfileData resourceData = result.Data;
+            AutomanageConfigurationProfileData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -94,16 +94,16 @@ namespace Azure.ResourceManager.Automanage.Samples
             ResourceIdentifier configurationProfileResourceId = ConfigurationProfileResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, configurationProfileName);
             ConfigurationProfileResource configurationProfile = client.GetConfigurationProfileResource(configurationProfileResourceId);
 
-            // get the collection of this ConfigurationProfileVersionResource
-            ConfigurationProfileVersionCollection collection = configurationProfile.GetConfigurationProfileVersions();
+            // get the collection of this AutomanageConfigurationProfileVersionResource
+            AutomanageConfigurationProfileVersionCollection collection = configurationProfile.GetAutomanageConfigurationProfileVersions();
 
             // invoke the operation
             string versionName = "version1";
-            ConfigurationProfileVersionResource result = await collection.GetAsync(versionName);
+            AutomanageConfigurationProfileVersionResource result = await collection.GetAsync(versionName);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            ConfigurationProfileData resourceData = result.Data;
+            AutomanageConfigurationProfileData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -129,8 +129,8 @@ namespace Azure.ResourceManager.Automanage.Samples
             ResourceIdentifier configurationProfileResourceId = ConfigurationProfileResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, configurationProfileName);
             ConfigurationProfileResource configurationProfile = client.GetConfigurationProfileResource(configurationProfileResourceId);
 
-            // get the collection of this ConfigurationProfileVersionResource
-            ConfigurationProfileVersionCollection collection = configurationProfile.GetConfigurationProfileVersions();
+            // get the collection of this AutomanageConfigurationProfileVersionResource
+            AutomanageConfigurationProfileVersionCollection collection = configurationProfile.GetAutomanageConfigurationProfileVersions();
 
             // invoke the operation
             string versionName = "version1";
@@ -160,15 +160,15 @@ namespace Azure.ResourceManager.Automanage.Samples
             ResourceIdentifier configurationProfileResourceId = ConfigurationProfileResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, configurationProfileName);
             ConfigurationProfileResource configurationProfile = client.GetConfigurationProfileResource(configurationProfileResourceId);
 
-            // get the collection of this ConfigurationProfileVersionResource
-            ConfigurationProfileVersionCollection collection = configurationProfile.GetConfigurationProfileVersions();
+            // get the collection of this AutomanageConfigurationProfileVersionResource
+            AutomanageConfigurationProfileVersionCollection collection = configurationProfile.GetAutomanageConfigurationProfileVersions();
 
             // invoke the operation and iterate over the result
-            await foreach (ConfigurationProfileVersionResource item in collection.GetAllAsync())
+            await foreach (AutomanageConfigurationProfileVersionResource item in collection.GetAllAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                ConfigurationProfileData resourceData = item.Data;
+                AutomanageConfigurationProfileData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }

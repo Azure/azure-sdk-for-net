@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Automanage
 
         private readonly ClientDiagnostics _configurationProfileClientDiagnostics;
         private readonly ConfigurationProfilesRestOperations _configurationProfileRestClient;
-        private readonly ConfigurationProfileData _data;
+        private readonly AutomanageConfigurationProfileData _data;
 
         /// <summary> Initializes a new instance of the <see cref="ConfigurationProfileResource"/> class for mocking. </summary>
         protected ConfigurationProfileResource()
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Automanage
         /// <summary> Initializes a new instance of the <see cref = "ConfigurationProfileResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal ConfigurationProfileResource(ArmClient client, ConfigurationProfileData data) : this(client, data.Id)
+        internal ConfigurationProfileResource(ArmClient client, AutomanageConfigurationProfileData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Automanage
 
         /// <summary> Gets the data representing this Feature. </summary>
         /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual ConfigurationProfileData Data
+        public virtual AutomanageConfigurationProfileData Data
         {
             get
             {
@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.Automanage
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of ConfigurationProfileVersionResources in the ConfigurationProfile. </summary>
-        /// <returns> An object representing collection of ConfigurationProfileVersionResources and their operations over a ConfigurationProfileVersionResource. </returns>
-        public virtual ConfigurationProfileVersionCollection GetConfigurationProfileVersions()
+        /// <summary> Gets a collection of AutomanageConfigurationProfileVersionResources in the ConfigurationProfile. </summary>
+        /// <returns> An object representing collection of AutomanageConfigurationProfileVersionResources and their operations over a AutomanageConfigurationProfileVersionResource. </returns>
+        public virtual AutomanageConfigurationProfileVersionCollection GetAutomanageConfigurationProfileVersions()
         {
-            return GetCachedClient(Client => new ConfigurationProfileVersionCollection(Client, Id));
+            return GetCachedClient(Client => new AutomanageConfigurationProfileVersionCollection(Client, Id));
         }
 
         /// <summary>
@@ -114,9 +114,9 @@ namespace Azure.ResourceManager.Automanage
         /// <exception cref="ArgumentException"> <paramref name="versionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="versionName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<ConfigurationProfileVersionResource>> GetConfigurationProfileVersionAsync(string versionName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AutomanageConfigurationProfileVersionResource>> GetAutomanageConfigurationProfileVersionAsync(string versionName, CancellationToken cancellationToken = default)
         {
-            return await GetConfigurationProfileVersions().GetAsync(versionName, cancellationToken).ConfigureAwait(false);
+            return await GetAutomanageConfigurationProfileVersions().GetAsync(versionName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -137,9 +137,9 @@ namespace Azure.ResourceManager.Automanage
         /// <exception cref="ArgumentException"> <paramref name="versionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="versionName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<ConfigurationProfileVersionResource> GetConfigurationProfileVersion(string versionName, CancellationToken cancellationToken = default)
+        public virtual Response<AutomanageConfigurationProfileVersionResource> GetAutomanageConfigurationProfileVersion(string versionName, CancellationToken cancellationToken = default)
         {
-            return GetConfigurationProfileVersions().Get(versionName, cancellationToken);
+            return GetAutomanageConfigurationProfileVersions().Get(versionName, cancellationToken);
         }
 
         /// <summary>

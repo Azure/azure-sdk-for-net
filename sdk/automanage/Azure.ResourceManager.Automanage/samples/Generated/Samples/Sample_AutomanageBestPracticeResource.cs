@@ -14,7 +14,7 @@ using Azure.ResourceManager.Automanage;
 
 namespace Azure.ResourceManager.Automanage.Samples
 {
-    public partial class Sample_BestPracticeResource
+    public partial class Sample_AutomanageBestPracticeResource
     {
         // Get an Automanage best practice 
         [NUnit.Framework.Test]
@@ -29,18 +29,18 @@ namespace Azure.ResourceManager.Automanage.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this BestPracticeResource created on azure
-            // for more information of creating BestPracticeResource, please refer to the document of BestPracticeResource
+            // this example assumes you already have this AutomanageBestPracticeResource created on azure
+            // for more information of creating AutomanageBestPracticeResource, please refer to the document of AutomanageBestPracticeResource
             string bestPracticeName = "azureBestPracticesProduction";
-            ResourceIdentifier bestPracticeResourceId = BestPracticeResource.CreateResourceIdentifier(bestPracticeName);
-            BestPracticeResource bestPractice = client.GetBestPracticeResource(bestPracticeResourceId);
+            ResourceIdentifier automanageBestPracticeResourceId = AutomanageBestPracticeResource.CreateResourceIdentifier(bestPracticeName);
+            AutomanageBestPracticeResource automanageBestPractice = client.GetAutomanageBestPracticeResource(automanageBestPracticeResourceId);
 
             // invoke the operation
-            BestPracticeResource result = await bestPractice.GetAsync();
+            AutomanageBestPracticeResource result = await automanageBestPractice.GetAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            BestPracticeData resourceData = result.Data;
+            AutomanageBestPracticeData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }

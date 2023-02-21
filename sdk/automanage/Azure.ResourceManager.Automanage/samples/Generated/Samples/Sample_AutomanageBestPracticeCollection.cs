@@ -14,7 +14,7 @@ using Azure.ResourceManager.Automanage;
 
 namespace Azure.ResourceManager.Automanage.Samples
 {
-    public partial class Sample_BestPracticeCollection
+    public partial class Sample_AutomanageBestPracticeCollection
     {
         // Get an Automanage best practice 
         [NUnit.Framework.Test]
@@ -33,16 +33,16 @@ namespace Azure.ResourceManager.Automanage.Samples
             // for more information of creating TenantResource, please refer to the document of TenantResource
             var tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
 
-            // get the collection of this BestPracticeResource
-            BestPracticeCollection collection = tenantResource.GetBestPractices();
+            // get the collection of this AutomanageBestPracticeResource
+            AutomanageBestPracticeCollection collection = tenantResource.GetAutomanageBestPractices();
 
             // invoke the operation
             string bestPracticeName = "azureBestPracticesProduction";
-            BestPracticeResource result = await collection.GetAsync(bestPracticeName);
+            AutomanageBestPracticeResource result = await collection.GetAsync(bestPracticeName);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            BestPracticeData resourceData = result.Data;
+            AutomanageBestPracticeData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -64,8 +64,8 @@ namespace Azure.ResourceManager.Automanage.Samples
             // for more information of creating TenantResource, please refer to the document of TenantResource
             var tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
 
-            // get the collection of this BestPracticeResource
-            BestPracticeCollection collection = tenantResource.GetBestPractices();
+            // get the collection of this AutomanageBestPracticeResource
+            AutomanageBestPracticeCollection collection = tenantResource.GetAutomanageBestPractices();
 
             // invoke the operation
             string bestPracticeName = "azureBestPracticesProduction";
@@ -91,15 +91,15 @@ namespace Azure.ResourceManager.Automanage.Samples
             // for more information of creating TenantResource, please refer to the document of TenantResource
             var tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
 
-            // get the collection of this BestPracticeResource
-            BestPracticeCollection collection = tenantResource.GetBestPractices();
+            // get the collection of this AutomanageBestPracticeResource
+            AutomanageBestPracticeCollection collection = tenantResource.GetAutomanageBestPractices();
 
             // invoke the operation and iterate over the result
-            await foreach (BestPracticeResource item in collection.GetAllAsync())
+            await foreach (AutomanageBestPracticeResource item in collection.GetAllAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                BestPracticeData resourceData = item.Data;
+                AutomanageBestPracticeData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }

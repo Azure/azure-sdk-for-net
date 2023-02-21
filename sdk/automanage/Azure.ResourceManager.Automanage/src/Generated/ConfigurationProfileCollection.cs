@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Automanage
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="configurationProfileName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="configurationProfileName"/> or <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<ConfigurationProfileResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string configurationProfileName, ConfigurationProfileData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<ConfigurationProfileResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string configurationProfileName, AutomanageConfigurationProfileData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(configurationProfileName, nameof(configurationProfileName));
             Argument.AssertNotNull(data, nameof(data));
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Automanage
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="configurationProfileName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="configurationProfileName"/> or <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<ConfigurationProfileResource> CreateOrUpdate(WaitUntil waitUntil, string configurationProfileName, ConfigurationProfileData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<ConfigurationProfileResource> CreateOrUpdate(WaitUntil waitUntil, string configurationProfileName, AutomanageConfigurationProfileData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(configurationProfileName, nameof(configurationProfileName));
             Argument.AssertNotNull(data, nameof(data));
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.Automanage
         public virtual AsyncPageable<ConfigurationProfileResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _configurationProfileRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new ConfigurationProfileResource(Client, ConfigurationProfileData.DeserializeConfigurationProfileData(e)), _configurationProfileClientDiagnostics, Pipeline, "ConfigurationProfileCollection.GetAll", "value", null, cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new ConfigurationProfileResource(Client, AutomanageConfigurationProfileData.DeserializeAutomanageConfigurationProfileData(e)), _configurationProfileClientDiagnostics, Pipeline, "ConfigurationProfileCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.Automanage
         public virtual Pageable<ConfigurationProfileResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _configurationProfileRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new ConfigurationProfileResource(Client, ConfigurationProfileData.DeserializeConfigurationProfileData(e)), _configurationProfileClientDiagnostics, Pipeline, "ConfigurationProfileCollection.GetAll", "value", null, cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new ConfigurationProfileResource(Client, AutomanageConfigurationProfileData.DeserializeAutomanageConfigurationProfileData(e)), _configurationProfileClientDiagnostics, Pipeline, "ConfigurationProfileCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

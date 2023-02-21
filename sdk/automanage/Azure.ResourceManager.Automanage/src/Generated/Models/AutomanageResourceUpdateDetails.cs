@@ -11,10 +11,10 @@ using Azure.Core;
 namespace Azure.ResourceManager.Automanage.Models
 {
     /// <summary> Represents an update resource. </summary>
-    public partial class UpdateResource
+    public partial class AutomanageResourceUpdateDetails
     {
-        /// <summary> Initializes a new instance of UpdateResource. </summary>
-        public UpdateResource()
+        /// <summary> Initializes a new instance of AutomanageResourceUpdateDetails. </summary>
+        public AutomanageResourceUpdateDetails()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
         }

@@ -19,28 +19,28 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Automanage
 {
     /// <summary>
-    /// A class representing a collection of <see cref="ConfigurationProfileVersionResource" /> and their operations.
-    /// Each <see cref="ConfigurationProfileVersionResource" /> in the collection will belong to the same instance of <see cref="ConfigurationProfileResource" />.
-    /// To get a <see cref="ConfigurationProfileVersionCollection" /> instance call the GetConfigurationProfileVersions method from an instance of <see cref="ConfigurationProfileResource" />.
+    /// A class representing a collection of <see cref="AutomanageConfigurationProfileVersionResource" /> and their operations.
+    /// Each <see cref="AutomanageConfigurationProfileVersionResource" /> in the collection will belong to the same instance of <see cref="ConfigurationProfileResource" />.
+    /// To get an <see cref="AutomanageConfigurationProfileVersionCollection" /> instance call the GetAutomanageConfigurationProfileVersions method from an instance of <see cref="ConfigurationProfileResource" />.
     /// </summary>
-    public partial class ConfigurationProfileVersionCollection : ArmCollection, IEnumerable<ConfigurationProfileVersionResource>, IAsyncEnumerable<ConfigurationProfileVersionResource>
+    public partial class AutomanageConfigurationProfileVersionCollection : ArmCollection, IEnumerable<AutomanageConfigurationProfileVersionResource>, IAsyncEnumerable<AutomanageConfigurationProfileVersionResource>
     {
-        private readonly ClientDiagnostics _configurationProfileVersionConfigurationProfilesVersionsClientDiagnostics;
-        private readonly ConfigurationProfilesVersionsRestOperations _configurationProfileVersionConfigurationProfilesVersionsRestClient;
+        private readonly ClientDiagnostics _automanageConfigurationProfileVersionConfigurationProfilesVersionsClientDiagnostics;
+        private readonly ConfigurationProfilesVersionsRestOperations _automanageConfigurationProfileVersionConfigurationProfilesVersionsRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="ConfigurationProfileVersionCollection"/> class for mocking. </summary>
-        protected ConfigurationProfileVersionCollection()
+        /// <summary> Initializes a new instance of the <see cref="AutomanageConfigurationProfileVersionCollection"/> class for mocking. </summary>
+        protected AutomanageConfigurationProfileVersionCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="ConfigurationProfileVersionCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="AutomanageConfigurationProfileVersionCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
-        internal ConfigurationProfileVersionCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal AutomanageConfigurationProfileVersionCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _configurationProfileVersionConfigurationProfilesVersionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Automanage", ConfigurationProfileVersionResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ConfigurationProfileVersionResource.ResourceType, out string configurationProfileVersionConfigurationProfilesVersionsApiVersion);
-            _configurationProfileVersionConfigurationProfilesVersionsRestClient = new ConfigurationProfilesVersionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, configurationProfileVersionConfigurationProfilesVersionsApiVersion);
+            _automanageConfigurationProfileVersionConfigurationProfilesVersionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Automanage", AutomanageConfigurationProfileVersionResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(AutomanageConfigurationProfileVersionResource.ResourceType, out string automanageConfigurationProfileVersionConfigurationProfilesVersionsApiVersion);
+            _automanageConfigurationProfileVersionConfigurationProfilesVersionsRestClient = new ConfigurationProfilesVersionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, automanageConfigurationProfileVersionConfigurationProfilesVersionsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -71,17 +71,17 @@ namespace Azure.ResourceManager.Automanage
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="versionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="versionName"/> or <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<ConfigurationProfileVersionResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string versionName, ConfigurationProfileData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<AutomanageConfigurationProfileVersionResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string versionName, AutomanageConfigurationProfileData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(versionName, nameof(versionName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _configurationProfileVersionConfigurationProfilesVersionsClientDiagnostics.CreateScope("ConfigurationProfileVersionCollection.CreateOrUpdate");
+            using var scope = _automanageConfigurationProfileVersionConfigurationProfilesVersionsClientDiagnostics.CreateScope("AutomanageConfigurationProfileVersionCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _configurationProfileVersionConfigurationProfilesVersionsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, versionName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new AutomanageArmOperation<ConfigurationProfileVersionResource>(Response.FromValue(new ConfigurationProfileVersionResource(Client, response), response.GetRawResponse()));
+                var response = await _automanageConfigurationProfileVersionConfigurationProfilesVersionsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, versionName, data, cancellationToken).ConfigureAwait(false);
+                var operation = new AutomanageArmOperation<AutomanageConfigurationProfileVersionResource>(Response.FromValue(new AutomanageConfigurationProfileVersionResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -112,17 +112,17 @@ namespace Azure.ResourceManager.Automanage
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="versionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="versionName"/> or <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<ConfigurationProfileVersionResource> CreateOrUpdate(WaitUntil waitUntil, string versionName, ConfigurationProfileData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<AutomanageConfigurationProfileVersionResource> CreateOrUpdate(WaitUntil waitUntil, string versionName, AutomanageConfigurationProfileData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(versionName, nameof(versionName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _configurationProfileVersionConfigurationProfilesVersionsClientDiagnostics.CreateScope("ConfigurationProfileVersionCollection.CreateOrUpdate");
+            using var scope = _automanageConfigurationProfileVersionConfigurationProfilesVersionsClientDiagnostics.CreateScope("AutomanageConfigurationProfileVersionCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _configurationProfileVersionConfigurationProfilesVersionsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, versionName, data, cancellationToken);
-                var operation = new AutomanageArmOperation<ConfigurationProfileVersionResource>(Response.FromValue(new ConfigurationProfileVersionResource(Client, response), response.GetRawResponse()));
+                var response = _automanageConfigurationProfileVersionConfigurationProfilesVersionsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, versionName, data, cancellationToken);
+                var operation = new AutomanageArmOperation<AutomanageConfigurationProfileVersionResource>(Response.FromValue(new AutomanageConfigurationProfileVersionResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -151,18 +151,18 @@ namespace Azure.ResourceManager.Automanage
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="versionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="versionName"/> is null. </exception>
-        public virtual async Task<Response<ConfigurationProfileVersionResource>> GetAsync(string versionName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AutomanageConfigurationProfileVersionResource>> GetAsync(string versionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(versionName, nameof(versionName));
 
-            using var scope = _configurationProfileVersionConfigurationProfilesVersionsClientDiagnostics.CreateScope("ConfigurationProfileVersionCollection.Get");
+            using var scope = _automanageConfigurationProfileVersionConfigurationProfilesVersionsClientDiagnostics.CreateScope("AutomanageConfigurationProfileVersionCollection.Get");
             scope.Start();
             try
             {
-                var response = await _configurationProfileVersionConfigurationProfilesVersionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, versionName, cancellationToken).ConfigureAwait(false);
+                var response = await _automanageConfigurationProfileVersionConfigurationProfilesVersionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, versionName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ConfigurationProfileVersionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new AutomanageConfigurationProfileVersionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -188,18 +188,18 @@ namespace Azure.ResourceManager.Automanage
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="versionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="versionName"/> is null. </exception>
-        public virtual Response<ConfigurationProfileVersionResource> Get(string versionName, CancellationToken cancellationToken = default)
+        public virtual Response<AutomanageConfigurationProfileVersionResource> Get(string versionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(versionName, nameof(versionName));
 
-            using var scope = _configurationProfileVersionConfigurationProfilesVersionsClientDiagnostics.CreateScope("ConfigurationProfileVersionCollection.Get");
+            using var scope = _automanageConfigurationProfileVersionConfigurationProfilesVersionsClientDiagnostics.CreateScope("AutomanageConfigurationProfileVersionCollection.Get");
             scope.Start();
             try
             {
-                var response = _configurationProfileVersionConfigurationProfilesVersionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, versionName, cancellationToken);
+                var response = _automanageConfigurationProfileVersionConfigurationProfilesVersionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, versionName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ConfigurationProfileVersionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new AutomanageConfigurationProfileVersionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -222,11 +222,11 @@ namespace Azure.ResourceManager.Automanage
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ConfigurationProfileVersionResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ConfigurationProfileVersionResource> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="AutomanageConfigurationProfileVersionResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<AutomanageConfigurationProfileVersionResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _configurationProfileVersionConfigurationProfilesVersionsRestClient.CreateListChildResourcesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new ConfigurationProfileVersionResource(Client, ConfigurationProfileData.DeserializeConfigurationProfileData(e)), _configurationProfileVersionConfigurationProfilesVersionsClientDiagnostics, Pipeline, "ConfigurationProfileVersionCollection.GetAll", "value", null, cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _automanageConfigurationProfileVersionConfigurationProfilesVersionsRestClient.CreateListChildResourcesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new AutomanageConfigurationProfileVersionResource(Client, AutomanageConfigurationProfileData.DeserializeAutomanageConfigurationProfileData(e)), _automanageConfigurationProfileVersionConfigurationProfilesVersionsClientDiagnostics, Pipeline, "AutomanageConfigurationProfileVersionCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -243,11 +243,11 @@ namespace Azure.ResourceManager.Automanage
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ConfigurationProfileVersionResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ConfigurationProfileVersionResource> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="AutomanageConfigurationProfileVersionResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<AutomanageConfigurationProfileVersionResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _configurationProfileVersionConfigurationProfilesVersionsRestClient.CreateListChildResourcesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new ConfigurationProfileVersionResource(Client, ConfigurationProfileData.DeserializeConfigurationProfileData(e)), _configurationProfileVersionConfigurationProfilesVersionsClientDiagnostics, Pipeline, "ConfigurationProfileVersionCollection.GetAll", "value", null, cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _automanageConfigurationProfileVersionConfigurationProfilesVersionsRestClient.CreateListChildResourcesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new AutomanageConfigurationProfileVersionResource(Client, AutomanageConfigurationProfileData.DeserializeAutomanageConfigurationProfileData(e)), _automanageConfigurationProfileVersionConfigurationProfilesVersionsClientDiagnostics, Pipeline, "AutomanageConfigurationProfileVersionCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -271,11 +271,11 @@ namespace Azure.ResourceManager.Automanage
         {
             Argument.AssertNotNullOrEmpty(versionName, nameof(versionName));
 
-            using var scope = _configurationProfileVersionConfigurationProfilesVersionsClientDiagnostics.CreateScope("ConfigurationProfileVersionCollection.Exists");
+            using var scope = _automanageConfigurationProfileVersionConfigurationProfilesVersionsClientDiagnostics.CreateScope("AutomanageConfigurationProfileVersionCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _configurationProfileVersionConfigurationProfilesVersionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, versionName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _automanageConfigurationProfileVersionConfigurationProfilesVersionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, versionName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -306,11 +306,11 @@ namespace Azure.ResourceManager.Automanage
         {
             Argument.AssertNotNullOrEmpty(versionName, nameof(versionName));
 
-            using var scope = _configurationProfileVersionConfigurationProfilesVersionsClientDiagnostics.CreateScope("ConfigurationProfileVersionCollection.Exists");
+            using var scope = _automanageConfigurationProfileVersionConfigurationProfilesVersionsClientDiagnostics.CreateScope("AutomanageConfigurationProfileVersionCollection.Exists");
             scope.Start();
             try
             {
-                var response = _configurationProfileVersionConfigurationProfilesVersionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, versionName, cancellationToken: cancellationToken);
+                var response = _automanageConfigurationProfileVersionConfigurationProfilesVersionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, versionName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -320,7 +320,7 @@ namespace Azure.ResourceManager.Automanage
             }
         }
 
-        IEnumerator<ConfigurationProfileVersionResource> IEnumerable<ConfigurationProfileVersionResource>.GetEnumerator()
+        IEnumerator<AutomanageConfigurationProfileVersionResource> IEnumerable<AutomanageConfigurationProfileVersionResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -330,7 +330,7 @@ namespace Azure.ResourceManager.Automanage
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<ConfigurationProfileVersionResource> IAsyncEnumerable<ConfigurationProfileVersionResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<AutomanageConfigurationProfileVersionResource> IAsyncEnumerable<AutomanageConfigurationProfileVersionResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

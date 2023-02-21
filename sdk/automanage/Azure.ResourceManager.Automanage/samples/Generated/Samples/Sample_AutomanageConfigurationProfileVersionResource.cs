@@ -16,7 +16,7 @@ using Azure.ResourceManager.Automanage;
 
 namespace Azure.ResourceManager.Automanage.Samples
 {
-    public partial class Sample_ConfigurationProfileVersionResource
+    public partial class Sample_AutomanageConfigurationProfileVersionResource
     {
         // Create or update configuration profile version
         [NUnit.Framework.Test]
@@ -31,17 +31,17 @@ namespace Azure.ResourceManager.Automanage.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ConfigurationProfileVersionResource created on azure
-            // for more information of creating ConfigurationProfileVersionResource, please refer to the document of ConfigurationProfileVersionResource
+            // this example assumes you already have this AutomanageConfigurationProfileVersionResource created on azure
+            // for more information of creating AutomanageConfigurationProfileVersionResource, please refer to the document of AutomanageConfigurationProfileVersionResource
             string subscriptionId = "mySubscriptionId";
             string resourceGroupName = "myResourceGroupName";
             string configurationProfileName = "customConfigurationProfile";
             string versionName = "version1";
-            ResourceIdentifier configurationProfileVersionResourceId = ConfigurationProfileVersionResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, configurationProfileName, versionName);
-            ConfigurationProfileVersionResource configurationProfileVersion = client.GetConfigurationProfileVersionResource(configurationProfileVersionResourceId);
+            ResourceIdentifier automanageConfigurationProfileVersionResourceId = AutomanageConfigurationProfileVersionResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, configurationProfileName, versionName);
+            AutomanageConfigurationProfileVersionResource automanageConfigurationProfileVersion = client.GetAutomanageConfigurationProfileVersionResource(automanageConfigurationProfileVersionResourceId);
 
             // invoke the operation
-            ConfigurationProfileData data = new ConfigurationProfileData(new AzureLocation("East US"))
+            AutomanageConfigurationProfileData data = new AutomanageConfigurationProfileData(new AzureLocation("East US"))
             {
                 Configuration = BinaryData.FromObjectAsJson(new Dictionary<string, object>()
                 {
@@ -60,12 +60,12 @@ namespace Azure.ResourceManager.Automanage.Samples
 ["Organization"] = "Administration",
 },
             };
-            ArmOperation<ConfigurationProfileVersionResource> lro = await configurationProfileVersion.UpdateAsync(WaitUntil.Completed, data);
-            ConfigurationProfileVersionResource result = lro.Value;
+            ArmOperation<AutomanageConfigurationProfileVersionResource> lro = await automanageConfigurationProfileVersion.UpdateAsync(WaitUntil.Completed, data);
+            AutomanageConfigurationProfileVersionResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            ConfigurationProfileData resourceData = result.Data;
+            AutomanageConfigurationProfileData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -83,21 +83,21 @@ namespace Azure.ResourceManager.Automanage.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ConfigurationProfileVersionResource created on azure
-            // for more information of creating ConfigurationProfileVersionResource, please refer to the document of ConfigurationProfileVersionResource
+            // this example assumes you already have this AutomanageConfigurationProfileVersionResource created on azure
+            // for more information of creating AutomanageConfigurationProfileVersionResource, please refer to the document of AutomanageConfigurationProfileVersionResource
             string subscriptionId = "mySubscriptionId";
             string resourceGroupName = "myResourceGroupName";
             string configurationProfileName = "customConfigurationProfile";
             string versionName = "version1";
-            ResourceIdentifier configurationProfileVersionResourceId = ConfigurationProfileVersionResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, configurationProfileName, versionName);
-            ConfigurationProfileVersionResource configurationProfileVersion = client.GetConfigurationProfileVersionResource(configurationProfileVersionResourceId);
+            ResourceIdentifier automanageConfigurationProfileVersionResourceId = AutomanageConfigurationProfileVersionResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, configurationProfileName, versionName);
+            AutomanageConfigurationProfileVersionResource automanageConfigurationProfileVersion = client.GetAutomanageConfigurationProfileVersionResource(automanageConfigurationProfileVersionResourceId);
 
             // invoke the operation
-            ConfigurationProfileVersionResource result = await configurationProfileVersion.GetAsync();
+            AutomanageConfigurationProfileVersionResource result = await automanageConfigurationProfileVersion.GetAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            ConfigurationProfileData resourceData = result.Data;
+            AutomanageConfigurationProfileData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -115,17 +115,17 @@ namespace Azure.ResourceManager.Automanage.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ConfigurationProfileVersionResource created on azure
-            // for more information of creating ConfigurationProfileVersionResource, please refer to the document of ConfigurationProfileVersionResource
+            // this example assumes you already have this AutomanageConfigurationProfileVersionResource created on azure
+            // for more information of creating AutomanageConfigurationProfileVersionResource, please refer to the document of AutomanageConfigurationProfileVersionResource
             string subscriptionId = "subid";
             string resourceGroupName = "rg";
             string configurationProfileName = "customConfigurationProfile";
             string versionName = "version1";
-            ResourceIdentifier configurationProfileVersionResourceId = ConfigurationProfileVersionResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, configurationProfileName, versionName);
-            ConfigurationProfileVersionResource configurationProfileVersion = client.GetConfigurationProfileVersionResource(configurationProfileVersionResourceId);
+            ResourceIdentifier automanageConfigurationProfileVersionResourceId = AutomanageConfigurationProfileVersionResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, configurationProfileName, versionName);
+            AutomanageConfigurationProfileVersionResource automanageConfigurationProfileVersion = client.GetAutomanageConfigurationProfileVersionResource(automanageConfigurationProfileVersionResourceId);
 
             // invoke the operation
-            await configurationProfileVersion.DeleteAsync(WaitUntil.Completed);
+            await automanageConfigurationProfileVersion.DeleteAsync(WaitUntil.Completed);
 
             Console.WriteLine($"Succeeded");
         }

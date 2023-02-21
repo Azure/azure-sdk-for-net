@@ -25,8 +25,8 @@ namespace Azure.ResourceManager.Automanage.Tests.Scenario
             var profile = await CreateConfigurationProfile(profileCollection, profileName);
 
             // create configuration profile versions
-            var versionCollection = profile.GetConfigurationProfileVersions();
-            var versions = new List<ConfigurationProfileVersionResource>();
+            var versionCollection = profile.GetAutomanageConfigurationProfileVersions();
+            var versions = new List<AutomanageConfigurationProfileVersionResource>();
             for (int i = 1; i <= 2; i++)
             {
                 var newVersion = await CreateConfigurationProfileVersion(versionCollection, i.ToString());
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Automanage.Tests.Scenario
             var profile = await CreateConfigurationProfile(profileCollection, profileName);
 
             // create configuration profile version
-            var versionCollection = profile.GetConfigurationProfileVersions();
+            var versionCollection = profile.GetAutomanageConfigurationProfileVersions();
             for (int i = 1; i <= 3; i++)
                 await CreateConfigurationProfileVersion(versionCollection, i.ToString());
 
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Automanage.Tests.Scenario
             var profile = await CreateConfigurationProfile(profileCollection, profileName);
 
             // create configuration profile version
-            var versionCollection = profile.GetConfigurationProfileVersions();
+            var versionCollection = profile.GetAutomanageConfigurationProfileVersions();
             await CreateConfigurationProfileVersion(versionCollection, "1");
             var version = await versionCollection.GetAsync("1");
 
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Automanage.Tests.Scenario
             var profile = await CreateConfigurationProfile(profileCollection, profileName);
 
             // create configuration profile version
-            var versionCollection = profile.GetConfigurationProfileVersions();
+            var versionCollection = profile.GetAutomanageConfigurationProfileVersions();
             await CreateConfigurationProfileVersion(versionCollection, "1");
             var version = await versionCollection.GetAsync("1");
 
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Automanage.Tests.Scenario
             var profile = await CreateConfigurationProfile(profileCollection, profileName);
 
             // create configuration profile version
-            var versionCollection = profile.GetConfigurationProfileVersions();
+            var versionCollection = profile.GetAutomanageConfigurationProfileVersions();
             var version = await CreateConfigurationProfileVersion(versionCollection, "1");
 
             // delete version

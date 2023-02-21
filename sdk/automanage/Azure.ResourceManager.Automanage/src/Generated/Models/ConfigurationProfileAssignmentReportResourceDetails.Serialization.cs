@@ -5,24 +5,40 @@
 
 #nullable disable
 
-using System;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
-namespace Azure.ResourceManager.Automanage
+namespace Azure.ResourceManager.Automanage.Models
 {
-    public partial class BestPracticeData
+    public partial class ConfigurationProfileAssignmentReportResourceDetails
     {
-        internal static BestPracticeData DeserializeBestPracticeData(JsonElement element)
+        internal static ConfigurationProfileAssignmentReportResourceDetails DeserializeConfigurationProfileAssignmentReportResourceDetails(JsonElement element)
         {
+            Optional<string> status = default;
+            Optional<ResponseError> error = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<BinaryData> configuration = default;
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("status"u8))
+                {
+                    status = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("error"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    error = JsonSerializer.Deserialize<ResponseError>(property.Value.GetRawText());
+                    continue;
+                }
                 if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
@@ -48,30 +64,8 @@ namespace Azure.ResourceManager.Automanage
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        if (property0.NameEquals("configuration"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                property0.ThrowNonNullablePropertyIsNull();
-                                continue;
-                            }
-                            configuration = BinaryData.FromString(property0.Value.GetRawText());
-                            continue;
-                        }
-                    }
-                    continue;
-                }
             }
-            return new BestPracticeData(id, name, type, systemData.Value, configuration.Value);
+            return new ConfigurationProfileAssignmentReportResourceDetails(id, name, type, systemData.Value, status.Value, error.Value);
         }
     }
 }

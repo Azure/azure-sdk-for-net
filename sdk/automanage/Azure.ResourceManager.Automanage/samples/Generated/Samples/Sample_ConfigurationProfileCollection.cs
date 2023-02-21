@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Automanage.Samples
 
             // invoke the operation
             string configurationProfileName = "customConfigurationProfile";
-            ConfigurationProfileData data = new ConfigurationProfileData(new AzureLocation("East US"))
+            AutomanageConfigurationProfileData data = new AutomanageConfigurationProfileData(new AzureLocation("East US"))
             {
                 Configuration = BinaryData.FromObjectAsJson(new Dictionary<string, object>()
                 {
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Automanage.Samples
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            ConfigurationProfileData resourceData = result.Data;
+            AutomanageConfigurationProfileData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Automanage.Samples
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            ConfigurationProfileData resourceData = result.Data;
+            AutomanageConfigurationProfileData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.Automanage.Samples
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                ConfigurationProfileData resourceData = item.Data;
+                AutomanageConfigurationProfileData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }

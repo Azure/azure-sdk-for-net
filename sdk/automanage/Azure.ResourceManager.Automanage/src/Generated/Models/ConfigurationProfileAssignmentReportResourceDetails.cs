@@ -12,21 +12,21 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.Automanage.Models
 {
     /// <summary> Details about the resource processed by the configuration profile assignment. </summary>
-    public partial class ReportResource : ResourceData
+    public partial class ConfigurationProfileAssignmentReportResourceDetails : ResourceData
     {
-        /// <summary> Initializes a new instance of ReportResource. </summary>
-        internal ReportResource()
+        /// <summary> Initializes a new instance of ConfigurationProfileAssignmentReportResourceDetails. </summary>
+        internal ConfigurationProfileAssignmentReportResourceDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of ReportResource. </summary>
+        /// <summary> Initializes a new instance of ConfigurationProfileAssignmentReportResourceDetails. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="status"> Status of the resource. </param>
         /// <param name="error"> Error message, if any, returned when deploying the resource. </param>
-        internal ReportResource(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string status, ResponseError error) : base(id, name, resourceType, systemData)
+        internal ConfigurationProfileAssignmentReportResourceDetails(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string status, ResponseError error) : base(id, name, resourceType, systemData)
         {
             Status = status;
             Error = error;

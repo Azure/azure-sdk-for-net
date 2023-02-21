@@ -17,17 +17,17 @@ namespace Azure.ResourceManager.Automanage.Models
         /// <summary> Initializes a new instance of ServicePrincipalListResult. </summary>
         internal ServicePrincipalListResult()
         {
-            Value = new ChangeTrackingList<ServicePrincipalData>();
+            Value = new ChangeTrackingList<AutomanageServicePrincipalData>();
         }
 
         /// <summary> Initializes a new instance of ServicePrincipalListResult. </summary>
         /// <param name="value"> The list of servicePrincipals. </param>
-        internal ServicePrincipalListResult(IReadOnlyList<ServicePrincipalData> value)
+        internal ServicePrincipalListResult(IReadOnlyList<AutomanageServicePrincipalData> value)
         {
             Value = value;
         }
 
         /// <summary> The list of servicePrincipals. </summary>
-        public IReadOnlyList<ServicePrincipalData> Value { get; }
+        public IReadOnlyList<AutomanageServicePrincipalData> Value { get; }
     }
 }

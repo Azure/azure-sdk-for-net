@@ -27,12 +27,12 @@ namespace Azure.ResourceManager.Automanage
             );
         }
 
-        /// <summary> Gets a collection of BestPracticeResources in the TenantResource. </summary>
+        /// <summary> Gets a collection of AutomanageBestPracticeResources in the TenantResource. </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of BestPracticeResources and their operations over a BestPracticeResource. </returns>
-        public static BestPracticeCollection GetBestPractices(this TenantResource tenantResource)
+        /// <returns> An object representing collection of AutomanageBestPracticeResources and their operations over a AutomanageBestPracticeResource. </returns>
+        public static AutomanageBestPracticeCollection GetAutomanageBestPractices(this TenantResource tenantResource)
         {
-            return GetExtensionClient(tenantResource).GetBestPractices();
+            return GetExtensionClient(tenantResource).GetAutomanageBestPractices();
         }
 
         /// <summary>
@@ -54,9 +54,9 @@ namespace Azure.ResourceManager.Automanage
         /// <exception cref="ArgumentException"> <paramref name="bestPracticeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="bestPracticeName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<BestPracticeResource>> GetBestPracticeAsync(this TenantResource tenantResource, string bestPracticeName, CancellationToken cancellationToken = default)
+        public static async Task<Response<AutomanageBestPracticeResource>> GetAutomanageBestPracticeAsync(this TenantResource tenantResource, string bestPracticeName, CancellationToken cancellationToken = default)
         {
-            return await tenantResource.GetBestPractices().GetAsync(bestPracticeName, cancellationToken).ConfigureAwait(false);
+            return await tenantResource.GetAutomanageBestPractices().GetAsync(bestPracticeName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -78,9 +78,9 @@ namespace Azure.ResourceManager.Automanage
         /// <exception cref="ArgumentException"> <paramref name="bestPracticeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="bestPracticeName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<BestPracticeResource> GetBestPractice(this TenantResource tenantResource, string bestPracticeName, CancellationToken cancellationToken = default)
+        public static Response<AutomanageBestPracticeResource> GetAutomanageBestPractice(this TenantResource tenantResource, string bestPracticeName, CancellationToken cancellationToken = default)
         {
-            return tenantResource.GetBestPractices().Get(bestPracticeName, cancellationToken);
+            return tenantResource.GetAutomanageBestPractices().Get(bestPracticeName, cancellationToken);
         }
 
         private static SubscriptionResourceExtensionClient GetExtensionClient(SubscriptionResource subscriptionResource)
@@ -92,12 +92,12 @@ namespace Azure.ResourceManager.Automanage
             );
         }
 
-        /// <summary> Gets an object representing a ServicePrincipalResource along with the instance operations that can be performed on it in the SubscriptionResource. </summary>
+        /// <summary> Gets an object representing a AutomanageServicePrincipalResource along with the instance operations that can be performed on it in the SubscriptionResource. </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="ServicePrincipalResource" /> object. </returns>
-        public static ServicePrincipalResource GetServicePrincipal(this SubscriptionResource subscriptionResource)
+        /// <returns> Returns a <see cref="AutomanageServicePrincipalResource" /> object. </returns>
+        public static AutomanageServicePrincipalResource GetAutomanageServicePrincipal(this SubscriptionResource subscriptionResource)
         {
-            return GetExtensionClient(subscriptionResource).GetServicePrincipal();
+            return GetExtensionClient(subscriptionResource).GetAutomanageServicePrincipal();
         }
 
         /// <summary>
@@ -438,20 +438,20 @@ namespace Azure.ResourceManager.Automanage
             return client.GetAutomanageHciClusterConfigurationProfileAssignments(scope).Get(configurationProfileAssignmentName, cancellationToken);
         }
 
-        #region BestPracticeResource
+        #region AutomanageBestPracticeResource
         /// <summary>
-        /// Gets an object representing a <see cref="BestPracticeResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="BestPracticeResource.CreateResourceIdentifier" /> to create a <see cref="BestPracticeResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="AutomanageBestPracticeResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="AutomanageBestPracticeResource.CreateResourceIdentifier" /> to create an <see cref="AutomanageBestPracticeResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="BestPracticeResource" /> object. </returns>
-        public static BestPracticeResource GetBestPracticeResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="AutomanageBestPracticeResource" /> object. </returns>
+        public static AutomanageBestPracticeResource GetAutomanageBestPracticeResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                BestPracticeResource.ValidateResourceId(id);
-                return new BestPracticeResource(client, id);
+                AutomanageBestPracticeResource.ValidateResourceId(id);
+                return new AutomanageBestPracticeResource(client, id);
             }
             );
         }
@@ -476,20 +476,20 @@ namespace Azure.ResourceManager.Automanage
         }
         #endregion
 
-        #region ConfigurationProfileVersionResource
+        #region AutomanageConfigurationProfileVersionResource
         /// <summary>
-        /// Gets an object representing a <see cref="ConfigurationProfileVersionResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ConfigurationProfileVersionResource.CreateResourceIdentifier" /> to create a <see cref="ConfigurationProfileVersionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="AutomanageConfigurationProfileVersionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="AutomanageConfigurationProfileVersionResource.CreateResourceIdentifier" /> to create an <see cref="AutomanageConfigurationProfileVersionResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ConfigurationProfileVersionResource" /> object. </returns>
-        public static ConfigurationProfileVersionResource GetConfigurationProfileVersionResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="AutomanageConfigurationProfileVersionResource" /> object. </returns>
+        public static AutomanageConfigurationProfileVersionResource GetAutomanageConfigurationProfileVersionResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                ConfigurationProfileVersionResource.ValidateResourceId(id);
-                return new ConfigurationProfileVersionResource(client, id);
+                AutomanageConfigurationProfileVersionResource.ValidateResourceId(id);
+                return new AutomanageConfigurationProfileVersionResource(client, id);
             }
             );
         }
@@ -609,20 +609,20 @@ namespace Azure.ResourceManager.Automanage
         }
         #endregion
 
-        #region ServicePrincipalResource
+        #region AutomanageServicePrincipalResource
         /// <summary>
-        /// Gets an object representing a <see cref="ServicePrincipalResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ServicePrincipalResource.CreateResourceIdentifier" /> to create a <see cref="ServicePrincipalResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="AutomanageServicePrincipalResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="AutomanageServicePrincipalResource.CreateResourceIdentifier" /> to create an <see cref="AutomanageServicePrincipalResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ServicePrincipalResource" /> object. </returns>
-        public static ServicePrincipalResource GetServicePrincipalResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="AutomanageServicePrincipalResource" /> object. </returns>
+        public static AutomanageServicePrincipalResource GetAutomanageServicePrincipalResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                ServicePrincipalResource.ValidateResourceId(id);
-                return new ServicePrincipalResource(client, id);
+                AutomanageServicePrincipalResource.ValidateResourceId(id);
+                return new AutomanageServicePrincipalResource(client, id);
             }
             );
         }

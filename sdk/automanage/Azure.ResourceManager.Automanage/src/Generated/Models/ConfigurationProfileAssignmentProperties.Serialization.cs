@@ -25,19 +25,29 @@ namespace Azure.ResourceManager.Automanage.Models
 
         internal static ConfigurationProfileAssignmentProperties DeserializeConfigurationProfileAssignmentProperties(JsonElement element)
         {
-            Optional<string> configurationProfile = default;
-            Optional<string> targetId = default;
+            Optional<ResourceIdentifier> configurationProfile = default;
+            Optional<ResourceIdentifier> targetId = default;
             Optional<string> status = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("configurationProfile"u8))
                 {
-                    configurationProfile = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    configurationProfile = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("targetId"u8))
                 {
-                    targetId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    targetId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("status"u8))

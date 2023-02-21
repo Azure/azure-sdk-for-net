@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Automanage.Tests
                 "\"BootDiagnostics/Enable\":true" +
             "}";
 
-            ConfigurationProfileData data = new ConfigurationProfileData(DefaultLocation)
+            AutomanageConfigurationProfileData data = new AutomanageConfigurationProfileData(DefaultLocation)
             {
                 Configuration = new BinaryData(configuration)
             };
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Automanage.Tests
         {
             var data = new AutomanageConfigurationProfileAssignmentData()
             {
-                Properties = new ConfigurationProfileAssignmentProperties() { ConfigurationProfile = profileId }
+                Properties = new ConfigurationProfileAssignmentProperties() { ConfigurationProfile = new ResourceIdentifier(profileId) }
             };
 
             // fetch assignments collection
