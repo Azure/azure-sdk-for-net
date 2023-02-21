@@ -178,6 +178,7 @@ namespace Azure.Identity
         public bool ExcludeSharedTokenCacheCredential { get { throw null; } set { } }
         public bool ExcludeVisualStudioCodeCredential { get { throw null; } set { } }
         public bool ExcludeVisualStudioCredential { get { throw null; } set { } }
+        public bool ExcludeWorkloadIdentityCredential { get { throw null; } set { } }
         public string InteractiveBrowserCredentialClientId { get { throw null; } set { } }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public string InteractiveBrowserTenantId { get { throw null; } set { } }
@@ -191,6 +192,7 @@ namespace Azure.Identity
         public string VisualStudioCodeTenantId { get { throw null; } set { } }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public string VisualStudioTenantId { get { throw null; } set { } }
+        public string WorkloadIdentityClientId { get { throw null; } set { } }
     }
     public partial class DeviceCodeCredential : Azure.Core.TokenCredential
     {
@@ -422,5 +424,21 @@ namespace Azure.Identity
         public System.Collections.Generic.IList<string> AdditionallyAllowedTenants { get { throw null; } }
         public string TenantId { get { throw null; } set { } }
         public System.TimeSpan? VisualStudioProcessTimeout { get { throw null; } set { } }
+    }
+    public partial class WorkloadIdentityCredential : Azure.Core.TokenCredential
+    {
+        public WorkloadIdentityCredential() { }
+        public WorkloadIdentityCredential(Azure.Identity.WorkloadIdentityCredentialOptions options) { }
+        public override Azure.Core.AccessToken GetToken(Azure.Core.TokenRequestContext requestContext, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public override System.Threading.Tasks.ValueTask<Azure.Core.AccessToken> GetTokenAsync(Azure.Core.TokenRequestContext requestContext, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class WorkloadIdentityCredentialOptions : Azure.Identity.TokenCredentialOptions
+    {
+        public WorkloadIdentityCredentialOptions() { }
+        public System.Collections.Generic.IList<string> AdditionallyAllowedTenants { get { throw null; } }
+        public string ClientId { get { throw null; } set { } }
+        public bool DisableInstanceDiscovery { get { throw null; } set { } }
+        public string TenantId { get { throw null; } set { } }
+        public string TokenFilePath { get { throw null; } set { } }
     }
 }
