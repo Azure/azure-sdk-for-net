@@ -1,0 +1,916 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doc>
+  <members>
+    <member name="GetReceivedShareAsync(String,RequestContext)">
+<example>
+This sample shows how to call GetReceivedShareAsync with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new ReceivedSharesClient("<https://my-service.azure.com>", credential);
+
+Response response = await client.GetReceivedShareAsync("<receivedShareId>");
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("shareKind").ToString());
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("type").ToString());
+]]></code>
+</example>
+<remarks>
+Get a received share
+
+Below is the JSON schema for the response payload.
+
+Response Body:
+
+<details><summary>InPlaceReceivedShare</summary>Schema for <c>InPlaceReceivedShare</c>:
+<code>{
+  properties: {
+    assetLocation: string, # Optional. Location of the shared Asset.
+    assetStoreKind: &quot;AdlsGen2Account&quot; | &quot;BlobAccount&quot;, # Optional. The types of asset.
+    createdAt: string (ISO 8601 Format), # Optional. Time at which the received share was created. Represented in the standard date-time format as defined by [RFC 3339](https://www.rfc-editor.org/rfc/rfc3339)
+    displayName: string, # Optional. Received Share Name
+    expirationDate: string (ISO 8601 Format), # Optional. The expiration date of the received share. Represented in the standard date-time format as defined by [RFC 3339](https://www.rfc-editor.org/rfc/rfc3339)
+    receiverEmail: string, # Optional. Email of the user/receiver who received the sent share invitation
+    receiverName: string, # Optional. Name of the user/receiver who received the sent share invitation
+    receiverTenantName: string, # Optional. Tenant name of the user/receiver who received the sent share invitation
+    senderEmail: string, # Optional. Email of the sender who created the sent share invitation
+    senderName: string, # Optional. Name of the sender who created the sent share invitation
+    senderTenantName: string, # Optional. Tenant name of the sender who created the sent share invitation
+    sentShareDescription: string, # Optional. Share description.
+    sharedAt: string (ISO 8601 Format), # Optional. Time at which the sent share was shared. Represented in the standard date-time format as defined by [RFC 3339](https://www.rfc-editor.org/rfc/rfc3339)
+    shareStatus: &quot;Detached&quot; | &quot;Attached&quot;, # Optional. Share status.
+    sink: {
+      storeKind: &quot;AdlsGen2Account&quot; | &quot;BlobAccount&quot;, # Required. The types of asset.
+      storeReference: {
+        referenceName: string, # Optional. Reference name for resource associated with the sink or artifact.
+        type: &quot;ArmResourceReference&quot;, # Optional. Defines the type of resource being shared
+      }, # Required. A Store Reference for an artifact or sink.
+    }, # Optional. Holds details on the destination of the mapped artifact
+    state: &quot;Unknown&quot; | &quot;Succeeded&quot; | &quot;Creating&quot; | &quot;Deleting&quot; | &quot;Moving&quot; | &quot;Failed&quot;, # Optional. State of the resource
+  }, # Required. Properties of in place received share.
+  shareKind: InPlace, # Required. Defines the supported types for share.
+  id: string, # Optional. The unique id of the resource.
+  type: string, # Optional. Type of the resource.
+}
+</code>
+</details>
+
+</remarks>
+    </member>
+    <member name="GetReceivedShare(String,RequestContext)">
+<example>
+This sample shows how to call GetReceivedShare with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new ReceivedSharesClient("<https://my-service.azure.com>", credential);
+
+Response response = client.GetReceivedShare("<receivedShareId>");
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("shareKind").ToString());
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("type").ToString());
+]]></code>
+</example>
+<remarks>
+Get a received share
+
+Below is the JSON schema for the response payload.
+
+Response Body:
+
+<details><summary>InPlaceReceivedShare</summary>Schema for <c>InPlaceReceivedShare</c>:
+<code>{
+  properties: {
+    assetLocation: string, # Optional. Location of the shared Asset.
+    assetStoreKind: &quot;AdlsGen2Account&quot; | &quot;BlobAccount&quot;, # Optional. The types of asset.
+    createdAt: string (ISO 8601 Format), # Optional. Time at which the received share was created. Represented in the standard date-time format as defined by [RFC 3339](https://www.rfc-editor.org/rfc/rfc3339)
+    displayName: string, # Optional. Received Share Name
+    expirationDate: string (ISO 8601 Format), # Optional. The expiration date of the received share. Represented in the standard date-time format as defined by [RFC 3339](https://www.rfc-editor.org/rfc/rfc3339)
+    receiverEmail: string, # Optional. Email of the user/receiver who received the sent share invitation
+    receiverName: string, # Optional. Name of the user/receiver who received the sent share invitation
+    receiverTenantName: string, # Optional. Tenant name of the user/receiver who received the sent share invitation
+    senderEmail: string, # Optional. Email of the sender who created the sent share invitation
+    senderName: string, # Optional. Name of the sender who created the sent share invitation
+    senderTenantName: string, # Optional. Tenant name of the sender who created the sent share invitation
+    sentShareDescription: string, # Optional. Share description.
+    sharedAt: string (ISO 8601 Format), # Optional. Time at which the sent share was shared. Represented in the standard date-time format as defined by [RFC 3339](https://www.rfc-editor.org/rfc/rfc3339)
+    shareStatus: &quot;Detached&quot; | &quot;Attached&quot;, # Optional. Share status.
+    sink: {
+      storeKind: &quot;AdlsGen2Account&quot; | &quot;BlobAccount&quot;, # Required. The types of asset.
+      storeReference: {
+        referenceName: string, # Optional. Reference name for resource associated with the sink or artifact.
+        type: &quot;ArmResourceReference&quot;, # Optional. Defines the type of resource being shared
+      }, # Required. A Store Reference for an artifact or sink.
+    }, # Optional. Holds details on the destination of the mapped artifact
+    state: &quot;Unknown&quot; | &quot;Succeeded&quot; | &quot;Creating&quot; | &quot;Deleting&quot; | &quot;Moving&quot; | &quot;Failed&quot;, # Optional. State of the resource
+  }, # Required. Properties of in place received share.
+  shareKind: InPlace, # Required. Defines the supported types for share.
+  id: string, # Optional. The unique id of the resource.
+  type: string, # Optional. Type of the resource.
+}
+</code>
+</details>
+
+</remarks>
+    </member>
+    <member name="ActivateTenantEmailRegistrationAsync(RequestContent,String,RequestContext)">
+<example>
+This sample shows how to call ActivateTenantEmailRegistrationAsync with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new ReceivedSharesClient("<https://my-service.azure.com>", credential);
+
+var data = new {};
+
+Response response = await client.ActivateTenantEmailRegistrationAsync(RequestContent.Create(data));
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code>
+This sample shows how to call ActivateTenantEmailRegistrationAsync with all parameters and request content, and how to parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new ReceivedSharesClient("<https://my-service.azure.com>", credential);
+
+var data = new {
+    properties = new {
+        activationCode = "<activationCode>",
+    },
+};
+
+Response response = await client.ActivateTenantEmailRegistrationAsync(RequestContent.Create(data), "<repeatabilityRequestId>");
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("properties").GetProperty("activationCode").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("activationExpiration").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("email").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("registrationStatus").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("state").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("tenantId").ToString());
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("type").ToString());
+]]></code>
+</example>
+<remarks>
+Activates the email registration for current tenant
+
+Below is the JSON schema for the request and response payloads.
+
+Request Body:
+
+Schema for <c>TenantEmailRegistration</c>:
+<code>{
+  properties: {
+    activationCode: string, # Required. Activation code for the registration.
+    activationExpiration: string (ISO 8601 Format), # Optional. Date of the activation expiration. Represented in the standard date-time format as defined by [RFC 3339](https://www.rfc-editor.org/rfc/rfc3339)
+    email: string, # Optional. The email to register.
+    registrationStatus: &quot;ActivationPending&quot; | &quot;Activated&quot; | &quot;ActivationAttemptsExhausted&quot;, # Optional. Defines the supported types for registration.
+    state: &quot;Unknown&quot; | &quot;Succeeded&quot; | &quot;Creating&quot; | &quot;Deleting&quot; | &quot;Moving&quot; | &quot;Failed&quot;, # Optional. State of the resource
+    tenantId: string, # Optional. The tenant id to register.
+  }, # Optional. Tenant email registration property bag.
+  id: string, # Optional. The unique id of the resource.
+  type: string, # Optional. Type of the resource.
+}
+</code>
+
+Response Body:
+
+Schema for <c>TenantEmailRegistration</c>:
+<code>{
+  properties: {
+    activationCode: string, # Required. Activation code for the registration.
+    activationExpiration: string (ISO 8601 Format), # Optional. Date of the activation expiration. Represented in the standard date-time format as defined by [RFC 3339](https://www.rfc-editor.org/rfc/rfc3339)
+    email: string, # Optional. The email to register.
+    registrationStatus: &quot;ActivationPending&quot; | &quot;Activated&quot; | &quot;ActivationAttemptsExhausted&quot;, # Optional. Defines the supported types for registration.
+    state: &quot;Unknown&quot; | &quot;Succeeded&quot; | &quot;Creating&quot; | &quot;Deleting&quot; | &quot;Moving&quot; | &quot;Failed&quot;, # Optional. State of the resource
+    tenantId: string, # Optional. The tenant id to register.
+  }, # Optional. Tenant email registration property bag.
+  id: string, # Optional. The unique id of the resource.
+  type: string, # Optional. Type of the resource.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="ActivateTenantEmailRegistration(RequestContent,String,RequestContext)">
+<example>
+This sample shows how to call ActivateTenantEmailRegistration with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new ReceivedSharesClient("<https://my-service.azure.com>", credential);
+
+var data = new {};
+
+Response response = client.ActivateTenantEmailRegistration(RequestContent.Create(data));
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code>
+This sample shows how to call ActivateTenantEmailRegistration with all parameters and request content, and how to parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new ReceivedSharesClient("<https://my-service.azure.com>", credential);
+
+var data = new {
+    properties = new {
+        activationCode = "<activationCode>",
+    },
+};
+
+Response response = client.ActivateTenantEmailRegistration(RequestContent.Create(data), "<repeatabilityRequestId>");
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("properties").GetProperty("activationCode").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("activationExpiration").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("email").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("registrationStatus").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("state").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("tenantId").ToString());
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("type").ToString());
+]]></code>
+</example>
+<remarks>
+Activates the email registration for current tenant
+
+Below is the JSON schema for the request and response payloads.
+
+Request Body:
+
+Schema for <c>TenantEmailRegistration</c>:
+<code>{
+  properties: {
+    activationCode: string, # Required. Activation code for the registration.
+    activationExpiration: string (ISO 8601 Format), # Optional. Date of the activation expiration. Represented in the standard date-time format as defined by [RFC 3339](https://www.rfc-editor.org/rfc/rfc3339)
+    email: string, # Optional. The email to register.
+    registrationStatus: &quot;ActivationPending&quot; | &quot;Activated&quot; | &quot;ActivationAttemptsExhausted&quot;, # Optional. Defines the supported types for registration.
+    state: &quot;Unknown&quot; | &quot;Succeeded&quot; | &quot;Creating&quot; | &quot;Deleting&quot; | &quot;Moving&quot; | &quot;Failed&quot;, # Optional. State of the resource
+    tenantId: string, # Optional. The tenant id to register.
+  }, # Optional. Tenant email registration property bag.
+  id: string, # Optional. The unique id of the resource.
+  type: string, # Optional. Type of the resource.
+}
+</code>
+
+Response Body:
+
+Schema for <c>TenantEmailRegistration</c>:
+<code>{
+  properties: {
+    activationCode: string, # Required. Activation code for the registration.
+    activationExpiration: string (ISO 8601 Format), # Optional. Date of the activation expiration. Represented in the standard date-time format as defined by [RFC 3339](https://www.rfc-editor.org/rfc/rfc3339)
+    email: string, # Optional. The email to register.
+    registrationStatus: &quot;ActivationPending&quot; | &quot;Activated&quot; | &quot;ActivationAttemptsExhausted&quot;, # Optional. Defines the supported types for registration.
+    state: &quot;Unknown&quot; | &quot;Succeeded&quot; | &quot;Creating&quot; | &quot;Deleting&quot; | &quot;Moving&quot; | &quot;Failed&quot;, # Optional. State of the resource
+    tenantId: string, # Optional. The tenant id to register.
+  }, # Optional. Tenant email registration property bag.
+  id: string, # Optional. The unique id of the resource.
+  type: string, # Optional. Type of the resource.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="RegisterTenantEmailRegistrationAsync(String,RequestContext)">
+<example>
+This sample shows how to call RegisterTenantEmailRegistrationAsync and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new ReceivedSharesClient("<https://my-service.azure.com>", credential);
+
+Response response = await client.RegisterTenantEmailRegistrationAsync();
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code>
+This sample shows how to call RegisterTenantEmailRegistrationAsync with all parameters, and how to parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new ReceivedSharesClient("<https://my-service.azure.com>", credential);
+
+Response response = await client.RegisterTenantEmailRegistrationAsync("<repeatabilityRequestId>");
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("properties").GetProperty("activationCode").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("activationExpiration").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("email").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("registrationStatus").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("state").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("tenantId").ToString());
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("type").ToString());
+]]></code>
+</example>
+<remarks>
+Register an email for the current tenant
+
+Below is the JSON schema for the response payload.
+
+Response Body:
+
+Schema for <c>TenantEmailRegistration</c>:
+<code>{
+  properties: {
+    activationCode: string, # Required. Activation code for the registration.
+    activationExpiration: string (ISO 8601 Format), # Optional. Date of the activation expiration. Represented in the standard date-time format as defined by [RFC 3339](https://www.rfc-editor.org/rfc/rfc3339)
+    email: string, # Optional. The email to register.
+    registrationStatus: &quot;ActivationPending&quot; | &quot;Activated&quot; | &quot;ActivationAttemptsExhausted&quot;, # Optional. Defines the supported types for registration.
+    state: &quot;Unknown&quot; | &quot;Succeeded&quot; | &quot;Creating&quot; | &quot;Deleting&quot; | &quot;Moving&quot; | &quot;Failed&quot;, # Optional. State of the resource
+    tenantId: string, # Optional. The tenant id to register.
+  }, # Optional. Tenant email registration property bag.
+  id: string, # Optional. The unique id of the resource.
+  type: string, # Optional. Type of the resource.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="RegisterTenantEmailRegistration(String,RequestContext)">
+<example>
+This sample shows how to call RegisterTenantEmailRegistration and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new ReceivedSharesClient("<https://my-service.azure.com>", credential);
+
+Response response = client.RegisterTenantEmailRegistration();
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code>
+This sample shows how to call RegisterTenantEmailRegistration with all parameters, and how to parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new ReceivedSharesClient("<https://my-service.azure.com>", credential);
+
+Response response = client.RegisterTenantEmailRegistration("<repeatabilityRequestId>");
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("properties").GetProperty("activationCode").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("activationExpiration").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("email").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("registrationStatus").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("state").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("tenantId").ToString());
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("type").ToString());
+]]></code>
+</example>
+<remarks>
+Register an email for the current tenant
+
+Below is the JSON schema for the response payload.
+
+Response Body:
+
+Schema for <c>TenantEmailRegistration</c>:
+<code>{
+  properties: {
+    activationCode: string, # Required. Activation code for the registration.
+    activationExpiration: string (ISO 8601 Format), # Optional. Date of the activation expiration. Represented in the standard date-time format as defined by [RFC 3339](https://www.rfc-editor.org/rfc/rfc3339)
+    email: string, # Optional. The email to register.
+    registrationStatus: &quot;ActivationPending&quot; | &quot;Activated&quot; | &quot;ActivationAttemptsExhausted&quot;, # Optional. Defines the supported types for registration.
+    state: &quot;Unknown&quot; | &quot;Succeeded&quot; | &quot;Creating&quot; | &quot;Deleting&quot; | &quot;Moving&quot; | &quot;Failed&quot;, # Optional. State of the resource
+    tenantId: string, # Optional. The tenant id to register.
+  }, # Optional. Tenant email registration property bag.
+  id: string, # Optional. The unique id of the resource.
+  type: string, # Optional. Type of the resource.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="GetAllAttachedReceivedSharesAsync(String,String,String,String,RequestContext)">
+<example>
+This sample shows how to call GetAllAttachedReceivedSharesAsync with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new ReceivedSharesClient("<https://my-service.azure.com>", credential);
+
+await foreach (var data in client.GetAllAttachedReceivedSharesAsync("<referenceName>"))
+{
+    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("shareKind").ToString());
+    Console.WriteLine(result.ToString());
+}
+]]></code>
+This sample shows how to call GetAllAttachedReceivedSharesAsync with all parameters, and how to parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new ReceivedSharesClient("<https://my-service.azure.com>", credential);
+
+await foreach (var data in client.GetAllAttachedReceivedSharesAsync("<referenceName>", "<skipToken>", "<filter>", "<orderby>"))
+{
+    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("shareKind").ToString());
+    Console.WriteLine(result.GetProperty("id").ToString());
+    Console.WriteLine(result.GetProperty("type").ToString());
+}
+]]></code>
+</example>
+<remarks>
+List attached received shares
+
+Below is the JSON schema for one item in the pageable response.
+
+Response Body:
+
+Schema for <c>ReceivedShareListValue</c>:
+<code>{
+  shareKind: &quot;InPlace&quot;, # Required. Defines the supported types for share.
+  id: string, # Optional. The unique id of the resource.
+  type: string, # Optional. Type of the resource.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="GetAllAttachedReceivedShares(String,String,String,String,RequestContext)">
+<example>
+This sample shows how to call GetAllAttachedReceivedShares with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new ReceivedSharesClient("<https://my-service.azure.com>", credential);
+
+foreach (var data in client.GetAllAttachedReceivedShares("<referenceName>"))
+{
+    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("shareKind").ToString());
+    Console.WriteLine(result.ToString());
+}
+]]></code>
+This sample shows how to call GetAllAttachedReceivedShares with all parameters, and how to parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new ReceivedSharesClient("<https://my-service.azure.com>", credential);
+
+foreach (var data in client.GetAllAttachedReceivedShares("<referenceName>", "<skipToken>", "<filter>", "<orderby>"))
+{
+    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("shareKind").ToString());
+    Console.WriteLine(result.GetProperty("id").ToString());
+    Console.WriteLine(result.GetProperty("type").ToString());
+}
+]]></code>
+</example>
+<remarks>
+List attached received shares
+
+Below is the JSON schema for one item in the pageable response.
+
+Response Body:
+
+Schema for <c>ReceivedShareListValue</c>:
+<code>{
+  shareKind: &quot;InPlace&quot;, # Required. Defines the supported types for share.
+  id: string, # Optional. The unique id of the resource.
+  type: string, # Optional. Type of the resource.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="GetAllDetachedReceivedSharesAsync(String,String,String,RequestContext)">
+<example>
+This sample shows how to call GetAllDetachedReceivedSharesAsync and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new ReceivedSharesClient("<https://my-service.azure.com>", credential);
+
+await foreach (var data in client.GetAllDetachedReceivedSharesAsync())
+{
+    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("shareKind").ToString());
+    Console.WriteLine(result.ToString());
+}
+]]></code>
+This sample shows how to call GetAllDetachedReceivedSharesAsync with all parameters, and how to parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new ReceivedSharesClient("<https://my-service.azure.com>", credential);
+
+await foreach (var data in client.GetAllDetachedReceivedSharesAsync("<skipToken>", "<filter>", "<orderby>"))
+{
+    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("shareKind").ToString());
+    Console.WriteLine(result.GetProperty("id").ToString());
+    Console.WriteLine(result.GetProperty("type").ToString());
+}
+]]></code>
+</example>
+<remarks>
+List detached received shares
+
+Below is the JSON schema for one item in the pageable response.
+
+Response Body:
+
+Schema for <c>ReceivedShareListValue</c>:
+<code>{
+  shareKind: &quot;InPlace&quot;, # Required. Defines the supported types for share.
+  id: string, # Optional. The unique id of the resource.
+  type: string, # Optional. Type of the resource.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="GetAllDetachedReceivedShares(String,String,String,RequestContext)">
+<example>
+This sample shows how to call GetAllDetachedReceivedShares and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new ReceivedSharesClient("<https://my-service.azure.com>", credential);
+
+foreach (var data in client.GetAllDetachedReceivedShares())
+{
+    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("shareKind").ToString());
+    Console.WriteLine(result.ToString());
+}
+]]></code>
+This sample shows how to call GetAllDetachedReceivedShares with all parameters, and how to parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new ReceivedSharesClient("<https://my-service.azure.com>", credential);
+
+foreach (var data in client.GetAllDetachedReceivedShares("<skipToken>", "<filter>", "<orderby>"))
+{
+    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("shareKind").ToString());
+    Console.WriteLine(result.GetProperty("id").ToString());
+    Console.WriteLine(result.GetProperty("type").ToString());
+}
+]]></code>
+</example>
+<remarks>
+List detached received shares
+
+Below is the JSON schema for one item in the pageable response.
+
+Response Body:
+
+Schema for <c>ReceivedShareListValue</c>:
+<code>{
+  shareKind: &quot;InPlace&quot;, # Required. Defines the supported types for share.
+  id: string, # Optional. The unique id of the resource.
+  type: string, # Optional. Type of the resource.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="CreateOrReplaceReceivedShareAsync(WaitUntil,String,RequestContent,RequestContext)">
+<example>
+This sample shows how to call CreateOrReplaceReceivedShareAsync with required parameters and request content, and how to parse the result.
+<code>
+  <![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new ReceivedSharesClient("<https://my-service.azure.com>", credential);
+
+var data = new {
+    properties = new {},
+    shareKind = "InPlace",
+};
+
+var operation = await client.CreateOrReplaceReceivedShareAsync(WaitUntil.Completed, "<receivedShareId>", RequestContent.Create(data));
+
+BinaryData data = operation.Value;
+JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+Console.WriteLine(result.GetProperty("shareKind").ToString());
+Console.WriteLine(result.ToString());
+]]></code>
+This sample shows how to call CreateOrReplaceReceivedShareAsync with all parameters and request content, and how to parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new ReceivedSharesClient("<https://my-service.azure.com>", credential);
+
+var data = new {
+    properties = new {
+        assetStoreKind = "AdlsGen2Account",
+        displayName = "<displayName>",
+        shareStatus = "Detached",
+        sink = new {
+            properties = new {
+                containerName = "<containerName>",
+                folder = "<folder>",
+                mountPath = "<mountPath>",
+            },
+            storeKind = "AdlsGen2Account",
+            storeReference = new {
+                referenceName = "<referenceName>",
+                type = "ArmResourceReference",
+            },
+        },
+    },
+    shareKind = "InPlace",
+};
+
+var operation = await client.CreateOrReplaceReceivedShareAsync(WaitUntil.Completed, "<receivedShareId>", RequestContent.Create(data));
+
+BinaryData data = operation.Value;
+JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+Console.WriteLine(result.GetProperty("shareKind").ToString());
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("type").ToString());
+]]></code>
+</example>
+<remarks>
+Update changes to a received share
+
+Below is the JSON schema for the request and response payloads.
+
+Request Body:
+
+<details><summary>InPlaceReceivedShare</summary>Schema for <c>InPlaceReceivedShare</c>:
+<code>{
+  properties: {
+    assetLocation: string, # Optional. Location of the shared Asset.
+    assetStoreKind: &quot;AdlsGen2Account&quot; | &quot;BlobAccount&quot;, # Optional. The types of asset.
+    createdAt: string (ISO 8601 Format), # Optional. Time at which the received share was created. Represented in the standard date-time format as defined by [RFC 3339](https://www.rfc-editor.org/rfc/rfc3339)
+    displayName: string, # Optional. Received Share Name
+    expirationDate: string (ISO 8601 Format), # Optional. The expiration date of the received share. Represented in the standard date-time format as defined by [RFC 3339](https://www.rfc-editor.org/rfc/rfc3339)
+    receiverEmail: string, # Optional. Email of the user/receiver who received the sent share invitation
+    receiverName: string, # Optional. Name of the user/receiver who received the sent share invitation
+    receiverTenantName: string, # Optional. Tenant name of the user/receiver who received the sent share invitation
+    senderEmail: string, # Optional. Email of the sender who created the sent share invitation
+    senderName: string, # Optional. Name of the sender who created the sent share invitation
+    senderTenantName: string, # Optional. Tenant name of the sender who created the sent share invitation
+    sentShareDescription: string, # Optional. Share description.
+    sharedAt: string (ISO 8601 Format), # Optional. Time at which the sent share was shared. Represented in the standard date-time format as defined by [RFC 3339](https://www.rfc-editor.org/rfc/rfc3339)
+    shareStatus: &quot;Detached&quot; | &quot;Attached&quot;, # Optional. Share status.
+    sink: {
+      storeKind: &quot;AdlsGen2Account&quot; | &quot;BlobAccount&quot;, # Required. The types of asset.
+      storeReference: {
+        referenceName: string, # Optional. Reference name for resource associated with the sink or artifact.
+        type: &quot;ArmResourceReference&quot;, # Optional. Defines the type of resource being shared
+      }, # Required. A Store Reference for an artifact or sink.
+    }, # Optional. Holds details on the destination of the mapped artifact
+    state: &quot;Unknown&quot; | &quot;Succeeded&quot; | &quot;Creating&quot; | &quot;Deleting&quot; | &quot;Moving&quot; | &quot;Failed&quot;, # Optional. State of the resource
+  }, # Required. Properties of in place received share.
+  shareKind: InPlace, # Required. Defines the supported types for share.
+  id: string, # Optional. The unique id of the resource.
+  type: string, # Optional. Type of the resource.
+}
+</code>
+</details>
+
+Response Body:
+
+<details><summary>InPlaceReceivedShare</summary>Schema for <c>InPlaceReceivedShare</c>:
+<code>{
+  properties: {
+    assetLocation: string, # Optional. Location of the shared Asset.
+    assetStoreKind: &quot;AdlsGen2Account&quot; | &quot;BlobAccount&quot;, # Optional. The types of asset.
+    createdAt: string (ISO 8601 Format), # Optional. Time at which the received share was created. Represented in the standard date-time format as defined by [RFC 3339](https://www.rfc-editor.org/rfc/rfc3339)
+    displayName: string, # Optional. Received Share Name
+    expirationDate: string (ISO 8601 Format), # Optional. The expiration date of the received share. Represented in the standard date-time format as defined by [RFC 3339](https://www.rfc-editor.org/rfc/rfc3339)
+    receiverEmail: string, # Optional. Email of the user/receiver who received the sent share invitation
+    receiverName: string, # Optional. Name of the user/receiver who received the sent share invitation
+    receiverTenantName: string, # Optional. Tenant name of the user/receiver who received the sent share invitation
+    senderEmail: string, # Optional. Email of the sender who created the sent share invitation
+    senderName: string, # Optional. Name of the sender who created the sent share invitation
+    senderTenantName: string, # Optional. Tenant name of the sender who created the sent share invitation
+    sentShareDescription: string, # Optional. Share description.
+    sharedAt: string (ISO 8601 Format), # Optional. Time at which the sent share was shared. Represented in the standard date-time format as defined by [RFC 3339](https://www.rfc-editor.org/rfc/rfc3339)
+    shareStatus: &quot;Detached&quot; | &quot;Attached&quot;, # Optional. Share status.
+    sink: {
+      storeKind: &quot;AdlsGen2Account&quot; | &quot;BlobAccount&quot;, # Required. The types of asset.
+      storeReference: {
+        referenceName: string, # Optional. Reference name for resource associated with the sink or artifact.
+        type: &quot;ArmResourceReference&quot;, # Optional. Defines the type of resource being shared
+      }, # Required. A Store Reference for an artifact or sink.
+    }, # Optional. Holds details on the destination of the mapped artifact
+    state: &quot;Unknown&quot; | &quot;Succeeded&quot; | &quot;Creating&quot; | &quot;Deleting&quot; | &quot;Moving&quot; | &quot;Failed&quot;, # Optional. State of the resource
+  }, # Required. Properties of in place received share.
+  shareKind: InPlace, # Required. Defines the supported types for share.
+  id: string, # Optional. The unique id of the resource.
+  type: string, # Optional. Type of the resource.
+}
+</code>
+</details>
+
+</remarks>
+    </member>
+    <member name="CreateOrReplaceReceivedShare(WaitUntil,String,RequestContent,RequestContext)">
+<example>
+This sample shows how to call CreateOrReplaceReceivedShare with required parameters and request content, and how to parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new ReceivedSharesClient("<https://my-service.azure.com>", credential);
+
+var data = new {
+    properties = new {},
+    shareKind = "InPlace",
+};
+
+var operation = client.CreateOrReplaceReceivedShare(WaitUntil.Completed, "<receivedShareId>", RequestContent.Create(data));
+
+BinaryData data = operation.Value;
+JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+Console.WriteLine(result.GetProperty("shareKind").ToString());
+Console.WriteLine(result.ToString());
+]]></code>
+This sample shows how to call CreateOrReplaceReceivedShare with all parameters and request content, and how to parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new ReceivedSharesClient("<https://my-service.azure.com>", credential);
+
+var data = new {
+    properties = new {
+        assetStoreKind = "AdlsGen2Account",
+        displayName = "<displayName>",
+        shareStatus = "Detached",
+        sink = new {
+            properties = new {
+                containerName = "<containerName>",
+                folder = "<folder>",
+                mountPath = "<mountPath>",
+            },
+            storeKind = "AdlsGen2Account",
+            storeReference = new {
+                referenceName = "<referenceName>",
+                type = "ArmResourceReference",
+            },
+        },
+    },
+    shareKind = "InPlace",
+};
+
+var operation = client.CreateOrReplaceReceivedShare(WaitUntil.Completed, "<receivedShareId>", RequestContent.Create(data));
+
+BinaryData data = operation.Value;
+JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+Console.WriteLine(result.GetProperty("shareKind").ToString());
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("type").ToString());
+]]></code>
+</example>
+<remarks>
+Update changes to a received share
+
+Below is the JSON schema for the request and response payloads.
+
+Request Body:
+
+<details><summary>InPlaceReceivedShare</summary>Schema for <c>InPlaceReceivedShare</c>:
+<code>{
+  properties: {
+    assetLocation: string, # Optional. Location of the shared Asset.
+    assetStoreKind: &quot;AdlsGen2Account&quot; | &quot;BlobAccount&quot;, # Optional. The types of asset.
+    createdAt: string (ISO 8601 Format), # Optional. Time at which the received share was created. Represented in the standard date-time format as defined by [RFC 3339](https://www.rfc-editor.org/rfc/rfc3339)
+    displayName: string, # Optional. Received Share Name
+    expirationDate: string (ISO 8601 Format), # Optional. The expiration date of the received share. Represented in the standard date-time format as defined by [RFC 3339](https://www.rfc-editor.org/rfc/rfc3339)
+    receiverEmail: string, # Optional. Email of the user/receiver who received the sent share invitation
+    receiverName: string, # Optional. Name of the user/receiver who received the sent share invitation
+    receiverTenantName: string, # Optional. Tenant name of the user/receiver who received the sent share invitation
+    senderEmail: string, # Optional. Email of the sender who created the sent share invitation
+    senderName: string, # Optional. Name of the sender who created the sent share invitation
+    senderTenantName: string, # Optional. Tenant name of the sender who created the sent share invitation
+    sentShareDescription: string, # Optional. Share description.
+    sharedAt: string (ISO 8601 Format), # Optional. Time at which the sent share was shared. Represented in the standard date-time format as defined by [RFC 3339](https://www.rfc-editor.org/rfc/rfc3339)
+    shareStatus: &quot;Detached&quot; | &quot;Attached&quot;, # Optional. Share status.
+    sink: {
+      storeKind: &quot;AdlsGen2Account&quot; | &quot;BlobAccount&quot;, # Required. The types of asset.
+      storeReference: {
+        referenceName: string, # Optional. Reference name for resource associated with the sink or artifact.
+        type: &quot;ArmResourceReference&quot;, # Optional. Defines the type of resource being shared
+      }, # Required. A Store Reference for an artifact or sink.
+    }, # Optional. Holds details on the destination of the mapped artifact
+    state: &quot;Unknown&quot; | &quot;Succeeded&quot; | &quot;Creating&quot; | &quot;Deleting&quot; | &quot;Moving&quot; | &quot;Failed&quot;, # Optional. State of the resource
+  }, # Required. Properties of in place received share.
+  shareKind: InPlace, # Required. Defines the supported types for share.
+  id: string, # Optional. The unique id of the resource.
+  type: string, # Optional. Type of the resource.
+}
+</code>
+</details>
+
+Response Body:
+
+<details><summary>InPlaceReceivedShare</summary>Schema for <c>InPlaceReceivedShare</c>:
+<code>{
+  properties: {
+    assetLocation: string, # Optional. Location of the shared Asset.
+    assetStoreKind: &quot;AdlsGen2Account&quot; | &quot;BlobAccount&quot;, # Optional. The types of asset.
+    createdAt: string (ISO 8601 Format), # Optional. Time at which the received share was created. Represented in the standard date-time format as defined by [RFC 3339](https://www.rfc-editor.org/rfc/rfc3339)
+    displayName: string, # Optional. Received Share Name
+    expirationDate: string (ISO 8601 Format), # Optional. The expiration date of the received share. Represented in the standard date-time format as defined by [RFC 3339](https://www.rfc-editor.org/rfc/rfc3339)
+    receiverEmail: string, # Optional. Email of the user/receiver who received the sent share invitation
+    receiverName: string, # Optional. Name of the user/receiver who received the sent share invitation
+    receiverTenantName: string, # Optional. Tenant name of the user/receiver who received the sent share invitation
+    senderEmail: string, # Optional. Email of the sender who created the sent share invitation
+    senderName: string, # Optional. Name of the sender who created the sent share invitation
+    senderTenantName: string, # Optional. Tenant name of the sender who created the sent share invitation
+    sentShareDescription: string, # Optional. Share description.
+    sharedAt: string (ISO 8601 Format), # Optional. Time at which the sent share was shared. Represented in the standard date-time format as defined by [RFC 3339](https://www.rfc-editor.org/rfc/rfc3339)
+    shareStatus: &quot;Detached&quot; | &quot;Attached&quot;, # Optional. Share status.
+    sink: {
+      storeKind: &quot;AdlsGen2Account&quot; | &quot;BlobAccount&quot;, # Required. The types of asset.
+      storeReference: {
+        referenceName: string, # Optional. Reference name for resource associated with the sink or artifact.
+        type: &quot;ArmResourceReference&quot;, # Optional. Defines the type of resource being shared
+      }, # Required. A Store Reference for an artifact or sink.
+    }, # Optional. Holds details on the destination of the mapped artifact
+    state: &quot;Unknown&quot; | &quot;Succeeded&quot; | &quot;Creating&quot; | &quot;Deleting&quot; | &quot;Moving&quot; | &quot;Failed&quot;, # Optional. State of the resource
+  }, # Required. Properties of in place received share.
+  shareKind: InPlace, # Required. Defines the supported types for share.
+  id: string, # Optional. The unique id of the resource.
+  type: string, # Optional. Type of the resource.
+}
+</code>
+</details>
+
+</remarks>
+    </member>
+    <member name="DeleteReceivedShareAsync(WaitUntil,String,RequestContext)">
+<example>
+This sample shows how to call DeleteReceivedShareAsync with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new ReceivedSharesClient("<https://my-service.azure.com>", credential);
+
+var operation = await client.DeleteReceivedShareAsync(WaitUntil.Completed, "<receivedShareId>");
+
+BinaryData data = operation.Value;
+JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+Console.WriteLine(result.GetProperty("endTime").ToString());
+Console.WriteLine(result.GetProperty("error").GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("error").GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("error").GetProperty("target").ToString());
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("startTime").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+]]></code>
+</example>
+<remarks>
+Delete a received share
+
+Below is the JSON schema for the response payload.
+
+Response Body:
+
+Schema for <c>OperationResponse</c>:
+<code>{
+  endTime: string (ISO 8601 Format), # Optional. End time of the long running operation. Represented in the standard date-time format as defined by [RFC 3339](https://www.rfc-editor.org/rfc/rfc3339)
+  error: {
+    code: string, # Required. Code of the error
+    details: [PurviewShareErrorInfo], # Optional. Nested details of the error model
+    message: string, # Required. Message of the error
+    target: string, # Optional. Target of the error
+  }, # Optional. The purview share error body model.
+  id: string, # Optional. Job id of the long running operation
+  startTime: string (ISO 8601 Format), # Optional. Start time of the long running operation. Represented in the standard date-time format as defined by [RFC 3339](https://www.rfc-editor.org/rfc/rfc3339)
+  status: &quot;Running&quot; | &quot;TransientFailure&quot; | &quot;Succeeded&quot; | &quot;Failed&quot; | &quot;NotStarted&quot;, # Required. States for long running operations.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="DeleteReceivedShare(WaitUntil,String,RequestContext)">
+<example>
+This sample shows how to call DeleteReceivedShare with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new ReceivedSharesClient("<https://my-service.azure.com>", credential);
+
+var operation = client.DeleteReceivedShare(WaitUntil.Completed, "<receivedShareId>");
+
+BinaryData data = operation.Value;
+JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+Console.WriteLine(result.GetProperty("endTime").ToString());
+Console.WriteLine(result.GetProperty("error").GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("error").GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("error").GetProperty("target").ToString());
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("startTime").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+]]></code>
+</example>
+<remarks>
+Delete a received share
+
+Below is the JSON schema for the response payload.
+
+Response Body:
+
+Schema for <c>OperationResponse</c>:
+<code>{
+  endTime: string (ISO 8601 Format), # Optional. End time of the long running operation. Represented in the standard date-time format as defined by [RFC 3339](https://www.rfc-editor.org/rfc/rfc3339)
+  error: {
+    code: string, # Required. Code of the error
+    details: [PurviewShareErrorInfo], # Optional. Nested details of the error model
+    message: string, # Required. Message of the error
+    target: string, # Optional. Target of the error
+  }, # Optional. The purview share error body model.
+  id: string, # Optional. Job id of the long running operation
+  startTime: string (ISO 8601 Format), # Optional. Start time of the long running operation. Represented in the standard date-time format as defined by [RFC 3339](https://www.rfc-editor.org/rfc/rfc3339)
+  status: &quot;Running&quot; | &quot;TransientFailure&quot; | &quot;Succeeded&quot; | &quot;Failed&quot; | &quot;NotStarted&quot;, # Required. States for long running operations.
+}
+</code>
+
+</remarks>
+    </member>
+  </members>
+</doc>
