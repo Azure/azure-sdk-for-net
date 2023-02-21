@@ -1,14 +1,20 @@
 # Release History
 
-## 1.0.0-beta.5 (Unreleased)
+## 1.0.0 (2023-02-17)
 
 ### Features Added
+- Added EventHandler to LogsUploadOptions for error handling.
+- Added Upload method in LogsIngestionClient that takes RequestContent.
+- Added LogsUploadOptions type which includes setting concurrency for multi-threading support and the serializer type of the input.
 
 ### Breaking Changes
-
-### Bugs Fixed
+ - Renamed UploadLogsOptions to LogsUploadOptions
+ - Renamed UploadLogsFailedEventArgs to LogsUploadFailedEventArgs
 
 ### Other Changes
+- Removed Model `UploadLogsResult` containing the result of a logs upload operation
+- Removed Model `UploadLogsError` representing the error and the associated logs that failed when uploading a subset of logs to Azure Monitor.
+- Removed Model `UploadLogsStatus` indicating the status of a logs upload operation.
 
 ## 1.0.0-beta.4 (2022-10-11)
 

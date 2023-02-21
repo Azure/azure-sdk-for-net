@@ -15,11 +15,11 @@ namespace Azure.ResourceManager.Sql.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("destinationManagedDatabaseId");
+            writer.WritePropertyName("destinationManagedDatabaseId"u8);
             writer.WriteStringValue(DestinationManagedDatabaseId);
             if (Optional.IsDefined(OperationMode))
             {
-                writer.WritePropertyName("operationMode");
+                writer.WritePropertyName("operationMode"u8);
                 writer.WriteStringValue(OperationMode.Value.ToString());
             }
             writer.WriteEndObject();

@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.StorageCache.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(ActiveDirectory))
             {
-                writer.WritePropertyName("activeDirectory");
+                writer.WritePropertyName("activeDirectory"u8);
                 writer.WriteObjectValue(ActiveDirectory);
             }
             if (Optional.IsDefined(UsernameDownload))
             {
-                writer.WritePropertyName("usernameDownload");
+                writer.WritePropertyName("usernameDownload"u8);
                 writer.WriteObjectValue(UsernameDownload);
             }
             writer.WriteEndObject();
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.StorageCache.Models
             Optional<StorageCacheUsernameDownloadSettings> usernameDownload = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("activeDirectory"))
+                if (property.NameEquals("activeDirectory"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                     activeDirectory = StorageCacheActiveDirectorySettings.DeserializeStorageCacheActiveDirectorySettings(property.Value);
                     continue;
                 }
-                if (property.NameEquals("usernameDownload"))
+                if (property.NameEquals("usernameDownload"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

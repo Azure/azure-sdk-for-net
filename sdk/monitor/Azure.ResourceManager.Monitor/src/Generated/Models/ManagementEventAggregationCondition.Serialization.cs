@@ -18,17 +18,17 @@ namespace Azure.ResourceManager.Monitor.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Operator))
             {
-                writer.WritePropertyName("operator");
+                writer.WritePropertyName("operator"u8);
                 writer.WriteStringValue(Operator.Value.ToSerialString());
             }
             if (Optional.IsDefined(Threshold))
             {
-                writer.WritePropertyName("threshold");
+                writer.WritePropertyName("threshold"u8);
                 writer.WriteNumberValue(Threshold.Value);
             }
             if (Optional.IsDefined(WindowSize))
             {
-                writer.WritePropertyName("windowSize");
+                writer.WritePropertyName("windowSize"u8);
                 writer.WriteStringValue(WindowSize.Value, "P");
             }
             writer.WriteEndObject();
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Monitor.Models
             Optional<TimeSpan> windowSize = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("operator"))
+                if (property.NameEquals("operator"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     @operator = property.Value.GetString().ToMonitorConditionOperator();
                     continue;
                 }
-                if (property.NameEquals("threshold"))
+                if (property.NameEquals("threshold"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     threshold = property.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("windowSize"))
+                if (property.NameEquals("windowSize"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

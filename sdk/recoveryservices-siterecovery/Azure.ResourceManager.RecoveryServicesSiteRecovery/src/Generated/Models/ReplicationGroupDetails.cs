@@ -11,7 +11,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// Replication group details. This will be used in case of San.
     /// Serialized Name: ReplicationGroupDetails
     /// </summary>
-    public partial class ReplicationGroupDetails : ConfigurationSettings
+    public partial class ReplicationGroupDetails : ReplicationProviderSettings
     {
         /// <summary> Initializes a new instance of ReplicationGroupDetails. </summary>
         internal ReplicationGroupDetails()

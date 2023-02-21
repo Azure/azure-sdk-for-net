@@ -17,14 +17,14 @@ namespace Azure.ResourceManager.BotService.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(CognitiveServiceResourceId))
             {
-                writer.WritePropertyName("cognitiveServiceResourceId");
+                writer.WritePropertyName("cognitiveServiceResourceId"u8);
                 writer.WriteStringValue(CognitiveServiceResourceId);
             }
             if (Optional.IsDefined(CognitiveServiceRegion))
             {
                 if (CognitiveServiceRegion != null)
                 {
-                    writer.WritePropertyName("cognitiveServiceRegion");
+                    writer.WritePropertyName("cognitiveServiceRegion"u8);
                     writer.WriteStringValue(CognitiveServiceRegion);
                 }
                 else
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.BotService.Models
             {
                 if (CognitiveServiceSubscriptionKey != null)
                 {
-                    writer.WritePropertyName("cognitiveServiceSubscriptionKey");
+                    writer.WritePropertyName("cognitiveServiceSubscriptionKey"u8);
                     writer.WriteStringValue(CognitiveServiceSubscriptionKey);
                 }
                 else
@@ -46,22 +46,22 @@ namespace Azure.ResourceManager.BotService.Models
             }
             if (Optional.IsDefined(IsEnabled))
             {
-                writer.WritePropertyName("isEnabled");
+                writer.WritePropertyName("isEnabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
             if (Optional.IsDefined(CustomVoiceDeploymentId))
             {
-                writer.WritePropertyName("customVoiceDeploymentId");
+                writer.WritePropertyName("customVoiceDeploymentId"u8);
                 writer.WriteStringValue(CustomVoiceDeploymentId);
             }
             if (Optional.IsDefined(CustomSpeechModelId))
             {
-                writer.WritePropertyName("customSpeechModelId");
+                writer.WritePropertyName("customSpeechModelId"u8);
                 writer.WriteStringValue(CustomSpeechModelId);
             }
             if (Optional.IsDefined(IsDefaultBotForCogSvcAccount))
             {
-                writer.WritePropertyName("isDefaultBotForCogSvcAccount");
+                writer.WritePropertyName("isDefaultBotForCogSvcAccount"u8);
                 writer.WriteBooleanValue(IsDefaultBotForCogSvcAccount.Value);
             }
             writer.WriteEndObject();
@@ -78,12 +78,12 @@ namespace Azure.ResourceManager.BotService.Models
             Optional<bool> isDefaultBotForCogSvcAccount = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("cognitiveServiceResourceId"))
+                if (property.NameEquals("cognitiveServiceResourceId"u8))
                 {
                     cognitiveServiceResourceId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("cognitiveServiceRegion"))
+                if (property.NameEquals("cognitiveServiceRegion"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.BotService.Models
                     cognitiveServiceRegion = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("cognitiveServiceSubscriptionKey"))
+                if (property.NameEquals("cognitiveServiceSubscriptionKey"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.BotService.Models
                     cognitiveServiceSubscriptionKey = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("isEnabled"))
+                if (property.NameEquals("isEnabled"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -113,17 +113,17 @@ namespace Azure.ResourceManager.BotService.Models
                     isEnabled = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("customVoiceDeploymentId"))
+                if (property.NameEquals("customVoiceDeploymentId"u8))
                 {
                     customVoiceDeploymentId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("customSpeechModelId"))
+                if (property.NameEquals("customSpeechModelId"u8))
                 {
                     customSpeechModelId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("isDefaultBotForCogSvcAccount"))
+                if (property.NameEquals("isDefaultBotForCogSvcAccount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

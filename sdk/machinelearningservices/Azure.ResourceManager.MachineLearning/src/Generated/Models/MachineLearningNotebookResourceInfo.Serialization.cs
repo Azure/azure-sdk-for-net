@@ -19,17 +19,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Optional<MachineLearningNotebookPreparationError> notebookPreparationError = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("fqdn"))
+                if (property.NameEquals("fqdn"u8))
                 {
                     fqdn = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("resourceId"))
+                if (property.NameEquals("resourceId"u8))
                 {
                     resourceId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("notebookPreparationError"))
+                if (property.NameEquals("notebookPreparationError"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

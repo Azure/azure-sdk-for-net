@@ -15,9 +15,9 @@ namespace Azure.ResourceManager.LabServices.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("username");
+            writer.WritePropertyName("username"u8);
             writer.WriteStringValue(Username);
-            writer.WritePropertyName("password");
+            writer.WritePropertyName("password"u8);
             writer.WriteStringValue(Password);
             writer.WriteEndObject();
         }

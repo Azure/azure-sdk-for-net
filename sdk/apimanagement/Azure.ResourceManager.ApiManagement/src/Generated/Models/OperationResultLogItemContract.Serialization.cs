@@ -19,17 +19,17 @@ namespace Azure.ResourceManager.ApiManagement.Models
             Optional<string> objectKey = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("objectType"))
+                if (property.NameEquals("objectType"u8))
                 {
                     objectType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("action"))
+                if (property.NameEquals("action"u8))
                 {
                     action = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("objectKey"))
+                if (property.NameEquals("objectKey"u8))
                 {
                     objectKey = property.Value.GetString();
                     continue;

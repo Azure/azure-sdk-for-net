@@ -21,30 +21,30 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<string> recoveryServicesProviderId = default;
             Optional<IReadOnlyList<string>> protectionReadinessErrors = default;
             Optional<IReadOnlyList<string>> supportedReplicationProviders = default;
-            Optional<ConfigurationSettings> customDetails = default;
+            Optional<ReplicationProviderSettings> customDetails = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("friendlyName"))
+                if (property.NameEquals("friendlyName"u8))
                 {
                     friendlyName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("protectionStatus"))
+                if (property.NameEquals("protectionStatus"u8))
                 {
                     protectionStatus = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("replicationProtectedItemId"))
+                if (property.NameEquals("replicationProtectedItemId"u8))
                 {
                     replicationProtectedItemId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("recoveryServicesProviderId"))
+                if (property.NameEquals("recoveryServicesProviderId"u8))
                 {
                     recoveryServicesProviderId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("protectionReadinessErrors"))
+                if (property.NameEquals("protectionReadinessErrors"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     protectionReadinessErrors = array;
                     continue;
                 }
-                if (property.NameEquals("supportedReplicationProviders"))
+                if (property.NameEquals("supportedReplicationProviders"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -74,14 +74,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     supportedReplicationProviders = array;
                     continue;
                 }
-                if (property.NameEquals("customDetails"))
+                if (property.NameEquals("customDetails"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    customDetails = ConfigurationSettings.DeserializeConfigurationSettings(property.Value);
+                    customDetails = ReplicationProviderSettings.DeserializeReplicationProviderSettings(property.Value);
                     continue;
                 }
             }

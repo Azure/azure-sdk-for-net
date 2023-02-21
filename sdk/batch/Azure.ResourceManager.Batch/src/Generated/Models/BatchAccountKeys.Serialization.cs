@@ -19,17 +19,17 @@ namespace Azure.ResourceManager.Batch.Models
             Optional<string> secondary = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("accountName"))
+                if (property.NameEquals("accountName"u8))
                 {
                     accountName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("primary"))
+                if (property.NameEquals("primary"u8))
                 {
                     primary = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("secondary"))
+                if (property.NameEquals("secondary"u8))
                 {
                     secondary = property.Value.GetString();
                     continue;

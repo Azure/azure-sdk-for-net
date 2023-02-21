@@ -66,7 +66,8 @@ namespace Azure.Storage.Files.DataLake
                 AcceptRanges = blobDownloadProperties.AcceptRanges,
                 IsServerEncrypted = blobDownloadProperties.IsServerEncrypted,
                 EncryptionKeySha256 = blobDownloadProperties.EncryptionKeySha256,
-                ContentHash = blobDownloadProperties.BlobContentHash
+                ContentHash = blobDownloadProperties.BlobContentHash,
+                CreatedOn = blobDownloadProperties.CreatedOn,
             };
 
         internal static FileDownloadInfo ToFileDownloadInfo(this BlobDownloadInfo blobDownloadInfo) =>
@@ -927,9 +928,7 @@ namespace Azure.Storage.Files.DataLake
             string operationName,
             string parameterName)
         {
-            if (AppContextSwitchHelper.GetConfigValue(
-                Constants.DisableRequestConditionsValidationSwitchName,
-                Constants.DisableRequestConditionsValidationEnvVar))
+            if (CompatSwitches.DisableRequestConditionsValidation)
             {
                 return;
             }
@@ -959,9 +958,7 @@ namespace Azure.Storage.Files.DataLake
             string operationName,
             string parameterName)
         {
-            if (AppContextSwitchHelper.GetConfigValue(
-                Constants.DisableRequestConditionsValidationSwitchName,
-                Constants.DisableRequestConditionsValidationEnvVar))
+            if (CompatSwitches.DisableRequestConditionsValidation)
             {
                 return;
             }

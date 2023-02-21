@@ -20,22 +20,22 @@ namespace Azure.AI.TextAnalytics.Legacy
             long transactionsCount = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("documentsCount"))
+                if (property.NameEquals("documentsCount"u8))
                 {
                     documentsCount = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("validDocumentsCount"))
+                if (property.NameEquals("validDocumentsCount"u8))
                 {
                     validDocumentsCount = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("erroneousDocumentsCount"))
+                if (property.NameEquals("erroneousDocumentsCount"u8))
                 {
                     erroneousDocumentsCount = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("transactionsCount"))
+                if (property.NameEquals("transactionsCount"u8))
                 {
                     transactionsCount = property.Value.GetInt64();
                     continue;

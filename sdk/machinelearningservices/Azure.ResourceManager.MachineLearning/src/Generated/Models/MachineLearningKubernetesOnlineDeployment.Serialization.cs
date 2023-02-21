@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 if (ContainerResourceRequirements != null)
                 {
-                    writer.WritePropertyName("containerResourceRequirements");
+                    writer.WritePropertyName("containerResourceRequirements"u8);
                     writer.WriteObjectValue(ContainerResourceRequirements);
                 }
                 else
@@ -30,21 +30,21 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             if (Optional.IsDefined(AppInsightsEnabled))
             {
-                writer.WritePropertyName("appInsightsEnabled");
+                writer.WritePropertyName("appInsightsEnabled"u8);
                 writer.WriteBooleanValue(AppInsightsEnabled.Value);
             }
             if (Optional.IsDefined(EgressPublicNetworkAccess))
             {
-                writer.WritePropertyName("egressPublicNetworkAccess");
+                writer.WritePropertyName("egressPublicNetworkAccess"u8);
                 writer.WriteStringValue(EgressPublicNetworkAccess.Value.ToString());
             }
-            writer.WritePropertyName("endpointComputeType");
+            writer.WritePropertyName("endpointComputeType"u8);
             writer.WriteStringValue(EndpointComputeType.ToString());
             if (Optional.IsDefined(InstanceType))
             {
                 if (InstanceType != null)
                 {
-                    writer.WritePropertyName("instanceType");
+                    writer.WritePropertyName("instanceType"u8);
                     writer.WriteStringValue(InstanceType);
                 }
                 else
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 if (LivenessProbe != null)
                 {
-                    writer.WritePropertyName("livenessProbe");
+                    writer.WritePropertyName("livenessProbe"u8);
                     writer.WriteObjectValue(LivenessProbe);
                 }
                 else
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 if (Model != null)
                 {
-                    writer.WritePropertyName("model");
+                    writer.WritePropertyName("model"u8);
                     writer.WriteStringValue(Model);
                 }
                 else
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 if (ModelMountPath != null)
                 {
-                    writer.WritePropertyName("modelMountPath");
+                    writer.WritePropertyName("modelMountPath"u8);
                     writer.WriteStringValue(ModelMountPath);
                 }
                 else
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 if (ReadinessProbe != null)
                 {
-                    writer.WritePropertyName("readinessProbe");
+                    writer.WritePropertyName("readinessProbe"u8);
                     writer.WriteObjectValue(ReadinessProbe);
                 }
                 else
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 if (RequestSettings != null)
                 {
-                    writer.WritePropertyName("requestSettings");
+                    writer.WritePropertyName("requestSettings"u8);
                     writer.WriteObjectValue(RequestSettings);
                 }
                 else
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 if (ScaleSettings != null)
                 {
-                    writer.WritePropertyName("scaleSettings");
+                    writer.WritePropertyName("scaleSettings"u8);
                     writer.WriteObjectValue(ScaleSettings);
                 }
                 else
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 if (CodeConfiguration != null)
                 {
-                    writer.WritePropertyName("codeConfiguration");
+                    writer.WritePropertyName("codeConfiguration"u8);
                     writer.WriteObjectValue(CodeConfiguration);
                 }
                 else
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 if (Description != null)
                 {
-                    writer.WritePropertyName("description");
+                    writer.WritePropertyName("description"u8);
                     writer.WriteStringValue(Description);
                 }
                 else
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 if (EnvironmentId != null)
                 {
-                    writer.WritePropertyName("environmentId");
+                    writer.WritePropertyName("environmentId"u8);
                     writer.WriteStringValue(EnvironmentId);
                 }
                 else
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 if (EnvironmentVariables != null)
                 {
-                    writer.WritePropertyName("environmentVariables");
+                    writer.WritePropertyName("environmentVariables"u8);
                     writer.WriteStartObject();
                     foreach (var item in EnvironmentVariables)
                     {
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 if (Properties != null)
                 {
-                    writer.WritePropertyName("properties");
+                    writer.WritePropertyName("properties"u8);
                     writer.WriteStartObject();
                     foreach (var item in Properties)
                     {
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Optional<IDictionary<string, string>> properties = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("containerResourceRequirements"))
+                if (property.NameEquals("containerResourceRequirements"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     containerResourceRequirements = MachineLearningContainerResourceRequirements.DeserializeMachineLearningContainerResourceRequirements(property.Value);
                     continue;
                 }
-                if (property.NameEquals("appInsightsEnabled"))
+                if (property.NameEquals("appInsightsEnabled"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -240,7 +240,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     appInsightsEnabled = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("egressPublicNetworkAccess"))
+                if (property.NameEquals("egressPublicNetworkAccess"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -250,12 +250,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     egressPublicNetworkAccess = new MachineLearningEgressPublicNetworkAccessType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("endpointComputeType"))
+                if (property.NameEquals("endpointComputeType"u8))
                 {
                     endpointComputeType = new MachineLearningEndpointComputeType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("instanceType"))
+                if (property.NameEquals("instanceType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -265,7 +265,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     instanceType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("livenessProbe"))
+                if (property.NameEquals("livenessProbe"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -275,7 +275,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     livenessProbe = MachineLearningProbeSettings.DeserializeMachineLearningProbeSettings(property.Value);
                     continue;
                 }
-                if (property.NameEquals("model"))
+                if (property.NameEquals("model"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -285,7 +285,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     model = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("modelMountPath"))
+                if (property.NameEquals("modelMountPath"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -295,7 +295,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     modelMountPath = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("provisioningState"))
+                if (property.NameEquals("provisioningState"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -305,7 +305,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     provisioningState = new MachineLearningDeploymentProvisioningState(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("readinessProbe"))
+                if (property.NameEquals("readinessProbe"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -315,7 +315,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     readinessProbe = MachineLearningProbeSettings.DeserializeMachineLearningProbeSettings(property.Value);
                     continue;
                 }
-                if (property.NameEquals("requestSettings"))
+                if (property.NameEquals("requestSettings"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -325,7 +325,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     requestSettings = MachineLearningOnlineRequestSettings.DeserializeMachineLearningOnlineRequestSettings(property.Value);
                     continue;
                 }
-                if (property.NameEquals("scaleSettings"))
+                if (property.NameEquals("scaleSettings"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -335,7 +335,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     scaleSettings = MachineLearningOnlineScaleSettings.DeserializeMachineLearningOnlineScaleSettings(property.Value);
                     continue;
                 }
-                if (property.NameEquals("codeConfiguration"))
+                if (property.NameEquals("codeConfiguration"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -345,7 +345,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     codeConfiguration = MachineLearningCodeConfiguration.DeserializeMachineLearningCodeConfiguration(property.Value);
                     continue;
                 }
-                if (property.NameEquals("description"))
+                if (property.NameEquals("description"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -355,7 +355,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     description = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("environmentId"))
+                if (property.NameEquals("environmentId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -365,7 +365,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     environmentId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("environmentVariables"))
+                if (property.NameEquals("environmentVariables"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -387,7 +387,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     environmentVariables = dictionary;
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

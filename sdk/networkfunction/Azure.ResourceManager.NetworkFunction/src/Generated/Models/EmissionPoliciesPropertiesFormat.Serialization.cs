@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.NetworkFunction.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(EmissionType))
             {
-                writer.WritePropertyName("emissionType");
+                writer.WritePropertyName("emissionType"u8);
                 writer.WriteStringValue(EmissionType.Value.ToString());
             }
             if (Optional.IsCollectionDefined(EmissionDestinations))
             {
-                writer.WritePropertyName("emissionDestinations");
+                writer.WritePropertyName("emissionDestinations"u8);
                 writer.WriteStartArray();
                 foreach (var item in EmissionDestinations)
                 {
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.NetworkFunction.Models
             Optional<IList<EmissionPolicyDestination>> emissionDestinations = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("emissionType"))
+                if (property.NameEquals("emissionType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.NetworkFunction.Models
                     emissionType = new EmissionType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("emissionDestinations"))
+                if (property.NameEquals("emissionDestinations"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

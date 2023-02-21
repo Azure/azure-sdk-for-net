@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Monitor.Models
             Optional<string> endpoint = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("endpoint"))
+                if (property.NameEquals("endpoint"u8))
                 {
                     endpoint = property.Value.GetString();
                     continue;

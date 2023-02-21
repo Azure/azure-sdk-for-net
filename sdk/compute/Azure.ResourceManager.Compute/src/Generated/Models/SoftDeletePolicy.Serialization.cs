@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Compute.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(IsSoftDeleteEnabled))
             {
-                writer.WritePropertyName("isSoftDeleteEnabled");
+                writer.WritePropertyName("isSoftDeleteEnabled"u8);
                 writer.WriteBooleanValue(IsSoftDeleteEnabled.Value);
             }
             writer.WriteEndObject();
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Compute.Models
             Optional<bool> isSoftDeleteEnabled = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("isSoftDeleteEnabled"))
+                if (property.NameEquals("isSoftDeleteEnabled"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -15,15 +15,15 @@ namespace Azure.ResourceManager.Network.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("targetResourceId");
+            writer.WritePropertyName("targetResourceId"u8);
             writer.WriteStringValue(TargetResourceId);
-            writer.WritePropertyName("sourceIPAddress");
+            writer.WritePropertyName("sourceIPAddress"u8);
             writer.WriteStringValue(SourceIPAddress);
-            writer.WritePropertyName("destinationIPAddress");
+            writer.WritePropertyName("destinationIPAddress"u8);
             writer.WriteStringValue(DestinationIPAddress);
             if (Optional.IsDefined(TargetNicResourceId))
             {
-                writer.WritePropertyName("targetNicResourceId");
+                writer.WritePropertyName("targetNicResourceId"u8);
                 writer.WriteStringValue(TargetNicResourceId);
             }
             writer.WriteEndObject();

@@ -165,7 +165,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
 
             try
             {
-                var source = new AzureBlobContentSource(blobContainerUri.AbsoluteUri);
+                var source = new AzureBlobContentSource(blobContainerUri);
                 if (!string.IsNullOrEmpty(prefix))
                 {
                     source.Prefix = prefix;
@@ -253,7 +253,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
 
             try
             {
-                var source = new AzureBlobContentSource(blobContainerUri.AbsoluteUri);
+                var source = new AzureBlobContentSource(blobContainerUri);
                 if (!string.IsNullOrEmpty(prefix))
                 {
                     source.Prefix = prefix;

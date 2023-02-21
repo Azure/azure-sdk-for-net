@@ -20,39 +20,39 @@ namespace Azure.ResourceManager.Kusto
             writer.WriteStartObject();
             if (Optional.IsDefined(Location))
             {
-                writer.WritePropertyName("location");
+                writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(DatabaseName))
             {
-                writer.WritePropertyName("databaseName");
+                writer.WritePropertyName("databaseName"u8);
                 writer.WriteStringValue(DatabaseName);
             }
             if (Optional.IsDefined(ClusterResourceId))
             {
-                writer.WritePropertyName("clusterResourceId");
+                writer.WritePropertyName("clusterResourceId"u8);
                 writer.WriteStringValue(ClusterResourceId);
             }
             if (Optional.IsDefined(DefaultPrincipalsModificationKind))
             {
-                writer.WritePropertyName("defaultPrincipalsModificationKind");
+                writer.WritePropertyName("defaultPrincipalsModificationKind"u8);
                 writer.WriteStringValue(DefaultPrincipalsModificationKind.Value.ToString());
             }
             if (Optional.IsDefined(TableLevelSharingProperties))
             {
-                writer.WritePropertyName("tableLevelSharingProperties");
+                writer.WritePropertyName("tableLevelSharingProperties"u8);
                 writer.WriteObjectValue(TableLevelSharingProperties);
             }
             if (Optional.IsDefined(DatabaseNameOverride))
             {
-                writer.WritePropertyName("databaseNameOverride");
+                writer.WritePropertyName("databaseNameOverride"u8);
                 writer.WriteStringValue(DatabaseNameOverride);
             }
             if (Optional.IsDefined(DatabaseNamePrefix))
             {
-                writer.WritePropertyName("databaseNamePrefix");
+                writer.WritePropertyName("databaseNamePrefix"u8);
                 writer.WriteStringValue(DatabaseNamePrefix);
             }
             writer.WriteEndObject();
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Kusto
             Optional<string> databaseNamePrefix = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("location"))
+                if (property.NameEquals("location"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -86,22 +86,22 @@ namespace Azure.ResourceManager.Kusto
                     location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Kusto
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.Kusto
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("provisioningState"))
+                        if (property0.NameEquals("provisioningState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -130,12 +130,12 @@ namespace Azure.ResourceManager.Kusto
                             provisioningState = new KustoProvisioningState(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("databaseName"))
+                        if (property0.NameEquals("databaseName"u8))
                         {
                             databaseName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("clusterResourceId"))
+                        if (property0.NameEquals("clusterResourceId"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.Kusto
                             clusterResourceId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("attachedDatabaseNames"))
+                        if (property0.NameEquals("attachedDatabaseNames"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.Kusto
                             attachedDatabaseNames = array;
                             continue;
                         }
-                        if (property0.NameEquals("defaultPrincipalsModificationKind"))
+                        if (property0.NameEquals("defaultPrincipalsModificationKind"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Kusto
                             defaultPrincipalsModificationKind = new KustoDatabaseDefaultPrincipalsModificationKind(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("tableLevelSharingProperties"))
+                        if (property0.NameEquals("tableLevelSharingProperties"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -180,12 +180,12 @@ namespace Azure.ResourceManager.Kusto
                             tableLevelSharingProperties = KustoDatabaseTableLevelSharingProperties.DeserializeKustoDatabaseTableLevelSharingProperties(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("databaseNameOverride"))
+                        if (property0.NameEquals("databaseNameOverride"u8))
                         {
                             databaseNameOverride = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("databaseNamePrefix"))
+                        if (property0.NameEquals("databaseNamePrefix"u8))
                         {
                             databaseNamePrefix = property0.Value.GetString();
                             continue;

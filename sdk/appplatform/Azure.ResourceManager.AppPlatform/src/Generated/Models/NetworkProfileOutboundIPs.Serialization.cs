@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             Optional<IReadOnlyList<IPAddress>> publicIPs = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("publicIPs"))
+                if (property.NameEquals("publicIPs"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

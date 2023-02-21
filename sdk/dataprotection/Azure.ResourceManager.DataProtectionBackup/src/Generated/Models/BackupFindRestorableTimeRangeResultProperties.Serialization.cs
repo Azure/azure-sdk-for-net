@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(RestorableTimeRanges))
             {
-                writer.WritePropertyName("restorableTimeRanges");
+                writer.WritePropertyName("restorableTimeRanges"u8);
                 writer.WriteStartArray();
                 foreach (var item in RestorableTimeRanges)
                 {
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             }
             if (Optional.IsDefined(ObjectType))
             {
-                writer.WritePropertyName("objectType");
+                writer.WritePropertyName("objectType"u8);
                 writer.WriteStringValue(ObjectType);
             }
             writer.WriteEndObject();
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             Optional<string> objectType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("restorableTimeRanges"))
+                if (property.NameEquals("restorableTimeRanges"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     restorableTimeRanges = array;
                     continue;
                 }
-                if (property.NameEquals("objectType"))
+                if (property.NameEquals("objectType"u8))
                 {
                     objectType = property.Value.GetString();
                     continue;

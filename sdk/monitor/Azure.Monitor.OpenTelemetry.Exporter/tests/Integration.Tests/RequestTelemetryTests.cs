@@ -14,7 +14,7 @@ using Azure.Monitor.OpenTelemetry.Exporter.Models;
 using Azure.Monitor.OpenTelemetry.Exporter.Tests.CommonTestFramework;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.AspNetCore.TestHost;
-
+using Microsoft.Extensions.DependencyInjection;
 using OpenTelemetry;
 using OpenTelemetry.Trace;
 
@@ -48,8 +48,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Integration.Tests
                     {
                         services.AddOpenTelemetry().WithTracing(builder => builder
                             .AddAspNetCoreInstrumentation()
-                            .AddAzureMonitorTraceExporterForTest(out telemetryItems))
-                            .StartWithHost();
+                            .AddAzureMonitorTraceExporterForTest(out telemetryItems));
+                        ;
                     }))
                 .CreateClient();
 

@@ -1,15 +1,12 @@
 # Release History
 
-## 5.1.0-beta.1 (Unreleased)
+## 5.1.0-beta.2 (Unreleased)
+- Added Target Based Scaling support for Storage Queues and Blobs
 
-### Features Added
-- Blob storage support for ParameterBindingData reference type (#31757)
-
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+## 5.1.0-beta.1 (2023-02-07)
+- Added logging for details of a storage blob listener on start/stop operations.
+- Updated BlobNameValidationAttribute to allow $web as a container name.
+- Added Blob storage support for ParameterBindingData reference type.
 
 ## 5.0.1 (2022-05-02)
 - Implemented caching blobs in shared memory for faster I/O.

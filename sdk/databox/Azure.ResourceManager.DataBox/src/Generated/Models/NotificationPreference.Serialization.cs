@@ -15,9 +15,9 @@ namespace Azure.ResourceManager.DataBox.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("stageName");
+            writer.WritePropertyName("stageName"u8);
             writer.WriteStringValue(StageName.ToString());
-            writer.WritePropertyName("sendNotification");
+            writer.WritePropertyName("sendNotification"u8);
             writer.WriteBooleanValue(SendNotification);
             writer.WriteEndObject();
         }
@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.DataBox.Models
             bool sendNotification = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("stageName"))
+                if (property.NameEquals("stageName"u8))
                 {
                     stageName = new NotificationStageName(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("sendNotification"))
+                if (property.NameEquals("sendNotification"u8))
                 {
                     sendNotification = property.Value.GetBoolean();
                     continue;

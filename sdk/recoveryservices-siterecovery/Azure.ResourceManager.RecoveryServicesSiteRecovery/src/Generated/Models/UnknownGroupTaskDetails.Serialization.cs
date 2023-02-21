@@ -19,12 +19,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<IReadOnlyList<AsrTask>> childTasks = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("instanceType"))
+                if (property.NameEquals("instanceType"u8))
                 {
                     instanceType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("childTasks"))
+                if (property.NameEquals("childTasks"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

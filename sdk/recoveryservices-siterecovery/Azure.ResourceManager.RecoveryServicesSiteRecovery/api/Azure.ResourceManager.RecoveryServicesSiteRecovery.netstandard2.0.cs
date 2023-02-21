@@ -1675,13 +1675,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         public string Message { get { throw null; } }
         public string Severity { get { throw null; } }
     }
-    public abstract partial class ConfigurationSettings
+    public partial class ConfigureReplicationAlertProperties
     {
-        protected ConfigurationSettings() { }
-    }
-    public partial class ConfigureAlertRequestProperties
-    {
-        public ConfigureAlertRequestProperties() { }
+        public ConfigureReplicationAlertProperties() { }
         public System.Collections.Generic.IList<string> CustomEmailAddresses { get { throw null; } }
         public string Locale { get { throw null; } set { } }
         public string SendToOwners { get { throw null; } set { } }
@@ -2524,7 +2520,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         internal HyperVSiteDetails() { }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.HyperVHostDetails> HyperVHosts { get { throw null; } }
     }
-    public partial class HyperVVirtualMachineDetails : Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.ConfigurationSettings
+    public partial class HyperVVirtualMachineDetails : Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.ReplicationProviderSettings
     {
         internal HyperVVirtualMachineDetails() { }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.DiskDetails> DiskDetails { get { throw null; } }
@@ -4122,7 +4118,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     public partial class ProtectableItemProperties
     {
         internal ProtectableItemProperties() { }
-        public Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.ConfigurationSettings CustomDetails { get { throw null; } }
+        public Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.ReplicationProviderSettings CustomDetails { get { throw null; } }
         public string FriendlyName { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> ProtectionReadinessErrors { get { throw null; } }
         public string ProtectionStatus { get { throw null; } }
@@ -4613,7 +4609,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     public partial class ReplicationAlertCreateOrUpdateContent
     {
         public ReplicationAlertCreateOrUpdateContent() { }
-        public Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.ConfigureAlertRequestProperties Properties { get { throw null; } set { } }
+        public Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.ConfigureReplicationAlertProperties Properties { get { throw null; } set { } }
     }
     public partial class ReplicationAlertProperties
     {
@@ -4646,7 +4642,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         public string ClientRequestId { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.ReplicationEligibilityResultsErrorInfo> Errors { get { throw null; } }
     }
-    public partial class ReplicationGroupDetails : Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.ConfigurationSettings
+    public partial class ReplicationGroupDetails : Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.ReplicationProviderSettings
     {
         internal ReplicationGroupDetails() { }
     }
@@ -4801,6 +4797,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     public abstract partial class ReplicationProtectionIntentProviderSpecificSettings
     {
         protected ReplicationProtectionIntentProviderSpecificSettings() { }
+    }
+    public abstract partial class ReplicationProviderSettings
+    {
+        protected ReplicationProviderSettings() { }
     }
     public abstract partial class ReplicationProviderSpecificContainerCreationInput
     {
@@ -5786,7 +5786,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         public string ServiceResourceId { get { throw null; } }
         public string VMwareSiteId { get { throw null; } }
     }
-    public partial class VMwareVirtualMachineDetails : Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.ConfigurationSettings
+    public partial class VMwareVirtualMachineDetails : Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.ReplicationProviderSettings
     {
         internal VMwareVirtualMachineDetails() { }
         public string AgentGeneratedId { get { throw null; } }

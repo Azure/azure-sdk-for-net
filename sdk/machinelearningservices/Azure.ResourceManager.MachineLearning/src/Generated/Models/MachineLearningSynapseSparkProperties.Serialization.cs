@@ -17,52 +17,52 @@ namespace Azure.ResourceManager.MachineLearning.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(AutoScaleProperties))
             {
-                writer.WritePropertyName("autoScaleProperties");
+                writer.WritePropertyName("autoScaleProperties"u8);
                 writer.WriteObjectValue(AutoScaleProperties);
             }
             if (Optional.IsDefined(AutoPauseProperties))
             {
-                writer.WritePropertyName("autoPauseProperties");
+                writer.WritePropertyName("autoPauseProperties"u8);
                 writer.WriteObjectValue(AutoPauseProperties);
             }
             if (Optional.IsDefined(SparkVersion))
             {
-                writer.WritePropertyName("sparkVersion");
+                writer.WritePropertyName("sparkVersion"u8);
                 writer.WriteStringValue(SparkVersion);
             }
             if (Optional.IsDefined(NodeCount))
             {
-                writer.WritePropertyName("nodeCount");
+                writer.WritePropertyName("nodeCount"u8);
                 writer.WriteNumberValue(NodeCount.Value);
             }
             if (Optional.IsDefined(NodeSize))
             {
-                writer.WritePropertyName("nodeSize");
+                writer.WritePropertyName("nodeSize"u8);
                 writer.WriteStringValue(NodeSize);
             }
             if (Optional.IsDefined(NodeSizeFamily))
             {
-                writer.WritePropertyName("nodeSizeFamily");
+                writer.WritePropertyName("nodeSizeFamily"u8);
                 writer.WriteStringValue(NodeSizeFamily);
             }
             if (Optional.IsDefined(SubscriptionId))
             {
-                writer.WritePropertyName("subscriptionId");
+                writer.WritePropertyName("subscriptionId"u8);
                 writer.WriteStringValue(SubscriptionId);
             }
             if (Optional.IsDefined(ResourceGroup))
             {
-                writer.WritePropertyName("resourceGroup");
+                writer.WritePropertyName("resourceGroup"u8);
                 writer.WriteStringValue(ResourceGroup);
             }
             if (Optional.IsDefined(WorkspaceName))
             {
-                writer.WritePropertyName("workspaceName");
+                writer.WritePropertyName("workspaceName"u8);
                 writer.WriteStringValue(WorkspaceName);
             }
             if (Optional.IsDefined(PoolName))
             {
-                writer.WritePropertyName("poolName");
+                writer.WritePropertyName("poolName"u8);
                 writer.WriteStringValue(PoolName);
             }
             writer.WriteEndObject();
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Optional<string> poolName = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("autoScaleProperties"))
+                if (property.NameEquals("autoScaleProperties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     autoScaleProperties = MachineLearningAutoScaleProperties.DeserializeMachineLearningAutoScaleProperties(property.Value);
                     continue;
                 }
-                if (property.NameEquals("autoPauseProperties"))
+                if (property.NameEquals("autoPauseProperties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -102,12 +102,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     autoPauseProperties = MachineLearningAutoPauseProperties.DeserializeMachineLearningAutoPauseProperties(property.Value);
                     continue;
                 }
-                if (property.NameEquals("sparkVersion"))
+                if (property.NameEquals("sparkVersion"u8))
                 {
                     sparkVersion = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("nodeCount"))
+                if (property.NameEquals("nodeCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -117,32 +117,32 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     nodeCount = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("nodeSize"))
+                if (property.NameEquals("nodeSize"u8))
                 {
                     nodeSize = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("nodeSizeFamily"))
+                if (property.NameEquals("nodeSizeFamily"u8))
                 {
                     nodeSizeFamily = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("subscriptionId"))
+                if (property.NameEquals("subscriptionId"u8))
                 {
                     subscriptionId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("resourceGroup"))
+                if (property.NameEquals("resourceGroup"u8))
                 {
                     resourceGroup = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("workspaceName"))
+                if (property.NameEquals("workspaceName"u8))
                 {
                     workspaceName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("poolName"))
+                if (property.NameEquals("poolName"u8))
                 {
                     poolName = property.Value.GetString();
                     continue;

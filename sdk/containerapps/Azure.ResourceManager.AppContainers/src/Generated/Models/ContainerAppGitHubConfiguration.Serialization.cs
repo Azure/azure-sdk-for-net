@@ -17,17 +17,17 @@ namespace Azure.ResourceManager.AppContainers.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(IsEnabled))
             {
-                writer.WritePropertyName("enabled");
+                writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
             if (Optional.IsDefined(Registration))
             {
-                writer.WritePropertyName("registration");
+                writer.WritePropertyName("registration"u8);
                 writer.WriteObjectValue(Registration);
             }
             if (Optional.IsDefined(Login))
             {
-                writer.WritePropertyName("login");
+                writer.WritePropertyName("login"u8);
                 writer.WriteObjectValue(Login);
             }
             writer.WriteEndObject();
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             Optional<LoginScopes> login = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("enabled"))
+                if (property.NameEquals("enabled"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     enabled = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("registration"))
+                if (property.NameEquals("registration"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     registration = ContainerAppClientRegistration.DeserializeContainerAppClientRegistration(property.Value);
                     continue;
                 }
-                if (property.NameEquals("login"))
+                if (property.NameEquals("login"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

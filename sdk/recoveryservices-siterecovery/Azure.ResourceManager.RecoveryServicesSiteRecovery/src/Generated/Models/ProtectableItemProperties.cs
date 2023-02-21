@@ -51,10 +51,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="customDetails">
         /// The Replication provider custom settings.
         /// Serialized Name: ProtectableItemProperties.customDetails
-        /// Please note <see cref="ConfigurationSettings"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="ReplicationProviderSettings"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="HyperVVirtualMachineDetails"/>, <see cref="ReplicationGroupDetails"/>, <see cref="VMwareVirtualMachineDetails"/> and <see cref="VmmVirtualMachineDetails"/>.
         /// </param>
-        internal ProtectableItemProperties(string friendlyName, string protectionStatus, string replicationProtectedItemId, string recoveryServicesProviderId, IReadOnlyList<string> protectionReadinessErrors, IReadOnlyList<string> supportedReplicationProviders, ConfigurationSettings customDetails)
+        internal ProtectableItemProperties(string friendlyName, string protectionStatus, string replicationProtectedItemId, string recoveryServicesProviderId, IReadOnlyList<string> protectionReadinessErrors, IReadOnlyList<string> supportedReplicationProviders, ReplicationProviderSettings customDetails)
         {
             FriendlyName = friendlyName;
             ProtectionStatus = protectionStatus;
@@ -98,9 +98,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <summary>
         /// The Replication provider custom settings.
         /// Serialized Name: ProtectableItemProperties.customDetails
-        /// Please note <see cref="ConfigurationSettings"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="ReplicationProviderSettings"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="HyperVVirtualMachineDetails"/>, <see cref="ReplicationGroupDetails"/>, <see cref="VMwareVirtualMachineDetails"/> and <see cref="VmmVirtualMachineDetails"/>.
         /// </summary>
-        public ConfigurationSettings CustomDetails { get; }
+        public ReplicationProviderSettings CustomDetails { get; }
     }
 }

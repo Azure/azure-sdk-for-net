@@ -32,32 +32,32 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<JobDetails> customDetails = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("activityId"))
+                if (property.NameEquals("activityId"u8))
                 {
                     activityId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("scenarioName"))
+                if (property.NameEquals("scenarioName"u8))
                 {
                     scenarioName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("friendlyName"))
+                if (property.NameEquals("friendlyName"u8))
                 {
                     friendlyName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("state"))
+                if (property.NameEquals("state"u8))
                 {
                     state = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("stateDescription"))
+                if (property.NameEquals("stateDescription"u8))
                 {
                     stateDescription = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("tasks"))
+                if (property.NameEquals("tasks"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     tasks = array;
                     continue;
                 }
-                if (property.NameEquals("errors"))
+                if (property.NameEquals("errors"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     errors = array;
                     continue;
                 }
-                if (property.NameEquals("startTime"))
+                if (property.NameEquals("startTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     startTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("endTime"))
+                if (property.NameEquals("endTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     endTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("allowedActions"))
+                if (property.NameEquals("allowedActions"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -122,22 +122,22 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     allowedActions = array;
                     continue;
                 }
-                if (property.NameEquals("targetObjectId"))
+                if (property.NameEquals("targetObjectId"u8))
                 {
                     targetObjectId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("targetObjectName"))
+                if (property.NameEquals("targetObjectName"u8))
                 {
                     targetObjectName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("targetInstanceType"))
+                if (property.NameEquals("targetInstanceType"u8))
                 {
                     targetInstanceType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("customDetails"))
+                if (property.NameEquals("customDetails"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -15,9 +15,9 @@ namespace Azure.ResourceManager.ProviderHub.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("environment");
+            writer.WritePropertyName("environment"u8);
             writer.WriteStringValue(Environment);
-            writer.WritePropertyName("baselineArmManifestLocation");
+            writer.WritePropertyName("baselineArmManifestLocation"u8);
             writer.WriteStringValue(BaselineArmManifestLocation);
             writer.WriteEndObject();
         }

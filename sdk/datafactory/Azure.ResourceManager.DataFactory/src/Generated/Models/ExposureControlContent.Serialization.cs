@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(FeatureName))
             {
-                writer.WritePropertyName("featureName");
+                writer.WritePropertyName("featureName"u8);
                 writer.WriteStringValue(FeatureName);
             }
             if (Optional.IsDefined(FeatureType))
             {
-                writer.WritePropertyName("featureType");
+                writer.WritePropertyName("featureType"u8);
                 writer.WriteStringValue(FeatureType);
             }
             writer.WriteEndObject();

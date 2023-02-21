@@ -16,16 +16,16 @@ namespace Azure.ResourceManager.MySql
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(QueryId))
             {
-                writer.WritePropertyName("queryId");
+                writer.WritePropertyName("queryId"u8);
                 writer.WriteStringValue(QueryId);
             }
             if (Optional.IsDefined(QueryText))
             {
-                writer.WritePropertyName("queryText");
+                writer.WritePropertyName("queryText"u8);
                 writer.WriteStringValue(QueryText);
             }
             writer.WriteEndObject();
@@ -42,22 +42,22 @@ namespace Azure.ResourceManager.MySql
             Optional<string> queryText = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.MySql
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -76,12 +76,12 @@ namespace Azure.ResourceManager.MySql
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("queryId"))
+                        if (property0.NameEquals("queryId"u8))
                         {
                             queryId = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("queryText"))
+                        if (property0.NameEquals("queryText"u8))
                         {
                             queryText = property0.Value.GetString();
                             continue;

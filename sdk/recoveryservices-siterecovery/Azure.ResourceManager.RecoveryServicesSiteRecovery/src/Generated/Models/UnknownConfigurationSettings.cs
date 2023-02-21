@@ -11,7 +11,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// The UnknownConfigurationSettings.
     /// Serialized Name: UnknownConfigurationSettings
     /// </summary>
-    internal partial class UnknownConfigurationSettings : ConfigurationSettings
+    internal partial class UnknownConfigurationSettings : ReplicationProviderSettings
     {
         /// <summary> Initializes a new instance of UnknownConfigurationSettings. </summary>
         /// <param name="instanceType">

@@ -17,22 +17,22 @@ namespace Azure.ResourceManager.AppContainers.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Server))
             {
-                writer.WritePropertyName("server");
+                writer.WritePropertyName("server"u8);
                 writer.WriteStringValue(Server);
             }
             if (Optional.IsDefined(Username))
             {
-                writer.WritePropertyName("username");
+                writer.WritePropertyName("username"u8);
                 writer.WriteStringValue(Username);
             }
             if (Optional.IsDefined(PasswordSecretRef))
             {
-                writer.WritePropertyName("passwordSecretRef");
+                writer.WritePropertyName("passwordSecretRef"u8);
                 writer.WriteStringValue(PasswordSecretRef);
             }
             if (Optional.IsDefined(Identity))
             {
-                writer.WritePropertyName("identity");
+                writer.WritePropertyName("identity"u8);
                 writer.WriteStringValue(Identity);
             }
             writer.WriteEndObject();
@@ -46,22 +46,22 @@ namespace Azure.ResourceManager.AppContainers.Models
             Optional<string> identity = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("server"))
+                if (property.NameEquals("server"u8))
                 {
                     server = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("username"))
+                if (property.NameEquals("username"u8))
                 {
                     username = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("passwordSecretRef"))
+                if (property.NameEquals("passwordSecretRef"u8))
                 {
                     passwordSecretRef = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("identity"))
+                if (property.NameEquals("identity"u8))
                 {
                     identity = property.Value.GetString();
                     continue;

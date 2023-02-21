@@ -15,7 +15,7 @@ namespace Azure.Storage.Files.Shares.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("permission");
+            writer.WritePropertyName("permission"u8);
             writer.WriteStringValue(Permission);
             writer.WriteEndObject();
         }
@@ -25,7 +25,7 @@ namespace Azure.Storage.Files.Shares.Models
             string permission = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("permission"))
+                if (property.NameEquals("permission"u8))
                 {
                     permission = property.Value.GetString();
                     continue;

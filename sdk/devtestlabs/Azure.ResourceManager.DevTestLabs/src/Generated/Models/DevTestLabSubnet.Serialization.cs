@@ -17,17 +17,17 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(ResourceId))
             {
-                writer.WritePropertyName("resourceId");
+                writer.WritePropertyName("resourceId"u8);
                 writer.WriteStringValue(ResourceId);
             }
             if (Optional.IsDefined(LabSubnetName))
             {
-                writer.WritePropertyName("labSubnetName");
+                writer.WritePropertyName("labSubnetName"u8);
                 writer.WriteStringValue(LabSubnetName);
             }
             if (Optional.IsDefined(AllowPublicIP))
             {
-                writer.WritePropertyName("allowPublicIp");
+                writer.WritePropertyName("allowPublicIp"u8);
                 writer.WriteStringValue(AllowPublicIP.Value.ToString());
             }
             writer.WriteEndObject();
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             Optional<DevTestLabUsagePermissionType> allowPublicIP = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("resourceId"))
+                if (property.NameEquals("resourceId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -50,12 +50,12 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                     resourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("labSubnetName"))
+                if (property.NameEquals("labSubnetName"u8))
                 {
                     labSubnetName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("allowPublicIp"))
+                if (property.NameEquals("allowPublicIp"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

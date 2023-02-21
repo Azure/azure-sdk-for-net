@@ -28,8 +28,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// Serialized Name: AddDisksInputProperties.providerSpecificDetails
         /// Please note <see cref="AddDisksProviderSpecificInput"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="A2AAddDisksInput"/>.
-        /// Please note <see cref="AddDisksProviderSpecificInput"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="A2AAddDisksInput"/>.
         /// </summary>
         public AddDisksProviderSpecificInput AddDisksInputProviderSpecificDetails
         {

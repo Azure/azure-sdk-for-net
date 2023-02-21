@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// VMware provider specific settings.
     /// Serialized Name: VMwareVirtualMachineDetails
     /// </summary>
-    public partial class VMwareVirtualMachineDetails : ConfigurationSettings
+    public partial class VMwareVirtualMachineDetails : ReplicationProviderSettings
     {
         /// <summary> Initializes a new instance of VMwareVirtualMachineDetails. </summary>
         internal VMwareVirtualMachineDetails()

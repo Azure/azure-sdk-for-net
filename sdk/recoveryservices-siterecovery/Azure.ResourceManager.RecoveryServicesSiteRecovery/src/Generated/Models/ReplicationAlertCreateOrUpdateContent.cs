@@ -22,6 +22,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// The properties of a configure alert request.
         /// Serialized Name: ConfigureAlertRequest.properties
         /// </summary>
-        public ConfigureAlertRequestProperties Properties { get; set; }
+        public ConfigureReplicationAlertProperties Properties { get; set; }
     }
 }

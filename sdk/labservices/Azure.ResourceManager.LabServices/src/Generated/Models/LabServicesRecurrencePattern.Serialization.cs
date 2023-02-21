@@ -17,11 +17,11 @@ namespace Azure.ResourceManager.LabServices.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("frequency");
+            writer.WritePropertyName("frequency"u8);
             writer.WriteStringValue(Frequency.ToSerialString());
             if (Optional.IsCollectionDefined(WeekDays))
             {
-                writer.WritePropertyName("weekDays");
+                writer.WritePropertyName("weekDays"u8);
                 writer.WriteStartArray();
                 foreach (var item in WeekDays)
                 {
@@ -31,10 +31,10 @@ namespace Azure.ResourceManager.LabServices.Models
             }
             if (Optional.IsDefined(Interval))
             {
-                writer.WritePropertyName("interval");
+                writer.WritePropertyName("interval"u8);
                 writer.WriteNumberValue(Interval.Value);
             }
-            writer.WritePropertyName("expirationDate");
+            writer.WritePropertyName("expirationDate"u8);
             writer.WriteStringValue(ExpireOn, "O");
             writer.WriteEndObject();
         }
@@ -47,12 +47,12 @@ namespace Azure.ResourceManager.LabServices.Models
             DateTimeOffset expirationDate = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("frequency"))
+                if (property.NameEquals("frequency"u8))
                 {
                     frequency = property.Value.GetString().ToLabServicesRecurrenceFrequency();
                     continue;
                 }
-                if (property.NameEquals("weekDays"))
+                if (property.NameEquals("weekDays"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.LabServices.Models
                     weekDays = array;
                     continue;
                 }
-                if (property.NameEquals("interval"))
+                if (property.NameEquals("interval"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.LabServices.Models
                     interval = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("expirationDate"))
+                if (property.NameEquals("expirationDate"u8))
                 {
                     expirationDate = property.Value.GetDateTimeOffset("O");
                     continue;

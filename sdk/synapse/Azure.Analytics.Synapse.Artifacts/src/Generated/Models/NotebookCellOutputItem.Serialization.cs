@@ -20,29 +20,29 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Name))
             {
-                writer.WritePropertyName("name");
+                writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
             if (Optional.IsDefined(ExecutionCount))
             {
-                writer.WritePropertyName("execution_count");
+                writer.WritePropertyName("execution_count"u8);
                 writer.WriteNumberValue(ExecutionCount.Value);
             }
-            writer.WritePropertyName("output_type");
+            writer.WritePropertyName("output_type"u8);
             writer.WriteStringValue(OutputType.ToString());
             if (Optional.IsDefined(Text))
             {
-                writer.WritePropertyName("text");
+                writer.WritePropertyName("text"u8);
                 writer.WriteObjectValue(Text);
             }
             if (Optional.IsDefined(Data))
             {
-                writer.WritePropertyName("data");
+                writer.WritePropertyName("data"u8);
                 writer.WriteObjectValue(Data);
             }
             if (Optional.IsDefined(Metadata))
             {
-                writer.WritePropertyName("metadata");
+                writer.WritePropertyName("metadata"u8);
                 writer.WriteObjectValue(Metadata);
             }
             writer.WriteEndObject();
@@ -58,12 +58,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Optional<object> metadata = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("execution_count"))
+                if (property.NameEquals("execution_count"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -73,12 +73,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     executionCount = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("output_type"))
+                if (property.NameEquals("output_type"u8))
                 {
                     outputType = new CellOutputType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("text"))
+                if (property.NameEquals("text"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -88,7 +88,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     text = property.Value.GetObject();
                     continue;
                 }
-                if (property.NameEquals("data"))
+                if (property.NameEquals("data"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -98,7 +98,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     data = property.Value.GetObject();
                     continue;
                 }
-                if (property.NameEquals("metadata"))
+                if (property.NameEquals("metadata"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

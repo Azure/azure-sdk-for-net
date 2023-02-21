@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("authorizationType");
+            writer.WritePropertyName("authorizationType"u8);
             writer.WriteStringValue(AuthorizationType);
             writer.WriteEndObject();
         }
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             string authorizationType = "Unknown";
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("authorizationType"))
+                if (property.NameEquals("authorizationType"u8))
                 {
                     authorizationType = property.Value.GetString();
                     continue;

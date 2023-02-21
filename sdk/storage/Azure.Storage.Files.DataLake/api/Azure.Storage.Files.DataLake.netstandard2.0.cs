@@ -561,7 +561,7 @@ namespace Azure.Storage.Files.DataLake.Models
         public DataLakeFileAppendOptions() { }
         public byte[] ContentHash { get { throw null; } set { } }
         public bool? Flush { get { throw null; } set { } }
-        public Azure.Storage.Files.DataLake.Models.LeaseAction? LeaseAction { get { throw null; } set { } }
+        public Azure.Storage.Files.DataLake.Models.DataLakeLeaseAction? LeaseAction { get { throw null; } set { } }
         public System.TimeSpan? LeaseDuration { get { throw null; } set { } }
         public string LeaseId { get { throw null; } set { } }
         public System.IProgress<long> ProgressHandler { get { throw null; } set { } }
@@ -579,7 +579,7 @@ namespace Azure.Storage.Files.DataLake.Models
         public bool? Close { get { throw null; } set { } }
         public Azure.Storage.Files.DataLake.Models.DataLakeRequestConditions Conditions { get { throw null; } set { } }
         public Azure.Storage.Files.DataLake.Models.PathHttpHeaders HttpHeaders { get { throw null; } set { } }
-        public Azure.Storage.Files.DataLake.Models.LeaseAction? LeaseAction { get { throw null; } set { } }
+        public Azure.Storage.Files.DataLake.Models.DataLakeLeaseAction? LeaseAction { get { throw null; } set { } }
         public System.TimeSpan? LeaseDuration { get { throw null; } set { } }
         public string ProposedLeaseId { get { throw null; } set { } }
         public bool? RetainUncommittedData { get { throw null; } set { } }
@@ -650,6 +650,13 @@ namespace Azure.Storage.Files.DataLake.Models
         public string LeaseId { get { throw null; } }
         public int? LeaseTime { get { throw null; } }
     }
+    public enum DataLakeLeaseAction
+    {
+        Acquire = 0,
+        AutoRenew = 1,
+        Release = 2,
+        AcquireRelease = 3,
+    }
     public enum DataLakeLeaseDuration
     {
         Infinite = 0,
@@ -679,7 +686,9 @@ namespace Azure.Storage.Files.DataLake.Models
     public static partial class DataLakeModelFactory
     {
         public static Azure.Storage.Files.DataLake.Models.DataLakeQueryError DataLakeQueryError(string name = null, string description = null, bool isFatal = false, long position = (long)0) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.Storage.Files.DataLake.Models.FileDownloadDetails FileDownloadDetails(System.DateTimeOffset lastModified, System.Collections.Generic.IDictionary<string, string> metadata, string contentRange, Azure.ETag eTag, string contentEncoding, string cacheControl, string contentDisposition, string contentLanguage, System.DateTimeOffset copyCompletionTime, string copyStatusDescription, string copyId, string copyProgress, System.Uri copySource, Azure.Storage.Files.DataLake.Models.CopyStatus copyStatus, Azure.Storage.Files.DataLake.Models.DataLakeLeaseDuration leaseDuration, Azure.Storage.Files.DataLake.Models.DataLakeLeaseState leaseState, Azure.Storage.Files.DataLake.Models.DataLakeLeaseStatus leaseStatus, string acceptRanges, bool isServerEncrypted, string encryptionKeySha256, byte[] contentHash) { throw null; }
+        public static Azure.Storage.Files.DataLake.Models.FileDownloadDetails FileDownloadDetails(System.DateTimeOffset lastModified, System.Collections.Generic.IDictionary<string, string> metadata, string contentRange, Azure.ETag eTag, string contentEncoding, string cacheControl, string contentDisposition, string contentLanguage, System.DateTimeOffset copyCompletionTime, string copyStatusDescription, string copyId, string copyProgress, System.Uri copySource, Azure.Storage.Files.DataLake.Models.CopyStatus copyStatus, Azure.Storage.Files.DataLake.Models.DataLakeLeaseDuration leaseDuration, Azure.Storage.Files.DataLake.Models.DataLakeLeaseState leaseState, Azure.Storage.Files.DataLake.Models.DataLakeLeaseStatus leaseStatus, string acceptRanges, bool isServerEncrypted, string encryptionKeySha256, byte[] contentHash, System.DateTimeOffset createdOn) { throw null; }
         public static Azure.Storage.Files.DataLake.Models.FileDownloadInfo FileDownloadInfo(long contentLength, System.IO.Stream content, byte[] contentHash, Azure.Storage.Files.DataLake.Models.FileDownloadDetails properties) { throw null; }
         public static Azure.Storage.Files.DataLake.Models.FileSystemInfo FileSystemInfo(Azure.ETag etag, System.DateTimeOffset lastModified) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
@@ -841,6 +850,7 @@ namespace Azure.Storage.Files.DataLake.Models
         public System.Uri CopySource { get { throw null; } }
         public Azure.Storage.Files.DataLake.Models.CopyStatus CopyStatus { get { throw null; } }
         public string CopyStatusDescription { get { throw null; } }
+        public System.DateTimeOffset CreatedOn { get { throw null; } }
         public string EncryptionKeySha256 { get { throw null; } }
         public Azure.ETag ETag { get { throw null; } }
         public bool IsServerEncrypted { get { throw null; } }
@@ -909,13 +919,6 @@ namespace Azure.Storage.Files.DataLake.Models
     {
         None = 0,
         Metadata = 1,
-    }
-    public enum LeaseAction
-    {
-        Acquire = 0,
-        AutoRenew = 1,
-        Release = 2,
-        AcquireRelease = 3,
     }
     public partial class PathAccessControl
     {

@@ -20,12 +20,12 @@ namespace Azure.ResourceManager.DataMigration.Models
             Optional<ExecutionStatistics> targetResult = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("queryText"))
+                if (property.NameEquals("queryText"u8))
                 {
                     queryText = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("statementsInBatch"))
+                if (property.NameEquals("statementsInBatch"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     statementsInBatch = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("sourceResult"))
+                if (property.NameEquals("sourceResult"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     sourceResult = ExecutionStatistics.DeserializeExecutionStatistics(property.Value);
                     continue;
                 }
-                if (property.NameEquals("targetResult"))
+                if (property.NameEquals("targetResult"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

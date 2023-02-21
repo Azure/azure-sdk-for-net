@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.HealthcareApis.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(OfferThroughput))
             {
-                writer.WritePropertyName("offerThroughput");
+                writer.WritePropertyName("offerThroughput"u8);
                 writer.WriteNumberValue(OfferThroughput.Value);
             }
             if (Optional.IsDefined(KeyVaultKeyUri))
             {
-                writer.WritePropertyName("keyVaultKeyUri");
+                writer.WritePropertyName("keyVaultKeyUri"u8);
                 writer.WriteStringValue(KeyVaultKeyUri.AbsoluteUri);
             }
             writer.WriteEndObject();
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
             Optional<Uri> keyVaultKeyUri = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("offerThroughput"))
+                if (property.NameEquals("offerThroughput"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
                     offerThroughput = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("keyVaultKeyUri"))
+                if (property.NameEquals("keyVaultKeyUri"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

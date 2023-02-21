@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(SourceName))
             {
-                writer.WritePropertyName("sourceName");
+                writer.WritePropertyName("sourceName"u8);
                 writer.WriteStringValue(SourceName);
             }
             if (Optional.IsDefined(RowLimit))
             {
-                writer.WritePropertyName("rowLimit");
+                writer.WritePropertyName("rowLimit"u8);
                 writer.WriteNumberValue(RowLimit.Value);
             }
             foreach (var item in AdditionalProperties)

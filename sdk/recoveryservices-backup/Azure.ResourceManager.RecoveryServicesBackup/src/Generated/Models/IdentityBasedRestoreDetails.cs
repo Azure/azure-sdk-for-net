@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using Azure.Core;
+
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary> IaaS VM workload specific restore details for restores using managed identity. </summary>
@@ -18,7 +20,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <summary> Initializes a new instance of IdentityBasedRestoreDetails. </summary>
         /// <param name="objectType"> Gets the class type. </param>
         /// <param name="targetStorageAccountId"> Fully qualified ARM ID of the target storage account. </param>
-        internal IdentityBasedRestoreDetails(string objectType, string targetStorageAccountId)
+        internal IdentityBasedRestoreDetails(string objectType, ResourceIdentifier targetStorageAccountId)
         {
             ObjectType = objectType;
             TargetStorageAccountId = targetStorageAccountId;
@@ -27,6 +29,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <summary> Gets the class type. </summary>
         public string ObjectType { get; set; }
         /// <summary> Fully qualified ARM ID of the target storage account. </summary>
-        public string TargetStorageAccountId { get; set; }
+        public ResourceIdentifier TargetStorageAccountId { get; set; }
     }
 }

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServices.Models
 {
@@ -19,15 +20,15 @@ namespace Azure.ResourceManager.RecoveryServices.Models
 
         /// <summary> Initializes a new instance of VaultPropertiesMoveDetails. </summary>
         /// <param name="operationId"> OperationId of the Resource Move Operation. </param>
-        /// <param name="startTimeUtc"> Start Time of the Resource Move Operation. </param>
-        /// <param name="completionTimeUtc"> End Time of the Resource Move Operation. </param>
+        /// <param name="startOn"> Start Time of the Resource Move Operation. </param>
+        /// <param name="completedOn"> End Time of the Resource Move Operation. </param>
         /// <param name="sourceResourceId"> Source Resource of the Resource Move Operation. </param>
         /// <param name="targetResourceId"> Target Resource of the Resource Move Operation. </param>
-        internal VaultPropertiesMoveDetails(string operationId, DateTimeOffset? startTimeUtc, DateTimeOffset? completionTimeUtc, string sourceResourceId, string targetResourceId)
+        internal VaultPropertiesMoveDetails(string operationId, DateTimeOffset? startOn, DateTimeOffset? completedOn, ResourceIdentifier sourceResourceId, ResourceIdentifier targetResourceId)
         {
             OperationId = operationId;
-            StartTimeUtc = startTimeUtc;
-            CompletionTimeUtc = completionTimeUtc;
+            StartOn = startOn;
+            CompletedOn = completedOn;
             SourceResourceId = sourceResourceId;
             TargetResourceId = targetResourceId;
         }
@@ -35,12 +36,12 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         /// <summary> OperationId of the Resource Move Operation. </summary>
         public string OperationId { get; }
         /// <summary> Start Time of the Resource Move Operation. </summary>
-        public DateTimeOffset? StartTimeUtc { get; }
+        public DateTimeOffset? StartOn { get; }
         /// <summary> End Time of the Resource Move Operation. </summary>
-        public DateTimeOffset? CompletionTimeUtc { get; }
+        public DateTimeOffset? CompletedOn { get; }
         /// <summary> Source Resource of the Resource Move Operation. </summary>
-        public string SourceResourceId { get; }
+        public ResourceIdentifier SourceResourceId { get; }
         /// <summary> Target Resource of the Resource Move Operation. </summary>
-        public string TargetResourceId { get; }
+        public ResourceIdentifier TargetResourceId { get; }
     }
 }

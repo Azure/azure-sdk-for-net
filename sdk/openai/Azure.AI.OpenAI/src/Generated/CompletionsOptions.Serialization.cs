@@ -19,7 +19,7 @@ namespace Azure.AI.OpenAI
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Prompt))
             {
-                writer.WritePropertyName("prompt");
+                writer.WritePropertyName("prompt"u8);
                 writer.WriteStartArray();
                 foreach (var item in Prompt)
                 {
@@ -31,7 +31,7 @@ namespace Azure.AI.OpenAI
             {
                 if (MaxTokens != null)
                 {
-                    writer.WritePropertyName("max_tokens");
+                    writer.WritePropertyName("max_tokens"u8);
                     writer.WriteNumberValue(MaxTokens.Value);
                 }
                 else
@@ -43,7 +43,7 @@ namespace Azure.AI.OpenAI
             {
                 if (Temperature != null)
                 {
-                    writer.WritePropertyName("temperature");
+                    writer.WritePropertyName("temperature"u8);
                     writer.WriteNumberValue(Temperature.Value);
                 }
                 else
@@ -55,7 +55,7 @@ namespace Azure.AI.OpenAI
             {
                 if (NucleusSamplingFactor != null)
                 {
-                    writer.WritePropertyName("top_p");
+                    writer.WritePropertyName("top_p"u8);
                     writer.WriteNumberValue(NucleusSamplingFactor.Value);
                 }
                 else
@@ -65,7 +65,7 @@ namespace Azure.AI.OpenAI
             }
             if (Optional.IsCollectionDefined(LogitBias))
             {
-                writer.WritePropertyName("logit_bias");
+                writer.WritePropertyName("logit_bias"u8);
                 writer.WriteStartObject();
                 foreach (var item in LogitBias)
                 {
@@ -76,14 +76,14 @@ namespace Azure.AI.OpenAI
             }
             if (Optional.IsDefined(User))
             {
-                writer.WritePropertyName("user");
+                writer.WritePropertyName("user"u8);
                 writer.WriteStringValue(User);
             }
             if (Optional.IsDefined(SnippetCount))
             {
                 if (SnippetCount != null)
                 {
-                    writer.WritePropertyName("n");
+                    writer.WritePropertyName("n"u8);
                     writer.WriteNumberValue(SnippetCount.Value);
                 }
                 else
@@ -95,7 +95,7 @@ namespace Azure.AI.OpenAI
             {
                 if (LogProbability != null)
                 {
-                    writer.WritePropertyName("logprobs");
+                    writer.WritePropertyName("logprobs"u8);
                     writer.WriteNumberValue(LogProbability.Value);
                 }
                 else
@@ -105,14 +105,14 @@ namespace Azure.AI.OpenAI
             }
             if (Optional.IsDefined(Model))
             {
-                writer.WritePropertyName("model");
+                writer.WritePropertyName("model"u8);
                 writer.WriteStringValue(Model);
             }
             if (Optional.IsDefined(Echo))
             {
                 if (Echo != null)
                 {
-                    writer.WritePropertyName("echo");
+                    writer.WritePropertyName("echo"u8);
                     writer.WriteBooleanValue(Echo.Value);
                 }
                 else
@@ -122,7 +122,7 @@ namespace Azure.AI.OpenAI
             }
             if (Optional.IsCollectionDefined(Stop))
             {
-                writer.WritePropertyName("stop");
+                writer.WritePropertyName("stop"u8);
                 writer.WriteStartArray();
                 foreach (var item in Stop)
                 {
@@ -132,14 +132,14 @@ namespace Azure.AI.OpenAI
             }
             if (Optional.IsDefined(CompletionConfig))
             {
-                writer.WritePropertyName("completion_config");
+                writer.WritePropertyName("completion_config"u8);
                 writer.WriteStringValue(CompletionConfig);
             }
             if (Optional.IsDefined(CacheLevel))
             {
                 if (CacheLevel != null)
                 {
-                    writer.WritePropertyName("cache_level");
+                    writer.WritePropertyName("cache_level"u8);
                     writer.WriteNumberValue(CacheLevel.Value);
                 }
                 else
@@ -151,7 +151,7 @@ namespace Azure.AI.OpenAI
             {
                 if (PresencePenalty != null)
                 {
-                    writer.WritePropertyName("presence_penalty");
+                    writer.WritePropertyName("presence_penalty"u8);
                     writer.WriteNumberValue(PresencePenalty.Value);
                 }
                 else
@@ -163,7 +163,7 @@ namespace Azure.AI.OpenAI
             {
                 if (FrequencyPenalty != null)
                 {
-                    writer.WritePropertyName("frequency_penalty");
+                    writer.WritePropertyName("frequency_penalty"u8);
                     writer.WriteNumberValue(FrequencyPenalty.Value);
                 }
                 else
@@ -175,7 +175,7 @@ namespace Azure.AI.OpenAI
             {
                 if (GenerationSampleCount != null)
                 {
-                    writer.WritePropertyName("best_of");
+                    writer.WritePropertyName("best_of"u8);
                     writer.WriteNumberValue(GenerationSampleCount.Value);
                 }
                 else
@@ -206,7 +206,7 @@ namespace Azure.AI.OpenAI
             Optional<int?> bestOf = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("prompt"))
+                if (property.NameEquals("prompt"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -221,7 +221,7 @@ namespace Azure.AI.OpenAI
                     prompt = array;
                     continue;
                 }
-                if (property.NameEquals("max_tokens"))
+                if (property.NameEquals("max_tokens"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -231,7 +231,7 @@ namespace Azure.AI.OpenAI
                     maxTokens = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("temperature"))
+                if (property.NameEquals("temperature"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -241,7 +241,7 @@ namespace Azure.AI.OpenAI
                     temperature = property.Value.GetSingle();
                     continue;
                 }
-                if (property.NameEquals("top_p"))
+                if (property.NameEquals("top_p"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -251,7 +251,7 @@ namespace Azure.AI.OpenAI
                     topP = property.Value.GetSingle();
                     continue;
                 }
-                if (property.NameEquals("logit_bias"))
+                if (property.NameEquals("logit_bias"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -266,12 +266,12 @@ namespace Azure.AI.OpenAI
                     logitBias = dictionary;
                     continue;
                 }
-                if (property.NameEquals("user"))
+                if (property.NameEquals("user"u8))
                 {
                     user = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("n"))
+                if (property.NameEquals("n"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -281,7 +281,7 @@ namespace Azure.AI.OpenAI
                     n = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("logprobs"))
+                if (property.NameEquals("logprobs"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -291,12 +291,12 @@ namespace Azure.AI.OpenAI
                     logprobs = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("model"))
+                if (property.NameEquals("model"u8))
                 {
                     model = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("echo"))
+                if (property.NameEquals("echo"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -306,7 +306,7 @@ namespace Azure.AI.OpenAI
                     echo = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("stop"))
+                if (property.NameEquals("stop"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -321,12 +321,12 @@ namespace Azure.AI.OpenAI
                     stop = array;
                     continue;
                 }
-                if (property.NameEquals("completion_config"))
+                if (property.NameEquals("completion_config"u8))
                 {
                     completionConfig = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("cache_level"))
+                if (property.NameEquals("cache_level"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -336,7 +336,7 @@ namespace Azure.AI.OpenAI
                     cacheLevel = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("presence_penalty"))
+                if (property.NameEquals("presence_penalty"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -346,7 +346,7 @@ namespace Azure.AI.OpenAI
                     presencePenalty = property.Value.GetSingle();
                     continue;
                 }
-                if (property.NameEquals("frequency_penalty"))
+                if (property.NameEquals("frequency_penalty"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -356,7 +356,7 @@ namespace Azure.AI.OpenAI
                     frequencyPenalty = property.Value.GetSingle();
                     continue;
                 }
-                if (property.NameEquals("best_of"))
+                if (property.NameEquals("best_of"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

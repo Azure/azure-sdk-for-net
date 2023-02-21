@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<string> postParameterValue = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("url"))
+                if (property.NameEquals("url"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -30,12 +30,12 @@ namespace Azure.ResourceManager.AppService.Models
                     url = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("postParameterKey"))
+                if (property.NameEquals("postParameterKey"u8))
                 {
                     postParameterKey = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("postParameterValue"))
+                if (property.NameEquals("postParameterValue"u8))
                 {
                     postParameterValue = property.Value.GetString();
                     continue;

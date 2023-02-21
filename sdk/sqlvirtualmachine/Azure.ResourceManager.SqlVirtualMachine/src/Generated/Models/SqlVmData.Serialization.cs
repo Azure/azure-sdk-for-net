@@ -21,12 +21,12 @@ namespace Azure.ResourceManager.SqlVirtualMachine
             writer.WriteStartObject();
             if (Optional.IsDefined(Identity))
             {
-                writer.WritePropertyName("identity");
+                writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
-                writer.WritePropertyName("tags");
+                writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
                 foreach (var item in Tags)
                 {
@@ -35,78 +35,78 @@ namespace Azure.ResourceManager.SqlVirtualMachine
                 }
                 writer.WriteEndObject();
             }
-            writer.WritePropertyName("location");
+            writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(VirtualMachineResourceId))
             {
-                writer.WritePropertyName("virtualMachineResourceId");
+                writer.WritePropertyName("virtualMachineResourceId"u8);
                 writer.WriteStringValue(VirtualMachineResourceId);
             }
             if (Optional.IsDefined(SqlImageOffer))
             {
-                writer.WritePropertyName("sqlImageOffer");
+                writer.WritePropertyName("sqlImageOffer"u8);
                 writer.WriteStringValue(SqlImageOffer);
             }
             if (Optional.IsDefined(SqlServerLicenseType))
             {
-                writer.WritePropertyName("sqlServerLicenseType");
+                writer.WritePropertyName("sqlServerLicenseType"u8);
                 writer.WriteStringValue(SqlServerLicenseType.Value.ToString());
             }
             if (Optional.IsDefined(SqlManagement))
             {
-                writer.WritePropertyName("sqlManagement");
+                writer.WritePropertyName("sqlManagement"u8);
                 writer.WriteStringValue(SqlManagement.Value.ToString());
             }
             if (Optional.IsDefined(SqlImageSku))
             {
-                writer.WritePropertyName("sqlImageSku");
+                writer.WritePropertyName("sqlImageSku"u8);
                 writer.WriteStringValue(SqlImageSku.Value.ToString());
             }
             if (Optional.IsDefined(SqlVmGroupResourceId))
             {
-                writer.WritePropertyName("sqlVirtualMachineGroupResourceId");
+                writer.WritePropertyName("sqlVirtualMachineGroupResourceId"u8);
                 writer.WriteStringValue(SqlVmGroupResourceId);
             }
             if (Optional.IsDefined(WindowsServerFailoverClusterDomainCredentials))
             {
-                writer.WritePropertyName("wsfcDomainCredentials");
+                writer.WritePropertyName("wsfcDomainCredentials"u8);
                 writer.WriteObjectValue(WindowsServerFailoverClusterDomainCredentials);
             }
             if (Optional.IsDefined(WindowsServerFailoverClusterStaticIP))
             {
-                writer.WritePropertyName("wsfcStaticIp");
+                writer.WritePropertyName("wsfcStaticIp"u8);
                 writer.WriteStringValue(WindowsServerFailoverClusterStaticIP.ToString());
             }
             if (Optional.IsDefined(AutoPatchingSettings))
             {
-                writer.WritePropertyName("autoPatchingSettings");
+                writer.WritePropertyName("autoPatchingSettings"u8);
                 writer.WriteObjectValue(AutoPatchingSettings);
             }
             if (Optional.IsDefined(AutoBackupSettings))
             {
-                writer.WritePropertyName("autoBackupSettings");
+                writer.WritePropertyName("autoBackupSettings"u8);
                 writer.WriteObjectValue(AutoBackupSettings);
             }
             if (Optional.IsDefined(KeyVaultCredentialSettings))
             {
-                writer.WritePropertyName("keyVaultCredentialSettings");
+                writer.WritePropertyName("keyVaultCredentialSettings"u8);
                 writer.WriteObjectValue(KeyVaultCredentialSettings);
             }
             if (Optional.IsDefined(ServerConfigurationsManagementSettings))
             {
-                writer.WritePropertyName("serverConfigurationsManagementSettings");
+                writer.WritePropertyName("serverConfigurationsManagementSettings"u8);
                 writer.WriteObjectValue(ServerConfigurationsManagementSettings);
             }
             if (Optional.IsDefined(StorageConfigurationSettings))
             {
-                writer.WritePropertyName("storageConfigurationSettings");
+                writer.WritePropertyName("storageConfigurationSettings"u8);
                 writer.WriteObjectValue(StorageConfigurationSettings);
             }
             if (Optional.IsDefined(AssessmentSettings))
             {
-                writer.WritePropertyName("assessmentSettings");
+                writer.WritePropertyName("assessmentSettings"u8);
                 writer.WriteObjectValue(AssessmentSettings);
             }
             writer.WriteEndObject();
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
             Optional<SqlVmAssessmentSettings> assessmentSettings = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("identity"))
+                if (property.NameEquals("identity"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
                     identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("tags"))
+                if (property.NameEquals("tags"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -164,27 +164,27 @@ namespace Azure.ResourceManager.SqlVirtualMachine
                     tags = dictionary;
                     continue;
                 }
-                if (property.NameEquals("location"))
+                if (property.NameEquals("location"u8))
                 {
                     location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("virtualMachineResourceId"))
+                        if (property0.NameEquals("virtualMachineResourceId"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -213,17 +213,17 @@ namespace Azure.ResourceManager.SqlVirtualMachine
                             virtualMachineResourceId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("provisioningState"))
+                        if (property0.NameEquals("provisioningState"u8))
                         {
                             provisioningState = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("sqlImageOffer"))
+                        if (property0.NameEquals("sqlImageOffer"u8))
                         {
                             sqlImageOffer = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("sqlServerLicenseType"))
+                        if (property0.NameEquals("sqlServerLicenseType"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
                             sqlServerLicenseType = new SqlServerLicenseType(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("sqlManagement"))
+                        if (property0.NameEquals("sqlManagement"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -243,7 +243,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
                             sqlManagement = new SqlManagementMode(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("sqlImageSku"))
+                        if (property0.NameEquals("sqlImageSku"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
                             sqlImageSku = new SqlImageSku(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("sqlVirtualMachineGroupResourceId"))
+                        if (property0.NameEquals("sqlVirtualMachineGroupResourceId"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -263,7 +263,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
                             sqlVmGroupResourceId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("wsfcDomainCredentials"))
+                        if (property0.NameEquals("wsfcDomainCredentials"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -273,7 +273,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
                             windowsServerFailoverClusterDomainCredentials = WindowsServerFailoverClusterDomainCredentials.DeserializeWindowsServerFailoverClusterDomainCredentials(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("wsfcStaticIp"))
+                        if (property0.NameEquals("wsfcStaticIp"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -283,7 +283,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
                             windowsServerFailoverClusterStaticIP = IPAddress.Parse(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("autoPatchingSettings"))
+                        if (property0.NameEquals("autoPatchingSettings"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
                             autoPatchingSettings = SqlVmAutoPatchingSettings.DeserializeSqlVmAutoPatchingSettings(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("autoBackupSettings"))
+                        if (property0.NameEquals("autoBackupSettings"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -303,7 +303,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
                             autoBackupSettings = SqlVmAutoBackupSettings.DeserializeSqlVmAutoBackupSettings(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("keyVaultCredentialSettings"))
+                        if (property0.NameEquals("keyVaultCredentialSettings"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -313,7 +313,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
                             keyVaultCredentialSettings = SqlVmKeyVaultCredentialSettings.DeserializeSqlVmKeyVaultCredentialSettings(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("serverConfigurationsManagementSettings"))
+                        if (property0.NameEquals("serverConfigurationsManagementSettings"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -323,7 +323,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
                             serverConfigurationsManagementSettings = SqlServerConfigurationsManagementSettings.DeserializeSqlServerConfigurationsManagementSettings(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("storageConfigurationSettings"))
+                        if (property0.NameEquals("storageConfigurationSettings"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -333,7 +333,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
                             storageConfigurationSettings = SqlVmStorageConfigurationSettings.DeserializeSqlVmStorageConfigurationSettings(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("assessmentSettings"))
+                        if (property0.NameEquals("assessmentSettings"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             OperationalInsightsWorkspacePurgeState status = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("status"))
+                if (property.NameEquals("status"u8))
                 {
                     status = new OperationalInsightsWorkspacePurgeState(property.Value.GetString());
                     continue;

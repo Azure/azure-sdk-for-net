@@ -1,9 +1,26 @@
 # Release History
 
-## 1.1.0 (2022-11-01)
+## 1.2.0-beta.1 (Unreleased)
 
 ### Features Added
-- Added two additional fields to Policy Attestations representing `AssessmentDate` and `Metadata`
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 1.1.0 (2023-02-16)
+
+### Features Added
+
+- Added two additional fields to Policy Attestations representing `AssessOn` and `Metadata`.
+
+### Other Changes
+
+- Upgraded API version of Policy Attestations to 2022-09-01.
+- Upgraded dependent `Azure.Core` to `1.28.0`.
+- Upgraded dependent `Azure.ResourceManager` to `1.4.0`.
 
 ## 1.0.0 (2022-09-29)
 

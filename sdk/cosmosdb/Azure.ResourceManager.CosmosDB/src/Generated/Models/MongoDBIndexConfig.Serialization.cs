@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(ExpireAfterSeconds))
             {
-                writer.WritePropertyName("expireAfterSeconds");
+                writer.WritePropertyName("expireAfterSeconds"u8);
                 writer.WriteNumberValue(ExpireAfterSeconds.Value);
             }
             if (Optional.IsDefined(IsUnique))
             {
-                writer.WritePropertyName("unique");
+                writer.WritePropertyName("unique"u8);
                 writer.WriteBooleanValue(IsUnique.Value);
             }
             writer.WriteEndObject();
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             Optional<bool> unique = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("expireAfterSeconds"))
+                if (property.NameEquals("expireAfterSeconds"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     expireAfterSeconds = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("unique"))
+                if (property.NameEquals("unique"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -15,9 +15,9 @@ namespace Azure.Communication.MediaComposition.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("x");
+            writer.WritePropertyName("x"u8);
             writer.WriteNumberValue(X);
-            writer.WritePropertyName("y");
+            writer.WritePropertyName("y"u8);
             writer.WriteNumberValue(Y);
             writer.WriteEndObject();
         }
@@ -28,12 +28,12 @@ namespace Azure.Communication.MediaComposition.Models
             int y = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("x"))
+                if (property.NameEquals("x"u8))
                 {
                     x = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("y"))
+                if (property.NameEquals("y"u8))
                 {
                     y = property.Value.GetInt32();
                     continue;

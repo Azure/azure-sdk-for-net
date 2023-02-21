@@ -25,20 +25,20 @@ namespace Azure.Identity.Tests.Mock
             => new EnvironmentCredential(Pipeline, Options);
 
         public override TokenCredential CreateManagedIdentityCredential()
-            => new ManagedIdentityCredential(new ManagedIdentityClient(Pipeline, Options.ManagedIdentityClientId));
+            => new ManagedIdentityCredential(Options.ManagedIdentityClientId, Pipeline, Options);
 
         public override TokenCredential CreateSharedTokenCacheCredential()
             => new SharedTokenCacheCredential(Options.SharedTokenCacheTenantId, Options.SharedTokenCacheUsername, Options, Pipeline);
 
         public override TokenCredential CreateInteractiveBrowserCredential()
-            => new InteractiveBrowserCredential(Options.InteractiveBrowserTenantId, Options.InteractiveBrowserCredentialClientId ?? Constants.DeveloperSignOnClientId, new InteractiveBrowserCredentialOptions() { AdditionallyAllowedTenantsCore = Options.AdditionallyAllowedTenantsCore, AuthorityHost = Options.AuthorityHost }, Pipeline);
+            => new InteractiveBrowserCredential(Options.InteractiveBrowserTenantId, Options.InteractiveBrowserCredentialClientId ?? Constants.DeveloperSignOnClientId, new InteractiveBrowserCredentialOptions() { AdditionallyAllowedTenants = Options.AdditionallyAllowedTenants, AuthorityHost = Options.AuthorityHost }, Pipeline);
 
         public override TokenCredential CreateAzureCliCredential()
         {
             var options = new AzureCliCredentialOptions
             {
                 TenantId = Options.TenantId,
-                AdditionallyAllowedTenantsCore = Options.AdditionallyAllowedTenants.ToList(),
+                AdditionallyAllowedTenants = Options.AdditionallyAllowedTenants,
 				CliProcessTimeout = Options.DeveloperCredentialTimeout
             };
 
@@ -50,7 +50,7 @@ namespace Azure.Identity.Tests.Mock
             var options = new AzureDeveloperCliCredentialOptions
             {
                 TenantId = Options.TenantId,
-                AdditionallyAllowedTenantsCore = Options.AdditionallyAllowedTenants.ToList(),
+                AdditionallyAllowedTenants = Options.AdditionallyAllowedTenants,
 				AzdCliProcessTimeout = Options.DeveloperCredentialTimeout
             };
 
@@ -62,8 +62,8 @@ namespace Azure.Identity.Tests.Mock
             var options = new VisualStudioCredentialOptions
             {
                 TenantId = Options.VisualStudioTenantId,
-                AdditionallyAllowedTenantsCore = Options.AdditionallyAllowedTenants.ToList(),
-				VisualStudioProcessTimeout = Options.DeveloperCredentialTimeout
+                AdditionallyAllowedTenants = Options.AdditionallyAllowedTenants,
+                VisualStudioProcessTimeout = Options.DeveloperCredentialTimeout
             };
 
             return new VisualStudioCredential(Options.VisualStudioTenantId, Pipeline, _fileSystem, _processService, options);
@@ -74,7 +74,7 @@ namespace Azure.Identity.Tests.Mock
             var options = new VisualStudioCodeCredentialOptions
             {
                 TenantId = Options.VisualStudioCodeTenantId,
-                AdditionallyAllowedTenantsCore = Options.AdditionallyAllowedTenants.ToList()
+                AdditionallyAllowedTenants = Options.AdditionallyAllowedTenants,
             };
 
             return new VisualStudioCodeCredential(options, Pipeline, default, _fileSystem, _vscAdapter);
@@ -85,8 +85,8 @@ namespace Azure.Identity.Tests.Mock
             var options = new AzurePowerShellCredentialOptions
             {
                 TenantId = Options.VisualStudioCodeTenantId,
-                AdditionallyAllowedTenantsCore = Options.AdditionallyAllowedTenants.ToList(),
-				PowerShellProcessTimeout = Options.DeveloperCredentialTimeout
+                AdditionallyAllowedTenants = Options.AdditionallyAllowedTenants,
+                PowerShellProcessTimeout = Options.DeveloperCredentialTimeout
             };
 
             return new AzurePowerShellCredential(options, Pipeline, _processService);

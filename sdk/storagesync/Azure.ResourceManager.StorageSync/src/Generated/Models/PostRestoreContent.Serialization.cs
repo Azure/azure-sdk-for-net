@@ -17,42 +17,42 @@ namespace Azure.ResourceManager.StorageSync.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Partition))
             {
-                writer.WritePropertyName("partition");
+                writer.WritePropertyName("partition"u8);
                 writer.WriteStringValue(Partition);
             }
             if (Optional.IsDefined(ReplicaGroup))
             {
-                writer.WritePropertyName("replicaGroup");
+                writer.WritePropertyName("replicaGroup"u8);
                 writer.WriteStringValue(ReplicaGroup);
             }
             if (Optional.IsDefined(RequestId))
             {
-                writer.WritePropertyName("requestId");
+                writer.WritePropertyName("requestId"u8);
                 writer.WriteStringValue(RequestId);
             }
             if (Optional.IsDefined(AzureFileShareUri))
             {
-                writer.WritePropertyName("azureFileShareUri");
+                writer.WritePropertyName("azureFileShareUri"u8);
                 writer.WriteStringValue(AzureFileShareUri.AbsoluteUri);
             }
             if (Optional.IsDefined(Status))
             {
-                writer.WritePropertyName("status");
+                writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status);
             }
             if (Optional.IsDefined(SourceAzureFileShareUri))
             {
-                writer.WritePropertyName("sourceAzureFileShareUri");
+                writer.WritePropertyName("sourceAzureFileShareUri"u8);
                 writer.WriteStringValue(SourceAzureFileShareUri.AbsoluteUri);
             }
             if (Optional.IsDefined(FailedFileList))
             {
-                writer.WritePropertyName("failedFileList");
+                writer.WritePropertyName("failedFileList"u8);
                 writer.WriteStringValue(FailedFileList);
             }
             if (Optional.IsCollectionDefined(RestoreFileSpec))
             {
-                writer.WritePropertyName("restoreFileSpec");
+                writer.WritePropertyName("restoreFileSpec"u8);
                 writer.WriteStartArray();
                 foreach (var item in RestoreFileSpec)
                 {

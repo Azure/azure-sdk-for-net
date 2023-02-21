@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             Optional<IReadOnlyList<string>> sites = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("location"))
+                if (property.NameEquals("location"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("zones"))
+                if (property.NameEquals("zones"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     zones = array;
                     continue;
                 }
-                if (property.NameEquals("sites"))
+                if (property.NameEquals("sites"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

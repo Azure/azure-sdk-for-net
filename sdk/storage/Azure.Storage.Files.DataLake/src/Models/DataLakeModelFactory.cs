@@ -15,8 +15,61 @@ namespace Azure.Storage.Files.DataLake.Models
     {
         #region FileDownloadDetails
         /// <summary>
-        /// Creates a new <see cref="FileDownloadDetails"/> instance for mocking.
+        /// Creates a new <see cref="Models.FileDownloadDetails"/> instance for mocking.
         /// </summary>
+        public static FileDownloadDetails FileDownloadDetails(
+            DateTimeOffset lastModified,
+            IDictionary<string, string> metadata,
+            string contentRange,
+            ETag eTag,
+            string contentEncoding,
+            string cacheControl,
+            string contentDisposition,
+            string contentLanguage,
+            DateTimeOffset copyCompletionTime,
+            string copyStatusDescription,
+            string copyId,
+            string copyProgress,
+            Uri copySource,
+            CopyStatus copyStatus,
+            DataLakeLeaseDuration leaseDuration,
+            DataLakeLeaseState leaseState,
+            DataLakeLeaseStatus leaseStatus,
+            string acceptRanges,
+            bool isServerEncrypted,
+            string encryptionKeySha256,
+            byte[] contentHash,
+            DateTimeOffset createdOn)
+            => new FileDownloadDetails()
+            {
+                LastModified = lastModified,
+                Metadata = metadata,
+                ContentRange = contentRange,
+                ETag = eTag,
+                ContentEncoding = contentEncoding,
+                CacheControl = cacheControl,
+                ContentDisposition = contentDisposition,
+                ContentLanguage = contentLanguage,
+                CopyCompletedOn = copyCompletionTime,
+                CopyStatusDescription = copyStatusDescription,
+                CopyId = copyId,
+                CopyProgress = copyProgress,
+                CopySource = copySource,
+                CopyStatus = copyStatus,
+                LeaseDuration = leaseDuration,
+                LeaseState = leaseState,
+                LeaseStatus = leaseStatus,
+                AcceptRanges = acceptRanges,
+                IsServerEncrypted = isServerEncrypted,
+                EncryptionKeySha256 = encryptionKeySha256,
+                ContentHash = contentHash,
+                CreatedOn = createdOn,
+            };
+
+        /// <summary>
+        /// Creates a new <see cref="Models.FileDownloadDetails"/> instance for mocking.
+        /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static FileDownloadDetails FileDownloadDetails(
             DateTimeOffset lastModified,
             IDictionary<string, string> metadata,

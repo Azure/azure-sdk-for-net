@@ -16,16 +16,16 @@ namespace Azure.ResourceManager.NotificationHubs.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(GcmEndpoint))
             {
-                writer.WritePropertyName("gcmEndpoint");
+                writer.WritePropertyName("gcmEndpoint"u8);
                 writer.WriteStringValue(GcmEndpoint.AbsoluteUri);
             }
             if (Optional.IsDefined(GcmApiKey))
             {
-                writer.WritePropertyName("googleApiKey");
+                writer.WritePropertyName("googleApiKey"u8);
                 writer.WriteStringValue(GcmApiKey);
             }
             writer.WriteEndObject();
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
             Optional<string> googleApiKey = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("gcmEndpoint"))
+                        if (property0.NameEquals("gcmEndpoint"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
                             gcmEndpoint = new Uri(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("googleApiKey"))
+                        if (property0.NameEquals("googleApiKey"u8))
                         {
                             googleApiKey = property0.Value.GetString();
                             continue;

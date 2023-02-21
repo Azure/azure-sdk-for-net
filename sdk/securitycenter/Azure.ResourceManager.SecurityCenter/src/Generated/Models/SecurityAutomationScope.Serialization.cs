@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Description))
             {
-                writer.WritePropertyName("description");
+                writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
             if (Optional.IsDefined(ScopePath))
             {
-                writer.WritePropertyName("scopePath");
+                writer.WritePropertyName("scopePath"u8);
                 writer.WriteStringValue(ScopePath);
             }
             writer.WriteEndObject();
@@ -34,12 +34,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             Optional<string> scopePath = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("description"))
+                if (property.NameEquals("description"u8))
                 {
                     description = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("scopePath"))
+                if (property.NameEquals("scopePath"u8))
                 {
                     scopePath = property.Value.GetString();
                     continue;
