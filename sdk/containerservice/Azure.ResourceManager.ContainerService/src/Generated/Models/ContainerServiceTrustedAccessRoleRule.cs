@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             ApiGroups = new ChangeTrackingList<string>();
             Resources = new ChangeTrackingList<string>();
             ResourceNames = new ChangeTrackingList<string>();
-            NonResourceURLs = new ChangeTrackingList<string>();
+            NonResourceUrls = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of ContainerServiceTrustedAccessRoleRule. </summary>
@@ -28,14 +28,14 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <param name="apiGroups"> List of allowed apiGroups. </param>
         /// <param name="resources"> List of allowed resources. </param>
         /// <param name="resourceNames"> List of allowed names. </param>
-        /// <param name="nonResourceURLs"> List of allowed nonResourceURLs. </param>
-        internal ContainerServiceTrustedAccessRoleRule(IReadOnlyList<string> verbs, IReadOnlyList<string> apiGroups, IReadOnlyList<string> resources, IReadOnlyList<string> resourceNames, IReadOnlyList<string> nonResourceURLs)
+        /// <param name="nonResourceUrls"> List of allowed nonResourceURLs. </param>
+        internal ContainerServiceTrustedAccessRoleRule(IReadOnlyList<string> verbs, IReadOnlyList<string> apiGroups, IReadOnlyList<string> resources, IReadOnlyList<string> resourceNames, IReadOnlyList<string> nonResourceUrls)
         {
             Verbs = verbs;
             ApiGroups = apiGroups;
             Resources = resources;
             ResourceNames = resourceNames;
-            NonResourceURLs = nonResourceURLs;
+            NonResourceUrls = nonResourceUrls;
         }
 
         /// <summary> List of allowed verbs. </summary>
@@ -47,6 +47,6 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <summary> List of allowed names. </summary>
         public IReadOnlyList<string> ResourceNames { get; }
         /// <summary> List of allowed nonResourceURLs. </summary>
-        public IReadOnlyList<string> NonResourceURLs { get; }
+        public IReadOnlyList<string> NonResourceUrls { get; }
     }
 }

@@ -43,33 +43,11 @@ namespace Azure.ResourceManager.ContainerService.Models
         public ManagedClusterSecurityProfileKeyVaultKms AzureKeyVaultKms { get; set; }
         /// <summary> [Workload Identity](https://azure.github.io/azure-workload-identity/docs/) settings for the security profile. </summary>
         internal ManagedClusterSecurityProfileWorkloadIdentity WorkloadIdentity { get; set; }
-        /// <summary> Whether to enable Workload Identity. </summary>
-        public bool? WorkloadIdentityEnabled
-        {
-            get => WorkloadIdentity is null ? default : WorkloadIdentity.Enabled;
-            set
-            {
-                if (WorkloadIdentity is null)
-                    WorkloadIdentity = new ManagedClusterSecurityProfileWorkloadIdentity();
-                WorkloadIdentity.Enabled = value;
-            }
-        }
 
         /// <summary> ImageCleaner settings for the security profile. </summary>
         public ManagedClusterSecurityProfileImageCleaner ImageCleaner { get; set; }
         /// <summary> [Node Restriction](https://kubernetes.io/docs/reference/access-authn-authz/admission-controllers/#noderestriction) settings for the security profile. </summary>
         internal ManagedClusterSecurityProfileNodeRestriction NodeRestriction { get; set; }
-        /// <summary> Whether to enable Node Restriction. </summary>
-        public bool? NodeRestrictionEnabled
-        {
-            get => NodeRestriction is null ? default : NodeRestriction.Enabled;
-            set
-            {
-                if (NodeRestriction is null)
-                    NodeRestriction = new ManagedClusterSecurityProfileNodeRestriction();
-                NodeRestriction.Enabled = value;
-            }
-        }
 
         /// <summary> A list of up to 10 base64 encoded CAs that will be added to the trust store on nodes with the Custom CA Trust feature enabled. For more information see [Custom CA Trust Certificates](https://learn.microsoft.com/en-us/azure/aks/custom-certificate-authority). </summary>
         public IList<byte[]> CustomCATrustCertificates { get; }

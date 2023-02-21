@@ -26,15 +26,6 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> KEDA (Kubernetes Event-driven Autoscaling) settings for the workload auto-scaler profile. </summary>
         internal ManagedClusterWorkloadAutoScalerProfileKeda Keda { get; set; }
-        /// <summary> Whether to enable KEDA. </summary>
-        public bool? KedaEnabled
-        {
-            get => Keda is null ? default(bool?) : Keda.Enabled;
-            set
-            {
-                Keda = value.HasValue ? new ManagedClusterWorkloadAutoScalerProfileKeda(value.Value) : null;
-            }
-        }
 
         /// <summary> Gets or sets the vertical pod autoscaler. </summary>
         public ManagedClusterVerticalPodAutoscaler VerticalPodAutoscaler { get; set; }

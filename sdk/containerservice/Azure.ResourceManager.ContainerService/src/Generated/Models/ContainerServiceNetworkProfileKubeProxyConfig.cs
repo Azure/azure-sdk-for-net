@@ -16,21 +16,21 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> Initializes a new instance of ContainerServiceNetworkProfileKubeProxyConfig. </summary>
-        /// <param name="enabled"> Whether to enable on kube-proxy on the cluster (if no &apos;kubeProxyConfig&apos; exists, kube-proxy is enabled in AKS by default without these customizations). </param>
+        /// <param name="isEnabled"> Whether to enable on kube-proxy on the cluster (if no &apos;kubeProxyConfig&apos; exists, kube-proxy is enabled in AKS by default without these customizations). </param>
         /// <param name="mode"> Specify which proxy mode to use (&apos;IPTABLES&apos; or &apos;IPVS&apos;). </param>
         /// <param name="ipvsConfig"> Holds configuration customizations for IPVS. May only be specified if &apos;mode&apos; is set to &apos;IPVS&apos;. </param>
-        internal ContainerServiceNetworkProfileKubeProxyConfig(bool? enabled, ContainerServiceNetworkProfileKubeProxyMode? mode, ContainerServiceNetworkProfileKubeProxyIpvsConfig ipvsConfig)
+        internal ContainerServiceNetworkProfileKubeProxyConfig(bool? isEnabled, ContainerServiceNetworkProfileKubeProxyMode? mode, ContainerServiceNetworkProfileKubeProxyIPVSConfig ipvsConfig)
         {
-            Enabled = enabled;
+            IsEnabled = isEnabled;
             Mode = mode;
-            IpvsConfig = ipvsConfig;
+            IPVSConfig = ipvsConfig;
         }
 
         /// <summary> Whether to enable on kube-proxy on the cluster (if no &apos;kubeProxyConfig&apos; exists, kube-proxy is enabled in AKS by default without these customizations). </summary>
-        public bool? Enabled { get; set; }
+        public bool? IsEnabled { get; set; }
         /// <summary> Specify which proxy mode to use (&apos;IPTABLES&apos; or &apos;IPVS&apos;). </summary>
         public ContainerServiceNetworkProfileKubeProxyMode? Mode { get; set; }
         /// <summary> Holds configuration customizations for IPVS. May only be specified if &apos;mode&apos; is set to &apos;IPVS&apos;. </summary>
-        public ContainerServiceNetworkProfileKubeProxyIpvsConfig IpvsConfig { get; set; }
+        public ContainerServiceNetworkProfileKubeProxyIPVSConfig IPVSConfig { get; set; }
     }
 }

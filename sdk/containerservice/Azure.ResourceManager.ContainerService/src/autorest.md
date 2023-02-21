@@ -70,6 +70,7 @@ rename-mapping:
   Schedule: ContainerServiceMaintenanceSchedule
   WeeklySchedule: ContainerServiceMaintenanceWeeklySchedule
   BackendPoolType: ManagedClusterLoadBalancerBackendPoolType
+  ContainerServiceNetworkProfileKubeProxyConfig.enabled: IsEnabled
   ContainerServiceNetworkProfileKubeProxyConfigIpvsConfig: ContainerServiceNetworkProfileKubeProxyIpvsConfig
   IpvsScheduler: ContainerServiceNetworkProfileKubeProxyIpvsScheduler
   Mode: ContainerServiceNetworkProfileKubeProxyMode
@@ -78,15 +79,21 @@ rename-mapping:
   Level: ManagedClusterGuardrailsProfileLevel
   ManagedClusterAzureMonitorProfileKubeStateMetrics: ManagedClusterMonitorProfileKubeStateMetrics
   ManagedClusterAzureMonitorProfileMetrics: ManagedClusterMonitorProfileMetrics
-  ManagedClusterSecurityProfile.nodeRestrictionEnabled: IsNodeRestrictionEnabled
-  ManagedClusterSecurityProfile.workloadIdentityEnabled: IsWorkloadIdentityEnabled
+  ManagedClusterAzureMonitorProfileMetrics.enabled: IsEnabled
+  ManagedClusterSecurityProfile.properties.nodeRestrictionEnabled: IsNodeRestrictionEnabled
+  ManagedClusterSecurityProfile.properties.workloadIdentityEnabled: IsWorkloadIdentityEnabled
   ManagedClusterSecurityProfileImageCleaner.enabled: IsEnabled
+  ManagedClusterWorkloadAutoScalerProfile.kedaEnabled: IsKedaEnabled
   ManagedClusterWorkloadAutoScalerProfileVerticalPodAutoscaler: ManagedClusterVerticalPodAutoscaler
+  ManagedClusterWorkloadAutoScalerProfileVerticalPodAutoscaler.enabled: IsEnabled
   UpdateMode: ManagedClusterVerticalPodAutoscalerUpdateMode
   NodeOSUpgradeChannel: ManagedClusterNodeOSUpgradeChannel
   PortRange: AgentPoolNetworkPortRange
   Protocol: AgentPoolNetworkPortProtocol
   RestrictionLevel: ManagedClusterNodeResourceGroupRestrictionLevel
+  AgentPool.properties.capacityReservationGroupID: -|arm-id
+  ManagedClusterAgentPoolProfileProperties.capacityReservationGroupID: -|arm-id
+  ManagedClusterIngressProfileWebAppRouting.enabled: IsEnabled
 
 format-by-name-rules:
   'tenantId': 'uuid'
@@ -110,6 +117,8 @@ rename-rules:
   Os: OS
   Ip: IP
   Ips: IPs|ips
+  Iptables: IPTables
+  Ipvs: IPVS
   ID: Id
   IDs: Ids
   VM: Vm
@@ -125,6 +134,7 @@ rename-rules:
   SSO: Sso
   URI: Uri
   URL: Url
+  URLs: Urls
   Etag: ETag|etag
   SSD: Ssd
   GPU: Gpu

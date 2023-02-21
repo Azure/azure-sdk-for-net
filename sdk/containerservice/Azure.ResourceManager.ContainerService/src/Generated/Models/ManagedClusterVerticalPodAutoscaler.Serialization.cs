@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("enabled"u8);
-            writer.WriteBooleanValue(Enabled);
+            writer.WriteBooleanValue(IsEnabled);
             writer.WritePropertyName("controlledValues"u8);
             writer.WriteStringValue(ControlledValues.ToString());
             writer.WritePropertyName("updateMode"u8);

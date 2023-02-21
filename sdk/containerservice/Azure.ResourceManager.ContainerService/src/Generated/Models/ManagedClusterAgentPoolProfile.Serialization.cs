@@ -303,7 +303,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             Optional<bool> enableFIPS = default;
             Optional<GpuInstanceProfile> gpuInstanceProfile = default;
             Optional<ContainerServiceCreationData> creationData = default;
-            Optional<string> capacityReservationGroupId = default;
+            Optional<ResourceIdentifier> capacityReservationGroupId = default;
             Optional<ResourceIdentifier> hostGroupId = default;
             Optional<AgentPoolWindowsProfile> windowsProfile = default;
             Optional<AgentPoolNetworkProfile> networkProfile = default;
@@ -726,7 +726,12 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
                 if (property.NameEquals("capacityReservationGroupID"u8))
                 {
-                    capacityReservationGroupId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    capacityReservationGroupId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("hostGroupID"u8))

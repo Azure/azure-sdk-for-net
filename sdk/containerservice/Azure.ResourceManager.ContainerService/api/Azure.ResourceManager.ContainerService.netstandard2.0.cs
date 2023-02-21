@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.ContainerService
     {
         public ContainerServiceAgentPoolData() { }
         public System.Collections.Generic.IList<string> AvailabilityZones { get { throw null; } }
-        public string CapacityReservationGroupId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier CapacityReservationGroupId { get { throw null; } set { } }
         public int? Count { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier CreationDataSourceResourceId { get { throw null; } set { } }
         public string CurrentOrchestratorVersion { get { throw null; } }
@@ -884,7 +884,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         public int DurationHours { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.ContainerService.Models.ContainerServiceDateSpan> NotAllowedDates { get { throw null; } }
         public Azure.ResourceManager.ContainerService.Models.ContainerServiceMaintenanceSchedule Schedule { get { throw null; } set { } }
-        public System.DateTimeOffset? StartOn { get { throw null; } set { } }
+        public string StartDate { get { throw null; } set { } }
         public string StartTime { get { throw null; } set { } }
         public string UtcOffset { get { throw null; } set { } }
     }
@@ -993,34 +993,34 @@ namespace Azure.ResourceManager.ContainerService.Models
     public partial class ContainerServiceNetworkProfileKubeProxyConfig
     {
         public ContainerServiceNetworkProfileKubeProxyConfig() { }
-        public bool? Enabled { get { throw null; } set { } }
-        public Azure.ResourceManager.ContainerService.Models.ContainerServiceNetworkProfileKubeProxyIpvsConfig IpvsConfig { get { throw null; } set { } }
+        public Azure.ResourceManager.ContainerService.Models.ContainerServiceNetworkProfileKubeProxyIPVSConfig IPVSConfig { get { throw null; } set { } }
+        public bool? IsEnabled { get { throw null; } set { } }
         public Azure.ResourceManager.ContainerService.Models.ContainerServiceNetworkProfileKubeProxyMode? Mode { get { throw null; } set { } }
     }
-    public partial class ContainerServiceNetworkProfileKubeProxyIpvsConfig
+    public partial class ContainerServiceNetworkProfileKubeProxyIPVSConfig
     {
-        public ContainerServiceNetworkProfileKubeProxyIpvsConfig() { }
-        public Azure.ResourceManager.ContainerService.Models.ContainerServiceNetworkProfileKubeProxyIpvsScheduler? Scheduler { get { throw null; } set { } }
+        public ContainerServiceNetworkProfileKubeProxyIPVSConfig() { }
+        public Azure.ResourceManager.ContainerService.Models.ContainerServiceNetworkProfileKubeProxyIPVSScheduler? Scheduler { get { throw null; } set { } }
         public int? TcpFinTimeoutSeconds { get { throw null; } set { } }
         public int? TcpTimeoutSeconds { get { throw null; } set { } }
         public int? UdpTimeoutSeconds { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct ContainerServiceNetworkProfileKubeProxyIpvsScheduler : System.IEquatable<Azure.ResourceManager.ContainerService.Models.ContainerServiceNetworkProfileKubeProxyIpvsScheduler>
+    public readonly partial struct ContainerServiceNetworkProfileKubeProxyIPVSScheduler : System.IEquatable<Azure.ResourceManager.ContainerService.Models.ContainerServiceNetworkProfileKubeProxyIPVSScheduler>
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
-        public ContainerServiceNetworkProfileKubeProxyIpvsScheduler(string value) { throw null; }
-        public static Azure.ResourceManager.ContainerService.Models.ContainerServiceNetworkProfileKubeProxyIpvsScheduler LeastConnection { get { throw null; } }
-        public static Azure.ResourceManager.ContainerService.Models.ContainerServiceNetworkProfileKubeProxyIpvsScheduler RoundRobin { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.ContainerService.Models.ContainerServiceNetworkProfileKubeProxyIpvsScheduler other) { throw null; }
+        public ContainerServiceNetworkProfileKubeProxyIPVSScheduler(string value) { throw null; }
+        public static Azure.ResourceManager.ContainerService.Models.ContainerServiceNetworkProfileKubeProxyIPVSScheduler LeastConnection { get { throw null; } }
+        public static Azure.ResourceManager.ContainerService.Models.ContainerServiceNetworkProfileKubeProxyIPVSScheduler RoundRobin { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.ContainerService.Models.ContainerServiceNetworkProfileKubeProxyIPVSScheduler other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.ContainerService.Models.ContainerServiceNetworkProfileKubeProxyIpvsScheduler left, Azure.ResourceManager.ContainerService.Models.ContainerServiceNetworkProfileKubeProxyIpvsScheduler right) { throw null; }
-        public static implicit operator Azure.ResourceManager.ContainerService.Models.ContainerServiceNetworkProfileKubeProxyIpvsScheduler (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.ContainerService.Models.ContainerServiceNetworkProfileKubeProxyIpvsScheduler left, Azure.ResourceManager.ContainerService.Models.ContainerServiceNetworkProfileKubeProxyIpvsScheduler right) { throw null; }
+        public static bool operator ==(Azure.ResourceManager.ContainerService.Models.ContainerServiceNetworkProfileKubeProxyIPVSScheduler left, Azure.ResourceManager.ContainerService.Models.ContainerServiceNetworkProfileKubeProxyIPVSScheduler right) { throw null; }
+        public static implicit operator Azure.ResourceManager.ContainerService.Models.ContainerServiceNetworkProfileKubeProxyIPVSScheduler (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.ContainerService.Models.ContainerServiceNetworkProfileKubeProxyIPVSScheduler left, Azure.ResourceManager.ContainerService.Models.ContainerServiceNetworkProfileKubeProxyIPVSScheduler right) { throw null; }
         public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
@@ -1029,8 +1029,8 @@ namespace Azure.ResourceManager.ContainerService.Models
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public ContainerServiceNetworkProfileKubeProxyMode(string value) { throw null; }
-        public static Azure.ResourceManager.ContainerService.Models.ContainerServiceNetworkProfileKubeProxyMode Iptables { get { throw null; } }
-        public static Azure.ResourceManager.ContainerService.Models.ContainerServiceNetworkProfileKubeProxyMode Ipvs { get { throw null; } }
+        public static Azure.ResourceManager.ContainerService.Models.ContainerServiceNetworkProfileKubeProxyMode IPTables { get { throw null; } }
+        public static Azure.ResourceManager.ContainerService.Models.ContainerServiceNetworkProfileKubeProxyMode IPVS { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ContainerService.Models.ContainerServiceNetworkProfileKubeProxyMode other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
@@ -1283,7 +1283,7 @@ namespace Azure.ResourceManager.ContainerService.Models
     {
         internal ContainerServiceTrustedAccessRoleRule() { }
         public System.Collections.Generic.IReadOnlyList<string> ApiGroups { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<string> NonResourceURLs { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<string> NonResourceUrls { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> ResourceNames { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> Resources { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> Verbs { get { throw null; } }
@@ -1470,7 +1470,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         public ManagedClusterAgentPoolProfileProperties() { }
         public Azure.ResourceManager.ContainerService.Models.AgentPoolType? AgentPoolType { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> AvailabilityZones { get { throw null; } }
-        public string CapacityReservationGroupId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier CapacityReservationGroupId { get { throw null; } set { } }
         public int? Count { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier CreationDataSourceResourceId { get { throw null; } set { } }
         public string CurrentOrchestratorVersion { get { throw null; } }
@@ -1604,7 +1604,7 @@ namespace Azure.ResourceManager.ContainerService.Models
     {
         public ManagedClusterIngressProfileWebAppRouting() { }
         public Azure.Core.ResourceIdentifier DnsZoneResourceId { get { throw null; } set { } }
-        public bool? Enabled { get { throw null; } set { } }
+        public bool? IsEnabled { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ManagedClusterKeyVaultNetworkAccessType : System.IEquatable<Azure.ResourceManager.ContainerService.Models.ManagedClusterKeyVaultNetworkAccessType>
@@ -1668,8 +1668,8 @@ namespace Azure.ResourceManager.ContainerService.Models
     }
     public partial class ManagedClusterMonitorProfileMetrics
     {
-        public ManagedClusterMonitorProfileMetrics(bool enabled) { }
-        public bool Enabled { get { throw null; } set { } }
+        public ManagedClusterMonitorProfileMetrics(bool isEnabled) { }
+        public bool IsEnabled { get { throw null; } set { } }
         public Azure.ResourceManager.ContainerService.Models.ManagedClusterMonitorProfileKubeStateMetrics KubeStateMetrics { get { throw null; } set { } }
     }
     public partial class ManagedClusterNatGatewayProfile
@@ -1817,8 +1817,8 @@ namespace Azure.ResourceManager.ContainerService.Models
         public System.Collections.Generic.IList<byte[]> CustomCATrustCertificates { get { throw null; } }
         public Azure.ResourceManager.ContainerService.Models.ManagedClusterSecurityProfileDefender Defender { get { throw null; } set { } }
         public Azure.ResourceManager.ContainerService.Models.ManagedClusterSecurityProfileImageCleaner ImageCleaner { get { throw null; } set { } }
-        public bool? NodeRestrictionEnabled { get { throw null; } set { } }
-        public bool? WorkloadIdentityEnabled { get { throw null; } set { } }
+        public bool? IsNodeRestrictionEnabled { get { throw null; } set { } }
+        public bool? IsWorkloadIdentityEnabled { get { throw null; } set { } }
     }
     public partial class ManagedClusterSecurityProfileAzureDefender
     {
@@ -1898,6 +1898,8 @@ namespace Azure.ResourceManager.ContainerService.Models
         public ManagedClusterStorageProfile() { }
         public Azure.ResourceManager.ContainerService.Models.ManagedClusterStorageProfileDiskCsiDriver DiskCsiDriver { get { throw null; } set { } }
         public bool? IsBlobCsiDriverEnabled { get { throw null; } set { } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        [System.ObsoleteAttribute("This property is obsolete and will be removed in a future release", false)]
         public bool? IsDiskCsiDriverEnabled { get { throw null; } set { } }
         public bool? IsFileCsiDriverEnabled { get { throw null; } set { } }
         public bool? IsSnapshotControllerEnabled { get { throw null; } set { } }
@@ -1910,9 +1912,9 @@ namespace Azure.ResourceManager.ContainerService.Models
     }
     public partial class ManagedClusterVerticalPodAutoscaler
     {
-        public ManagedClusterVerticalPodAutoscaler(bool enabled, Azure.ResourceManager.ContainerService.Models.ManagedClusterWorkloadAutoScalerControlledValue controlledValues, Azure.ResourceManager.ContainerService.Models.ManagedClusterVerticalPodAutoscalerUpdateMode updateMode) { }
+        public ManagedClusterVerticalPodAutoscaler(bool isEnabled, Azure.ResourceManager.ContainerService.Models.ManagedClusterWorkloadAutoScalerControlledValue controlledValues, Azure.ResourceManager.ContainerService.Models.ManagedClusterVerticalPodAutoscalerUpdateMode updateMode) { }
         public Azure.ResourceManager.ContainerService.Models.ManagedClusterWorkloadAutoScalerControlledValue ControlledValues { get { throw null; } set { } }
-        public bool Enabled { get { throw null; } set { } }
+        public bool IsEnabled { get { throw null; } set { } }
         public Azure.ResourceManager.ContainerService.Models.ManagedClusterVerticalPodAutoscalerUpdateMode UpdateMode { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
@@ -1965,7 +1967,7 @@ namespace Azure.ResourceManager.ContainerService.Models
     public partial class ManagedClusterWorkloadAutoScalerProfile
     {
         public ManagedClusterWorkloadAutoScalerProfile() { }
-        public bool? KedaEnabled { get { throw null; } set { } }
+        public bool? IsKedaEnabled { get { throw null; } set { } }
         public Azure.ResourceManager.ContainerService.Models.ManagedClusterVerticalPodAutoscaler VerticalPodAutoscaler { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]

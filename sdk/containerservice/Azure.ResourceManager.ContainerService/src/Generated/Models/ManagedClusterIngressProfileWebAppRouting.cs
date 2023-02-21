@@ -18,16 +18,16 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> Initializes a new instance of ManagedClusterIngressProfileWebAppRouting. </summary>
-        /// <param name="enabled"> Whether to enable Web App Routing. </param>
+        /// <param name="isEnabled"> Whether to enable Web App Routing. </param>
         /// <param name="dnsZoneResourceId"> Resource ID of the DNS Zone to be associated with the web app. Used only when Web App Routing is enabled. </param>
-        internal ManagedClusterIngressProfileWebAppRouting(bool? enabled, ResourceIdentifier dnsZoneResourceId)
+        internal ManagedClusterIngressProfileWebAppRouting(bool? isEnabled, ResourceIdentifier dnsZoneResourceId)
         {
-            Enabled = enabled;
+            IsEnabled = isEnabled;
             DnsZoneResourceId = dnsZoneResourceId;
         }
 
         /// <summary> Whether to enable Web App Routing. </summary>
-        public bool? Enabled { get; set; }
+        public bool? IsEnabled { get; set; }
         /// <summary> Resource ID of the DNS Zone to be associated with the web app. Used only when Web App Routing is enabled. </summary>
         public ResourceIdentifier DnsZoneResourceId { get; set; }
     }

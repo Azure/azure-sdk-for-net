@@ -11,23 +11,23 @@ namespace Azure.ResourceManager.ContainerService.Models
     public partial class ManagedClusterMonitorProfileMetrics
     {
         /// <summary> Initializes a new instance of ManagedClusterMonitorProfileMetrics. </summary>
-        /// <param name="enabled"> Whether to enable the Prometheus collector. </param>
-        public ManagedClusterMonitorProfileMetrics(bool enabled)
+        /// <param name="isEnabled"> Whether to enable the Prometheus collector. </param>
+        public ManagedClusterMonitorProfileMetrics(bool isEnabled)
         {
-            Enabled = enabled;
+            IsEnabled = isEnabled;
         }
 
         /// <summary> Initializes a new instance of ManagedClusterMonitorProfileMetrics. </summary>
-        /// <param name="enabled"> Whether to enable the Prometheus collector. </param>
+        /// <param name="isEnabled"> Whether to enable the Prometheus collector. </param>
         /// <param name="kubeStateMetrics"> Kube State Metrics for prometheus addon profile for the container service cluster. </param>
-        internal ManagedClusterMonitorProfileMetrics(bool enabled, ManagedClusterMonitorProfileKubeStateMetrics kubeStateMetrics)
+        internal ManagedClusterMonitorProfileMetrics(bool isEnabled, ManagedClusterMonitorProfileKubeStateMetrics kubeStateMetrics)
         {
-            Enabled = enabled;
+            IsEnabled = isEnabled;
             KubeStateMetrics = kubeStateMetrics;
         }
 
         /// <summary> Whether to enable the Prometheus collector. </summary>
-        public bool Enabled { get; set; }
+        public bool IsEnabled { get; set; }
         /// <summary> Kube State Metrics for prometheus addon profile for the container service cluster. </summary>
         public ManagedClusterMonitorProfileKubeStateMetrics KubeStateMetrics { get; set; }
     }

@@ -15,20 +15,20 @@ namespace Azure.ResourceManager.ContainerService.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Enabled))
+            if (Optional.IsDefined(IsEnabled))
             {
                 writer.WritePropertyName("enabled"u8);
-                writer.WriteBooleanValue(Enabled.Value);
+                writer.WriteBooleanValue(IsEnabled.Value);
             }
             if (Optional.IsDefined(Mode))
             {
                 writer.WritePropertyName("mode"u8);
                 writer.WriteStringValue(Mode.Value.ToString());
             }
-            if (Optional.IsDefined(IpvsConfig))
+            if (Optional.IsDefined(IPVSConfig))
             {
                 writer.WritePropertyName("ipvsConfig"u8);
-                writer.WriteObjectValue(IpvsConfig);
+                writer.WriteObjectValue(IPVSConfig);
             }
             writer.WriteEndObject();
         }
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         {
             Optional<bool> enabled = default;
             Optional<ContainerServiceNetworkProfileKubeProxyMode> mode = default;
-            Optional<ContainerServiceNetworkProfileKubeProxyIpvsConfig> ipvsConfig = default;
+            Optional<ContainerServiceNetworkProfileKubeProxyIPVSConfig> ipvsConfig = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("enabled"u8))
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    ipvsConfig = ContainerServiceNetworkProfileKubeProxyIpvsConfig.DeserializeContainerServiceNetworkProfileKubeProxyIpvsConfig(property.Value);
+                    ipvsConfig = ContainerServiceNetworkProfileKubeProxyIPVSConfig.DeserializeContainerServiceNetworkProfileKubeProxyIPVSConfig(property.Value);
                     continue;
                 }
             }

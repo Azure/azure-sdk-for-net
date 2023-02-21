@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    public partial class ContainerServiceNetworkProfileKubeProxyIpvsConfig : IUtf8JsonSerializable
+    public partial class ContainerServiceNetworkProfileKubeProxyIPVSConfig : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -38,9 +38,9 @@ namespace Azure.ResourceManager.ContainerService.Models
             writer.WriteEndObject();
         }
 
-        internal static ContainerServiceNetworkProfileKubeProxyIpvsConfig DeserializeContainerServiceNetworkProfileKubeProxyIpvsConfig(JsonElement element)
+        internal static ContainerServiceNetworkProfileKubeProxyIPVSConfig DeserializeContainerServiceNetworkProfileKubeProxyIPVSConfig(JsonElement element)
         {
-            Optional<ContainerServiceNetworkProfileKubeProxyIpvsScheduler> scheduler = default;
+            Optional<ContainerServiceNetworkProfileKubeProxyIPVSScheduler> scheduler = default;
             Optional<int> tcpTimeoutSeconds = default;
             Optional<int> tcpFinTimeoutSeconds = default;
             Optional<int> udpTimeoutSeconds = default;
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    scheduler = new ContainerServiceNetworkProfileKubeProxyIpvsScheduler(property.Value.GetString());
+                    scheduler = new ContainerServiceNetworkProfileKubeProxyIPVSScheduler(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("tcpTimeoutSeconds"u8))
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     continue;
                 }
             }
-            return new ContainerServiceNetworkProfileKubeProxyIpvsConfig(Optional.ToNullable(scheduler), Optional.ToNullable(tcpTimeoutSeconds), Optional.ToNullable(tcpFinTimeoutSeconds), Optional.ToNullable(udpTimeoutSeconds));
+            return new ContainerServiceNetworkProfileKubeProxyIPVSConfig(Optional.ToNullable(scheduler), Optional.ToNullable(tcpTimeoutSeconds), Optional.ToNullable(tcpFinTimeoutSeconds), Optional.ToNullable(udpTimeoutSeconds));
         }
     }
 }

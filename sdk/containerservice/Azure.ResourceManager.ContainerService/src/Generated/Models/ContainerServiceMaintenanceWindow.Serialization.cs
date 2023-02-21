@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -26,10 +25,10 @@ namespace Azure.ResourceManager.ContainerService.Models
                 writer.WritePropertyName("utcOffset"u8);
                 writer.WriteStringValue(UtcOffset);
             }
-            if (Optional.IsDefined(StartOn))
+            if (Optional.IsDefined(StartDate))
             {
                 writer.WritePropertyName("startDate"u8);
-                writer.WriteStringValue(StartOn.Value, "D");
+                writer.WriteStringValue(StartDate);
             }
             writer.WritePropertyName("startTime"u8);
             writer.WriteStringValue(StartTime);
@@ -51,7 +50,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             ContainerServiceMaintenanceSchedule schedule = default;
             int durationHours = default;
             Optional<string> utcOffset = default;
-            Optional<DateTimeOffset> startDate = default;
+            Optional<string> startDate = default;
             string startTime = default;
             Optional<IList<ContainerServiceDateSpan>> notAllowedDates = default;
             foreach (var property in element.EnumerateObject())
@@ -73,12 +72,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
                 if (property.NameEquals("startDate"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    startDate = property.Value.GetDateTimeOffset("D");
+                    startDate = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("startTime"u8))
@@ -102,7 +96,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     continue;
                 }
             }
-            return new ContainerServiceMaintenanceWindow(schedule, durationHours, utcOffset.Value, Optional.ToNullable(startDate), startTime, Optional.ToList(notAllowedDates));
+            return new ContainerServiceMaintenanceWindow(schedule, durationHours, utcOffset.Value, startDate.Value, startTime, Optional.ToList(notAllowedDates));
         }
     }
 }

@@ -11,13 +11,13 @@ using System.ComponentModel;
 namespace Azure.ResourceManager.ContainerService.Models
 {
     /// <summary> IPVS scheduler, for more information please see http://www.linuxvirtualserver.org/docs/scheduling.html. </summary>
-    public readonly partial struct ContainerServiceNetworkProfileKubeProxyIpvsScheduler : IEquatable<ContainerServiceNetworkProfileKubeProxyIpvsScheduler>
+    public readonly partial struct ContainerServiceNetworkProfileKubeProxyIPVSScheduler : IEquatable<ContainerServiceNetworkProfileKubeProxyIPVSScheduler>
     {
         private readonly string _value;
 
-        /// <summary> Initializes a new instance of <see cref="ContainerServiceNetworkProfileKubeProxyIpvsScheduler"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceNetworkProfileKubeProxyIPVSScheduler"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public ContainerServiceNetworkProfileKubeProxyIpvsScheduler(string value)
+        public ContainerServiceNetworkProfileKubeProxyIPVSScheduler(string value)
         {
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
@@ -26,21 +26,21 @@ namespace Azure.ResourceManager.ContainerService.Models
         private const string LeastConnectionValue = "LeastConnection";
 
         /// <summary> Round Robin. </summary>
-        public static ContainerServiceNetworkProfileKubeProxyIpvsScheduler RoundRobin { get; } = new ContainerServiceNetworkProfileKubeProxyIpvsScheduler(RoundRobinValue);
+        public static ContainerServiceNetworkProfileKubeProxyIPVSScheduler RoundRobin { get; } = new ContainerServiceNetworkProfileKubeProxyIPVSScheduler(RoundRobinValue);
         /// <summary> Least Connection. </summary>
-        public static ContainerServiceNetworkProfileKubeProxyIpvsScheduler LeastConnection { get; } = new ContainerServiceNetworkProfileKubeProxyIpvsScheduler(LeastConnectionValue);
-        /// <summary> Determines if two <see cref="ContainerServiceNetworkProfileKubeProxyIpvsScheduler"/> values are the same. </summary>
-        public static bool operator ==(ContainerServiceNetworkProfileKubeProxyIpvsScheduler left, ContainerServiceNetworkProfileKubeProxyIpvsScheduler right) => left.Equals(right);
-        /// <summary> Determines if two <see cref="ContainerServiceNetworkProfileKubeProxyIpvsScheduler"/> values are not the same. </summary>
-        public static bool operator !=(ContainerServiceNetworkProfileKubeProxyIpvsScheduler left, ContainerServiceNetworkProfileKubeProxyIpvsScheduler right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ContainerServiceNetworkProfileKubeProxyIpvsScheduler"/>. </summary>
-        public static implicit operator ContainerServiceNetworkProfileKubeProxyIpvsScheduler(string value) => new ContainerServiceNetworkProfileKubeProxyIpvsScheduler(value);
+        public static ContainerServiceNetworkProfileKubeProxyIPVSScheduler LeastConnection { get; } = new ContainerServiceNetworkProfileKubeProxyIPVSScheduler(LeastConnectionValue);
+        /// <summary> Determines if two <see cref="ContainerServiceNetworkProfileKubeProxyIPVSScheduler"/> values are the same. </summary>
+        public static bool operator ==(ContainerServiceNetworkProfileKubeProxyIPVSScheduler left, ContainerServiceNetworkProfileKubeProxyIPVSScheduler right) => left.Equals(right);
+        /// <summary> Determines if two <see cref="ContainerServiceNetworkProfileKubeProxyIPVSScheduler"/> values are not the same. </summary>
+        public static bool operator !=(ContainerServiceNetworkProfileKubeProxyIPVSScheduler left, ContainerServiceNetworkProfileKubeProxyIPVSScheduler right) => !left.Equals(right);
+        /// <summary> Converts a string to a <see cref="ContainerServiceNetworkProfileKubeProxyIPVSScheduler"/>. </summary>
+        public static implicit operator ContainerServiceNetworkProfileKubeProxyIPVSScheduler(string value) => new ContainerServiceNetworkProfileKubeProxyIPVSScheduler(value);
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is ContainerServiceNetworkProfileKubeProxyIpvsScheduler other && Equals(other);
+        public override bool Equals(object obj) => obj is ContainerServiceNetworkProfileKubeProxyIPVSScheduler other && Equals(other);
         /// <inheritdoc />
-        public bool Equals(ContainerServiceNetworkProfileKubeProxyIpvsScheduler other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(ContainerServiceNetworkProfileKubeProxyIPVSScheduler other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
