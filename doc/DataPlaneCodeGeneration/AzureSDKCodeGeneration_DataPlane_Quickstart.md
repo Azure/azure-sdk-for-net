@@ -109,7 +109,7 @@ options:
   @azure-tools/cadl-csharp emitter options:  
 
 - `namespace` define the client library namespace. e.g. Azure.IoT.DeviceUpdate.
-- `emitter-output-dir` define the output dire path which will store the generated code.
+- `emitter-output-dir` define the output dir path which will store the generated code.
 - `generate-protocol-methods` indicate if you want to generate **protocol method** for each operation. It is a boolean flag to shift the entire generation for the process (`true` by default)
 - `generate-convenience-methods` indicate if you want to generate **convenience method** for each operation. It is a boolean flag to shift the entire generation for the process (`true` by default)
 - `unreferenced-types-handling` define the strategy how to handle the unreferenced types. It can be `removeOrInternalize`, `internalize` or `keepAll`
