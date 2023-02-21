@@ -66,16 +66,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         {
             string? message = logRecord.FormattedMessage;
 
-            // Both logRecord.State and logRecord.StateValues will not be set at the same time for LogRecord.
-            // Either logRecord.State != null or logRecord.StateValues will be called.
-            if (logRecord.State != null)
-            {
-                if (logRecord.State is IReadOnlyCollection<KeyValuePair<string, object?>> stateDictionary)
-                {
-                    ExtractProperties(ref message, properties, stateDictionary);
-                }
-            }
-
             if (logRecord.StateValues != null)
             {
                 ExtractProperties(ref message, properties, logRecord.StateValues);
