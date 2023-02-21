@@ -788,10 +788,8 @@ namespace Azure.Data.AppConfiguration
         /// <summary> Gets a single configuration setting snapshot. </summary>
         /// <param name="name"> The name of the configuration setting snapshot to retrieve. </param>
         /// <param name="select"> Used to select what fields are present in the returned resource(s). </param>
-        /// <param name="matchConditions">"IfMatch" Used to perform an operation only if the targeted resource's etag matches the value provided and
-        /// "IfNoneMatch" Used to perform an operation only if the targeted resource's etag does not match the value provided. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ConfigurationSettingsSnapshot>> GetSnapshotAsync(string name, IEnumerable<SnapshotFields> select = null, MatchConditions matchConditions = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ConfigurationSettingsSnapshot>> GetSnapshotAsync(string name, IEnumerable<SnapshotFields> select = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
@@ -810,7 +808,7 @@ namespace Azure.Data.AppConfiguration
                     }
                 }
 
-                Response response = await GetSnapshotAsync(name, snapshotFields, matchConditions, context).ConfigureAwait(false);
+                Response response = await GetSnapshotAsync(name, snapshotFields, context).ConfigureAwait(false);
                 ConfigurationSettingsSnapshot value = ConfigurationSettingsSnapshot.FromResponse(response);
                 return Response.FromValue(value, response);
             }
@@ -824,10 +822,8 @@ namespace Azure.Data.AppConfiguration
         /// <summary> Gets a single configuration setting snapshot. </summary>
         /// <param name="name"> The name of the configuration setting snapshot to retrieve. </param>
         /// <param name="select"> Used to select what fields are present in the returned resource(s). </param>
-        /// <param name="matchConditions">"IfMatch" Used to perform an operation only if the targeted resource's etag matches the value provided and
-        /// "IfNoneMatch" Used to perform an operation only if the targeted resource's etag does not match the value provided. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ConfigurationSettingsSnapshot> GetSnapshot(string name, IEnumerable<SnapshotFields> select = null, MatchConditions matchConditions = null, CancellationToken cancellationToken = default)
+        public virtual Response<ConfigurationSettingsSnapshot> GetSnapshot(string name, IEnumerable<SnapshotFields> select = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
@@ -846,7 +842,7 @@ namespace Azure.Data.AppConfiguration
                     }
                 }
 
-                Response response = GetSnapshot(name, snapshotFields, matchConditions, context);
+                Response response = GetSnapshot(name, snapshotFields, context);
                 ConfigurationSettingsSnapshot value = ConfigurationSettingsSnapshot.FromResponse(response);
                 return Response.FromValue(value, response);
             }
@@ -860,14 +856,13 @@ namespace Azure.Data.AppConfiguration
         /// <summary> Gets a single key-value snapshot. </summary>
         /// <param name="name"> The name of the key-value snapshot to retrieve. </param>
         /// <param name="select"> Used to select what fields are present in the returned resource(s). </param>
-        /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <include file="Generated/Docs/ConfigurationClient.xml" path="doc/members/member[@name='GetSnapshotAsync(String,IEnumerable,MatchConditions,RequestContext)']/*" />
-        internal virtual async Task<Response> GetSnapshotAsync(string name, IEnumerable<string> select, MatchConditions matchConditions, RequestContext context)
+        internal virtual async Task<Response> GetSnapshotAsync(string name, IEnumerable<string> select, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
@@ -875,7 +870,7 @@ namespace Azure.Data.AppConfiguration
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetSnapshotRequest(name, select, matchConditions, context);
+                using HttpMessage message = CreateGetSnapshotRequest(name, select, new MatchConditions(), context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -888,14 +883,13 @@ namespace Azure.Data.AppConfiguration
         /// <summary> Gets a single key-value snapshot. </summary>
         /// <param name="name"> The name of the key-value snapshot to retrieve. </param>
         /// <param name="select"> Used to select what fields are present in the returned resource(s). </param>
-        /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <include file="Generated/Docs/ConfigurationClient.xml" path="doc/members/member[@name='GetSnapshot(String,IEnumerable,MatchConditions,RequestContext)']/*" />
-        internal virtual Response GetSnapshot(string name, IEnumerable<string> select, MatchConditions matchConditions, RequestContext context)
+        internal virtual Response GetSnapshot(string name, IEnumerable<string> select, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
@@ -903,7 +897,7 @@ namespace Azure.Data.AppConfiguration
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetSnapshotRequest(name, select, matchConditions, context);
+                using HttpMessage message = CreateGetSnapshotRequest(name, select, new MatchConditions(), context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -1009,10 +1003,9 @@ namespace Azure.Data.AppConfiguration
 
         /// <summary> Updates the state of a configuration setting snapshot to archive. </summary>
         /// <param name="name"> The name of the configuration setting snapshot to delete. </param>
-        /// <param name="matchConditions">"IfMatch" Used to perform an operation only if the targeted resource's etag matches the value provided and
-        /// "IfNoneMatch" Used to perform an operation only if the targeted resource's etag does not match the value provided. </param>
+        /// <param name="onlyIfUnchanged">TODO</param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ConfigurationSettingsSnapshot>> ArchiveSnapshotAsync(string name, MatchConditions matchConditions = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ConfigurationSettingsSnapshot>> ArchiveSnapshotAsync(string name, bool onlyIfUnchanged = false, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
@@ -1028,7 +1021,7 @@ namespace Azure.Data.AppConfiguration
                 };
                 using RequestContent content = SnapshotUpdateParameters.ToRequestContent(snapshotUpdateParameters);
 
-                Response response = await UpdateSnapshotStatusAsync(name, content, matchConditions, context).ConfigureAwait(false);
+                Response response = await UpdateSnapshotStatusAsync(name, content, new MatchConditions(), context).ConfigureAwait(false);
                 ConfigurationSettingsSnapshot value = ConfigurationSettingsSnapshot.FromResponse(response);
                 return Response.FromValue(value, response);
             }
@@ -1060,10 +1053,9 @@ namespace Azure.Data.AppConfiguration
 
         /// <summary> Updates the state of a configuration setting snapshot to archive. </summary>
         /// <param name="name"> The name of the configuration setting snapshot to delete. </param>
-        /// <param name="matchConditions">"IfMatch" Used to perform an operation only if the targeted resource's etag matches the value provided and
-        /// "IfNoneMatch" Used to perform an operation only if the targeted resource's etag does not match the value provided. </param>
+        /// <param name="onlyIfUnchanged">TODO</param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ConfigurationSettingsSnapshot> ArchiveSnapshot(string name, MatchConditions matchConditions = null, CancellationToken cancellationToken = default)
+        public virtual Response<ConfigurationSettingsSnapshot> ArchiveSnapshot(string name, bool onlyIfUnchanged = false, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
@@ -1079,7 +1071,7 @@ namespace Azure.Data.AppConfiguration
                 };
                 using RequestContent content = SnapshotUpdateParameters.ToRequestContent(snapshotUpdateParameters);
 
-                Response response = UpdateSnapshotStatus(name, content, matchConditions, context);
+                Response response = UpdateSnapshotStatus(name, content, new MatchConditions(), context);
                 ConfigurationSettingsSnapshot value = ConfigurationSettingsSnapshot.FromResponse(response);
                 return Response.FromValue(value, response);
             }
@@ -1111,10 +1103,9 @@ namespace Azure.Data.AppConfiguration
 
         /// <summary> Updates the state of a configuration setting snapshot to ready. </summary>
         /// <param name="name"> The name of the configuration setting snapshot to delete. </param>
-        /// <param name="matchConditions">"IfMatch" Used to perform an operation only if the targeted resource's etag matches the value provided and
-        /// "IfNoneMatch" Used to perform an operation only if the targeted resource's etag does not match the value provided. </param>
+        /// <param name="onlyIfUnchanged">TODO</param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ConfigurationSettingsSnapshot>> RecoverSnapshotAsync(string name, MatchConditions matchConditions = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ConfigurationSettingsSnapshot>> RecoverSnapshotAsync(string name, bool onlyIfUnchanged = false, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
@@ -1130,7 +1121,7 @@ namespace Azure.Data.AppConfiguration
                 };
                 using RequestContent content = SnapshotUpdateParameters.ToRequestContent(snapshotUpdateParameters);
 
-                Response response = await UpdateSnapshotStatusAsync(name, content, matchConditions, context).ConfigureAwait(false);
+                Response response = await UpdateSnapshotStatusAsync(name, content, new MatchConditions(), context).ConfigureAwait(false);
                 ConfigurationSettingsSnapshot value = ConfigurationSettingsSnapshot.FromResponse(response);
                 return Response.FromValue(value, response);
             }
@@ -1143,10 +1134,9 @@ namespace Azure.Data.AppConfiguration
 
         /// <summary> Updates the state of a configuration setting snapshot to ready. </summary>
         /// <param name="name"> The name of the configuration setting snapshot to delete. </param>
-        /// <param name="matchConditions">"IfMatch" Used to perform an operation only if the targeted resource's etag matches the value provided and
-        /// "IfNoneMatch" Used to perform an operation only if the targeted resource's etag does not match the value provided. </param>
+        /// <param name="onlyIfUnchanged">TODO</param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ConfigurationSettingsSnapshot> RecoverSnapshot(string name, MatchConditions matchConditions = null, CancellationToken cancellationToken = default)
+        public virtual Response<ConfigurationSettingsSnapshot> RecoverSnapshot(string name, bool onlyIfUnchanged = false, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
@@ -1162,7 +1152,7 @@ namespace Azure.Data.AppConfiguration
                 };
                 using RequestContent content = SnapshotUpdateParameters.ToRequestContent(snapshotUpdateParameters);
 
-                Response response = UpdateSnapshotStatus(name, content, matchConditions, context);
+                Response response = UpdateSnapshotStatus(name, content, new MatchConditions(), context);
                 ConfigurationSettingsSnapshot value = ConfigurationSettingsSnapshot.FromResponse(response);
                 return Response.FromValue(value, response);
             }
