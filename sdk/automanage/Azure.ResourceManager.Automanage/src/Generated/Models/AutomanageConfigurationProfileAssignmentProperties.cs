@@ -10,18 +10,18 @@ using Azure.Core;
 namespace Azure.ResourceManager.Automanage.Models
 {
     /// <summary> Automanage configuration profile assignment properties. </summary>
-    public partial class ConfigurationProfileAssignmentProperties
+    public partial class AutomanageConfigurationProfileAssignmentProperties
     {
-        /// <summary> Initializes a new instance of ConfigurationProfileAssignmentProperties. </summary>
-        public ConfigurationProfileAssignmentProperties()
+        /// <summary> Initializes a new instance of AutomanageConfigurationProfileAssignmentProperties. </summary>
+        public AutomanageConfigurationProfileAssignmentProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of ConfigurationProfileAssignmentProperties. </summary>
+        /// <summary> Initializes a new instance of AutomanageConfigurationProfileAssignmentProperties. </summary>
         /// <param name="configurationProfile"> The Automanage configurationProfile ARM Resource URI. </param>
         /// <param name="targetId"> The target VM resource URI. </param>
         /// <param name="status"> The status of onboarding, which only appears in the response. </param>
-        internal ConfigurationProfileAssignmentProperties(ResourceIdentifier configurationProfile, ResourceIdentifier targetId, string status)
+        internal AutomanageConfigurationProfileAssignmentProperties(ResourceIdentifier configurationProfile, ResourceIdentifier targetId, string status)
         {
             ConfigurationProfile = configurationProfile;
             TargetId = targetId;

@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Automanage.Tests
         {
             var data = new AutomanageConfigurationProfileAssignmentData()
             {
-                Properties = new ConfigurationProfileAssignmentProperties() { ConfigurationProfile = new ResourceIdentifier(profileId) }
+                Properties = new AutomanageConfigurationProfileAssignmentProperties() { ConfigurationProfile = new ResourceIdentifier(profileId) }
             };
 
             // fetch assignments collection

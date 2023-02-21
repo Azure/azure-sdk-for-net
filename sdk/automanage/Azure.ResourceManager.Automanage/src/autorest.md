@@ -66,6 +66,7 @@ rename-rules:
 rename-mapping:
   ConfigurationProfile: AutomanageConfigurationProfile
   ConfigurationProfileAssignment: AutomanageConfigurationProfileAssignment
+  ConfigurationProfileAssignmentProperties: AutomanageConfigurationProfileAssignmentProperties
   ConfigurationProfileAssignmentProperties.configurationProfile: -|arm-id
   ConfigurationProfileAssignmentProperties.targetId: -|arm-id
   Report: AutomanageConfigurationProfileAssignmentReport

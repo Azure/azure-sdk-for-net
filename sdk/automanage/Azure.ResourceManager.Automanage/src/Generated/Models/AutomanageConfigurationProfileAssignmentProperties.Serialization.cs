@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Automanage.Models
 {
-    public partial class ConfigurationProfileAssignmentProperties : IUtf8JsonSerializable
+    public partial class AutomanageConfigurationProfileAssignmentProperties : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Automanage.Models
             writer.WriteEndObject();
         }
 
-        internal static ConfigurationProfileAssignmentProperties DeserializeConfigurationProfileAssignmentProperties(JsonElement element)
+        internal static AutomanageConfigurationProfileAssignmentProperties DeserializeAutomanageConfigurationProfileAssignmentProperties(JsonElement element)
         {
             Optional<ResourceIdentifier> configurationProfile = default;
             Optional<ResourceIdentifier> targetId = default;
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Automanage.Models
                     continue;
                 }
             }
-            return new ConfigurationProfileAssignmentProperties(configurationProfile.Value, targetId.Value, status.Value);
+            return new AutomanageConfigurationProfileAssignmentProperties(configurationProfile.Value, targetId.Value, status.Value);
         }
     }
 }

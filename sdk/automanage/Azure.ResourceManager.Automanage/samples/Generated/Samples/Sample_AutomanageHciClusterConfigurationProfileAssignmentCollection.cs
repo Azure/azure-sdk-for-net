@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Automanage.Samples
             string configurationProfileAssignmentName = "default";
             AutomanageConfigurationProfileAssignmentData data = new AutomanageConfigurationProfileAssignmentData()
             {
-                Properties = new ConfigurationProfileAssignmentProperties()
+                Properties = new AutomanageConfigurationProfileAssignmentProperties()
                 {
                     ConfigurationProfile = new ResourceIdentifier("/providers/Microsoft.Automanage/bestPractices/AzureBestPracticesProduction"),
                 },

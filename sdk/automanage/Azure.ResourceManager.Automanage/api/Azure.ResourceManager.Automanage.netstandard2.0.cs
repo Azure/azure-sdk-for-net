@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Automanage
     {
         public AutomanageConfigurationProfileAssignmentData() { }
         public string ManagedBy { get { throw null; } }
-        public Azure.ResourceManager.Automanage.Models.ConfigurationProfileAssignmentProperties Properties { get { throw null; } set { } }
+        public Azure.ResourceManager.Automanage.Models.AutomanageConfigurationProfileAssignmentProperties Properties { get { throw null; } set { } }
     }
     public partial class AutomanageConfigurationProfileAssignmentReportData : Azure.ResourceManager.Models.ResourceData
     {
@@ -327,6 +327,13 @@ namespace Azure.ResourceManager.Automanage
 }
 namespace Azure.ResourceManager.Automanage.Models
 {
+    public partial class AutomanageConfigurationProfileAssignmentProperties
+    {
+        public AutomanageConfigurationProfileAssignmentProperties() { }
+        public Azure.Core.ResourceIdentifier ConfigurationProfile { get { throw null; } set { } }
+        public string Status { get { throw null; } }
+        public Azure.Core.ResourceIdentifier TargetId { get { throw null; } }
+    }
     public partial class AutomanageConfigurationProfilePatch : Azure.ResourceManager.Automanage.Models.AutomanageResourceUpdateDetails
     {
         public AutomanageConfigurationProfilePatch() { }
@@ -342,13 +349,6 @@ namespace Azure.ResourceManager.Automanage.Models
         public AutomanageServicePrincipalData() { }
         public bool? IsAuthorizationSet { get { throw null; } }
         public string ServicePrincipalId { get { throw null; } }
-    }
-    public partial class ConfigurationProfileAssignmentProperties
-    {
-        public ConfigurationProfileAssignmentProperties() { }
-        public Azure.Core.ResourceIdentifier ConfigurationProfile { get { throw null; } set { } }
-        public string Status { get { throw null; } }
-        public Azure.Core.ResourceIdentifier TargetId { get { throw null; } }
     }
     public partial class ConfigurationProfileAssignmentReportResourceDetails : Azure.ResourceManager.Models.ResourceData
     {
