@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.LabServices.Tests
     public class LabPlanTests : LabServicesManagementTestBase
     {
         public LabPlanTests(bool isAsync)
-                    : base(isAsync, RecordedTestMode.Record)
+                    : base(isAsync)//, RecordedTestMode.Record)
         {
         }
 
