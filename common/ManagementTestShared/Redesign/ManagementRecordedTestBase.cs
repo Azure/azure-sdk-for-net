@@ -3,6 +3,7 @@
 
 using Azure.Core;
 using Azure.Core.TestFramework;
+using Azure.Core.TestFramework.Models;
 using Azure.ResourceManager.Resources;
 using Castle.DynamicProxy;
 using NUnit.Framework;
@@ -38,7 +39,7 @@ namespace Azure.ResourceManager.TestFramework
         private ResourceType _resourceType;
         protected string ApiVersion { get; }
 
-        protected ManagementRecordedTestBase(bool isAsync, RecordedTestMode? mode = default)
+        protected ManagementRecordedTestBase(bool isAsync, RecordedTestMode? mode = default, bool ignoreArmCoreDependencyVersions = true)
             : base(isAsync, mode)
         {
             AdditionalInterceptors = new[] { new ManagementInterceptor(this) };
@@ -46,10 +47,14 @@ namespace Azure.ResourceManager.TestFramework
             SessionEnvironment = new TEnvironment();
             SessionEnvironment.Mode = Mode;
             Initialize();
+            if (ignoreArmCoreDependencyVersions)
+            {
+                IgnoreArmCoreDependencyVersions();
+            }
         }
 
-        protected ManagementRecordedTestBase(bool isAsync, ResourceType resourceType, string apiVersion, RecordedTestMode? mode = default)
-            : this(isAsync, mode)
+        protected ManagementRecordedTestBase(bool isAsync, ResourceType resourceType, string apiVersion, RecordedTestMode? mode = default, bool ignoreArmCoreDependencyVersions = true)
+            : this(isAsync, mode, ignoreArmCoreDependencyVersions)
         {
             _resourceType = resourceType;
             ApiVersion = apiVersion;
@@ -66,6 +71,38 @@ namespace Azure.ResourceManager.TestFramework
             _waitForCleanup = Mode == RecordedTestMode.Live ? WaitUntil.Completed : WaitUntil.Started;
         }
 
+        private void IgnoreArmCoreDependencyVersions()
+        {
+            // Ignore the api-version of resource group operations
+            UriRegexSanitizers.Add(new UriRegexSanitizer(
+                @"/resourcegroups/[^/]+api-version=(?<group>[a-z0-9-]+)", "**"
+            )
+            {
+                GroupForReplace = "group"
+            });
+            // Ignore the api-version of LRO query status operation for resource group deletion
+            UriRegexSanitizers.Add(new UriRegexSanitizer(
+                @"/subscriptions/[^/]+/operationresults/[^/]+api-version=(?<group>[a-z0-9-]+)", "**"
+            )
+            {
+                GroupForReplace = "group"
+            });
+            // Ignore the api-version of TagResource operations
+            UriRegexSanitizers.Add(new UriRegexSanitizer(
+                @"/providers/Microsoft.Resources/tags/default\?api-version=(?<group>[a-z0-9-]+)", "**"
+            )
+            {
+                GroupForReplace = "group"
+            });
+            // Ignore the api-version of the operation to query resource providers
+            UriRegexSanitizers.Add(new UriRegexSanitizer(
+                @"/providers/([^/]+)api-version=(?<group>[a-z0-9-]+)", "**"
+            )
+            {
+                GroupForReplace = "group"
+            });
+        }
+
         private ArmClient GetCleanupClient()
         {
             if (Mode != RecordedTestMode.Playback)
@@ -73,7 +110,7 @@ namespace Azure.ResourceManager.TestFramework
                 return new ArmClient(
                     TestEnvironment.Credential,
                     TestEnvironment.SubscriptionId,
-                    new ArmClientOptions() { Environment = GetEnvironment(TestEnvironment.ResourceManagerUrl)});
+                    new ArmClientOptions() { Environment = GetEnvironment(TestEnvironment.ResourceManagerUrl) });
             }
             return null;
         }

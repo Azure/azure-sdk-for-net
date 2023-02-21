@@ -17,36 +17,36 @@ namespace Azure.ResourceManager.OperationalInsights
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(RetentionInDays))
             {
-                writer.WritePropertyName("retentionInDays");
+                writer.WritePropertyName("retentionInDays"u8);
                 writer.WriteNumberValue(RetentionInDays.Value);
             }
             if (Optional.IsDefined(TotalRetentionInDays))
             {
-                writer.WritePropertyName("totalRetentionInDays");
+                writer.WritePropertyName("totalRetentionInDays"u8);
                 writer.WriteNumberValue(TotalRetentionInDays.Value);
             }
             if (Optional.IsDefined(SearchResults))
             {
-                writer.WritePropertyName("searchResults");
+                writer.WritePropertyName("searchResults"u8);
                 writer.WriteObjectValue(SearchResults);
             }
             if (Optional.IsDefined(RestoredLogs))
             {
-                writer.WritePropertyName("restoredLogs");
+                writer.WritePropertyName("restoredLogs"u8);
                 writer.WriteObjectValue(RestoredLogs);
             }
             if (Optional.IsDefined(Plan))
             {
-                writer.WritePropertyName("plan");
+                writer.WritePropertyName("plan"u8);
                 writer.WriteStringValue(Plan.Value.ToString());
             }
             if (Optional.IsDefined(Schema))
             {
-                writer.WritePropertyName("schema");
+                writer.WritePropertyName("schema"u8);
                 writer.WriteObjectValue(Schema);
             }
             writer.WriteEndObject();
@@ -73,22 +73,22 @@ namespace Azure.ResourceManager.OperationalInsights
             Optional<TotalRetentionInDaysAsDefaultState> totalRetentionInDaysAsDefault = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.OperationalInsights
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.OperationalInsights
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("retentionInDays"))
+                        if (property0.NameEquals("retentionInDays"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.OperationalInsights
                             retentionInDays = property0.Value.GetInt32();
                             continue;
                         }
-                        if (property0.NameEquals("totalRetentionInDays"))
+                        if (property0.NameEquals("totalRetentionInDays"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.OperationalInsights
                             totalRetentionInDays = property0.Value.GetInt32();
                             continue;
                         }
-                        if (property0.NameEquals("archiveRetentionInDays"))
+                        if (property0.NameEquals("archiveRetentionInDays"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.OperationalInsights
                             archiveRetentionInDays = property0.Value.GetInt32();
                             continue;
                         }
-                        if (property0.NameEquals("searchResults"))
+                        if (property0.NameEquals("searchResults"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.OperationalInsights
                             searchResults = OperationalInsightsTableSearchResults.DeserializeOperationalInsightsTableSearchResults(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("restoredLogs"))
+                        if (property0.NameEquals("restoredLogs"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.OperationalInsights
                             restoredLogs = OperationalInsightsTableRestoredLogs.DeserializeOperationalInsightsTableRestoredLogs(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("resultStatistics"))
+                        if (property0.NameEquals("resultStatistics"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.OperationalInsights
                             resultStatistics = OperationalInsightsTableResultStatistics.DeserializeOperationalInsightsTableResultStatistics(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("plan"))
+                        if (property0.NameEquals("plan"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -177,12 +177,12 @@ namespace Azure.ResourceManager.OperationalInsights
                             plan = new OperationalInsightsTablePlan(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("lastPlanModifiedDate"))
+                        if (property0.NameEquals("lastPlanModifiedDate"u8))
                         {
                             lastPlanModifiedDate = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("schema"))
+                        if (property0.NameEquals("schema"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.OperationalInsights
                             schema = OperationalInsightsSchema.DeserializeOperationalInsightsSchema(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("provisioningState"))
+                        if (property0.NameEquals("provisioningState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.OperationalInsights
                             provisioningState = new OperationalInsightsTableProvisioningState(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("retentionInDaysAsDefault"))
+                        if (property0.NameEquals("retentionInDaysAsDefault"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.OperationalInsights
                             retentionInDaysAsDefault = new RetentionInDaysAsDefaultState(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("totalRetentionInDaysAsDefault"))
+                        if (property0.NameEquals("totalRetentionInDaysAsDefault"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

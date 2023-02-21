@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Network.Models
             Optional<IReadOnlyList<VirtualWanSecurityProvider>> supportedProviders = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("supportedProviders"))
+                if (property.NameEquals("supportedProviders"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

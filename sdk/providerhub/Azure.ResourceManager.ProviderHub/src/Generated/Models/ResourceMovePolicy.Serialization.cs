@@ -17,17 +17,17 @@ namespace Azure.ResourceManager.ProviderHub.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(ValidationRequired))
             {
-                writer.WritePropertyName("validationRequired");
+                writer.WritePropertyName("validationRequired"u8);
                 writer.WriteBooleanValue(ValidationRequired.Value);
             }
             if (Optional.IsDefined(CrossResourceGroupMoveEnabled))
             {
-                writer.WritePropertyName("crossResourceGroupMoveEnabled");
+                writer.WritePropertyName("crossResourceGroupMoveEnabled"u8);
                 writer.WriteBooleanValue(CrossResourceGroupMoveEnabled.Value);
             }
             if (Optional.IsDefined(CrossSubscriptionMoveEnabled))
             {
-                writer.WritePropertyName("crossSubscriptionMoveEnabled");
+                writer.WritePropertyName("crossSubscriptionMoveEnabled"u8);
                 writer.WriteBooleanValue(CrossSubscriptionMoveEnabled.Value);
             }
             writer.WriteEndObject();
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             Optional<bool> crossSubscriptionMoveEnabled = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("validationRequired"))
+                if (property.NameEquals("validationRequired"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     validationRequired = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("crossResourceGroupMoveEnabled"))
+                if (property.NameEquals("crossResourceGroupMoveEnabled"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     crossResourceGroupMoveEnabled = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("crossSubscriptionMoveEnabled"))
+                if (property.NameEquals("crossSubscriptionMoveEnabled"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

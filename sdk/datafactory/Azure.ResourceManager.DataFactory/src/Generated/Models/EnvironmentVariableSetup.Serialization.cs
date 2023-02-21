@@ -15,13 +15,13 @@ namespace Azure.ResourceManager.DataFactory.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("type");
+            writer.WritePropertyName("type"u8);
             writer.WriteStringValue(CustomSetupBaseType);
-            writer.WritePropertyName("typeProperties");
+            writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
-            writer.WritePropertyName("variableName");
+            writer.WritePropertyName("variableName"u8);
             writer.WriteStringValue(VariableName);
-            writer.WritePropertyName("variableValue");
+            writer.WritePropertyName("variableValue"u8);
             writer.WriteStringValue(VariableValue);
             writer.WriteEndObject();
             writer.WriteEndObject();
@@ -34,12 +34,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             string variableValue = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("typeProperties"))
+                if (property.NameEquals("typeProperties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -48,12 +48,12 @@ namespace Azure.ResourceManager.DataFactory.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("variableName"))
+                        if (property0.NameEquals("variableName"u8))
                         {
                             variableName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("variableValue"))
+                        if (property0.NameEquals("variableValue"u8))
                         {
                             variableValue = property0.Value.GetString();
                             continue;

@@ -18,7 +18,7 @@ namespace Azure.Maps.Search.Models
             Optional<IReadOnlyList<PointOfInterestCategory>> poiCategories = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("poiCategories"))
+                if (property.NameEquals("poiCategories"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

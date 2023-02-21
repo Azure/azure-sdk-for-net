@@ -30,22 +30,22 @@ namespace Azure.ResourceManager.Marketplace.Models
             Optional<IReadOnlyList<PrivateStorePlan>> plans = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("uniqueOfferId"))
+                if (property.NameEquals("uniqueOfferId"u8))
                 {
                     uniqueOfferId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("offerDisplayName"))
+                if (property.NameEquals("offerDisplayName"u8))
                 {
                     offerDisplayName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("publisherDisplayName"))
+                if (property.NameEquals("publisherDisplayName"u8))
                 {
                     publisherDisplayName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("eTag"))
+                if (property.NameEquals("eTag"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                     eTag = new ETag(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("privateStoreId"))
+                if (property.NameEquals("privateStoreId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                     privateStoreId = property.Value.GetGuid();
                     continue;
                 }
-                if (property.NameEquals("createdAt"))
+                if (property.NameEquals("createdAt"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                     createdAt = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("modifiedAt"))
+                if (property.NameEquals("modifiedAt"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                     modifiedAt = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("specificPlanIdsLimitation"))
+                if (property.NameEquals("specificPlanIdsLimitation"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                     specificPlanIdsLimitation = array;
                     continue;
                 }
-                if (property.NameEquals("updateSuppressedDueIdempotence"))
+                if (property.NameEquals("updateSuppressedDueIdempotence"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                     updateSuppressedDueIdempotence = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("iconFileUris"))
+                if (property.NameEquals("iconFileUris"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                     iconFileUris = dictionary;
                     continue;
                 }
-                if (property.NameEquals("plans"))
+                if (property.NameEquals("plans"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

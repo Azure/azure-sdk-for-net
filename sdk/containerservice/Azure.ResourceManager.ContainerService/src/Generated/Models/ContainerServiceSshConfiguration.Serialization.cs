@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("publicKeys");
+            writer.WritePropertyName("publicKeys"u8);
             writer.WriteStartArray();
             foreach (var item in PublicKeys)
             {
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             IList<ContainerServiceSshPublicKey> publicKeys = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("publicKeys"))
+                if (property.NameEquals("publicKeys"u8))
                 {
                     List<ContainerServiceSshPublicKey> array = new List<ContainerServiceSshPublicKey>();
                     foreach (var item in property.Value.EnumerateArray())

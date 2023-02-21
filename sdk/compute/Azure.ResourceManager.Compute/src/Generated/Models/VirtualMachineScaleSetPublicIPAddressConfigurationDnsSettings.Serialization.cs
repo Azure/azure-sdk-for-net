@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Compute.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("domainNameLabel");
+            writer.WritePropertyName("domainNameLabel"u8);
             writer.WriteStringValue(DomainNameLabel);
             writer.WriteEndObject();
         }
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Compute.Models
             string domainNameLabel = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("domainNameLabel"))
+                if (property.NameEquals("domainNameLabel"u8))
                 {
                     domainNameLabel = property.Value.GetString();
                     continue;

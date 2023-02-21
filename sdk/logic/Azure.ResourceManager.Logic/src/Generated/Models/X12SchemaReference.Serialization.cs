@@ -15,16 +15,16 @@ namespace Azure.ResourceManager.Logic.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("messageId");
+            writer.WritePropertyName("messageId"u8);
             writer.WriteStringValue(MessageId);
             if (Optional.IsDefined(SenderApplicationId))
             {
-                writer.WritePropertyName("senderApplicationId");
+                writer.WritePropertyName("senderApplicationId"u8);
                 writer.WriteStringValue(SenderApplicationId);
             }
-            writer.WritePropertyName("schemaVersion");
+            writer.WritePropertyName("schemaVersion"u8);
             writer.WriteStringValue(SchemaVersion);
-            writer.WritePropertyName("schemaName");
+            writer.WritePropertyName("schemaName"u8);
             writer.WriteStringValue(SchemaName);
             writer.WriteEndObject();
         }
@@ -37,22 +37,22 @@ namespace Azure.ResourceManager.Logic.Models
             string schemaName = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("messageId"))
+                if (property.NameEquals("messageId"u8))
                 {
                     messageId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("senderApplicationId"))
+                if (property.NameEquals("senderApplicationId"u8))
                 {
                     senderApplicationId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("schemaVersion"))
+                if (property.NameEquals("schemaVersion"u8))
                 {
                     schemaVersion = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("schemaName"))
+                if (property.NameEquals("schemaName"u8))
                 {
                     schemaName = property.Value.GetString();
                     continue;

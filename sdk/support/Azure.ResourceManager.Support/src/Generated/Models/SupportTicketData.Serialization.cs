@@ -18,71 +18,71 @@ namespace Azure.ResourceManager.Support
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(SupportTicketId))
             {
-                writer.WritePropertyName("supportTicketId");
+                writer.WritePropertyName("supportTicketId"u8);
                 writer.WriteStringValue(SupportTicketId);
             }
             if (Optional.IsDefined(Description))
             {
-                writer.WritePropertyName("description");
+                writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
             if (Optional.IsDefined(ProblemClassificationId))
             {
-                writer.WritePropertyName("problemClassificationId");
+                writer.WritePropertyName("problemClassificationId"u8);
                 writer.WriteStringValue(ProblemClassificationId);
             }
             if (Optional.IsDefined(Severity))
             {
-                writer.WritePropertyName("severity");
+                writer.WritePropertyName("severity"u8);
                 writer.WriteStringValue(Severity.Value.ToString());
             }
             if (Optional.IsDefined(Require24X7Response))
             {
-                writer.WritePropertyName("require24X7Response");
+                writer.WritePropertyName("require24X7Response"u8);
                 writer.WriteBooleanValue(Require24X7Response.Value);
             }
             if (Optional.IsDefined(ContactDetails))
             {
-                writer.WritePropertyName("contactDetails");
+                writer.WritePropertyName("contactDetails"u8);
                 writer.WriteObjectValue(ContactDetails);
             }
             if (Optional.IsDefined(ServiceLevelAgreement))
             {
-                writer.WritePropertyName("serviceLevelAgreement");
+                writer.WritePropertyName("serviceLevelAgreement"u8);
                 writer.WriteObjectValue(ServiceLevelAgreement);
             }
             if (Optional.IsDefined(SupportEngineer))
             {
-                writer.WritePropertyName("supportEngineer");
+                writer.WritePropertyName("supportEngineer"u8);
                 writer.WriteObjectValue(SupportEngineer);
             }
             if (Optional.IsDefined(Title))
             {
-                writer.WritePropertyName("title");
+                writer.WritePropertyName("title"u8);
                 writer.WriteStringValue(Title);
             }
             if (Optional.IsDefined(ProblemStartOn))
             {
-                writer.WritePropertyName("problemStartTime");
+                writer.WritePropertyName("problemStartTime"u8);
                 writer.WriteStringValue(ProblemStartOn.Value, "O");
             }
             if (Optional.IsDefined(ServiceId))
             {
-                writer.WritePropertyName("serviceId");
+                writer.WritePropertyName("serviceId"u8);
                 writer.WriteStringValue(ServiceId);
             }
             if (Optional.IsDefined(TechnicalTicketDetails))
             {
-                writer.WritePropertyName("technicalTicketDetails");
+                writer.WritePropertyName("technicalTicketDetails"u8);
                 writer.WriteObjectValue(TechnicalTicketDetails);
             }
             if (Optional.IsDefined(QuotaTicketDetails))
             {
-                writer.WritePropertyName("quotaTicketDetails");
+                writer.WritePropertyName("quotaTicketDetails"u8);
                 writer.WriteObjectValue(QuotaTicketDetails);
             }
             writer.WriteEndObject();
@@ -117,22 +117,22 @@ namespace Azure.ResourceManager.Support
             Optional<QuotaTicketDetails> quotaTicketDetails = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.Support
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -151,27 +151,27 @@ namespace Azure.ResourceManager.Support
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("supportTicketId"))
+                        if (property0.NameEquals("supportTicketId"u8))
                         {
                             supportTicketId = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("description"))
+                        if (property0.NameEquals("description"u8))
                         {
                             description = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("problemClassificationId"))
+                        if (property0.NameEquals("problemClassificationId"u8))
                         {
                             problemClassificationId = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("problemClassificationDisplayName"))
+                        if (property0.NameEquals("problemClassificationDisplayName"u8))
                         {
                             problemClassificationDisplayName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("severity"))
+                        if (property0.NameEquals("severity"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -181,12 +181,12 @@ namespace Azure.ResourceManager.Support
                             severity = new SupportSeverityLevel(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("enrollmentId"))
+                        if (property0.NameEquals("enrollmentId"u8))
                         {
                             enrollmentId = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("require24X7Response"))
+                        if (property0.NameEquals("require24X7Response"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.Support
                             require24X7Response = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("contactDetails"))
+                        if (property0.NameEquals("contactDetails"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.Support
                             contactDetails = SupportContactProfile.DeserializeSupportContactProfile(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("serviceLevelAgreement"))
+                        if (property0.NameEquals("serviceLevelAgreement"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.Support
                             serviceLevelAgreement = SupportServiceLevelAgreement.DeserializeSupportServiceLevelAgreement(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("supportEngineer"))
+                        if (property0.NameEquals("supportEngineer"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -226,17 +226,17 @@ namespace Azure.ResourceManager.Support
                             supportEngineer = SupportEngineer.DeserializeSupportEngineer(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("supportPlanType"))
+                        if (property0.NameEquals("supportPlanType"u8))
                         {
                             supportPlanType = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("title"))
+                        if (property0.NameEquals("title"u8))
                         {
                             title = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("problemStartTime"))
+                        if (property0.NameEquals("problemStartTime"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -246,22 +246,22 @@ namespace Azure.ResourceManager.Support
                             problemStartTime = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("serviceId"))
+                        if (property0.NameEquals("serviceId"u8))
                         {
                             serviceId = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("serviceDisplayName"))
+                        if (property0.NameEquals("serviceDisplayName"u8))
                         {
                             serviceDisplayName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("status"))
+                        if (property0.NameEquals("status"u8))
                         {
                             status = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("createdDate"))
+                        if (property0.NameEquals("createdDate"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -271,7 +271,7 @@ namespace Azure.ResourceManager.Support
                             createdDate = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("modifiedDate"))
+                        if (property0.NameEquals("modifiedDate"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -281,7 +281,7 @@ namespace Azure.ResourceManager.Support
                             modifiedDate = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("technicalTicketDetails"))
+                        if (property0.NameEquals("technicalTicketDetails"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -291,7 +291,7 @@ namespace Azure.ResourceManager.Support
                             technicalTicketDetails = TechnicalTicketDetails.DeserializeTechnicalTicketDetails(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("quotaTicketDetails"))
+                        if (property0.NameEquals("quotaTicketDetails"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

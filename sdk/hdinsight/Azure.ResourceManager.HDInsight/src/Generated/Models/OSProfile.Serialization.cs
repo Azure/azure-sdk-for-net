@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(LinuxProfile))
             {
-                writer.WritePropertyName("linuxOperatingSystemProfile");
+                writer.WritePropertyName("linuxOperatingSystemProfile"u8);
                 writer.WriteObjectValue(LinuxProfile);
             }
             writer.WriteEndObject();
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             Optional<HDInsightLinuxOSProfile> linuxOperatingSystemProfile = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("linuxOperatingSystemProfile"))
+                if (property.NameEquals("linuxOperatingSystemProfile"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

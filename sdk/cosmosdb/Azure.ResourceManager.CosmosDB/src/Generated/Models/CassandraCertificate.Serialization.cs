@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Pem))
             {
-                writer.WritePropertyName("pem");
+                writer.WritePropertyName("pem"u8);
                 writer.WriteStringValue(Pem);
             }
             writer.WriteEndObject();
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             Optional<string> pem = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("pem"))
+                if (property.NameEquals("pem"u8))
                 {
                     pem = property.Value.GetString();
                     continue;

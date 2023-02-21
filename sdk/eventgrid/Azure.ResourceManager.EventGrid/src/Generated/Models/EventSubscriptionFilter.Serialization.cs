@@ -18,17 +18,17 @@ namespace Azure.ResourceManager.EventGrid.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(SubjectBeginsWith))
             {
-                writer.WritePropertyName("subjectBeginsWith");
+                writer.WritePropertyName("subjectBeginsWith"u8);
                 writer.WriteStringValue(SubjectBeginsWith);
             }
             if (Optional.IsDefined(SubjectEndsWith))
             {
-                writer.WritePropertyName("subjectEndsWith");
+                writer.WritePropertyName("subjectEndsWith"u8);
                 writer.WriteStringValue(SubjectEndsWith);
             }
             if (Optional.IsCollectionDefined(IncludedEventTypes))
             {
-                writer.WritePropertyName("includedEventTypes");
+                writer.WritePropertyName("includedEventTypes"u8);
                 writer.WriteStartArray();
                 foreach (var item in IncludedEventTypes)
                 {
@@ -38,17 +38,17 @@ namespace Azure.ResourceManager.EventGrid.Models
             }
             if (Optional.IsDefined(IsSubjectCaseSensitive))
             {
-                writer.WritePropertyName("isSubjectCaseSensitive");
+                writer.WritePropertyName("isSubjectCaseSensitive"u8);
                 writer.WriteBooleanValue(IsSubjectCaseSensitive.Value);
             }
             if (Optional.IsDefined(IsAdvancedFilteringOnArraysEnabled))
             {
-                writer.WritePropertyName("enableAdvancedFilteringOnArrays");
+                writer.WritePropertyName("enableAdvancedFilteringOnArrays"u8);
                 writer.WriteBooleanValue(IsAdvancedFilteringOnArraysEnabled.Value);
             }
             if (Optional.IsCollectionDefined(AdvancedFilters))
             {
-                writer.WritePropertyName("advancedFilters");
+                writer.WritePropertyName("advancedFilters"u8);
                 writer.WriteStartArray();
                 foreach (var item in AdvancedFilters)
                 {
@@ -69,17 +69,17 @@ namespace Azure.ResourceManager.EventGrid.Models
             Optional<IList<AdvancedFilter>> advancedFilters = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("subjectBeginsWith"))
+                if (property.NameEquals("subjectBeginsWith"u8))
                 {
                     subjectBeginsWith = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("subjectEndsWith"))
+                if (property.NameEquals("subjectEndsWith"u8))
                 {
                     subjectEndsWith = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("includedEventTypes"))
+                if (property.NameEquals("includedEventTypes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                     includedEventTypes = array;
                     continue;
                 }
-                if (property.NameEquals("isSubjectCaseSensitive"))
+                if (property.NameEquals("isSubjectCaseSensitive"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                     isSubjectCaseSensitive = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("enableAdvancedFilteringOnArrays"))
+                if (property.NameEquals("enableAdvancedFilteringOnArrays"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                     enableAdvancedFilteringOnArrays = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("advancedFilters"))
+                if (property.NameEquals("advancedFilters"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

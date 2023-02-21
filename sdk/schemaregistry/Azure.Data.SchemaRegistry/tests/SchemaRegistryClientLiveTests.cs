@@ -10,6 +10,7 @@ using Azure.Core;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 using System.Collections.Generic;
+using System.Net;
 
 namespace Azure.Data.SchemaRegistry.Tests
 {
@@ -26,19 +27,28 @@ namespace Azure.Data.SchemaRegistry.Tests
         private SchemaRegistryClient CreateClient(string format)
         {
             string endpoint;
-            switch (format)
+            switch (format, _serviceVersion)
             {
-                case Json:
+                case (Avro, SchemaRegistryClientOptions.ServiceVersion.V2022_10):
+                    endpoint = TestEnvironment.SchemaRegistryEndpointAvro;
+                    break;
+                case (Avro, SchemaRegistryClientOptions.ServiceVersion.V2021_10):
+                    endpoint = TestEnvironment.SchemaRegistryEndpointAvro2021;
+                    break;
+                case (Json, SchemaRegistryClientOptions.ServiceVersion.V2022_10):
                     endpoint = TestEnvironment.SchemaRegistryEndpointJson;
                     break;
-                case Avro:
-                    endpoint = TestEnvironment.SchemaRegistryEndpointAvro;
+                case (Json, SchemaRegistryClientOptions.ServiceVersion.V2021_10):
+                    endpoint = TestEnvironment.SchemaRegistryEndpointJson2021;
                     break;
-                case Custom:
+                case (Custom, SchemaRegistryClientOptions.ServiceVersion.V2022_10):
                     endpoint = TestEnvironment.SchemaRegistryEndpointCustom;
                     break;
+                case (Custom, SchemaRegistryClientOptions.ServiceVersion.V2021_10):
+                    endpoint = TestEnvironment.SchemaRegistryEndpointCustom2021;
+                    break;
                 default:
-                    endpoint = TestEnvironment.SchemaRegistryEndpointAvro;
+                    endpoint= TestEnvironment.SchemaRegistryEndpointAvro;
                     break;
             }
 
@@ -246,7 +256,9 @@ namespace Azure.Data.SchemaRegistry.Tests
             Assert.IsTrue(Guid.TryParse(properties.Id, out Guid _));
             Assert.AreEqual(schemaFormat, properties.Format);
             Assert.AreEqual(schemaName, properties.Name);
-            Assert.AreEqual(TestEnvironment.SchemaRegistryGroup, properties.GroupName);
+            string expectedGroupName = TestEnvironment.SchemaRegistryGroup;
+
+            Assert.AreEqual(expectedGroupName, properties.GroupName);
         }
 
         private void AssertPropertiesAreEqual(SchemaProperties registeredSchema, SchemaProperties schema, SchemaFormat schemaFormat)

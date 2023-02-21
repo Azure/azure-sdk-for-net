@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Compute.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(DiskTypes))
             {
-                writer.WritePropertyName("diskTypes");
+                writer.WritePropertyName("diskTypes"u8);
                 writer.WriteStartArray();
                 foreach (var item in DiskTypes)
                 {
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Compute.Models
             Optional<IList<string>> diskTypes = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("diskTypes"))
+                if (property.NameEquals("diskTypes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <summary> Initializes a new instance of YearlyRetentionSchedule. </summary>
         public YearlyRetentionSchedule()
         {
-            MonthsOfYear = new ChangeTrackingList<MonthOfYear>();
+            MonthsOfYear = new ChangeTrackingList<BackupMonthOfYear>();
             RetentionTimes = new ChangeTrackingList<DateTimeOffset>();
         }
 
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="retentionScheduleWeekly"> Weekly retention format for yearly retention policy. </param>
         /// <param name="retentionTimes"> Retention times of retention policy. </param>
         /// <param name="retentionDuration"> Retention duration of retention Policy. </param>
-        internal YearlyRetentionSchedule(RetentionScheduleFormat? retentionScheduleFormatType, IList<MonthOfYear> monthsOfYear, DailyRetentionFormat retentionScheduleDaily, WeeklyRetentionFormat retentionScheduleWeekly, IList<DateTimeOffset> retentionTimes, RetentionDuration retentionDuration)
+        internal YearlyRetentionSchedule(RetentionScheduleFormat? retentionScheduleFormatType, IList<BackupMonthOfYear> monthsOfYear, DailyRetentionFormat retentionScheduleDaily, WeeklyRetentionFormat retentionScheduleWeekly, IList<DateTimeOffset> retentionTimes, RetentionDuration retentionDuration)
         {
             RetentionScheduleFormatType = retentionScheduleFormatType;
             MonthsOfYear = monthsOfYear;
@@ -41,11 +41,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <summary> Retention schedule format for yearly retention policy. </summary>
         public RetentionScheduleFormat? RetentionScheduleFormatType { get; set; }
         /// <summary> List of months of year of yearly retention policy. </summary>
-        public IList<MonthOfYear> MonthsOfYear { get; }
+        public IList<BackupMonthOfYear> MonthsOfYear { get; }
         /// <summary> Daily retention format for yearly retention policy. </summary>
         internal DailyRetentionFormat RetentionScheduleDaily { get; set; }
         /// <summary> List of days of the month. </summary>
-        public IList<Day> RetentionScheduleDailyDaysOfTheMonth
+        public IList<BackupDay> RetentionScheduleDailyDaysOfTheMonth
         {
             get
             {

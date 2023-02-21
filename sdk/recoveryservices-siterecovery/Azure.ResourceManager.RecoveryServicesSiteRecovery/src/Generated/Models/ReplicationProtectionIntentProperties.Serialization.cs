@@ -22,22 +22,22 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<ReplicationProtectionIntentProviderSpecificSettings> providerSpecificDetails = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("friendlyName"))
+                if (property.NameEquals("friendlyName"u8))
                 {
                     friendlyName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("jobId"))
+                if (property.NameEquals("jobId"u8))
                 {
                     jobId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("jobState"))
+                if (property.NameEquals("jobState"u8))
                 {
                     jobState = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("isActive"))
+                if (property.NameEquals("isActive"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -47,12 +47,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     isActive = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("creationTimeUTC"))
+                if (property.NameEquals("creationTimeUTC"u8))
                 {
                     creationTimeUTC = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("providerSpecificDetails"))
+                if (property.NameEquals("providerSpecificDetails"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -17,22 +17,22 @@ namespace Azure.ResourceManager.AppService.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(CpuUsage))
             {
-                writer.WritePropertyName("cpuUsage");
+                writer.WritePropertyName("cpuUsage"u8);
                 writer.WriteObjectValue(CpuUsage);
             }
             if (Optional.IsDefined(SystemCpuUsage))
             {
-                writer.WritePropertyName("systemCpuUsage");
+                writer.WritePropertyName("systemCpuUsage"u8);
                 writer.WriteNumberValue(SystemCpuUsage.Value);
             }
             if (Optional.IsDefined(OnlineCpuCount))
             {
-                writer.WritePropertyName("onlineCpuCount");
+                writer.WritePropertyName("onlineCpuCount"u8);
                 writer.WriteNumberValue(OnlineCpuCount.Value);
             }
             if (Optional.IsDefined(ThrottlingData))
             {
-                writer.WritePropertyName("throttlingData");
+                writer.WritePropertyName("throttlingData"u8);
                 writer.WriteObjectValue(ThrottlingData);
             }
             writer.WriteEndObject();
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<ContainerThrottlingInfo> throttlingData = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("cpuUsage"))
+                if (property.NameEquals("cpuUsage"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.AppService.Models
                     cpuUsage = ContainerCpuUsage.DeserializeContainerCpuUsage(property.Value);
                     continue;
                 }
-                if (property.NameEquals("systemCpuUsage"))
+                if (property.NameEquals("systemCpuUsage"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.AppService.Models
                     systemCpuUsage = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("onlineCpuCount"))
+                if (property.NameEquals("onlineCpuCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.AppService.Models
                     onlineCpuCount = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("throttlingData"))
+                if (property.NameEquals("throttlingData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

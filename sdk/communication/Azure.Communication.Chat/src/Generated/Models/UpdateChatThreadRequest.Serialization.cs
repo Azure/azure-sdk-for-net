@@ -17,7 +17,7 @@ namespace Azure.Communication.Chat
             writer.WriteStartObject();
             if (Optional.IsDefined(Topic))
             {
-                writer.WritePropertyName("topic");
+                writer.WritePropertyName("topic"u8);
                 writer.WriteStringValue(Topic);
             }
             writer.WriteEndObject();

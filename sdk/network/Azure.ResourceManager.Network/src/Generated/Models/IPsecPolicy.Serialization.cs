@@ -15,21 +15,21 @@ namespace Azure.ResourceManager.Network.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("saLifeTimeSeconds");
+            writer.WritePropertyName("saLifeTimeSeconds"u8);
             writer.WriteNumberValue(SaLifeTimeSeconds);
-            writer.WritePropertyName("saDataSizeKilobytes");
+            writer.WritePropertyName("saDataSizeKilobytes"u8);
             writer.WriteNumberValue(SaDataSizeKilobytes);
-            writer.WritePropertyName("ipsecEncryption");
+            writer.WritePropertyName("ipsecEncryption"u8);
             writer.WriteStringValue(IPsecEncryption.ToString());
-            writer.WritePropertyName("ipsecIntegrity");
+            writer.WritePropertyName("ipsecIntegrity"u8);
             writer.WriteStringValue(IPsecIntegrity.ToString());
-            writer.WritePropertyName("ikeEncryption");
+            writer.WritePropertyName("ikeEncryption"u8);
             writer.WriteStringValue(IkeEncryption.ToString());
-            writer.WritePropertyName("ikeIntegrity");
+            writer.WritePropertyName("ikeIntegrity"u8);
             writer.WriteStringValue(IkeIntegrity.ToString());
-            writer.WritePropertyName("dhGroup");
+            writer.WritePropertyName("dhGroup"u8);
             writer.WriteStringValue(DhGroup.ToString());
-            writer.WritePropertyName("pfsGroup");
+            writer.WritePropertyName("pfsGroup"u8);
             writer.WriteStringValue(PfsGroup.ToString());
             writer.WriteEndObject();
         }
@@ -46,42 +46,42 @@ namespace Azure.ResourceManager.Network.Models
             PfsGroup pfsGroup = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("saLifeTimeSeconds"))
+                if (property.NameEquals("saLifeTimeSeconds"u8))
                 {
                     saLifeTimeSeconds = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("saDataSizeKilobytes"))
+                if (property.NameEquals("saDataSizeKilobytes"u8))
                 {
                     saDataSizeKilobytes = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("ipsecEncryption"))
+                if (property.NameEquals("ipsecEncryption"u8))
                 {
                     ipsecEncryption = new IPsecEncryption(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("ipsecIntegrity"))
+                if (property.NameEquals("ipsecIntegrity"u8))
                 {
                     ipsecIntegrity = new IPsecIntegrity(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("ikeEncryption"))
+                if (property.NameEquals("ikeEncryption"u8))
                 {
                     ikeEncryption = new IkeEncryption(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("ikeIntegrity"))
+                if (property.NameEquals("ikeIntegrity"u8))
                 {
                     ikeIntegrity = new IkeIntegrity(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("dhGroup"))
+                if (property.NameEquals("dhGroup"u8))
                 {
                     dhGroup = new DHGroup(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("pfsGroup"))
+                if (property.NameEquals("pfsGroup"u8))
                 {
                     pfsGroup = new PfsGroup(property.Value.GetString());
                     continue;

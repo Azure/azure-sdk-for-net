@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Reservations.Models
             Optional<PurchasePrice> p1Y = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("p1Y"))
+                if (property.NameEquals("p1Y"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

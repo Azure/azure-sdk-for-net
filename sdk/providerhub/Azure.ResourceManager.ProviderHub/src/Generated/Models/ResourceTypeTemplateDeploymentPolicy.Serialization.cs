@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.ProviderHub.Models
             TemplateDeploymentPreflightOption preflightOptions = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("capabilities"))
+                if (property.NameEquals("capabilities"u8))
                 {
                     capabilities = new TemplateDeploymentCapability(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("preflightOptions"))
+                if (property.NameEquals("preflightOptions"u8))
                 {
                     preflightOptions = new TemplateDeploymentPreflightOption(property.Value.GetString());
                     continue;

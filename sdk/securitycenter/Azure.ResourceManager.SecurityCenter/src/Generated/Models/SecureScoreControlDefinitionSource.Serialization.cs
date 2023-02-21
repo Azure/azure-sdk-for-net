@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             Optional<SecurityControlType> sourceType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("sourceType"))
+                if (property.NameEquals("sourceType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

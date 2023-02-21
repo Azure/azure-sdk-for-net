@@ -17,8 +17,8 @@ namespace Azure.ResourceManager.Compute.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("sourceVault");
-            JsonSerializer.Serialize(writer, SourceVault); writer.WritePropertyName("secretUrl");
+            writer.WritePropertyName("sourceVault"u8);
+            JsonSerializer.Serialize(writer, SourceVault); writer.WritePropertyName("secretUrl"u8);
             writer.WriteStringValue(SecretUri.AbsoluteUri);
             writer.WriteEndObject();
         }
@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.Compute.Models
             Uri secretUrl = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("sourceVault"))
+                if (property.NameEquals("sourceVault"u8))
                 {
                     sourceVault = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("secretUrl"))
+                if (property.NameEquals("secretUrl"u8))
                 {
                     secretUrl = new Uri(property.Value.GetString());
                     continue;

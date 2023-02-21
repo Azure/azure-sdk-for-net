@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using Azure.Core.Json;
 
 namespace Azure.Core.Dynamic
 {
@@ -15,7 +16,7 @@ namespace Azure.Core.Dynamic
         /// </summary>
         public static dynamic ToDynamic(this BinaryData data)
         {
-            return JsonData.Parse(data);
+            return new DynamicJson(MutableJsonDocument.Parse(data).RootElement);
         }
     }
 }

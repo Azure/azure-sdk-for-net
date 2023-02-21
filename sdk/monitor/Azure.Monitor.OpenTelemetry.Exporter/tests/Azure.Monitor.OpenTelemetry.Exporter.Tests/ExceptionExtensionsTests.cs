@@ -1,8 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-#nullable disable // TODO: remove and fix errors
-
 using System;
 using System.Globalization;
 using System.Threading;
@@ -20,7 +18,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         [Fact]
         public void ExtractsStackTraceWithInvariantCultureMatchesErrorsReportedByOSsWithDifferentLanguages()
         {
-            CultureInfo stackTraceCulture = null;
+            CultureInfo? stackTraceCulture = null;
             var exception = new StubException();
             exception.OnToString = () =>
             {

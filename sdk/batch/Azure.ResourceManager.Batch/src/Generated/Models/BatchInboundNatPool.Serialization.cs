@@ -16,19 +16,19 @@ namespace Azure.ResourceManager.Batch.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("name");
+            writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            writer.WritePropertyName("protocol");
+            writer.WritePropertyName("protocol"u8);
             writer.WriteStringValue(Protocol.ToSerialString());
-            writer.WritePropertyName("backendPort");
+            writer.WritePropertyName("backendPort"u8);
             writer.WriteNumberValue(BackendPort);
-            writer.WritePropertyName("frontendPortRangeStart");
+            writer.WritePropertyName("frontendPortRangeStart"u8);
             writer.WriteNumberValue(FrontendPortRangeStart);
-            writer.WritePropertyName("frontendPortRangeEnd");
+            writer.WritePropertyName("frontendPortRangeEnd"u8);
             writer.WriteNumberValue(FrontendPortRangeEnd);
             if (Optional.IsCollectionDefined(NetworkSecurityGroupRules))
             {
-                writer.WritePropertyName("networkSecurityGroupRules");
+                writer.WritePropertyName("networkSecurityGroupRules"u8);
                 writer.WriteStartArray();
                 foreach (var item in NetworkSecurityGroupRules)
                 {
@@ -49,32 +49,32 @@ namespace Azure.ResourceManager.Batch.Models
             Optional<IList<BatchNetworkSecurityGroupRule>> networkSecurityGroupRules = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("protocol"))
+                if (property.NameEquals("protocol"u8))
                 {
                     protocol = property.Value.GetString().ToBatchInboundEndpointProtocol();
                     continue;
                 }
-                if (property.NameEquals("backendPort"))
+                if (property.NameEquals("backendPort"u8))
                 {
                     backendPort = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("frontendPortRangeStart"))
+                if (property.NameEquals("frontendPortRangeStart"u8))
                 {
                     frontendPortRangeStart = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("frontendPortRangeEnd"))
+                if (property.NameEquals("frontendPortRangeEnd"u8))
                 {
                     frontendPortRangeEnd = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("networkSecurityGroupRules"))
+                if (property.NameEquals("networkSecurityGroupRules"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

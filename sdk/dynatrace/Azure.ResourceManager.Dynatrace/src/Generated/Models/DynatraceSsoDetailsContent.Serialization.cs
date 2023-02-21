@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(UserPrincipal))
             {
-                writer.WritePropertyName("userPrincipal");
+                writer.WritePropertyName("userPrincipal"u8);
                 writer.WriteStringValue(UserPrincipal);
             }
             writer.WriteEndObject();

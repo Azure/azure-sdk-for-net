@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     List<AssociationData> array = new List<AssociationData>();
                     foreach (var item in property.Value.EnumerateArray())
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
                     value = array;
                     continue;
                 }
-                if (property.NameEquals("nextLink"))
+                if (property.NameEquals("nextLink"u8))
                 {
                     nextLink = property.Value.GetString();
                     continue;

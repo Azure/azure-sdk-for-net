@@ -16,16 +16,16 @@ namespace Azure.ResourceManager.WebPubSub.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("urlTemplate");
+            writer.WritePropertyName("urlTemplate"u8);
             writer.WriteStringValue(UrlTemplate);
             if (Optional.IsDefined(UserEventPattern))
             {
-                writer.WritePropertyName("userEventPattern");
+                writer.WritePropertyName("userEventPattern"u8);
                 writer.WriteStringValue(UserEventPattern);
             }
             if (Optional.IsCollectionDefined(SystemEvents))
             {
-                writer.WritePropertyName("systemEvents");
+                writer.WritePropertyName("systemEvents"u8);
                 writer.WriteStartArray();
                 foreach (var item in SystemEvents)
                 {
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
             }
             if (Optional.IsDefined(Auth))
             {
-                writer.WritePropertyName("auth");
+                writer.WritePropertyName("auth"u8);
                 writer.WriteObjectValue(Auth);
             }
             writer.WriteEndObject();
@@ -49,17 +49,17 @@ namespace Azure.ResourceManager.WebPubSub.Models
             Optional<UpstreamAuthSettings> auth = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("urlTemplate"))
+                if (property.NameEquals("urlTemplate"u8))
                 {
                     urlTemplate = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("userEventPattern"))
+                if (property.NameEquals("userEventPattern"u8))
                 {
                     userEventPattern = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("systemEvents"))
+                if (property.NameEquals("systemEvents"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
                     systemEvents = array;
                     continue;
                 }
-                if (property.NameEquals("auth"))
+                if (property.NameEquals("auth"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

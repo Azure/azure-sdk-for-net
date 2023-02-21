@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager;
+using Azure.ResourceManager.IotHub;
 using Azure.ResourceManager.IotHub.Models;
 using Azure.ResourceManager.Resources;
 

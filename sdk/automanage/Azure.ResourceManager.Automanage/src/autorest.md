@@ -2,6 +2,7 @@
 Run `dotnet build /t:GenerateCode` to generate code.
 ``` yaml
 azure-arm: true
+generate-model-factory: false
 csharp: true
 library-name: Automanage
 namespace: Azure.ResourceManager.Automanage
@@ -13,6 +14,26 @@ modelerfour:
   flatten-payloads: false
 request-path-is-non-resource:
   - /{scope}/providers/Microsoft.Automanage/configurationProfileAssignments/{configurationProfileAssignmentName}/reports/{reportName}
+  - /subscriptions/{subscriptionId}/providers/Microsoft.Automanage/servicePrincipals/default
+
+parameterized-scopes:
+- /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}
+- /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/machines/{machineName}
+- /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHci/clusters/{clusterName}
+
+request-path-to-resource-name:
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/providers/Microsoft.Automanage/configurationProfileAssignments/{configurationProfileAssignmentName}: AutomanageVmConfigurationProfileAssignment
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/machines/{machineName}/providers/Microsoft.Automanage/configurationProfileAssignments/{configurationProfileAssignmentName}: AutomanageHcrpConfigurationProfileAssignment
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHci/clusters/{clusterName}/providers/Microsoft.Automanage/configurationProfileAssignments/{configurationProfileAssignmentName}: AutomanageHciClusterConfigurationProfileAssignment
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/providers/Microsoft.Automanage/configurationProfileAssignments/{configurationProfileAssignmentName}/reports/{reportName}: AutomanageVmConfigurationProfileAssignmentReport
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/machines/{machineName}/providers/Microsoft.Automanage/configurationProfileAssignments/{configurationProfileAssignmentName}/reports/{reportName}: AutomanageHcrpConfigurationProfileAssignmentReport
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHci/clusters/{clusterName}/providers/Microsoft.Automanage/configurationProfileAssignments/{configurationProfileAssignmentName}/reports/{reportName}: AutomanageHciClusterConfigurationProfileAssignmentReport
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automanage/configurationProfiles/{configurationProfileName}: AutomanageConfigurationProfile
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automanage/configurationProfiles/{configurationProfileName}/versions/{versionName}: AutomanageConfigurationProfileVersion
+
+override-operation-name:
+  ServicePrincipals_ListBySubscription: GetServicePrincipals
+
 format-by-name-rules:
   'tenantId': 'uuid'
   'ETag': 'etag'
@@ -41,137 +62,28 @@ rename-rules:
   SSO: Sso
   URI: Uri
   Etag: ETag|etag
+
+rename-mapping:
+  ConfigurationProfile: AutomanageConfigurationProfile
+  ConfigurationProfileAssignment: AutomanageConfigurationProfileAssignment
+  ConfigurationProfileAssignmentProperties: AutomanageConfigurationProfileAssignmentProperties
+  ConfigurationProfileAssignmentProperties.configurationProfile: -|arm-id
+  ConfigurationProfileAssignmentProperties.targetId: -|arm-id
+  Report: AutomanageConfigurationProfileAssignmentReport
+  Report.properties.startTime: StartOn|date-time
+  Report.properties.endTime: EndOn|date-time
+  Report.properties.lastModifiedTime: LastModifiedOn|date-time
+  Report.properties.type: ConfigurationProfileAssignmentProcessingType
+  ReportResource: ConfigurationProfileAssignmentReportResourceDetails
+  BestPractice: AutomanageBestPractice
+  ServicePrincipal: AutomanageServicePrincipalData
+  ServicePrincipal.properties.authorizationSet: IsAuthorizationSet
+  UpdateResource: AutomanageResourceUpdateDetails
+
 directive:
   # these operations will be supported in the future
   - remove-operation: BestPracticesVersions_Get
   - remove-operation: BestPracticesVersions_ListByTenant
-#use scope parameter on the two paths that are defined multiple times
-  - from: automanage.json
-    where: $.paths
-    transform: $['/{scope}/providers/Microsoft.Automanage/configurationProfileAssignments/{configurationProfileAssignmentName}'] = $['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/providers/Microsoft.Automanage/configurationProfileAssignments/{configurationProfileAssignmentName}']
-  - from: automanage.json
-    where: $.paths
-    transform: $['/{scope}/providers/Microsoft.Automanage/configurationProfileAssignments/{configurationProfileAssignmentName}/reports/{reportName}'] = $['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/providers/Microsoft.Automanage/configurationProfileAssignments/{configurationProfileAssignmentName}/reports/{reportName}']
-#add definition for scope parameter
-  - from: automanage.json
-    where: $.paths['/{scope}/providers/Microsoft.Automanage/configurationProfileAssignments/{configurationProfileAssignmentName}']
-    transform: >
-      $.put.parameters = [
-          {
-            "name": "scope",
-            "in": "path",
-            "required": true,
-            "type": "string",
-            "description": "The scope the configuration profile assignments apply to.  Valid scopes are /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}, /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/machines/{machineName}, or /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHci/clusters/{clusterName}",
-            "x-ms-skip-url-encoding": true
-          },
-          {
-            "name": "configurationProfileAssignmentName",
-            "in": "path",
-            "required": true,
-            "type": "string",
-            "description": "Name of the configuration profile assignment. Only default is supported."
-          },
-          {
-            "name": "parameters",
-            "in": "body",
-            "required": true,
-            "schema": {
-            "$ref": "#/definitions/ConfigurationProfileAssignment"
-            },
-            "description": "Parameters supplied to the create or update configuration profile assignment."
-          },
-          {
-            "$ref": "../../../../../common-types/resource-management/v2/types.json#/parameters/ApiVersionParameter"
-          }
-      ];
-      $.get.parameters = [
-          {
-            "name": "scope",
-            "in": "path",
-            "required": true,
-            "type": "string",
-            "description": "The scope the configuration profile assignments apply to.  Valid scopes are /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}, /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/machines/{machineName}, or /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHci/clusters/{clusterName}",
-            "x-ms-skip-url-encoding": true
-          },
-          {
-            "name": "configurationProfileAssignmentName",
-            "in": "path",
-            "required": true,
-            "type": "string",
-            "description": "The configuration profile assignment name."
-          },
-          {
-            "$ref": "../../../../../common-types/resource-management/v2/types.json#/parameters/ApiVersionParameter"
-          }
-      ];
-      $.delete.parameters = [
-          {
-            "name": "scope",
-            "in": "path",
-            "required": true,
-            "type": "string",
-            "description": "The scope the configuration profile assignments apply to.  Valid scopes are /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}, /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/machines/{machineName}, or /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHci/clusters/{clusterName}",
-            "x-ms-skip-url-encoding": true
-          },
-          {
-            "name": "configurationProfileAssignmentName",
-            "in": "path",
-            "required": true,
-            "type": "string",
-            "description": "The configuration profile assignment name."
-          },
-          {
-            "$ref": "../../../../../common-types/resource-management/v2/types.json#/parameters/ApiVersionParameter"
-          }
-      ];
-  - from: automanage.json
-    where: $.paths['/{scope}/providers/Microsoft.Automanage/configurationProfileAssignments/{configurationProfileAssignmentName}/reports/{reportName}'].get.parameters
-    transform: >
-      $ = [
-          {
-            "name": "scope",
-            "in": "path",
-            "required": true,
-            "type": "string",
-            "description": "The scope the configuration profile assignments apply to.  Valid scopes are /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}, /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/machines/{machineName}, or /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHci/clusters/{clusterName}",
-            "x-ms-skip-url-encoding": true
-          },
-          {
-            "name": "configurationProfileAssignmentName",
-            "in": "path",
-            "required": true,
-            "type": "string",
-            "description": "The configuration profile assignment name."
-          },
-          {
-            "name": "reportName",
-            "in": "path",
-            "required": true,
-            "type": "string",
-            "description": "The report name."
-          },
-          {
-            "$ref": "../../../../../common-types/resource-management/v2/types.json#/parameters/ApiVersionParameter"
-          }
-      ]
-#remove old paths
-  - from: automanage.json
-    where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/providers/Microsoft.Automanage/configurationProfileAssignments/{configurationProfileAssignmentName}']
-    transform: $ = {}
-  - from: automanage.json
-    where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/machines/{machineName}/providers/Microsoft.Automanage/configurationProfileAssignments/{configurationProfileAssignmentName}']
-    transform: $ = {}
-  - from: automanage.json
-    where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHci/clusters/{clusterName}/providers/Microsoft.Automanage/configurationProfileAssignments/{configurationProfileAssignmentName}']
-    transform: $ = {}
-  - from: automanage.json
-    where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/providers/Microsoft.Automanage/configurationProfileAssignments/{configurationProfileAssignmentName}/reports/{reportName}']
-    transform: $ = {}
-  - from: automanage.json
-    where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/machines/{machineName}/providers/Microsoft.Automanage/configurationProfileAssignments/{configurationProfileAssignmentName}/reports/{reportName}']
-    transform: $ = {}
-  - from: automanage.json
-    where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHci/clusters/{clusterName}/providers/Microsoft.Automanage/configurationProfileAssignments/{configurationProfileAssignmentName}/reports/{reportName}']
-    transform: $ = {}
+  - remove-operation: ConfigurationProfileAssignments_ListBySubscription
+  - remove-operation: ConfigurationProfileAssignments_List
 ```

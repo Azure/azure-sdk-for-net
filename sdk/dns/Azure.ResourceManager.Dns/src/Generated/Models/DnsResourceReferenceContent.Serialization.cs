@@ -15,11 +15,11 @@ namespace Azure.ResourceManager.Dns.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(TargetResources))
             {
-                writer.WritePropertyName("targetResources");
+                writer.WritePropertyName("targetResources"u8);
                 writer.WriteStartArray();
                 foreach (var item in TargetResources)
                 {

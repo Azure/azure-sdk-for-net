@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Automation.Models
             Optional<SourceControlStreamType> streamType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Automation.Models
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -41,17 +41,17 @@ namespace Azure.ResourceManager.Automation.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("sourceControlSyncJobStreamId"))
+                        if (property0.NameEquals("sourceControlSyncJobStreamId"u8))
                         {
                             sourceControlSyncJobStreamId = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("summary"))
+                        if (property0.NameEquals("summary"u8))
                         {
                             summary = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("time"))
+                        if (property0.NameEquals("time"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Automation.Models
                             time = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("streamType"))
+                        if (property0.NameEquals("streamType"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

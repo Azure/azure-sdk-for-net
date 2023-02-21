@@ -15,15 +15,15 @@ namespace Azure.ResourceManager.Cdn.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("typeName");
+            writer.WritePropertyName("typeName"u8);
             writer.WriteStringValue(ActionType.ToString());
-            writer.WritePropertyName("headerAction");
+            writer.WritePropertyName("headerAction"u8);
             writer.WriteStringValue(HeaderAction.ToString());
-            writer.WritePropertyName("headerName");
+            writer.WritePropertyName("headerName"u8);
             writer.WriteStringValue(HeaderName);
             if (Optional.IsDefined(Value))
             {
-                writer.WritePropertyName("value");
+                writer.WritePropertyName("value"u8);
                 writer.WriteStringValue(Value);
             }
             writer.WriteEndObject();
@@ -37,22 +37,22 @@ namespace Azure.ResourceManager.Cdn.Models
             Optional<string> value = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("typeName"))
+                if (property.NameEquals("typeName"u8))
                 {
                     typeName = new HeaderActionType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("headerAction"))
+                if (property.NameEquals("headerAction"u8))
                 {
                     headerAction = new HeaderAction(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("headerName"))
+                if (property.NameEquals("headerName"u8))
                 {
                     headerName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     value = property.Value.GetString();
                     continue;

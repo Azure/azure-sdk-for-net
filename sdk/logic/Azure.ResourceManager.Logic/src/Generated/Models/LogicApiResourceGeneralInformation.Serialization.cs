@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Logic.Models
             Optional<LogicApiTier> tier = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("iconUrl"))
+                if (property.NameEquals("iconUrl"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -33,17 +33,17 @@ namespace Azure.ResourceManager.Logic.Models
                     iconUrl = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("displayName"))
+                if (property.NameEquals("displayName"u8))
                 {
                     displayName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("description"))
+                if (property.NameEquals("description"u8))
                 {
                     description = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("termsOfUseUrl"))
+                if (property.NameEquals("termsOfUseUrl"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -53,12 +53,12 @@ namespace Azure.ResourceManager.Logic.Models
                     termsOfUseUrl = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("releaseTag"))
+                if (property.NameEquals("releaseTag"u8))
                 {
                     releaseTag = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("tier"))
+                if (property.NameEquals("tier"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

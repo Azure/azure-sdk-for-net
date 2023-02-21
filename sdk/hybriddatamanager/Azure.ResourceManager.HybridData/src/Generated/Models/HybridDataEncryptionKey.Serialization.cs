@@ -15,11 +15,11 @@ namespace Azure.ResourceManager.HybridData.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("keyModulus");
+            writer.WritePropertyName("keyModulus"u8);
             writer.WriteStringValue(KeyModulus);
-            writer.WritePropertyName("keyExponent");
+            writer.WritePropertyName("keyExponent"u8);
             writer.WriteStringValue(KeyExponent);
-            writer.WritePropertyName("encryptionChunkSizeInBytes");
+            writer.WritePropertyName("encryptionChunkSizeInBytes"u8);
             writer.WriteNumberValue(EncryptionChunkSizeInBytes);
             writer.WriteEndObject();
         }
@@ -31,17 +31,17 @@ namespace Azure.ResourceManager.HybridData.Models
             int encryptionChunkSizeInBytes = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("keyModulus"))
+                if (property.NameEquals("keyModulus"u8))
                 {
                     keyModulus = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("keyExponent"))
+                if (property.NameEquals("keyExponent"u8))
                 {
                     keyExponent = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("encryptionChunkSizeInBytes"))
+                if (property.NameEquals("encryptionChunkSizeInBytes"u8))
                 {
                     encryptionChunkSizeInBytes = property.Value.GetInt32();
                     continue;

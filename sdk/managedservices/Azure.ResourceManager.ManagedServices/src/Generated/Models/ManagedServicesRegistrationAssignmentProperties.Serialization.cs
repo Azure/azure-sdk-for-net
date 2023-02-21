@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.ManagedServices.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("registrationDefinitionId");
+            writer.WritePropertyName("registrationDefinitionId"u8);
             writer.WriteStringValue(RegistrationId);
             writer.WriteEndObject();
         }
@@ -27,12 +27,12 @@ namespace Azure.ResourceManager.ManagedServices.Models
             Optional<ManagedServicesRegistrationAssignmentRegistrationData> registrationDefinition = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("registrationDefinitionId"))
+                if (property.NameEquals("registrationDefinitionId"u8))
                 {
                     registrationDefinitionId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("provisioningState"))
+                if (property.NameEquals("provisioningState"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.ManagedServices.Models
                     provisioningState = new ManagedServicesProvisioningState(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("registrationDefinition"))
+                if (property.NameEquals("registrationDefinition"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

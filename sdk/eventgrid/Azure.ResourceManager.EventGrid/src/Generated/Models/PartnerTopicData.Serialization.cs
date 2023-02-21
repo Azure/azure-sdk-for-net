@@ -21,12 +21,12 @@ namespace Azure.ResourceManager.EventGrid
             writer.WriteStartObject();
             if (Optional.IsDefined(Identity))
             {
-                writer.WritePropertyName("identity");
+                writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
-                writer.WritePropertyName("tags");
+                writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
                 foreach (var item in Tags)
                 {
@@ -35,43 +35,43 @@ namespace Azure.ResourceManager.EventGrid
                 }
                 writer.WriteEndObject();
             }
-            writer.WritePropertyName("location");
+            writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(PartnerRegistrationImmutableId))
             {
-                writer.WritePropertyName("partnerRegistrationImmutableId");
+                writer.WritePropertyName("partnerRegistrationImmutableId"u8);
                 writer.WriteStringValue(PartnerRegistrationImmutableId.Value);
             }
             if (Optional.IsDefined(Source))
             {
-                writer.WritePropertyName("source");
+                writer.WritePropertyName("source"u8);
                 writer.WriteStringValue(Source);
             }
             if (Optional.IsDefined(EventTypeInfo))
             {
-                writer.WritePropertyName("eventTypeInfo");
+                writer.WritePropertyName("eventTypeInfo"u8);
                 writer.WriteObjectValue(EventTypeInfo);
             }
             if (Optional.IsDefined(ExpireOnIfNotActivated))
             {
-                writer.WritePropertyName("expirationTimeIfNotActivatedUtc");
+                writer.WritePropertyName("expirationTimeIfNotActivatedUtc"u8);
                 writer.WriteStringValue(ExpireOnIfNotActivated.Value, "O");
             }
             if (Optional.IsDefined(ActivationState))
             {
-                writer.WritePropertyName("activationState");
+                writer.WritePropertyName("activationState"u8);
                 writer.WriteStringValue(ActivationState.Value.ToString());
             }
             if (Optional.IsDefined(PartnerTopicFriendlyDescription))
             {
-                writer.WritePropertyName("partnerTopicFriendlyDescription");
+                writer.WritePropertyName("partnerTopicFriendlyDescription"u8);
                 writer.WriteStringValue(PartnerTopicFriendlyDescription);
             }
             if (Optional.IsDefined(MessageForActivation))
             {
-                writer.WritePropertyName("messageForActivation");
+                writer.WritePropertyName("messageForActivation"u8);
                 writer.WriteStringValue(MessageForActivation);
             }
             writer.WriteEndObject();
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.EventGrid
             Optional<string> messageForActivation = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("identity"))
+                if (property.NameEquals("identity"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.EventGrid
                     identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("tags"))
+                if (property.NameEquals("tags"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -122,27 +122,27 @@ namespace Azure.ResourceManager.EventGrid
                     tags = dictionary;
                     continue;
                 }
-                if (property.NameEquals("location"))
+                if (property.NameEquals("location"u8))
                 {
                     location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.EventGrid
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.EventGrid
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("partnerRegistrationImmutableId"))
+                        if (property0.NameEquals("partnerRegistrationImmutableId"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -171,12 +171,12 @@ namespace Azure.ResourceManager.EventGrid
                             partnerRegistrationImmutableId = property0.Value.GetGuid();
                             continue;
                         }
-                        if (property0.NameEquals("source"))
+                        if (property0.NameEquals("source"u8))
                         {
                             source = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("eventTypeInfo"))
+                        if (property0.NameEquals("eventTypeInfo"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.EventGrid
                             eventTypeInfo = PartnerTopicEventTypeInfo.DeserializePartnerTopicEventTypeInfo(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("expirationTimeIfNotActivatedUtc"))
+                        if (property0.NameEquals("expirationTimeIfNotActivatedUtc"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.EventGrid
                             expirationTimeIfNotActivatedUtc = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("provisioningState"))
+                        if (property0.NameEquals("provisioningState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.EventGrid
                             provisioningState = new PartnerTopicProvisioningState(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("activationState"))
+                        if (property0.NameEquals("activationState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -216,12 +216,12 @@ namespace Azure.ResourceManager.EventGrid
                             activationState = new PartnerTopicActivationState(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("partnerTopicFriendlyDescription"))
+                        if (property0.NameEquals("partnerTopicFriendlyDescription"u8))
                         {
                             partnerTopicFriendlyDescription = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("messageForActivation"))
+                        if (property0.NameEquals("messageForActivation"u8))
                         {
                             messageForActivation = property0.Value.GetString();
                             continue;

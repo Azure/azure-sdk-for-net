@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Modifications))
             {
-                writer.WritePropertyName("modifications");
+                writer.WritePropertyName("modifications"u8);
                 writer.WriteStartArray();
                 foreach (var item in Modifications)
                 {
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             }
             if (Optional.IsDefined(NextLink))
             {
-                writer.WritePropertyName("nextLink");
+                writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
             }
             writer.WriteEndObject();
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("smartGroupId"))
+                if (property.NameEquals("smartGroupId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                     smartGroupId = property.Value.GetGuid();
                     continue;
                 }
-                if (property.NameEquals("modifications"))
+                if (property.NameEquals("modifications"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                     modifications = array;
                     continue;
                 }
-                if (property.NameEquals("nextLink"))
+                if (property.NameEquals("nextLink"u8))
                 {
                     nextLink = property.Value.GetString();
                     continue;

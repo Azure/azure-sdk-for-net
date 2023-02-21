@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(PartitionColumnName))
             {
-                writer.WritePropertyName("partitionColumnName");
+                writer.WritePropertyName("partitionColumnName"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(PartitionColumnName);
 #else
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             if (Optional.IsDefined(PartitionUpperBound))
             {
-                writer.WritePropertyName("partitionUpperBound");
+                writer.WritePropertyName("partitionUpperBound"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(PartitionUpperBound);
 #else
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             if (Optional.IsDefined(PartitionLowerBound))
             {
-                writer.WritePropertyName("partitionLowerBound");
+                writer.WritePropertyName("partitionLowerBound"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(PartitionLowerBound);
 #else
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             if (Optional.IsDefined(MaxPartitionsNumber))
             {
-                writer.WritePropertyName("maxPartitionsNumber");
+                writer.WritePropertyName("maxPartitionsNumber"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(MaxPartitionsNumber);
 #else
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<BinaryData> maxPartitionsNumber = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("partitionColumnName"))
+                if (property.NameEquals("partitionColumnName"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     partitionColumnName = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("partitionUpperBound"))
+                if (property.NameEquals("partitionUpperBound"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     partitionUpperBound = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("partitionLowerBound"))
+                if (property.NameEquals("partitionLowerBound"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     partitionLowerBound = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("maxPartitionsNumber"))
+                if (property.NameEquals("maxPartitionsNumber"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

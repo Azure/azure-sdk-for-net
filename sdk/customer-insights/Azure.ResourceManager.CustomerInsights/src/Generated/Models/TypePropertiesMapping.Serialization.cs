@@ -15,13 +15,13 @@ namespace Azure.ResourceManager.CustomerInsights.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("sourcePropertyName");
+            writer.WritePropertyName("sourcePropertyName"u8);
             writer.WriteStringValue(SourcePropertyName);
-            writer.WritePropertyName("targetPropertyName");
+            writer.WritePropertyName("targetPropertyName"u8);
             writer.WriteStringValue(TargetPropertyName);
             if (Optional.IsDefined(LinkType))
             {
-                writer.WritePropertyName("linkType");
+                writer.WritePropertyName("linkType"u8);
                 writer.WriteStringValue(LinkType.Value.ToSerialString());
             }
             writer.WriteEndObject();
@@ -34,17 +34,17 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             Optional<LinkType> linkType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("sourcePropertyName"))
+                if (property.NameEquals("sourcePropertyName"u8))
                 {
                     sourcePropertyName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("targetPropertyName"))
+                if (property.NameEquals("targetPropertyName"u8))
                 {
                     targetPropertyName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("linkType"))
+                if (property.NameEquals("linkType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

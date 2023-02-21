@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Path))
             {
-                writer.WritePropertyName("path");
+                writer.WritePropertyName("path"u8);
                 writer.WriteStringValue(Path);
             }
             if (Optional.IsCollectionDefined(Indexes))
             {
-                writer.WritePropertyName("indexes");
+                writer.WritePropertyName("indexes"u8);
                 writer.WriteStartArray();
                 foreach (var item in Indexes)
                 {
@@ -40,12 +40,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
             Optional<IList<CosmosDBPathIndexes>> indexes = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("path"))
+                if (property.NameEquals("path"u8))
                 {
                     path = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("indexes"))
+                if (property.NameEquals("indexes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

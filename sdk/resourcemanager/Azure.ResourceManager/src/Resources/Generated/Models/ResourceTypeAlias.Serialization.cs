@@ -23,12 +23,12 @@ namespace Azure.ResourceManager.Resources.Models
             Optional<ResourceTypeAliasPathMetadata> defaultMetadata = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("paths"))
+                if (property.NameEquals("paths"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Resources.Models
                     paths = array;
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -53,12 +53,12 @@ namespace Azure.ResourceManager.Resources.Models
                     type = property.Value.GetString().ToResourceTypeAliasType();
                     continue;
                 }
-                if (property.NameEquals("defaultPath"))
+                if (property.NameEquals("defaultPath"u8))
                 {
                     defaultPath = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("defaultPattern"))
+                if (property.NameEquals("defaultPattern"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Resources.Models
                     defaultPattern = ResourceTypeAliasPattern.DeserializeResourceTypeAliasPattern(property.Value);
                     continue;
                 }
-                if (property.NameEquals("defaultMetadata"))
+                if (property.NameEquals("defaultMetadata"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -15,9 +15,9 @@ namespace Azure.Security.KeyVault.Administration.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("sasTokenParameters");
+            writer.WritePropertyName("sasTokenParameters"u8);
             writer.WriteObjectValue(SasTokenParameters);
-            writer.WritePropertyName("folderToRestore");
+            writer.WritePropertyName("folderToRestore"u8);
             writer.WriteStringValue(FolderToRestore);
             writer.WriteEndObject();
         }

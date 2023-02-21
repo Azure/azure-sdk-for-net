@@ -18,17 +18,17 @@ namespace Azure.ResourceManager.AppContainers.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(MinReplicas))
             {
-                writer.WritePropertyName("minReplicas");
+                writer.WritePropertyName("minReplicas"u8);
                 writer.WriteNumberValue(MinReplicas.Value);
             }
             if (Optional.IsDefined(MaxReplicas))
             {
-                writer.WritePropertyName("maxReplicas");
+                writer.WritePropertyName("maxReplicas"u8);
                 writer.WriteNumberValue(MaxReplicas.Value);
             }
             if (Optional.IsCollectionDefined(Rules))
             {
-                writer.WritePropertyName("rules");
+                writer.WritePropertyName("rules"u8);
                 writer.WriteStartArray();
                 foreach (var item in Rules)
                 {
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             Optional<IList<ContainerAppScaleRule>> rules = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("minReplicas"))
+                if (property.NameEquals("minReplicas"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     minReplicas = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("maxReplicas"))
+                if (property.NameEquals("maxReplicas"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     maxReplicas = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("rules"))
+                if (property.NameEquals("rules"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

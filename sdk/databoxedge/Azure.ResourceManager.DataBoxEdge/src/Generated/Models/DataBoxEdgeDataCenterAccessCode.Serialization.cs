@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             Optional<string> authCode = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("authCode"))
+                        if (property0.NameEquals("authCode"u8))
                         {
                             authCode = property0.Value.GetString();
                             continue;

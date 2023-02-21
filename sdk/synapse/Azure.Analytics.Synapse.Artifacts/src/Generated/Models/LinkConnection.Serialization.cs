@@ -20,22 +20,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(SourceDatabase))
             {
-                writer.WritePropertyName("sourceDatabase");
+                writer.WritePropertyName("sourceDatabase"u8);
                 writer.WriteObjectValue(SourceDatabase);
             }
             if (Optional.IsDefined(TargetDatabase))
             {
-                writer.WritePropertyName("targetDatabase");
+                writer.WritePropertyName("targetDatabase"u8);
                 writer.WriteObjectValue(TargetDatabase);
             }
             if (Optional.IsDefined(LandingZone))
             {
-                writer.WritePropertyName("landingZone");
+                writer.WritePropertyName("landingZone"u8);
                 writer.WriteObjectValue(LandingZone);
             }
             if (Optional.IsDefined(Compute))
             {
-                writer.WritePropertyName("compute");
+                writer.WritePropertyName("compute"u8);
                 writer.WriteObjectValue(Compute);
             }
             writer.WriteEndObject();
@@ -49,7 +49,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Optional<LinkConnectionCompute> compute = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("sourceDatabase"))
+                if (property.NameEquals("sourceDatabase"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -59,7 +59,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     sourceDatabase = LinkConnectionSourceDatabase.DeserializeLinkConnectionSourceDatabase(property.Value);
                     continue;
                 }
-                if (property.NameEquals("targetDatabase"))
+                if (property.NameEquals("targetDatabase"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -69,7 +69,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     targetDatabase = LinkConnectionTargetDatabase.DeserializeLinkConnectionTargetDatabase(property.Value);
                     continue;
                 }
-                if (property.NameEquals("landingZone"))
+                if (property.NameEquals("landingZone"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -79,7 +79,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     landingZone = LinkConnectionLandingZone.DeserializeLinkConnectionLandingZone(property.Value);
                     continue;
                 }
-                if (property.NameEquals("compute"))
+                if (property.NameEquals("compute"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

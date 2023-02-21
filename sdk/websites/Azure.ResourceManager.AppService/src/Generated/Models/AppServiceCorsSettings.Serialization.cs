@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.AppService.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(AllowedOrigins))
             {
-                writer.WritePropertyName("allowedOrigins");
+                writer.WritePropertyName("allowedOrigins"u8);
                 writer.WriteStartArray();
                 foreach (var item in AllowedOrigins)
                 {
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.AppService.Models
             }
             if (Optional.IsDefined(IsCredentialsSupported))
             {
-                writer.WritePropertyName("supportCredentials");
+                writer.WritePropertyName("supportCredentials"u8);
                 writer.WriteBooleanValue(IsCredentialsSupported.Value);
             }
             writer.WriteEndObject();
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<bool> supportCredentials = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("allowedOrigins"))
+                if (property.NameEquals("allowedOrigins"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.AppService.Models
                     allowedOrigins = array;
                     continue;
                 }
-                if (property.NameEquals("supportCredentials"))
+                if (property.NameEquals("supportCredentials"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

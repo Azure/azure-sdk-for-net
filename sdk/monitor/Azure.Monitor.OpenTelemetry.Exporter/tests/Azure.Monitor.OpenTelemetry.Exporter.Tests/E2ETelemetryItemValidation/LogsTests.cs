@@ -1,8 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-#nullable disable // TODO: remove and fix errors
-
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
@@ -43,7 +41,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
 
             var logCategoryName = $"logCategoryName{uniqueTestId}";
 
-            ConcurrentBag<TelemetryItem> telemetryItems = null;
+            ConcurrentBag<TelemetryItem>? telemetryItems = null;
 
             var loggerFactory = LoggerFactory.Create(builder =>
             {
@@ -68,15 +66,15 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
             loggerFactory.Dispose();
 
             // ASSERT
-            Assert.True(telemetryItems.Any(), "Unit test failed to collect telemetry.");
+            Assert.True(telemetryItems?.Any(), "Unit test failed to collect telemetry.");
             this.telemetryOutput.Write(telemetryItems);
-            var telemetryItem = telemetryItems.Single();
+            var telemetryItem = telemetryItems?.Single();
 
-            TelemetryItemValidationHelper.AssertLog_As_MessageTelemetry(
-                telemetryItem: telemetryItem,
+            TelemetryItemValidationHelper.AssertMessageTelemetry(
+                telemetryItem: telemetryItem!,
                 expectedSeverityLevel: expectedSeverityLevel,
                 expectedMessage: "Hello {name}.",
-                expectedMeessageProperties: new Dictionary<string, string> { { "name", "World" }},
+                expectedMessageProperties: new Dictionary<string, string> { { "name", "World" }},
                 expectedSpanId: null,
                 expectedTraceId: null);
         }
@@ -95,7 +93,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
 
             var logCategoryName = $"logCategoryName{uniqueTestId}";
 
-            ConcurrentBag<TelemetryItem> telemetryItems = null;
+            ConcurrentBag<TelemetryItem>? telemetryItems = null;
 
             var loggerFactory = LoggerFactory.Create(builder =>
             {
@@ -128,12 +126,12 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
             loggerFactory.Dispose();
 
             // ASSERT
-            Assert.True(telemetryItems.Any(), "Unit test failed to collect telemetry.");
+            Assert.True(telemetryItems?.Any(), "Unit test failed to collect telemetry.");
             this.telemetryOutput.Write(telemetryItems);
-            var telemetryItem = telemetryItems.Single();
+            var telemetryItem = telemetryItems?.Single();
 
             TelemetryItemValidationHelper.AssertLog_As_ExceptionTelemetry(
-                telemetryItem: telemetryItem,
+                telemetryItem: telemetryItem!,
                 expectedSeverityLevel: expectedSeverityLevel,
                 expectedMessage: "Test Exception", // TODO: this fails. Currently the ILogger message is overwriting the Exception.Message.
                 expectedTypeName: "System.Exception");

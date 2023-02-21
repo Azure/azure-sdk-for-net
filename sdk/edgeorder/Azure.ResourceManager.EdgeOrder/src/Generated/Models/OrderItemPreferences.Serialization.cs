@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(NotificationPreferences))
             {
-                writer.WritePropertyName("notificationPreferences");
+                writer.WritePropertyName("notificationPreferences"u8);
                 writer.WriteStartArray();
                 foreach (var item in NotificationPreferences)
                 {
@@ -28,17 +28,17 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             }
             if (Optional.IsDefined(TransportPreferences))
             {
-                writer.WritePropertyName("transportPreferences");
+                writer.WritePropertyName("transportPreferences"u8);
                 writer.WriteObjectValue(TransportPreferences);
             }
             if (Optional.IsDefined(EncryptionPreferences))
             {
-                writer.WritePropertyName("encryptionPreferences");
+                writer.WritePropertyName("encryptionPreferences"u8);
                 writer.WriteObjectValue(EncryptionPreferences);
             }
             if (Optional.IsDefined(ManagementResourcePreferences))
             {
-                writer.WritePropertyName("managementResourcePreferences");
+                writer.WritePropertyName("managementResourcePreferences"u8);
                 writer.WriteObjectValue(ManagementResourcePreferences);
             }
             writer.WriteEndObject();
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             Optional<ManagementResourcePreferences> managementResourcePreferences = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("notificationPreferences"))
+                if (property.NameEquals("notificationPreferences"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                     notificationPreferences = array;
                     continue;
                 }
-                if (property.NameEquals("transportPreferences"))
+                if (property.NameEquals("transportPreferences"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                     transportPreferences = TransportPreferences.DeserializeTransportPreferences(property.Value);
                     continue;
                 }
-                if (property.NameEquals("encryptionPreferences"))
+                if (property.NameEquals("encryptionPreferences"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                     encryptionPreferences = EncryptionPreferences.DeserializeEncryptionPreferences(property.Value);
                     continue;
                 }
-                if (property.NameEquals("managementResourcePreferences"))
+                if (property.NameEquals("managementResourcePreferences"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

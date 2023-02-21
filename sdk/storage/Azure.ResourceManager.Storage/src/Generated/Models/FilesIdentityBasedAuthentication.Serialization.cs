@@ -15,16 +15,16 @@ namespace Azure.ResourceManager.Storage.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("directoryServiceOptions");
+            writer.WritePropertyName("directoryServiceOptions"u8);
             writer.WriteStringValue(DirectoryServiceOptions.ToString());
             if (Optional.IsDefined(ActiveDirectoryProperties))
             {
-                writer.WritePropertyName("activeDirectoryProperties");
+                writer.WritePropertyName("activeDirectoryProperties"u8);
                 writer.WriteObjectValue(ActiveDirectoryProperties);
             }
             if (Optional.IsDefined(DefaultSharePermission))
             {
-                writer.WritePropertyName("defaultSharePermission");
+                writer.WritePropertyName("defaultSharePermission"u8);
                 writer.WriteStringValue(DefaultSharePermission.Value.ToString());
             }
             writer.WriteEndObject();
@@ -37,12 +37,12 @@ namespace Azure.ResourceManager.Storage.Models
             Optional<DefaultSharePermission> defaultSharePermission = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("directoryServiceOptions"))
+                if (property.NameEquals("directoryServiceOptions"u8))
                 {
                     directoryServiceOptions = new DirectoryServiceOption(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("activeDirectoryProperties"))
+                if (property.NameEquals("activeDirectoryProperties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Storage.Models
                     activeDirectoryProperties = StorageActiveDirectoryProperties.DeserializeStorageActiveDirectoryProperties(property.Value);
                     continue;
                 }
-                if (property.NameEquals("defaultSharePermission"))
+                if (property.NameEquals("defaultSharePermission"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

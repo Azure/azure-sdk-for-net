@@ -19,17 +19,17 @@ namespace Azure.ResourceManager.Resources.Models
             Optional<ResourceTypeAliasPatternType> type = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("phrase"))
+                if (property.NameEquals("phrase"u8))
                 {
                     phrase = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("variable"))
+                if (property.NameEquals("variable"u8))
                 {
                     variable = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
