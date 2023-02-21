@@ -8,9 +8,9 @@
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
-namespace Azure.ResourceManager.Automanage
+namespace Azure.ResourceManager.Automanage.Models
 {
-    /// <summary> A class representing the AutomanageServicePrincipal data model. </summary>
+    /// <summary> The Service Principal Id for the subscription. </summary>
     public partial class AutomanageServicePrincipalData : ResourceData
     {
         /// <summary> Initializes a new instance of AutomanageServicePrincipalData. </summary>

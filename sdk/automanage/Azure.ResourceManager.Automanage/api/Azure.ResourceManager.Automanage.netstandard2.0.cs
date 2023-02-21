@@ -105,8 +105,6 @@ namespace Azure.ResourceManager.Automanage
         public static Azure.ResourceManager.Automanage.AutomanageHcrpConfigurationProfileAssignmentReportResource GetAutomanageHcrpConfigurationProfileAssignmentReportResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.Automanage.AutomanageHcrpConfigurationProfileAssignmentResource GetAutomanageHcrpConfigurationProfileAssignmentResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.Automanage.AutomanageHcrpConfigurationProfileAssignmentCollection GetAutomanageHcrpConfigurationProfileAssignments(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope) { throw null; }
-        public static Azure.ResourceManager.Automanage.AutomanageServicePrincipalResource GetAutomanageServicePrincipal(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource) { throw null; }
-        public static Azure.ResourceManager.Automanage.AutomanageServicePrincipalResource GetAutomanageServicePrincipalResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.Response<Azure.ResourceManager.Automanage.AutomanageVmConfigurationProfileAssignmentResource> GetAutomanageVmConfigurationProfileAssignment(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, string configurationProfileAssignmentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Automanage.AutomanageVmConfigurationProfileAssignmentResource>> GetAutomanageVmConfigurationProfileAssignmentAsync(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, string configurationProfileAssignmentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.Automanage.AutomanageVmConfigurationProfileAssignmentReportResource GetAutomanageVmConfigurationProfileAssignmentReportResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
@@ -118,6 +116,10 @@ namespace Azure.ResourceManager.Automanage
         public static Azure.ResourceManager.Automanage.ConfigurationProfileCollection GetConfigurationProfiles(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource) { throw null; }
         public static Azure.Pageable<Azure.ResourceManager.Automanage.ConfigurationProfileResource> GetConfigurationProfiles(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.AsyncPageable<Azure.ResourceManager.Automanage.ConfigurationProfileResource> GetConfigurationProfilesAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Response<Azure.ResourceManager.Automanage.Models.AutomanageServicePrincipalData> GetServicePrincipal(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Automanage.Models.AutomanageServicePrincipalData>> GetServicePrincipalAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Pageable<Azure.ResourceManager.Automanage.Models.AutomanageServicePrincipalData> GetServicePrincipals(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.AsyncPageable<Azure.ResourceManager.Automanage.Models.AutomanageServicePrincipalData> GetServicePrincipalsAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class AutomanageHciClusterConfigurationProfileAssignmentCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Automanage.AutomanageHciClusterConfigurationProfileAssignmentResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Automanage.AutomanageHciClusterConfigurationProfileAssignmentResource>, System.Collections.IEnumerable
     {
@@ -229,22 +231,6 @@ namespace Azure.ResourceManager.Automanage
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Automanage.AutomanageHcrpConfigurationProfileAssignmentResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Automanage.AutomanageConfigurationProfileAssignmentData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Automanage.AutomanageHcrpConfigurationProfileAssignmentResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Automanage.AutomanageConfigurationProfileAssignmentData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class AutomanageServicePrincipalData : Azure.ResourceManager.Models.ResourceData
-    {
-        public AutomanageServicePrincipalData() { }
-        public bool? IsAuthorizationSet { get { throw null; } }
-        public string ServicePrincipalId { get { throw null; } }
-    }
-    public partial class AutomanageServicePrincipalResource : Azure.ResourceManager.ArmResource
-    {
-        public static readonly Azure.Core.ResourceType ResourceType;
-        protected AutomanageServicePrincipalResource() { }
-        public virtual Azure.ResourceManager.Automanage.AutomanageServicePrincipalData Data { get { throw null; } }
-        public virtual bool HasData { get { throw null; } }
-        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Automanage.AutomanageServicePrincipalResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Automanage.AutomanageServicePrincipalResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
     public partial class AutomanageVmConfigurationProfileAssignmentCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Automanage.AutomanageVmConfigurationProfileAssignmentResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Automanage.AutomanageVmConfigurationProfileAssignmentResource>, System.Collections.IEnumerable
     {
         protected AutomanageVmConfigurationProfileAssignmentCollection() { }
@@ -345,6 +331,12 @@ namespace Azure.ResourceManager.Automanage.Models
     {
         public AutomanageResourceUpdateDetails() { }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+    }
+    public partial class AutomanageServicePrincipalData : Azure.ResourceManager.Models.ResourceData
+    {
+        public AutomanageServicePrincipalData() { }
+        public bool? IsAuthorizationSet { get { throw null; } }
+        public string ServicePrincipalId { get { throw null; } }
     }
     public partial class ConfigurationProfileAssignmentProperties
     {

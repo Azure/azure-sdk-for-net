@@ -9,7 +9,7 @@ using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
-namespace Azure.ResourceManager.Automanage
+namespace Azure.ResourceManager.Automanage.Models
 {
     public partial class AutomanageServicePrincipalData : IUtf8JsonSerializable
     {

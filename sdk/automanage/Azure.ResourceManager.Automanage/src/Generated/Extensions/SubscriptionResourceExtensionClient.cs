@@ -5,11 +5,14 @@
 
 #nullable disable
 
+using System;
 using System.Threading;
+using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Automanage.Models;
 
 namespace Azure.ResourceManager.Automanage
 {
@@ -18,6 +21,8 @@ namespace Azure.ResourceManager.Automanage
     {
         private ClientDiagnostics _configurationProfileClientDiagnostics;
         private ConfigurationProfilesRestOperations _configurationProfileRestClient;
+        private ClientDiagnostics _servicePrincipalsClientDiagnostics;
+        private ServicePrincipalsRestOperations _servicePrincipalsRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="SubscriptionResourceExtensionClient"/> class for mocking. </summary>
         protected SubscriptionResourceExtensionClient()
@@ -33,18 +38,13 @@ namespace Azure.ResourceManager.Automanage
 
         private ClientDiagnostics ConfigurationProfileClientDiagnostics => _configurationProfileClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Automanage", ConfigurationProfileResource.ResourceType.Namespace, Diagnostics);
         private ConfigurationProfilesRestOperations ConfigurationProfileRestClient => _configurationProfileRestClient ??= new ConfigurationProfilesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(ConfigurationProfileResource.ResourceType));
+        private ClientDiagnostics ServicePrincipalsClientDiagnostics => _servicePrincipalsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Automanage", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private ServicePrincipalsRestOperations ServicePrincipalsRestClient => _servicePrincipalsRestClient ??= new ServicePrincipalsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
             TryGetApiVersion(resourceType, out string apiVersion);
             return apiVersion;
-        }
-
-        /// <summary> Gets an object representing a AutomanageServicePrincipalResource along with the instance operations that can be performed on it in the SubscriptionResource. </summary>
-        /// <returns> Returns a <see cref="AutomanageServicePrincipalResource" /> object. </returns>
-        public virtual AutomanageServicePrincipalResource GetAutomanageServicePrincipal()
-        {
-            return new AutomanageServicePrincipalResource(Client, new ResourceIdentifier(Id.ToString() + "/providers/Microsoft.Automanage/servicePrincipals/default"));
         }
 
         /// <summary>
@@ -87,6 +87,108 @@ namespace Azure.ResourceManager.Automanage
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ConfigurationProfileRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new ConfigurationProfileResource(Client, AutomanageConfigurationProfileData.DeserializeAutomanageConfigurationProfileData(e)), ConfigurationProfileClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetConfigurationProfiles", "value", null, cancellationToken);
+        }
+
+        /// <summary>
+        /// Get the Automanage AAD first party Application Service Principal details for the subscription id.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Automanage/servicePrincipals</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ServicePrincipals_ListBySubscription</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="AutomanageServicePrincipalData" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<AutomanageServicePrincipalData> GetServicePrincipalsAsync(CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => ServicePrincipalsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, AutomanageServicePrincipalData.DeserializeAutomanageServicePrincipalData, ServicePrincipalsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetServicePrincipals", "value", null, cancellationToken);
+        }
+
+        /// <summary>
+        /// Get the Automanage AAD first party Application Service Principal details for the subscription id.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Automanage/servicePrincipals</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ServicePrincipals_ListBySubscription</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="AutomanageServicePrincipalData" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<AutomanageServicePrincipalData> GetServicePrincipals(CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => ServicePrincipalsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, AutomanageServicePrincipalData.DeserializeAutomanageServicePrincipalData, ServicePrincipalsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetServicePrincipals", "value", null, cancellationToken);
+        }
+
+        /// <summary>
+        /// Get the Automanage AAD first party Application Service Principal details for the subscription id.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Automanage/servicePrincipals/default</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ServicePrincipals_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<AutomanageServicePrincipalData>> GetServicePrincipalAsync(CancellationToken cancellationToken = default)
+        {
+            using var scope = ServicePrincipalsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetServicePrincipal");
+            scope.Start();
+            try
+            {
+                var response = await ServicePrincipalsRestClient.GetAsync(Id.SubscriptionId, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Get the Automanage AAD first party Application Service Principal details for the subscription id.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Automanage/servicePrincipals/default</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ServicePrincipals_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<AutomanageServicePrincipalData> GetServicePrincipal(CancellationToken cancellationToken = default)
+        {
+            using var scope = ServicePrincipalsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetServicePrincipal");
+            scope.Start();
+            try
+            {
+                var response = ServicePrincipalsRestClient.Get(Id.SubscriptionId, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
     }
 }

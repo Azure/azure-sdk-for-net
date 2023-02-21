@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Automanage.Models;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Automanage
@@ -92,14 +93,6 @@ namespace Azure.ResourceManager.Automanage
             );
         }
 
-        /// <summary> Gets an object representing a AutomanageServicePrincipalResource along with the instance operations that can be performed on it in the SubscriptionResource. </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="AutomanageServicePrincipalResource" /> object. </returns>
-        public static AutomanageServicePrincipalResource GetAutomanageServicePrincipal(this SubscriptionResource subscriptionResource)
-        {
-            return GetExtensionClient(subscriptionResource).GetAutomanageServicePrincipal();
-        }
-
         /// <summary>
         /// Retrieve a list of configuration profile within a subscription
         /// <list type="bullet">
@@ -140,6 +133,88 @@ namespace Azure.ResourceManager.Automanage
         public static Pageable<ConfigurationProfileResource> GetConfigurationProfiles(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(subscriptionResource).GetConfigurationProfiles(cancellationToken);
+        }
+
+        /// <summary>
+        /// Get the Automanage AAD first party Application Service Principal details for the subscription id.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Automanage/servicePrincipals</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ServicePrincipals_ListBySubscription</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="AutomanageServicePrincipalData" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<AutomanageServicePrincipalData> GetServicePrincipalsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            return GetExtensionClient(subscriptionResource).GetServicePrincipalsAsync(cancellationToken);
+        }
+
+        /// <summary>
+        /// Get the Automanage AAD first party Application Service Principal details for the subscription id.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Automanage/servicePrincipals</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ServicePrincipals_ListBySubscription</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="AutomanageServicePrincipalData" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<AutomanageServicePrincipalData> GetServicePrincipals(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            return GetExtensionClient(subscriptionResource).GetServicePrincipals(cancellationToken);
+        }
+
+        /// <summary>
+        /// Get the Automanage AAD first party Application Service Principal details for the subscription id.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Automanage/servicePrincipals/default</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ServicePrincipals_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public static async Task<Response<AutomanageServicePrincipalData>> GetServicePrincipalAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            return await GetExtensionClient(subscriptionResource).GetServicePrincipalAsync(cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get the Automanage AAD first party Application Service Principal details for the subscription id.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Automanage/servicePrincipals/default</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ServicePrincipals_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public static Response<AutomanageServicePrincipalData> GetServicePrincipal(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            return GetExtensionClient(subscriptionResource).GetServicePrincipal(cancellationToken);
         }
 
         private static ResourceGroupResourceExtensionClient GetExtensionClient(ResourceGroupResource resourceGroupResource)
@@ -604,25 +679,6 @@ namespace Azure.ResourceManager.Automanage
             {
                 AutomanageHciClusterConfigurationProfileAssignmentReportResource.ValidateResourceId(id);
                 return new AutomanageHciClusterConfigurationProfileAssignmentReportResource(client, id);
-            }
-            );
-        }
-        #endregion
-
-        #region AutomanageServicePrincipalResource
-        /// <summary>
-        /// Gets an object representing an <see cref="AutomanageServicePrincipalResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="AutomanageServicePrincipalResource.CreateResourceIdentifier" /> to create an <see cref="AutomanageServicePrincipalResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="AutomanageServicePrincipalResource" /> object. </returns>
-        public static AutomanageServicePrincipalResource GetAutomanageServicePrincipalResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                AutomanageServicePrincipalResource.ValidateResourceId(id);
-                return new AutomanageServicePrincipalResource(client, id);
             }
             );
         }
