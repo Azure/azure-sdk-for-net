@@ -1,14 +1,17 @@
 # Release History
 
-## 1.2.0-beta.1 (Unreleased)
+## 1.2.0-beta.1 (2023-02-21)
 
 ### Features Added
 
-### Breaking Changes
-
-### Bugs Fixed
+- Added support for fleet resources.
+- Added support for managed cluster snapshot, trusted access role binding.
 
 ### Other Changes
+
+- Upgraded managed clusters API version to `2022-11-02-preview`.
+- Upgraded dependent `Azure.Core` to `1.28.0`.
+- Upgraded dependent `Azure.ResourceManager` to `1.4.0`.
 
 ## 1.1.0 (2022-12-14)
 
