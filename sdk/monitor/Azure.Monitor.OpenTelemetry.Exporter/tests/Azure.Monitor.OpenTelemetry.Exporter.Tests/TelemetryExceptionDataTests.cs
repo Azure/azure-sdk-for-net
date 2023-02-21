@@ -333,6 +333,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             {
                 builder.AddOpenTelemetry(options =>
                 {
+                    options.ParseStateValues = true;
                     options.AddInMemoryExporter(logRecords);
                 });
                 builder.AddFilter(typeof(TelemetryExceptionDataTests).FullName, LogLevel.Trace);
