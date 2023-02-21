@@ -20,46 +20,46 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.Automanage
 {
     /// <summary>
-    /// A Class representing a ConfigurationProfile along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="ConfigurationProfileResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetConfigurationProfileResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetConfigurationProfile method.
+    /// A Class representing an AutomanageConfigurationProfile along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="AutomanageConfigurationProfileResource" />
+    /// from an instance of <see cref="ArmClient" /> using the GetAutomanageConfigurationProfileResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetAutomanageConfigurationProfile method.
     /// </summary>
-    public partial class ConfigurationProfileResource : ArmResource
+    public partial class AutomanageConfigurationProfileResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="ConfigurationProfileResource"/> instance. </summary>
+        /// <summary> Generate the resource identifier of a <see cref="AutomanageConfigurationProfileResource"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string configurationProfileName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automanage/configurationProfiles/{configurationProfileName}";
             return new ResourceIdentifier(resourceId);
         }
 
-        private readonly ClientDiagnostics _configurationProfileClientDiagnostics;
-        private readonly ConfigurationProfilesRestOperations _configurationProfileRestClient;
-        private readonly ConfigurationProfileData _data;
+        private readonly ClientDiagnostics _automanageConfigurationProfileConfigurationProfilesClientDiagnostics;
+        private readonly ConfigurationProfilesRestOperations _automanageConfigurationProfileConfigurationProfilesRestClient;
+        private readonly AutomanageConfigurationProfileData _data;
 
-        /// <summary> Initializes a new instance of the <see cref="ConfigurationProfileResource"/> class for mocking. </summary>
-        protected ConfigurationProfileResource()
+        /// <summary> Initializes a new instance of the <see cref="AutomanageConfigurationProfileResource"/> class for mocking. </summary>
+        protected AutomanageConfigurationProfileResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ConfigurationProfileResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref = "AutomanageConfigurationProfileResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal ConfigurationProfileResource(ArmClient client, ConfigurationProfileData data) : this(client, data.Id)
+        internal AutomanageConfigurationProfileResource(ArmClient client, AutomanageConfigurationProfileData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="ConfigurationProfileResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="AutomanageConfigurationProfileResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal ConfigurationProfileResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal AutomanageConfigurationProfileResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _configurationProfileClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Automanage", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string configurationProfileApiVersion);
-            _configurationProfileRestClient = new ConfigurationProfilesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, configurationProfileApiVersion);
+            _automanageConfigurationProfileConfigurationProfilesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Automanage", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string automanageConfigurationProfileConfigurationProfilesApiVersion);
+            _automanageConfigurationProfileConfigurationProfilesRestClient = new ConfigurationProfilesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, automanageConfigurationProfileConfigurationProfilesApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Automanage
 
         /// <summary> Gets the data representing this Feature. </summary>
         /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual ConfigurationProfileData Data
+        public virtual AutomanageConfigurationProfileData Data
         {
             get
             {
@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.Automanage
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of ConfigurationProfileVersionResources in the ConfigurationProfile. </summary>
-        /// <returns> An object representing collection of ConfigurationProfileVersionResources and their operations over a ConfigurationProfileVersionResource. </returns>
-        public virtual ConfigurationProfileVersionCollection GetConfigurationProfileVersions()
+        /// <summary> Gets a collection of AutomanageConfigurationProfileVersionResources in the AutomanageConfigurationProfile. </summary>
+        /// <returns> An object representing collection of AutomanageConfigurationProfileVersionResources and their operations over a AutomanageConfigurationProfileVersionResource. </returns>
+        public virtual AutomanageConfigurationProfileVersionCollection GetAutomanageConfigurationProfileVersions()
         {
-            return GetCachedClient(Client => new ConfigurationProfileVersionCollection(Client, Id));
+            return GetCachedClient(Client => new AutomanageConfigurationProfileVersionCollection(Client, Id));
         }
 
         /// <summary>
@@ -114,9 +114,9 @@ namespace Azure.ResourceManager.Automanage
         /// <exception cref="ArgumentException"> <paramref name="versionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="versionName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<ConfigurationProfileVersionResource>> GetConfigurationProfileVersionAsync(string versionName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AutomanageConfigurationProfileVersionResource>> GetAutomanageConfigurationProfileVersionAsync(string versionName, CancellationToken cancellationToken = default)
         {
-            return await GetConfigurationProfileVersions().GetAsync(versionName, cancellationToken).ConfigureAwait(false);
+            return await GetAutomanageConfigurationProfileVersions().GetAsync(versionName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -137,9 +137,9 @@ namespace Azure.ResourceManager.Automanage
         /// <exception cref="ArgumentException"> <paramref name="versionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="versionName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<ConfigurationProfileVersionResource> GetConfigurationProfileVersion(string versionName, CancellationToken cancellationToken = default)
+        public virtual Response<AutomanageConfigurationProfileVersionResource> GetAutomanageConfigurationProfileVersion(string versionName, CancellationToken cancellationToken = default)
         {
-            return GetConfigurationProfileVersions().Get(versionName, cancellationToken);
+            return GetAutomanageConfigurationProfileVersions().Get(versionName, cancellationToken);
         }
 
         /// <summary>
@@ -156,16 +156,16 @@ namespace Azure.ResourceManager.Automanage
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ConfigurationProfileResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AutomanageConfigurationProfileResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _configurationProfileClientDiagnostics.CreateScope("ConfigurationProfileResource.Get");
+            using var scope = _automanageConfigurationProfileConfigurationProfilesClientDiagnostics.CreateScope("AutomanageConfigurationProfileResource.Get");
             scope.Start();
             try
             {
-                var response = await _configurationProfileRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _automanageConfigurationProfileConfigurationProfilesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ConfigurationProfileResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new AutomanageConfigurationProfileResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -188,16 +188,16 @@ namespace Azure.ResourceManager.Automanage
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ConfigurationProfileResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<AutomanageConfigurationProfileResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _configurationProfileClientDiagnostics.CreateScope("ConfigurationProfileResource.Get");
+            using var scope = _automanageConfigurationProfileConfigurationProfilesClientDiagnostics.CreateScope("AutomanageConfigurationProfileResource.Get");
             scope.Start();
             try
             {
-                var response = _configurationProfileRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                var response = _automanageConfigurationProfileConfigurationProfilesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ConfigurationProfileResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new AutomanageConfigurationProfileResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -223,11 +223,11 @@ namespace Azure.ResourceManager.Automanage
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _configurationProfileClientDiagnostics.CreateScope("ConfigurationProfileResource.Delete");
+            using var scope = _automanageConfigurationProfileConfigurationProfilesClientDiagnostics.CreateScope("AutomanageConfigurationProfileResource.Delete");
             scope.Start();
             try
             {
-                var response = await _configurationProfileRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _automanageConfigurationProfileConfigurationProfilesRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 var operation = new AutomanageArmOperation(response);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
@@ -257,11 +257,11 @@ namespace Azure.ResourceManager.Automanage
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _configurationProfileClientDiagnostics.CreateScope("ConfigurationProfileResource.Delete");
+            using var scope = _automanageConfigurationProfileConfigurationProfilesClientDiagnostics.CreateScope("AutomanageConfigurationProfileResource.Delete");
             scope.Start();
             try
             {
-                var response = _configurationProfileRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                var response = _automanageConfigurationProfileConfigurationProfilesRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 var operation = new AutomanageArmOperation(response);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
@@ -290,16 +290,16 @@ namespace Azure.ResourceManager.Automanage
         /// <param name="patch"> Parameters supplied to update configuration profile. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual async Task<Response<ConfigurationProfileResource>> UpdateAsync(ConfigurationProfilePatch patch, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AutomanageConfigurationProfileResource>> UpdateAsync(AutomanageConfigurationProfilePatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using var scope = _configurationProfileClientDiagnostics.CreateScope("ConfigurationProfileResource.Update");
+            using var scope = _automanageConfigurationProfileConfigurationProfilesClientDiagnostics.CreateScope("AutomanageConfigurationProfileResource.Update");
             scope.Start();
             try
             {
-                var response = await _configurationProfileRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new ConfigurationProfileResource(Client, response.Value), response.GetRawResponse());
+                var response = await _automanageConfigurationProfileConfigurationProfilesRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new AutomanageConfigurationProfileResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -324,16 +324,16 @@ namespace Azure.ResourceManager.Automanage
         /// <param name="patch"> Parameters supplied to update configuration profile. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual Response<ConfigurationProfileResource> Update(ConfigurationProfilePatch patch, CancellationToken cancellationToken = default)
+        public virtual Response<AutomanageConfigurationProfileResource> Update(AutomanageConfigurationProfilePatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using var scope = _configurationProfileClientDiagnostics.CreateScope("ConfigurationProfileResource.Update");
+            using var scope = _automanageConfigurationProfileConfigurationProfilesClientDiagnostics.CreateScope("AutomanageConfigurationProfileResource.Update");
             scope.Start();
             try
             {
-                var response = _configurationProfileRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken);
-                return Response.FromValue(new ConfigurationProfileResource(Client, response.Value), response.GetRawResponse());
+                var response = _automanageConfigurationProfileConfigurationProfilesRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken);
+                return Response.FromValue(new AutomanageConfigurationProfileResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -359,12 +359,12 @@ namespace Azure.ResourceManager.Automanage
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
-        public virtual async Task<Response<ConfigurationProfileResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AutomanageConfigurationProfileResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using var scope = _configurationProfileClientDiagnostics.CreateScope("ConfigurationProfileResource.AddTag");
+            using var scope = _automanageConfigurationProfileConfigurationProfilesClientDiagnostics.CreateScope("AutomanageConfigurationProfileResource.AddTag");
             scope.Start();
             try
             {
@@ -373,13 +373,13 @@ namespace Azure.ResourceManager.Automanage
                     var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues[key] = value;
                     await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _configurationProfileRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new ConfigurationProfileResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    var originalResponse = await _automanageConfigurationProfileConfigurationProfilesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(new AutomanageConfigurationProfileResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
                 {
                     var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new ConfigurationProfilePatch();
+                    var patch = new AutomanageConfigurationProfilePatch();
                     foreach (var tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -413,12 +413,12 @@ namespace Azure.ResourceManager.Automanage
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
-        public virtual Response<ConfigurationProfileResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
+        public virtual Response<AutomanageConfigurationProfileResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using var scope = _configurationProfileClientDiagnostics.CreateScope("ConfigurationProfileResource.AddTag");
+            using var scope = _automanageConfigurationProfileConfigurationProfilesClientDiagnostics.CreateScope("AutomanageConfigurationProfileResource.AddTag");
             scope.Start();
             try
             {
@@ -427,13 +427,13 @@ namespace Azure.ResourceManager.Automanage
                     var originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues[key] = value;
                     GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _configurationProfileRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                    return Response.FromValue(new ConfigurationProfileResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    var originalResponse = _automanageConfigurationProfileConfigurationProfilesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                    return Response.FromValue(new AutomanageConfigurationProfileResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
                 {
                     var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new ConfigurationProfilePatch();
+                    var patch = new AutomanageConfigurationProfilePatch();
                     foreach (var tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -466,11 +466,11 @@ namespace Azure.ResourceManager.Automanage
         /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
-        public virtual async Task<Response<ConfigurationProfileResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AutomanageConfigurationProfileResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using var scope = _configurationProfileClientDiagnostics.CreateScope("ConfigurationProfileResource.SetTags");
+            using var scope = _automanageConfigurationProfileConfigurationProfilesClientDiagnostics.CreateScope("AutomanageConfigurationProfileResource.SetTags");
             scope.Start();
             try
             {
@@ -480,13 +480,13 @@ namespace Azure.ResourceManager.Automanage
                     var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues.ReplaceWith(tags);
                     await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _configurationProfileRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new ConfigurationProfileResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    var originalResponse = await _automanageConfigurationProfileConfigurationProfilesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(new AutomanageConfigurationProfileResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
                 {
                     var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new ConfigurationProfilePatch();
+                    var patch = new AutomanageConfigurationProfilePatch();
                     patch.Tags.ReplaceWith(tags);
                     var result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return result;
@@ -515,11 +515,11 @@ namespace Azure.ResourceManager.Automanage
         /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
-        public virtual Response<ConfigurationProfileResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        public virtual Response<AutomanageConfigurationProfileResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using var scope = _configurationProfileClientDiagnostics.CreateScope("ConfigurationProfileResource.SetTags");
+            using var scope = _automanageConfigurationProfileConfigurationProfilesClientDiagnostics.CreateScope("AutomanageConfigurationProfileResource.SetTags");
             scope.Start();
             try
             {
@@ -529,13 +529,13 @@ namespace Azure.ResourceManager.Automanage
                     var originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues.ReplaceWith(tags);
                     GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _configurationProfileRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                    return Response.FromValue(new ConfigurationProfileResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    var originalResponse = _automanageConfigurationProfileConfigurationProfilesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                    return Response.FromValue(new AutomanageConfigurationProfileResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
                 {
                     var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new ConfigurationProfilePatch();
+                    var patch = new AutomanageConfigurationProfilePatch();
                     patch.Tags.ReplaceWith(tags);
                     var result = Update(patch, cancellationToken: cancellationToken);
                     return result;
@@ -564,11 +564,11 @@ namespace Azure.ResourceManager.Automanage
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        public virtual async Task<Response<ConfigurationProfileResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AutomanageConfigurationProfileResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using var scope = _configurationProfileClientDiagnostics.CreateScope("ConfigurationProfileResource.RemoveTag");
+            using var scope = _automanageConfigurationProfileConfigurationProfilesClientDiagnostics.CreateScope("AutomanageConfigurationProfileResource.RemoveTag");
             scope.Start();
             try
             {
@@ -577,13 +577,13 @@ namespace Azure.ResourceManager.Automanage
                     var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues.Remove(key);
                     await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _configurationProfileRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new ConfigurationProfileResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    var originalResponse = await _automanageConfigurationProfileConfigurationProfilesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(new AutomanageConfigurationProfileResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
                 {
                     var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new ConfigurationProfilePatch();
+                    var patch = new AutomanageConfigurationProfilePatch();
                     foreach (var tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -616,11 +616,11 @@ namespace Azure.ResourceManager.Automanage
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        public virtual Response<ConfigurationProfileResource> RemoveTag(string key, CancellationToken cancellationToken = default)
+        public virtual Response<AutomanageConfigurationProfileResource> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using var scope = _configurationProfileClientDiagnostics.CreateScope("ConfigurationProfileResource.RemoveTag");
+            using var scope = _automanageConfigurationProfileConfigurationProfilesClientDiagnostics.CreateScope("AutomanageConfigurationProfileResource.RemoveTag");
             scope.Start();
             try
             {
@@ -629,13 +629,13 @@ namespace Azure.ResourceManager.Automanage
                     var originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues.Remove(key);
                     GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _configurationProfileRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                    return Response.FromValue(new ConfigurationProfileResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    var originalResponse = _automanageConfigurationProfileConfigurationProfilesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                    return Response.FromValue(new AutomanageConfigurationProfileResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
                 {
                     var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new ConfigurationProfilePatch();
+                    var patch = new AutomanageConfigurationProfilePatch();
                     foreach (var tag in current.Tags)
                     {
                         patch.Tags.Add(tag);

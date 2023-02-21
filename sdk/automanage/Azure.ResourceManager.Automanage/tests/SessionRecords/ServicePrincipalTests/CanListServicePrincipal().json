@@ -6,9 +6,9 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-b2b08411f3eff1dbe2557bfd610d42b5-63b830ecd146d678-00",
+        "traceparent": "00-9fa8ad2fc168fe837493d39ae8d14034-afc0900c3a35e9c6-00",
         "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET 6.0.14; Microsoft Windows 10.0.19045)",
-        "x-ms-client-request-id": "d60e8e0cdbd4d565e6fc6a31cee72925",
+        "x-ms-client-request-id": "a8eb9d13077971965d91346626b60b64",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -17,15 +17,15 @@
         "Cache-Control": "no-cache",
         "Content-Length": "748",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 21 Feb 2023 06:30:13 GMT",
+        "Date": "Tue, 21 Feb 2023 06:30:14 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "0d769179-40a0-42cf-97b2-bdbe9011a5c6",
-        "x-ms-ratelimit-remaining-subscription-reads": "11999",
-        "x-ms-request-id": "0d769179-40a0-42cf-97b2-bdbe9011a5c6",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20230221T063013Z:0d769179-40a0-42cf-97b2-bdbe9011a5c6"
+        "x-ms-correlation-request-id": "b5f75bf1-c35f-4a54-8da9-db6ef9c4c333",
+        "x-ms-ratelimit-remaining-subscription-reads": "11997",
+        "x-ms-request-id": "b5f75bf1-c35f-4a54-8da9-db6ef9c4c333",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20230221T063015Z:b5f75bf1-c35f-4a54-8da9-db6ef9c4c333"
       },
       "ResponseBody": {
         "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c",
@@ -56,21 +56,21 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Automanage/servicePrincipals/default?api-version=2022-05-04",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Automanage/servicePrincipals?api-version=2022-05-04",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-776cad07ef6e7de006ee2ecbb14a8f3c-ea57709a212bab27-00",
+        "traceparent": "00-09f9803cc3b19a4f3a04eecebc4bf3d8-fb2f0dbff7b9477f-00",
         "User-Agent": "azsdk-net-ResourceManager.Automanage/1.0.0-alpha.20230221.1 (.NET 6.0.14; Microsoft Windows 10.0.19045)",
-        "x-ms-client-request-id": "493b489a845001e2d537677afa14e6f1",
+        "x-ms-client-request-id": "4d98669edfa9e2e3ddf56f150d43ca58",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "255",
+        "Content-Length": "12",
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Tue, 21 Feb 2023 06:30:14 GMT",
         "Expires": "-1",
@@ -79,26 +79,20 @@
         "Server": "Kestrel",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-client-request-id": "493b489a845001e2d537677afa14e6f1",
-        "x-ms-correlation-request-id": "ba02cc25-18c1-4caf-9a3f-21b9f23533ec",
-        "x-ms-ratelimit-remaining-subscription-reads": "11998",
-        "x-ms-request-id": "ba02cc25-18c1-4caf-9a3f-21b9f23533ec",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20230221T063014Z:ba02cc25-18c1-4caf-9a3f-21b9f23533ec"
+        "x-ms-client-request-id": "4d98669edfa9e2e3ddf56f150d43ca58",
+        "x-ms-correlation-request-id": "73501e42-e7a4-49c0-b462-dc09252ea6b4",
+        "x-ms-ratelimit-remaining-subscription-reads": "11996",
+        "x-ms-request-id": "73501e42-e7a4-49c0-b462-dc09252ea6b4",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20230221T063015Z:73501e42-e7a4-49c0-b462-dc09252ea6b4"
       },
       "ResponseBody": {
-        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Automanage/servicePrincipals/default",
-        "name": "default",
-        "type": "Microsoft.Automanage/servicePrincipals",
-        "properties": {
-          "authorizationSet": false,
-          "servicePrincipalId": "Sanitized"
-        }
+        "value": []
       }
     }
   ],
   "Variables": {
     "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
-    "RandomSeed": "1936013114",
+    "RandomSeed": "791793933",
     "RESOURCE_MANAGER_URL": null,
     "SUBSCRIPTION_ID": "db1ab6f0-4769-4b27-930e-01e2ef9c123c"
   }

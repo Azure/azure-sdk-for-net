@@ -18,7 +18,7 @@ using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Automanage.Samples
 {
-    public partial class Sample_ConfigurationProfileResource
+    public partial class Sample_AutomanageConfigurationProfileResource
     {
         // Get a configuration profile
         [NUnit.Framework.Test]
@@ -33,20 +33,20 @@ namespace Azure.ResourceManager.Automanage.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ConfigurationProfileResource created on azure
-            // for more information of creating ConfigurationProfileResource, please refer to the document of ConfigurationProfileResource
+            // this example assumes you already have this AutomanageConfigurationProfileResource created on azure
+            // for more information of creating AutomanageConfigurationProfileResource, please refer to the document of AutomanageConfigurationProfileResource
             string subscriptionId = "mySubscriptionId";
             string resourceGroupName = "myResourceGroupName";
             string configurationProfileName = "customConfigurationProfile";
-            ResourceIdentifier configurationProfileResourceId = ConfigurationProfileResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, configurationProfileName);
-            ConfigurationProfileResource configurationProfile = client.GetConfigurationProfileResource(configurationProfileResourceId);
+            ResourceIdentifier automanageConfigurationProfileResourceId = AutomanageConfigurationProfileResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, configurationProfileName);
+            AutomanageConfigurationProfileResource automanageConfigurationProfile = client.GetAutomanageConfigurationProfileResource(automanageConfigurationProfileResourceId);
 
             // invoke the operation
-            ConfigurationProfileResource result = await configurationProfile.GetAsync();
+            AutomanageConfigurationProfileResource result = await automanageConfigurationProfile.GetAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            ConfigurationProfileData resourceData = result.Data;
+            AutomanageConfigurationProfileData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -64,16 +64,16 @@ namespace Azure.ResourceManager.Automanage.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ConfigurationProfileResource created on azure
-            // for more information of creating ConfigurationProfileResource, please refer to the document of ConfigurationProfileResource
+            // this example assumes you already have this AutomanageConfigurationProfileResource created on azure
+            // for more information of creating AutomanageConfigurationProfileResource, please refer to the document of AutomanageConfigurationProfileResource
             string subscriptionId = "subid";
             string resourceGroupName = "rg";
             string configurationProfileName = "customConfigurationProfile";
-            ResourceIdentifier configurationProfileResourceId = ConfigurationProfileResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, configurationProfileName);
-            ConfigurationProfileResource configurationProfile = client.GetConfigurationProfileResource(configurationProfileResourceId);
+            ResourceIdentifier automanageConfigurationProfileResourceId = AutomanageConfigurationProfileResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, configurationProfileName);
+            AutomanageConfigurationProfileResource automanageConfigurationProfile = client.GetAutomanageConfigurationProfileResource(automanageConfigurationProfileResourceId);
 
             // invoke the operation
-            await configurationProfile.DeleteAsync(WaitUntil.Completed);
+            await automanageConfigurationProfile.DeleteAsync(WaitUntil.Completed);
 
             Console.WriteLine($"Succeeded");
         }
@@ -91,16 +91,16 @@ namespace Azure.ResourceManager.Automanage.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ConfigurationProfileResource created on azure
-            // for more information of creating ConfigurationProfileResource, please refer to the document of ConfigurationProfileResource
+            // this example assumes you already have this AutomanageConfigurationProfileResource created on azure
+            // for more information of creating AutomanageConfigurationProfileResource, please refer to the document of AutomanageConfigurationProfileResource
             string subscriptionId = "mySubscriptionId";
             string resourceGroupName = "myResourceGroupName";
             string configurationProfileName = "customConfigurationProfile";
-            ResourceIdentifier configurationProfileResourceId = ConfigurationProfileResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, configurationProfileName);
-            ConfigurationProfileResource configurationProfile = client.GetConfigurationProfileResource(configurationProfileResourceId);
+            ResourceIdentifier automanageConfigurationProfileResourceId = AutomanageConfigurationProfileResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, configurationProfileName);
+            AutomanageConfigurationProfileResource automanageConfigurationProfile = client.GetAutomanageConfigurationProfileResource(automanageConfigurationProfileResourceId);
 
             // invoke the operation
-            ConfigurationProfilePatch patch = new ConfigurationProfilePatch()
+            AutomanageConfigurationProfilePatch patch = new AutomanageConfigurationProfilePatch()
             {
                 Configuration = BinaryData.FromObjectAsJson(new Dictionary<string, object>()
                 {
@@ -119,11 +119,11 @@ namespace Azure.ResourceManager.Automanage.Samples
 ["Organization"] = "Administration",
 },
             };
-            ConfigurationProfileResource result = await configurationProfile.UpdateAsync(patch);
+            AutomanageConfigurationProfileResource result = await automanageConfigurationProfile.UpdateAsync(patch);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            ConfigurationProfileData resourceData = result.Data;
+            AutomanageConfigurationProfileData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Automanage.Samples
         // List configuration profiles by subscription
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetConfigurationProfiles_ListConfigurationProfilesBySubscription()
+        public async Task GetAutomanageConfigurationProfiles_ListConfigurationProfilesBySubscription()
         {
             // Generated from example definition: specification/automanage/resource-manager/Microsoft.Automanage/stable/2022-05-04/examples/listConfigurationProfilesBySubscription.json
             // this example is just showing the usage of "ConfigurationProfiles_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
@@ -148,11 +148,11 @@ namespace Azure.ResourceManager.Automanage.Samples
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (ConfigurationProfileResource item in subscriptionResource.GetConfigurationProfilesAsync())
+            await foreach (AutomanageConfigurationProfileResource item in subscriptionResource.GetAutomanageConfigurationProfilesAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                ConfigurationProfileData resourceData = item.Data;
+                AutomanageConfigurationProfileData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }

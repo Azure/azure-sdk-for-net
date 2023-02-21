@@ -18,46 +18,46 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.Automanage
 {
     /// <summary>
-    /// A Class representing a BestPractice along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="BestPracticeResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetBestPracticeResource method.
-    /// Otherwise you can get one from its parent resource <see cref="TenantResource" /> using the GetBestPractice method.
+    /// A Class representing an AutomanageBestPractice along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="AutomanageBestPracticeResource" />
+    /// from an instance of <see cref="ArmClient" /> using the GetAutomanageBestPracticeResource method.
+    /// Otherwise you can get one from its parent resource <see cref="TenantResource" /> using the GetAutomanageBestPractice method.
     /// </summary>
-    public partial class BestPracticeResource : ArmResource
+    public partial class AutomanageBestPracticeResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="BestPracticeResource"/> instance. </summary>
+        /// <summary> Generate the resource identifier of a <see cref="AutomanageBestPracticeResource"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string bestPracticeName)
         {
             var resourceId = $"/providers/Microsoft.Automanage/bestPractices/{bestPracticeName}";
             return new ResourceIdentifier(resourceId);
         }
 
-        private readonly ClientDiagnostics _bestPracticeClientDiagnostics;
-        private readonly BestPracticesRestOperations _bestPracticeRestClient;
-        private readonly BestPracticeData _data;
+        private readonly ClientDiagnostics _automanageBestPracticeBestPracticesClientDiagnostics;
+        private readonly BestPracticesRestOperations _automanageBestPracticeBestPracticesRestClient;
+        private readonly AutomanageBestPracticeData _data;
 
-        /// <summary> Initializes a new instance of the <see cref="BestPracticeResource"/> class for mocking. </summary>
-        protected BestPracticeResource()
+        /// <summary> Initializes a new instance of the <see cref="AutomanageBestPracticeResource"/> class for mocking. </summary>
+        protected AutomanageBestPracticeResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "BestPracticeResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref = "AutomanageBestPracticeResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal BestPracticeResource(ArmClient client, BestPracticeData data) : this(client, data.Id)
+        internal AutomanageBestPracticeResource(ArmClient client, AutomanageBestPracticeData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="BestPracticeResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="AutomanageBestPracticeResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal BestPracticeResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal AutomanageBestPracticeResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _bestPracticeClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Automanage", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string bestPracticeApiVersion);
-            _bestPracticeRestClient = new BestPracticesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, bestPracticeApiVersion);
+            _automanageBestPracticeBestPracticesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Automanage", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string automanageBestPracticeBestPracticesApiVersion);
+            _automanageBestPracticeBestPracticesRestClient = new BestPracticesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, automanageBestPracticeBestPracticesApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Automanage
 
         /// <summary> Gets the data representing this Feature. </summary>
         /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual BestPracticeData Data
+        public virtual AutomanageBestPracticeData Data
         {
             get
             {
@@ -101,16 +101,16 @@ namespace Azure.ResourceManager.Automanage
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<BestPracticeResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AutomanageBestPracticeResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _bestPracticeClientDiagnostics.CreateScope("BestPracticeResource.Get");
+            using var scope = _automanageBestPracticeBestPracticesClientDiagnostics.CreateScope("AutomanageBestPracticeResource.Get");
             scope.Start();
             try
             {
-                var response = await _bestPracticeRestClient.GetAsync(Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _automanageBestPracticeBestPracticesRestClient.GetAsync(Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new BestPracticeResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new AutomanageBestPracticeResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -133,16 +133,16 @@ namespace Azure.ResourceManager.Automanage
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<BestPracticeResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<AutomanageBestPracticeResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _bestPracticeClientDiagnostics.CreateScope("BestPracticeResource.Get");
+            using var scope = _automanageBestPracticeBestPracticesClientDiagnostics.CreateScope("AutomanageBestPracticeResource.Get");
             scope.Start();
             try
             {
-                var response = _bestPracticeRestClient.Get(Id.Name, cancellationToken);
+                var response = _automanageBestPracticeBestPracticesRestClient.Get(Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new BestPracticeResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new AutomanageBestPracticeResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

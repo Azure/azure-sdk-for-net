@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Automanage.Models
 {
-    public partial class ConfigurationProfilePatch : IUtf8JsonSerializable
+    public partial class AutomanageConfigurationProfilePatch : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {

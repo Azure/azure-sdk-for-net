@@ -9,9 +9,9 @@ using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
-namespace Azure.ResourceManager.Automanage
+namespace Azure.ResourceManager.Automanage.Models
 {
-    public partial class ServicePrincipalData : IUtf8JsonSerializable
+    public partial class AutomanageServicePrincipalData : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Automanage
             writer.WriteEndObject();
         }
 
-        internal static ServicePrincipalData DeserializeServicePrincipalData(JsonElement element)
+        internal static AutomanageServicePrincipalData DeserializeAutomanageServicePrincipalData(JsonElement element)
         {
             ResourceIdentifier id = default;
             string name = default;
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Automanage
                     continue;
                 }
             }
-            return new ServicePrincipalData(id, name, type, systemData.Value, servicePrincipalId.Value, Optional.ToNullable(authorizationSet));
+            return new AutomanageServicePrincipalData(id, name, type, systemData.Value, servicePrincipalId.Value, Optional.ToNullable(authorizationSet));
         }
     }
 }

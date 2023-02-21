@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Automanage.Models
 {
-    public partial class ConfigurationProfileAssignmentProperties : IUtf8JsonSerializable
+    public partial class AutomanageConfigurationProfileAssignmentProperties : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -23,21 +23,31 @@ namespace Azure.ResourceManager.Automanage.Models
             writer.WriteEndObject();
         }
 
-        internal static ConfigurationProfileAssignmentProperties DeserializeConfigurationProfileAssignmentProperties(JsonElement element)
+        internal static AutomanageConfigurationProfileAssignmentProperties DeserializeAutomanageConfigurationProfileAssignmentProperties(JsonElement element)
         {
-            Optional<string> configurationProfile = default;
-            Optional<string> targetId = default;
+            Optional<ResourceIdentifier> configurationProfile = default;
+            Optional<ResourceIdentifier> targetId = default;
             Optional<string> status = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("configurationProfile"u8))
                 {
-                    configurationProfile = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    configurationProfile = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("targetId"u8))
                 {
-                    targetId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    targetId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("status"u8))
@@ -46,7 +56,7 @@ namespace Azure.ResourceManager.Automanage.Models
                     continue;
                 }
             }
-            return new ConfigurationProfileAssignmentProperties(configurationProfile.Value, targetId.Value, status.Value);
+            return new AutomanageConfigurationProfileAssignmentProperties(configurationProfile.Value, targetId.Value, status.Value);
         }
     }
 }

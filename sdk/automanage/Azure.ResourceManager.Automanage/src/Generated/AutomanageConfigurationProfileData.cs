@@ -13,16 +13,16 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Automanage
 {
-    /// <summary> A class representing the ConfigurationProfile data model. </summary>
-    public partial class ConfigurationProfileData : TrackedResourceData
+    /// <summary> A class representing the AutomanageConfigurationProfile data model. </summary>
+    public partial class AutomanageConfigurationProfileData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of ConfigurationProfileData. </summary>
+        /// <summary> Initializes a new instance of AutomanageConfigurationProfileData. </summary>
         /// <param name="location"> The location. </param>
-        public ConfigurationProfileData(AzureLocation location) : base(location)
+        public AutomanageConfigurationProfileData(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of ConfigurationProfileData. </summary>
+        /// <summary> Initializes a new instance of AutomanageConfigurationProfileData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Automanage
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
         /// <param name="properties"> Properties of the configuration profile. </param>
-        internal ConfigurationProfileData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ConfigurationProfileProperties properties) : base(id, name, resourceType, systemData, tags, location)
+        internal AutomanageConfigurationProfileData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ConfigurationProfileProperties properties) : base(id, name, resourceType, systemData, tags, location)
         {
             Properties = properties;
         }

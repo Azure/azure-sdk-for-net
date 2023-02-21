@@ -11,21 +11,21 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Automanage
 {
-    /// <summary> A class representing the BestPractice data model. </summary>
-    public partial class BestPracticeData : ResourceData
+    /// <summary> A class representing the AutomanageBestPractice data model. </summary>
+    public partial class AutomanageBestPracticeData : ResourceData
     {
-        /// <summary> Initializes a new instance of BestPracticeData. </summary>
-        internal BestPracticeData()
+        /// <summary> Initializes a new instance of AutomanageBestPracticeData. </summary>
+        internal AutomanageBestPracticeData()
         {
         }
 
-        /// <summary> Initializes a new instance of BestPracticeData. </summary>
+        /// <summary> Initializes a new instance of AutomanageBestPracticeData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="configuration"> configuration dictionary of the configuration profile. </param>
-        internal BestPracticeData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, BinaryData configuration) : base(id, name, resourceType, systemData)
+        internal AutomanageBestPracticeData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, BinaryData configuration) : base(id, name, resourceType, systemData)
         {
             Configuration = configuration;
         }

@@ -6,9 +6,9 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-b2b08411f3eff1dbe2557bfd610d42b5-63b830ecd146d678-00",
+        "traceparent": "00-d6137318654b826b9cedd34acc5ad77b-5a57bee19952cc62-00",
         "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET 6.0.14; Microsoft Windows 10.0.19045)",
-        "x-ms-client-request-id": "d60e8e0cdbd4d565e6fc6a31cee72925",
+        "x-ms-client-request-id": "150c939826aacf1fcfbdc43815b8caaf",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -17,15 +17,15 @@
         "Cache-Control": "no-cache",
         "Content-Length": "748",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 21 Feb 2023 06:30:13 GMT",
+        "Date": "Tue, 21 Feb 2023 06:30:15 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "0d769179-40a0-42cf-97b2-bdbe9011a5c6",
-        "x-ms-ratelimit-remaining-subscription-reads": "11999",
-        "x-ms-request-id": "0d769179-40a0-42cf-97b2-bdbe9011a5c6",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20230221T063013Z:0d769179-40a0-42cf-97b2-bdbe9011a5c6"
+        "x-ms-correlation-request-id": "3e56e72a-3e4c-41c0-970a-f06e5f0b4036",
+        "x-ms-ratelimit-remaining-subscription-reads": "11993",
+        "x-ms-request-id": "3e56e72a-3e4c-41c0-970a-f06e5f0b4036",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20230221T063016Z:3e56e72a-3e4c-41c0-970a-f06e5f0b4036"
       },
       "ResponseBody": {
         "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c",
@@ -56,49 +56,42 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Automanage/servicePrincipals/default?api-version=2022-05-04",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Automanage/servicePrincipals?api-version=2022-05-04",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-776cad07ef6e7de006ee2ecbb14a8f3c-ea57709a212bab27-00",
         "User-Agent": "azsdk-net-ResourceManager.Automanage/1.0.0-alpha.20230221.1 (.NET 6.0.14; Microsoft Windows 10.0.19045)",
-        "x-ms-client-request-id": "493b489a845001e2d537677afa14e6f1",
+        "x-ms-client-request-id": "aeef5284e3fa260c2674700603e170cd",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "255",
+        "Content-Length": "12",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 21 Feb 2023 06:30:14 GMT",
+        "Date": "Tue, 21 Feb 2023 06:30:15 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Request-Context": "appId=cid-v1:a4d240dc-d543-4b4e-a019-0a571290b85d",
         "Server": "Kestrel",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-client-request-id": "493b489a845001e2d537677afa14e6f1",
-        "x-ms-correlation-request-id": "ba02cc25-18c1-4caf-9a3f-21b9f23533ec",
-        "x-ms-ratelimit-remaining-subscription-reads": "11998",
-        "x-ms-request-id": "ba02cc25-18c1-4caf-9a3f-21b9f23533ec",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20230221T063014Z:ba02cc25-18c1-4caf-9a3f-21b9f23533ec"
+        "x-ms-client-request-id": "aeef5284e3fa260c2674700603e170cd",
+        "x-ms-correlation-request-id": "67a2737e-5171-4031-933a-127f81ed2b59",
+        "x-ms-ratelimit-remaining-subscription-reads": "11992",
+        "x-ms-request-id": "67a2737e-5171-4031-933a-127f81ed2b59",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20230221T063016Z:67a2737e-5171-4031-933a-127f81ed2b59"
       },
       "ResponseBody": {
-        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Automanage/servicePrincipals/default",
-        "name": "default",
-        "type": "Microsoft.Automanage/servicePrincipals",
-        "properties": {
-          "authorizationSet": false,
-          "servicePrincipalId": "Sanitized"
-        }
+        "value": []
       }
     }
   ],
   "Variables": {
     "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
-    "RandomSeed": "1936013114",
+    "RandomSeed": "483362701",
     "RESOURCE_MANAGER_URL": null,
     "SUBSCRIPTION_ID": "db1ab6f0-4769-4b27-930e-01e2ef9c123c"
   }

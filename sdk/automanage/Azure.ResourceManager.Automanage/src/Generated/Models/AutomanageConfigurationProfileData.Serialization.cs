@@ -13,7 +13,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Automanage
 {
-    public partial class ConfigurationProfileData : IUtf8JsonSerializable
+    public partial class AutomanageConfigurationProfileData : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Automanage
             writer.WriteEndObject();
         }
 
-        internal static ConfigurationProfileData DeserializeConfigurationProfileData(JsonElement element)
+        internal static AutomanageConfigurationProfileData DeserializeAutomanageConfigurationProfileData(JsonElement element)
         {
             Optional<ConfigurationProfileProperties> properties = default;
             Optional<IDictionary<string, string>> tags = default;
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Automanage
                     continue;
                 }
             }
-            return new ConfigurationProfileData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, properties.Value);
+            return new AutomanageConfigurationProfileData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, properties.Value);
         }
     }
 }
