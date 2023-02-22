@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Workloads
         /// <returns> Returns a <see cref="WordPressInstanceResource" /> object. </returns>
         public virtual WordPressInstanceResource GetWordPressInstanceResource()
         {
-            return new WordPressInstanceResource(Client, new ResourceIdentifier(Id.ToString() + "/wordpressInstances/default"));
+            return new WordPressInstanceResource(Client, Id.AppendChildResource("wordpressInstances", "default"));
         }
 
         /// <summary>

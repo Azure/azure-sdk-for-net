@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="DataMaskingPolicyResource" /> object. </returns>
         public virtual DataMaskingPolicyResource GetDataMaskingPolicy()
         {
-            return new DataMaskingPolicyResource(Client, new ResourceIdentifier(Id.ToString() + "/dataMaskingPolicies/Default"));
+            return new DataMaskingPolicyResource(Client, Id.AppendChildResource("dataMaskingPolicies", "Default"));
         }
 
         /// <summary> Gets a collection of GeoBackupPolicyResources in the SqlDatabase. </summary>
@@ -240,7 +240,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="SqlDatabaseAutomaticTuningResource" /> object. </returns>
         public virtual SqlDatabaseAutomaticTuningResource GetSqlDatabaseAutomaticTuning()
         {
-            return new SqlDatabaseAutomaticTuningResource(Client, new ResourceIdentifier(Id.ToString() + "/automaticTuning/current"));
+            return new SqlDatabaseAutomaticTuningResource(Client, Id.AppendChildResource("automaticTuning", "current"));
         }
 
         /// <summary> Gets a collection of SqlDatabaseSchemaResources in the SqlDatabase. </summary>
@@ -496,14 +496,14 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="MaintenanceWindowOptionResource" /> object. </returns>
         public virtual MaintenanceWindowOptionResource GetMaintenanceWindowOption()
         {
-            return new MaintenanceWindowOptionResource(Client, new ResourceIdentifier(Id.ToString() + "/maintenanceWindowOptions/current"));
+            return new MaintenanceWindowOptionResource(Client, Id.AppendChildResource("maintenanceWindowOptions", "current"));
         }
 
         /// <summary> Gets an object representing a MaintenanceWindowsResource along with the instance operations that can be performed on it in the SqlDatabase. </summary>
         /// <returns> Returns a <see cref="MaintenanceWindowsResource" /> object. </returns>
         public virtual MaintenanceWindowsResource GetMaintenanceWindows()
         {
-            return new MaintenanceWindowsResource(Client, new ResourceIdentifier(Id.ToString() + "/maintenanceWindows/current"));
+            return new MaintenanceWindowsResource(Client, Id.AppendChildResource("maintenanceWindows", "current"));
         }
 
         /// <summary> Gets a collection of SqlServerDatabaseRestorePointResources in the SqlDatabase. </summary>

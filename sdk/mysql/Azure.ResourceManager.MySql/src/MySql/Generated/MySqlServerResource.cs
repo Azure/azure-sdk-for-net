@@ -329,7 +329,7 @@ namespace Azure.ResourceManager.MySql
         /// <returns> Returns a <see cref="MySqlServerAdministratorResource" /> object. </returns>
         public virtual MySqlServerAdministratorResource GetMySqlServerAdministrator()
         {
-            return new MySqlServerAdministratorResource(Client, new ResourceIdentifier(Id.ToString() + "/administrators/activeDirectory"));
+            return new MySqlServerAdministratorResource(Client, Id.AppendChildResource("administrators", "activeDirectory"));
         }
 
         /// <summary> Gets a collection of MySqlServerSecurityAlertPolicyResources in the MySqlServer. </summary>
