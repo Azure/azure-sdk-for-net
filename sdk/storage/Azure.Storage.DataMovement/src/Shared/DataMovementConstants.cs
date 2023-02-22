@@ -66,6 +66,37 @@ namespace Azure.Storage.DataMovement
             internal const long MemoryMappedFileSize = 4 * Constants.MB;
             internal const int CustomHeaderMaxBytes = 256;
             internal const int Padding = 8;
+
+            internal const int LongSizeInBytes = 8; // 8 bytes
+            internal const int VersionStrMaxSize = 2; // 2 chars
+            internal const int VersionMaxSizeInBytes = 2; //  4 bytes
+            internal const int TransferIdStrMaxSize = 36; // 36 chars
+            internal const int TransferIdMaxSizeInBytes = 72; // 72 bytes
+            internal const int PathStrMaxSize = 4096; // 8182 bytes
+            internal const int PathStrMaxSizeInBytes = 8182; // 8182 bytes
+            internal const int ExtraQueryMaxSize = 1000; // 2048 char
+            internal const int ExtraQueryMaxSizeInBytes = 2000; // 2000 bytes
+
+            internal const int VersionIndex = 0; // Index: 0
+            internal const int StartTimeIndex = 4; // Index: 4
+            internal const int TransferIdIndex = 12; // Index: 12
+            internal const int PartNumberIndex = 84; // Index: 84
+            internal const int SourcePathLengthIndex = 92; // Index: 92
+            internal const int SourcePathIndex = 100; // Index: 100
+            internal const int SourceExtraQueryLengthIndex = 8282; // Index: 8282
+            internal const int SourceExtraQueryIndex = 8290; // Index: 8290
+            internal const int DestinationPathIndex = 10274; // Index: 10274
+            internal const int DestinationExtraQueryIndex = 18456; // Index: 18456
+            internal const int IsFinalPartIndex = 20456; // Index: 20456
+            internal const int ForceWriteIndex = 20457; // Index: 20457
+            internal const int ForceIfReadOnlyIndex = 20458; // Index: 20458
+            internal const int AutoDecompressIndex = 20459; // Index: 20459
+            internal const int PriorityIndex = 20460; // Index: 20460
+            internal const int TTLAfterCompletionIndex = 20461; // Index: 20461
+            internal const int FromToIndex = 20469; // Index: 20469
+            internal const int FolderPropertyOptionIndex = 20470; // Index: 20470
+            internal const int NumberChunksIndex = 20471; // Index: 20471
+            internal const int DstBlobDataIndex = 20479; // Index: 20472
         }
     }
 }

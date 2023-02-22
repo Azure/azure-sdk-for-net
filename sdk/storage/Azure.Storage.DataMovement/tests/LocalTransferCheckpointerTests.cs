@@ -7,11 +7,9 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Azure.Core.TestFramework;
-using Azure.Storage.Test.Shared;
 using NUnit.Framework;
-using Azure.Storage.Test;
 using Azure.Storage.DataMovement.Models;
+using Azure.Storage.DataMovement.JobPlanModels;
 
 namespace Azure.Storage.DataMovement.Tests
 {
@@ -30,51 +28,43 @@ namespace Azure.Storage.DataMovement.Tests
 
         internal JobPartPlanHeader CreateJobPartHeader(
             string transferId,
-            int partNumber,
+            long partNumber,
             string sourcePath,
             string destinationPath,
             string schemaVersion = default)
         {
-            byte[] sourceRoot = Encoding.UTF8.GetBytes(sourcePath);
-            byte[] destinationRoot = Encoding.UTF8.GetBytes(destinationPath);
             schemaVersion ??= DataMovementConstants.PlanFile.SchemaVersion;
-            return new JobPartPlanHeader()
-            {
-                Version = Encoding.Unicode.GetBytes(schemaVersion),
-                StartTime = 0, // TODO: update to job start time
-                TransferId = transferId,
-                PartNum = (uint)partNumber,
-                SourceRootLength = (ushort)sourceRoot.Length,
-                SourceRoot = sourceRoot,
-                SourceExtraQueryLength = 0,
-                SourceExtraQuery = default,
-                DestinationRootLength = (ushort)destinationRoot.Length,
-                DestinationRoot = destinationRoot,
-                DestExtraQueryLength = 0,
-                DestExtraQuery = default,
-                IsFinalPart = false,
-                ForceWrite = false,
-                ForceIfReadOnly = false,
-                AutoDecompress = false,
-                Priority = 0,
-                TTLAfterCompletion = 0,
-                FromTo = 0,
-                FolderPropertyOption = FolderPropertiesMode.None,
-                NumTransfers = 0,
-                DstBlobData = default,
-                DstLocalData = default,
-                PreserveSMBPermissions = 0,
-                PreserveSMBInfo = false,
-                S2SGetPropertiesInBackend = false,
-                S2SSourceChangeValidation = false,
-                DestLengthValidation = false,
-                S2SInvalidMetadataHandleOption = 0,
-                atomicJobStatus = (uint)StorageTransferStatus.Queued,
-                atomicPartStatus = (uint)StorageTransferStatus.Queued,
-                DeleteSnapshotsOption = JobPartDeleteSnapshotsOption.None,
-                PermanentDeleteOption = JobPartPermanentDeleteOption.None,
-                RehydratePriorityType = JobPartPlanRehydratePriorityType.None,
-            };
+            return new JobPartPlanHeader(
+                version: schemaVersion,
+                startTime: DateTimeOffset.UtcNow,
+                transferId: transferId,
+                partNumber: partNumber,
+                sourcePath: sourcePath,
+                sourceExtraQuery: default,
+                destinationPath: destinationPath,
+                destinationExtraQuery: default,
+                isFinalPart: false,
+                forceWrite: false,
+                forceIfReadOnly: false,
+                autoDecompress: false,
+                priority: 0,
+                ttlAfterCompletion: 0,
+                fromTo: 0,
+                folderPropertyOption: FolderPropertiesMode.None,
+                numberChunks: 0,
+                dstBlobData: default,
+                dstLocalData: default,
+                preserveSMBPermissions: false,
+                preserveSMBInfo: false,
+                s2sGetPropertiesInBackend: false,
+                s2sSourceChangeValidation: false,
+                destLengthValidation: false,
+                s2sInvalidMetadataHandleOption: 0,
+                deleteSnapshotsOption: JobPartDeleteSnapshotsOption.None,
+                permanentDeleteOption: JobPartPermanentDeleteOption.None,
+                rehydratePriorityType: JobPartPlanRehydratePriorityType.None,
+                atomicJobStatus: StorageTransferStatus.Queued,
+                atomicPartStatus: StorageTransferStatus.Queued);
         }
 
         /// <summary>

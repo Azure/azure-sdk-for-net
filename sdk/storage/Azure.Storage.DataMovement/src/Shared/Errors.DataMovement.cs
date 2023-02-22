@@ -93,5 +93,8 @@ namespace Azure.Storage
 
         public static ArgumentException InvalidSchemaVersionFileName(string schemaVersion)
             => new ArgumentException($"Invalid Job Part Plan File: Job Part Schema version: {schemaVersion} does not match the Schema Version supported by the package: {DataMovementConstants.PlanFile.SchemaVersion}. Please consider altering the package version that supports the respective version.");
+
+        public static ArgumentException InvalidPlanFileJson(string elementName, int expectedSize, int actualSize)
+            => throw new ArgumentException($"Invalid Job Part Plan File: Attempt to set element, \"{elementName}\" failed.\n Expected size: {expectedSize}\n Actual Size: {actualSize}");
     }
 }

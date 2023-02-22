@@ -4,12 +4,10 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.IO.MemoryMappedFiles;
-using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Core;
+using Azure.Storage.DataMovement.JobPlanModels;
 
 namespace Azure.Storage.DataMovement
 {
@@ -165,7 +163,7 @@ namespace Azure.Storage.DataMovement
             string transferId,
             JobPartPlanHeader header)
         {
-            string schemaVersion = Encoding.UTF8.GetString(header.Version);
+            string schemaVersion = header.Version;
             if (!DataMovementConstants.PlanFile.SchemaVersion.Equals(schemaVersion))
             {
                 throw Errors.MismatchSchemaVersion(schemaVersion);

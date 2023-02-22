@@ -43,10 +43,18 @@ namespace Azure.Storage.DataMovement
             return default;
         }
 
+        // string to byte array
         public static byte[] ToByteArray(this string query)
         {
             // Convert query to byte array.
-            return Encoding.Unicode.GetBytes(query);
+            return Encoding.UTF8.GetBytes(query);
+        }
+
+        // long to byte array
+        public static byte[] ToByteArray(this long query)
+        {
+            // Convert query to byte array.
+            return query.ToString(CultureInfo.InvariantCulture).ToByteArray();
         }
 
         internal static StorageResourceProperties ToStorageResourceProperties(this FileInfo fileInfo)

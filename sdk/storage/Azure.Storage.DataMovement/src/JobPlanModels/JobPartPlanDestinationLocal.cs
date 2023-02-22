@@ -10,7 +10,7 @@ namespace Azure.Storage.DataMovement
     /// This matching the JobPartPlanDstLocal of azcopy
     /// </summary>
     [StructLayout(LayoutKind.Sequential)]
-    internal struct JobPartPlanDestinationLocal
+    internal class JobPartPlanDestinationLocal
     {
         private const string preserveLastModifiedTimeName = "preserveLastModifiedTime";
         private const string md5VerificationOptionName = "md5VerificationOption";

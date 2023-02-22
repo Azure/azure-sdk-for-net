@@ -2,202 +2,146 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Runtime.InteropServices;
-using System.Text.Json;
-using Azure.Storage.DataMovement.JobPlanModels;
+using System.Globalization;
+using System.IO;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
+using Azure.Core.Pipeline;
 using Azure.Storage.DataMovement.Models;
 
-namespace Azure.Storage.DataMovement
+namespace Azure.Storage.DataMovement.JobPlanModels
 {
     /// <summary>
     /// Stores the Job Part Header information to resume from.
     ///
     /// This matching the JobPartPlanHeader of azcopy
     /// </summary>
-    [StructLayout(LayoutKind.Sequential, CharSet=CharSet.Unicode, Pack=1)]
     internal class JobPartPlanHeader
     {
-        internal const string currentVersion = "b1";
-        private const string startTimeName = "startTime";
-        private const string transferIdName = "transferIdName";
-        private const string partNumberName = "partNumber";
-        private const string sourceRootName = "sourceRoot";
-        private const string sourceQueryName = "sourceQuery";
-        private const string destinationRootName = "destinationRoot";
-        private const string destinationQueryName = "destinationQuery";
-        private const string isFinalPartName = "isFinalPart";
-        private const string forceWriteName = "forceWrite";
-        private const string forceIfReadOnlyName = "forceIfReadOnly";
-        private const string autoDecompressName = "autoDecompress";
-        private const string priorityName = "priority";
-        private const string ttlAfterCompletionName = "ttlAfterCompletion";
-        private const string fromToName = "fromTo";
-        private const string folderPropertyOptionName = "folderPropertyOption";
-        private const string numTransfersName = "numTransfers";
-        private const string dstBlobDataName = "dstBlobData";
-        private const string dstLocalDataName = "dstLocalData";
-        private const string preserveSMBPermissionsName = "preserveSmbPermissions";
-        private const string preserveSMBInfoName = "preserveSmbInfo";
-        private const string s2sGetPropertiesInBackendName = "s2sGetPropertiesInBackend";
-        private const string destLengthValidationName = "DestLengthValidation";
-        private const string s2sInvalidMetadataHandleOptionName = "s2sInvalidMetadataHandleOption";
-        private const string deleteSnapshotsOptionName = "deleteSnapshotsOption";
-        private const string permanentDeleteOptionName = "permanentDeleteOption";
-        private const string rehydratePriorityTypeName = "rehydratePriorityType";
-        private const string atomicJobStatusName = "atomicJobStatus";
-        private const string atomicPartStatusName = "atomicPartStatus";
-
-        private static readonly JsonEncodedText s_startTimeNameBytes = JsonEncodedText.Encode(startTimeName);
-        private static readonly JsonEncodedText s_transferIdNameBytes = JsonEncodedText.Encode(transferIdName);
-        private static readonly JsonEncodedText s_partNumberNameBytes = JsonEncodedText.Encode(partNumberName);
-        private static readonly JsonEncodedText s_sourceRootNameBytes = JsonEncodedText.Encode(sourceRootName);
-        private static readonly JsonEncodedText s_sourceQueryNameBytes = JsonEncodedText.Encode(sourceQueryName);
-        private static readonly JsonEncodedText s_destinationRootNameBytes = JsonEncodedText.Encode(destinationRootName);
-        private static readonly JsonEncodedText s_destinationQueryNameBytes = JsonEncodedText.Encode(destinationQueryName);
-        private static readonly JsonEncodedText s_isFinalPartNameBytes = JsonEncodedText.Encode(isFinalPartName);
-        private static readonly JsonEncodedText s_forceWriteNameBytes = JsonEncodedText.Encode(forceWriteName);
-        private static readonly JsonEncodedText s_forceIfReadOnlyNameBytes = JsonEncodedText.Encode(forceIfReadOnlyName);
-        private static readonly JsonEncodedText s_autoDecompressNameBytes = JsonEncodedText.Encode(autoDecompressName);
-        private static readonly JsonEncodedText s_priorityNameBytes = JsonEncodedText.Encode(priorityName);
-        private static readonly JsonEncodedText s_ttlAfterCompletionNameBytes = JsonEncodedText.Encode(ttlAfterCompletionName);
-        private static readonly JsonEncodedText s_fromToNameBytes = JsonEncodedText.Encode(fromToName);
-        private static readonly JsonEncodedText s_folderPropertyOptionNameBytes = JsonEncodedText.Encode(folderPropertyOptionName);
-        private static readonly JsonEncodedText s_numTransfersNameBytes = JsonEncodedText.Encode(numTransfersName);
-        private static readonly JsonEncodedText s_dstBlobDataNameBytes = JsonEncodedText.Encode(dstBlobDataName);
-        private static readonly JsonEncodedText s_dstLocalDataNameBytes = JsonEncodedText.Encode(dstLocalDataName);
-        private static readonly JsonEncodedText s_preserveSMBPermissionsNameBytes = JsonEncodedText.Encode(preserveSMBPermissionsName);
-        private static readonly JsonEncodedText s_preserveSMBInfoNameBytes = JsonEncodedText.Encode(preserveSMBInfoName);
-        private static readonly JsonEncodedText s_s2sGetPropertiesInBackendNameBytes = JsonEncodedText.Encode(s2sGetPropertiesInBackendName);
-        private static readonly JsonEncodedText s_destLengthValidationNameBytes = JsonEncodedText.Encode(destLengthValidationName);
-        private static readonly JsonEncodedText s_s2sInvalidMetadataHandleOptionNameBytes = JsonEncodedText.Encode(s2sInvalidMetadataHandleOptionName);
-        private static readonly JsonEncodedText s_deleteSnapshotsOptionNameBytes = JsonEncodedText.Encode(deleteSnapshotsOptionName);
-        private static readonly JsonEncodedText s_permanentDeleteOptionNameBytes = JsonEncodedText.Encode(permanentDeleteOptionName);
-        private static readonly JsonEncodedText s_rehydratePriorityTypeNameBytes = JsonEncodedText.Encode(rehydratePriorityTypeName);
-        private static readonly JsonEncodedText s_atomicJobStatusNameBytes = JsonEncodedText.Encode(atomicJobStatusName);
-        private static readonly JsonEncodedText s_atomicPartStatusNameBytes = JsonEncodedText.Encode(atomicPartStatusName);
-
         /// <summary>
         /// The version of data schema format of header
         /// This will seem weird because we will have a schema for how we store the data
-        /// when the schema changes this verison will increment
+        /// when the schema changes this version will increment
+        /// Index: 0
         ///
         /// Set to a size of 3
-        /// TODO: Consider changing to an int when GA comes. In public preview we should
+        /// TODO: Consider changing to an int when GA comes.
+        /// TODO: In public preview we should
         /// leave the version as "b1", instead of complete ints.
         /// </summary>
-        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 4)]
-        public byte[] Version;
+        public string Version;
 
         /// <summary>
         /// The start time of the job part.
+        /// Index: 4
         /// </summary>
-        [MarshalAs(UnmanagedType.U8)]
-        public long StartTime;
+        public DateTimeOffset StartTime;
 
         /// <summary>
         /// The Transfer/Job Id
+        /// Index: 12
         ///
         /// Size of a GUID.
         /// </summary>
-        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = DataMovementConstants.PlanFile.IdSize)]
         public string TransferId;
 
         /// <summary>
         /// Job Part's part number (0+)
+        /// Index: 84
         ///
         /// We don't expect there to be more than 50,000 job parts
         /// So reaching int.MAX is extremely unlikely
         /// </summary>
-        [MarshalAs(UnmanagedType.U4)]
-        public uint PartNum;
+        public long PartNumber;
 
         /// <summary>
         /// The length of the source root path
+        /// Index: 92
         /// </summary>
-        [MarshalAs(UnmanagedType.U2)]
-        public ushort SourceRootLength;
+        public long SourcePathLength;
 
         /// <summary>
-        /// The root directory of the source
+        /// The source path
+        /// Index: 100
         ///
         /// Size of byte[] in azcopy is 1000 bytes.
         /// TODO: consider a different number, the max name of a blob cannot exceed 254
         /// however the max length of a path in linux is 4096.
         /// </summary>
-        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 1000)]
-        public byte[] SourceRoot;
+        public string SourcePath;
 
         /// <summary>
-        /// Length of the extra source query params if the source is a URL.
+        /// The length of the source path query
+        /// Index: 10274
         /// </summary>
-        [MarshalAs(UnmanagedType.U2)]
-	    public ushort SourceExtraQueryLength;
+        public long SourceExtraQueryLength;
 
         /// <summary>
         /// Extra query params applicable to the source
+        /// Index: 18456
         ///
         /// Size of byte array in azcopy is 1000 bytes.
         /// TODO: consider changing this to something like 2048 because the max a url could be
         /// </summary>
-        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 1000)]
-        public byte[] SourceExtraQuery;
+        public string SourceExtraQuery;
 
         /// <summary>
         /// The length of the destination root path
+        /// Index: 20456
         /// </summary>
-        [MarshalAs(UnmanagedType.U2)]
-	    public ushort DestinationRootLength;
+        public long DestinationPathLength;
 
         /// <summary>
-        /// The root directory of the destination.
+        /// The destination path
+        /// Index: 20457
         ///
         /// Size of byte array in azcopy is 1000 bytes
         /// </summary>
-        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 1000)]
-        public byte[] DestinationRoot;
+        public string DestinationPath;
 
         /// <summary>
-        /// Length of the extra destination query params if applicable.
+        /// The length of the destination path query
+        /// Index: 20458
         /// </summary>
-        [MarshalAs(UnmanagedType.U2)]
-	    public ushort DestExtraQueryLength;
+        public long DestinationExtraQueryLength;
 
         /// <summary>
         /// Extra query params applicable to the dest
+        /// Index: 20459
         ///
         /// Size of byte array in azcopy is 1000 bytes
         /// </summary>
-        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 1000)]
-        public byte[] DestExtraQuery;
+        public string DestinationExtraQuery;
 
         /// <summary>
         /// True if this is the Job's last part; else false
+        /// Index: 20460
         /// </summary>
-        [MarshalAs(UnmanagedType.Bool)]
-	    public bool IsFinalPart;
+        public bool IsFinalPart;
 
         /// <summary>
         /// True if the existing blobs needs to be overwritten.
+        /// Index: 20461
         /// </summary>
-        [MarshalAs(UnmanagedType.Bool)]
         public bool ForceWrite;
 
         /// <summary>
         /// Supplements ForceWrite with an additional setting for Azure Files. If true, the read-only attribute will be cleared before we overwrite
+        /// Index: 20461
         /// </summary>
-        [MarshalAs(UnmanagedType.Bool)]
         public bool ForceIfReadOnly;
 
         /// <summary>
         /// if true, source data with encodings that represent compression are automatically decompressed when downloading
+        /// Index: 20469
         /// </summary>
-        [MarshalAs(UnmanagedType.Bool)]
         public bool AutoDecompress;
 
         /// <summary>
         /// The Job Part's priority
+        /// Index: 20469
         /// </summary>
-        [MarshalAs(UnmanagedType.U1)]
         public byte Priority;
 
         /// <summary>
@@ -205,15 +149,13 @@ namespace Azure.Storage.DataMovement
         ///
         /// TODO: change to DateTimeOffset object, and make convert from DateTimeOffset to UInt32
         /// </summary>
-        [MarshalAs(UnmanagedType.U4)]
-        public uint TTLAfterCompletion;
+        public long TTLAfterCompletion;
 
         /// <summary>
         /// The location of the transfer's source and destination
         ///
         /// TODO: change to object for storing transfer source and destination
         /// </summary>
-        [MarshalAs(UnmanagedType.U4)]
         public JobPlanFromTo FromTo;
 
         /// <summary>
@@ -221,14 +163,12 @@ namespace Azure.Storage.DataMovement
         ///
         /// TODO: change to struct for FolderPropertyOptions
         /// </summary>
-        [MarshalAs(UnmanagedType.U4)]
         public FolderPropertiesMode FolderPropertyOption;
 
         /// <summary>
         /// The number of transfers in the Job part
         /// </summary>
-        [MarshalAs(UnmanagedType.U4)]
-        public uint NumTransfers;
+        public long NumberChunks;
 
         /// <summary>
         /// This Job Part's minimal log level
@@ -251,31 +191,26 @@ namespace Azure.Storage.DataMovement
         /// <summary>
         /// If applicable the SMB information
         /// </summary>
-        [MarshalAs(UnmanagedType.U1)]
-        public byte PreserveSMBPermissions;
+        public bool PreserveSMBPermissions;
 
         /// <summary>
         /// Whether to preserve SMB info
         /// </summary>
-        [MarshalAs(UnmanagedType.Bool)]
         public bool PreserveSMBInfo;
 
         /// <summary>
         /// S2SGetPropertiesInBackend represents whether to enable get S3 objects' or Azure files' properties during s2s copy in backend.
         /// </summary>
-        [MarshalAs(UnmanagedType.Bool)]
         public bool S2SGetPropertiesInBackend;
 
         /// <summary>
         /// S2SSourceChangeValidation represents whether user wants to check if source has changed after enumerating.
         /// </summary>
-        [MarshalAs(UnmanagedType.Bool)]
         public bool S2SSourceChangeValidation;
 
         /// <summary>
         /// DestLengthValidation represents whether the user wants to check if the destination has a different content-length
         /// </summary>
-        [MarshalAs(UnmanagedType.Bool)]
         public bool DestLengthValidation;
 
         /// <summary>
@@ -283,25 +218,21 @@ namespace Azure.Storage.DataMovement
         ///
         /// TODO: update to a struc tto handle the S2S Invalid metadata handle option
         /// </summary>
-        [MarshalAs(UnmanagedType.U1)]
         public byte S2SInvalidMetadataHandleOption;
 
         /// <summary>
         /// For delete operation specify what to do with snapshots
         /// </summary>
-        [MarshalAs(UnmanagedType.U4)]
         public JobPartDeleteSnapshotsOption DeleteSnapshotsOption;
 
         /// <summary>
         /// Permanent Delete Option
         /// </summary>
-        [MarshalAs(UnmanagedType.U4)]
         public JobPartPermanentDeleteOption PermanentDeleteOption;
 
         /// <summary>
         /// Rehydrate Priority type
         /// </summary>
-        [MarshalAs(UnmanagedType.U4)]
         public JobPartPlanRehydratePriorityType RehydratePriorityType;
 
         // Any fields below this comment are NOT constants; they may change over as the job part is processed.
@@ -310,10 +241,293 @@ namespace Azure.Storage.DataMovement
         // jobStatus_doNotUse represents the current status of JobPartPlan
         // jobStatus_doNotUse is a private member whose value can be accessed by Status and SetJobStatus
         // jobStatus_doNotUse should not be directly accessed anywhere except by the Status and SetJobStatus
-        [MarshalAs(UnmanagedType.U4)]
-        public uint atomicJobStatus;
+        public StorageTransferStatus AtomicJobStatus;
 
-        [MarshalAs(UnmanagedType.U4)]
-        public uint atomicPartStatus;
+        public StorageTransferStatus AtomicPartStatus;
+
+        private JobPartPlanHeader()
+        {
+        }
+
+        internal JobPartPlanHeader(
+            string version,
+            DateTimeOffset startTime,
+            string transferId,
+            long partNumber,
+            string sourcePath,
+            string sourceExtraQuery,
+            string destinationPath,
+            string destinationExtraQuery,
+            bool isFinalPart,
+            bool forceWrite,
+            bool forceIfReadOnly,
+            bool autoDecompress,
+            byte priority,
+            long ttlAfterCompletion,
+            JobPlanFromTo fromTo,
+            FolderPropertiesMode folderPropertyOption,
+            long numberChunks,
+            JobPartPlanDestinationBlob dstBlobData,
+            JobPartPlanDestinationLocal dstLocalData,
+            bool preserveSMBPermissions,
+            bool preserveSMBInfo,
+            bool s2sGetPropertiesInBackend,
+            bool s2sSourceChangeValidation,
+            bool destLengthValidation,
+            byte s2sInvalidMetadataHandleOption,
+            JobPartDeleteSnapshotsOption deleteSnapshotsOption,
+            JobPartPermanentDeleteOption permanentDeleteOption,
+            JobPartPlanRehydratePriorityType rehydratePriorityType,
+            StorageTransferStatus atomicJobStatus,
+            StorageTransferStatus atomicPartStatus)
+        {
+            // Version String size verification
+            if (Version.Length == DataMovementConstants.PlanFile.VersionStrMaxSize)
+            {
+                Version = version;
+            }
+            else
+            {
+                throw Errors.InvalidPlanFileJson(
+                    elementName: nameof(Version),
+                    expectedSize: DataMovementConstants.PlanFile.VersionStrMaxSize,
+                    actualSize: Version.Length);
+            }
+            StartTime = startTime;
+            // TransferId String size verification
+            if (TransferId.Length == DataMovementConstants.PlanFile.TransferIdStrMaxSize)
+            {
+                TransferId = transferId;
+            }
+            else
+            {
+                throw Errors.InvalidPlanFileJson(
+                    elementName: nameof(TransferId),
+                    expectedSize: DataMovementConstants.PlanFile.TransferIdStrMaxSize,
+                    actualSize: TransferId.Length);
+            }
+            PartNumber = partNumber;
+            SourcePath = sourcePath;
+            // TransferId String size verification
+            if (SourcePath.Length < DataMovementConstants.PlanFile.PathStrMaxSize)
+            {
+                SourcePath = sourcePath;
+                SourcePathLength = sourcePath.Length;
+            }
+            else
+            {
+                throw Errors.InvalidPlanFileJson(
+                    elementName: nameof(SourcePath),
+                    expectedSize: DataMovementConstants.PlanFile.PathStrMaxSize,
+                    actualSize: SourcePath.Length);
+            }
+            // SourcePath
+            if (SourceExtraQuery.Length == DataMovementConstants.PlanFile.ExtraQueryMaxSize)
+            {
+                SourceExtraQuery = sourceExtraQuery;
+                SourceExtraQueryLength = sourceExtraQuery.Length;
+            }
+            else
+            {
+                throw Errors.InvalidPlanFileJson(
+                    elementName: nameof(SourceExtraQuery),
+                    expectedSize: DataMovementConstants.PlanFile.ExtraQueryMaxSize,
+                    actualSize: SourceExtraQuery.Length);
+            }
+            // DestinationPath
+            if (DestinationPath.Length == DataMovementConstants.PlanFile.PathStrMaxSize)
+            {
+                DestinationPath = destinationPath;
+                DestinationPathLength = destinationPath.Length;
+            }
+            else
+            {
+                throw Errors.InvalidPlanFileJson(
+                    elementName: nameof(DestinationPath),
+                    expectedSize: DataMovementConstants.PlanFile.PathStrMaxSize,
+                    actualSize: DestinationPath.Length);
+            }
+            if (DestinationExtraQuery.Length == DataMovementConstants.PlanFile.ExtraQueryMaxSize)
+            {
+                DestinationExtraQuery = destinationExtraQuery;
+                DestinationExtraQueryLength = destinationExtraQuery.Length;
+            }
+            else
+            {
+                throw Errors.InvalidPlanFileJson(
+                    elementName: nameof(DestinationExtraQuery),
+                    expectedSize: DataMovementConstants.PlanFile.ExtraQueryMaxSize,
+                    actualSize: DestinationExtraQuery.Length);
+            }
+            IsFinalPart = isFinalPart;
+            ForceWrite = forceWrite;
+            ForceIfReadOnly = forceIfReadOnly;
+            AutoDecompress = autoDecompress;
+            Priority = priority;
+            TTLAfterCompletion = ttlAfterCompletion;
+            FromTo = fromTo;
+            FolderPropertyOption = folderPropertyOption;
+            NumberChunks = numberChunks;
+            DstBlobData = dstBlobData;
+            DstLocalData = dstLocalData;
+            PreserveSMBPermissions = preserveSMBPermissions;
+            PreserveSMBInfo = preserveSMBInfo;
+            S2SGetPropertiesInBackend = s2sGetPropertiesInBackend;
+            S2SSourceChangeValidation = s2sSourceChangeValidation;
+            DestLengthValidation = destLengthValidation;
+            S2SInvalidMetadataHandleOption = s2sInvalidMetadataHandleOption;
+            DeleteSnapshotsOption = deleteSnapshotsOption;
+            PermanentDeleteOption = permanentDeleteOption;
+            RehydratePriorityType = rehydratePriorityType;
+            AtomicJobStatus = atomicJobStatus;
+            AtomicPartStatus = atomicPartStatus;
+        }
+
+        /// <summary>
+        /// Serializes the <see cref="JobPartPlanHeader"/> to the specified <see cref="Stream"/>.
+        /// </summary>
+        /// <param name="stream">The <see cref="Stream"/> to which the serialized <see cref="JobPartPlanHeader"/> will be written.</param>
+        public void Serialize(Stream stream)
+        {
+            if (stream is null)
+            {
+                throw new ArgumentNullException(nameof(stream));
+            }
+
+            using (var writer = new BinaryWriter(stream))
+            {
+                // Version
+                writer.Write(
+                    buffer: Version.ToByteArray(),
+                    index: DataMovementConstants.PlanFile.VersionIndex,
+                    count: DataMovementConstants.PlanFile.VersionMaxSizeInBytes);
+
+                // StartTime
+                writer.Write(
+                    buffer: StartTime.Ticks.ToByteArray(),
+                    index: DataMovementConstants.PlanFile.StartTimeIndex,
+                    count: DataMovementConstants.PlanFile.LongSizeInBytes);
+
+                writer.Write(
+                    buffer: TransferId.ToByteArray(),
+                    index: DataMovementConstants.PlanFile.TransferIdIndex,
+                    count: DataMovementConstants.PlanFile.TransferIdMaxSizeInBytes);
+
+                /*
+                writer.Write(PartNumber);
+
+                writer.Write(SourcePath);
+
+                writer.Write(SourceExtraQuery);
+
+                writer.Write(DestinationPath);
+
+                writer.Write(DestinationExtraQuery);
+
+                writer.Write(IsFinalPart);
+
+                writer.Write(ForceWrite);
+
+                writer.Write(ForceIfReadOnly);
+
+                writer.Write(AutoDecompress);
+
+                writer.Write(Priority);
+
+                writer.Write(TTLAfterCompletion);
+
+                writer.Write(FromTo);
+
+                writer.Write(FolderPropertyOption);
+
+                writer.Write(NumberChunks);
+
+                writer.Write(DstBlobData);
+
+                writer.Write(DstLocalData);
+
+                writer.Write(PreserveSMBPermissions);
+
+                writer.Write(PreserveSMBInfo);
+
+                writer.Write(S2SGetPropertiesInBackend);
+
+                writer.Write(S2SInvalidMetadataHandleOption);
+
+                writer.Write(DestLengthValidation);
+
+                writer.Write(DeleteSnapshotsOption);
+
+                writer.Write(PermanentDeleteOption);
+
+                writer.Write(RehydratePriorityType);
+
+                writer.Write(AtomicJobStatus);
+
+                writer.Write(AtomicPartStatus);
+                */
+
+                writer.Flush();
+            }
+        }
+
+        public static JobPartPlanHeader Deserialize(Stream stream)
+        {
+            if (stream is null)
+            {
+                throw new ArgumentNullException(nameof(stream));
+            }
+
+            var header = new JobPartPlanHeader();
+
+            /*
+            using writerDocument doc = async ? await writerDocument.ParseAsync(stream, cancellationToken: cancellationToken).ConfigureAwait(false) : writerDocument.Parse(stream);
+
+            foreach (writerProperty prop in doc.RootElement.EnumerateObject())
+            {
+                switch (prop.Name)
+                {
+                    case currentVersion:
+                        header.Version = prop.Value.GetString();
+                        break;
+                    case startTimeName:
+                        if (prop.Value.TryGetInt64(out long value))
+                        {
+                            header.StartTime = value;
+                        }
+                        else
+                        {
+                            throw Errors.InvalidPlanFilewriter(nameof(StartTime));
+                        }
+                        break;
+                    case transferIdName:
+                        header.TransferId = BuildAccountIdFromString(prop.Value.GetString());
+                        break;
+                    case partNumberName:
+                        if (prop.Value.TryGetInt64(out long value))
+                        {
+                            header.PartNumber = value;
+                        }
+                        else
+                        {
+                            throw Errors.InvalidPlanFilewriter(nameof(PartNumber));
+                        }
+                        break;
+                    case ClientIdPropertyName:
+                        header.ClientId = prop.Value.GetString();
+                        break;
+                    case VersionPropertyName:
+                        header.Version = prop.Value.GetString();
+                        if (header.Version != CurrentVersion)
+                        {
+                            throw new InvalidOperationException($"Attempted to deserialize an {nameof(AuthenticationRecord)} with a version that is not the current version. Expected: '{CurrentVersion}', Actual: '{header.Version}'");
+                        }
+                        break;
+                }
+            }
+            */
+
+            return header;
+        }
     }
 }

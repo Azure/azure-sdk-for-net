@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using System.Xml.Linq;
 using Azure.Core;
 using Azure.Storage.DataMovement.Models;
+using Azure.Storage.DataMovement.JobPlanModels;
 
 namespace Azure.Storage.DataMovement
 {

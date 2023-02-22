@@ -7,10 +7,10 @@ using System.IO;
 using System.IO.MemoryMappedFiles;
 using System.Linq;
 using System.Runtime.InteropServices;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Storage.DataMovement.JobPlanModels;
 
 namespace Azure.Storage.DataMovement
 {
@@ -357,7 +357,7 @@ namespace Azure.Storage.DataMovement
             CancellationToken cancellationToken)
         {
             long length = Marshal.SizeOf(status);
-            IntPtr offset = Marshal.OffsetOf(typeof(JobPartPlanHeader), nameof(JobPartPlanHeader.atomicJobStatus));
+            IntPtr offset = Marshal.OffsetOf(typeof(JobPartPlanHeader), nameof(JobPartPlanHeader.AtomicJobStatus));
             foreach (JobPartPlanFile jobPartFile in _transferStates[transferId])
             {
                 CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
@@ -390,7 +390,7 @@ namespace Azure.Storage.DataMovement
             CancellationToken cancellationToken)
         {
             long length = Marshal.SizeOf(status);
-            IntPtr offset = Marshal.OffsetOf(typeof(JobPartPlanHeader), nameof(JobPartPlanHeader.atomicPartStatus));
+            IntPtr offset = Marshal.OffsetOf(typeof(JobPartPlanHeader), nameof(JobPartPlanHeader.AtomicPartStatus));
             CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
             lock (_transferStates[transferId][partNumber].writeLock)
             {

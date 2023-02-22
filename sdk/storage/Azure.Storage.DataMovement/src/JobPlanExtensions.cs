@@ -55,10 +55,10 @@ namespace Azure.Storage.DataMovement
             JobPartPlanHeader header = planFileStream.ToJobStruct();
 
             // Apply credentials to the saved transfer job path
-            StorageTransferStatus jobPartStatus = (StorageTransferStatus) header.atomicJobStatus;
+            StorageTransferStatus jobPartStatus = (StorageTransferStatus) header.AtomicJobStatus;
             StreamToUriJobPart jobPart = new StreamToUriJobPart(
                 job: baseJob,
-                partNumber: Convert.ToInt32(header.PartNum),
+                partNumber: Convert.ToInt32(header.PartNumber),
                 jobPartStatus: jobPartStatus,
                 sourceResource: sourceResource,
                 destinationResource: destinationResource);
@@ -77,10 +77,10 @@ namespace Azure.Storage.DataMovement
             JobPartPlanHeader header = planFileStream.ToJobStruct();
 
             // Apply credentials to the saved transfer job path
-            StorageTransferStatus jobPartStatus = (StorageTransferStatus) header.atomicJobStatus;
+            StorageTransferStatus jobPartStatus = (StorageTransferStatus) header.AtomicJobStatus;
             ServiceToServiceJobPart jobPart = new ServiceToServiceJobPart(
                 job: baseJob,
-                partNumber: Convert.ToInt32(header.PartNum),
+                partNumber: Convert.ToInt32(header.PartNumber),
                 jobPartStatus: jobPartStatus,
                 sourceResource: sourceResource,
                 destinationResource: destinationResource);
@@ -99,10 +99,10 @@ namespace Azure.Storage.DataMovement
             JobPartPlanHeader header = planFileStream.ToJobStruct();
 
             // Apply credentials to the saved transfer job path
-            StorageTransferStatus jobPartStatus = (StorageTransferStatus)header.atomicJobStatus;
+            StorageTransferStatus jobPartStatus = (StorageTransferStatus)header.AtomicJobStatus;
             UriToStreamJobPart jobPart = new UriToStreamJobPart(
                 job: baseJob,
-                partNumber: Convert.ToInt32(header.PartNum),
+                partNumber: Convert.ToInt32(header.PartNumber),
                 jobPartStatus: jobPartStatus,
                 sourceResource: sourceResource,
                 destinationResource: destinationResource);
@@ -121,12 +121,12 @@ namespace Azure.Storage.DataMovement
             JobPartPlanHeader header = planFileStream.ToJobStruct();
 
             // Apply credentials to the saved transfer job path
-            string childSourcePath = Encoding.UTF8.GetString(header.SourceRoot);
-            string childDestinationPath = Encoding.UTF8.GetString(header.SourceRoot);
+            string childSourcePath = Encoding.UTF8.GetString(header.SourcePath);
+            string childDestinationPath = Encoding.UTF8.GetString(header.SourcePath);
             StorageTransferStatus jobPartStatus = (StorageTransferStatus)header.atomicJobStatus;
             StreamToUriJobPart jobPart = new StreamToUriJobPart(
                 job: baseJob,
-                partNumber: Convert.ToInt32(header.PartNum),
+                partNumber: Convert.ToInt32(header.PartNumber),
                 jobPartStatus: jobPartStatus,
                 sourceResource: sourceResource.GetChildStorageResource(childSourcePath.Substring(sourceResource.Path.Length)),
                 destinationResource: destinationResource.GetChildStorageResource(childDestinationPath.Substring(destinationResource.Path.Length)));
@@ -145,12 +145,12 @@ namespace Azure.Storage.DataMovement
             JobPartPlanHeader header = planFileStream.ToJobStruct();
 
             // Apply credentials to the saved transfer job path
-            string childSourcePath = Encoding.UTF8.GetString(header.SourceRoot);
-            string childDestinationPath = Encoding.UTF8.GetString(header.SourceRoot);
+            string childSourcePath = Encoding.UTF8.GetString(header.SourcePath);
+            string childDestinationPath = Encoding.UTF8.GetString(header.SourcePath);
             StorageTransferStatus jobPartStatus = (StorageTransferStatus)header.atomicJobStatus;
             ServiceToServiceJobPart jobPart = new ServiceToServiceJobPart(
                 job: baseJob,
-                partNumber: Convert.ToInt32(header.PartNum),
+                partNumber: Convert.ToInt32(header.PartNumber),
                 jobPartStatus: jobPartStatus,
                 sourceResource: sourceResource.GetChildStorageResource(childSourcePath.Substring(sourceResource.Path.Length)),
                 destinationResource: destinationResource.GetChildStorageResource(childDestinationPath.Substring(destinationResource.Path.Length)));
@@ -169,12 +169,12 @@ namespace Azure.Storage.DataMovement
             JobPartPlanHeader header = planFileStream.ToJobStruct();
 
             // Apply credentials to the saved transfer job path
-            string childSourcePath = Encoding.UTF8.GetString(header.SourceRoot);
-            string childDestinationPath = Encoding.UTF8.GetString(header.SourceRoot);
+            string childSourcePath = Encoding.UTF8.GetString(header.SourcePath);
+            string childDestinationPath = Encoding.UTF8.GetString(header.SourcePath);
             StorageTransferStatus jobPartStatus = (StorageTransferStatus)header.atomicJobStatus;
             UriToStreamJobPart jobPart = new UriToStreamJobPart(
                 job: baseJob,
-                partNumber: Convert.ToInt32(header.PartNum),
+                partNumber: Convert.ToInt32(header.PartNumber),
                 jobPartStatus: jobPartStatus,
                 sourceResource: sourceResource.GetChildStorageResource(childSourcePath.Substring(sourceResource.Path.Length)),
                 destinationResource: destinationResource.GetChildStorageResource(childDestinationPath.Substring(destinationResource.Path.Length)));
@@ -197,9 +197,9 @@ namespace Azure.Storage.DataMovement
                 Version = Encoding.Unicode.GetBytes(DataMovementConstants.PlanFile.SchemaVersion),
                 StartTime = 0, // TODO: update to job start time
                 TransferId = jobPart._dataTransfer.Id,
-                PartNum = (uint)jobPart.PartNumber,
-                SourceRootLength = (ushort)sourceRoot.Length,
-                SourceRoot = sourceRoot,
+                PartNumber = (uint)jobPart.PartNumber,
+                SourcePathLength = (ushort)sourceRoot.Length,
+                SourcePath = sourceRoot,
                 SourceExtraQueryLength = (ushort)sourceQueryParams.Length,
                 SourceExtraQuery = sourceQueryParams,
                 DestinationRootLength = (ushort)destinationRoot.Length,
@@ -214,7 +214,7 @@ namespace Azure.Storage.DataMovement
                 TTLAfterCompletion = 0, // TODO: revisit for Azure Files
                 FromTo = 0, // TODO: revisit when we add this feature
                 FolderPropertyOption = FolderPropertiesMode.None, // TODO: revisit for Azure Files
-                NumTransfers = 0, // TODO: revisit when added
+                numberChunks = 0, // TODO: revisit when added
                 DstBlobData = default, // TODO: revisit when we add feature to cache this info
                 DstLocalData = default, // TODO: revisit when we add feature to cache this info
                 PreserveSMBPermissions = 0, // TODO: revisit for Azure Files
