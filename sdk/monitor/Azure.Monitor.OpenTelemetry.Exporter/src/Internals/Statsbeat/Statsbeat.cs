@@ -17,17 +17,17 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 {
     internal sealed class Statsbeat : IDisposable
     {
-        internal const string StatsBeat_ConnectionString_NonEU = "InstrumentationKey=00000000-0000-0000-0000-000000000000;IngestionEndpoint=https://NonEU.in.applicationinsights.azure.com/";
+        internal const string Statsbeat_ConnectionString_NonEU = "InstrumentationKey=00000000-0000-0000-0000-000000000000;IngestionEndpoint=https://NonEU.in.applicationinsights.azure.com/";
 
-        internal const string StatsBeat_ConnectionString_EU = "InstrumentationKey=00000000-0000-0000-0000-000000000000;IngestionEndpoint=https://EU.in.applicationinsights.azure.com/";
+        internal const string Statsbeat_ConnectionString_EU = "InstrumentationKey=00000000-0000-0000-0000-000000000000;IngestionEndpoint=https://EU.in.applicationinsights.azure.com/";
 
         private const string AMS_Url = "http://169.254.169.254/metadata/instance/compute?api-version=2017-08-01&format=json";
 
-        internal const int AttachStatsBeatInterval = 86400000;
+        internal const int AttachStatsbeatInterval = 86400000;
 
         private static readonly Meter s_myMeter = new("AttachStatsBeatMeter", "1.0");
 
-        internal string? _statsBeat_ConnectionString;
+        internal string? _statsbeat_ConnectionString;
 
         private string? _resourceProviderId;
 
@@ -41,11 +41,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
         private readonly string? _customer_Ikey;
 
-        internal MeterProvider? _attachStatsBeatMeterProvider;
+        internal MeterProvider? _attachStatsbeatMeterProvider;
 
-        internal static Regex s_endpoint_pattern = new("^https?://(?:www\\.)?([^/.-]+)");
+        internal static Regex s_endpoint_pattern => new("^https?://(?:www\\.)?([^/.-]+)");
 
-        internal static readonly HashSet<string> EU_Endpoints = new()
+        internal static readonly HashSet<string> s_eU_Endpoints = new()
         {
             "francecentral",
             "francesouth",
@@ -60,7 +60,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             "westeurope",
         };
 
-        internal static readonly HashSet<string> Non_EU_Endpoints = new()
+        internal static readonly HashSet<string> s_non_EU_Endpoints = new()
         {
             "australiacentral",
             "australiacentral2",
@@ -101,17 +101,17 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         {
             var parsedConnectionString = ConnectionStringParser.GetValues(connectionString);
 
-            _statsBeat_ConnectionString = GetStatsbeatConnectionString(parsedConnectionString.IngestionEndpoint);
+            _statsbeat_ConnectionString = GetStatsbeatConnectionString(parsedConnectionString.IngestionEndpoint);
 
             // Initialize only if we are able to determine the correct region to send the data to.
-            if (_statsBeat_ConnectionString == null)
+            if (_statsbeat_ConnectionString == null)
             {
                 throw new InvalidOperationException("Cannot initialize statsbeat");
             }
 
             _customer_Ikey = parsedConnectionString.InstrumentationKey;
 
-            s_myMeter.CreateObservableGauge("AttachStatsBeat", () => GetAttachStatsBeat());
+            s_myMeter.CreateObservableGauge("AttachStatsbeat", () => GetAttachStatsbeat());
 
             // Configure for attach statsbeat which has collection
             // schedule of 24 hrs == 86400000 milliseconds.
@@ -119,11 +119,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             // in case if the app exits before 24hrs duration.
             var exporterOptions = new AzureMonitorExporterOptions();
             exporterOptions.DisableOfflineStorage = true;
-            exporterOptions.ConnectionString = _statsBeat_ConnectionString;
+            exporterOptions.ConnectionString = _statsbeat_ConnectionString;
 
-            _attachStatsBeatMeterProvider = Sdk.CreateMeterProviderBuilder()
-            .AddMeter("AttachStatsBeatMeter")
-            .AddReader(new PeriodicExportingMetricReader(new AzureMonitorMetricExporter(exporterOptions), AttachStatsBeatInterval)
+            _attachStatsbeatMeterProvider = Sdk.CreateMeterProviderBuilder()
+            .AddMeter("AttachStatsbeatMeter")
+            .AddReader(new PeriodicExportingMetricReader(new AzureMonitorMetricExporter(exporterOptions), AttachStatsbeatInterval)
             { TemporalityPreference = MetricReaderTemporalityPreference.Delta })
             .Build();
         }
@@ -149,24 +149,24 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         internal static string? GetStatsbeatConnectionString(string ingestionEndpoint)
         {
             var patternMatch = s_endpoint_pattern.Match(ingestionEndpoint);
-            string? statsBeatConnectionString = null;
+            string? statsbeatConnectionString = null;
             if (patternMatch.Success)
             {
                 var endpoint = patternMatch.Groups[1].Value;
-                if (EU_Endpoints.Contains(endpoint))
+                if (s_eU_Endpoints.Contains(endpoint))
                 {
-                    statsBeatConnectionString = StatsBeat_ConnectionString_EU;
+                    statsbeatConnectionString = Statsbeat_ConnectionString_EU;
                 }
-                else if (Non_EU_Endpoints.Contains(endpoint))
+                else if (s_non_EU_Endpoints.Contains(endpoint))
                 {
-                    statsBeatConnectionString = StatsBeat_ConnectionString_NonEU;
+                    statsbeatConnectionString = Statsbeat_ConnectionString_NonEU;
                 }
             }
 
-            return statsBeatConnectionString;
+            return statsbeatConnectionString;
         }
 
-        private Measurement<int> GetAttachStatsBeat()
+        private Measurement<int> GetAttachStatsbeat()
         {
             try
             {
@@ -188,7 +188,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             }
             catch (Exception ex)
             {
-                AzureMonitorExporterEventSource.Log.WriteWarning("ErrorGettingStatsBeatData", ex);
+                AzureMonitorExporterEventSource.Log.WriteWarning("ErrorGettingStatsbeatData", ex);
                 return new Measurement<int>();
             }
         }
@@ -257,7 +257,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
         public void Dispose()
         {
-            _attachStatsBeatMeterProvider?.Dispose();
+            _attachStatsbeatMeterProvider?.Dispose();
         }
     }
 }

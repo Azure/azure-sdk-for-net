@@ -26,7 +26,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             var customer_ConnectionString = $"InstrumentationKey=00000000-0000-0000-0000-000000000000;IngestionEndpoint=https://{euEndpoint}.in.applicationinsights.azure.com/";
             var statsBeatInstance = new Statsbeat(customer_ConnectionString);
 
-            Assert.Equal(Statsbeat.StatsBeat_ConnectionString_EU, statsBeatInstance._statsBeat_ConnectionString);
+            Assert.Equal(Statsbeat.Statsbeat_ConnectionString_EU, statsBeatInstance._statsbeat_ConnectionString);
         }
 
         [Theory]
@@ -68,7 +68,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             var customer_ConnectionString = $"InstrumentationKey=00000000-0000-0000-0000-000000000000;IngestionEndpoint=https://{nonEUEndpoint}.in.applicationinsights.azure.com/";
             var statsBeatInstance =  new Statsbeat(customer_ConnectionString);
 
-            Assert.Equal(Statsbeat.StatsBeat_ConnectionString_NonEU, statsBeatInstance._statsBeat_ConnectionString);
+            Assert.Equal(Statsbeat.Statsbeat_ConnectionString_NonEU, statsBeatInstance._statsbeat_ConnectionString);
         }
 
         [Fact]
