@@ -146,7 +146,7 @@ DefaultAzureCredentialOptions options = new DefaultAzureCredentialOptions()
 `CredentialUnavailableException`
 | Error Message |Description| Mitigation |
 |---|---|---|
-|The workload options are not fully configured.|The workload identity configuration was not provided in environment variables or through `WorkloadIdentityCredentialOptions`.|Ensure the appropriate environment variables are set **prior to application startup** or they are specified in code.</p><ul><li>To configure the `WorkloadIdentityCredential` via the environment ensure the variables `AZURE_CLIENT_ID`, `AZURE_TENANT_ID` and `AZURE_FEDERATED_TOKEN_FILE` are properly set.</li><li>To configure the `WorkloadIdentityCredential` in code ensure `ClientId`, `TenantId` and `TokenFilePath` are set on the `WorkloadIdentityCredentialOptions` passed to the constructor of the `WorkloadIdentityCredential`</li><ul>|
+|The workload options are not fully configured.|The workload identity configuration was not provided in environment variables or through `WorkloadIdentityCredentialOptions`.|Ensure the appropriate environment variables are set **prior to application startup** or they are specified in code.</p><ul><li>To configure the `WorkloadIdentityCredential` via the environment ensure the variables `AZURE_AUTHORITY_HOST`, `AZURE_CLIENT_ID`, `AZURE_TENANT_ID` and `AZURE_FEDERATED_TOKEN_FILE` are set by the admission webhook.</li><li>To configure the `WorkloadIdentityCredential` in code ensure `ClientId`, `TenantId` and `TokenFilePath` are set on the `WorkloadIdentityCredentialOptions` passed to the constructor of the `WorkloadIdentityCredential`</li><ul>|
 
 ## Troubleshoot `ManagedIdentityCredential` authentication issues
 
