@@ -40,6 +40,11 @@ namespace Azure.ResourceManager.ContainerService
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsDefined(MaintenanceWindow))
+            {
+                writer.WritePropertyName("maintenanceWindow"u8);
+                writer.WriteObjectValue(MaintenanceWindow);
+            }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
@@ -52,6 +57,7 @@ namespace Azure.ResourceManager.ContainerService
             Optional<SystemData> systemData = default;
             Optional<IList<ContainerServiceTimeInWeek>> timeInWeek = default;
             Optional<IList<ContainerServiceTimeSpan>> notAllowedTime = default;
+            Optional<ContainerServiceMaintenanceWindow> maintenanceWindow = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -118,11 +124,21 @@ namespace Azure.ResourceManager.ContainerService
                             notAllowedTime = array;
                             continue;
                         }
+                        if (property0.NameEquals("maintenanceWindow"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            maintenanceWindow = ContainerServiceMaintenanceWindow.DeserializeContainerServiceMaintenanceWindow(property0.Value);
+                            continue;
+                        }
                     }
                     continue;
                 }
             }
-            return new ContainerServiceMaintenanceConfigurationData(id, name, type, systemData.Value, Optional.ToList(timeInWeek), Optional.ToList(notAllowedTime));
+            return new ContainerServiceMaintenanceConfigurationData(id, name, type, systemData.Value, Optional.ToList(timeInWeek), Optional.ToList(notAllowedTime), maintenanceWindow.Value);
         }
     }
 }

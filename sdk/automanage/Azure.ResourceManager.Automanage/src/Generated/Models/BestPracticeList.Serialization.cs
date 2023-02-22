@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Automanage.Models
     {
         internal static BestPracticeList DeserializeBestPracticeList(JsonElement element)
         {
-            Optional<IReadOnlyList<BestPracticeData>> value = default;
+            Optional<IReadOnlyList<AutomanageBestPracticeData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -26,10 +26,10 @@ namespace Azure.ResourceManager.Automanage.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<BestPracticeData> array = new List<BestPracticeData>();
+                    List<AutomanageBestPracticeData> array = new List<AutomanageBestPracticeData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(BestPracticeData.DeserializeBestPracticeData(item));
+                        array.Add(AutomanageBestPracticeData.DeserializeAutomanageBestPracticeData(item));
                     }
                     value = array;
                     continue;

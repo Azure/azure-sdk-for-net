@@ -36,14 +36,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Samples
             string resourceGroupName = "SwaggerTestRg";
             string vaultName = "SwaggerTest";
             ResourceIdentifier backupResourceVaultConfigResourceId = BackupResourceVaultConfigResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vaultName);
-            BackupResourceVaultConfigResource backupResourceVaultConfigResource = client.GetBackupResourceVaultConfigResource(backupResourceVaultConfigResourceId);
+            BackupResourceVaultConfigResource backupResourceVaultConfig = client.GetBackupResourceVaultConfigResource(backupResourceVaultConfigResourceId);
 
             // invoke the operation
-            BackupResourceVaultConfigResource result = await backupResourceVaultConfigResource.GetAsync();
+            BackupResourceVaultConfigResource result = await backupResourceVaultConfig.GetAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            BackupResourceVaultConfigResourceData resourceData = result.Data;
+            BackupResourceVaultConfigData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -67,21 +67,21 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Samples
             string resourceGroupName = "SwaggerTestRg";
             string vaultName = "SwaggerTest";
             ResourceIdentifier backupResourceVaultConfigResourceId = BackupResourceVaultConfigResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vaultName);
-            BackupResourceVaultConfigResource backupResourceVaultConfigResource = client.GetBackupResourceVaultConfigResource(backupResourceVaultConfigResourceId);
+            BackupResourceVaultConfigResource backupResourceVaultConfig = client.GetBackupResourceVaultConfigResource(backupResourceVaultConfigResourceId);
 
             // invoke the operation
-            BackupResourceVaultConfigResourceData data = new BackupResourceVaultConfigResourceData(new AzureLocation("placeholder"))
+            BackupResourceVaultConfigData data = new BackupResourceVaultConfigData(new AzureLocation("placeholder"))
             {
-                Properties = new BackupResourceVaultConfig()
+                Properties = new BackupResourceVaultConfigProperties()
                 {
                     EnhancedSecurityState = EnhancedSecurityState.Enabled,
                 },
             };
-            BackupResourceVaultConfigResource result = await backupResourceVaultConfigResource.UpdateAsync(data);
+            BackupResourceVaultConfigResource result = await backupResourceVaultConfig.UpdateAsync(data);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            BackupResourceVaultConfigResourceData resourceData = result.Data;
+            BackupResourceVaultConfigData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }

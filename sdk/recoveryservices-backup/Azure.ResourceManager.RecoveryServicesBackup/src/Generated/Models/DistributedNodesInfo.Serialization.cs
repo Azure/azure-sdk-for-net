@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         {
             Optional<string> nodeName = default;
             Optional<string> status = default;
-            Optional<ErrorDetail> errorDetail = default;
+            Optional<BackupErrorDetail> errorDetail = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("nodeName"u8))
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    errorDetail = ErrorDetail.DeserializeErrorDetail(property.Value);
+                    errorDetail = BackupErrorDetail.DeserializeBackupErrorDetail(property.Value);
                     continue;
                 }
             }
