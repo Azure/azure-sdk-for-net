@@ -25,30 +25,30 @@ namespace Azure.Communication
                 {
                     if (Cloud == CommunicationCloudEnvironment.Dod)
                     {
-                        _rawId = $"28:dod-global:{BotId}";
+                        _rawId = $"{BotDodCloudGlobal}{BotId}";
                     }
                     else if (Cloud == CommunicationCloudEnvironment.Gcch)
                     {
-                        _rawId = $"28:gcch-global:{BotId}";
+                        _rawId = $"{BotGcchCloudGlobal}{BotId}";
                     }
                     else
                     {
-                        _rawId = $"28:{BotId}";
+                        _rawId = $"{Bot}{BotId}";
                     }
                 }
                 else
                 {
                     if (Cloud == CommunicationCloudEnvironment.Dod)
                     {
-                        _rawId = $"28:dod:{BotId}";
+                        _rawId = $"{BotDodCloud}{BotId}";
                     }
                     else if (Cloud == CommunicationCloudEnvironment.Gcch)
                     {
-                        _rawId = $"28:gcch:{BotId}";
+                        _rawId = $"{BotGcchCloud}{BotId}";
                     }
                     else
                     {
-                        _rawId = $"28:orgid:{BotId}";
+                        _rawId = $"{BotPublicCloud}{BotId}";
                     }
                 }
 
