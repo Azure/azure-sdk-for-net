@@ -10,10 +10,6 @@
 
 - Upgrade framework to .NET 6.0 LTS version.
 
-### Bugs Fixed
-
-### Other Changes
-
 ## 1.0.0-beta.4 (2022-11-11)
 
 ### Features Added
