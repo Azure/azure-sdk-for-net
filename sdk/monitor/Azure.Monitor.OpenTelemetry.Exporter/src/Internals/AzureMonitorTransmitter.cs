@@ -36,15 +36,14 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
             options.Retry.MaxRetries = 0;
 
-            var connectionString = GetConnectionString(options);
-            _connectionVars = ConnectionStringParser.GetValues(connectionString);
+            _connectionVars = InitializeConnectionVars(options);
 
             _applicationInsightsRestClient = InitializeRestClient(options, _connectionVars, credential);
 
             _fileBlobProvider = InitializeOfflineStorage(options);
 
             // TODO: uncomment following line for enablement.
-            // InitializeStatsbeat(connectionString);
+            // InitializeStatsbeat(_connectionVars);
         }
 
         private static void InitializeStatsbeat(string? connectionString)
@@ -218,16 +217,23 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             return null;
         }
 
-        private static string GetConnectionString(AzureMonitorExporterOptions options)
+        private static ConnectionVars InitializeConnectionVars(AzureMonitorExporterOptions options)
         {
             if (options.ConnectionString == null)
             {
-                return Environment.GetEnvironmentVariable("APPLICATIONINSIGHTS_CONNECTION_STRING");
+                var connectionString = Environment.GetEnvironmentVariable("APPLICATIONINSIGHTS_CONNECTION_STRING");
+
+                if (!string.IsNullOrWhiteSpace(connectionString))
+                {
+                    return ConnectionStringParser.GetValues(connectionString);
+                }
             }
             else
             {
-                return options.ConnectionString;
+                return ConnectionStringParser.GetValues(options.ConnectionString);
             }
+
+            throw new InvalidOperationException("A connection string was not found. This MUST be provided via either AzureMonitorExporterOptions or set in the environment variable 'APPLICATIONINSIGHTS_CONNECTION_STRING'");
         }
 
         private ExportResult HandleFailures(HttpMessage httpMessage)

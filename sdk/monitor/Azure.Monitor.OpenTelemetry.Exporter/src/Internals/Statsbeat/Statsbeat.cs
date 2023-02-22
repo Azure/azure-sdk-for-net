@@ -97,11 +97,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             "westus3",
         };
 
-        internal Statsbeat(string? connectionString)
+        internal Statsbeat(ConnectionVars? connectionStringVars)
         {
-            var parsedConnectionString = ConnectionStringParser.GetValues(connectionString);
-
-            _statsbeat_ConnectionString = GetStatsbeatConnectionString(parsedConnectionString.IngestionEndpoint);
+            _statsbeat_ConnectionString = GetStatsbeatConnectionString(connectionStringVars?.IngestionEndpoint);
 
             // Initialize only if we are able to determine the correct region to send the data to.
             if (_statsbeat_ConnectionString == null)
@@ -109,7 +107,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                 throw new InvalidOperationException("Cannot initialize statsbeat");
             }
 
-            _customer_Ikey = parsedConnectionString.InstrumentationKey;
+            _customer_Ikey = connectionStringVars?.InstrumentationKey;
 
             s_myMeter.CreateObservableGauge("AttachStatsbeat", () => GetAttachStatsbeat());
 
@@ -146,7 +144,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             return "unknown";
         }
 
-        internal static string? GetStatsbeatConnectionString(string ingestionEndpoint)
+        internal static string? GetStatsbeatConnectionString(string? ingestionEndpoint)
         {
             var patternMatch = s_endpoint_pattern.Match(ingestionEndpoint);
             string? statsbeatConnectionString = null;

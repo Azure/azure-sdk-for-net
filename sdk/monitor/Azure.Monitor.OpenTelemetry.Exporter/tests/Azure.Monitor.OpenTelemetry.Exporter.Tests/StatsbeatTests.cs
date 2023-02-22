@@ -2,7 +2,9 @@
 // Licensed under the MIT License.
 
 using System;
+using Azure.Core;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals;
+using Azure.Monitor.OpenTelemetry.Exporter.Internals.ConnectionString;
 using Xunit;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
@@ -24,7 +26,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         public void StatsbeatConnectionStringIsSetBasedOnCustomersConnectionStringEndpointInEU(string euEndpoint)
         {
             var customer_ConnectionString = $"InstrumentationKey=00000000-0000-0000-0000-000000000000;IngestionEndpoint=https://{euEndpoint}.in.applicationinsights.azure.com/";
-            var statsBeatInstance = new Statsbeat(customer_ConnectionString);
+            var connectionStringVars = ConnectionStringParser.GetValues(customer_ConnectionString);
+            var statsBeatInstance = new Statsbeat(connectionStringVars);
 
             Assert.Equal(Statsbeat.Statsbeat_ConnectionString_EU, statsBeatInstance._statsbeat_ConnectionString);
         }
@@ -66,7 +69,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         public void StatsbeatConnectionStringIsSetBasedOnCustomersConnectionStringEndpointInNonEU(string nonEUEndpoint)
         {
             var customer_ConnectionString = $"InstrumentationKey=00000000-0000-0000-0000-000000000000;IngestionEndpoint=https://{nonEUEndpoint}.in.applicationinsights.azure.com/";
-            var statsBeatInstance =  new Statsbeat(customer_ConnectionString);
+            var connectionStringVars = ConnectionStringParser.GetValues(customer_ConnectionString);
+            var statsBeatInstance = new Statsbeat(connectionStringVars);
 
             Assert.Equal(Statsbeat.Statsbeat_ConnectionString_NonEU, statsBeatInstance._statsbeat_ConnectionString);
         }
@@ -76,7 +80,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         {
             var customer_ConnectionString = "InstrumentationKey=00000000-0000-0000-0000-000000000000;IngestionEndpoint=https://foo.in.applicationinsights.azure.com/";
 
-            Assert.Throws<InvalidOperationException>(() => new Statsbeat(customer_ConnectionString));
+            var connectionStringVars = ConnectionStringParser.GetValues(customer_ConnectionString);
+            Assert.Throws<InvalidOperationException>(() => new Statsbeat(connectionStringVars));
         }
     }
 }
