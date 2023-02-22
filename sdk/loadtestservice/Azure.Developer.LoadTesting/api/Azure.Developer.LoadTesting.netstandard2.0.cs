@@ -1,9 +1,9 @@
 namespace Azure.Developer.LoadTesting
 {
-    public partial class FileUploadOperation : Azure.Operation<System.BinaryData>
+    public partial class FileUploadResultOperation : Azure.Operation<System.BinaryData>
     {
-        protected FileUploadOperation() { }
-        public FileUploadOperation(string testId, string fileName, Azure.Developer.LoadTesting.LoadTestAdministrationClient client, Azure.Response initialResponse = null) { }
+        protected FileUploadResultOperation() { }
+        public FileUploadResultOperation(string testId, string fileName, Azure.Developer.LoadTesting.LoadTestAdministrationClient client, Azure.Response initialResponse = null) { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -40,8 +40,8 @@ namespace Azure.Developer.LoadTesting
         public virtual Azure.AsyncPageable<System.BinaryData> GetTestFilesAsync(string testId, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Pageable<System.BinaryData> GetTests(string orderby = null, string search = null, System.DateTimeOffset? lastModifiedStartTime = default(System.DateTimeOffset?), System.DateTimeOffset? lastModifiedEndTime = default(System.DateTimeOffset?), Azure.RequestContext context = null) { throw null; }
         public virtual Azure.AsyncPageable<System.BinaryData> GetTestsAsync(string orderby = null, string search = null, System.DateTimeOffset? lastModifiedStartTime = default(System.DateTimeOffset?), System.DateTimeOffset? lastModifiedEndTime = default(System.DateTimeOffset?), Azure.RequestContext context = null) { throw null; }
-        public virtual Azure.Developer.LoadTesting.FileUploadOperation UploadTestFile(Azure.WaitUntil waitUntil, string testId, string fileName, Azure.Core.RequestContent content, System.TimeSpan? timeSpan = default(System.TimeSpan?), string fileType = null, Azure.RequestContext context = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Developer.LoadTesting.FileUploadOperation> UploadTestFileAsync(Azure.WaitUntil waitUntil, string testId, string fileName, Azure.Core.RequestContent content, System.TimeSpan? timeSpan = default(System.TimeSpan?), string fileType = null, Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Developer.LoadTesting.FileUploadResultOperation UploadTestFile(Azure.WaitUntil waitUntil, string testId, string fileName, Azure.Core.RequestContent content, System.TimeSpan? timeSpan = default(System.TimeSpan?), string fileType = null, Azure.RequestContext context = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Developer.LoadTesting.FileUploadResultOperation> UploadTestFileAsync(Azure.WaitUntil waitUntil, string testId, string fileName, Azure.Core.RequestContent content, System.TimeSpan? timeSpan = default(System.TimeSpan?), string fileType = null, Azure.RequestContext context = null) { throw null; }
     }
     public partial class LoadTestingClientOptions : Azure.Core.ClientOptions
     {
@@ -57,8 +57,8 @@ namespace Azure.Developer.LoadTesting
         public LoadTestRunClient(System.Uri endpoint, Azure.Core.TokenCredential credential) { }
         public LoadTestRunClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.Developer.LoadTesting.LoadTestingClientOptions options) { }
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
-        public virtual Azure.Developer.LoadTesting.TestRunOperation BeginTestRun(Azure.WaitUntil waitUntil, string testRunId, Azure.Core.RequestContent content, System.TimeSpan? timeSpan = default(System.TimeSpan?), string oldTestRunId = null, Azure.RequestContext context = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Developer.LoadTesting.TestRunOperation> BeginTestRunAsync(Azure.WaitUntil waitUntil, string testRunId, Azure.Core.RequestContent content, System.TimeSpan? timeSpan = default(System.TimeSpan?), string oldTestRunId = null, Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Developer.LoadTesting.TestRunResultOperation BeginTestRun(Azure.WaitUntil waitUntil, string testRunId, Azure.Core.RequestContent content, System.TimeSpan? timeSpan = default(System.TimeSpan?), string oldTestRunId = null, Azure.RequestContext context = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Developer.LoadTesting.TestRunResultOperation> BeginTestRunAsync(Azure.WaitUntil waitUntil, string testRunId, Azure.Core.RequestContent content, System.TimeSpan? timeSpan = default(System.TimeSpan?), string oldTestRunId = null, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response CreateOrUpdateAppComponents(string testRunId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> CreateOrUpdateAppComponentsAsync(string testRunId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response CreateOrUpdateServerMetricsConfig(string testRunId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
@@ -86,10 +86,10 @@ namespace Azure.Developer.LoadTesting
         public virtual Azure.Response StopTestRun(string testRunId, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> StopTestRunAsync(string testRunId, Azure.RequestContext context = null) { throw null; }
     }
-    public partial class TestRunOperation : Azure.Operation<System.BinaryData>
+    public partial class TestRunResultOperation : Azure.Operation<System.BinaryData>
     {
-        protected TestRunOperation() { }
-        public TestRunOperation(string testRunId, Azure.Developer.LoadTesting.LoadTestRunClient client, Azure.Response initialResponse = null) { }
+        protected TestRunResultOperation() { }
+        public TestRunResultOperation(string testRunId, Azure.Developer.LoadTesting.LoadTestRunClient client, Azure.Response initialResponse = null) { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
