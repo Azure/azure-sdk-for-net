@@ -88,8 +88,14 @@ namespace Azure.AI.TextTranslator
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<GetLanguagesResult>> GetLanguagesAsync(string clientTraceId = null, string scope = null, string acceptLanguage = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
+            ETag? eTag = null;
+            if (ifNoneMatch != null)
+            {
+                eTag = new ETag(ifNoneMatch);
+            }
+
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await GetLanguagesAsync(clientTraceId, scope, acceptLanguage, ifNoneMatch, context).ConfigureAwait(false);
+            Response response = await GetLanguagesAsync(clientTraceId, scope, acceptLanguage, eTag, context).ConfigureAwait(false);
             return Response.FromValue(GetLanguagesResult.FromResponse(response), response);
         }
 
@@ -117,8 +123,14 @@ namespace Azure.AI.TextTranslator
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<GetLanguagesResult> GetLanguages(string clientTraceId = null, string scope = null, string acceptLanguage = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
+            ETag? eTag = null;
+            if (ifNoneMatch != null)
+            {
+                eTag = new ETag(ifNoneMatch);
+            }
+
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = GetLanguages(clientTraceId, scope, acceptLanguage, ifNoneMatch, context);
+            Response response = GetLanguages(clientTraceId, scope, acceptLanguage, eTag, context);
             return Response.FromValue(GetLanguagesResult.FromResponse(response), response);
         }
 
@@ -265,7 +277,7 @@ namespace Azure.AI.TextTranslator
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="to"/> or <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<IReadOnlyList<TranslatedTextElement>>> TranslateAsync(object to, object content, string clientTraceId = null, string @from = null, TextTypes? textType = null, string category = null, ProfanityActions? profanityAction = null, ProfanityMarkers? profanityMarker = null, bool? includeAlignment = null, bool? includeSentenceLength = null, string suggestedFrom = null, string fromScript = null, string toScript = null, bool? allowFallback = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<IReadOnlyList<TranslatedTextElement>>> TranslateAsync(IEnumerable<string> to, object content, string clientTraceId = null, string @from = null, TextTypes? textType = null, string category = null, ProfanityActions? profanityAction = null, ProfanityMarkers? profanityMarker = null, bool? includeAlignment = null, bool? includeSentenceLength = null, string suggestedFrom = null, string fromScript = null, string toScript = null, bool? allowFallback = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(to, nameof(to));
             Argument.AssertNotNull(content, nameof(content));
@@ -344,7 +356,7 @@ namespace Azure.AI.TextTranslator
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="to"/> or <paramref name="content"/> is null. </exception>
-        public virtual Response<IReadOnlyList<TranslatedTextElement>> Translate(object to, object content, string clientTraceId = null, string @from = null, TextTypes? textType = null, string category = null, ProfanityActions? profanityAction = null, ProfanityMarkers? profanityMarker = null, bool? includeAlignment = null, bool? includeSentenceLength = null, string suggestedFrom = null, string fromScript = null, string toScript = null, bool? allowFallback = null, CancellationToken cancellationToken = default)
+        public virtual Response<IReadOnlyList<TranslatedTextElement>> Translate(IEnumerable<string> to, object content, string clientTraceId = null, string @from = null, TextTypes? textType = null, string category = null, ProfanityActions? profanityAction = null, ProfanityMarkers? profanityMarker = null, bool? includeAlignment = null, bool? includeSentenceLength = null, string suggestedFrom = null, string fromScript = null, string toScript = null, bool? allowFallback = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(to, nameof(to));
             Argument.AssertNotNull(content, nameof(content));
@@ -1222,7 +1234,7 @@ namespace Azure.AI.TextTranslator
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/translate", false);
-            uri.AppendQuery("to", to, true);
+            uri.AppendQuery("to", string.Join(",", to), true);
             if (@from != null)
             {
                 uri.AppendQuery("from", @from, true);
