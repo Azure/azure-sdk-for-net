@@ -73,30 +73,39 @@ namespace Azure.Storage.DataMovement
             internal const int TransferIdStrMaxSize = 36; // 36 chars
             internal const int TransferIdMaxSizeInBytes = 72; // 72 bytes
             internal const int PathStrMaxSize = 4096; // 8182 bytes
-            internal const int PathStrMaxSizeInBytes = 8182; // 8182 bytes
-            internal const int ExtraQueryMaxSize = 1000; // 2048 char
-            internal const int ExtraQueryMaxSizeInBytes = 2000; // 2000 bytes
+            internal const int PathStrMaxSizeInBytes = PathStrMaxSize * 2; // 8182 bytes
+            internal const int ExtraQueryMaxSize = 1000; // 1000 char
+            internal const int ExtraQueryMaxSizeInBytes = ExtraQueryMaxSize * 2; // 2000 bytes
+            internal const int HeaderValueMaxSize = 1000; // 1000 char
+            internal const int HeaderValueMaxSizeInBytes = HeaderValueMaxSize * 2; // 2000 char
 
             internal const int VersionIndex = 0; // Index: 0
-            internal const int StartTimeIndex = 4; // Index: 4
+            internal const int StartTimeIndex = VersionIndex + LongSizeInBytes; // Index: 8
             internal const int TransferIdIndex = 12; // Index: 12
             internal const int PartNumberIndex = 84; // Index: 84
             internal const int SourcePathLengthIndex = 92; // Index: 92
             internal const int SourcePathIndex = 100; // Index: 100
             internal const int SourceExtraQueryLengthIndex = 8282; // Index: 8282
             internal const int SourceExtraQueryIndex = 8290; // Index: 8290
-            internal const int DestinationPathIndex = 10274; // Index: 10274
-            internal const int DestinationExtraQueryIndex = 18456; // Index: 18456
-            internal const int IsFinalPartIndex = 20456; // Index: 20456
-            internal const int ForceWriteIndex = 20457; // Index: 20457
-            internal const int ForceIfReadOnlyIndex = 20458; // Index: 20458
-            internal const int AutoDecompressIndex = 20459; // Index: 20459
-            internal const int PriorityIndex = 20460; // Index: 20460
-            internal const int TTLAfterCompletionIndex = 20461; // Index: 20461
-            internal const int FromToIndex = 20469; // Index: 20469
-            internal const int FolderPropertyOptionIndex = 20470; // Index: 20470
-            internal const int NumberChunksIndex = 20471; // Index: 20471
-            internal const int DstBlobDataIndex = 20479; // Index: 20472
+            internal const int DestinationPathLengthIndex = 10290; // Index: 10,290
+            internal const int DestinationPathIndex = 10298; // Index: 10,298
+            internal const int DestinationExtraQueryLengthIndex = 18480; // Index: 18,480
+            internal const int DestinationExtraQueryIndex = 18488; // Index: 18,488
+            internal const int IsFinalPartIndex = 20488; // Index: 20,488
+            internal const int ForceWriteIndex = 20489; // Index: 20,489
+            internal const int ForceIfReadOnlyIndex = 20490; // Index: 20,490
+            internal const int AutoDecompressIndex = 20491; // Index: 20,491
+            internal const int PriorityIndex = 20492; // Index: 20,492
+            internal const int TTLAfterCompletionIndex = 20493; // Index: 20,493
+            internal const int FromToIndex = 20501; // Index: 20,501
+            internal const int FolderPropertyOptionIndex = 20502; // Index: 20,502
+            internal const int NumberChunksIndex = 20503; // Index: 20,503
+
+            internal const int DstBlobTypeIndex = 20511; // Index: 20,511
+            internal const int DstBlobNoGuessMimeTypeIndex = 20512; // Index: 20,512
+            internal const int DstBlobContentTypeLengthIndex = 20513; // Index: 20,513
+            internal const int DstBlobContentTypeIndex = 20521; // Index: 20,521
+            internal const int DstBlobContentEncodingLengthIndex = 20521; // Index: 20,521
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 using System;
+using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using System.Text.Json;
 
@@ -26,52 +27,52 @@ namespace Azure.Storage.DataMovement
         /// <summary>
         /// Specifies the length of MIME content type of the blob
         /// </summary>
-        public ushort ContentTypeLength;
+        public long ContentTypeLength;
 
         /// <summary>
         /// Specifies the MIME content type of the blob. The default type is application/octet-stream
         /// </summary>
-        public byte[] ContentType;
+        public string ContentType;
 
         /// <summary>
         /// Specifies length of content encoding which have been applied to the blob.
         /// </summary>
-        public ushort ContentEncodingLength;
+        public long ContentEncodingLength;
 
         /// <summary>
         /// Specifies the MIME content type of the blob. The default type is application/octet-stream
         /// </summary>
-        public byte[] ContentEncoding;
+        public string ContentEncoding;
 
         /// <summary>
         /// Specifies length of content language which has been applied to the blob.
         /// </summary>
-        public ushort ContentLanguageLength;
+        public long ContentLanguageLength;
 
         /// <summary>
         /// Specifies which content language has been applied to the blob.
         /// </summary>
-        public byte[] ContentLanguage;
+        public string ContentLanguage;
 
         /// <summary>
         /// Specifies length of content disposition which has been applied to the blob.
         /// </summary>
-        public ushort ContentDispositionLength;
+        public long ContentDispositionLength;
 
         /// <summary>
         /// Specifies the content disposition of the blob
         /// </summary>
-        public byte[] ContentDisposition;
+        public string ContentDisposition;
 
         /// <summary>
         /// Specifies the length of the cache control which has been applied to the blob.
         /// </summary>
-        public ushort CacheControlLength;
+        public long CacheControlLength;
 
         /// <summary>
         /// Specifies the cache control of the blob
         /// </summary>
-        public byte[] CacheControl;
+        public string CacheControl;
 
         /// <summary>
         /// Specifies the tier if this is a block or page blob respectfully. Only one or none can be specified at a time.
@@ -87,12 +88,12 @@ namespace Azure.Storage.DataMovement
         /// <summary>
         /// Length of metadata
         /// </summary>
-        public ushort MetadataLength;
+        public long MetadataLength;
 
         /// <summary>
         /// Metadata
         /// </summary>
-        public byte[] Metadata;
+        public IDictionary<string,string> Metadata;
 
         /// <summary>
         /// Length of blob tags

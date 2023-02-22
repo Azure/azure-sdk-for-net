@@ -73,28 +73,27 @@ namespace Azure.Storage.DataMovement.JobPlanModels
 
         /// <summary>
         /// The length of the source path query
-        /// Index: 10274
+        /// Index: 8282
         /// </summary>
         public long SourceExtraQueryLength;
 
         /// <summary>
         /// Extra query params applicable to the source
-        /// Index: 18456
+        /// Index: 8290
         ///
         /// Size of byte array in azcopy is 1000 bytes.
-        /// TODO: consider changing this to something like 2048 because the max a url could be
         /// </summary>
         public string SourceExtraQuery;
 
         /// <summary>
         /// The length of the destination root path
-        /// Index: 20456
+        /// Index: 10,290
         /// </summary>
         public long DestinationPathLength;
 
         /// <summary>
         /// The destination path
-        /// Index: 20457
+        /// Index: 10,298
         ///
         /// Size of byte array in azcopy is 1000 bytes
         /// </summary>
@@ -102,13 +101,13 @@ namespace Azure.Storage.DataMovement.JobPlanModels
 
         /// <summary>
         /// The length of the destination path query
-        /// Index: 20458
+        /// Index: 18,480
         /// </summary>
         public long DestinationExtraQueryLength;
 
         /// <summary>
         /// Extra query params applicable to the dest
-        /// Index: 20459
+        /// Index: 18,488
         ///
         /// Size of byte array in azcopy is 1000 bytes
         /// </summary>
@@ -116,70 +115,67 @@ namespace Azure.Storage.DataMovement.JobPlanModels
 
         /// <summary>
         /// True if this is the Job's last part; else false
-        /// Index: 20460
+        /// Index: 20,488
         /// </summary>
         public bool IsFinalPart;
 
         /// <summary>
         /// True if the existing blobs needs to be overwritten.
-        /// Index: 20461
+        /// Index: 20,489
         /// </summary>
         public bool ForceWrite;
 
         /// <summary>
         /// Supplements ForceWrite with an additional setting for Azure Files. If true, the read-only attribute will be cleared before we overwrite
-        /// Index: 20461
+        /// Index: 20,490
         /// </summary>
         public bool ForceIfReadOnly;
 
         /// <summary>
         /// if true, source data with encodings that represent compression are automatically decompressed when downloading
-        /// Index: 20469
+        /// Index: 20,491
         /// </summary>
         public bool AutoDecompress;
 
         /// <summary>
         /// The Job Part's priority
-        /// Index: 20469
+        /// Index: 20,492
         /// </summary>
         public byte Priority;
 
         /// <summary>
         /// Time to live after completion is used to persists the file on disk of specified time after the completion of JobPartOrder
         ///
-        /// TODO: change to DateTimeOffset object, and make convert from DateTimeOffset to UInt32
+        /// Index: 20,493
         /// </summary>
-        public long TTLAfterCompletion;
+        public DateTimeOffset TTLAfterCompletion;
 
         /// <summary>
         /// The location of the transfer's source and destination
         ///
-        /// TODO: change to object for storing transfer source and destination
+        /// Index: 20,501
         /// </summary>
         public JobPlanFromTo FromTo;
 
         /// <summary>
         /// option specifying how folders will be handled
         ///
-        /// TODO: change to struct for FolderPropertyOptions
+        /// Index: 20,502
         /// </summary>
         public FolderPropertiesMode FolderPropertyOption;
 
         /// <summary>
         /// The number of transfers in the Job part
+        ///
+        /// Index: 20,503
         /// </summary>
         public long NumberChunks;
 
         /// <summary>
-        /// This Job Part's minimal log level
-        /// </summary>
-        /// TODO: use core diagnostics log level instead
-        ///public DataMovementLogLevel LogLevel;
-
-        /// <summary>
         /// Additional data for blob destinations
+        /// Holds the additional information about the blob
         ///
-        /// holds the additional information about the blob, see BlobProperties and request conditions
+        /// Index: 20,511
         /// </summary>
         public JobPartPlanDestinationBlob DstBlobData;
 
@@ -413,7 +409,6 @@ namespace Azure.Storage.DataMovement.JobPlanModels
                     index: DataMovementConstants.PlanFile.TransferIdIndex,
                     count: DataMovementConstants.PlanFile.TransferIdMaxSizeInBytes);
 
-                /*
                 writer.Write(PartNumber);
 
                 writer.Write(SourcePath);
