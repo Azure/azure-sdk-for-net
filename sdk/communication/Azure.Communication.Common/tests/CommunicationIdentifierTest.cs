@@ -30,6 +30,8 @@ namespace Azure.Communication
 
             // Bots
             Assert.AreEqual(new MicrosoftBotIdentifier("45ab2481-1c1c-4005-be24-0ffb879b1130", isGlobal: true), new MicrosoftBotIdentifier("45ab2481-1c1c-4005-be24-0ffb879b1130", isGlobal: true));
+            Assert.AreEqual(new MicrosoftBotIdentifier("45ab2481-1c1c-4005-be24-0ffb879b1130", isGlobal: true), new MicrosoftBotIdentifier("45ab2481-1c1c-4005-be24-0ffb879b1130", isGlobal: true, cloud: CommunicationCloudEnvironment.Public));
+            Assert.AreEqual(new MicrosoftBotIdentifier("45ab2481-1c1c-4005-be24-0ffb879b1130"), new MicrosoftBotIdentifier("45ab2481-1c1c-4005-be24-0ffb879b1130", isGlobal: false));
             Assert.AreNotEqual(new MicrosoftBotIdentifier("45ab2481-1c1c-4005-be24-0ffb879b1130", isGlobal: true, rawId: "Raw Id"), new MicrosoftBotIdentifier("45ab2481-1c1c-4005-be24-0ffb879b1130", isGlobal: true, rawId: "Another Raw Id"));
 
             Assert.AreNotEqual(new MicrosoftBotIdentifier("override", isGlobal: true, rawId: "8:teamsvisitor:45ab2481-1c1c-4005-be24-0ffb879b1130"), new MicrosoftBotIdentifier("45ab2481-1c1c-4005-be24-0ffb879b1130", isGlobal: true));
