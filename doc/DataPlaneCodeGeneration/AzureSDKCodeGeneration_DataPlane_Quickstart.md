@@ -2,7 +2,7 @@
 
 We build Azure SDK libraries to give developers a consistent, unified experience working with Azure services, in the language ecosystem where they're most comfortable.  Azure SDK Code Generation allows you to quickly and easily create a client library so customers can work with your service as part of the SDK.  In this tutorial, we will step through the process of creating a new Azure SDK Generated Client library for a data plane Azure service.  The output library will have an API that follows [.NET Azure SDK Design Guidelines](https://azure.github.io/azure-sdk/dotnet_introduction.html), which will give it the same look and feel of other .NET libraries in the Azure SDK.
 
-Azure SDK Code Generation takes an Open API spec or [Cadl](https://microsoft.github.io/cadl/) as input, and uses the [autorest.csharp](https://github.com/Azure/autorest.csharp) generator to output a generated library.  It is important that the input API spec should follow the [Azure REST API Guidelines](https://github.com/microsoft/api-guidelines/blob/vNext/azure/Guidelines.md) and Cadl files should comply with cadl lint rules, to enable the output library to be consistent with the Azure SDK Guidelines.
+Azure SDK Code Generation takes an Open API spec or [Cadl](https://microsoft.github.io/typespec/) as input, and uses the [autorest.csharp](https://github.com/Azure/autorest.csharp) generator to output a generated library.  It is important that the input API spec should follow the [Azure REST API Guidelines](https://github.com/microsoft/api-guidelines/blob/vNext/azure/Guidelines.md) and Cadl files should comply with cadl lint rules, to enable the output library to be consistent with the Azure SDK Guidelines.
 
 **Learn more**: You can learn more about Azure SDK Data Plane Code Generation in the [Azure SDK Code Generation docs](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md).
 
@@ -70,7 +70,7 @@ sdk\<service name>\<package name>\<package name>.sln
 
   ***Initialize Cadl Project***
 
-  Follow [Cadl Getting Start](https://github.com/microsoft/cadl/#using-node--npm) to initialize your Cadl project.
+  Follow [Cadl Getting Start](https://github.com/microsoft/typespec/#using-node--npm) to initialize your Cadl project.
 
   Make sure `npx cadl compile .` runs correctly.
 
@@ -109,7 +109,7 @@ options:
   @azure-tools/cadl-csharp emitter options:  
 
 - `namespace` define the client library namespace. e.g. Azure.IoT.DeviceUpdate.
-- `emitter-output-dir` define the output dire path which will store the generated code.
+- `emitter-output-dir` define the output dir path which will store the generated code.
 - `generate-protocol-methods` indicate if you want to generate **protocol method** for each operation. It is a boolean flag to shift the entire generation for the process (`true` by default)
 - `generate-convenience-methods` indicate if you want to generate **convenience method** for each operation. It is a boolean flag to shift the entire generation for the process (`true` by default)
 - `unreferenced-types-handling` define the strategy how to handle the unreferenced types. It can be `removeOrInternalize`, `internalize` or `keepAll`
