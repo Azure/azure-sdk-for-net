@@ -22,7 +22,7 @@ namespace Azure.Communication.Email.Tests.Samples
         {
             EmailClient emailClient = CreateEmailClient();
 
-            #region Snippet:Azure_Communication_Email_Send_Simple_AutoPolling
+            #region Snippet:Azure_Communication_Email_Send_Simple_AutoPolling_Async
             var emailSendOperation = await emailClient.SendAsync(
                 wait: WaitUntil.Completed,
                 //@@ from: "<Send email address>" // The email address of the domain registered with the Communication Services resource
@@ -36,7 +36,7 @@ namespace Azure.Communication.Email.Tests.Samples
             /// Get the OperationId so that it can be used for tracking the message for troubleshooting
             string operationId = emailSendOperation.Id;
             Console.WriteLine($"Email operation id = {operationId}");
-            #endregion Snippet:Azure_Communication_Email_Send_Simple_AutoPolling
+            #endregion Snippet:Azure_Communication_Email_Send_Simple_AutoPolling_Async
 
             Assert.False(string.IsNullOrEmpty(operationId));
         }
@@ -47,7 +47,7 @@ namespace Azure.Communication.Email.Tests.Samples
         {
             EmailClient emailClient = CreateEmailClient();
 
-            #region Snippet:Azure_Communication_Email_Send_Simple_ManualPolling
+            #region Snippet:Azure_Communication_Email_Send_Simple_ManualPolling_Async
             /// Send the email message with WaitUntil.Started
             var emailSendOperation = await emailClient.SendAsync(
                 wait: WaitUntil.Started,
@@ -78,7 +78,7 @@ namespace Azure.Communication.Email.Tests.Samples
             /// Get the OperationId so that it can be used for tracking the message for troubleshooting
             string operationId = emailSendOperation.Id;
             Console.WriteLine($"Email operation id = {operationId}");
-            #endregion: Azure_Communication_Email_Send_Simple_ManualPolling
+            #endregion: Azure_Communication_Email_Send_Simple_ManualPolling_Async
         }
 
         [Test]
@@ -87,7 +87,7 @@ namespace Azure.Communication.Email.Tests.Samples
         {
             EmailClient client = CreateEmailClient();
 
-            #region Snippet:Azure_Communication_Email_Send_With_MoreOptions
+            #region Snippet:Azure_Communication_Email_Send_With_MoreOptions_Async
             // Create the email content
             var emailContent = new EmailContent("This is the subject")
             {
@@ -111,7 +111,7 @@ namespace Azure.Communication.Email.Tests.Samples
             /// Get the OperationId so that it can be used for tracking the message for troubleshooting
             string operationId = emailSendOperation.Id;
             Console.WriteLine($"Email operation id = {operationId}");
-            #endregion Snippet:Azure_Communication_Email_Send_With_MoreOptions
+            #endregion Snippet:Azure_Communication_Email_Send_With_MoreOptions_Async
 
             Assert.False(string.IsNullOrEmpty(operationId));
         }
@@ -122,7 +122,7 @@ namespace Azure.Communication.Email.Tests.Samples
         {
             EmailClient emailClient = CreateEmailClient();
 
-            #region Snippet:Azure_Communication_Email_Send_Multiple_Recipients
+            #region Snippet:Azure_Communication_Email_Send_Multiple_Recipients_Async
             // Create the email content
             var emailContent = new EmailContent("This is the subject")
             {
@@ -190,7 +190,7 @@ namespace Azure.Communication.Email.Tests.Samples
             /// Get the OperationId so that it can be used for tracking the message for troubleshooting
             string operationId = emailSendOperation.Id;
             Console.WriteLine($"Email operation id = {operationId}");
-            #endregion Snippet:Azure_Communication_Email_Send_Multiple_Recipients
+            #endregion Snippet:Azure_Communication_Email_Send_Multiple_Recipients_Async
 
             Assert.False(string.IsNullOrEmpty(operationId));
         }
@@ -208,7 +208,7 @@ namespace Azure.Communication.Email.Tests.Samples
                 Html = "<html><body>This is the html body</body></html>"
             };
 
-            #region Snippet:Azure_Communication_Email_Send_With_Attachments
+            #region Snippet:Azure_Communication_Email_Send_With_Attachments_Async
             // Create the EmailMessage
             var emailMessage = new EmailMessage(
                 //@@ fromAddress: "<Send email address>" // The email address of the domain registered with the Communication Services resource
@@ -240,7 +240,7 @@ namespace Azure.Communication.Email.Tests.Samples
             /// Get the OperationId so that it can be used for tracking the message for troubleshooting
             string operationId = emailSendOperation.Id;
             Console.WriteLine($"Email operation id = {operationId}");
-            #endregion Snippet:Azure_Communication_Email_Send_With_Attachments
+            #endregion Snippet:Azure_Communication_Email_Send_With_Attachments_Async
         }
     }
 }

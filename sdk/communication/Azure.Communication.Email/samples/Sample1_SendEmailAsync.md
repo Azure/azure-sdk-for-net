@@ -13,43 +13,91 @@ var connectionString = "<connection_string>"; // Find your Communication Service
 EmailClient client = new EmailClient(connectionString);
 ```
 
-## Send Email to a single recipient
+### Send a simple email message with automatic polling for status
+To send an email message, call the simple overload of `Send` or `SendAsync` function from the `EmailClient`.
+```C# Snippet:Azure_Communication_Email_Send_Simple_AutoPolling_Async
+var emailSendOperation = await emailClient.SendAsync(
+    wait: WaitUntil.Completed,
+    from: "<Send email address>" // The email address of the domain registered with the Communication Services resource
+    to: "<recipient email address>"
+    subject: "This is the subject",
+    htmlContent: "<html><body>This is the html body</body></html>");
+Console.WriteLine($"Email Sent. Status = {emailSendOperation.Value.Status}");
 
-To send a email message, call the `Send` or `SendAsync` function from the `EmailClient`. `Send` expects an `EmailMessage` with the details of the email. The returned value is `EmailSendResult` objects that contains the ID of the send operation.
+/// Get the OperationId so that it can be used for tracking the message for troubleshooting
+string operationId = emailSendOperation.Id;
+Console.WriteLine($"Email operation id = {operationId}");
+```
 
-```C# Snippet:Azure_Communication_Email_SendAsync
-// Create the email content
-var emailContent = new EmailContent("This is the subject");
-emailContent.PlainText = "This is the body";
+### Send a simple email message with manual polling for status
+To send an email message, call the simple overload of `Send` or `SendAsync` function from the `EmailClient`.
+```C# Snippet:Azure_Communication_Email_Send_Simple_ManualPolling_Async
+/// Send the email message with WaitUntil.Started
+var emailSendOperation = await emailClient.SendAsync(
+    wait: WaitUntil.Started,
+    from: "<Send email address>" // The email address of the domain registered with the Communication Services resource
+    to: "<recipient email address>"
+    subject: "This is the subject",
+    htmlContent: "<html><body>This is the html body</body></html>");
 
-// Create the recipient list
-var emailRecipients = new EmailRecipients(
-    new List<EmailAddress>
+/// Call UpdateStatus on the email send operation to poll for the status
+/// manually.
+while (true)
+{
+    await emailSendOperation.UpdateStatusAsync();
+    if (emailSendOperation.HasCompleted)
     {
-        new EmailAddress(
-            email: "<recipient email address>"
-            displayName: "<recipient displayname>"
-    });
+        break;
+    }
+    await Task.Delay(1000);
+}
+
+if (emailSendOperation.HasValue)
+{
+    Console.WriteLine($"Email Sent. Status = {emailSendOperation.Value.Status}");
+}
+
+/// Get the OperationId so that it can be used for tracking the message for troubleshooting
+string operationId = emailSendOperation.Id;
+Console.WriteLine($"Email operation id = {operationId}");
+```
+
+### Send an email message with more options
+To send an email message, call the overload of `Send` or `SendAsync` function from the `EmailClient` that takes an `EmailMessage` parameter.
+```C# Snippet:Azure_Communication_Email_Send_With_MoreOptions_Async
+// Create the email content
+var emailContent = new EmailContent("This is the subject")
+{
+    PlainText = "This is the body",
+    Html = "<html><body>This is the html body</body></html>"
+};
 
 // Create the EmailMessage
 var emailMessage = new EmailMessage(
-    sender: "<Send email address>" // The email address of the domain registered with the Communication Services resource
-    emailContent,
-    emailRecipients);
+    fromAddress: "<Send email address>" // The email address of the domain registered with the Communication Services resource
+    toAddress: "<recipient email address>"
+    content: emailContent);
 
-SendEmailResult sendResult = await client.SendAsync(emailMessage);
+var emailSendOperation = await client.SendAsync(
+    wait: WaitUntil.Completed,
+    message: emailMessage);
+Console.WriteLine($"Email Sent. Status = {emailSendOperation.Value.Status}");
 
-Console.WriteLine($"Email id: {sendResult.MessageId}");
+/// Get the OperationId so that it can be used for tracking the message for troubleshooting
+string operationId = emailSendOperation.Id;
+Console.WriteLine($"Email operation id = {operationId}");
 ```
 
-## Send Email to multiple recipients
+### Send an email message to multiple recipients
+To send an email message to multiple recipients, add an `EmailAddress` object for each recipent type to the `EmailRecipient` object.
 
-To send a Email message to a list of recipients, call the `Send` or `SendAsync` function from the `EmailClient` with an `EmailMessage` object that has a list of recipient.
-
-```C# Snippet:Azure_Communication_Email_Send_Multiple_RecipientsAsync
+```C# Snippet:Azure_Communication_Email_Send_Multiple_Recipients_Async
 // Create the email content
-var emailContent = new EmailContent("This is the subject");
-emailContent.PlainText = "This is the body";
+var emailContent = new EmailContent("This is the subject")
+{
+    PlainText = "This is the body",
+    Html = "<html><body>This is the html body</body></html>"
+};
 
 // Create the To list
 var toRecipients = new List<EmailAddress>
@@ -88,45 +136,42 @@ var emailRecipients = new EmailRecipients(toRecipients, ccRecipients, bccRecipie
 
 // Create the EmailMessage
 var emailMessage = new EmailMessage(
-    sender: "<Send email address>" // The email address of the domain registered with the Communication Services resource
+    senderEmail: "<Send email address>" // The email address of the domain registered with the Communication Services resource
     emailContent,
     emailRecipients);
 
-SendEmailResult sendResult = await client.SendAsync(emailMessage);
+EmailSendOperation emailSendOperation = await emailClient.SendAsync(WaitUntil.Completed, emailMessage);
+Console.WriteLine($"Email Sent. Status = {emailSendOperation.Value.Status}");
 
-Console.WriteLine($"Email id: {sendResult.MessageId}");
+/// Get the OperationId so that it can be used for tracking the message for troubleshooting
+string operationId = emailSendOperation.Id;
+Console.WriteLine($"Email operation id = {operationId}");
 ```
 
-## Send Email with Attachments
-To send a Email message with attachments, call the `Send` or `SendAsync` function from the `EmailClient` with an `EmailMessage` object which has `EmailAttachment` objects added to the `Attachments` list.
-
-```C# Snippet:Azure_Communication_Email_Send_With_AttachmentsAsync
+### Send email with attachments
+Azure Communication Services support sending emails with attachments. See [EmailAttachmentType][email_attachmentTypes] for a list of supported attachments
+```C# Snippet:Azure_Communication_Email_Send_With_Attachments_Async
 // Create the EmailMessage
 var emailMessage = new EmailMessage(
-    sender: "<Send email address>" // The email address of the domain registered with the Communication Services resource
-    emailContent,
-    emailRecipients);
+    fromAddress: "<Send email address>" // The email address of the domain registered with the Communication Services resource
+    toAddress: "<recipient email address>"
+    content: emailContent);
 
 var filePath = "<path to your file>";
 var attachmentName = "<name of your attachment>";
-EmailAttachmentType attachmentType = EmailAttachmentType.Txt;
+var contentType = MediaTypeNames.Text.Plain;
 
-// Convert the file content into a Base64 string
-byte[] bytes = File.ReadAllBytes(filePath);
-string attachmentFileInBytes = Convert.ToBase64String(bytes);
-var emailAttachment = new EmailAttachment(attachmentName, attachmentType, attachmentFileInBytes);
+string content = new BinaryData(File.ReadAllBytes(filePath));
+var emailAttachment = new EmailAttachment(attachmentName, contentType, content);
 
 emailMessage.Attachments.Add(emailAttachment);
 
-SendEmailResult sendResult = await client.SendAsync(emailMessage);
-```
+EmailSendOperation emailSendOperation = await emailClient.SendAsync(WaitUntil.Completed, emailMessage);
+Console.WriteLine($"Email Sent. Status = {emailSendOperation.Value.Status}");
 
-## Get the status of a call to `Send`
-When `Send` or `SendAsync` is called, the Azure Communication Service has accepted the email that you want to send. The actual sending opration is an asynchronous process. You can get the status of the email throughout this process by calling `GetSendStatus` or `GetSendStatusAsync` using the `SendEmailResult.MessageId` returned from a previous call to `Send` or `SendAsync`
-```C# Snippet:Azure_Communication_Email_GetSendStatusAsync
-SendEmailResult sendResult = await client.SendAsync(emailMessage);
-
-SendStatusResult status = await client.GetSendStatusAsync(sendResult.MessageId);
+/// Get the OperationId so that it can be used for tracking the message for troubleshooting
+string operationId = emailSendOperation.Id;
+Console.WriteLine($"Email operation id = {operationId}");
 ```
 
 [README]: https://www.bing.com

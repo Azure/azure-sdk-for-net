@@ -15,9 +15,11 @@ Azure Communication Email is a client library that provides the functionality to
 To get started you will need to have an Azure Subscription. Once you have this you can go into the Azure portal and create an Azure Communication Services resource, an Azure Communication Email resource with a domain. The page will give you necessary information to be able to use the sample codes here such as connections string, shared access key, etc.
 
 This client library allows to do following operations:
- - Send an Email to one or more recipients
+ - Send a simple email message with automatic polling for status
+ - Send a simple email message with manual polling for status
  - Specify optional paramters while sending Emails
- - Get the status of a sent email
+ - Send an email message to multiple recipients
+ - Send an email message with attachments
 
  #### You can find samples for each of these functions below.
  - Send Email Messages [synchronously][sample_email] or [asynchronously][sample_email_async]
