@@ -86,7 +86,7 @@ namespace Azure.Communication
             }
 
             var prefix = $"{segments[0]}:{segments[1]}:";
-            var suffix = rawId.Substring(prefix.Length);
+            var suffix = segments[2];
 
             return prefix switch
             {
