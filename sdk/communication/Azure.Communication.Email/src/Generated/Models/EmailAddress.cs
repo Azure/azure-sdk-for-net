@@ -11,21 +11,12 @@ using Azure.Core;
 namespace Azure.Communication.Email
 {
     /// <summary> An object representing the email address and its display name. </summary>
-    public partial class EmailAddress
+    public readonly partial struct EmailAddress
     {
-        /// <summary> Initializes a new instance of EmailAddress. </summary>
-        /// <param name="address"> Email address. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="address"/> is null. </exception>
-        public EmailAddress(string address)
-        {
-            Argument.AssertNotNull(address, nameof(address));
-
-            Address = address;
-        }
 
         /// <summary> Email address. </summary>
         public string Address { get; }
         /// <summary> Email display name. </summary>
-        public string DisplayName { get; set; }
+        public string DisplayName { get; }
     }
 }

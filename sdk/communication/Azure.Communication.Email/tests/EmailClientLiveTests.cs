@@ -213,17 +213,17 @@ namespace Azure.Communication.Email.Tests
 
             if (setTo)
             {
-                toEmailAddressList = new List<EmailAddress> { new EmailAddress(TestEnvironment.RecipientAddress) { DisplayName = "ToAddress" } };
+                toEmailAddressList = new List<EmailAddress> { new EmailAddress(TestEnvironment.RecipientAddress, "ToAddress") };
             }
 
             if (setCc)
             {
-                ccEmailAddressList = new List<EmailAddress> { new EmailAddress(TestEnvironment.RecipientAddress) { DisplayName = "CcAddress" } };
+                ccEmailAddressList = new List<EmailAddress> { new EmailAddress(TestEnvironment.RecipientAddress, "CcAddress") };
             }
 
             if (setBcc)
             {
-                bccEmailAddressList = new List<EmailAddress> { new EmailAddress(TestEnvironment.RecipientAddress) { DisplayName = "BccAddress" } };
+                bccEmailAddressList = new List<EmailAddress> { new EmailAddress(TestEnvironment.RecipientAddress, "BccAddress") };
             }
 
             return new EmailRecipients(toEmailAddressList, ccEmailAddressList, bccEmailAddressList);

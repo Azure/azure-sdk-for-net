@@ -6,7 +6,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Communication.Email.Extensions;
 using Azure.Core;
 
 namespace Azure.Communication.Email
@@ -44,12 +43,6 @@ namespace Azure.Communication.Email
             {
                 throw new ArgumentException(ErrorMessages.EmptyToRecipients);
             }
-
-            To.Validate();
-
-            CC.Validate();
-
-            BCC.Validate();
         }
     }
 }

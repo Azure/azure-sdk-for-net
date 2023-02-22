@@ -8,7 +8,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Communication.Email.Extensions;
 using Azure.Communication.Pipeline;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -326,7 +325,6 @@ namespace Azure.Communication.Email
             ValidateEmailContent(emailMessage);
             ValidateSenderEmailAddress(emailMessage);
             ValidateRecipients(emailMessage);
-            ValidateReplyToEmailAddresses(emailMessage);
             ValidateAttachmentContent(emailMessage);
         }
 
@@ -359,7 +357,7 @@ namespace Azure.Communication.Email
 
         private static void ValidateSenderEmailAddress(EmailMessage emailMessage)
         {
-            if (string.IsNullOrEmpty(emailMessage.SenderAddress) || !ValidEmailAddress(emailMessage.SenderAddress))
+            if (string.IsNullOrEmpty(emailMessage.SenderAddress))
             {
                 throw new ArgumentException(ErrorMessages.InvalidSenderEmail);
             }
@@ -370,32 +368,12 @@ namespace Azure.Communication.Email
             emailMessage.Recipients.Validate();
         }
 
-        private static void ValidateReplyToEmailAddresses(EmailMessage emailMessage)
-        {
-            emailMessage.ReplyTo?.Validate();
-        }
-
         private static void ValidateAttachmentContent(EmailMessage emailMessage)
         {
             foreach (EmailAttachment attachment in emailMessage.Attachments ?? Enumerable.Empty<EmailAttachment>())
             {
                 attachment.ValidateAttachmentContent();
             }
-        }
-
-        private static bool ValidEmailAddress(string sender)
-        {
-            try
-            {
-                var emailAddress = new EmailAddress(sender);
-                emailAddress.ValidateEmailAddress();
-            }
-            catch
-            {
-                return false;
-            }
-
-            return true;
         }
     }
 }

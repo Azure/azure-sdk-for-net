@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.Communication.Email
 {
-    public partial class EmailAddress : IUtf8JsonSerializable
+    public partial struct EmailAddress : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {

@@ -1,11 +1,14 @@
 namespace Azure.Communication.Email
 {
-    public partial class EmailAddress
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct EmailAddress
     {
-        public EmailAddress(string address) { }
-        public EmailAddress(string address, string displayName) { }
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public EmailAddress(string address) { throw null; }
+        public EmailAddress(string address, string displayName) { throw null; }
         public string Address { get { throw null; } }
-        public string DisplayName { get { throw null; } set { } }
+        public string DisplayName { get { throw null; } }
     }
     public partial class EmailAttachment
     {
