@@ -332,9 +332,9 @@ namespace Azure.ResourceManager.Reservations.Samples
                     ReturnReason = "PurchasedWrongProduct",
                 },
             };
-            ReservationRefundResult result = await reservationOrder.ReturnAsync(content);
-
-            Console.WriteLine($"Succeeded: {result}");
+            var result = await reservationOrder.ReturnAsync(waitUntil: WaitUntil.Completed, content);
+            var resultValue = result.Value;
+            Console.WriteLine($"Succeeded: {resultValue}");
         }
     }
 }

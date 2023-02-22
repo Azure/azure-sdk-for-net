@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.Reservations.Tests
                 }
             };
 
-            var refundResponse = await orderDetail.Value.ReturnAsync(refundRequest);
+            var refundResponse = await orderDetail.Value.ReturnAsync(waitUntil: WaitUntil.Completed, content: refundRequest);
 
             Assert.IsNotNull(refundResponse.Value);
             Assert.AreEqual(202, refundResponse.GetRawResponse().Status);

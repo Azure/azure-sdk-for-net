@@ -40,7 +40,11 @@ namespace Azure.ResourceManager.Reservations.Samples
             // invoke the operation and iterate over the result
             string reservedResourceType = "VirtualMachines";
             AzureLocation? location = new AzureLocation("eastus");
-            await foreach (ReservationCatalog item in subscriptionResource.GetCatalogAsync(reservedResourceType: reservedResourceType, location: location))
+            var options = new SubscriptionResourceGetCatalogOptions();
+            options.ReservedResourceType = reservedResourceType;
+            options.Location = location;
+            
+            await foreach (ReservationCatalog item in subscriptionResource.GetCatalogAsync(options))
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
