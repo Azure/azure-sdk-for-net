@@ -1,14 +1,8 @@
 # Release History
 
 ## 12.14.0-beta.1 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- Added support for service version 2022-11-02.
+- Added support for Encryption Context.
 
 ## 12.13.0 (2023-02-21)
 - Includes all features from 12.13.0-beta.1.
