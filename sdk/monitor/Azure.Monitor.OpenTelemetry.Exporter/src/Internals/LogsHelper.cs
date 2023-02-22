@@ -66,7 +66,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         {
             string? message = logRecord.Exception?.Message ?? logRecord.FormattedMessage;
 
-
             if (logRecord.StateValues != null)
             {
                 ExtractProperties(ref message, properties, logRecord.StateValues);
