@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.DataBox.Models
 
         public static DataBoxDoubleEncryption ToDataBoxDoubleEncryption(this string value)
         {
-            if (string.Equals(value, "Enabled", StringComparison.InvariantCultureIgnoreCase)) return DataBoxDoubleEncryption.Enabled;
-            if (string.Equals(value, "Disabled", StringComparison.InvariantCultureIgnoreCase)) return DataBoxDoubleEncryption.Disabled;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Enabled")) return DataBoxDoubleEncryption.Enabled;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Disabled")) return DataBoxDoubleEncryption.Disabled;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown DataBoxDoubleEncryption value.");
         }
     }

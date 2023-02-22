@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.MySql.Models
 
         public static MySqlServerSecurityAlertPolicyState ToMySqlServerSecurityAlertPolicyState(this string value)
         {
-            if (string.Equals(value, "Enabled", StringComparison.InvariantCultureIgnoreCase)) return MySqlServerSecurityAlertPolicyState.Enabled;
-            if (string.Equals(value, "Disabled", StringComparison.InvariantCultureIgnoreCase)) return MySqlServerSecurityAlertPolicyState.Disabled;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Enabled")) return MySqlServerSecurityAlertPolicyState.Enabled;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Disabled")) return MySqlServerSecurityAlertPolicyState.Disabled;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown MySqlServerSecurityAlertPolicyState value.");
         }
     }
