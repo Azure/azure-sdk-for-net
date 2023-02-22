@@ -97,7 +97,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             "westus3",
         };
 
-        internal Statsbeat(ConnectionVars? connectionStringVars)
+        internal Statsbeat(ConnectionVars connectionStringVars)
         {
             _statsbeat_ConnectionString = GetStatsbeatConnectionString(connectionStringVars?.IngestionEndpoint);
 
