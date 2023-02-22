@@ -37,11 +37,16 @@ namespace Azure.Identity
                 return s_defaultCredentialChain;
             }
 
-            List<TokenCredential> chain = new(9);
+            List<TokenCredential> chain = new(10);
 
             if (!Options.ExcludeEnvironmentCredential)
             {
                 chain.Add(CreateEnvironmentCredential());
+            }
+
+            if (!Options.ExcludeWorkloadIdentityCredential)
+            {
+                chain.Add(CreateWorkloadIdentityCredential());
             }
 
             if (!Options.ExcludeManagedIdentityCredential)
@@ -97,6 +102,17 @@ namespace Azure.Identity
             var options = Options.Clone<EnvironmentCredentialOptions>();
 
             return new EnvironmentCredential(Pipeline, options);
+        }
+
+        public virtual TokenCredential CreateWorkloadIdentityCredential()
+        {
+            var options = Options.Clone<WorkloadIdentityCredentialOptions>();
+
+            options.ClientId = Options.WorkloadIdentityClientId;
+            options.TenantId = Options.TenantId;
+            options.Pipeline = Pipeline;
+
+            return new WorkloadIdentityCredential(options);
         }
 
         public virtual TokenCredential CreateManagedIdentityCredential()

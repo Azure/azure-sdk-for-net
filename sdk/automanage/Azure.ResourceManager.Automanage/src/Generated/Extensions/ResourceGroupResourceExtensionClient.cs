@@ -31,11 +31,11 @@ namespace Azure.ResourceManager.Automanage
             return apiVersion;
         }
 
-        /// <summary> Gets a collection of ConfigurationProfileResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of ConfigurationProfileResources and their operations over a ConfigurationProfileResource. </returns>
-        public virtual ConfigurationProfileCollection GetConfigurationProfiles()
+        /// <summary> Gets a collection of AutomanageConfigurationProfileResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of AutomanageConfigurationProfileResources and their operations over a AutomanageConfigurationProfileResource. </returns>
+        public virtual AutomanageConfigurationProfileCollection GetAutomanageConfigurationProfiles()
         {
-            return GetCachedClient(Client => new ConfigurationProfileCollection(Client, Id));
+            return GetCachedClient(Client => new AutomanageConfigurationProfileCollection(Client, Id));
         }
     }
 }
