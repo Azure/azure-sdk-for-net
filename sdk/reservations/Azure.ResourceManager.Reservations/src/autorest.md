@@ -8,7 +8,7 @@ generate-model-factory: false
 csharp: true
 library-name: Reservations
 namespace: Azure.ResourceManager.Reservations
-require: https://github.com/Azure/azure-rest-api-specs/blob/04efa7dde730c9eaa35bdab1681117d639522edb/specification/reservations/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/a207ec1754c20e5d601c08274bc33d40167968c2/specification/reservations/resource-manager/readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true
@@ -118,6 +118,12 @@ directive:
   - from: reservations.json
     where: $.definitions
     transform: >
+      $.ReservationOrderProperties.properties.expiryDate['x-ms-client-name'] = 'ExpireOn';
+      $.ReservationOrderProperties.properties.expiryDateTime['x-ms-client-name'] = 'ReservationExpireOn';
+      $.ReservationsProperties.properties.expiryDate['x-ms-client-name'] = 'ExpireOn';
+      $.ReservationsProperties.properties.expiryDateTime['x-ms-client-name'] = 'ReservationExpireOn';
+      $.ReservationsProperties.properties.purchaseDate['x-ms-client-name'] = 'PurchaseOn';
+      $.ReservationsProperties.properties.purchaseDateTime['x-ms-client-name'] = 'ReservationPurchaseOn';
       delete $.Location;
       $.ReservationResponse.properties.etag['x-ms-client-name'] = 'version';
       $.ReservationResponse.properties.kind['x-ms-enum'].name = 'ReservationKind';

@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -33,7 +32,7 @@ namespace Azure.ResourceManager.Reservations
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2022-03-01";
+            _apiVersion = apiVersion ?? "2022-11-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -58,12 +57,12 @@ namespace Azure.ResourceManager.Reservations
             return message;
         }
 
-        /// <summary> Return a reservation. </summary>
+        /// <summary> Return a reservation and get refund information. </summary>
         /// <param name="reservationOrderId"> Order Id of the reservation. </param>
         /// <param name="content"> Information needed for returning reservation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public async Task<Response<ReservationRefundResult>> PostAsync(Guid reservationOrderId, ReservationRefundContent content, CancellationToken cancellationToken = default)
+        public async Task<Response> PostAsync(Guid reservationOrderId, ReservationRefundContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -72,23 +71,18 @@ namespace Azure.ResourceManager.Reservations
             switch (message.Response.Status)
             {
                 case 202:
-                    {
-                        ReservationRefundResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ReservationRefundResult.DeserializeReservationRefundResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
+                    return message.Response;
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        /// <summary> Return a reservation. </summary>
+        /// <summary> Return a reservation and get refund information. </summary>
         /// <param name="reservationOrderId"> Order Id of the reservation. </param>
         /// <param name="content"> Information needed for returning reservation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public Response<ReservationRefundResult> Post(Guid reservationOrderId, ReservationRefundContent content, CancellationToken cancellationToken = default)
+        public Response Post(Guid reservationOrderId, ReservationRefundContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -97,12 +91,7 @@ namespace Azure.ResourceManager.Reservations
             switch (message.Response.Status)
             {
                 case 202:
-                    {
-                        ReservationRefundResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ReservationRefundResult.DeserializeReservationRefundResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
+                    return message.Response;
                 default:
                     throw new RequestFailedException(message.Response);
             }

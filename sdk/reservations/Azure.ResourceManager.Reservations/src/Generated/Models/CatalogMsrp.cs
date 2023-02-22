@@ -7,7 +7,7 @@
 
 namespace Azure.ResourceManager.Reservations.Models
 {
-    /// <summary> Pricing information about the SKU. </summary>
+    /// <summary> Pricing information about the sku. </summary>
     internal partial class CatalogMsrp
     {
         /// <summary> Initializes a new instance of CatalogMsrp. </summary>

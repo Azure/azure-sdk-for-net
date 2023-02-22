@@ -5,12 +5,13 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Reservations.Models
 {
-    /// <summary> The ReservationPurchaseContent. </summary>
+    /// <summary> The request for reservation purchase. </summary>
     public partial class ReservationPurchaseContent
     {
         /// <summary> Initializes a new instance of ReservationPurchaseContent. </summary>
@@ -20,19 +21,21 @@ namespace Azure.ResourceManager.Reservations.Models
         }
 
         /// <summary> Initializes a new instance of ReservationPurchaseContent. </summary>
-        /// <param name="sku"></param>
-        /// <param name="location"> The Azure Region where the reserved resource lives. </param>
+        /// <param name="sku"> The name of sku. </param>
+        /// <param name="location"> The Azure region where the reserved resource lives. </param>
         /// <param name="reservedResourceType"> The type of the resource that is being reserved. </param>
-        /// <param name="billingScopeId"> Subscription that will be charged for purchasing Reservation. </param>
-        /// <param name="term"> Represent the term of Reservation. </param>
+        /// <param name="billingScopeId"> Subscription that will be charged for purchasing reservation or savings plan. </param>
+        /// <param name="term"> Represent the term of reservation. </param>
         /// <param name="billingPlan"> Represent the billing plans. </param>
-        /// <param name="quantity"> Quantity of the SKUs that are part of the Reservation. </param>
-        /// <param name="displayName"> Friendly name of the Reservation. </param>
+        /// <param name="quantity"> Quantity of the skus that are part of the reservation. </param>
+        /// <param name="displayName"> Friendly name of the reservation. </param>
         /// <param name="appliedScopeType"> Type of the Applied Scope. </param>
         /// <param name="appliedScopes"> List of the subscriptions that the benefit will be applied. Do not specify if AppliedScopeType is Shared. </param>
+        /// <param name="appliedScopeProperties"> Properties specific to applied scope type. Not required if not applicable. Required and need to provide tenantId and managementGroupId if AppliedScopeType is ManagementGroup. </param>
         /// <param name="isRenewEnabled"> Setting this to true will automatically purchase a new reservation on the expiration date time. </param>
         /// <param name="reservedResourceProperties"> Properties specific to each reserved resource type. Not required if not applicable. </param>
-        internal ReservationPurchaseContent(ReservationsSkuName sku, AzureLocation? location, ReservedResourceType? reservedResourceType, ResourceIdentifier billingScopeId, ReservationTerm? term, ReservationBillingPlan? billingPlan, int? quantity, string displayName, AppliedScopeType? appliedScopeType, IList<string> appliedScopes, bool? isRenewEnabled, PurchaseRequestPropertiesReservedResourceProperties reservedResourceProperties)
+        /// <param name="reviewOn"> This is the date-time when the Azure hybrid benefit needs to be reviewed. </param>
+        internal ReservationPurchaseContent(ReservationsSkuName sku, AzureLocation? location, ReservedResourceType? reservedResourceType, ResourceIdentifier billingScopeId, ReservationTerm? term, ReservationBillingPlan? billingPlan, int? quantity, string displayName, AppliedScopeType? appliedScopeType, IList<string> appliedScopes, AppliedScopeProperties appliedScopeProperties, bool? isRenewEnabled, PurchaseRequestPropertiesReservedResourceProperties reservedResourceProperties, DateTimeOffset? reviewOn)
         {
             Sku = sku;
             Location = location;
@@ -44,11 +47,13 @@ namespace Azure.ResourceManager.Reservations.Models
             DisplayName = displayName;
             AppliedScopeType = appliedScopeType;
             AppliedScopes = appliedScopes;
+            AppliedScopeProperties = appliedScopeProperties;
             IsRenewEnabled = isRenewEnabled;
             ReservedResourceProperties = reservedResourceProperties;
+            ReviewOn = reviewOn;
         }
 
-        /// <summary> Gets or sets the sku. </summary>
+        /// <summary> The name of sku. </summary>
         internal ReservationsSkuName Sku { get; set; }
         /// <summary> Gets or sets the sku name. </summary>
         public string SkuName
@@ -62,24 +67,26 @@ namespace Azure.ResourceManager.Reservations.Models
             }
         }
 
-        /// <summary> The Azure Region where the reserved resource lives. </summary>
+        /// <summary> The Azure region where the reserved resource lives. </summary>
         public AzureLocation? Location { get; set; }
         /// <summary> The type of the resource that is being reserved. </summary>
         public ReservedResourceType? ReservedResourceType { get; set; }
-        /// <summary> Subscription that will be charged for purchasing Reservation. </summary>
+        /// <summary> Subscription that will be charged for purchasing reservation or savings plan. </summary>
         public ResourceIdentifier BillingScopeId { get; set; }
-        /// <summary> Represent the term of Reservation. </summary>
+        /// <summary> Represent the term of reservation. </summary>
         public ReservationTerm? Term { get; set; }
         /// <summary> Represent the billing plans. </summary>
         public ReservationBillingPlan? BillingPlan { get; set; }
-        /// <summary> Quantity of the SKUs that are part of the Reservation. </summary>
+        /// <summary> Quantity of the skus that are part of the reservation. </summary>
         public int? Quantity { get; set; }
-        /// <summary> Friendly name of the Reservation. </summary>
+        /// <summary> Friendly name of the reservation. </summary>
         public string DisplayName { get; set; }
         /// <summary> Type of the Applied Scope. </summary>
         public AppliedScopeType? AppliedScopeType { get; set; }
         /// <summary> List of the subscriptions that the benefit will be applied. Do not specify if AppliedScopeType is Shared. </summary>
         public IList<string> AppliedScopes { get; set; }
+        /// <summary> Properties specific to applied scope type. Not required if not applicable. Required and need to provide tenantId and managementGroupId if AppliedScopeType is ManagementGroup. </summary>
+        public AppliedScopeProperties AppliedScopeProperties { get; set; }
         /// <summary> Setting this to true will automatically purchase a new reservation on the expiration date time. </summary>
         public bool? IsRenewEnabled { get; set; }
         /// <summary> Properties specific to each reserved resource type. Not required if not applicable. </summary>
@@ -95,5 +102,8 @@ namespace Azure.ResourceManager.Reservations.Models
                 ReservedResourceProperties.InstanceFlexibility = value;
             }
         }
+
+        /// <summary> This is the date-time when the Azure hybrid benefit needs to be reviewed. </summary>
+        public DateTimeOffset? ReviewOn { get; set; }
     }
 }

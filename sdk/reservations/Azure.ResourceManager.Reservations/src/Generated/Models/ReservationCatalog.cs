@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Reservations.Models
 {
-    /// <summary> The ReservationCatalog. </summary>
+    /// <summary> Product details of a type of resource. </summary>
     public partial class ReservationCatalog
     {
         /// <summary> Initializes a new instance of ReservationCatalog. </summary>
@@ -25,16 +25,16 @@ namespace Azure.ResourceManager.Reservations.Models
         }
 
         /// <summary> Initializes a new instance of ReservationCatalog. </summary>
-        /// <param name="appliedResourceType"> The type of resource the SKU applies to. </param>
-        /// <param name="skuName"> The name of SKU. </param>
-        /// <param name="billingPlans"> The billing plan options available for this SKU. </param>
+        /// <param name="appliedResourceType"> The type of resource the sku applies to. </param>
+        /// <param name="skuName"> The name of sku. </param>
+        /// <param name="billingPlans"> The billing plan options available for this sku. </param>
         /// <param name="terms"> Available reservation terms for this resource. </param>
         /// <param name="locations"></param>
         /// <param name="skuProperties"></param>
-        /// <param name="msrp"> Pricing information about the SKU. </param>
+        /// <param name="msrp"> Pricing information about the sku. </param>
         /// <param name="restrictions"></param>
-        /// <param name="tier"> The tier of this SKU. </param>
-        /// <param name="size"> The size of this SKU. </param>
+        /// <param name="tier"> The tier of this sku. </param>
+        /// <param name="size"> The size of this sku. </param>
         /// <param name="capabilities"></param>
         internal ReservationCatalog(string appliedResourceType, string skuName, IReadOnlyDictionary<string, IList<ReservationBillingPlan>> billingPlans, IReadOnlyList<ReservationTerm> terms, IReadOnlyList<AzureLocation> locations, IReadOnlyList<SkuProperty> skuProperties, CatalogMsrp msrp, IReadOnlyList<SkuRestriction> restrictions, string tier, string size, IReadOnlyList<SkuCapability> capabilities)
         {
@@ -51,11 +51,11 @@ namespace Azure.ResourceManager.Reservations.Models
             Capabilities = capabilities;
         }
 
-        /// <summary> The type of resource the SKU applies to. </summary>
+        /// <summary> The type of resource the sku applies to. </summary>
         public string AppliedResourceType { get; }
-        /// <summary> The name of SKU. </summary>
+        /// <summary> The name of sku. </summary>
         public string SkuName { get; }
-        /// <summary> The billing plan options available for this SKU. </summary>
+        /// <summary> The billing plan options available for this sku. </summary>
         public IReadOnlyDictionary<string, IList<ReservationBillingPlan>> BillingPlans { get; }
         /// <summary> Available reservation terms for this resource. </summary>
         public IReadOnlyList<ReservationTerm> Terms { get; }
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Reservations.Models
         public IReadOnlyList<AzureLocation> Locations { get; }
         /// <summary> Gets the sku properties. </summary>
         public IReadOnlyList<SkuProperty> SkuProperties { get; }
-        /// <summary> Pricing information about the SKU. </summary>
+        /// <summary> Pricing information about the sku. </summary>
         internal CatalogMsrp Msrp { get; }
         /// <summary> Amount in pricing currency. Tax not included. </summary>
         public PurchasePrice MsrpP1Y
@@ -73,9 +73,9 @@ namespace Azure.ResourceManager.Reservations.Models
 
         /// <summary> Gets the restrictions. </summary>
         public IReadOnlyList<SkuRestriction> Restrictions { get; }
-        /// <summary> The tier of this SKU. </summary>
+        /// <summary> The tier of this sku. </summary>
         public string Tier { get; }
-        /// <summary> The size of this SKU. </summary>
+        /// <summary> The size of this sku. </summary>
         public string Size { get; }
         /// <summary> Gets the capabilities. </summary>
         public IReadOnlyList<SkuCapability> Capabilities { get; }
