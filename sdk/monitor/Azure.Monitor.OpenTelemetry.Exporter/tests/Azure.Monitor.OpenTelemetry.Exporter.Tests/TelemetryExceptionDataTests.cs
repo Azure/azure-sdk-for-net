@@ -232,7 +232,13 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             var exceptionData = new TelemetryExceptionData(2, logRecords[0]);
 
             Assert.Equal(3, exceptionData.Exceptions.Count);
+
+#if NET461
+            Assert.Equal("AggregateException", exceptionData.Exceptions[0].Message);
+#else
             Assert.Equal("AggregateException (Inner1) (Inner2)", exceptionData.Exceptions[0].Message);
+#endif
+
             Assert.Equal("Inner1", exceptionData.Exceptions[1].Message);
             Assert.Equal("Inner2", exceptionData.Exceptions[2].Message);
         }
@@ -307,7 +313,12 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 
             // The first exception is the AggregateException
             Assert.Equal("System.AggregateException", exceptionData.Exceptions[0].TypeName);
+
+#if NET461
+            Assert.Equal("0", exceptionData.Exceptions[0].Message);
+#else
             Assert.Equal("0 (1) (2) (3) (4) (5) (6) (7) (8) (9) (10) (11) (12) (13) (14) (15)", exceptionData.Exceptions[0].Message);
+#endif
 
             // Assert Additional exceptions
             for (int counter = 1; counter < maxNumberOfExceptionsAllowed; counter++)
