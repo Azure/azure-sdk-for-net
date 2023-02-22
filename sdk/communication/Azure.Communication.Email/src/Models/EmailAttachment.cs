@@ -4,6 +4,7 @@
 #nullable disable
 
 using System;
+using System.Text;
 using Azure.Core;
 
 namespace Azure.Communication.Email
@@ -25,15 +26,7 @@ namespace Azure.Communication.Email
 
             Name = name;
             ContentType = contentType;
-
-            try
-            {
-                ContentInBase64 = Convert.ToBase64String(content.ToArray());
-            }
-            catch (Exception)
-            {
-                throw new ArgumentException(ErrorMessages.InvalidAttachmentContent);
-            }
+            Content = content;
         }
 
         internal void ValidateAttachmentContent()
@@ -43,5 +36,24 @@ namespace Azure.Communication.Email
                 throw new ArgumentException(ErrorMessages.InvalidAttachmentContent);
             }
         }
+
+        internal string ContentInBase64
+        {
+            get
+            {
+                string valueToReturn = Convert.ToBase64String(Encoding.UTF8.GetBytes(Content.ToString()));
+                if (string.IsNullOrWhiteSpace(valueToReturn))
+                {
+                    throw new ArgumentException(ErrorMessages.InvalidAttachmentContent);
+                }
+
+                return valueToReturn;
+            }
+        }
+
+        /// <summary>
+        /// Contents of the attachment as BinaryData.
+        /// </summary>
+        public BinaryData Content { get; }
     }
 }
