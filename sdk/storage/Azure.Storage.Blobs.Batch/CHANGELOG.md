@@ -1,6 +1,6 @@
 # Release History
 
-## 12.13.0-beta.1 (2023-02-21)
+## 12.13.0-beta.1 (Unreleased)
 - `BlobBatch` is made explicitly resilient to multiple dispose
 
 ## 12.12.0 (2023-02-21)
