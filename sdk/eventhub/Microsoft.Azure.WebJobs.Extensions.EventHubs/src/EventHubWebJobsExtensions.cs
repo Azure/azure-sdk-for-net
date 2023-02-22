@@ -9,7 +9,7 @@ using Microsoft.Azure.WebJobs.EventHubs;
 
 namespace Microsoft.Azure.WebJobs
 {
-    public static class EventHubsWebJobsExtensions
+    public static class EventHubWebJobsExtensions
     {
         /// <summary>
         /// Add an event to be published using the provided <paramref name="partitionKey"/> for partition assignment.
