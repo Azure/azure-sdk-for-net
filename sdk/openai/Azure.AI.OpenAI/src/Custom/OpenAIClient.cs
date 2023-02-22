@@ -4,9 +4,10 @@
 #nullable disable
 
 using System;
+using System.IO;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.AI.OpenAI.Models;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -16,69 +17,126 @@ namespace Azure.AI.OpenAI
     /// <summary> Azure OpenAI APIs for completions and search. </summary>
     public partial class OpenAIClient
     {
-        private readonly string _completionsDeploymentId;
-        private readonly string _embeddingsDeploymentId;
-
-        /// <summary> Initializes a new instance of OpenAIClient. </summary>
-        /// <param name="endpoint">
-        /// Supported Cognitive Services endpoints (protocol and hostname, for example:
-        /// https://westus.api.cognitive.microsoft.com).
-        /// </param>
-        /// <param name="deploymentId"> default deployment id to use for operations </param>
-        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public OpenAIClient(Uri endpoint, string deploymentId, TokenCredential credential) : this(endpoint, deploymentId, credential, new OpenAIClientOptions())
-        {
-        }
-
-        /// <summary> Initializes a new instance of OpenAIClient. </summary>
-        /// <param name="endpoint">
-        /// Supported Cognitive Services endpoints (protocol and hostname, for example:
-        /// https://westus.api.cognitive.microsoft.com).
-        /// </param>
-        /// <param name="deploymentId"> default deployment id to use for operations </param>
-        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
-        /// <param name="options"> The options for configuring the client. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public OpenAIClient(Uri endpoint, string deploymentId, TokenCredential credential, OpenAIClientOptions options)
-        {
-            Argument.AssertNotNull(endpoint, nameof(endpoint));
-            Argument.AssertNotNull(credential, nameof(credential));
-            options ??= new OpenAIClientOptions();
-
-            ClientDiagnostics = new ClientDiagnostics(options, true);
-            _tokenCredential = credential;
-            _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes) }, new ResponseClassifier());
-            _endpoint = endpoint;
-            _apiVersion = options.Version;
-            _completionsDeploymentId ??= deploymentId;
-            _embeddingsDeploymentId ??= deploymentId;
-        }
-
         /// <summary> Return the completion for a given prompt. </summary>
+        /// <param name="deploymentId"> Deployment id (also known as model name) to use for operations </param>
         /// <param name="prompt"> Input string prompt to create a prompt completion from a deployment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<Completions>> GetCompletionsAsync(string prompt, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<Completions>> GetCompletionsAsync(string deploymentId, string prompt, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(_completionsDeploymentId, nameof(_completionsDeploymentId));
+            Argument.AssertNotNullOrEmpty(deploymentId, nameof(deploymentId));
             Argument.AssertNotNullOrEmpty(prompt, nameof(prompt));
 
             CompletionsOptions completionsOptions = new CompletionsOptions();
             completionsOptions.Prompt.Add(prompt);
-            return await GetCompletionsAsync(_completionsDeploymentId, completionsOptions, cancellationToken).ConfigureAwait(false);
+            return await GetCompletionsAsync(deploymentId, completionsOptions, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Return the completions for a given prompt. </summary>
+        /// <param name="deploymentId"> Deployment id (also known as model name) to use for operations </param>
         /// <param name="prompt"> Input string prompt to create a prompt completion from a deployment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<Completions> GetCompletions(string prompt, CancellationToken cancellationToken = default)
+        public virtual Response<Completions> GetCompletions(string deploymentId, string prompt, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(_completionsDeploymentId, nameof(_completionsDeploymentId));
+            Argument.AssertNotNullOrEmpty(deploymentId, nameof(deploymentId));
             Argument.AssertNotNullOrEmpty(prompt, nameof(prompt));
 
             CompletionsOptions completionsOptions = new CompletionsOptions();
             completionsOptions.Prompt.Add(prompt);
-            return GetCompletions(_completionsDeploymentId, completionsOptions, cancellationToken);
+            return GetCompletions(deploymentId, completionsOptions, cancellationToken);
+        }
+
+        public virtual Response<StreamingCompletions> GetCompletionsStreaming(
+            string deploymentId,
+            CompletionsOptions completionsOptions,
+            CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(deploymentId, nameof(deploymentId));
+            Argument.AssertNotNull(completionsOptions, nameof(completionsOptions));
+
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope(
+                "OpenAIClient.GetCompletionsStreaming");
+            scope.Start();
+
+            RequestContext context = FromCancellationToken(cancellationToken);
+
+            RequestContent nonStreamingContent = completionsOptions.ToRequestContent();
+            RequestContent streamingContent = GetStreamingEnabledRequestContent(nonStreamingContent);
+
+            try
+            {
+                HttpMessage message = CreateGetCompletionsRequest(deploymentId, streamingContent, context);
+                message.BufferResponse = false;
+                Response baseResponse = _pipeline.ProcessMessage(message, context, cancellationToken);
+                return Response.FromValue(new StreamingCompletions(baseResponse), baseResponse);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        public virtual async Task<Response<StreamingCompletions>> GetCompletionsStreamingAsync(
+            string deploymentId,
+            CompletionsOptions completionsOptions,
+            CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(deploymentId, nameof(deploymentId));
+            Argument.AssertNotNull(completionsOptions, nameof(completionsOptions));
+
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope(
+                "OpenAIClient.GetCompletionsStreaming");
+            scope.Start();
+
+            RequestContext context = FromCancellationToken(cancellationToken);
+
+            RequestContent nonStreamingContent = completionsOptions.ToRequestContent();
+            RequestContent streamingContent = GetStreamingEnabledRequestContent(nonStreamingContent);
+
+            try
+            {
+                HttpMessage message = CreateGetCompletionsRequest(deploymentId, streamingContent, context);
+                message.BufferResponse = false;
+                Response baseResponse = await _pipeline.ProcessMessageAsync(
+                    message,
+                    context,
+                    cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new StreamingCompletions(baseResponse), baseResponse);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        private static RequestContent GetStreamingEnabledRequestContent(RequestContent originalRequestContent)
+        {
+            // Dump the original request content to a temporary stream and seek to start
+            using Stream originalRequestContentStream = new MemoryStream();
+            originalRequestContent.WriteTo(originalRequestContentStream, new CancellationToken());
+            originalRequestContentStream.Position = 0;
+
+            JsonDocument originalJson = JsonDocument.Parse(originalRequestContentStream);
+            JsonElement originalJsonRoot = originalJson.RootElement;
+
+            Utf8JsonRequestContent augmentedContent = new Utf8JsonRequestContent();
+            augmentedContent.JsonWriter.WriteStartObject();
+
+            // Copy the original JSON content back into the new copy
+            foreach (JsonProperty jsonThing in originalJsonRoot.EnumerateObject())
+            {
+                augmentedContent.JsonWriter.WritePropertyName(jsonThing.Name);
+                jsonThing.Value.WriteTo(augmentedContent.JsonWriter);
+            }
+
+            // ...Add the *one thing* we wanted to add
+            augmentedContent.JsonWriter.WritePropertyName("stream");
+            augmentedContent.JsonWriter.WriteBooleanValue(true);
+
+            augmentedContent.JsonWriter.WriteEndObject();
+
+            return augmentedContent;
         }
     }
 }

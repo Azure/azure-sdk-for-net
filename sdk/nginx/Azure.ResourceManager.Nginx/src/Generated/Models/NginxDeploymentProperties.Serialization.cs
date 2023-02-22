@@ -17,22 +17,22 @@ namespace Azure.ResourceManager.Nginx.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(ManagedResourceGroup))
             {
-                writer.WritePropertyName("managedResourceGroup");
+                writer.WritePropertyName("managedResourceGroup"u8);
                 writer.WriteStringValue(ManagedResourceGroup);
             }
             if (Optional.IsDefined(NetworkProfile))
             {
-                writer.WritePropertyName("networkProfile");
+                writer.WritePropertyName("networkProfile"u8);
                 writer.WriteObjectValue(NetworkProfile);
             }
             if (Optional.IsDefined(EnableDiagnosticsSupport))
             {
-                writer.WritePropertyName("enableDiagnosticsSupport");
+                writer.WritePropertyName("enableDiagnosticsSupport"u8);
                 writer.WriteBooleanValue(EnableDiagnosticsSupport.Value);
             }
             if (Optional.IsDefined(Logging))
             {
-                writer.WritePropertyName("logging");
+                writer.WritePropertyName("logging"u8);
                 writer.WriteObjectValue(Logging);
             }
             writer.WriteEndObject();
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Nginx.Models
             Optional<NginxLogging> logging = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("provisioningState"))
+                if (property.NameEquals("provisioningState"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -59,17 +59,17 @@ namespace Azure.ResourceManager.Nginx.Models
                     provisioningState = new ProvisioningState(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("nginxVersion"))
+                if (property.NameEquals("nginxVersion"u8))
                 {
                     nginxVersion = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("managedResourceGroup"))
+                if (property.NameEquals("managedResourceGroup"u8))
                 {
                     managedResourceGroup = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("networkProfile"))
+                if (property.NameEquals("networkProfile"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -79,12 +79,12 @@ namespace Azure.ResourceManager.Nginx.Models
                     networkProfile = NginxNetworkProfile.DeserializeNginxNetworkProfile(property.Value);
                     continue;
                 }
-                if (property.NameEquals("ipAddress"))
+                if (property.NameEquals("ipAddress"u8))
                 {
                     ipAddress = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("enableDiagnosticsSupport"))
+                if (property.NameEquals("enableDiagnosticsSupport"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Nginx.Models
                     enableDiagnosticsSupport = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("logging"))
+                if (property.NameEquals("logging"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DevCenter.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Tags))
             {
-                writer.WritePropertyName("tags");
+                writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
                 foreach (var item in Tags)
                 {
@@ -28,29 +28,29 @@ namespace Azure.ResourceManager.DevCenter.Models
             }
             if (Optional.IsDefined(Location))
             {
-                writer.WritePropertyName("location");
+                writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(DevBoxDefinitionName))
             {
-                writer.WritePropertyName("devBoxDefinitionName");
+                writer.WritePropertyName("devBoxDefinitionName"u8);
                 writer.WriteStringValue(DevBoxDefinitionName);
             }
             if (Optional.IsDefined(NetworkConnectionName))
             {
-                writer.WritePropertyName("networkConnectionName");
+                writer.WritePropertyName("networkConnectionName"u8);
                 writer.WriteStringValue(NetworkConnectionName);
             }
             if (Optional.IsDefined(LicenseType))
             {
-                writer.WritePropertyName("licenseType");
+                writer.WritePropertyName("licenseType"u8);
                 writer.WriteStringValue(LicenseType.Value.ToString());
             }
             if (Optional.IsDefined(LocalAdministrator))
             {
-                writer.WritePropertyName("localAdministrator");
+                writer.WritePropertyName("localAdministrator"u8);
                 writer.WriteStringValue(LocalAdministrator.Value.ToString());
             }
             writer.WriteEndObject();

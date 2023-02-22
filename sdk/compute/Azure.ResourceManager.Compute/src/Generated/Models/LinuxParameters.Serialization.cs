@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Compute.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(ClassificationsToInclude))
             {
-                writer.WritePropertyName("classificationsToInclude");
+                writer.WritePropertyName("classificationsToInclude"u8);
                 writer.WriteStartArray();
                 foreach (var item in ClassificationsToInclude)
                 {
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Compute.Models
             }
             if (Optional.IsCollectionDefined(PackageNameMasksToInclude))
             {
-                writer.WritePropertyName("packageNameMasksToInclude");
+                writer.WritePropertyName("packageNameMasksToInclude"u8);
                 writer.WriteStartArray();
                 foreach (var item in PackageNameMasksToInclude)
                 {
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Compute.Models
             }
             if (Optional.IsCollectionDefined(PackageNameMasksToExclude))
             {
-                writer.WritePropertyName("packageNameMasksToExclude");
+                writer.WritePropertyName("packageNameMasksToExclude"u8);
                 writer.WriteStartArray();
                 foreach (var item in PackageNameMasksToExclude)
                 {
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Compute.Models
             }
             if (Optional.IsDefined(MaintenanceRunId))
             {
-                writer.WritePropertyName("maintenanceRunId");
+                writer.WritePropertyName("maintenanceRunId"u8);
                 writer.WriteStringValue(MaintenanceRunId);
             }
             writer.WriteEndObject();

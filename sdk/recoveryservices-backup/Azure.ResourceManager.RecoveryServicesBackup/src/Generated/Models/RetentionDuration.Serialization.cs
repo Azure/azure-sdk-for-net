@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Count))
             {
-                writer.WritePropertyName("count");
+                writer.WritePropertyName("count"u8);
                 writer.WriteNumberValue(Count.Value);
             }
             if (Optional.IsDefined(DurationType))
             {
-                writer.WritePropertyName("durationType");
+                writer.WritePropertyName("durationType"u8);
                 writer.WriteStringValue(DurationType.Value.ToString());
             }
             writer.WriteEndObject();
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             Optional<RetentionDurationType> durationType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("count"))
+                if (property.NameEquals("count"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     count = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("durationType"))
+                if (property.NameEquals("durationType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

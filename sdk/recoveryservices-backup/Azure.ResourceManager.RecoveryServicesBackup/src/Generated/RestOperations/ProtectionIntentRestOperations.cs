@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal HttpMessage CreateValidateRequest(string subscriptionId, string azureRegion, PreValidateEnableBackupContent content)
+        internal HttpMessage CreateValidateRequest(string subscriptionId, AzureLocation location, PreValidateEnableBackupContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
             uri.AppendPath("/Subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/providers/Microsoft.RecoveryServices/locations/", false);
-            uri.AppendPath(azureRegion, true);
+            uri.AppendPath(location, true);
             uri.AppendPath("/backupPreValidateProtection", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
@@ -67,26 +67,25 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// 3. Any VM related configuration passed in properties.
         /// </summary>
         /// <param name="subscriptionId"> The subscription Id. </param>
-        /// <param name="azureRegion"> Azure region to hit Api. </param>
+        /// <param name="location"> Azure region to hit Api. </param>
         /// <param name="content"> Enable backup validation request on Virtual Machine. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="azureRegion"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="azureRegion"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<PreValidateEnableBackupResponse>> ValidateAsync(string subscriptionId, string azureRegion, PreValidateEnableBackupContent content, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<PreValidateEnableBackupResult>> ValidateAsync(string subscriptionId, AzureLocation location, PreValidateEnableBackupContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(azureRegion, nameof(azureRegion));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateValidateRequest(subscriptionId, azureRegion, content);
+            using var message = CreateValidateRequest(subscriptionId, location, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        PreValidateEnableBackupResponse value = default;
+                        PreValidateEnableBackupResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = PreValidateEnableBackupResponse.DeserializePreValidateEnableBackupResponse(document.RootElement);
+                        value = PreValidateEnableBackupResult.DeserializePreValidateEnableBackupResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -101,26 +100,25 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// 3. Any VM related configuration passed in properties.
         /// </summary>
         /// <param name="subscriptionId"> The subscription Id. </param>
-        /// <param name="azureRegion"> Azure region to hit Api. </param>
+        /// <param name="location"> Azure region to hit Api. </param>
         /// <param name="content"> Enable backup validation request on Virtual Machine. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="azureRegion"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="azureRegion"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<PreValidateEnableBackupResponse> Validate(string subscriptionId, string azureRegion, PreValidateEnableBackupContent content, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<PreValidateEnableBackupResult> Validate(string subscriptionId, AzureLocation location, PreValidateEnableBackupContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(azureRegion, nameof(azureRegion));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateValidateRequest(subscriptionId, azureRegion, content);
+            using var message = CreateValidateRequest(subscriptionId, location, content);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        PreValidateEnableBackupResponse value = default;
+                        PreValidateEnableBackupResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = PreValidateEnableBackupResponse.DeserializePreValidateEnableBackupResponse(document.RootElement);
+                        value = PreValidateEnableBackupResult.DeserializePreValidateEnableBackupResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -164,7 +162,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/>, <paramref name="fabricName"/> or <paramref name="intentObjectName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/>, <paramref name="fabricName"/> or <paramref name="intentObjectName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ProtectionIntentResourceData>> GetAsync(string subscriptionId, string resourceGroupName, string vaultName, string fabricName, string intentObjectName, CancellationToken cancellationToken = default)
+        public async Task<Response<BackupProtectionIntentData>> GetAsync(string subscriptionId, string resourceGroupName, string vaultName, string fabricName, string intentObjectName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -178,13 +176,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
             {
                 case 200:
                     {
-                        ProtectionIntentResourceData value = default;
+                        BackupProtectionIntentData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ProtectionIntentResourceData.DeserializeProtectionIntentResourceData(document.RootElement);
+                        value = BackupProtectionIntentData.DeserializeBackupProtectionIntentData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((ProtectionIntentResourceData)null, message.Response);
+                    return Response.FromValue((BackupProtectionIntentData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -202,7 +200,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/>, <paramref name="fabricName"/> or <paramref name="intentObjectName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/>, <paramref name="fabricName"/> or <paramref name="intentObjectName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ProtectionIntentResourceData> Get(string subscriptionId, string resourceGroupName, string vaultName, string fabricName, string intentObjectName, CancellationToken cancellationToken = default)
+        public Response<BackupProtectionIntentData> Get(string subscriptionId, string resourceGroupName, string vaultName, string fabricName, string intentObjectName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -216,19 +214,19 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
             {
                 case 200:
                     {
-                        ProtectionIntentResourceData value = default;
+                        BackupProtectionIntentData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ProtectionIntentResourceData.DeserializeProtectionIntentResourceData(document.RootElement);
+                        value = BackupProtectionIntentData.DeserializeBackupProtectionIntentData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((ProtectionIntentResourceData)null, message.Response);
+                    return Response.FromValue((BackupProtectionIntentData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string vaultName, string fabricName, string intentObjectName, ProtectionIntentResourceData data)
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string vaultName, string fabricName, string intentObjectName, BackupProtectionIntentData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -266,7 +264,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/>, <paramref name="fabricName"/>, <paramref name="intentObjectName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/>, <paramref name="fabricName"/> or <paramref name="intentObjectName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ProtectionIntentResourceData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string vaultName, string fabricName, string intentObjectName, ProtectionIntentResourceData data, CancellationToken cancellationToken = default)
+        public async Task<Response<BackupProtectionIntentData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string vaultName, string fabricName, string intentObjectName, BackupProtectionIntentData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -281,9 +279,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
             {
                 case 200:
                     {
-                        ProtectionIntentResourceData value = default;
+                        BackupProtectionIntentData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ProtectionIntentResourceData.DeserializeProtectionIntentResourceData(document.RootElement);
+                        value = BackupProtectionIntentData.DeserializeBackupProtectionIntentData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -301,7 +299,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/>, <paramref name="fabricName"/>, <paramref name="intentObjectName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/>, <paramref name="fabricName"/> or <paramref name="intentObjectName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ProtectionIntentResourceData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string vaultName, string fabricName, string intentObjectName, ProtectionIntentResourceData data, CancellationToken cancellationToken = default)
+        public Response<BackupProtectionIntentData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string vaultName, string fabricName, string intentObjectName, BackupProtectionIntentData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -316,9 +314,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
             {
                 case 200:
                     {
-                        ProtectionIntentResourceData value = default;
+                        BackupProtectionIntentData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ProtectionIntentResourceData.DeserializeProtectionIntentResourceData(document.RootElement);
+                        value = BackupProtectionIntentData.DeserializeBackupProtectionIntentData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

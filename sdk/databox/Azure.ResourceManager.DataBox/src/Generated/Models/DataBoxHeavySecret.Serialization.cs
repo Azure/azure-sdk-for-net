@@ -22,17 +22,17 @@ namespace Azure.ResourceManager.DataBox.Models
             Optional<IReadOnlyList<DataBoxAccountCredentialDetails>> accountCredentialDetails = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("deviceSerialNumber"))
+                if (property.NameEquals("deviceSerialNumber"u8))
                 {
                     deviceSerialNumber = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("devicePassword"))
+                if (property.NameEquals("devicePassword"u8))
                 {
                     devicePassword = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("networkConfigurations"))
+                if (property.NameEquals("networkConfigurations"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -47,12 +47,12 @@ namespace Azure.ResourceManager.DataBox.Models
                     networkConfigurations = array;
                     continue;
                 }
-                if (property.NameEquals("encodedValidationCertPubKey"))
+                if (property.NameEquals("encodedValidationCertPubKey"u8))
                 {
                     encodedValidationCertPubKey = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("accountCredentialDetails"))
+                if (property.NameEquals("accountCredentialDetails"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -1,16 +1,16 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://sdk.openai.azure.com/openai/deployments/text-davinci-002/completions?api-version=2022-12-01",
+      "RequestUri": "https://sdk2319.openai.azure.com/openai/deployments/text-davinci-002/completions?api-version=2022-12-01",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
         "api-key": "***********",
         "Content-Length": "61",
         "Content-Type": "application/json",
-        "traceparent": "00-e7b4c527a1c7d191c6f85c9fa8366a20-94c869d64adf89d4-00",
-        "User-Agent": "azsdk-net-AI.OpenAI/1.0.0-alpha.20230125.1 (.NET 6.0.13; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "90d4fae356b74641b86026f6bc27ec94",
+        "traceparent": "00-91f381e335caef6ec60652ddae7559e3-2c9fc1631b862efb-00",
+        "User-Agent": "azsdk-net-AI.OpenAI/1.0.0-alpha.20230214.1 (.NET 7.0.2; Microsoft Windows 10.0.22623)",
+        "x-ms-client-request-id": "d93800d680c0988ad981cf6217137822",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -22,43 +22,43 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Access-Control-Allow-Origin": "*",
-        "apim-request-id": "78ee7455-f60c-44d9-9ec7-a52ec2a7193b",
+        "apim-request-id": "f482fe1d-8c62-4742-9f9b-be03fbf2073c",
         "Cache-Control": "must-revalidate, no-cache",
-        "Content-Length": "453",
         "Content-Type": "application/json",
-        "Date": "Wed, 25 Jan 2023 20:21:42 GMT",
+        "Date": "Tue, 14 Feb 2023 23:03:23 GMT",
         "openai-model": "text-davinci-002",
-        "openai-processing-ms": "310.945",
+        "openai-processing-ms": "329.296",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "Transfer-Encoding": "chunked",
         "x-accel-buffering": "no",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-client-request-id": "90d4fae356b74641b86026f6bc27ec94",
-        "x-ms-region": "South Central US",
-        "X-Request-ID": "8333af59-dd1f-4502-b9be-db7aca15ddea"
+        "x-ms-client-request-id": "d93800d680c0988ad981cf6217137822",
+        "x-ms-region": "West Europe",
+        "X-Request-ID": "d79595fd-5f3b-413c-b3a3-3ba5c4c5ea25"
       },
       "ResponseBody": {
-        "id": "cmpl-6cgZ5ghyqSTSLQ4PURlJZJGJvy2rb",
+        "id": "cmpl-6jycV2Es4owEGF0L7J8zJELYum61f",
         "object": "text_completion",
-        "created": 1674678103,
+        "created": 1676415803,
         "model": "text-davinci-002",
         "choices": [
           {
-            "text": "\u0022: Start learning computer.\n- 2. index_1 (index_2",
+            "text": "!\n\n\u6B22\u8FCE\uFF0C\u4E16\u754C",
             "index": 0,
-            "finish_reason": "length",
-            "logprobs": null
+            "logprobs": null,
+            "finish_reason": "length"
           },
           {
-            "text": "\n\nHaving a difficult time getting over the death of her best friend, Sarah",
+            "text": ", I know, but I\u0027ll still - it looks as though we\u0027re really",
             "index": 1,
-            "finish_reason": "length",
-            "logprobs": null
+            "logprobs": null,
+            "finish_reason": "length"
           }
         ],
         "usage": {
-          "completion_tokens": 32,
           "prompt_tokens": 8,
-          "total_tokens": 40
+          "completion_tokens": 31,
+          "total_tokens": 39
         }
       }
     }
@@ -67,8 +67,8 @@
     "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
     "OPENAI_DEPLOYMENT_ID": "text-davinci-002",
     "OPENAI_EMBEDDINGS_DEPLOYMENT_ID": "text-similarity-davinci-001",
-    "OPENAI_ENDPOINT": "https://sdk.openai.azure.com/",
-    "RandomSeed": "1067226900",
-    "SUBSCRIPTION_ID": "faa080af-c1d8-40ad-9cce-e1a450ca5b57"
+    "OPENAI_ENDPOINT": "https://sdk2319.openai.azure.com/",
+    "RandomSeed": "2044677211",
+    "SUBSCRIPTION_ID": "e72e5254-f265-4e95-9bd2-9ee8e7329051"
   }
 }

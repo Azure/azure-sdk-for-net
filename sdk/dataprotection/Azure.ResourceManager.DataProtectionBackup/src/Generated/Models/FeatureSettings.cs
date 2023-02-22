@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <summary> CrossSubscriptionRestore Settings. </summary>
         internal CrossSubscriptionRestoreSettings CrossSubscriptionRestoreSettings { get; set; }
         /// <summary> CrossSubscriptionRestore state. </summary>
-        public CrossSubscriptionRestoreState? CrossSubscriptionRestoreState
+        public DataProtectionBackupCrossSubscriptionRestoreState? CrossSubscriptionRestoreState
         {
             get => CrossSubscriptionRestoreSettings is null ? default : CrossSubscriptionRestoreSettings.State;
             set

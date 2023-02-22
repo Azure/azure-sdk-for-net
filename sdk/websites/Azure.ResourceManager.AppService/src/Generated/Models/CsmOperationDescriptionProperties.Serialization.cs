@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<ServiceSpecification> serviceSpecification = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("serviceSpecification"))
+                if (property.NameEquals("serviceSpecification"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

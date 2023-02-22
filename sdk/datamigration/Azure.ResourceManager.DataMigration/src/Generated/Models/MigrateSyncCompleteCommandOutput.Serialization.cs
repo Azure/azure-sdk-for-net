@@ -19,12 +19,12 @@ namespace Azure.ResourceManager.DataMigration.Models
             Optional<IReadOnlyList<ReportableException>> errors = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("errors"))
+                if (property.NameEquals("errors"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

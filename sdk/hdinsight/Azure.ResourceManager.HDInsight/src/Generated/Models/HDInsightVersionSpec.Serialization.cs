@@ -21,17 +21,17 @@ namespace Azure.ResourceManager.HDInsight.Models
             Optional<IReadOnlyDictionary<string, string>> componentVersions = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("friendlyName"))
+                if (property.NameEquals("friendlyName"u8))
                 {
                     friendlyName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("displayName"))
+                if (property.NameEquals("displayName"u8))
                 {
                     displayName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("isDefault"))
+                if (property.NameEquals("isDefault"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     isDefault = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("componentVersions"))
+                if (property.NameEquals("componentVersions"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

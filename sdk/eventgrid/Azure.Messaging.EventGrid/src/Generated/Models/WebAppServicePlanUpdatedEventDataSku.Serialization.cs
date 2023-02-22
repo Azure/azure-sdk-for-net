@@ -21,27 +21,27 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             Optional<string> capacity = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("Tier"))
+                if (property.NameEquals("Tier"u8))
                 {
                     tier = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("Size"))
+                if (property.NameEquals("Size"u8))
                 {
                     size = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("Family"))
+                if (property.NameEquals("Family"u8))
                 {
                     family = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("Capacity"))
+                if (property.NameEquals("Capacity"u8))
                 {
                     capacity = property.Value.GetString();
                     continue;

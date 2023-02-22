@@ -19,7 +19,7 @@ namespace Azure.AI.TextAnalytics.Legacy
             double confidenceScore = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -29,7 +29,7 @@ namespace Azure.AI.TextAnalytics.Legacy
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("iso6391Name"))
+                if (property.NameEquals("iso6391Name"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -39,7 +39,7 @@ namespace Azure.AI.TextAnalytics.Legacy
                     iso6391Name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("confidenceScore"))
+                if (property.NameEquals("confidenceScore"u8))
                 {
                     confidenceScore = property.Value.GetDouble();
                     continue;

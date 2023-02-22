@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             Optional<KubernetesConfigurationMesageLevel> messageLevel = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("complianceState"))
+                if (property.NameEquals("complianceState"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     complianceState = new KubernetesConfigurationComplianceStateType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("lastConfigApplied"))
+                if (property.NameEquals("lastConfigApplied"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -41,12 +41,12 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     lastConfigApplied = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("message"))
+                if (property.NameEquals("message"u8))
                 {
                     message = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("messageLevel"))
+                if (property.NameEquals("messageLevel"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

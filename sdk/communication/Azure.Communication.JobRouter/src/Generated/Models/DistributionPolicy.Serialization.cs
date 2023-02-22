@@ -18,17 +18,17 @@ namespace Azure.Communication.JobRouter.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Name))
             {
-                writer.WritePropertyName("name");
+                writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
             if (Optional.IsDefined(_offerTtlSeconds))
             {
-                writer.WritePropertyName("offerTtlSeconds");
+                writer.WritePropertyName("offerTtlSeconds"u8);
                 writer.WriteNumberValue(_offerTtlSeconds.Value);
             }
             if (Optional.IsDefined(Mode))
             {
-                writer.WritePropertyName("mode");
+                writer.WritePropertyName("mode"u8);
                 writer.WriteObjectValue(Mode);
             }
             writer.WriteEndObject();
@@ -42,17 +42,17 @@ namespace Azure.Communication.JobRouter.Models
             Optional<DistributionMode> mode = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("offerTtlSeconds"))
+                if (property.NameEquals("offerTtlSeconds"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -62,7 +62,7 @@ namespace Azure.Communication.JobRouter.Models
                     offerTtlSeconds = property.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("mode"))
+                if (property.NameEquals("mode"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

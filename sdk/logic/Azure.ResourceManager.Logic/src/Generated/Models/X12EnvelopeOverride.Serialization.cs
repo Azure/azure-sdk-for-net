@@ -15,28 +15,28 @@ namespace Azure.ResourceManager.Logic.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("targetNamespace");
+            writer.WritePropertyName("targetNamespace"u8);
             writer.WriteStringValue(TargetNamespace);
-            writer.WritePropertyName("protocolVersion");
+            writer.WritePropertyName("protocolVersion"u8);
             writer.WriteStringValue(ProtocolVersion);
-            writer.WritePropertyName("messageId");
+            writer.WritePropertyName("messageId"u8);
             writer.WriteStringValue(MessageId);
-            writer.WritePropertyName("responsibleAgencyCode");
+            writer.WritePropertyName("responsibleAgencyCode"u8);
             writer.WriteStringValue(ResponsibleAgencyCode);
-            writer.WritePropertyName("headerVersion");
+            writer.WritePropertyName("headerVersion"u8);
             writer.WriteStringValue(HeaderVersion);
-            writer.WritePropertyName("senderApplicationId");
+            writer.WritePropertyName("senderApplicationId"u8);
             writer.WriteStringValue(SenderApplicationId);
-            writer.WritePropertyName("receiverApplicationId");
+            writer.WritePropertyName("receiverApplicationId"u8);
             writer.WriteStringValue(ReceiverApplicationId);
             if (Optional.IsDefined(FunctionalIdentifierCode))
             {
-                writer.WritePropertyName("functionalIdentifierCode");
+                writer.WritePropertyName("functionalIdentifierCode"u8);
                 writer.WriteStringValue(FunctionalIdentifierCode);
             }
-            writer.WritePropertyName("dateFormat");
+            writer.WritePropertyName("dateFormat"u8);
             writer.WriteStringValue(DateFormat.ToString());
-            writer.WritePropertyName("timeFormat");
+            writer.WritePropertyName("timeFormat"u8);
             writer.WriteStringValue(TimeFormat.ToString());
             writer.WriteEndObject();
         }
@@ -55,52 +55,52 @@ namespace Azure.ResourceManager.Logic.Models
             X12TimeFormat timeFormat = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("targetNamespace"))
+                if (property.NameEquals("targetNamespace"u8))
                 {
                     targetNamespace = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("protocolVersion"))
+                if (property.NameEquals("protocolVersion"u8))
                 {
                     protocolVersion = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("messageId"))
+                if (property.NameEquals("messageId"u8))
                 {
                     messageId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("responsibleAgencyCode"))
+                if (property.NameEquals("responsibleAgencyCode"u8))
                 {
                     responsibleAgencyCode = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("headerVersion"))
+                if (property.NameEquals("headerVersion"u8))
                 {
                     headerVersion = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("senderApplicationId"))
+                if (property.NameEquals("senderApplicationId"u8))
                 {
                     senderApplicationId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("receiverApplicationId"))
+                if (property.NameEquals("receiverApplicationId"u8))
                 {
                     receiverApplicationId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("functionalIdentifierCode"))
+                if (property.NameEquals("functionalIdentifierCode"u8))
                 {
                     functionalIdentifierCode = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("dateFormat"))
+                if (property.NameEquals("dateFormat"u8))
                 {
                     dateFormat = new X12DateFormat(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("timeFormat"))
+                if (property.NameEquals("timeFormat"u8))
                 {
                     timeFormat = new X12TimeFormat(property.Value.GetString());
                     continue;

@@ -17,44 +17,44 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(VirtualMachineId))
             {
-                writer.WritePropertyName("virtualMachineId");
+                writer.WritePropertyName("virtualMachineId"u8);
                 writer.WriteStringValue(VirtualMachineId);
             }
             if (Optional.IsDefined(VirtualMachineVersion))
             {
-                writer.WritePropertyName("virtualMachineVersion");
+                writer.WritePropertyName("virtualMachineVersion"u8);
                 writer.WriteStringValue(VirtualMachineVersion);
             }
             if (Optional.IsDefined(ResourceGroup))
             {
-                writer.WritePropertyName("resourceGroup");
+                writer.WritePropertyName("resourceGroup"u8);
                 writer.WriteStringValue(ResourceGroup);
             }
             if (Optional.IsDefined(FriendlyName))
             {
-                writer.WritePropertyName("friendlyName");
+                writer.WritePropertyName("friendlyName"u8);
                 writer.WriteStringValue(FriendlyName);
             }
             if (Optional.IsDefined(BackupManagementType))
             {
-                writer.WritePropertyName("backupManagementType");
+                writer.WritePropertyName("backupManagementType"u8);
                 writer.WriteStringValue(BackupManagementType.Value.ToString());
             }
             if (Optional.IsDefined(RegistrationStatus))
             {
-                writer.WritePropertyName("registrationStatus");
+                writer.WritePropertyName("registrationStatus"u8);
                 writer.WriteStringValue(RegistrationStatus);
             }
             if (Optional.IsDefined(HealthStatus))
             {
-                writer.WritePropertyName("healthStatus");
+                writer.WritePropertyName("healthStatus"u8);
                 writer.WriteStringValue(HealthStatus);
             }
-            writer.WritePropertyName("containerType");
+            writer.WritePropertyName("containerType"u8);
             writer.WriteStringValue(ContainerType.ToSerialString());
             if (Optional.IsDefined(ProtectableObjectType))
             {
-                writer.WritePropertyName("protectableObjectType");
+                writer.WritePropertyName("protectableObjectType"u8);
                 writer.WriteStringValue(ProtectableObjectType);
             }
             writer.WriteEndObject();
@@ -66,11 +66,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "Microsoft.ClassicCompute/virtualMachines": return AzureIaaSClassicComputeVmContainer.DeserializeAzureIaaSClassicComputeVmContainer(element);
-                    case "Microsoft.Compute/virtualMachines": return AzureIaaSComputeVmContainer.DeserializeAzureIaaSComputeVmContainer(element);
+                    case "Microsoft.ClassicCompute/virtualMachines": return IaasClassicComputeVmContainer.DeserializeIaasClassicComputeVmContainer(element);
+                    case "Microsoft.Compute/virtualMachines": return IaasComputeVmContainer.DeserializeIaasComputeVmContainer(element);
                 }
             }
-            Optional<string> virtualMachineId = default;
+            Optional<ResourceIdentifier> virtualMachineId = default;
             Optional<string> virtualMachineVersion = default;
             Optional<string> resourceGroup = default;
             Optional<string> friendlyName = default;
@@ -81,27 +81,32 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             Optional<string> protectableObjectType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("virtualMachineId"))
+                if (property.NameEquals("virtualMachineId"u8))
                 {
-                    virtualMachineId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    virtualMachineId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("virtualMachineVersion"))
+                if (property.NameEquals("virtualMachineVersion"u8))
                 {
                     virtualMachineVersion = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("resourceGroup"))
+                if (property.NameEquals("resourceGroup"u8))
                 {
                     resourceGroup = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("friendlyName"))
+                if (property.NameEquals("friendlyName"u8))
                 {
                     friendlyName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("backupManagementType"))
+                if (property.NameEquals("backupManagementType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -111,22 +116,22 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     backupManagementType = new BackupManagementType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("registrationStatus"))
+                if (property.NameEquals("registrationStatus"u8))
                 {
                     registrationStatus = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("healthStatus"))
+                if (property.NameEquals("healthStatus"u8))
                 {
                     healthStatus = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("containerType"))
+                if (property.NameEquals("containerType"u8))
                 {
                     containerType = property.Value.GetString().ToProtectableContainerType();
                     continue;
                 }
-                if (property.NameEquals("protectableObjectType"))
+                if (property.NameEquals("protectableObjectType"u8))
                 {
                     protectableObjectType = property.Value.GetString();
                     continue;

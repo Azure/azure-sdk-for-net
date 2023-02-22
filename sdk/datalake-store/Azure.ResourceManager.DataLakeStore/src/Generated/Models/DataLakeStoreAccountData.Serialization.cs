@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.DataLakeStore
             Optional<DataLakeStoreCommitmentTierType> currentTier = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("identity"))
+                if (property.NameEquals("identity"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.DataLakeStore
                     identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("location"))
+                if (property.NameEquals("location"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.DataLakeStore
                     location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("tags"))
+                if (property.NameEquals("tags"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -80,22 +80,22 @@ namespace Azure.ResourceManager.DataLakeStore
                     tags = dictionary;
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.DataLakeStore
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.DataLakeStore
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("accountId"))
+                        if (property0.NameEquals("accountId"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.DataLakeStore
                             accountId = property0.Value.GetGuid();
                             continue;
                         }
-                        if (property0.NameEquals("provisioningState"))
+                        if (property0.NameEquals("provisioningState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.DataLakeStore
                             provisioningState = property0.Value.GetString().ToDataLakeStoreAccountStatus();
                             continue;
                         }
-                        if (property0.NameEquals("state"))
+                        if (property0.NameEquals("state"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.DataLakeStore
                             state = property0.Value.GetString().ToDataLakeStoreAccountState();
                             continue;
                         }
-                        if (property0.NameEquals("creationTime"))
+                        if (property0.NameEquals("creationTime"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.DataLakeStore
                             creationTime = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("lastModifiedTime"))
+                        if (property0.NameEquals("lastModifiedTime"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -164,17 +164,17 @@ namespace Azure.ResourceManager.DataLakeStore
                             lastModifiedTime = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("endpoint"))
+                        if (property0.NameEquals("endpoint"u8))
                         {
                             endpoint = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("defaultGroup"))
+                        if (property0.NameEquals("defaultGroup"u8))
                         {
                             defaultGroup = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("encryptionConfig"))
+                        if (property0.NameEquals("encryptionConfig"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.DataLakeStore
                             encryptionConfig = DataLakeStoreAccountEncryptionConfig.DeserializeDataLakeStoreAccountEncryptionConfig(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("encryptionState"))
+                        if (property0.NameEquals("encryptionState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.DataLakeStore
                             encryptionState = property0.Value.GetString().ToDataLakeStoreEncryptionState();
                             continue;
                         }
-                        if (property0.NameEquals("encryptionProvisioningState"))
+                        if (property0.NameEquals("encryptionProvisioningState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.DataLakeStore
                             encryptionProvisioningState = property0.Value.GetString().ToDataLakeStoreEncryptionProvisioningState();
                             continue;
                         }
-                        if (property0.NameEquals("firewallRules"))
+                        if (property0.NameEquals("firewallRules"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.DataLakeStore
                             firewallRules = array;
                             continue;
                         }
-                        if (property0.NameEquals("virtualNetworkRules"))
+                        if (property0.NameEquals("virtualNetworkRules"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.DataLakeStore
                             virtualNetworkRules = array;
                             continue;
                         }
-                        if (property0.NameEquals("firewallState"))
+                        if (property0.NameEquals("firewallState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.DataLakeStore
                             firewallState = property0.Value.GetString().ToDataLakeStoreFirewallState();
                             continue;
                         }
-                        if (property0.NameEquals("firewallAllowAzureIps"))
+                        if (property0.NameEquals("firewallAllowAzureIps"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.DataLakeStore
                             firewallAllowAzureIPs = property0.Value.GetString().ToDataLakeStoreFirewallAllowAzureIPsState();
                             continue;
                         }
-                        if (property0.NameEquals("trustedIdProviders"))
+                        if (property0.NameEquals("trustedIdProviders"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -269,7 +269,7 @@ namespace Azure.ResourceManager.DataLakeStore
                             trustedIdProviders = array;
                             continue;
                         }
-                        if (property0.NameEquals("trustedIdProviderState"))
+                        if (property0.NameEquals("trustedIdProviderState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -279,7 +279,7 @@ namespace Azure.ResourceManager.DataLakeStore
                             trustedIdProviderState = property0.Value.GetString().ToDataLakeStoreTrustedIdProviderState();
                             continue;
                         }
-                        if (property0.NameEquals("newTier"))
+                        if (property0.NameEquals("newTier"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -289,7 +289,7 @@ namespace Azure.ResourceManager.DataLakeStore
                             newTier = property0.Value.GetString().ToDataLakeStoreCommitmentTierType();
                             continue;
                         }
-                        if (property0.NameEquals("currentTier"))
+                        if (property0.NameEquals("currentTier"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

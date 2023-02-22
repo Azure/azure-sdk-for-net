@@ -15,11 +15,11 @@ namespace Azure.ResourceManager.Network.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("ruleId");
+            writer.WritePropertyName("ruleId"u8);
             writer.WriteStringValue(RuleId);
             if (Optional.IsDefined(State))
             {
-                writer.WritePropertyName("state");
+                writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
             writer.WriteEndObject();
@@ -31,12 +31,12 @@ namespace Azure.ResourceManager.Network.Models
             Optional<ManagedRuleEnabledState> state = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("ruleId"))
+                if (property.NameEquals("ruleId"u8))
                 {
                     ruleId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("state"))
+                if (property.NameEquals("state"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

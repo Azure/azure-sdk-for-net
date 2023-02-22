@@ -17,17 +17,17 @@ namespace Azure.ResourceManager.Network.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(TargetResourceGroupName))
             {
-                writer.WritePropertyName("targetResourceGroupName");
+                writer.WritePropertyName("targetResourceGroupName"u8);
                 writer.WriteStringValue(TargetResourceGroupName);
             }
             if (Optional.IsDefined(TargetVirtualNetwork))
             {
-                writer.WritePropertyName("targetVirtualNetwork");
+                writer.WritePropertyName("targetVirtualNetwork"u8);
                 JsonSerializer.Serialize(writer, TargetVirtualNetwork);
             }
             if (Optional.IsDefined(TargetSubnet))
             {
-                writer.WritePropertyName("targetSubnet");
+                writer.WritePropertyName("targetSubnet"u8);
                 JsonSerializer.Serialize(writer, TargetSubnet);
             }
             writer.WriteEndObject();

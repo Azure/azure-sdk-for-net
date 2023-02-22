@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager;
+using Azure.ResourceManager.DataShare;
 using Azure.ResourceManager.DataShare.Models;
 
 namespace Azure.ResourceManager.DataShare.Samples

@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Requests))
             {
-                writer.WritePropertyName("requests");
+                writer.WritePropertyName("requests"u8);
                 writer.WriteStartObject();
                 foreach (var item in Requests)
                 {
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             if (Optional.IsCollectionDefined(Limits))
             {
-                writer.WritePropertyName("limits");
+                writer.WritePropertyName("limits"u8);
                 writer.WriteStartObject();
                 foreach (var item in Limits)
                 {
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Optional<IDictionary<string, string>> limits = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("requests"))
+                if (property.NameEquals("requests"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     requests = dictionary;
                     continue;
                 }
-                if (property.NameEquals("limits"))
+                if (property.NameEquals("limits"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

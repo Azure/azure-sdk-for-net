@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             {
                 if (DoesConnectAsKubernetesCsiDriver != null)
                 {
-                    writer.WritePropertyName("connectAsKubernetesCsiDriver");
+                    writer.WritePropertyName("connectAsKubernetesCsiDriver"u8);
                     writer.WriteBooleanValue(DoesConnectAsKubernetesCsiDriver.Value);
                 }
                 else
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                     writer.WriteNull("connectAsKubernetesCsiDriver");
                 }
             }
-            writer.WritePropertyName("type");
+            writer.WritePropertyName("type"u8);
             writer.WriteStringValue(AzureResourceType.ToString());
             writer.WriteEndObject();
         }
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             AzureResourceType type = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("connectAsKubernetesCsiDriver"))
+                if (property.NameEquals("connectAsKubernetesCsiDriver"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                     connectAsKubernetesCsiDriver = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new AzureResourceType(property.Value.GetString());
                     continue;

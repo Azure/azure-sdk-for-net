@@ -1,8 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-#nullable disable // TODO: remove and fix errors
-
 using System;
 using System.Collections.Concurrent;
 using System.Linq;
@@ -14,8 +12,7 @@ using Azure.Monitor.OpenTelemetry.Exporter.Models;
 using Azure.Monitor.OpenTelemetry.Exporter.Tests.CommonTestFramework;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.AspNetCore.TestHost;
-
-using OpenTelemetry;
+using Microsoft.Extensions.DependencyInjection;
 using OpenTelemetry.Trace;
 
 using Xunit;
@@ -39,7 +36,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Integration.Tests
         {
             string testValue = Guid.NewGuid().ToString();
 
-            ConcurrentBag<TelemetryItem> telemetryItems = null;
+            ConcurrentBag<TelemetryItem>? telemetryItems = null;
 
             // Arrange
             var client = this.factory
@@ -48,17 +45,18 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Integration.Tests
                     {
                         services.AddOpenTelemetry().WithTracing(builder => builder
                             .AddAspNetCoreInstrumentation()
-                            .AddAzureMonitorTraceExporterForTest(out telemetryItems))
-                            .StartWithHost();
+                            .AddAzureMonitorTraceExporterForTest(out telemetryItems));
+                        ;
                     }))
                 .CreateClient();
 
             // Act
-            var request = new Uri(client.BaseAddress, $"api/home/{testValue}");
+            var request = new Uri(client.BaseAddress!, $"api/home/{testValue}");
             var response = await client.GetAsync(request);
 
             // Shutdown
             response.EnsureSuccessStatusCode();
+            Assert.NotNull(telemetryItems);
             this.WaitForActivityExport(telemetryItems);
 
             // Assert

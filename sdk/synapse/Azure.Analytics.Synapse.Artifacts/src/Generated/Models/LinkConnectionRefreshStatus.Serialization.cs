@@ -21,12 +21,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Optional<string> errorMessage = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("refreshStatus"))
+                if (property.NameEquals("refreshStatus"u8))
                 {
                     refreshStatus = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("errorMessage"))
+                if (property.NameEquals("errorMessage"u8))
                 {
                     errorMessage = property.Value.GetString();
                     continue;

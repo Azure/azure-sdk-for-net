@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Tags))
             {
-                writer.WritePropertyName("tags");
+                writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
                 foreach (var item in Tags)
                 {
@@ -28,27 +28,27 @@ namespace Azure.ResourceManager.Dynatrace.Models
             }
             if (Optional.IsDefined(MonitoringStatus))
             {
-                writer.WritePropertyName("monitoringStatus");
+                writer.WritePropertyName("monitoringStatus"u8);
                 writer.WriteStringValue(MonitoringStatus.Value.ToString());
             }
             if (Optional.IsDefined(MarketplaceSubscriptionStatus))
             {
-                writer.WritePropertyName("marketplaceSubscriptionStatus");
+                writer.WritePropertyName("marketplaceSubscriptionStatus"u8);
                 writer.WriteStringValue(MarketplaceSubscriptionStatus.Value.ToString());
             }
             if (Optional.IsDefined(DynatraceEnvironmentProperties))
             {
-                writer.WritePropertyName("dynatraceEnvironmentProperties");
+                writer.WritePropertyName("dynatraceEnvironmentProperties"u8);
                 writer.WriteObjectValue(DynatraceEnvironmentProperties);
             }
             if (Optional.IsDefined(UserInfo))
             {
-                writer.WritePropertyName("userInfo");
+                writer.WritePropertyName("userInfo"u8);
                 writer.WriteObjectValue(UserInfo);
             }
             if (Optional.IsDefined(PlanData))
             {
-                writer.WritePropertyName("planData");
+                writer.WritePropertyName("planData"u8);
                 writer.WriteObjectValue(PlanData);
             }
             writer.WriteEndObject();

@@ -20,7 +20,7 @@ namespace Azure.Maps.Routing.Models
             Optional<string> groupMessage = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("firstInstructionIndex"))
+                if (property.NameEquals("firstInstructionIndex"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -30,7 +30,7 @@ namespace Azure.Maps.Routing.Models
                     firstInstructionIndex = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("lastInstructionIndex"))
+                if (property.NameEquals("lastInstructionIndex"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -40,7 +40,7 @@ namespace Azure.Maps.Routing.Models
                     lastInstructionIndex = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("groupLengthInMeters"))
+                if (property.NameEquals("groupLengthInMeters"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -50,7 +50,7 @@ namespace Azure.Maps.Routing.Models
                     groupLengthInMeters = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("groupMessage"))
+                if (property.NameEquals("groupMessage"u8))
                 {
                     groupMessage = property.Value.GetString();
                     continue;

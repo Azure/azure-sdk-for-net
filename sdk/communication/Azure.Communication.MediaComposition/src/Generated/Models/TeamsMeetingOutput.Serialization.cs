@@ -15,9 +15,9 @@ namespace Azure.Communication.MediaComposition
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("teamsJoinUrl");
+            writer.WritePropertyName("teamsJoinUrl"u8);
             writer.WriteStringValue(TeamsJoinUrl);
-            writer.WritePropertyName("kind");
+            writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
             writer.WriteEndObject();
         }
@@ -28,12 +28,12 @@ namespace Azure.Communication.MediaComposition
             MediaOutputType kind = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("teamsJoinUrl"))
+                if (property.NameEquals("teamsJoinUrl"u8))
                 {
                     teamsJoinUrl = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("kind"))
+                if (property.NameEquals("kind"u8))
                 {
                     kind = new MediaOutputType(property.Value.GetString());
                     continue;

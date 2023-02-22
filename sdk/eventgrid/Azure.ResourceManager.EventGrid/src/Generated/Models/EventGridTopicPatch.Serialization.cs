@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Tags))
             {
-                writer.WritePropertyName("tags");
+                writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
                 foreach (var item in Tags)
                 {
@@ -28,19 +28,19 @@ namespace Azure.ResourceManager.EventGrid.Models
             }
             if (Optional.IsDefined(Identity))
             {
-                writer.WritePropertyName("identity");
+                writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(PublicNetworkAccess))
             {
-                writer.WritePropertyName("publicNetworkAccess");
+                writer.WritePropertyName("publicNetworkAccess"u8);
                 writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
             }
             if (Optional.IsCollectionDefined(InboundIPRules))
             {
-                writer.WritePropertyName("inboundIpRules");
+                writer.WritePropertyName("inboundIpRules"u8);
                 writer.WriteStartArray();
                 foreach (var item in InboundIPRules)
                 {
@@ -50,12 +50,12 @@ namespace Azure.ResourceManager.EventGrid.Models
             }
             if (Optional.IsDefined(IsLocalAuthDisabled))
             {
-                writer.WritePropertyName("disableLocalAuth");
+                writer.WritePropertyName("disableLocalAuth"u8);
                 writer.WriteBooleanValue(IsLocalAuthDisabled.Value);
             }
             if (Optional.IsDefined(DataResidencyBoundary))
             {
-                writer.WritePropertyName("dataResidencyBoundary");
+                writer.WritePropertyName("dataResidencyBoundary"u8);
                 writer.WriteStringValue(DataResidencyBoundary.Value.ToString());
             }
             writer.WriteEndObject();

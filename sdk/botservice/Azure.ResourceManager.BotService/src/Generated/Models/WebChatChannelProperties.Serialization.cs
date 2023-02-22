@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.BotService.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Sites))
             {
-                writer.WritePropertyName("sites");
+                writer.WritePropertyName("sites"u8);
                 writer.WriteStartArray();
                 foreach (var item in Sites)
                 {
@@ -35,12 +35,12 @@ namespace Azure.ResourceManager.BotService.Models
             Optional<IList<WebChatSite>> sites = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("webChatEmbedCode"))
+                if (property.NameEquals("webChatEmbedCode"u8))
                 {
                     webChatEmbedCode = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("sites"))
+                if (property.NameEquals("sites"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -14,32 +14,33 @@ namespace Azure.AI.TextAnalytics.Samples
         [Test]
         public async Task ExtractKeyPhrasesBatchConvenienceAsync()
         {
-            string endpoint = TestEnvironment.Endpoint;
-            string apiKey = TestEnvironment.ApiKey;
+            Uri endpoint = new(TestEnvironment.Endpoint);
+            AzureKeyCredential credential = new(TestEnvironment.ApiKey);
+            TextAnalyticsClient client = new(endpoint, credential, CreateSampleOptions());
 
-            // Instantiate a client that will be used to call the service.
-            var client = new TextAnalyticsClient(new Uri(endpoint), new AzureKeyCredential(apiKey), CreateSampleOptions());
+            string documentA =
+                "We love this trail and make the trip every year. The views are breathtaking and well worth the hike!"
+                + " Yesterday was foggy though, so we missed the spectacular views. We tried again today and it was"
+                + " amazing. Everyone in my family liked the trail although it was too challenging for the less"
+                + " athletic among us. Not necessarily recommended for small children. A hotel close to the trail"
+                + " offers services for childcare in case you want that.";
 
-            string documentA = @"We love this trail and make the trip every year. The views are breathtaking and well
-                                worth the hike! Yesterday was foggy though, so we missed the spectacular views.
-                                We tried again today and it was amazing. Everyone in my family liked the trail although
-                                it was too challenging for the less athletic among us.
-                                Not necessarily recommended for small children.
-                                A hotel close to the trail offers services for childcare in case you want that.";
+            string documentB =
+                "Last week we stayed at Hotel Foo to celebrate our anniversary. The staff knew about our anniversary"
+                + " so they helped me organize a little surprise for my partner. The room was clean and with the"
+                + " decoration I requested. It was perfect!";
 
-            string documentB = @"Last week we stayed at Hotel Foo to celebrate our anniversary. The staff knew about
-                                our anniversary so they helped me organize a little surprise for my partner.
-                                The room was clean and with the decoration I requested. It was perfect!";
-
-            string documentC = @"That was the best day of my life! We went on a 4 day trip where we stayed at Hotel Foo.
-                                They had great amenities that included an indoor pool, a spa, and a bar.
-                                The spa offered couples massages which were really good. 
-                                The spa was clean and felt very peaceful. Overall the whole experience was great.
-                                We will definitely come back.";
+            string documentC =
+                "That was the best day of my life! We went on a 4 day trip where we stayed at Hotel Foo. They had"
+                + " great amenities that included an indoor pool, a spa, and a bar. The spa offered couples massages"
+                + " which were really good. The spa was clean and felt very peaceful. Overall the whole experience was"
+                + " great. We will definitely come back.";
 
             string documentD = string.Empty;
 
-            var documents = new List<string>
+            // Prepare the input of the text analysis operation. You can add multiple documents to this list and
+            // perform the same operation on all of them simultaneously.
+            List<string> batchedDocuments = new()
             {
                 documentA,
                 documentB,
@@ -47,34 +48,33 @@ namespace Azure.AI.TextAnalytics.Samples
                 documentD
             };
 
-            Response<ExtractKeyPhrasesResultCollection> response = await client.ExtractKeyPhrasesBatchAsync(documents);
+            Response<ExtractKeyPhrasesResultCollection> response = await client.ExtractKeyPhrasesBatchAsync(batchedDocuments);
             ExtractKeyPhrasesResultCollection keyPhrasesInDocuments = response.Value;
 
             int i = 0;
-            Console.WriteLine($"Results of \"Extract Key Phrases\" Model, version: \"{keyPhrasesInDocuments.ModelVersion}\"");
-            Console.WriteLine("");
+            Console.WriteLine($"Extract Key Phrases, model version: \"{keyPhrasesInDocuments.ModelVersion}\"");
+            Console.WriteLine();
 
-            foreach (ExtractKeyPhrasesResult keyPhrases in keyPhrasesInDocuments)
+            foreach (ExtractKeyPhrasesResult documentResult in keyPhrasesInDocuments)
             {
-                Console.WriteLine($"On document with Text: \"{documents[i++]}\"");
-                Console.WriteLine("");
+                Console.WriteLine($"Result for document with Text = \"{batchedDocuments[i++]}\"");
 
-                if (keyPhrases.HasError)
+                if (documentResult.HasError)
                 {
-                    Console.WriteLine("  Error!");
-                    Console.WriteLine($"  Document error: {keyPhrases.Error.ErrorCode}.");
-                    Console.WriteLine($"  Message: {keyPhrases.Error.Message}");
+                    Console.WriteLine($"  Error!");
+                    Console.WriteLine($"  Document error code: {documentResult.Error.ErrorCode}");
+                    Console.WriteLine($"  Message: {documentResult.Error.Message}");
+                    Console.WriteLine();
+                    continue;
                 }
-                else
-                {
-                    Console.WriteLine($"  Extracted the following {keyPhrases.KeyPhrases.Count()} key phrases:");
 
-                    foreach (string keyPhrase in keyPhrases.KeyPhrases)
-                    {
-                        Console.WriteLine($"    {keyPhrase}");
-                    }
+                Console.WriteLine($"  Extracted {documentResult.KeyPhrases.Count()} key phrases:");
+
+                foreach (string keyPhrase in documentResult.KeyPhrases)
+                {
+                    Console.WriteLine($"    {keyPhrase}");
                 }
-                Console.WriteLine("");
+                Console.WriteLine();
             }
         }
     }

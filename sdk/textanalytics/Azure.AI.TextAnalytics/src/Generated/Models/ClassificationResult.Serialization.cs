@@ -15,9 +15,9 @@ namespace Azure.AI.TextAnalytics.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("category");
+            writer.WritePropertyName("category"u8);
             writer.WriteStringValue(Category);
-            writer.WritePropertyName("confidenceScore");
+            writer.WritePropertyName("confidenceScore"u8);
             writer.WriteNumberValue(ConfidenceScore);
             writer.WriteEndObject();
         }
@@ -28,12 +28,12 @@ namespace Azure.AI.TextAnalytics.Models
             double confidenceScore = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("category"))
+                if (property.NameEquals("category"u8))
                 {
                     category = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("confidenceScore"))
+                if (property.NameEquals("confidenceScore"u8))
                 {
                     confidenceScore = property.Value.GetDouble();
                     continue;

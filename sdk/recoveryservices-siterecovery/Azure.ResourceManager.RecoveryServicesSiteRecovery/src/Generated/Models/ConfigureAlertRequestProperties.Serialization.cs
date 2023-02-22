@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(SendToOwners))
             {
-                writer.WritePropertyName("sendToOwners");
+                writer.WritePropertyName("sendToOwners"u8);
                 writer.WriteStringValue(SendToOwners);
             }
             if (Optional.IsCollectionDefined(CustomEmailAddresses))
             {
-                writer.WritePropertyName("customEmailAddresses");
+                writer.WritePropertyName("customEmailAddresses"u8);
                 writer.WriteStartArray();
                 foreach (var item in CustomEmailAddresses)
                 {
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
             if (Optional.IsDefined(Locale))
             {
-                writer.WritePropertyName("locale");
+                writer.WritePropertyName("locale"u8);
                 writer.WriteStringValue(Locale);
             }
             writer.WriteEndObject();

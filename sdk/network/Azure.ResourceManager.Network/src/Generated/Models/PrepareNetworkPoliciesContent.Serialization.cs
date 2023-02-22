@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.Network.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(ServiceName))
             {
-                writer.WritePropertyName("serviceName");
+                writer.WritePropertyName("serviceName"u8);
                 writer.WriteStringValue(ServiceName);
             }
             if (Optional.IsCollectionDefined(NetworkIntentPolicyConfigurations))
             {
-                writer.WritePropertyName("networkIntentPolicyConfigurations");
+                writer.WritePropertyName("networkIntentPolicyConfigurations"u8);
                 writer.WriteStartArray();
                 foreach (var item in NetworkIntentPolicyConfigurations)
                 {

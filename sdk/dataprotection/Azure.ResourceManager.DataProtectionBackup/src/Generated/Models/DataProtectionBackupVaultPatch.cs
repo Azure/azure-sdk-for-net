@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <summary> Input Managed Identity Details. </summary>
         public ManagedServiceIdentity Identity { get; set; }
         /// <summary> Resource properties. </summary>
-        public PatchBackupVaultInput Properties { get; set; }
+        public DataProtectionBackupVaultPatchProperties Properties { get; set; }
         /// <summary> Resource tags. </summary>
         public IDictionary<string, string> Tags { get; }
     }

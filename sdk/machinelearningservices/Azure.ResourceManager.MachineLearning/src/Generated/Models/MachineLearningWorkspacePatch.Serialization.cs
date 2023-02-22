@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Tags))
             {
-                writer.WritePropertyName("tags");
+                writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
                 foreach (var item in Tags)
                 {
@@ -29,55 +29,55 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             if (Optional.IsDefined(Sku))
             {
-                writer.WritePropertyName("sku");
+                writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
             }
             if (Optional.IsDefined(Identity))
             {
-                writer.WritePropertyName("identity");
+                writer.WritePropertyName("identity"u8);
                 var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
                 JsonSerializer.Serialize(writer, Identity, serializeOptions);
             }
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(Description))
             {
-                writer.WritePropertyName("description");
+                writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
             if (Optional.IsDefined(FriendlyName))
             {
-                writer.WritePropertyName("friendlyName");
+                writer.WritePropertyName("friendlyName"u8);
                 writer.WriteStringValue(FriendlyName);
             }
             if (Optional.IsDefined(ImageBuildCompute))
             {
-                writer.WritePropertyName("imageBuildCompute");
+                writer.WritePropertyName("imageBuildCompute"u8);
                 writer.WriteStringValue(ImageBuildCompute);
             }
             if (Optional.IsDefined(ServiceManagedResourcesSettings))
             {
-                writer.WritePropertyName("serviceManagedResourcesSettings");
+                writer.WritePropertyName("serviceManagedResourcesSettings"u8);
                 writer.WriteObjectValue(ServiceManagedResourcesSettings);
             }
             if (Optional.IsDefined(PrimaryUserAssignedIdentity))
             {
-                writer.WritePropertyName("primaryUserAssignedIdentity");
+                writer.WritePropertyName("primaryUserAssignedIdentity"u8);
                 writer.WriteStringValue(PrimaryUserAssignedIdentity);
             }
             if (Optional.IsDefined(PublicNetworkAccess))
             {
-                writer.WritePropertyName("publicNetworkAccess");
+                writer.WritePropertyName("publicNetworkAccess"u8);
                 writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
             }
             if (Optional.IsDefined(ApplicationInsights))
             {
-                writer.WritePropertyName("applicationInsights");
+                writer.WritePropertyName("applicationInsights"u8);
                 writer.WriteStringValue(ApplicationInsights);
             }
             if (Optional.IsDefined(ContainerRegistry))
             {
-                writer.WritePropertyName("containerRegistry");
+                writer.WritePropertyName("containerRegistry"u8);
                 writer.WriteStringValue(ContainerRegistry);
             }
             writer.WriteEndObject();

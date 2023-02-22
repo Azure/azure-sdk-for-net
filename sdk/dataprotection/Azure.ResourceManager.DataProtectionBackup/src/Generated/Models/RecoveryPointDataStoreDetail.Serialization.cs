@@ -18,37 +18,37 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(CreatedOn))
             {
-                writer.WritePropertyName("creationTime");
+                writer.WritePropertyName("creationTime"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
             if (Optional.IsDefined(ExpireOn))
             {
-                writer.WritePropertyName("expiryTime");
+                writer.WritePropertyName("expiryTime"u8);
                 writer.WriteStringValue(ExpireOn.Value, "O");
             }
             if (Optional.IsDefined(RecoveryPointDataStoreId))
             {
-                writer.WritePropertyName("id");
+                writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(RecoveryPointDataStoreId.Value);
             }
             if (Optional.IsDefined(Metadata))
             {
-                writer.WritePropertyName("metaData");
+                writer.WritePropertyName("metaData"u8);
                 writer.WriteStringValue(Metadata);
             }
             if (Optional.IsDefined(State))
             {
-                writer.WritePropertyName("state");
+                writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State);
             }
             if (Optional.IsDefined(RecoveryPointDataStoreType))
             {
-                writer.WritePropertyName("type");
+                writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(RecoveryPointDataStoreType);
             }
             if (Optional.IsDefined(IsVisible))
             {
-                writer.WritePropertyName("visible");
+                writer.WritePropertyName("visible"u8);
                 writer.WriteBooleanValue(IsVisible.Value);
             }
             writer.WriteEndObject();
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             Optional<RecoveryPointDataStoreRehydrationStatus> rehydrationStatus = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("creationTime"))
+                if (property.NameEquals("creationTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     creationTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("expiryTime"))
+                if (property.NameEquals("expiryTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     expiryTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -97,22 +97,22 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     id = property.Value.GetGuid();
                     continue;
                 }
-                if (property.NameEquals("metaData"))
+                if (property.NameEquals("metaData"u8))
                 {
                     metaData = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("state"))
+                if (property.NameEquals("state"u8))
                 {
                     state = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("visible"))
+                if (property.NameEquals("visible"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     visible = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("rehydrationExpiryTime"))
+                if (property.NameEquals("rehydrationExpiryTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     rehydrationExpiryTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("rehydrationStatus"))
+                if (property.NameEquals("rehydrationStatus"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -21,39 +21,39 @@ namespace Azure.ResourceManager.Network
             writer.WriteStartObject();
             if (Optional.IsDefined(Id))
             {
-                writer.WritePropertyName("id");
+                writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
             if (Optional.IsDefined(Name))
             {
-                writer.WritePropertyName("name");
+                writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(Protocol))
             {
-                writer.WritePropertyName("protocol");
+                writer.WritePropertyName("protocol"u8);
                 writer.WriteStringValue(Protocol.Value.ToString());
             }
             if (Optional.IsDefined(Port))
             {
-                writer.WritePropertyName("port");
+                writer.WritePropertyName("port"u8);
                 writer.WriteNumberValue(Port.Value);
             }
             if (Optional.IsDefined(IntervalInSeconds))
             {
-                writer.WritePropertyName("intervalInSeconds");
+                writer.WritePropertyName("intervalInSeconds"u8);
                 writer.WriteNumberValue(IntervalInSeconds.Value);
             }
             if (Optional.IsDefined(NumberOfProbes))
             {
-                writer.WritePropertyName("numberOfProbes");
+                writer.WritePropertyName("numberOfProbes"u8);
                 writer.WriteNumberValue(NumberOfProbes.Value);
             }
             if (Optional.IsDefined(RequestPath))
             {
-                writer.WritePropertyName("requestPath");
+                writer.WritePropertyName("requestPath"u8);
                 writer.WriteStringValue(RequestPath);
             }
             writer.WriteEndObject();
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Network
             Optional<NetworkProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("etag"))
+                if (property.NameEquals("etag"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Network
                     etag = new ETag(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -95,12 +95,12 @@ namespace Azure.ResourceManager.Network
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Network
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Network
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("loadBalancingRules"))
+                        if (property0.NameEquals("loadBalancingRules"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.Network
                             loadBalancingRules = array;
                             continue;
                         }
-                        if (property0.NameEquals("protocol"))
+                        if (property0.NameEquals("protocol"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.Network
                             protocol = new ProbeProtocol(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("port"))
+                        if (property0.NameEquals("port"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.Network
                             port = property0.Value.GetInt32();
                             continue;
                         }
-                        if (property0.NameEquals("intervalInSeconds"))
+                        if (property0.NameEquals("intervalInSeconds"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.Network
                             intervalInSeconds = property0.Value.GetInt32();
                             continue;
                         }
-                        if (property0.NameEquals("numberOfProbes"))
+                        if (property0.NameEquals("numberOfProbes"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -174,12 +174,12 @@ namespace Azure.ResourceManager.Network
                             numberOfProbes = property0.Value.GetInt32();
                             continue;
                         }
-                        if (property0.NameEquals("requestPath"))
+                        if (property0.NameEquals("requestPath"u8))
                         {
                             requestPath = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("provisioningState"))
+                        if (property0.NameEquals("provisioningState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

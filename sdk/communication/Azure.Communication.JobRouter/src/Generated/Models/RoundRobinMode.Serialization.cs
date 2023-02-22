@@ -15,15 +15,15 @@ namespace Azure.Communication.JobRouter
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("kind");
+            writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind);
-            writer.WritePropertyName("minConcurrentOffers");
+            writer.WritePropertyName("minConcurrentOffers"u8);
             writer.WriteNumberValue(MinConcurrentOffers);
-            writer.WritePropertyName("maxConcurrentOffers");
+            writer.WritePropertyName("maxConcurrentOffers"u8);
             writer.WriteNumberValue(MaxConcurrentOffers);
             if (Optional.IsDefined(BypassSelectors))
             {
-                writer.WritePropertyName("bypassSelectors");
+                writer.WritePropertyName("bypassSelectors"u8);
                 writer.WriteBooleanValue(BypassSelectors.Value);
             }
             writer.WriteEndObject();
@@ -37,22 +37,22 @@ namespace Azure.Communication.JobRouter
             Optional<bool> bypassSelectors = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("kind"))
+                if (property.NameEquals("kind"u8))
                 {
                     kind = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("minConcurrentOffers"))
+                if (property.NameEquals("minConcurrentOffers"u8))
                 {
                     minConcurrentOffers = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("maxConcurrentOffers"))
+                if (property.NameEquals("maxConcurrentOffers"u8))
                 {
                     maxConcurrentOffers = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("bypassSelectors"))
+                if (property.NameEquals("bypassSelectors"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

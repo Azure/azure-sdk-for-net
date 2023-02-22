@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Automanage.Tests.Scenario
             var result = await CreateAssignment(vmId, profileId);
 
             // fetch assignment
-            var assignment = await ArmClient.GetConfigurationProfileAssignmentAsync(vmId, "default");
+            var assignment = await ArmClient.GetAutomanageVmConfigurationProfileAssignmentAsync(vmId, "default");
 
             // assert
             Assert.True(assignment.Value.HasData);
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Automanage.Tests.Scenario
             var rg = await CreateResourceGroup("SDKAutomanage-", DefaultLocation);
 
             // fetch configuration profile collection
-            var profileCollection = rg.GetConfigurationProfiles();
+            var profileCollection = rg.GetAutomanageConfigurationProfiles();
 
             // create configuration profile
             var profile = await CreateConfigurationProfile(profileCollection, profileName);

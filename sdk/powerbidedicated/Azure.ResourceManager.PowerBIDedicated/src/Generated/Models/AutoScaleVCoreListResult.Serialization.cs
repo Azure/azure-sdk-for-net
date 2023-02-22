@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
             IReadOnlyList<AutoScaleVCoreData> value = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     List<AutoScaleVCoreData> array = new List<AutoScaleVCoreData>();
                     foreach (var item in property.Value.EnumerateArray())

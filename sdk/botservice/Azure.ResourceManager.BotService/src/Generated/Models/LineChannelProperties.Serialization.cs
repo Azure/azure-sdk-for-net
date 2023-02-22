@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.BotService.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("lineRegistrations");
+            writer.WritePropertyName("lineRegistrations"u8);
             writer.WriteStartArray();
             foreach (var item in LineRegistrations)
             {
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.BotService.Models
             Optional<bool> isValidated = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("lineRegistrations"))
+                if (property.NameEquals("lineRegistrations"u8))
                 {
                     List<LineRegistration> array = new List<LineRegistration>();
                     foreach (var item in property.Value.EnumerateArray())
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.BotService.Models
                     lineRegistrations = array;
                     continue;
                 }
-                if (property.NameEquals("callbackUrl"))
+                if (property.NameEquals("callbackUrl"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.BotService.Models
                     callbackUrl = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("isValidated"))
+                if (property.NameEquals("isValidated"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

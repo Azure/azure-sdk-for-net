@@ -17,42 +17,42 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(StartTime))
             {
-                writer.WritePropertyName("startTime");
+                writer.WritePropertyName("startTime"u8);
                 writer.WriteStringValue(StartTime);
             }
             if (Optional.IsDefined(EndTime))
             {
-                writer.WritePropertyName("endTime");
+                writer.WritePropertyName("endTime"u8);
                 writer.WriteStringValue(EndTime);
             }
             if (Optional.IsDefined(FabricId))
             {
-                writer.WritePropertyName("fabricId");
+                writer.WritePropertyName("fabricId"u8);
                 writer.WriteStringValue(FabricId);
             }
             if (Optional.IsDefined(AffectedObjectTypes))
             {
-                writer.WritePropertyName("affectedObjectTypes");
+                writer.WritePropertyName("affectedObjectTypes"u8);
                 writer.WriteStringValue(AffectedObjectTypes);
             }
             if (Optional.IsDefined(JobStatus))
             {
-                writer.WritePropertyName("jobStatus");
+                writer.WritePropertyName("jobStatus"u8);
                 writer.WriteStringValue(JobStatus);
             }
             if (Optional.IsDefined(JobOutputType))
             {
-                writer.WritePropertyName("jobOutputType");
+                writer.WritePropertyName("jobOutputType"u8);
                 writer.WriteStringValue(JobOutputType.Value.ToString());
             }
             if (Optional.IsDefined(JobName))
             {
-                writer.WritePropertyName("jobName");
+                writer.WritePropertyName("jobName"u8);
                 writer.WriteStringValue(JobName);
             }
             if (Optional.IsDefined(TimezoneOffset))
             {
-                writer.WritePropertyName("timezoneOffset");
+                writer.WritePropertyName("timezoneOffset"u8);
                 writer.WriteNumberValue(TimezoneOffset.Value);
             }
             writer.WriteEndObject();

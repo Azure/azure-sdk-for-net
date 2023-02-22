@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.AppPlatform.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Thumbprint))
             {
-                writer.WritePropertyName("thumbprint");
+                writer.WritePropertyName("thumbprint"u8);
                 writer.WriteStringValue(Thumbprint);
             }
             if (Optional.IsDefined(CertName))
             {
-                writer.WritePropertyName("certName");
+                writer.WritePropertyName("certName"u8);
                 writer.WriteStringValue(CertName);
             }
             writer.WriteEndObject();
@@ -36,22 +36,22 @@ namespace Azure.ResourceManager.AppPlatform.Models
             Optional<AppPlatformCustomDomainProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("thumbprint"))
+                if (property.NameEquals("thumbprint"u8))
                 {
                     thumbprint = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("appName"))
+                if (property.NameEquals("appName"u8))
                 {
                     appName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("certName"))
+                if (property.NameEquals("certName"u8))
                 {
                     certName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("provisioningState"))
+                if (property.NameEquals("provisioningState"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

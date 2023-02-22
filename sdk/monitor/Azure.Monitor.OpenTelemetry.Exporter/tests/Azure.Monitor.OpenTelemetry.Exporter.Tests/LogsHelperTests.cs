@@ -66,6 +66,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
                 builder.AddOpenTelemetry(options =>
                 {
                     options.IncludeFormattedMessage = true;
+                    options.ParseStateValues = true;
                     options.AddInMemoryExporter(logRecords);
                 });
                 builder.AddFilter(typeof(LogsHelperTests).FullName, LogLevel.Trace);
@@ -97,6 +98,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             {
                 builder.AddOpenTelemetry(options =>
                 {
+                    options.ParseStateValues = true;
                     options.AddInMemoryExporter(logRecords);
                 });
                 builder.AddFilter(typeof(LogsHelperTests).FullName, LogLevel.Trace);
@@ -127,6 +129,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             {
                 builder.AddOpenTelemetry(options =>
                 {
+                    options.ParseStateValues = true;
                     options.AddInMemoryExporter(logRecords);
                 });
                 builder.AddFilter(typeof(LogsHelperTests).FullName, LogLevel.Trace);

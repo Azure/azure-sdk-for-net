@@ -15,9 +15,9 @@ namespace Azure.ResourceManager.Synapse.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("clusterResourceId");
+            writer.WritePropertyName("clusterResourceId"u8);
             writer.WriteStringValue(KustoPoolResourceId);
-            writer.WritePropertyName("attachedDatabaseConfigurationName");
+            writer.WritePropertyName("attachedDatabaseConfigurationName"u8);
             writer.WriteStringValue(AttachedDatabaseConfigurationName);
             writer.WriteEndObject();
         }
@@ -29,17 +29,17 @@ namespace Azure.ResourceManager.Synapse.Models
             Optional<string> databaseName = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("clusterResourceId"))
+                if (property.NameEquals("clusterResourceId"u8))
                 {
                     clusterResourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("attachedDatabaseConfigurationName"))
+                if (property.NameEquals("attachedDatabaseConfigurationName"u8))
                 {
                     attachedDatabaseConfigurationName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("databaseName"))
+                if (property.NameEquals("databaseName"u8))
                 {
                     databaseName = property.Value.GetString();
                     continue;

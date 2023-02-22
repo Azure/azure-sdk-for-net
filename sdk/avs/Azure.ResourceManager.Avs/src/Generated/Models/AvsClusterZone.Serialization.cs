@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Avs.Models
             Optional<string> zone = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("hosts"))
+                if (property.NameEquals("hosts"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Avs.Models
                     hosts = array;
                     continue;
                 }
-                if (property.NameEquals("zone"))
+                if (property.NameEquals("zone"u8))
                 {
                     zone = property.Value.GetString();
                     continue;

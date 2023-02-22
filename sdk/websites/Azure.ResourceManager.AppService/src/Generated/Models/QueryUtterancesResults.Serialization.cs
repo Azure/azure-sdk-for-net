@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.AppService.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Query))
             {
-                writer.WritePropertyName("query");
+                writer.WritePropertyName("query"u8);
                 writer.WriteStringValue(Query);
             }
             if (Optional.IsCollectionDefined(Results))
             {
-                writer.WritePropertyName("results");
+                writer.WritePropertyName("results"u8);
                 writer.WriteStartArray();
                 foreach (var item in Results)
                 {
@@ -40,12 +40,12 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<IList<QueryUtterancesResult>> results = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("query"))
+                if (property.NameEquals("query"u8))
                 {
                     query = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("results"))
+                if (property.NameEquals("results"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

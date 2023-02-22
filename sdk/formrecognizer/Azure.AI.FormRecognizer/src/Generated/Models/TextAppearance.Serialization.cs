@@ -17,7 +17,7 @@ namespace Azure.AI.FormRecognizer.Models
             Style style = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("style"))
+                if (property.NameEquals("style"u8))
                 {
                     style = FormRecognizer.Models.Style.DeserializeStyle(property.Value);
                     continue;

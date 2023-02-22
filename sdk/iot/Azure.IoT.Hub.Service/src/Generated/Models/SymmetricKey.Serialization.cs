@@ -17,12 +17,12 @@ namespace Azure.IoT.Hub.Service.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(PrimaryKey))
             {
-                writer.WritePropertyName("primaryKey");
+                writer.WritePropertyName("primaryKey"u8);
                 writer.WriteStringValue(PrimaryKey);
             }
             if (Optional.IsDefined(SecondaryKey))
             {
-                writer.WritePropertyName("secondaryKey");
+                writer.WritePropertyName("secondaryKey"u8);
                 writer.WriteStringValue(SecondaryKey);
             }
             writer.WriteEndObject();
@@ -34,12 +34,12 @@ namespace Azure.IoT.Hub.Service.Models
             Optional<string> secondaryKey = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("primaryKey"))
+                if (property.NameEquals("primaryKey"u8))
                 {
                     primaryKey = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("secondaryKey"))
+                if (property.NameEquals("secondaryKey"u8))
                 {
                     secondaryKey = property.Value.GetString();
                     continue;

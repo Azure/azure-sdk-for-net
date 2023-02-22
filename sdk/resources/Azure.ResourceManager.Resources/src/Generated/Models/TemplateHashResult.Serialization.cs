@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.Resources.Models
             Optional<string> templateHash = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("minifiedTemplate"))
+                if (property.NameEquals("minifiedTemplate"u8))
                 {
                     minifiedTemplate = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("templateHash"))
+                if (property.NameEquals("templateHash"u8))
                 {
                     templateHash = property.Value.GetString();
                     continue;

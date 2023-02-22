@@ -19,12 +19,12 @@ namespace Azure.ResourceManager.Logic.Models
             Optional<IReadOnlyList<string>> endpointQualifiedNames = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("qualifiedName"))
+                if (property.NameEquals("qualifiedName"u8))
                 {
                     qualifiedName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("EndpointQualifiedNames"))
+                if (property.NameEquals("EndpointQualifiedNames"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

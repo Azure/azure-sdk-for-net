@@ -16,26 +16,26 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     {
         internal static DeletedBackupInstanceResourceList DeserializeDeletedBackupInstanceResourceList(JsonElement element)
         {
-            Optional<IReadOnlyList<DeletedBackupInstanceResourceData>> value = default;
+            Optional<IReadOnlyList<DeletedDataProtectionBackupInstanceData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<DeletedBackupInstanceResourceData> array = new List<DeletedBackupInstanceResourceData>();
+                    List<DeletedDataProtectionBackupInstanceData> array = new List<DeletedDataProtectionBackupInstanceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DeletedBackupInstanceResourceData.DeserializeDeletedBackupInstanceResourceData(item));
+                        array.Add(DeletedDataProtectionBackupInstanceData.DeserializeDeletedDataProtectionBackupInstanceData(item));
                     }
                     value = array;
                     continue;
                 }
-                if (property.NameEquals("nextLink"))
+                if (property.NameEquals("nextLink"u8))
                 {
                     nextLink = property.Value.GetString();
                     continue;

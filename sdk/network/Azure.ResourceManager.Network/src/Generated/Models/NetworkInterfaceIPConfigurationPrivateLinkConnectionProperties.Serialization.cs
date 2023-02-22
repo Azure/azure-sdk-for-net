@@ -20,17 +20,17 @@ namespace Azure.ResourceManager.Network.Models
             Optional<IReadOnlyList<string>> fqdns = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("groupId"))
+                if (property.NameEquals("groupId"u8))
                 {
                     groupId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("requiredMemberName"))
+                if (property.NameEquals("requiredMemberName"u8))
                 {
                     requiredMemberName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("fqdns"))
+                if (property.NameEquals("fqdns"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

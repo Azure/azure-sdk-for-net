@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Datadog.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(FilteringTags))
             {
-                writer.WritePropertyName("filteringTags");
+                writer.WritePropertyName("filteringTags"u8);
                 writer.WriteStartArray();
                 foreach (var item in FilteringTags)
                 {
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Datadog.Models
             Optional<IList<FilteringTag>> filteringTags = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("filteringTags"))
+                if (property.NameEquals("filteringTags"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

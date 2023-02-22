@@ -21,74 +21,74 @@ namespace Azure.ResourceManager.Network
             writer.WriteStartObject();
             if (Optional.IsDefined(Id))
             {
-                writer.WritePropertyName("id");
+                writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
             if (Optional.IsDefined(Name))
             {
-                writer.WritePropertyName("name");
+                writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
             if (Optional.IsDefined(ResourceType))
             {
-                writer.WritePropertyName("type");
+                writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType.Value);
             }
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(AllowVirtualNetworkAccess))
             {
-                writer.WritePropertyName("allowVirtualNetworkAccess");
+                writer.WritePropertyName("allowVirtualNetworkAccess"u8);
                 writer.WriteBooleanValue(AllowVirtualNetworkAccess.Value);
             }
             if (Optional.IsDefined(AllowForwardedTraffic))
             {
-                writer.WritePropertyName("allowForwardedTraffic");
+                writer.WritePropertyName("allowForwardedTraffic"u8);
                 writer.WriteBooleanValue(AllowForwardedTraffic.Value);
             }
             if (Optional.IsDefined(AllowGatewayTransit))
             {
-                writer.WritePropertyName("allowGatewayTransit");
+                writer.WritePropertyName("allowGatewayTransit"u8);
                 writer.WriteBooleanValue(AllowGatewayTransit.Value);
             }
             if (Optional.IsDefined(UseRemoteGateways))
             {
-                writer.WritePropertyName("useRemoteGateways");
+                writer.WritePropertyName("useRemoteGateways"u8);
                 writer.WriteBooleanValue(UseRemoteGateways.Value);
             }
             if (Optional.IsDefined(RemoteVirtualNetwork))
             {
-                writer.WritePropertyName("remoteVirtualNetwork");
+                writer.WritePropertyName("remoteVirtualNetwork"u8);
                 JsonSerializer.Serialize(writer, RemoteVirtualNetwork);
             }
             if (Optional.IsDefined(RemoteAddressSpace))
             {
-                writer.WritePropertyName("remoteAddressSpace");
+                writer.WritePropertyName("remoteAddressSpace"u8);
                 writer.WriteObjectValue(RemoteAddressSpace);
             }
             if (Optional.IsDefined(RemoteVirtualNetworkAddressSpace))
             {
-                writer.WritePropertyName("remoteVirtualNetworkAddressSpace");
+                writer.WritePropertyName("remoteVirtualNetworkAddressSpace"u8);
                 writer.WriteObjectValue(RemoteVirtualNetworkAddressSpace);
             }
             if (Optional.IsDefined(RemoteBgpCommunities))
             {
-                writer.WritePropertyName("remoteBgpCommunities");
+                writer.WritePropertyName("remoteBgpCommunities"u8);
                 writer.WriteObjectValue(RemoteBgpCommunities);
             }
             if (Optional.IsDefined(PeeringState))
             {
-                writer.WritePropertyName("peeringState");
+                writer.WritePropertyName("peeringState"u8);
                 writer.WriteStringValue(PeeringState.Value.ToString());
             }
             if (Optional.IsDefined(PeeringSyncLevel))
             {
-                writer.WritePropertyName("peeringSyncLevel");
+                writer.WritePropertyName("peeringSyncLevel"u8);
                 writer.WriteStringValue(PeeringSyncLevel.Value.ToString());
             }
             if (Optional.IsDefined(DoNotVerifyRemoteGateways))
             {
-                writer.WritePropertyName("doNotVerifyRemoteGateways");
+                writer.WritePropertyName("doNotVerifyRemoteGateways"u8);
                 writer.WriteBooleanValue(DoNotVerifyRemoteGateways.Value);
             }
             writer.WriteEndObject();
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Network
             Optional<Guid> resourceGuid = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("etag"))
+                if (property.NameEquals("etag"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Network
                     etag = new ETag(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -136,12 +136,12 @@ namespace Azure.ResourceManager.Network
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.Network
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.Network
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("allowVirtualNetworkAccess"))
+                        if (property0.NameEquals("allowVirtualNetworkAccess"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Network
                             allowVirtualNetworkAccess = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("allowForwardedTraffic"))
+                        if (property0.NameEquals("allowForwardedTraffic"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.Network
                             allowForwardedTraffic = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("allowGatewayTransit"))
+                        if (property0.NameEquals("allowGatewayTransit"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.Network
                             allowGatewayTransit = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("useRemoteGateways"))
+                        if (property0.NameEquals("useRemoteGateways"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.Network
                             useRemoteGateways = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("remoteVirtualNetwork"))
+                        if (property0.NameEquals("remoteVirtualNetwork"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.Network
                             remoteVirtualNetwork = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
                             continue;
                         }
-                        if (property0.NameEquals("remoteAddressSpace"))
+                        if (property0.NameEquals("remoteAddressSpace"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.Network
                             remoteAddressSpace = AddressSpace.DeserializeAddressSpace(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("remoteVirtualNetworkAddressSpace"))
+                        if (property0.NameEquals("remoteVirtualNetworkAddressSpace"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.Network
                             remoteVirtualNetworkAddressSpace = AddressSpace.DeserializeAddressSpace(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("remoteBgpCommunities"))
+                        if (property0.NameEquals("remoteBgpCommunities"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -240,7 +240,7 @@ namespace Azure.ResourceManager.Network
                             remoteBgpCommunities = VirtualNetworkBgpCommunities.DeserializeVirtualNetworkBgpCommunities(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("peeringState"))
+                        if (property0.NameEquals("peeringState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.Network
                             peeringState = new VirtualNetworkPeeringState(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("peeringSyncLevel"))
+                        if (property0.NameEquals("peeringSyncLevel"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -260,7 +260,7 @@ namespace Azure.ResourceManager.Network
                             peeringSyncLevel = new VirtualNetworkPeeringLevel(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("provisioningState"))
+                        if (property0.NameEquals("provisioningState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -270,7 +270,7 @@ namespace Azure.ResourceManager.Network
                             provisioningState = new NetworkProvisioningState(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("doNotVerifyRemoteGateways"))
+                        if (property0.NameEquals("doNotVerifyRemoteGateways"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -280,7 +280,7 @@ namespace Azure.ResourceManager.Network
                             doNotVerifyRemoteGateways = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("resourceGuid"))
+                        if (property0.NameEquals("resourceGuid"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

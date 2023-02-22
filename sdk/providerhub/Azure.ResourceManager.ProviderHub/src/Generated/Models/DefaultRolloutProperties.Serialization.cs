@@ -17,17 +17,17 @@ namespace Azure.ResourceManager.ProviderHub.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(ProvisioningState))
             {
-                writer.WritePropertyName("provisioningState");
+                writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
             if (Optional.IsDefined(Specification))
             {
-                writer.WritePropertyName("specification");
+                writer.WritePropertyName("specification"u8);
                 writer.WriteObjectValue(Specification);
             }
             if (Optional.IsDefined(Status))
             {
-                writer.WritePropertyName("status");
+                writer.WritePropertyName("status"u8);
                 writer.WriteObjectValue(Status);
             }
             writer.WriteEndObject();
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             Optional<DefaultRolloutPropertiesStatus> status = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("provisioningState"))
+                if (property.NameEquals("provisioningState"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     provisioningState = new ProvisioningState(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("specification"))
+                if (property.NameEquals("specification"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     specification = DefaultRolloutPropertiesSpecification.DeserializeDefaultRolloutPropertiesSpecification(property.Value);
                     continue;
                 }
-                if (property.NameEquals("status"))
+                if (property.NameEquals("status"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

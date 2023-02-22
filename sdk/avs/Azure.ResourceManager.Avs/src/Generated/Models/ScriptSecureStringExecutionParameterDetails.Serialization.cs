@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.Avs.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(SecureValue))
             {
-                writer.WritePropertyName("secureValue");
+                writer.WritePropertyName("secureValue"u8);
                 writer.WriteStringValue(SecureValue);
             }
-            writer.WritePropertyName("name");
+            writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            writer.WritePropertyName("type");
+            writer.WritePropertyName("type"u8);
             writer.WriteStringValue(ParameterType.ToString());
             writer.WriteEndObject();
         }
@@ -34,17 +34,17 @@ namespace Azure.ResourceManager.Avs.Models
             ScriptExecutionParameterType type = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("secureValue"))
+                if (property.NameEquals("secureValue"u8))
                 {
                     secureValue = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ScriptExecutionParameterType(property.Value.GetString());
                     continue;

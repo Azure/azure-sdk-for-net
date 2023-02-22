@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Logic.Models
             Optional<string> tier = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Logic.Models
                     name = new IntegrationServiceEnvironmentSkuName(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("tier"))
+                if (property.NameEquals("tier"u8))
                 {
                     tier = property.Value.GetString();
                     continue;

@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             Optional<float> scannedGb = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("progress"))
+                if (property.NameEquals("progress"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                     progress = property.Value.GetSingle();
                     continue;
                 }
-                if (property.NameEquals("ingestedRecords"))
+                if (property.NameEquals("ingestedRecords"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                     ingestedRecords = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("scannedGb"))
+                if (property.NameEquals("scannedGb"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             Optional<long?> upgradeFailureCount = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("lastRevisionApplied"))
+                if (property.NameEquals("lastRevisionApplied"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     lastRevisionApplied = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("helmChartRef"))
+                if (property.NameEquals("helmChartRef"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     helmChartRef = KubernetesObjectReference.DeserializeKubernetesObjectReference(property.Value);
                     continue;
                 }
-                if (property.NameEquals("failureCount"))
+                if (property.NameEquals("failureCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     failureCount = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("installFailureCount"))
+                if (property.NameEquals("installFailureCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     installFailureCount = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("upgradeFailureCount"))
+                if (property.NameEquals("upgradeFailureCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

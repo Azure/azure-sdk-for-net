@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.NetApp.Models
             Optional<IReadOnlyList<AvailabilityZoneMapping>> availabilityZoneMappings = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("storageToNetworkProximity"))
+                if (property.NameEquals("storageToNetworkProximity"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     storageToNetworkProximity = new RegionStorageToNetworkProximity(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("availabilityZoneMappings"))
+                if (property.NameEquals("availabilityZoneMappings"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

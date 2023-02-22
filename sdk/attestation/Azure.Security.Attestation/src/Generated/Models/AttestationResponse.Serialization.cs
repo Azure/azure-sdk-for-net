@@ -17,7 +17,7 @@ namespace Azure.Security.Attestation
             Optional<string> token = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("token"))
+                if (property.NameEquals("token"u8))
                 {
                     token = property.Value.GetString();
                     continue;

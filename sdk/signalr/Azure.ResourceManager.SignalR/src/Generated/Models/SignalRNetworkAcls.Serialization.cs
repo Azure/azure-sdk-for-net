@@ -18,17 +18,17 @@ namespace Azure.ResourceManager.SignalR.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(DefaultAction))
             {
-                writer.WritePropertyName("defaultAction");
+                writer.WritePropertyName("defaultAction"u8);
                 writer.WriteStringValue(DefaultAction.Value.ToString());
             }
             if (Optional.IsDefined(PublicNetwork))
             {
-                writer.WritePropertyName("publicNetwork");
+                writer.WritePropertyName("publicNetwork"u8);
                 writer.WriteObjectValue(PublicNetwork);
             }
             if (Optional.IsCollectionDefined(PrivateEndpoints))
             {
-                writer.WritePropertyName("privateEndpoints");
+                writer.WritePropertyName("privateEndpoints"u8);
                 writer.WriteStartArray();
                 foreach (var item in PrivateEndpoints)
                 {
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.SignalR.Models
             Optional<IList<SignalRPrivateEndpointAcl>> privateEndpoints = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("defaultAction"))
+                if (property.NameEquals("defaultAction"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.SignalR.Models
                     defaultAction = new SignalRNetworkAclAction(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("publicNetwork"))
+                if (property.NameEquals("publicNetwork"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.SignalR.Models
                     publicNetwork = SignalRNetworkAcl.DeserializeSignalRNetworkAcl(property.Value);
                     continue;
                 }
-                if (property.NameEquals("privateEndpoints"))
+                if (property.NameEquals("privateEndpoints"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

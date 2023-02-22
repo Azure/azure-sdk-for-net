@@ -11,6 +11,7 @@ using Azure;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Compute;
 using Azure.ResourceManager.Compute.Models;
 using Azure.ResourceManager.Resources;
 
@@ -23,7 +24,7 @@ namespace Azure.ResourceManager.Compute.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetUsages_UsageListMaximumSetGen()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-08-01/examples/computeRPCommonExamples/Usage_List_MaximumSet_Gen.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-11-01/examples/computeRPCommonExamples/Usage_List_MaximumSet_Gen.json
             // this example is just showing the usage of "Usage_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -52,7 +53,7 @@ namespace Azure.ResourceManager.Compute.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetUsages_UsageListMinimumSetGen()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-08-01/examples/computeRPCommonExamples/Usage_List_MinimumSet_Gen.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-11-01/examples/computeRPCommonExamples/Usage_List_MinimumSet_Gen.json
             // this example is just showing the usage of "Usage_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -81,7 +82,7 @@ namespace Azure.ResourceManager.Compute.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetVirtualMachineSizes_VirtualMachineSizesListMaximumSetGen()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-08-01/examples/computeRPCommonExamples/VirtualMachineSizes_List_MaximumSet_Gen.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-11-01/examples/computeRPCommonExamples/VirtualMachineSizes_List_MaximumSet_Gen.json
             // this example is just showing the usage of "VirtualMachineSizes_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -110,7 +111,7 @@ namespace Azure.ResourceManager.Compute.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetVirtualMachineSizes_VirtualMachineSizesListMinimumSetGen()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-08-01/examples/computeRPCommonExamples/VirtualMachineSizes_List_MinimumSet_Gen.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-11-01/examples/computeRPCommonExamples/VirtualMachineSizes_List_MinimumSet_Gen.json
             // this example is just showing the usage of "VirtualMachineSizes_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -139,7 +140,7 @@ namespace Azure.ResourceManager.Compute.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetVirtualMachineImage_VirtualMachineImagesGetMaximumSetGen()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-08-01/examples/virtualMachineImageExamples/VirtualMachineImages_Get_MaximumSet_Gen.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-11-01/examples/virtualMachineImageExamples/VirtualMachineImages_Get_MaximumSet_Gen.json
             // this example is just showing the usage of "VirtualMachineImages_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -169,7 +170,7 @@ namespace Azure.ResourceManager.Compute.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetVirtualMachineImage_VirtualMachineImagesGetMinimumSetGen()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-08-01/examples/virtualMachineImageExamples/VirtualMachineImages_Get_MinimumSet_Gen.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-11-01/examples/virtualMachineImageExamples/VirtualMachineImages_Get_MinimumSet_Gen.json
             // this example is just showing the usage of "VirtualMachineImages_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -199,7 +200,7 @@ namespace Azure.ResourceManager.Compute.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetVirtualMachineImages_VirtualMachineImagesListMaximumSetGen()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-08-01/examples/virtualMachineImageExamples/VirtualMachineImages_List_MaximumSet_Gen.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-11-01/examples/virtualMachineImageExamples/VirtualMachineImages_List_MaximumSet_Gen.json
             // this example is just showing the usage of "VirtualMachineImages_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -214,7 +215,7 @@ namespace Azure.ResourceManager.Compute.Samples
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // invoke the operation and iterate over the result
-            SubscriptionGetVirtualMachineImagesOptions options = new SubscriptionGetVirtualMachineImagesOptions(location: new AzureLocation("aaaaaaaaaaaaaaa"), publisherName: "aaaaaa", offer: "aaaaaaaaaaaaaaaa", skus: "aaaaaaaaaaaaaaaaaaaaaaa") { Expand = "aaaaaaaaaaaaaaaaaaaaaaaa", Top = 18, Orderby = "aa" };
+            SubscriptionResourceGetVirtualMachineImagesOptions options = new SubscriptionResourceGetVirtualMachineImagesOptions(location: new AzureLocation("aaaaaaaaaaaaaaa"), publisherName: "aaaaaa", offer: "aaaaaaaaaaaaaaaa", skus: "aaaaaaaaaaaaaaaaaaaaaaa") { Expand = "aaaaaaaaaaaaaaaaaaaaaaaa", Top = 18, Orderby = "aa" };
             await foreach (VirtualMachineImageBase item in subscriptionResource.GetVirtualMachineImagesAsync(options))
             {
                 Console.WriteLine($"Succeeded: {item}");
@@ -228,7 +229,7 @@ namespace Azure.ResourceManager.Compute.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetVirtualMachineImages_VirtualMachineImagesListMinimumSetGen()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-08-01/examples/virtualMachineImageExamples/VirtualMachineImages_List_MinimumSet_Gen.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-11-01/examples/virtualMachineImageExamples/VirtualMachineImages_List_MinimumSet_Gen.json
             // this example is just showing the usage of "VirtualMachineImages_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -243,7 +244,7 @@ namespace Azure.ResourceManager.Compute.Samples
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // invoke the operation and iterate over the result
-            SubscriptionGetVirtualMachineImagesOptions options = new SubscriptionGetVirtualMachineImagesOptions(location: new AzureLocation("aaaaaaa"), publisherName: "aaaaaaaaaaa", offer: "aaaaaaaaaa", skus: "aaaaaa") { };
+            SubscriptionResourceGetVirtualMachineImagesOptions options = new SubscriptionResourceGetVirtualMachineImagesOptions(location: new AzureLocation("aaaaaaa"), publisherName: "aaaaaaaaaaa", offer: "aaaaaaaaaa", skus: "aaaaaa") { };
             await foreach (VirtualMachineImageBase item in subscriptionResource.GetVirtualMachineImagesAsync(options))
             {
                 Console.WriteLine($"Succeeded: {item}");
@@ -257,7 +258,7 @@ namespace Azure.ResourceManager.Compute.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetVirtualMachineImageOffers_VirtualMachineImagesListOffersMaximumSetGen()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-08-01/examples/virtualMachineImageExamples/VirtualMachineImages_ListOffers_MaximumSet_Gen.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-11-01/examples/virtualMachineImageExamples/VirtualMachineImages_ListOffers_MaximumSet_Gen.json
             // this example is just showing the usage of "VirtualMachineImages_ListOffers" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -287,7 +288,7 @@ namespace Azure.ResourceManager.Compute.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetVirtualMachineImageOffers_VirtualMachineImagesListOffersMinimumSetGen()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-08-01/examples/virtualMachineImageExamples/VirtualMachineImages_ListOffers_MinimumSet_Gen.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-11-01/examples/virtualMachineImageExamples/VirtualMachineImages_ListOffers_MinimumSet_Gen.json
             // this example is just showing the usage of "VirtualMachineImages_ListOffers" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -317,7 +318,7 @@ namespace Azure.ResourceManager.Compute.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetVirtualMachineImagePublishers_VirtualMachineImagesListPublishersMaximumSetGen()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-08-01/examples/virtualMachineImageExamples/VirtualMachineImages_ListPublishers_MaximumSet_Gen.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-11-01/examples/virtualMachineImageExamples/VirtualMachineImages_ListPublishers_MaximumSet_Gen.json
             // this example is just showing the usage of "VirtualMachineImages_ListPublishers" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -346,7 +347,7 @@ namespace Azure.ResourceManager.Compute.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetVirtualMachineImagePublishers_VirtualMachineImagesListPublishersMinimumSetGen()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-08-01/examples/virtualMachineImageExamples/VirtualMachineImages_ListPublishers_MinimumSet_Gen.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-11-01/examples/virtualMachineImageExamples/VirtualMachineImages_ListPublishers_MinimumSet_Gen.json
             // this example is just showing the usage of "VirtualMachineImages_ListPublishers" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -375,7 +376,7 @@ namespace Azure.ResourceManager.Compute.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetVirtualMachineImageSkus_VirtualMachineImagesListSkusMaximumSetGen()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-08-01/examples/virtualMachineImageExamples/VirtualMachineImages_ListSkus_MaximumSet_Gen.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-11-01/examples/virtualMachineImageExamples/VirtualMachineImages_ListSkus_MaximumSet_Gen.json
             // this example is just showing the usage of "VirtualMachineImages_ListSkus" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -406,7 +407,7 @@ namespace Azure.ResourceManager.Compute.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetVirtualMachineImageSkus_VirtualMachineImagesListSkusMinimumSetGen()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-08-01/examples/virtualMachineImageExamples/VirtualMachineImages_ListSkus_MinimumSet_Gen.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-11-01/examples/virtualMachineImageExamples/VirtualMachineImages_ListSkus_MinimumSet_Gen.json
             // this example is just showing the usage of "VirtualMachineImages_ListSkus" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -437,7 +438,7 @@ namespace Azure.ResourceManager.Compute.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetVirtualMachineImagesByEdgeZone_VirtualMachineImagesEdgeZoneListByEdgeZoneMaximumSetGen()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-08-01/examples/virtualMachineImageExamples/VirtualMachineImagesEdgeZone_ListByEdgeZone_MaximumSet_Gen.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-11-01/examples/virtualMachineImageExamples/VirtualMachineImagesEdgeZone_ListByEdgeZone_MaximumSet_Gen.json
             // this example is just showing the usage of "VirtualMachineImages_ListByEdgeZone" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -467,7 +468,7 @@ namespace Azure.ResourceManager.Compute.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetVirtualMachineImagesByEdgeZone_VirtualMachineImagesEdgeZoneListByEdgeZoneMinimumSetGen()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-08-01/examples/virtualMachineImageExamples/VirtualMachineImagesEdgeZone_ListByEdgeZone_MinimumSet_Gen.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-11-01/examples/virtualMachineImageExamples/VirtualMachineImagesEdgeZone_ListByEdgeZone_MinimumSet_Gen.json
             // this example is just showing the usage of "VirtualMachineImages_ListByEdgeZone" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -497,7 +498,7 @@ namespace Azure.ResourceManager.Compute.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetVirtualMachineImagesEdgeZone_VirtualMachineImagesEdgeZoneGetMaximumSetGen()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-08-01/examples/virtualMachineImageExamples/VirtualMachineImagesEdgeZone_Get_MaximumSet_Gen.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-11-01/examples/virtualMachineImageExamples/VirtualMachineImagesEdgeZone_Get_MaximumSet_Gen.json
             // this example is just showing the usage of "VirtualMachineImagesEdgeZone_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -512,7 +513,7 @@ namespace Azure.ResourceManager.Compute.Samples
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // invoke the operation
-            SubscriptionGetVirtualMachineImagesEdgeZoneOptions options = new SubscriptionGetVirtualMachineImagesEdgeZoneOptions(location: new AzureLocation("aaaaaaaaaaaaaaaaaaaaaaaa"), edgeZone: "aaaaaaaa", publisherName: "aaaaaaaaaaaaaaaaaaaaaaa", offer: "aaaaaaaaaaaaaaaaaaaaaaaaaaa", skus: "aaaaaaaaaa", version: "aaaaaaaaaaaaaaaaaaaaaaaaaaa") { };
+            SubscriptionResourceGetVirtualMachineImagesEdgeZoneOptions options = new SubscriptionResourceGetVirtualMachineImagesEdgeZoneOptions(location: new AzureLocation("aaaaaaaaaaaaaaaaaaaaaaaa"), edgeZone: "aaaaaaaa", publisherName: "aaaaaaaaaaaaaaaaaaaaaaa", offer: "aaaaaaaaaaaaaaaaaaaaaaaaaaa", skus: "aaaaaaaaaa", version: "aaaaaaaaaaaaaaaaaaaaaaaaaaa") { };
             VirtualMachineImage result = await subscriptionResource.GetVirtualMachineImagesEdgeZoneAsync(options);
 
             Console.WriteLine($"Succeeded: {result}");
@@ -523,7 +524,7 @@ namespace Azure.ResourceManager.Compute.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetVirtualMachineImagesEdgeZone_VirtualMachineImagesEdgeZoneGetMinimumSetGen()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-08-01/examples/virtualMachineImageExamples/VirtualMachineImagesEdgeZone_Get_MinimumSet_Gen.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-11-01/examples/virtualMachineImageExamples/VirtualMachineImagesEdgeZone_Get_MinimumSet_Gen.json
             // this example is just showing the usage of "VirtualMachineImagesEdgeZone_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -538,7 +539,7 @@ namespace Azure.ResourceManager.Compute.Samples
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // invoke the operation
-            SubscriptionGetVirtualMachineImagesEdgeZoneOptions options = new SubscriptionGetVirtualMachineImagesEdgeZoneOptions(location: new AzureLocation("aaaaaaaaaaaaaaaaaaaaaaa"), edgeZone: "aaaaaaaaaaaaaaaaaaaaaaaaaaaaa", publisherName: "aaaaaaaaaaaaaaaaaaaaaaaaaaaaa", offer: "aaaaaaaaaaa", skus: "aaaaaaaaaaaaaaaaaa", version: "aa") { };
+            SubscriptionResourceGetVirtualMachineImagesEdgeZoneOptions options = new SubscriptionResourceGetVirtualMachineImagesEdgeZoneOptions(location: new AzureLocation("aaaaaaaaaaaaaaaaaaaaaaa"), edgeZone: "aaaaaaaaaaaaaaaaaaaaaaaaaaaaa", publisherName: "aaaaaaaaaaaaaaaaaaaaaaaaaaaaa", offer: "aaaaaaaaaaa", skus: "aaaaaaaaaaaaaaaaaa", version: "aa") { };
             VirtualMachineImage result = await subscriptionResource.GetVirtualMachineImagesEdgeZoneAsync(options);
 
             Console.WriteLine($"Succeeded: {result}");
@@ -549,7 +550,7 @@ namespace Azure.ResourceManager.Compute.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetVirtualMachineImagesEdgeZones_VirtualMachineImagesEdgeZoneListMaximumSetGen()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-08-01/examples/virtualMachineImageExamples/VirtualMachineImagesEdgeZone_List_MaximumSet_Gen.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-11-01/examples/virtualMachineImageExamples/VirtualMachineImagesEdgeZone_List_MaximumSet_Gen.json
             // this example is just showing the usage of "VirtualMachineImagesEdgeZone_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -564,7 +565,7 @@ namespace Azure.ResourceManager.Compute.Samples
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // invoke the operation and iterate over the result
-            SubscriptionGetVirtualMachineImagesEdgeZonesOptions options = new SubscriptionGetVirtualMachineImagesEdgeZonesOptions(location: new AzureLocation("aaaaaaaaaaaaaaa"), edgeZone: "aaaaaaaaaaaaaaaaaaaaaaaaa", publisherName: "aaaa", offer: "aaaaaaaaaaaaaaaaaaaaaaaaaa", skus: "aaaaaaaaaaaaaaaaaaaaaaa") { Expand = "aaaaaaaaaaaaaaaaaaaaaaaa", Top = 12, Orderby = "aaaaaaaaaaaaaaaaaaaaaaaaaaaa" };
+            SubscriptionResourceGetVirtualMachineImagesEdgeZonesOptions options = new SubscriptionResourceGetVirtualMachineImagesEdgeZonesOptions(location: new AzureLocation("aaaaaaaaaaaaaaa"), edgeZone: "aaaaaaaaaaaaaaaaaaaaaaaaa", publisherName: "aaaa", offer: "aaaaaaaaaaaaaaaaaaaaaaaaaa", skus: "aaaaaaaaaaaaaaaaaaaaaaa") { Expand = "aaaaaaaaaaaaaaaaaaaaaaaa", Top = 12, Orderby = "aaaaaaaaaaaaaaaaaaaaaaaaaaaa" };
             await foreach (VirtualMachineImageBase item in subscriptionResource.GetVirtualMachineImagesEdgeZonesAsync(options))
             {
                 Console.WriteLine($"Succeeded: {item}");
@@ -578,7 +579,7 @@ namespace Azure.ResourceManager.Compute.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetVirtualMachineImagesEdgeZones_VirtualMachineImagesEdgeZoneListMinimumSetGen()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-08-01/examples/virtualMachineImageExamples/VirtualMachineImagesEdgeZone_List_MinimumSet_Gen.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-11-01/examples/virtualMachineImageExamples/VirtualMachineImagesEdgeZone_List_MinimumSet_Gen.json
             // this example is just showing the usage of "VirtualMachineImagesEdgeZone_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -593,7 +594,7 @@ namespace Azure.ResourceManager.Compute.Samples
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // invoke the operation and iterate over the result
-            SubscriptionGetVirtualMachineImagesEdgeZonesOptions options = new SubscriptionGetVirtualMachineImagesEdgeZonesOptions(location: new AzureLocation("aaaaaaaaaaaaaaaaaaaaaaaaaaaaa"), edgeZone: "aaaaa", publisherName: "aaaaaaaaaaaaaaaaaaa", offer: "aaaaaaaaaaaaaaaaaaaaaaaaaaa", skus: "aaaaaaaaaaaaaaaaaaaaaaaaaaaaa") { };
+            SubscriptionResourceGetVirtualMachineImagesEdgeZonesOptions options = new SubscriptionResourceGetVirtualMachineImagesEdgeZonesOptions(location: new AzureLocation("aaaaaaaaaaaaaaaaaaaaaaaaaaaaa"), edgeZone: "aaaaa", publisherName: "aaaaaaaaaaaaaaaaaaa", offer: "aaaaaaaaaaaaaaaaaaaaaaaaaaa", skus: "aaaaaaaaaaaaaaaaaaaaaaaaaaaaa") { };
             await foreach (VirtualMachineImageBase item in subscriptionResource.GetVirtualMachineImagesEdgeZonesAsync(options))
             {
                 Console.WriteLine($"Succeeded: {item}");
@@ -607,7 +608,7 @@ namespace Azure.ResourceManager.Compute.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetOffersVirtualMachineImagesEdgeZones_VirtualMachineImagesEdgeZoneListOffersMaximumSetGen()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-08-01/examples/virtualMachineImageExamples/VirtualMachineImagesEdgeZone_ListOffers_MaximumSet_Gen.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-11-01/examples/virtualMachineImageExamples/VirtualMachineImagesEdgeZone_ListOffers_MaximumSet_Gen.json
             // this example is just showing the usage of "VirtualMachineImagesEdgeZone_ListOffers" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -638,7 +639,7 @@ namespace Azure.ResourceManager.Compute.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetOffersVirtualMachineImagesEdgeZones_VirtualMachineImagesEdgeZoneListOffersMinimumSetGen()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-08-01/examples/virtualMachineImageExamples/VirtualMachineImagesEdgeZone_ListOffers_MinimumSet_Gen.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-11-01/examples/virtualMachineImageExamples/VirtualMachineImagesEdgeZone_ListOffers_MinimumSet_Gen.json
             // this example is just showing the usage of "VirtualMachineImagesEdgeZone_ListOffers" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -669,7 +670,7 @@ namespace Azure.ResourceManager.Compute.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetPublishersVirtualMachineImagesEdgeZones_VirtualMachineImagesEdgeZoneListPublishersMaximumSetGen()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-08-01/examples/virtualMachineImageExamples/VirtualMachineImagesEdgeZone_ListPublishers_MaximumSet_Gen.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-11-01/examples/virtualMachineImageExamples/VirtualMachineImagesEdgeZone_ListPublishers_MaximumSet_Gen.json
             // this example is just showing the usage of "VirtualMachineImagesEdgeZone_ListPublishers" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -699,7 +700,7 @@ namespace Azure.ResourceManager.Compute.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetPublishersVirtualMachineImagesEdgeZones_VirtualMachineImagesEdgeZoneListPublishersMinimumSetGen()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-08-01/examples/virtualMachineImageExamples/VirtualMachineImagesEdgeZone_ListPublishers_MinimumSet_Gen.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-11-01/examples/virtualMachineImageExamples/VirtualMachineImagesEdgeZone_ListPublishers_MinimumSet_Gen.json
             // this example is just showing the usage of "VirtualMachineImagesEdgeZone_ListPublishers" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -729,7 +730,7 @@ namespace Azure.ResourceManager.Compute.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetVirtualMachineImageEdgeZoneSkus_VirtualMachineImagesEdgeZoneListSkusMaximumSetGen()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-08-01/examples/virtualMachineImageExamples/VirtualMachineImagesEdgeZone_ListSkus_MaximumSet_Gen.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-11-01/examples/virtualMachineImageExamples/VirtualMachineImagesEdgeZone_ListSkus_MaximumSet_Gen.json
             // this example is just showing the usage of "VirtualMachineImagesEdgeZone_ListSkus" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -761,7 +762,7 @@ namespace Azure.ResourceManager.Compute.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetVirtualMachineImageEdgeZoneSkus_VirtualMachineImagesEdgeZoneListSkusMinimumSetGen()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-08-01/examples/virtualMachineImageExamples/VirtualMachineImagesEdgeZone_ListSkus_MinimumSet_Gen.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-11-01/examples/virtualMachineImageExamples/VirtualMachineImagesEdgeZone_ListSkus_MinimumSet_Gen.json
             // this example is just showing the usage of "VirtualMachineImagesEdgeZone_ListSkus" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -793,7 +794,7 @@ namespace Azure.ResourceManager.Compute.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task ExportLogAnalyticsRequestRateByInterval_ExportLogsWhichContainAllApiRequestsMadeToComputeResourceProviderWithinTheGivenTimePeriodBrokenDownByIntervals()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-08-01/examples/logAnalyticExamples/LogAnalytics_RequestRateByInterval.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-11-01/examples/logAnalyticExamples/LogAnalytics_RequestRateByInterval.json
             // this example is just showing the usage of "LogAnalytics_ExportRequestRateByInterval" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -824,7 +825,7 @@ namespace Azure.ResourceManager.Compute.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task ExportLogAnalyticsThrottledRequests_ExportLogsWhichContainAllThrottledApiRequestsMadeToComputeResourceProviderWithinTheGivenTimePeriod()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-08-01/examples/logAnalyticExamples/LogAnalytics_ThrottledRequests.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-11-01/examples/logAnalyticExamples/LogAnalytics_ThrottledRequests.json
             // this example is just showing the usage of "LogAnalytics_ExportThrottledRequests" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
