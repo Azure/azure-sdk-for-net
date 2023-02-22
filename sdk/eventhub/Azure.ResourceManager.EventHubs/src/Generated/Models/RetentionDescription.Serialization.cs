@@ -17,17 +17,17 @@ namespace Azure.ResourceManager.EventHubs.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(CleanupPolicy))
             {
-                writer.WritePropertyName("cleanupPolicy");
+                writer.WritePropertyName("cleanupPolicy"u8);
                 writer.WriteStringValue(CleanupPolicy.Value.ToString());
             }
             if (Optional.IsDefined(RetentionTimeInHours))
             {
-                writer.WritePropertyName("retentionTimeInHours");
+                writer.WritePropertyName("retentionTimeInHours"u8);
                 writer.WriteNumberValue(RetentionTimeInHours.Value);
             }
             if (Optional.IsDefined(TombstoneRetentionTimeInHours))
             {
-                writer.WritePropertyName("tombstoneRetentionTimeInHours");
+                writer.WritePropertyName("tombstoneRetentionTimeInHours"u8);
                 writer.WriteNumberValue(TombstoneRetentionTimeInHours.Value);
             }
             writer.WriteEndObject();
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.EventHubs.Models
             Optional<int> tombstoneRetentionTimeInHours = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("cleanupPolicy"))
+                if (property.NameEquals("cleanupPolicy"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                     cleanupPolicy = new CleanupPolicyRetentionDescription(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("retentionTimeInHours"))
+                if (property.NameEquals("retentionTimeInHours"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                     retentionTimeInHours = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("tombstoneRetentionTimeInHours"))
+                if (property.NameEquals("tombstoneRetentionTimeInHours"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

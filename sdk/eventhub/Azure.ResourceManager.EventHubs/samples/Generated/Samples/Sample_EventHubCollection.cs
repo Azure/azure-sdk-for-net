@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.EventHubs.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetAll_EventHubsListAll()
         {
-            // Generated from example definition: specification/eventhub/resource-manager/Microsoft.EventHub/preview/2022-01-01-preview/examples/EventHubs/EHEventHubListByNameSpace.json
+            // Generated from example definition: specification/eventhub/resource-manager/Microsoft.EventHub/preview/2022-10-01-preview/examples/EventHubs/EHEventHubListByNameSpace.json
             // this example is just showing the usage of "EventHubs_ListByNamespace" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.EventHubs.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_EventHubCreate()
         {
-            // Generated from example definition: specification/eventhub/resource-manager/Microsoft.EventHub/preview/2022-01-01-preview/examples/EventHubs/EHEventHubCreate.json
+            // Generated from example definition: specification/eventhub/resource-manager/Microsoft.EventHub/preview/2022-10-01-preview/examples/EventHubs/EHEventHubCreate.json
             // this example is just showing the usage of "EventHubs_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -83,7 +83,6 @@ namespace Azure.ResourceManager.EventHubs.Samples
             string eventHubName = "sdk-EventHub-6547";
             EventHubData data = new EventHubData()
             {
-                MessageRetentionInDays = 4,
                 PartitionCount = 4,
                 Status = EventHubEntityStatus.Active,
                 CaptureDescription = new CaptureDescription()
@@ -99,6 +98,12 @@ namespace Azure.ResourceManager.EventHubs.Samples
                         BlobContainer = "container",
                         ArchiveNameFormat = "{Namespace}/{EventHub}/{PartitionId}/{Year}/{Month}/{Day}/{Hour}/{Minute}/{Second}",
                     },
+                },
+                RetentionDescription = new RetentionDescription()
+                {
+                    CleanupPolicy = CleanupPolicyRetentionDescription.Compaction,
+                    RetentionTimeInHours = 96,
+                    TombstoneRetentionTimeInHours = 1,
                 },
             };
             ArmOperation<EventHubResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, eventHubName, data);
@@ -116,7 +121,7 @@ namespace Azure.ResourceManager.EventHubs.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_EventHubGet()
         {
-            // Generated from example definition: specification/eventhub/resource-manager/Microsoft.EventHub/preview/2022-01-01-preview/examples/EventHubs/EHEventHubGet.json
+            // Generated from example definition: specification/eventhub/resource-manager/Microsoft.EventHub/preview/2022-10-01-preview/examples/EventHubs/EHEventHubGet.json
             // this example is just showing the usage of "EventHubs_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -151,7 +156,7 @@ namespace Azure.ResourceManager.EventHubs.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Exists_EventHubGet()
         {
-            // Generated from example definition: specification/eventhub/resource-manager/Microsoft.EventHub/preview/2022-01-01-preview/examples/EventHubs/EHEventHubGet.json
+            // Generated from example definition: specification/eventhub/resource-manager/Microsoft.EventHub/preview/2022-10-01-preview/examples/EventHubs/EHEventHubGet.json
             // this example is just showing the usage of "EventHubs_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

@@ -21,11 +21,6 @@ namespace Azure.ResourceManager.EventHubs
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(MessageRetentionInDays))
-            {
-                writer.WritePropertyName("messageRetentionInDays"u8);
-                writer.WriteNumberValue(MessageRetentionInDays.Value);
-            }
             if (Optional.IsDefined(PartitionCount))
             {
                 writer.WritePropertyName("partitionCount"u8);
@@ -43,7 +38,7 @@ namespace Azure.ResourceManager.EventHubs
             }
             if (Optional.IsDefined(RetentionDescription))
             {
-                writer.WritePropertyName("retentionDescription");
+                writer.WritePropertyName("retentionDescription"u8);
                 writer.WriteObjectValue(RetentionDescription);
             }
             writer.WriteEndObject();
@@ -60,7 +55,6 @@ namespace Azure.ResourceManager.EventHubs
             Optional<IReadOnlyList<string>> partitionIds = default;
             Optional<DateTimeOffset> createdAt = default;
             Optional<DateTimeOffset> updatedAt = default;
-            Optional<long> messageRetentionInDays = default;
             Optional<long> partitionCount = default;
             Optional<EventHubEntityStatus> status = default;
             Optional<CaptureDescription> captureDescription = default;
@@ -146,16 +140,6 @@ namespace Azure.ResourceManager.EventHubs
                             updatedAt = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("messageRetentionInDays"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                property0.ThrowNonNullablePropertyIsNull();
-                                continue;
-                            }
-                            messageRetentionInDays = property0.Value.GetInt64();
-                            continue;
-                        }
                         if (property0.NameEquals("partitionCount"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -186,7 +170,7 @@ namespace Azure.ResourceManager.EventHubs
                             captureDescription = CaptureDescription.DeserializeCaptureDescription(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("retentionDescription"))
+                        if (property0.NameEquals("retentionDescription"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -200,7 +184,7 @@ namespace Azure.ResourceManager.EventHubs
                     continue;
                 }
             }
-            return new EventHubData(id, name, type, systemData.Value, Optional.ToList(partitionIds), Optional.ToNullable(createdAt), Optional.ToNullable(updatedAt), Optional.ToNullable(messageRetentionInDays), Optional.ToNullable(partitionCount), Optional.ToNullable(status), captureDescription.Value, retentionDescription.Value, Optional.ToNullable(location));
+            return new EventHubData(id, name, type, systemData.Value, Optional.ToList(partitionIds), Optional.ToNullable(createdAt), Optional.ToNullable(updatedAt), Optional.ToNullable(partitionCount), Optional.ToNullable(status), captureDescription.Value, retentionDescription.Value, Optional.ToNullable(location));
         }
     }
 }

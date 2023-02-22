@@ -121,6 +121,7 @@ directive:
         $.Eventhub.properties.properties.properties.status['x-ms-enum'].name = 'EventHubEntityStatus';
         $.Destination['x-ms-client-name'] = 'EventHubDestination';
         $.Destination.properties.properties.properties.storageAccountResourceId['x-ms-format'] = 'arm-id';
+        delete $.Eventhub.properties.properties.properties.messageRetentionInDays;
     - from: namespaces-preview.json
       where: $.definitions
       transform: >

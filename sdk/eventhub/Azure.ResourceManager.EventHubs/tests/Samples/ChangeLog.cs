@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.EventHubs.Tests.Samples
             EventHubCollection eventHubCollection = eventHubNamespace.GetEventHubs();
             EventHubData eventHubData = new EventHubData()
             {
-                MessageRetentionInDays = 4,
+                // MessageRetentionInDays = 4,
                 PartitionCount = 4,
                 Status = EventHubEntityStatus.Active,
                 CaptureDescription = new CaptureDescription()
