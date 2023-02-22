@@ -228,8 +228,7 @@ namespace Azure.Storage.Files.Shares
                   directoryUri: directoryUri,
                   authentication: (HttpPipelinePolicy)null,
                   options: options,
-                  storageSharedKeyCredential: null,
-                  fileRequestIntent: null)
+                  storageSharedKeyCredential: null)
         {
         }
 
@@ -258,8 +257,7 @@ namespace Azure.Storage.Files.Shares
                   directoryUri: directoryUri,
                   authentication: credential.AsPolicy(),
                   options: options,
-                  storageSharedKeyCredential: credential,
-                  fileRequestIntent: null)
+                  storageSharedKeyCredential: credential)
         {
         }
 
@@ -295,6 +293,8 @@ namespace Azure.Storage.Files.Shares
         /// <summary>
         /// Initializes a new instance of the <see cref="ShareDirectoryClient"/>
         /// class.
+        ///
+        /// Note that <see cref="ShareClientOptions.ShareTokenIntent"/> is currently required for token authentication.
         /// </summary>
         /// <param name="directoryUri">
         /// A <see cref="Uri"/> referencing the directory that includes the
@@ -304,9 +304,6 @@ namespace Azure.Storage.Files.Shares
         /// <param name="credential">
         /// The token credential used to sign requests.
         /// </param>
-        /// <param name="fileRequestIntent">
-        /// File request intent.
-        /// </param>
         /// <param name="options">
         /// Optional client options that define the transport pipeline
         /// policies for authentication, retries, etc., that are applied to
@@ -315,14 +312,12 @@ namespace Azure.Storage.Files.Shares
         public ShareDirectoryClient(
             Uri directoryUri,
             TokenCredential credential,
-            ShareFileRequestIntent? fileRequestIntent = default,
             ShareClientOptions options = default)
             : this(
                   directoryUri: directoryUri,
                   authentication: credential.AsPolicy(options),
                   options: options ?? new ShareClientOptions(),
-                  storageSharedKeyCredential: null,
-                  fileRequestIntent: fileRequestIntent)
+                  storageSharedKeyCredential: null)
         {
             Errors.VerifyHttpsTokenAuth(directoryUri);
         }
@@ -347,15 +342,11 @@ namespace Azure.Storage.Files.Shares
         /// <param name="storageSharedKeyCredential">
         /// The shared key credential used to sign requests.
         /// </param>
-        /// <param name="fileRequestIntent">
-        /// File request intent.
-        /// </param>
         internal ShareDirectoryClient(
             Uri directoryUri,
             HttpPipelinePolicy authentication,
             ShareClientOptions options,
-            StorageSharedKeyCredential storageSharedKeyCredential,
-            ShareFileRequestIntent? fileRequestIntent)
+            StorageSharedKeyCredential storageSharedKeyCredential)
         {
             Argument.AssertNotNull(directoryUri, nameof(directoryUri));
             options ??= new ShareClientOptions();
@@ -365,8 +356,7 @@ namespace Azure.Storage.Files.Shares
                 sharedKeyCredential: storageSharedKeyCredential,
                 sasCredential: default,
                 clientDiagnostics: new ClientDiagnostics(options),
-                clientOptions: options,
-                fileRequestIntent: fileRequestIntent);
+                clientOptions: options);
             _directoryRestClient = BuildDirectoryRestClient(directoryUri);
         }
 
@@ -473,9 +463,9 @@ namespace Azure.Storage.Files.Shares
                 pipeline: _clientConfiguration.Pipeline,
                 url: uri.AbsoluteUri,
                 version: _clientConfiguration.ClientOptions.Version.ToVersionString(),
-                fileRequestIntent: _clientConfiguration.FileRequestIntent,
+                fileRequestIntent: _clientConfiguration.ClientOptions.ShareTokenIntent,
                 allowTrailingDot: _clientConfiguration.ClientOptions.AllowTrailingDot,
-                allowSourceTrailingDot: _clientConfiguration.ClientOptions.SourceAllowTrailingDot);
+                allowSourceTrailingDot: _clientConfiguration.ClientOptions.AllowSourceTrailingDot);
         }
         #endregion ctors
 

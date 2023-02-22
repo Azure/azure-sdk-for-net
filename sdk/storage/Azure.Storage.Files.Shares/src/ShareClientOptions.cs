@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using Azure.Core;
+using Azure.Storage.Files.Shares.Models;
 
 namespace Azure.Storage.Files.Shares
 {
@@ -144,7 +145,13 @@ namespace Azure.Storage.Files.Shares
         /// <see cref="ShareDirectoryClient.Rename(string, Models.ShareFileRenameOptions, System.Threading.CancellationToken)"/>,
         /// and <see cref="ShareDirectoryClient.RenameAsync(string, Models.ShareFileRenameOptions, System.Threading.CancellationToken)"/>.
         /// </summary>
-        public bool? SourceAllowTrailingDot { get; set; }
+        public bool? AllowSourceTrailingDot { get; set; }
+
+        /// <summary>
+        /// Share Token Intent.  For use with token authentication.  Used to indicate the intent of the request.
+        /// This is currently required when using token authentication.
+        /// </summary>
+        public ShareTokenIntent? ShareTokenIntent { get; set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ShareClientOptions"/>

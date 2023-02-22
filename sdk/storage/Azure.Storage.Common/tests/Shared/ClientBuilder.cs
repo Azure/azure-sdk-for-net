@@ -30,11 +30,6 @@ namespace Azure.Storage.Test.Shared
         public delegate TServiceClient GetServiceClientTokenCredential(Uri endpoint, TokenCredential credential, TServiceClientOptions clientOptions);
 
         /// <summary>
-        /// Delegate for accessing a token credential constructor with parameter for a service client.
-        /// </summary>
-        public delegate TServiceClient GetServiceClientTokenCredentialWithParameter(Uri endpoint, TokenCredential credential, object credentialParameter, TServiceClientOptions clientOptions);
-
-        /// <summary>
         /// Delegate for accessing a credential-less constructor for a service client.
         /// </summary>
         public delegate TServiceClient GetServiceClient(Uri endpoint, TServiceClientOptions clientOptions);
@@ -60,7 +55,6 @@ namespace Azure.Storage.Test.Shared
         private readonly GetServiceClientStorageSharedKeyCredential _getServiceClientStorageSharedKeyCredential;
         private readonly GetServiceClientAzureSasCredential _getServiceClientAzureSasCredential;
         private readonly GetServiceClientTokenCredential _getServiceClientTokenCredential;
-        private readonly GetServiceClientTokenCredentialWithParameter _getServiceClientTokenCredentialWithParameter;
         private readonly GetServiceClient _getServiceClient;
         private readonly GetServiceClientOptions _getServiceClientOptions;
 
@@ -94,7 +88,6 @@ namespace Azure.Storage.Test.Shared
             GetServiceClient getServiceClient,
             GetServiceClientStorageSharedKeyCredential getServiceClientStorageSharedKeyCredential,
             GetServiceClientTokenCredential getServiceClientTokenCredential,
-            GetServiceClientTokenCredentialWithParameter getServiceClientTokenCredentialWithParameter,
             GetServiceClientAzureSasCredential getServiceClientAzureSasCredential,
             GetServiceClientOptions getServiceClientOptions)
         {
@@ -103,7 +96,6 @@ namespace Azure.Storage.Test.Shared
             _getServiceClient = getServiceClient;
             _getServiceClientStorageSharedKeyCredential = getServiceClientStorageSharedKeyCredential;
             _getServiceClientTokenCredential = getServiceClientTokenCredential;
-            _getServiceClientTokenCredentialWithParameter = getServiceClientTokenCredentialWithParameter;
             _getServiceClientAzureSasCredential = getServiceClientAzureSasCredential;
             _getServiceClientOptions = getServiceClientOptions;
         }
@@ -150,17 +142,6 @@ namespace Azure.Storage.Test.Shared
                 _getServiceClientTokenCredential(
                     new Uri(GetEndpoint(config)),
                     Tenants.GetOAuthCredential(config),
-                    options ?? GetOptions()));
-
-        public TServiceClient GetServiceClientFromOauthConfigWithParameter(
-            TenantConfiguration config,
-            TServiceClientOptions options = default,
-            object parameter = default)
-            => AzureCoreRecordedTestBase.InstrumentClient(
-                _getServiceClientTokenCredentialWithParameter(
-                    new Uri(GetEndpoint(config)),
-                    Tenants.GetOAuthCredential(config),
-                    parameter,
                     options ?? GetOptions()));
 
         public TServiceClientOptions GetOptions(bool parallelRange = false)
