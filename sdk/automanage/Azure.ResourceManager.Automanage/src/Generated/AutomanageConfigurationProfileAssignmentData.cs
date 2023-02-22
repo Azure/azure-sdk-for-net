@@ -26,14 +26,14 @@ namespace Azure.ResourceManager.Automanage
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> Properties of the configuration profile assignment. </param>
         /// <param name="managedBy"> Azure resource id. Indicates if this resource is managed by another Azure resource. </param>
-        internal AutomanageConfigurationProfileAssignmentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ConfigurationProfileAssignmentProperties properties, string managedBy) : base(id, name, resourceType, systemData)
+        internal AutomanageConfigurationProfileAssignmentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AutomanageConfigurationProfileAssignmentProperties properties, string managedBy) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
             ManagedBy = managedBy;
         }
 
         /// <summary> Properties of the configuration profile assignment. </summary>
-        public ConfigurationProfileAssignmentProperties Properties { get; set; }
+        public AutomanageConfigurationProfileAssignmentProperties Properties { get; set; }
         /// <summary> Azure resource id. Indicates if this resource is managed by another Azure resource. </summary>
         public string ManagedBy { get; }
     }

@@ -52,8 +52,8 @@ namespace Azure.Containers.ContainerRegistry.Tests
 
             return InstrumentClient(new ContainerRegistryBlobClient(
                     new Uri(endpoint),
-                    TestEnvironment.Credential,
                     repository,
+                    TestEnvironment.Credential,
                     options));
         }
 
@@ -183,8 +183,8 @@ namespace Azure.Containers.ContainerRegistry.Tests
 
             // We won't record the set-up calls, so don't instrument this client.
             return new ContainerRegistryBlobClient(endpoint,
-                TestEnvironment.Credential,
                 repository,
+                TestEnvironment.Credential,
                 new ContainerRegistryClientOptions()
                 {
                     Audience = GetAudience(authorityHost)

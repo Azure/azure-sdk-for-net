@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             ProtectableContainerType.Windows => "Windows",
             ProtectableContainerType.VCenter => "VCenter",
             ProtectableContainerType.VmAppContainer => "VMAppContainer",
-            ProtectableContainerType.SqlAGWorkLoadContainer => "SQLAGWorkLoadContainer",
+            ProtectableContainerType.SqlAvailabilityGroupWorkLoadContainer => "SQLAGWorkLoadContainer",
             ProtectableContainerType.StorageContainer => "StorageContainer",
             ProtectableContainerType.GenericContainer => "GenericContainer",
             ProtectableContainerType.MicrosoftClassicComputeVirtualMachines => "Microsoft.ClassicCompute/virtualMachines",
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             if (string.Equals(value, "Windows", StringComparison.InvariantCultureIgnoreCase)) return ProtectableContainerType.Windows;
             if (string.Equals(value, "VCenter", StringComparison.InvariantCultureIgnoreCase)) return ProtectableContainerType.VCenter;
             if (string.Equals(value, "VMAppContainer", StringComparison.InvariantCultureIgnoreCase)) return ProtectableContainerType.VmAppContainer;
-            if (string.Equals(value, "SQLAGWorkLoadContainer", StringComparison.InvariantCultureIgnoreCase)) return ProtectableContainerType.SqlAGWorkLoadContainer;
+            if (string.Equals(value, "SQLAGWorkLoadContainer", StringComparison.InvariantCultureIgnoreCase)) return ProtectableContainerType.SqlAvailabilityGroupWorkLoadContainer;
             if (string.Equals(value, "StorageContainer", StringComparison.InvariantCultureIgnoreCase)) return ProtectableContainerType.StorageContainer;
             if (string.Equals(value, "GenericContainer", StringComparison.InvariantCultureIgnoreCase)) return ProtectableContainerType.GenericContainer;
             if (string.Equals(value, "Microsoft.ClassicCompute/virtualMachines", StringComparison.InvariantCultureIgnoreCase)) return ProtectableContainerType.MicrosoftClassicComputeVirtualMachines;

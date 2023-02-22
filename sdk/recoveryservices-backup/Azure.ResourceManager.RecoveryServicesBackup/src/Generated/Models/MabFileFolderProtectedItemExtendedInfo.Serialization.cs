@@ -21,10 +21,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 writer.WritePropertyName("lastRefreshedAt"u8);
                 writer.WriteStringValue(LastRefreshedOn.Value, "O");
             }
-            if (Optional.IsDefined(OldestRecoveryPoint))
+            if (Optional.IsDefined(OldestRecoverOn))
             {
                 writer.WritePropertyName("oldestRecoveryPoint"u8);
-                writer.WriteStringValue(OldestRecoveryPoint.Value, "O");
+                writer.WriteStringValue(OldestRecoverOn.Value, "O");
             }
             if (Optional.IsDefined(RecoveryPointCount))
             {

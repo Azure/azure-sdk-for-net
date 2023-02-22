@@ -5,7 +5,7 @@
 %% 2. Run command: mmdc -i DefaultAzureCredentialAuthFlow.md -o DefaultAzureCredentialAuthFlow.svg
 
 flowchart LR;
-    A(Environment):::deployed ==> B(Managed Identity):::deployed ==> C(Azure Developer CLI):::developer ==> D(Visual Studio):::developer ==> E(VS Code):::developer ==> F(Azure CLI):::developer ==> G(Azure PowerShell):::developer ==> H(Interactive browser):::interactive;
+    A(Environment):::deployed ==> B(Workload Identity):::deployed ==> C(Managed Identity):::deployed ==> D(Azure Developer CLI):::developer ==> E(Visual Studio):::developer ==> F(VS Code):::developer ==> G(Azure CLI):::developer ==> H(Azure PowerShell):::developer ==> I(Interactive browser):::interactive;
 
     subgraph CREDENTIAL TYPES;
         direction LR;
@@ -23,6 +23,7 @@ flowchart LR;
 
     %% Add API ref links to credential type boxes
     click A "https://learn.microsoft.com/dotnet/api/azure.identity.environmentcredential?view=azure-dotnet" _blank;
+    click B "https://learn.microsoft.com/dotnet/api/azure.identity.workflowidentitycredential?view=azure-dotnet" _blank;
     click B "https://learn.microsoft.com/dotnet/api/azure.identity.managedidentitycredential?view=azure-dotnet" _blank;
     click D "https://learn.microsoft.com/dotnet/api/azure.identity.visualstudiocredential?view=azure-dotnet" _blank;
     click E "https://learn.microsoft.com/dotnet/api/azure.identity.visualstudiocodecredential?view=azure-dotnet" _blank;

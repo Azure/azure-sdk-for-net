@@ -1,8 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-#nullable disable // TODO: remove and fix errors
-
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.Tracing;
@@ -122,7 +120,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 
             protected override void OnEventSourceCreated(EventSource eventSource)
             {
-                if (eventSource?.Name == AzureMonitorExporterEventSource.EventSourceName)
+                if (eventSource.Name == AzureMonitorExporterEventSource.EventSourceName)
                 {
                     this.eventSources.Add(eventSource);
                     this.EnableEvents(eventSource, EventLevel.Verbose, EventKeywords.All);
