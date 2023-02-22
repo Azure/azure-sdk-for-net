@@ -18,17 +18,17 @@ namespace Azure.ResourceManager.AppContainers.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(RegistryUri))
             {
-                writer.WritePropertyName("registryUrl");
+                writer.WritePropertyName("registryUrl"u8);
                 writer.WriteStringValue(RegistryUri.AbsoluteUri);
             }
             if (Optional.IsDefined(RegistryUserName))
             {
-                writer.WritePropertyName("registryUserName");
+                writer.WritePropertyName("registryUserName"u8);
                 writer.WriteStringValue(RegistryUserName);
             }
             if (Optional.IsDefined(RegistryPassword))
             {
-                writer.WritePropertyName("registryPassword");
+                writer.WritePropertyName("registryPassword"u8);
                 writer.WriteStringValue(RegistryPassword);
             }
             writer.WriteEndObject();
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             Optional<string> registryPassword = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("registryUrl"))
+                if (property.NameEquals("registryUrl"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -51,12 +51,12 @@ namespace Azure.ResourceManager.AppContainers.Models
                     registryUrl = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("registryUserName"))
+                if (property.NameEquals("registryUserName"u8))
                 {
                     registryUserName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("registryPassword"))
+                if (property.NameEquals("registryPassword"u8))
                 {
                     registryPassword = property.Value.GetString();
                     continue;

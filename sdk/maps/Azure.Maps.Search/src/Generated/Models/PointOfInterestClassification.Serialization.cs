@@ -19,12 +19,12 @@ namespace Azure.Maps.Search.Models
             Optional<IReadOnlyList<ClassificationName>> names = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("code"))
+                if (property.NameEquals("code"u8))
                 {
                     code = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("names"))
+                if (property.NameEquals("names"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

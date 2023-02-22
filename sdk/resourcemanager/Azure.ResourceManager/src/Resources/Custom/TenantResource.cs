@@ -1,12 +1,9 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
-using System.ComponentModel;
 using System.Threading;
 using Azure.Core;
-using Azure.Core.Pipeline;
-using Azure.ResourceManager.ManagementGroups;
+using Azure.ResourceManager.Resources.Models;
 
 [assembly: CodeGenSuppressType("TenantExtensions")]
 namespace Azure.ResourceManager.Resources
@@ -37,6 +34,54 @@ namespace Azure.ResourceManager.Resources
         {
             HasData = true;
             _data = data;
+        }
+
+        /// <summary>
+        /// Gets all resource providers for the tenant.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Providers_ListAtTenantScope</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="top"> [This parameter is no longer supported.] The number of results to return. </param>
+        /// <param name="expand"> The properties to include in the results. For example, use &amp;$expand=metadata in the query string to retrieve resource provider metadata. To include property aliases in response, use $expand=resourceTypes/aliases. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="TenantResourceProvider" /> that may take multiple service requests to iterate over. </returns>
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        [System.ObsoleteAttribute("This method is obsolete as the `top` parameter is not supported by service and will be removed in a future release.", false)]
+        public virtual AsyncPageable<TenantResourceProvider> GetTenantResourceProvidersAsync(int? top, string expand, CancellationToken cancellationToken = default)
+        {
+            return GetTenantResourceProvidersAsync(expand, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets all resource providers for the tenant.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Providers_ListAtTenantScope</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="top"> [This parameter is no longer supported.] The number of results to return. </param>
+        /// <param name="expand"> The properties to include in the results. For example, use &amp;$expand=metadata in the query string to retrieve resource provider metadata. To include property aliases in response, use $expand=resourceTypes/aliases. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="TenantResourceProvider" /> that may take multiple service requests to iterate over. </returns>
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        [System.ObsoleteAttribute("This method is obsolete as the `top` parameter is not supported by service and will be removed in a future release.", false)]
+        public virtual Pageable<TenantResourceProvider> GetTenantResourceProviders(int? top, string expand, CancellationToken cancellationToken = default)
+        {
+            return GetTenantResourceProviders(expand, cancellationToken);
         }
     }
 }

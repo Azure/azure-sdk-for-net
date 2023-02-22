@@ -17,27 +17,27 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(SqlVmInstanceId))
             {
-                writer.WritePropertyName("sqlVirtualMachineInstanceId");
+                writer.WritePropertyName("sqlVirtualMachineInstanceId"u8);
                 writer.WriteStringValue(SqlVmInstanceId);
             }
             if (Optional.IsDefined(Role))
             {
-                writer.WritePropertyName("role");
+                writer.WritePropertyName("role"u8);
                 writer.WriteStringValue(Role.Value.ToString());
             }
             if (Optional.IsDefined(Commit))
             {
-                writer.WritePropertyName("commit");
+                writer.WritePropertyName("commit"u8);
                 writer.WriteStringValue(Commit.Value.ToString());
             }
             if (Optional.IsDefined(Failover))
             {
-                writer.WritePropertyName("failover");
+                writer.WritePropertyName("failover"u8);
                 writer.WriteStringValue(Failover.Value.ToString());
             }
             if (Optional.IsDefined(ReadableSecondary))
             {
-                writer.WritePropertyName("readableSecondary");
+                writer.WritePropertyName("readableSecondary"u8);
                 writer.WriteStringValue(ReadableSecondary.Value.ToString());
             }
             writer.WriteEndObject();
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             Optional<ReadableSecondaryMode> readableSecondary = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("sqlVirtualMachineInstanceId"))
+                if (property.NameEquals("sqlVirtualMachineInstanceId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                     sqlVmInstanceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("role"))
+                if (property.NameEquals("role"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                     role = new AvailabilityGroupReplicaRole(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("commit"))
+                if (property.NameEquals("commit"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                     commit = new AvailabilityGroupReplicaCommitMode(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("failover"))
+                if (property.NameEquals("failover"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                     failover = new AvailabilityGroupReplicaFailoverMode(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("readableSecondary"))
+                if (property.NameEquals("readableSecondary"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

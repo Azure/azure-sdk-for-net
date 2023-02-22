@@ -15,9 +15,9 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("primaryAuthKeyHash");
+            writer.WritePropertyName("primaryAuthKeyHash"u8);
             writer.WriteStringValue(PrimaryAuthKeyHash);
-            writer.WritePropertyName("secondaryAuthKeyHash");
+            writer.WritePropertyName("secondaryAuthKeyHash"u8);
             writer.WriteStringValue(SecondaryAuthKeyHash);
             writer.WriteEndObject();
         }
@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
             string secondaryAuthKeyHash = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("primaryAuthKeyHash"))
+                if (property.NameEquals("primaryAuthKeyHash"u8))
                 {
                     primaryAuthKeyHash = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("secondaryAuthKeyHash"))
+                if (property.NameEquals("secondaryAuthKeyHash"u8))
                 {
                     secondaryAuthKeyHash = property.Value.GetString();
                     continue;

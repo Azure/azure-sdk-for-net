@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Orbital.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("subnetId");
+            writer.WritePropertyName("subnetId"u8);
             writer.WriteStringValue(NetworkSubnetId);
             writer.WriteEndObject();
         }
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Orbital.Models
             ResourceIdentifier subnetId = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("subnetId"))
+                if (property.NameEquals("subnetId"u8))
                 {
                     subnetId = new ResourceIdentifier(property.Value.GetString());
                     continue;

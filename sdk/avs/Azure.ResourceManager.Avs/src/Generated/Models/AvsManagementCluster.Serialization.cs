@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.Avs.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(ClusterSize))
             {
-                writer.WritePropertyName("clusterSize");
+                writer.WritePropertyName("clusterSize"u8);
                 writer.WriteNumberValue(ClusterSize.Value);
             }
             if (Optional.IsCollectionDefined(Hosts))
             {
-                writer.WritePropertyName("hosts");
+                writer.WritePropertyName("hosts"u8);
                 writer.WriteStartArray();
                 foreach (var item in Hosts)
                 {
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Avs.Models
             Optional<IList<string>> hosts = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("clusterSize"))
+                if (property.NameEquals("clusterSize"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Avs.Models
                     clusterSize = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("provisioningState"))
+                if (property.NameEquals("provisioningState"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Avs.Models
                     provisioningState = new AvsPrivateCloudClusterProvisioningState(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("clusterId"))
+                if (property.NameEquals("clusterId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Avs.Models
                     clusterId = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("hosts"))
+                if (property.NameEquals("hosts"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

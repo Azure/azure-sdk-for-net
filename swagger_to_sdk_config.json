@@ -1,5 +1,10 @@
 {
   "$schema": "https://raw.githubusercontent.com/lmazuel/swagger-to-sdk/master/swagger_to_sdk_config.schema.json",
+  "initOptions": {
+    "initScript": {
+      "path": "pwsh ./eng/scripts/Automation-Sdk-Init.ps1"
+    }
+  },
   "meta": {
     "autorest_options": {
       "version": "2.0.4421",

@@ -17,14 +17,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Status))
             {
-                writer.WritePropertyName("status");
+                writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
             if (Optional.IsDefined(Cert))
             {
                 if (Cert != null)
                 {
-                    writer.WritePropertyName("cert");
+                    writer.WritePropertyName("cert"u8);
                     writer.WriteStringValue(Cert);
                 }
                 else
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 if (Key != null)
                 {
-                    writer.WritePropertyName("key");
+                    writer.WritePropertyName("key"u8);
                     writer.WriteStringValue(Key);
                 }
                 else
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 if (Cname != null)
                 {
-                    writer.WritePropertyName("cname");
+                    writer.WritePropertyName("cname"u8);
                     writer.WriteStringValue(Cname);
                 }
                 else
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 if (LeafDomainLabel != null)
                 {
-                    writer.WritePropertyName("leafDomainLabel");
+                    writer.WritePropertyName("leafDomainLabel"u8);
                     writer.WriteStringValue(LeafDomainLabel);
                 }
                 else
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             if (Optional.IsDefined(OverwriteExistingDomain))
             {
-                writer.WritePropertyName("overwriteExistingDomain");
+                writer.WritePropertyName("overwriteExistingDomain"u8);
                 writer.WriteBooleanValue(OverwriteExistingDomain.Value);
             }
             writer.WriteEndObject();
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Optional<bool> overwriteExistingDomain = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("status"))
+                if (property.NameEquals("status"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     status = new MachineLearningSslConfigStatus(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("cert"))
+                if (property.NameEquals("cert"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     cert = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("key"))
+                if (property.NameEquals("key"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     key = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("cname"))
+                if (property.NameEquals("cname"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     cname = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("leafDomainLabel"))
+                if (property.NameEquals("leafDomainLabel"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     leafDomainLabel = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("overwriteExistingDomain"))
+                if (property.NameEquals("overwriteExistingDomain"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

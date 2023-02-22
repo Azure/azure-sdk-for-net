@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(ConfigurationServiceGitRepositories))
             {
-                writer.WritePropertyName("repositories");
+                writer.WritePropertyName("repositories"u8);
                 writer.WriteStartArray();
                 foreach (var item in ConfigurationServiceGitRepositories)
                 {
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             Optional<IList<AppPlatformConfigurationServiceGitRepository>> repositories = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("repositories"))
+                if (property.NameEquals("repositories"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

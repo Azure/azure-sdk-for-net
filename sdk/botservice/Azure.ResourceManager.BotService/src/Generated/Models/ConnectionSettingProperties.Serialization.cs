@@ -18,42 +18,42 @@ namespace Azure.ResourceManager.BotService.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Id))
             {
-                writer.WritePropertyName("id");
+                writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
             if (Optional.IsDefined(Name))
             {
-                writer.WritePropertyName("name");
+                writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
             if (Optional.IsDefined(ClientId))
             {
-                writer.WritePropertyName("clientId");
+                writer.WritePropertyName("clientId"u8);
                 writer.WriteStringValue(ClientId);
             }
             if (Optional.IsDefined(ClientSecret))
             {
-                writer.WritePropertyName("clientSecret");
+                writer.WritePropertyName("clientSecret"u8);
                 writer.WriteStringValue(ClientSecret);
             }
             if (Optional.IsDefined(Scopes))
             {
-                writer.WritePropertyName("scopes");
+                writer.WritePropertyName("scopes"u8);
                 writer.WriteStringValue(Scopes);
             }
             if (Optional.IsDefined(ServiceProviderId))
             {
-                writer.WritePropertyName("serviceProviderId");
+                writer.WritePropertyName("serviceProviderId"u8);
                 writer.WriteStringValue(ServiceProviderId);
             }
             if (Optional.IsDefined(ServiceProviderDisplayName))
             {
-                writer.WritePropertyName("serviceProviderDisplayName");
+                writer.WritePropertyName("serviceProviderDisplayName"u8);
                 writer.WriteStringValue(ServiceProviderDisplayName);
             }
             if (Optional.IsCollectionDefined(Parameters))
             {
-                writer.WritePropertyName("parameters");
+                writer.WritePropertyName("parameters"u8);
                 writer.WriteStartArray();
                 foreach (var item in Parameters)
                 {
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.BotService.Models
             }
             if (Optional.IsDefined(ProvisioningState))
             {
-                writer.WritePropertyName("provisioningState");
+                writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);
             }
             writer.WriteEndObject();
@@ -83,47 +83,47 @@ namespace Azure.ResourceManager.BotService.Models
             Optional<string> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("clientId"))
+                if (property.NameEquals("clientId"u8))
                 {
                     clientId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("settingId"))
+                if (property.NameEquals("settingId"u8))
                 {
                     settingId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("clientSecret"))
+                if (property.NameEquals("clientSecret"u8))
                 {
                     clientSecret = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("scopes"))
+                if (property.NameEquals("scopes"u8))
                 {
                     scopes = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("serviceProviderId"))
+                if (property.NameEquals("serviceProviderId"u8))
                 {
                     serviceProviderId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("serviceProviderDisplayName"))
+                if (property.NameEquals("serviceProviderDisplayName"u8))
                 {
                     serviceProviderDisplayName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("parameters"))
+                if (property.NameEquals("parameters"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.BotService.Models
                     parameters = array;
                     continue;
                 }
-                if (property.NameEquals("provisioningState"))
+                if (property.NameEquals("provisioningState"u8))
                 {
                     provisioningState = property.Value.GetString();
                     continue;

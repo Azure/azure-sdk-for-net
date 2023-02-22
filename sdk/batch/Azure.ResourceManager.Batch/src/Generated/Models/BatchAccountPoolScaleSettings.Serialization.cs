@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.Batch.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(FixedScale))
             {
-                writer.WritePropertyName("fixedScale");
+                writer.WritePropertyName("fixedScale"u8);
                 writer.WriteObjectValue(FixedScale);
             }
             if (Optional.IsDefined(AutoScale))
             {
-                writer.WritePropertyName("autoScale");
+                writer.WritePropertyName("autoScale"u8);
                 writer.WriteObjectValue(AutoScale);
             }
             writer.WriteEndObject();
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Batch.Models
             Optional<BatchAccountAutoScaleSettings> autoScale = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("fixedScale"))
+                if (property.NameEquals("fixedScale"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Batch.Models
                     fixedScale = BatchAccountFixedScaleSettings.DeserializeBatchAccountFixedScaleSettings(property.Value);
                     continue;
                 }
-                if (property.NameEquals("autoScale"))
+                if (property.NameEquals("autoScale"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Network.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(FrontendIPConfigurations))
             {
-                writer.WritePropertyName("frontendIPConfigurations");
+                writer.WritePropertyName("frontendIPConfigurations"u8);
                 writer.WriteStartArray();
                 foreach (var item in FrontendIPConfigurations)
                 {

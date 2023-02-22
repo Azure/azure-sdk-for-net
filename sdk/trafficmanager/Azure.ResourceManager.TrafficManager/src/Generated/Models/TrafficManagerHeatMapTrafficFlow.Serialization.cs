@@ -19,22 +19,22 @@ namespace Azure.ResourceManager.TrafficManager.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(SourceIP))
             {
-                writer.WritePropertyName("sourceIp");
+                writer.WritePropertyName("sourceIp"u8);
                 writer.WriteStringValue(SourceIP.ToString());
             }
             if (Optional.IsDefined(Latitude))
             {
-                writer.WritePropertyName("latitude");
+                writer.WritePropertyName("latitude"u8);
                 writer.WriteNumberValue(Latitude.Value);
             }
             if (Optional.IsDefined(Longitude))
             {
-                writer.WritePropertyName("longitude");
+                writer.WritePropertyName("longitude"u8);
                 writer.WriteNumberValue(Longitude.Value);
             }
             if (Optional.IsCollectionDefined(QueryExperiences))
             {
-                writer.WritePropertyName("queryExperiences");
+                writer.WritePropertyName("queryExperiences"u8);
                 writer.WriteStartArray();
                 foreach (var item in QueryExperiences)
                 {
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.TrafficManager.Models
             Optional<IList<TrafficManagerHeatMapQueryExperience>> queryExperiences = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("sourceIp"))
+                if (property.NameEquals("sourceIp"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.TrafficManager.Models
                     sourceIP = IPAddress.Parse(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("latitude"))
+                if (property.NameEquals("latitude"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.TrafficManager.Models
                     latitude = property.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("longitude"))
+                if (property.NameEquals("longitude"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.TrafficManager.Models
                     longitude = property.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("queryExperiences"))
+                if (property.NameEquals("queryExperiences"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

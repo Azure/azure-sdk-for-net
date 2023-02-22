@@ -16,9 +16,9 @@ namespace Azure.Communication.JobRouter
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("weight");
+            writer.WritePropertyName("weight"u8);
             writer.WriteNumberValue(Weight);
-            writer.WritePropertyName("labelSelectors");
+            writer.WritePropertyName("labelSelectors"u8);
             writer.WriteStartArray();
             foreach (var item in LabelSelectors)
             {
@@ -34,12 +34,12 @@ namespace Azure.Communication.JobRouter
             IList<WorkerSelector> labelSelectors = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("weight"))
+                if (property.NameEquals("weight"u8))
                 {
                     weight = property.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("labelSelectors"))
+                if (property.NameEquals("labelSelectors"u8))
                 {
                     List<WorkerSelector> array = new List<WorkerSelector>();
                     foreach (var item in property.Value.EnumerateArray())

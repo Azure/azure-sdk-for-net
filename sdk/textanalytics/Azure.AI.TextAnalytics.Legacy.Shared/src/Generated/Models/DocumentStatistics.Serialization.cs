@@ -18,12 +18,12 @@ namespace Azure.AI.TextAnalytics.Legacy
             int transactionsCount = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("charactersCount"))
+                if (property.NameEquals("charactersCount"u8))
                 {
                     charactersCount = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("transactionsCount"))
+                if (property.NameEquals("transactionsCount"u8))
                 {
                     transactionsCount = property.Value.GetInt32();
                     continue;

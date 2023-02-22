@@ -17,17 +17,17 @@ namespace Azure.ResourceManager.DataMigration.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(MinFreeCpu))
             {
-                writer.WritePropertyName("minFreeCpu");
+                writer.WritePropertyName("minFreeCpu"u8);
                 writer.WriteNumberValue(MinFreeCpu.Value);
             }
             if (Optional.IsDefined(MinFreeMemoryMb))
             {
-                writer.WritePropertyName("minFreeMemoryMb");
+                writer.WritePropertyName("minFreeMemoryMb"u8);
                 writer.WriteNumberValue(MinFreeMemoryMb.Value);
             }
             if (Optional.IsDefined(MaxParallelism))
             {
-                writer.WritePropertyName("maxParallelism");
+                writer.WritePropertyName("maxParallelism"u8);
                 writer.WriteNumberValue(MaxParallelism.Value);
             }
             writer.WriteEndObject();
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             Optional<int> maxParallelism = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("minFreeCpu"))
+                if (property.NameEquals("minFreeCpu"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     minFreeCpu = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("minFreeMemoryMb"))
+                if (property.NameEquals("minFreeMemoryMb"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     minFreeMemoryMb = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("maxParallelism"))
+                if (property.NameEquals("maxParallelism"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

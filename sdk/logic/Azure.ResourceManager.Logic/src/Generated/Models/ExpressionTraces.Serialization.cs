@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Logic.Models
             Optional<IReadOnlyList<LogicExpressionRoot>> inputs = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("inputs"))
+                if (property.NameEquals("inputs"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

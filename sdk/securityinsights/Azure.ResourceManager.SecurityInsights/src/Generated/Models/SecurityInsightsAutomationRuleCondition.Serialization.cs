@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("conditionType");
+            writer.WritePropertyName("conditionType"u8);
             writer.WriteStringValue(ConditionType.ToString());
             writer.WriteEndObject();
         }
@@ -31,16 +31,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     case "PropertyChanged": return SecurityInsightsPropertyChangedConditionProperties.DeserializeSecurityInsightsPropertyChangedConditionProperties(element);
                 }
             }
-            ConditionType conditionType = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("conditionType"))
-                {
-                    conditionType = new ConditionType(property.Value.GetString());
-                    continue;
-                }
-            }
-            return new UnknownSecurityInsightsAutomationRuleCondition(conditionType);
+            return UnknownAutomationRuleCondition.DeserializeUnknownAutomationRuleCondition(element);
         }
     }
 }

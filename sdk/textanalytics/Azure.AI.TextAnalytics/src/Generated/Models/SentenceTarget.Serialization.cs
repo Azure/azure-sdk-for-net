@@ -16,17 +16,17 @@ namespace Azure.AI.TextAnalytics.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("sentiment");
+            writer.WritePropertyName("sentiment"u8);
             writer.WriteStringValue(Sentiment);
-            writer.WritePropertyName("confidenceScores");
+            writer.WritePropertyName("confidenceScores"u8);
             writer.WriteObjectValue(ConfidenceScores);
-            writer.WritePropertyName("offset");
+            writer.WritePropertyName("offset"u8);
             writer.WriteNumberValue(Offset);
-            writer.WritePropertyName("length");
+            writer.WritePropertyName("length"u8);
             writer.WriteNumberValue(Length);
-            writer.WritePropertyName("text");
+            writer.WritePropertyName("text"u8);
             writer.WriteStringValue(Text);
-            writer.WritePropertyName("relations");
+            writer.WritePropertyName("relations"u8);
             writer.WriteStartArray();
             foreach (var item in Relations)
             {
@@ -46,32 +46,32 @@ namespace Azure.AI.TextAnalytics.Models
             IList<TargetRelation> relations = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("sentiment"))
+                if (property.NameEquals("sentiment"u8))
                 {
                     sentiment = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("confidenceScores"))
+                if (property.NameEquals("confidenceScores"u8))
                 {
                     confidenceScores = TargetConfidenceScoreLabel.DeserializeTargetConfidenceScoreLabel(property.Value);
                     continue;
                 }
-                if (property.NameEquals("offset"))
+                if (property.NameEquals("offset"u8))
                 {
                     offset = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("length"))
+                if (property.NameEquals("length"u8))
                 {
                     length = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("text"))
+                if (property.NameEquals("text"u8))
                 {
                     text = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("relations"))
+                if (property.NameEquals("relations"u8))
                 {
                     List<TargetRelation> array = new List<TargetRelation>();
                     foreach (var item in property.Value.EnumerateArray())

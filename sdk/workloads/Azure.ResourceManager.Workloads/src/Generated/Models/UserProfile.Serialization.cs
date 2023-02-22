@@ -15,9 +15,9 @@ namespace Azure.ResourceManager.Workloads.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("userName");
+            writer.WritePropertyName("userName"u8);
             writer.WriteStringValue(UserName);
-            writer.WritePropertyName("sshPublicKey");
+            writer.WritePropertyName("sshPublicKey"u8);
             writer.WriteStringValue(SshPublicKey);
             writer.WriteEndObject();
         }
@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.Workloads.Models
             string sshPublicKey = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("userName"))
+                if (property.NameEquals("userName"u8))
                 {
                     userName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("sshPublicKey"))
+                if (property.NameEquals("sshPublicKey"u8))
                 {
                     sshPublicKey = property.Value.GetString();
                     continue;

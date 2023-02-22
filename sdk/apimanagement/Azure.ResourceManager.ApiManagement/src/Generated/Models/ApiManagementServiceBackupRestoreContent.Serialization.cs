@@ -15,25 +15,25 @@ namespace Azure.ResourceManager.ApiManagement.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("storageAccount");
+            writer.WritePropertyName("storageAccount"u8);
             writer.WriteStringValue(StorageAccount);
-            writer.WritePropertyName("containerName");
+            writer.WritePropertyName("containerName"u8);
             writer.WriteStringValue(ContainerName);
-            writer.WritePropertyName("backupName");
+            writer.WritePropertyName("backupName"u8);
             writer.WriteStringValue(BackupName);
             if (Optional.IsDefined(AccessType))
             {
-                writer.WritePropertyName("accessType");
+                writer.WritePropertyName("accessType"u8);
                 writer.WriteStringValue(AccessType.Value.ToString());
             }
             if (Optional.IsDefined(AccessKey))
             {
-                writer.WritePropertyName("accessKey");
+                writer.WritePropertyName("accessKey"u8);
                 writer.WriteStringValue(AccessKey);
             }
             if (Optional.IsDefined(ClientId))
             {
-                writer.WritePropertyName("clientId");
+                writer.WritePropertyName("clientId"u8);
                 writer.WriteStringValue(ClientId);
             }
             writer.WriteEndObject();

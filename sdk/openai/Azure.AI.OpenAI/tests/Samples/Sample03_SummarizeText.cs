@@ -3,7 +3,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.AI.OpenAI.Models;
 using Azure.Identity;
 using NUnit.Framework;
 

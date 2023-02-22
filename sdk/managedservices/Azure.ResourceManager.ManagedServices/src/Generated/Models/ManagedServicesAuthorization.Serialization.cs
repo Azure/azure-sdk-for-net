@@ -17,18 +17,18 @@ namespace Azure.ResourceManager.ManagedServices.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("principalId");
+            writer.WritePropertyName("principalId"u8);
             writer.WriteStringValue(PrincipalId);
             if (Optional.IsDefined(PrincipalIdDisplayName))
             {
-                writer.WritePropertyName("principalIdDisplayName");
+                writer.WritePropertyName("principalIdDisplayName"u8);
                 writer.WriteStringValue(PrincipalIdDisplayName);
             }
-            writer.WritePropertyName("roleDefinitionId");
+            writer.WritePropertyName("roleDefinitionId"u8);
             writer.WriteStringValue(RoleDefinitionId);
             if (Optional.IsCollectionDefined(DelegatedRoleDefinitionIds))
             {
-                writer.WritePropertyName("delegatedRoleDefinitionIds");
+                writer.WritePropertyName("delegatedRoleDefinitionIds"u8);
                 writer.WriteStartArray();
                 foreach (var item in DelegatedRoleDefinitionIds)
                 {
@@ -47,22 +47,22 @@ namespace Azure.ResourceManager.ManagedServices.Models
             Optional<IList<Guid>> delegatedRoleDefinitionIds = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("principalId"))
+                if (property.NameEquals("principalId"u8))
                 {
                     principalId = property.Value.GetGuid();
                     continue;
                 }
-                if (property.NameEquals("principalIdDisplayName"))
+                if (property.NameEquals("principalIdDisplayName"u8))
                 {
                     principalIdDisplayName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("roleDefinitionId"))
+                if (property.NameEquals("roleDefinitionId"u8))
                 {
                     roleDefinitionId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("delegatedRoleDefinitionIds"))
+                if (property.NameEquals("delegatedRoleDefinitionIds"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

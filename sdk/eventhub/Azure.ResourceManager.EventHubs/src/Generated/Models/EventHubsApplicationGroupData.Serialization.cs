@@ -18,21 +18,21 @@ namespace Azure.ResourceManager.EventHubs
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(IsEnabled))
             {
-                writer.WritePropertyName("isEnabled");
+                writer.WritePropertyName("isEnabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
             if (Optional.IsDefined(ClientAppGroupIdentifier))
             {
-                writer.WritePropertyName("clientAppGroupIdentifier");
+                writer.WritePropertyName("clientAppGroupIdentifier"u8);
                 writer.WriteStringValue(ClientAppGroupIdentifier);
             }
             if (Optional.IsCollectionDefined(Policies))
             {
-                writer.WritePropertyName("policies");
+                writer.WritePropertyName("policies"u8);
                 writer.WriteStartArray();
                 foreach (var item in Policies)
                 {
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.EventHubs
             Optional<IList<EventHubsApplicationGroupPolicy>> policies = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("location"))
+                if (property.NameEquals("location"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -66,22 +66,22 @@ namespace Azure.ResourceManager.EventHubs
                     location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.EventHubs
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.EventHubs
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("isEnabled"))
+                        if (property0.NameEquals("isEnabled"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -110,12 +110,12 @@ namespace Azure.ResourceManager.EventHubs
                             isEnabled = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("clientAppGroupIdentifier"))
+                        if (property0.NameEquals("clientAppGroupIdentifier"u8))
                         {
                             clientAppGroupIdentifier = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("policies"))
+                        if (property0.NameEquals("policies"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

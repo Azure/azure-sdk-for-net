@@ -19,12 +19,12 @@ namespace Azure.ResourceManager.NetApp.Models
             Optional<bool> policyEnabled = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("volumeName"))
+                if (property.NameEquals("volumeName"u8))
                 {
                     volumeName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("backupsCount"))
+                if (property.NameEquals("backupsCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     backupsCount = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("policyEnabled"))
+                if (property.NameEquals("policyEnabled"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

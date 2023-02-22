@@ -18,16 +18,16 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("type");
+            writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
             if (Optional.IsDefined(Serializer))
             {
-                writer.WritePropertyName("serializer");
+                writer.WritePropertyName("serializer"u8);
                 writer.WriteObjectValue(Serializer);
             }
             if (Optional.IsDefined(Deserializer))
             {
-                writer.WritePropertyName("deserializer");
+                writer.WritePropertyName("deserializer"u8);
                 writer.WriteObjectValue(Deserializer);
             }
             foreach (var item in AdditionalProperties)

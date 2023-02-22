@@ -18,37 +18,37 @@ namespace Azure.ResourceManager.Batch.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(AutoBlobContainerName))
             {
-                writer.WritePropertyName("autoStorageContainerName");
+                writer.WritePropertyName("autoStorageContainerName"u8);
                 writer.WriteStringValue(AutoBlobContainerName);
             }
             if (Optional.IsDefined(BlobContainerUri))
             {
-                writer.WritePropertyName("storageContainerUrl");
+                writer.WritePropertyName("storageContainerUrl"u8);
                 writer.WriteStringValue(BlobContainerUri.AbsoluteUri);
             }
             if (Optional.IsDefined(HttpUri))
             {
-                writer.WritePropertyName("httpUrl");
+                writer.WritePropertyName("httpUrl"u8);
                 writer.WriteStringValue(HttpUri.AbsoluteUri);
             }
             if (Optional.IsDefined(BlobPrefix))
             {
-                writer.WritePropertyName("blobPrefix");
+                writer.WritePropertyName("blobPrefix"u8);
                 writer.WriteStringValue(BlobPrefix);
             }
             if (Optional.IsDefined(FilePath))
             {
-                writer.WritePropertyName("filePath");
+                writer.WritePropertyName("filePath"u8);
                 writer.WriteStringValue(FilePath);
             }
             if (Optional.IsDefined(FileMode))
             {
-                writer.WritePropertyName("fileMode");
+                writer.WritePropertyName("fileMode"u8);
                 writer.WriteStringValue(FileMode);
             }
             if (Optional.IsDefined(Identity))
             {
-                writer.WritePropertyName("identityReference");
+                writer.WritePropertyName("identityReference"u8);
                 writer.WriteObjectValue(Identity);
             }
             writer.WriteEndObject();
@@ -65,12 +65,12 @@ namespace Azure.ResourceManager.Batch.Models
             Optional<ComputeNodeIdentityReference> identityReference = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("autoStorageContainerName"))
+                if (property.NameEquals("autoStorageContainerName"u8))
                 {
                     autoStorageContainerName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("storageContainerUrl"))
+                if (property.NameEquals("storageContainerUrl"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Batch.Models
                     storageContainerUrl = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("httpUrl"))
+                if (property.NameEquals("httpUrl"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -90,22 +90,22 @@ namespace Azure.ResourceManager.Batch.Models
                     httpUrl = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("blobPrefix"))
+                if (property.NameEquals("blobPrefix"u8))
                 {
                     blobPrefix = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("filePath"))
+                if (property.NameEquals("filePath"u8))
                 {
                     filePath = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("fileMode"))
+                if (property.NameEquals("fileMode"u8))
                 {
                     fileMode = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("identityReference"))
+                if (property.NameEquals("identityReference"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

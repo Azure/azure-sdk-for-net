@@ -17,13 +17,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(VaultCriticalOperation))
             {
-                writer.WritePropertyName("vaultCriticalOperation");
+                writer.WritePropertyName("vaultCriticalOperation"u8);
                 writer.WriteStringValue(VaultCriticalOperation);
             }
-            if (Optional.IsDefined(DefaultResourceRequest))
+            if (Optional.IsDefined(DefaultResourceId))
             {
-                writer.WritePropertyName("defaultResourceRequest");
-                writer.WriteStringValue(DefaultResourceRequest);
+                writer.WritePropertyName("defaultResourceRequest"u8);
+                writer.WriteStringValue(DefaultResourceId);
             }
             writer.WriteEndObject();
         }
@@ -31,17 +31,22 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         internal static ResourceGuardOperationDetail DeserializeResourceGuardOperationDetail(JsonElement element)
         {
             Optional<string> vaultCriticalOperation = default;
-            Optional<string> defaultResourceRequest = default;
+            Optional<ResourceIdentifier> defaultResourceRequest = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("vaultCriticalOperation"))
+                if (property.NameEquals("vaultCriticalOperation"u8))
                 {
                     vaultCriticalOperation = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("defaultResourceRequest"))
+                if (property.NameEquals("defaultResourceRequest"u8))
                 {
-                    defaultResourceRequest = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    defaultResourceRequest = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
             }

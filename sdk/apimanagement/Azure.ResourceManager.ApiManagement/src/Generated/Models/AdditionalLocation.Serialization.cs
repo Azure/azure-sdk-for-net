@@ -18,13 +18,13 @@ namespace Azure.ResourceManager.ApiManagement.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("location");
+            writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
-            writer.WritePropertyName("sku");
+            writer.WritePropertyName("sku"u8);
             writer.WriteObjectValue(Sku);
             if (Optional.IsCollectionDefined(Zones))
             {
-                writer.WritePropertyName("zones");
+                writer.WritePropertyName("zones"u8);
                 writer.WriteStartArray();
                 foreach (var item in Zones)
                 {
@@ -34,17 +34,17 @@ namespace Azure.ResourceManager.ApiManagement.Models
             }
             if (Optional.IsDefined(PublicIPAddressId))
             {
-                writer.WritePropertyName("publicIpAddressId");
+                writer.WritePropertyName("publicIpAddressId"u8);
                 writer.WriteStringValue(PublicIPAddressId);
             }
             if (Optional.IsDefined(VirtualNetworkConfiguration))
             {
-                writer.WritePropertyName("virtualNetworkConfiguration");
+                writer.WritePropertyName("virtualNetworkConfiguration"u8);
                 writer.WriteObjectValue(VirtualNetworkConfiguration);
             }
             if (Optional.IsDefined(DisableGateway))
             {
-                writer.WritePropertyName("disableGateway");
+                writer.WritePropertyName("disableGateway"u8);
                 writer.WriteBooleanValue(DisableGateway.Value);
             }
             writer.WriteEndObject();
@@ -64,17 +64,17 @@ namespace Azure.ResourceManager.ApiManagement.Models
             Optional<PlatformVersion> platformVersion = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("location"))
+                if (property.NameEquals("location"u8))
                 {
                     location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("sku"))
+                if (property.NameEquals("sku"u8))
                 {
                     sku = ApiManagementServiceSkuProperties.DeserializeApiManagementServiceSkuProperties(property.Value);
                     continue;
                 }
-                if (property.NameEquals("zones"))
+                if (property.NameEquals("zones"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     zones = array;
                     continue;
                 }
-                if (property.NameEquals("publicIPAddresses"))
+                if (property.NameEquals("publicIPAddresses"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     publicIPAddresses = array;
                     continue;
                 }
-                if (property.NameEquals("privateIPAddresses"))
+                if (property.NameEquals("privateIPAddresses"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     privateIPAddresses = array;
                     continue;
                 }
-                if (property.NameEquals("publicIpAddressId"))
+                if (property.NameEquals("publicIpAddressId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     publicIPAddressId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("virtualNetworkConfiguration"))
+                if (property.NameEquals("virtualNetworkConfiguration"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     virtualNetworkConfiguration = VirtualNetworkConfiguration.DeserializeVirtualNetworkConfiguration(property.Value);
                     continue;
                 }
-                if (property.NameEquals("gatewayRegionalUrl"))
+                if (property.NameEquals("gatewayRegionalUrl"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     gatewayRegionalUri = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("disableGateway"))
+                if (property.NameEquals("disableGateway"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     disableGateway = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("platformVersion"))
+                if (property.NameEquals("platformVersion"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             Optional<string> java = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("java"))
+                if (property.NameEquals("java"u8))
                 {
                     java = property.Value.GetString();
                     continue;

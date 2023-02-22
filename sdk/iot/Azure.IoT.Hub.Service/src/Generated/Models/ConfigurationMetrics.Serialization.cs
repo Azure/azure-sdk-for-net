@@ -18,7 +18,7 @@ namespace Azure.IoT.Hub.Service.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Results))
             {
-                writer.WritePropertyName("results");
+                writer.WritePropertyName("results"u8);
                 writer.WriteStartObject();
                 foreach (var item in Results)
                 {
@@ -29,7 +29,7 @@ namespace Azure.IoT.Hub.Service.Models
             }
             if (Optional.IsCollectionDefined(Queries))
             {
-                writer.WritePropertyName("queries");
+                writer.WritePropertyName("queries"u8);
                 writer.WriteStartObject();
                 foreach (var item in Queries)
                 {
@@ -47,7 +47,7 @@ namespace Azure.IoT.Hub.Service.Models
             Optional<IDictionary<string, string>> queries = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("results"))
+                if (property.NameEquals("results"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -62,7 +62,7 @@ namespace Azure.IoT.Hub.Service.Models
                     results = dictionary;
                     continue;
                 }
-                if (property.NameEquals("queries"))
+                if (property.NameEquals("queries"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

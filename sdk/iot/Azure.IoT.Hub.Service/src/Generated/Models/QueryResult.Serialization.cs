@@ -20,7 +20,7 @@ namespace Azure.IoT.Hub.Service.Models
             Optional<string> continuationToken = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -30,7 +30,7 @@ namespace Azure.IoT.Hub.Service.Models
                     type = new QueryResultType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("items"))
+                if (property.NameEquals("items"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -45,7 +45,7 @@ namespace Azure.IoT.Hub.Service.Models
                     items = array;
                     continue;
                 }
-                if (property.NameEquals("continuationToken"))
+                if (property.NameEquals("continuationToken"u8))
                 {
                     continuationToken = property.Value.GetString();
                     continue;

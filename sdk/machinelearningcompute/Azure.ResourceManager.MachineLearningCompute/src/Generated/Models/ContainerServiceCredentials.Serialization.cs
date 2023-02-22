@@ -19,12 +19,12 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
             Optional<string> imagePullSecretName = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("acsKubeConfig"))
+                if (property.NameEquals("acsKubeConfig"u8))
                 {
                     acsKubeConfig = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("servicePrincipalConfiguration"))
+                if (property.NameEquals("servicePrincipalConfiguration"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
                     servicePrincipalConfiguration = ServicePrincipalProperties.DeserializeServicePrincipalProperties(property.Value);
                     continue;
                 }
-                if (property.NameEquals("imagePullSecretName"))
+                if (property.NameEquals("imagePullSecretName"u8))
                 {
                     imagePullSecretName = property.Value.GetString();
                     continue;

@@ -25,17 +25,17 @@ namespace Azure.ResourceManager.DataMigration.Models
             Optional<DatabaseBackupInfo> databaseBackupInfo = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("restoreDatabaseNameErrors"))
+                if (property.NameEquals("restoreDatabaseNameErrors"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     restoreDatabaseNameErrors = array;
                     continue;
                 }
-                if (property.NameEquals("backupFolderErrors"))
+                if (property.NameEquals("backupFolderErrors"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     backupFolderErrors = array;
                     continue;
                 }
-                if (property.NameEquals("backupShareCredentialsErrors"))
+                if (property.NameEquals("backupShareCredentialsErrors"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     backupShareCredentialsErrors = array;
                     continue;
                 }
-                if (property.NameEquals("backupStorageAccountErrors"))
+                if (property.NameEquals("backupStorageAccountErrors"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     backupStorageAccountErrors = array;
                     continue;
                 }
-                if (property.NameEquals("existingBackupErrors"))
+                if (property.NameEquals("existingBackupErrors"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     existingBackupErrors = array;
                     continue;
                 }
-                if (property.NameEquals("databaseBackupInfo"))
+                if (property.NameEquals("databaseBackupInfo"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

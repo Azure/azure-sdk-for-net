@@ -22,12 +22,12 @@ namespace Azure.ResourceManager.Storage.Models
             Optional<string> upn = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("tag"))
+                if (property.NameEquals("tag"u8))
                 {
                     tag = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("timestamp"))
+                if (property.NameEquals("timestamp"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -37,12 +37,12 @@ namespace Azure.ResourceManager.Storage.Models
                     timestamp = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("objectIdentifier"))
+                if (property.NameEquals("objectIdentifier"u8))
                 {
                     objectIdentifier = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("tenantId"))
+                if (property.NameEquals("tenantId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Storage.Models
                     tenantId = property.Value.GetGuid();
                     continue;
                 }
-                if (property.NameEquals("upn"))
+                if (property.NameEquals("upn"u8))
                 {
                     upn = property.Value.GetString();
                     continue;

@@ -22,7 +22,7 @@ namespace Azure.IoT.TimeSeriesInsights
             Optional<InstanceHitHighlights> highlights = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("timeSeriesId"))
+                if (property.NameEquals("timeSeriesId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -37,17 +37,17 @@ namespace Azure.IoT.TimeSeriesInsights
                     timeSeriesId = array;
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("typeId"))
+                if (property.NameEquals("typeId"u8))
                 {
                     typeId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("hierarchyIds"))
+                if (property.NameEquals("hierarchyIds"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -62,7 +62,7 @@ namespace Azure.IoT.TimeSeriesInsights
                     hierarchyIds = array;
                     continue;
                 }
-                if (property.NameEquals("highlights"))
+                if (property.NameEquals("highlights"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

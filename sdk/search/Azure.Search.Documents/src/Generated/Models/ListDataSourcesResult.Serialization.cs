@@ -18,7 +18,7 @@ namespace Azure.Search.Documents.Indexes.Models
             IReadOnlyList<SearchIndexerDataSourceConnection> value = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     List<SearchIndexerDataSourceConnection> array = new List<SearchIndexerDataSourceConnection>();
                     foreach (var item in property.Value.EnumerateArray())

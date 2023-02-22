@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(State))
             {
-                writer.WritePropertyName("state");
+                writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
             if (Optional.IsDefined(MinimalSeverity))
             {
-                writer.WritePropertyName("minimalSeverity");
+                writer.WritePropertyName("minimalSeverity"u8);
                 writer.WriteStringValue(MinimalSeverity.Value.ToString());
             }
             writer.WriteEndObject();
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             Optional<SecurityAlertMinimalSeverity> minimalSeverity = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("state"))
+                if (property.NameEquals("state"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     state = new SecurityAlertNotificationState(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("minimalSeverity"))
+                if (property.NameEquals("minimalSeverity"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

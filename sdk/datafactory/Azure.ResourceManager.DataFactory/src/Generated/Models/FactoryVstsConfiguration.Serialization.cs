@@ -16,26 +16,26 @@ namespace Azure.ResourceManager.DataFactory.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("projectName");
+            writer.WritePropertyName("projectName"u8);
             writer.WriteStringValue(ProjectName);
             if (Optional.IsDefined(TenantId))
             {
-                writer.WritePropertyName("tenantId");
+                writer.WritePropertyName("tenantId"u8);
                 writer.WriteStringValue(TenantId.Value);
             }
-            writer.WritePropertyName("type");
+            writer.WritePropertyName("type"u8);
             writer.WriteStringValue(FactoryRepoConfigurationType);
-            writer.WritePropertyName("accountName");
+            writer.WritePropertyName("accountName"u8);
             writer.WriteStringValue(AccountName);
-            writer.WritePropertyName("repositoryName");
+            writer.WritePropertyName("repositoryName"u8);
             writer.WriteStringValue(RepositoryName);
-            writer.WritePropertyName("collaborationBranch");
+            writer.WritePropertyName("collaborationBranch"u8);
             writer.WriteStringValue(CollaborationBranch);
-            writer.WritePropertyName("rootFolder");
+            writer.WritePropertyName("rootFolder"u8);
             writer.WriteStringValue(RootFolder);
             if (Optional.IsDefined(LastCommitId))
             {
-                writer.WritePropertyName("lastCommitId");
+                writer.WritePropertyName("lastCommitId"u8);
                 writer.WriteStringValue(LastCommitId);
             }
             writer.WriteEndObject();
@@ -53,12 +53,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<string> lastCommitId = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("projectName"))
+                if (property.NameEquals("projectName"u8))
                 {
                     projectName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("tenantId"))
+                if (property.NameEquals("tenantId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -68,32 +68,32 @@ namespace Azure.ResourceManager.DataFactory.Models
                     tenantId = property.Value.GetGuid();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("accountName"))
+                if (property.NameEquals("accountName"u8))
                 {
                     accountName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("repositoryName"))
+                if (property.NameEquals("repositoryName"u8))
                 {
                     repositoryName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("collaborationBranch"))
+                if (property.NameEquals("collaborationBranch"u8))
                 {
                     collaborationBranch = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("rootFolder"))
+                if (property.NameEquals("rootFolder"u8))
                 {
                     rootFolder = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("lastCommitId"))
+                if (property.NameEquals("lastCommitId"u8))
                 {
                     lastCommitId = property.Value.GetString();
                     continue;

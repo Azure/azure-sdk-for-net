@@ -17,17 +17,17 @@ namespace Azure.ResourceManager.Network.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(ServiceProviderName))
             {
-                writer.WritePropertyName("serviceProviderName");
+                writer.WritePropertyName("serviceProviderName"u8);
                 writer.WriteStringValue(ServiceProviderName);
             }
             if (Optional.IsDefined(PeeringLocation))
             {
-                writer.WritePropertyName("peeringLocation");
+                writer.WritePropertyName("peeringLocation"u8);
                 writer.WriteStringValue(PeeringLocation);
             }
             if (Optional.IsDefined(BandwidthInMbps))
             {
-                writer.WritePropertyName("bandwidthInMbps");
+                writer.WritePropertyName("bandwidthInMbps"u8);
                 writer.WriteNumberValue(BandwidthInMbps.Value);
             }
             writer.WriteEndObject();
@@ -40,17 +40,17 @@ namespace Azure.ResourceManager.Network.Models
             Optional<int> bandwidthInMbps = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("serviceProviderName"))
+                if (property.NameEquals("serviceProviderName"u8))
                 {
                     serviceProviderName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("peeringLocation"))
+                if (property.NameEquals("peeringLocation"u8))
                 {
                     peeringLocation = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("bandwidthInMbps"))
+                if (property.NameEquals("bandwidthInMbps"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

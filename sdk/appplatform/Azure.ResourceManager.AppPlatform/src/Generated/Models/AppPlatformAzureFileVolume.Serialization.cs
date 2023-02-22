@@ -16,20 +16,20 @@ namespace Azure.ResourceManager.AppPlatform.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("shareName");
+            writer.WritePropertyName("shareName"u8);
             writer.WriteStringValue(ShareName);
-            writer.WritePropertyName("type");
+            writer.WritePropertyName("type"u8);
             writer.WriteStringValue(UnderlyingResourceType.ToString());
-            writer.WritePropertyName("mountPath");
+            writer.WritePropertyName("mountPath"u8);
             writer.WriteStringValue(MountPath);
             if (Optional.IsDefined(IsReadOnly))
             {
-                writer.WritePropertyName("readOnly");
+                writer.WritePropertyName("readOnly"u8);
                 writer.WriteBooleanValue(IsReadOnly.Value);
             }
             if (Optional.IsCollectionDefined(MountOptions))
             {
-                writer.WritePropertyName("mountOptions");
+                writer.WritePropertyName("mountOptions"u8);
                 writer.WriteStartArray();
                 foreach (var item in MountOptions)
                 {
@@ -49,22 +49,22 @@ namespace Azure.ResourceManager.AppPlatform.Models
             Optional<IList<string>> mountOptions = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("shareName"))
+                if (property.NameEquals("shareName"u8))
                 {
                     shareName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new UnderlyingResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("mountPath"))
+                if (property.NameEquals("mountPath"u8))
                 {
                     mountPath = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("readOnly"))
+                if (property.NameEquals("readOnly"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     readOnly = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("mountOptions"))
+                if (property.NameEquals("mountOptions"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

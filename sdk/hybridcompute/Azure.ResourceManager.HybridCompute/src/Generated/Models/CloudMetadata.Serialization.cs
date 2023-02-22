@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             Optional<string> provider = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("provider"))
+                if (property.NameEquals("provider"u8))
                 {
                     provider = property.Value.GetString();
                     continue;

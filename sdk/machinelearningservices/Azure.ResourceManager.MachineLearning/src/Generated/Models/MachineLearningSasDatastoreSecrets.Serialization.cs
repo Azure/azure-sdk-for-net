@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 if (SasToken != null)
                 {
-                    writer.WritePropertyName("sasToken");
+                    writer.WritePropertyName("sasToken"u8);
                     writer.WriteStringValue(SasToken);
                 }
                 else
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("sasToken");
                 }
             }
-            writer.WritePropertyName("secretsType");
+            writer.WritePropertyName("secretsType"u8);
             writer.WriteStringValue(SecretsType.ToString());
             writer.WriteEndObject();
         }
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             SecretsType secretsType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("sasToken"))
+                if (property.NameEquals("sasToken"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     sasToken = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("secretsType"))
+                if (property.NameEquals("secretsType"u8))
                 {
                     secretsType = new SecretsType(property.Value.GetString());
                     continue;

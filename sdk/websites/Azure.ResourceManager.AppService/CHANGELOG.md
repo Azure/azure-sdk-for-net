@@ -10,6 +10,17 @@
 
 ### Other Changes
 
+## 1.0.1 (2023-02-20)
+
+### Bugs Fixed
+
+- Fixed serialization issue when service returns empty string for `KeyVaultId` in `AppCertificateData` and `AppCertificatePatch`.
+
+### Other Changes
+
+- Upgraded dependent `Azure.Core` to `1.28.0`.
+- Upgraded dependent `Azure.ResourceManager` to `1.4.0`.
+
 ## 1.0.0 (2022-09-29)
 
 This release is the first stable release of the AppService Management library.

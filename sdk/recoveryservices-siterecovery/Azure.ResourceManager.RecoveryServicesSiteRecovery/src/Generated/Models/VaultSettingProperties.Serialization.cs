@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<string> vmwareToAzureProviderType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("migrationSolutionId"))
+                if (property.NameEquals("migrationSolutionId"u8))
                 {
                     migrationSolutionId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("vmwareToAzureProviderType"))
+                if (property.NameEquals("vmwareToAzureProviderType"u8))
                 {
                     vmwareToAzureProviderType = property.Value.GetString();
                     continue;

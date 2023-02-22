@@ -16,28 +16,28 @@ namespace Azure.ResourceManager.ApiManagement.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("name");
+            writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
             if (Optional.IsDefined(Description))
             {
-                writer.WritePropertyName("description");
+                writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            writer.WritePropertyName("type");
+            writer.WritePropertyName("type"u8);
             writer.WriteStringValue(ParameterContractType);
             if (Optional.IsDefined(DefaultValue))
             {
-                writer.WritePropertyName("defaultValue");
+                writer.WritePropertyName("defaultValue"u8);
                 writer.WriteStringValue(DefaultValue);
             }
             if (Optional.IsDefined(IsRequired))
             {
-                writer.WritePropertyName("required");
+                writer.WritePropertyName("required"u8);
                 writer.WriteBooleanValue(IsRequired.Value);
             }
             if (Optional.IsCollectionDefined(Values))
             {
-                writer.WritePropertyName("values");
+                writer.WritePropertyName("values"u8);
                 writer.WriteStartArray();
                 foreach (var item in Values)
                 {
@@ -47,17 +47,17 @@ namespace Azure.ResourceManager.ApiManagement.Models
             }
             if (Optional.IsDefined(SchemaId))
             {
-                writer.WritePropertyName("schemaId");
+                writer.WritePropertyName("schemaId"u8);
                 writer.WriteStringValue(SchemaId);
             }
             if (Optional.IsDefined(TypeName))
             {
-                writer.WritePropertyName("typeName");
+                writer.WritePropertyName("typeName"u8);
                 writer.WriteStringValue(TypeName);
             }
             if (Optional.IsCollectionDefined(Examples))
             {
-                writer.WritePropertyName("examples");
+                writer.WritePropertyName("examples"u8);
                 writer.WriteStartObject();
                 foreach (var item in Examples)
                 {
@@ -82,27 +82,27 @@ namespace Azure.ResourceManager.ApiManagement.Models
             Optional<IDictionary<string, ParameterExampleContract>> examples = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("description"))
+                if (property.NameEquals("description"u8))
                 {
                     description = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("defaultValue"))
+                if (property.NameEquals("defaultValue"u8))
                 {
                     defaultValue = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("required"))
+                if (property.NameEquals("required"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     required = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("values"))
+                if (property.NameEquals("values"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -127,17 +127,17 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     values = array;
                     continue;
                 }
-                if (property.NameEquals("schemaId"))
+                if (property.NameEquals("schemaId"u8))
                 {
                     schemaId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("typeName"))
+                if (property.NameEquals("typeName"u8))
                 {
                     typeName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("examples"))
+                if (property.NameEquals("examples"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             ComputeType computeType = "Unknown";
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("computeType"))
+                if (property.NameEquals("computeType"u8))
                 {
                     computeType = new ComputeType(property.Value.GetString());
                     continue;

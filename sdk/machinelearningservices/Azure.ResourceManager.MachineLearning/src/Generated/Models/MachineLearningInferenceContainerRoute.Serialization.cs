@@ -15,9 +15,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("path");
+            writer.WritePropertyName("path"u8);
             writer.WriteStringValue(Path);
-            writer.WritePropertyName("port");
+            writer.WritePropertyName("port"u8);
             writer.WriteNumberValue(Port);
             writer.WriteEndObject();
         }
@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
             int port = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("path"))
+                if (property.NameEquals("path"u8))
                 {
                     path = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("port"))
+                if (property.NameEquals("port"u8))
                 {
                     port = property.Value.GetInt32();
                     continue;
