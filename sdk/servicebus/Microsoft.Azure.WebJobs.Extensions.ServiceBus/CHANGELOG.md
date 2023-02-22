@@ -1,14 +1,10 @@
 # Release History
 
-## 5.9.0-beta.1 (Unreleased)
+## 5.9.0 (2023-02-23)
 
 ### Features Added
 
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- Target-based scaling support has been added, allowing instances for Service Bus-triggered Functions to more accurately calculate their scale needs and adjust more quickly as the number of messages waiting to be processed changes.
 
 ## 5.8.1 (2022-11-09)
 
