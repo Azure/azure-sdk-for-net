@@ -4,8 +4,7 @@
   </PropertyGroup>
   <PropertyGroup>
     <Version>5.2.0-beta.1</Version>
-    <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
-    <ApiCompatVersion>5.1.0</ApiCompatVersion>
+    <RunApiCompat>false</RunApiCompat>
     <Description>This extension adds bindings for Storage</Description>
     <!-- This package is a metapackage. The flag below makes sure it doesn't include any DLL-->
     <IncludeBuildOutput>false</IncludeBuildOutput>
