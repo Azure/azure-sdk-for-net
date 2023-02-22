@@ -19,6 +19,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs
         public EventHubOptions()
         {
             MaxEventBatchSize = 10;
+            MinEventBatchSize = 0;
             ConnectionOptions = new EventHubConnectionOptions()
             {
                 TransportType = EventHubsTransportType.AmqpTcp
@@ -132,6 +133,29 @@ namespace Microsoft.Azure.WebJobs.EventHubs
             }
         }
 
+        private int _minEventBatchSize;
+
+        /// <summary>
+        /// Gets or sets the minimum number of events delivered in a batch. TODO.
+        /// </summary>
+        public int MinEventBatchSize
+        {
+            get => _minEventBatchSize;
+
+            set
+            {
+                if (value < 0)
+                {
+                    throw new ArgumentException("Batch size must be larger than or equal to 0.");
+                }
+                if (value > MaxEventBatchSize)
+                {
+                    throw new ArgumentException("Maximum batch size must be larger than minimum batch size.");
+                }
+                _minEventBatchSize = value;
+            }
+        }
+
         /// <summary>
         /// Gets the initial offset options to apply when processing. This only applies
         /// when no checkpoint information is available.
@@ -189,6 +213,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs
             JObject options = new JObject
                 {
                     { nameof(MaxEventBatchSize), MaxEventBatchSize },
+                    { nameof(MinEventBatchSize), MinEventBatchSize },
                     { nameof(BatchCheckpointFrequency), BatchCheckpointFrequency },
                     { nameof(TransportType),  TransportType.ToString()},
                     { nameof(WebProxy),  WebProxy is WebProxy proxy ? proxy.Address.AbsoluteUri : string.Empty },
