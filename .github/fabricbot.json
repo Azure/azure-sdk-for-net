@@ -1088,7 +1088,7 @@
         {
           "label": "Communication - Rooms",
           "pathFilter": [
-            "/sdk/communication/Azure.Communication.Room/"
+            "/sdk/communication/Azure.Communication.Rooms/"
           ]
         },
         {
