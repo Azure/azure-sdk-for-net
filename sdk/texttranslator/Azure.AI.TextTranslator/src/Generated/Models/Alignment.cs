@@ -8,7 +8,7 @@
 using System;
 using Azure.Core;
 
-namespace Azure.AI.Translator.Models
+namespace Azure.AI.TextTranslator.Models
 {
     /// <summary> Alignment information object. </summary>
     public partial class Alignment
