@@ -26,6 +26,20 @@ namespace Azure.AI.OpenAI.Tests
             Assert.That(tokenClient, Is.InstanceOf<OpenAIClient>());
         }
 
+        [Test]
+        public void PublicOpenAICompletionsTest()
+        {
+            var client = GetPublicOpenAIClient();
+            Assert.That(client, Is.InstanceOf<OpenAIClient>());
+            Response<Completions> response = client.GetCompletions("", "Hello world");
+            Assert.That(response, Is.Not.Null);
+            Assert.That(response, Is.InstanceOf<Response<Completions>>());
+            Assert.That(response.Value, Is.Not.Null);
+            Assert.That(response.Value.Choices, Is.Not.Null.Or.Empty);
+            Assert.That(response.Value.Choices.Count, Is.EqualTo(1));
+            Assert.That(response.Value.Choices[0].FinishReason, Is.Not.Null.Or.Empty);
+        }
+
         /// <summary>
         /// Test Completion.
         /// </summary>
