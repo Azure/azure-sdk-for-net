@@ -45,7 +45,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
         internal static Regex s_endpoint_pattern => new("^https?://(?:www\\.)?([^/.-]+)");
 
-        internal static readonly HashSet<string> s_eU_Endpoints = new()
+        internal static readonly HashSet<string> s_EU_Endpoints = new()
         {
             "francecentral",
             "francesouth",
@@ -153,7 +153,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             if (patternMatch.Success)
             {
                 var endpoint = patternMatch.Groups[1].Value;
-                if (s_eU_Endpoints.Contains(endpoint))
+                if (s_EU_Endpoints.Contains(endpoint))
                 {
                     statsbeatConnectionString = Statsbeat_ConnectionString_EU;
                 }
