@@ -1,6 +1,7 @@
 # Release History
 
 ## 12.13.0-beta.1 (Unreleased)
+- Added support for service version 2022-11-02.
 - `BlobBatch` is made explicitly resilient to multiple dispose
 
 ## 12.12.0 (2023-02-21)
