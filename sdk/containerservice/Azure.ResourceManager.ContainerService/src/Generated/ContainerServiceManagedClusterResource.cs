@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.ContainerService
         /// <returns> Returns a <see cref="ManagedClusterUpgradeProfileResource" /> object. </returns>
         public virtual ManagedClusterUpgradeProfileResource GetManagedClusterUpgradeProfile()
         {
-            return new ManagedClusterUpgradeProfileResource(Client, new ResourceIdentifier(Id.ToString() + "/upgradeProfiles/default"));
+            return new ManagedClusterUpgradeProfileResource(Client, Id.AppendChildResource("upgradeProfiles", "default"));
         }
 
         /// <summary> Gets a collection of ContainerServiceMaintenanceConfigurationResources in the ContainerServiceManagedCluster. </summary>

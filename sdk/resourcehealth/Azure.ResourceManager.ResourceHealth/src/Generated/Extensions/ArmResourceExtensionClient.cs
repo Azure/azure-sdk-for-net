@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <returns> Returns a <see cref="AvailabilityStatusResource" /> object. </returns>
         public virtual AvailabilityStatusResource GetAvailabilityStatus()
         {
-            return new AvailabilityStatusResource(Client, new ResourceIdentifier(Id.ToString() + "/providers/Microsoft.ResourceHealth/availabilityStatuses/current"));
+            return new AvailabilityStatusResource(Client, Id.AppendProviderResource("Microsoft.ResourceHealth", "availabilityStatuses", "current"));
         }
     }
 }
