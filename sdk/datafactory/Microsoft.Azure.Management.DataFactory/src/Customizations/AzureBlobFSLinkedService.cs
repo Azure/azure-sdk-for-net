@@ -11,6 +11,9 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <summary>
         /// Initializes a new instance of the AzureBlobFSLinkedService class.
         /// </summary>
+        /// <param name="url">Endpoint for the Azure Data Lake Storage Gen2
+        /// service. Type: string (or Expression with resultType
+        /// string).</param>
         /// <param name="additionalProperties">Unmatched properties from the
         /// message are deserialized this collection</param>
         /// <param name="connectVia">The integration runtime reference.</param>
@@ -18,9 +21,6 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="parameters">Parameters for linked service.</param>
         /// <param name="annotations">List of tags that can be used for
         /// describing the linked service.</param>
-        /// <param name="url">Endpoint for the Azure Data Lake Storage Gen2
-        /// service. Type: string (or Expression with resultType
-        /// string).</param>
         /// <param name="accountKey">Account key for the Azure Data Lake
         /// Storage Gen2 service. Type: string (or Expression with resultType
         /// string).</param>
