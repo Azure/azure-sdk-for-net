@@ -41,7 +41,7 @@ namespace Microsoft.Azure.Management.ManagementGroups.Models
         /// <param name="displayName">The friendly name of the child
         /// resource.</param>
         /// <param name="children">The list of children.</param>
-        public CreateManagementGroupChildInfo(string type = default(string), string id = default(string), string name = default(string), string displayName = default(string), IList<CreateManagementGroupChildInfo> children = default(IList<CreateManagementGroupChildInfo>))
+        public CreateManagementGroupChildInfo(ManagementGroupChildType? type = default(ManagementGroupChildType?), string id = default(string), string name = default(string), string displayName = default(string), IList<CreateManagementGroupChildInfo> children = default(IList<CreateManagementGroupChildInfo>))
         {
             Type = type;
             Id = id;
@@ -65,7 +65,7 @@ namespace Microsoft.Azure.Management.ManagementGroups.Models
         /// include: 'Microsoft.Management/managementGroups', '/subscriptions'
         /// </remarks>
         [JsonProperty(PropertyName = "type")]
-        public string Type { get; private set; }
+        public ManagementGroupChildType? Type { get; private set; }
 
         /// <summary>
         /// Gets the fully qualified ID for the child resource (management

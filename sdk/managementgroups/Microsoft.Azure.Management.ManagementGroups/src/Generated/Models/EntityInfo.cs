@@ -55,7 +55,7 @@ namespace Microsoft.Azure.Management.ManagementGroups.Models
         /// from the root group to the immediate parent</param>
         /// <param name="parentNameChain">The parent name chain from the root
         /// group to the immediate parent</param>
-        public EntityInfo(string id = default(string), string type = default(string), string name = default(string), string tenantId = default(string), string displayName = default(string), EntityParentGroupInfo parent = default(EntityParentGroupInfo), string permissions = default(string), string inheritedPermissions = default(string), int? numberOfDescendants = default(int?), int? numberOfChildren = default(int?), int? numberOfChildGroups = default(int?), IList<string> parentDisplayNameChain = default(IList<string>), IList<string> parentNameChain = default(IList<string>))
+        public EntityInfo(string id = default(string), string type = default(string), string name = default(string), string tenantId = default(string), string displayName = default(string), EntityParentGroupInfo parent = default(EntityParentGroupInfo), Permissions? permissions = default(Permissions?), Permissions? inheritedPermissions = default(Permissions?), int? numberOfDescendants = default(int?), int? numberOfChildren = default(int?), int? numberOfChildGroups = default(int?), IList<string> parentDisplayNameChain = default(IList<string>), IList<string> parentNameChain = default(IList<string>))
         {
             Id = id;
             Type = type;
@@ -125,7 +125,7 @@ namespace Microsoft.Azure.Management.ManagementGroups.Models
         /// Possible values include: 'noaccess', 'view', 'edit', 'delete'
         /// </remarks>
         [JsonProperty(PropertyName = "properties.permissions")]
-        public string Permissions { get; set; }
+        public Permissions? Permissions { get; set; }
 
         /// <summary>
         /// Gets or sets inherited Permissions
@@ -134,7 +134,7 @@ namespace Microsoft.Azure.Management.ManagementGroups.Models
         /// Possible values include: 'noaccess', 'view', 'edit', 'delete'
         /// </remarks>
         [JsonProperty(PropertyName = "properties.inheritedPermissions")]
-        public string InheritedPermissions { get; set; }
+        public Permissions? InheritedPermissions { get; set; }
 
         /// <summary>
         /// Gets or sets number of Descendants

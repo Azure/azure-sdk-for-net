@@ -49,7 +49,7 @@ namespace Microsoft.Azure.Management.ManagementGroups.Models
         /// subscription.</param>
         /// <param name="parent">Parent</param>
         /// <param name="state">The state of the subscription.</param>
-        public SubscriptionUnderManagementGroup(string id = default(string), string type = default(string), string name = default(string), string tenant = default(string), string displayName = default(string), DescendantParentGroupInfo parent = default(DescendantParentGroupInfo), string state = default(string))
+        public SubscriptionUnderManagementGroup(string id = default(string), string type = default(string), string name = default(string), string tenant = default(string), string displayName = default(string), ParentGroupBagInfo parent = default(ParentGroupBagInfo), string state = default(string))
         {
             Id = id;
             Type = type;
@@ -104,7 +104,7 @@ namespace Microsoft.Azure.Management.ManagementGroups.Models
         /// Gets or sets parent
         /// </summary>
         [JsonProperty(PropertyName = "properties.parent")]
-        public DescendantParentGroupInfo Parent { get; set; }
+        public ParentGroupBagInfo Parent { get; set; }
 
         /// <summary>
         /// Gets or sets the state of the subscription.

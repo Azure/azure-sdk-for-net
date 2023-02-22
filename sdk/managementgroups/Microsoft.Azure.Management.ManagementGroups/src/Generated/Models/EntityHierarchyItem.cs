@@ -46,7 +46,7 @@ namespace Microsoft.Azure.Management.ManagementGroups.Models
         /// group.</param>
         /// <param name="permissions">Permissions</param>
         /// <param name="children">The list of children.</param>
-        public EntityHierarchyItem(string id = default(string), string type = default(string), string name = default(string), string displayName = default(string), string permissions = default(string), IList<EntityHierarchyItem> children = default(IList<EntityHierarchyItem>))
+        public EntityHierarchyItem(string id = default(string), string type = default(string), string name = default(string), string displayName = default(string), Permissions? permissions = default(Permissions?), IList<EntityHierarchyItem> children = default(IList<EntityHierarchyItem>))
         {
             Id = id;
             Type = type;
@@ -96,7 +96,7 @@ namespace Microsoft.Azure.Management.ManagementGroups.Models
         /// Possible values include: 'noaccess', 'view', 'edit', 'delete'
         /// </remarks>
         [JsonProperty(PropertyName = "properties.permissions")]
-        public string Permissions { get; set; }
+        public Permissions? Permissions { get; set; }
 
         /// <summary>
         /// Gets or sets the list of children.

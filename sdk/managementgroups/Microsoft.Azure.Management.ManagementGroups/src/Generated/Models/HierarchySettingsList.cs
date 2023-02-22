@@ -55,7 +55,7 @@ namespace Microsoft.Azure.Management.ManagementGroups.Models
         /// <summary>
         /// Gets the URL to use for getting the next set of results.
         /// </summary>
-        [JsonProperty(PropertyName = "nextLink")]
+        [JsonProperty(PropertyName = "@nextLink")]
         public string NextLink { get; private set; }
 
     }

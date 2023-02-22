@@ -21,12 +21,12 @@ namespace Microsoft.Azure.Management.ManagementGroups.Models
     /// </summary>
     /// <typeparam name="T">Type of the page content items</typeparam>
     [JsonObject]
-    public class Page<T> : IPage<T>
+    public class Page1<T> : IPage<T>
     {
          /// <summary>
          /// Gets the link to the next page.
          /// </summary>
-         [JsonProperty("@nextLink")]
+         [JsonProperty("nextLink")]
          public string NextPageLink { get; private set; }
 
          [JsonProperty("value")]
