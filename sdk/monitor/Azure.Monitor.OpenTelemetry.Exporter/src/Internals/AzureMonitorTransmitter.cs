@@ -43,14 +43,18 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             _fileBlobProvider = InitializeOfflineStorage(options);
 
             // TODO: uncomment following line for enablement.
-            // InitializeStatsBeat(options.ConnectionString);
+            InitializeStatsbeat(options.ConnectionString);
         }
 
-        private static void InitializeStatsBeat(string? connectionString)
+        private static void InitializeStatsbeat(string? connectionString)
         {
             try
             {
-                _ = new Statsbeat(connectionString);
+                // Do not initialize statsbeat for statsbeat.
+                if (connectionString != null && connectionString != Statsbeat.Statsbeat_ConnectionString_EU && connectionString != Statsbeat.Statsbeat_ConnectionString_NonEU)
+                {
+                    _ = new Statsbeat(connectionString);
+                }
             }
             catch (Exception ex)
             {

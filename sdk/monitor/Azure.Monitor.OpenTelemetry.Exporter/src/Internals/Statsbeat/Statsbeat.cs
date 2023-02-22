@@ -25,7 +25,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
         internal const int AttachStatsbeatInterval = 86400000;
 
-        private static readonly Meter s_myMeter = new("AttachStatsBeatMeter", "1.0");
+        private static readonly Meter s_myMeter = new("AttachStatsbeatMeter", "1.0");
 
         internal string? _statsbeat_ConnectionString;
 
