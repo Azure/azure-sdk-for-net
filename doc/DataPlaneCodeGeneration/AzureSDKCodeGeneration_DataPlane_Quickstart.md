@@ -132,16 +132,7 @@ We will generate SDK under the SDK project directory.
 
 You can update `cadl-location.yaml` under sdk project directory to set the cadl project.
 
-`cadl-location.yaml` file should live under the project directory for each service and has the following properties
-
-| Property | Description | IsRequired |
-| --- | --- | --- |
-| <a id="directory-anchor"></a> directory | The top level directory where the main.cadl for the service lives.  This should be relative to the spec repo root such as `specification/cognitiveservices/OpenAI.Inference` | true |
-| <a id="additionalDirectories-anchor"></a> additionalDirectories | Sometimes a cadl file will use a relative import that might not be under the main directory.  In this case a single `directory` will not be enough to pull down all necessary files.  To support this you can specify additional directories as a list to sync so that all needed files are synced. | false: default = null |
-| <a id="commit-anchor"></a> commit | The commit sha for the version of the cadl files you want to generate off of.  This allows us to have idempotence on generation until we opt into pointing at a later version. | true |
-| <a id="repo-anchor"></a> repo | The repo this spec lives in.  This should be either `Azure/azure-rest-api-specs` or `Azure/azure-rest-api-specs-pr`.  Note that pr will work locally but not in CI until we add another change to handle token based auth. | true |
-| <a id="cleanup-anchor"></a> cleanup | This will remove the TempCadlFiles directory after generation is complete if true otherwise this directory will be left to support local changes to the files to see how different changes would affect the generation. | false: default = true |
-|<a id="specRootDirectory-anchor"></a> spec-root-dir | When you want to use the local specs repo  that is already present, you can specify the root directory of the repo. e.g. /home/azure-rest-api-specs| false|
+You can refer to the [cadl-location.yaml](https://github.com/Azure/azure-sdk-tools/blob/main/doc/common/Cadl-Project-Scripts.md#cadl-locationyaml) which describes the supported properties in the file.
 
 Example:
 
