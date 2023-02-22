@@ -18,20 +18,20 @@ namespace Azure.ResourceManager.Network.Models
         internal EffectiveNetworkSecurityGroup()
         {
             EffectiveSecurityRules = new ChangeTrackingList<EffectiveNetworkSecurityRule>();
-            TagDict = new ChangeTrackingDictionary<string, IList<string>>();
+            TagToIPAddresses = new ChangeTrackingDictionary<string, IList<string>>();
         }
 
         /// <summary> Initializes a new instance of EffectiveNetworkSecurityGroup. </summary>
         /// <param name="networkSecurityGroup"> The ID of network security group that is applied. </param>
         /// <param name="association"> Associated resources. </param>
         /// <param name="effectiveSecurityRules"> A collection of effective security rules. </param>
-        /// <param name="tagDict"> Mapping of tags to list of IP Addresses included within the tag. </param>
-        internal EffectiveNetworkSecurityGroup(WritableSubResource networkSecurityGroup, EffectiveNetworkSecurityGroupAssociation association, IReadOnlyList<EffectiveNetworkSecurityRule> effectiveSecurityRules, IReadOnlyDictionary<string, IList<string>> tagDict)
+        /// <param name="tagToIPAddresses"> Mapping of tags to list of IP Addresses included within the tag. </param>
+        internal EffectiveNetworkSecurityGroup(WritableSubResource networkSecurityGroup, EffectiveNetworkSecurityGroupAssociation association, IReadOnlyList<EffectiveNetworkSecurityRule> effectiveSecurityRules, IReadOnlyDictionary<string, IList<string>> tagToIPAddresses)
         {
             NetworkSecurityGroup = networkSecurityGroup;
             Association = association;
             EffectiveSecurityRules = effectiveSecurityRules;
-            TagDict = tagDict;
+            TagToIPAddresses = tagToIPAddresses;
         }
 
         /// <summary> The ID of network security group that is applied. </summary>
@@ -47,6 +47,6 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> A collection of effective security rules. </summary>
         public IReadOnlyList<EffectiveNetworkSecurityRule> EffectiveSecurityRules { get; }
         /// <summary> Mapping of tags to list of IP Addresses included within the tag. </summary>
-        public IReadOnlyDictionary<string, IList<string>> TagDict { get; }
+        public IReadOnlyDictionary<string, IList<string>> TagToIPAddresses { get; }
     }
 }

@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.Network.Models
     {
         /// <summary> Mapping of tags to list of IP Addresses included within the tag. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        [Obsolete("This property is obsolete and might be removed in a future version, please use TagDict instead", false)]
+        [Obsolete("This property is obsolete and might be removed in a future version, please use `TagToIPAddresses` instead", false)]
         public string TagMap { get; }
     }
 }

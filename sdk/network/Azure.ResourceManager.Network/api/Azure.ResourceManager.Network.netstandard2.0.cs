@@ -6319,10 +6319,10 @@ namespace Azure.ResourceManager.Network.Models
         public Azure.ResourceManager.Network.Models.EffectiveNetworkSecurityGroupAssociation Association { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Network.Models.EffectiveNetworkSecurityRule> EffectiveSecurityRules { get { throw null; } }
         public Azure.Core.ResourceIdentifier NetworkSecurityGroupId { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyDictionary<string, System.Collections.Generic.IList<string>> TagDict { get { throw null; } }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        [System.ObsoleteAttribute("This property is obsolete and might be removed in a future version, please use TagDict instead", false)]
+        [System.ObsoleteAttribute("This property is obsolete and might be removed in a future version, please use `TagToIPAddresses` instead", false)]
         public string TagMap { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyDictionary<string, System.Collections.Generic.IList<string>> TagToIPAddresses { get { throw null; } }
     }
     public partial class EffectiveNetworkSecurityGroupAssociation
     {
