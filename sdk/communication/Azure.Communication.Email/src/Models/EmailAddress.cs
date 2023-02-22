@@ -26,7 +26,7 @@ namespace Azure.Communication.Email
         /// <exception cref="ArgumentNullException"> <paramref name="address"/> is null. </exception>
         public EmailAddress(string address)
         {
-            Argument.AssertNotNull(address, nameof(address));
+            Argument.AssertNotNullOrWhiteSpace(address, nameof(address));
             Address = address;
             DisplayName = string.Empty;
         }

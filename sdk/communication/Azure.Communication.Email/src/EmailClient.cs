@@ -357,7 +357,7 @@ namespace Azure.Communication.Email
 
         private static void ValidateSenderEmailAddress(EmailMessage emailMessage)
         {
-            if (string.IsNullOrEmpty(emailMessage.SenderAddress))
+            if (string.IsNullOrWhiteSpace(emailMessage.SenderAddress))
             {
                 throw new ArgumentException(ErrorMessages.InvalidSenderEmail);
             }

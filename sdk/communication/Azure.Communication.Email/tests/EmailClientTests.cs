@@ -191,7 +191,7 @@ namespace Azure.Communication.Email.Tests
         }
 
         [Test]
-        [TestCaseSource(nameof(InvalidEmailMessages))]
+        [TestCaseSource(nameof(InvalidEmailMessagesForArgumentException))]
         public void InvalidEmailMessage_Throws_ArgumentException(EmailMessage emailMessage, string errorMessage)
         {
             EmailClient emailClient = CreateEmailClient(HttpStatusCode.BadRequest);
@@ -206,6 +206,24 @@ namespace Azure.Communication.Email.Tests
                 exception = Assert.Throws<ArgumentException>(() => emailClient.Send(WaitUntil.Started, emailMessage));
             }
             Assert.IsTrue(exception?.Message.Contains(errorMessage));
+        }
+
+        [Test]
+        [TestCaseSource(nameof(InvalidEmailMessagesForRequestFailedException))]
+        public void InvalidEmailMessage_Throws_RequestFailedException(EmailMessage emailMessage, string errorMessage)
+        {
+            EmailClient emailClient = CreateEmailClient(HttpStatusCode.BadRequest);
+
+            RequestFailedException? exception = null;
+            if (IsAsync)
+            {
+                exception = Assert.ThrowsAsync<RequestFailedException>(async () => await emailClient.SendAsync(WaitUntil.Started, emailMessage));
+            }
+            else
+            {
+                exception = Assert.Throws<RequestFailedException>(() => emailClient.Send(WaitUntil.Started, emailMessage));
+            }
+            Assert.AreEqual((int)HttpStatusCode.BadRequest, exception?.Status);
         }
 
         private EmailClient CreateEmailClient(HttpStatusCode statusCode = HttpStatusCode.OK)
@@ -264,18 +282,13 @@ namespace Azure.Communication.Email.Tests
             };
         }
 
-        private static IEnumerable<object?[]> InvalidEmailMessages()
+        private static IEnumerable<object?[]> InvalidEmailMessagesForArgumentException()
         {
             return new[]
             {
                 new object[]
                 {
                     EmailMessageEmptySender(),
-                    ErrorMessages.InvalidSenderEmail
-                },
-                new object[]
-                {
-                    EmailMessageInvalidSender(),
                     ErrorMessages.InvalidSenderEmail
                 },
                 new object[]
@@ -290,11 +303,6 @@ namespace Azure.Communication.Email.Tests
                 },
                 new object[]
                 {
-                    EmailMessageInvalidToRecipients(),
-                    ErrorMessages.InvalidEmailAddress
-                },
-                new object[]
-                {
                     EmailMessageEmptySubject(),
                     ErrorMessages.EmptySubject
                 },
@@ -305,7 +313,24 @@ namespace Azure.Communication.Email.Tests
                 },
                 new object[]
                 {
-                    EmailMessageEmptyCcEmailAddress(),
+                    EmailMessageInvalidAttachment(),
+                    ErrorMessages.InvalidAttachmentContent
+                }
+            };
+        }
+
+        private static IEnumerable<object?[]> InvalidEmailMessagesForRequestFailedException()
+        {
+            return new[]
+            {
+                new object[]
+                {
+                    EmailMessageInvalidSender(),
+                    ErrorMessages.InvalidSenderEmail
+                },
+                new object[]
+                {
+                    EmailMessageInvalidToRecipients(),
                     ErrorMessages.InvalidEmailAddress
                 },
                 new object[]
@@ -315,19 +340,9 @@ namespace Azure.Communication.Email.Tests
                 },
                 new object[]
                 {
-                    EmailMessageEmptyBccEmailAddress(),
-                    ErrorMessages.InvalidEmailAddress
-                },
-                new object[]
-                {
                     EmailMessageInvalidBccEmailAddress(),
                     ErrorMessages.InvalidEmailAddress
                 },
-                new object[]
-                {
-                    EmailMessageInvalidAttachment(),
-                    ErrorMessages.InvalidAttachmentContent
-                }
             };
         }
 
