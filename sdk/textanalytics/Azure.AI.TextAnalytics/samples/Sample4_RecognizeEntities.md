@@ -4,7 +4,7 @@ This sample demonstrates how to recognize named entities in one or more document
 
 ## Create a `TextAnalyticsClient`
 
-To create a new `TextAnalyticsClient`, you will need the service endpoint and credentials of your Language resource. To authenticate, you can use the [`DefaultAzureCredential`][DefaultAzureCredential], which combines credentials commonly used to authenticate when deployed on Azure, with credentials used to authenticate in a development environment. In this sample, however, you will use an `AzureKeyCredential`, which you can create simply with an API key.
+To create a new `TextAnalyticsClient`, you will need the service endpoint and credentials of your Language resource. To authenticate, you can use the [`DefaultAzureCredential`][DefaultAzureCredential], which combines credentials commonly used to authenticate when deployed on Azure, with credentials used to authenticate in a development environment. In this sample, however, you will use an `AzureKeyCredential`, which you can create with an API key.
 
 ```C# Snippet:CreateTextAnalyticsClient
 Uri endpoint = new("<endpoint>");
@@ -199,39 +199,6 @@ foreach (RecognizeEntitiesResult documentResult in entitiesInDocuments)
         if (!string.IsNullOrEmpty(entity.SubCategory))
             Console.WriteLine($"    SubCategory: {entity.SubCategory}");
         Console.WriteLine($"    Confidence score: {entity.ConfidenceScore}");
-        if (entity.Resolutions.Count > 0)
-        {
-            Console.WriteLine($"    Resolutions:");
-            foreach (BaseResolution resolution in entity.Resolutions)
-            {
-                // There are several different kinds of resolutions. In this particular sample, we are
-                // interested in viewing those of type DateTimeResolution and TemporalSpanResolution.
-
-                if (resolution is DateTimeResolution dateTime)
-                {
-                    Console.WriteLine($"      Value: {dateTime.Value} ");
-                    Console.WriteLine($"      DateTimeSubKind: {dateTime.DateTimeSubKind} ");
-                    if (!string.IsNullOrEmpty(dateTime.Timex))
-                        Console.WriteLine($"      Timex: {dateTime.Timex}");
-                    if (dateTime.Modifier is not null)
-                        Console.WriteLine($"      Modifier: {dateTime.Modifier}");
-                }
-
-                if (resolution is TemporalSpanResolution temporalSpan)
-                {
-                    if (!string.IsNullOrEmpty(temporalSpan.Begin))
-                        Console.WriteLine($"      Begin: {temporalSpan.Begin}");
-                    if (!string.IsNullOrEmpty(temporalSpan.End))
-                        Console.WriteLine($"      End: {temporalSpan.End}");
-                    if (!string.IsNullOrEmpty(temporalSpan.Duration))
-                        Console.WriteLine($"      Duration: {temporalSpan.Duration}");
-                    if (!string.IsNullOrEmpty(temporalSpan.End))
-                        Console.WriteLine($"      Timex: {temporalSpan.Timex}");
-                    if (temporalSpan.Modifier is not null)
-                        Console.WriteLine($"      Modifier: {temporalSpan.Modifier}");
-                }
-            }
-        }
         Console.WriteLine();
     }
 
@@ -249,7 +216,7 @@ Console.WriteLine($"  Transaction count: {entitiesInDocuments.Statistics.Transac
 Console.WriteLine();
 ```
 
-See the [README][README] of the Text Analytics client library for more information, including useful links and instructions.
+See the [README] of the Text Analytics client library for more information, including useful links and instructions.
 
 [DefaultAzureCredential]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/README.md
 [README]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/textanalytics/Azure.AI.TextAnalytics/README.md

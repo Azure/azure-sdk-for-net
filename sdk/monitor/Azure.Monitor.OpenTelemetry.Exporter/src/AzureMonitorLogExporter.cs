@@ -19,7 +19,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
         private readonly AzureMonitorPersistentStorage? _persistentStorage;
         private AzureMonitorResource? _resource;
 
-        public AzureMonitorLogExporter(AzureMonitorExporterOptions options, TokenCredential? credential = null) : this(new AzureMonitorTransmitter(options, credential))
+        public AzureMonitorLogExporter(AzureMonitorExporterOptions options, TokenCredential? credential = null) : this(TransmitterFactory.Instance.Get(options, credential))
         {
         }
 
