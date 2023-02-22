@@ -28,7 +28,6 @@ namespace Azure.Storage.DataMovement.Tests
                 (uri, clientOptions) => new BlobServiceClient(uri, clientOptions),
                 (uri, sharedKeyCredential, clientOptions) => new BlobServiceClient(uri, sharedKeyCredential, clientOptions),
                 (uri, tokenCredential, clientOptions) => new BlobServiceClient(uri, tokenCredential, clientOptions),
-                default,
                 (uri, azureSasCredential, clientOptions) => new BlobServiceClient(uri, azureSasCredential, clientOptions),
                 () => new BlobClientOptions(serviceVersion));
 

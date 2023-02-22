@@ -206,7 +206,7 @@ namespace Azure.Storage.Files.Shares
             Uri shareUri,
             StorageSharedKeyCredential credential,
             ShareClientOptions options = default)
-            : this(shareUri, credential.AsPolicy(), options, credential, default)
+            : this(shareUri, credential.AsPolicy(), options, credential)
         {
         }
 
@@ -245,6 +245,17 @@ namespace Azure.Storage.Files.Shares
         /// <summary>
         /// Initializes a new instance of the <see cref="ShareClient"/>
         /// class.
+        ///
+        /// Note that the only share-level operations that support token credential authentication are
+        /// <see cref="CreatePermission(string, CancellationToken)"/>,
+        /// <see cref="CreatePermissionAsync(string, CancellationToken)"/>,
+        /// <see cref="GetPermission(string, CancellationToken)"/>, and
+        /// <see cref="GetPermissionAsync(string, CancellationToken)"/>.
+        ///
+        /// This constructor also allow the construction of a <see cref="ShareServiceClient"/> that can be used to derive
+        /// a <see cref="ShareClient"/> that has token credential authentication.
+        ///
+        /// Also note that <see cref="ShareClientOptions.ShareTokenIntent"/> is currently required for token authentication.
         /// </summary>
         /// <param name="shareUri">
         /// A <see cref="Uri"/> referencing the share that includes the
@@ -252,9 +263,6 @@ namespace Azure.Storage.Files.Shares
         /// </param>
         /// <param name="credential">
         /// The token credential used to sign requests.
-        /// </param>
-        /// <param name="fileRequestIntent">
-        /// File request intent.
         /// </param>
         /// <param name="options">
         /// Optional client options that define the transport pipeline
@@ -264,14 +272,12 @@ namespace Azure.Storage.Files.Shares
         public ShareClient(
             Uri shareUri,
             TokenCredential credential,
-            ShareFileRequestIntent? fileRequestIntent = default,
             ShareClientOptions options = default)
             : this(
-                  shareUri,
-                  credential.AsPolicy(options),
-                  options ?? new ShareClientOptions(),
-                  default,
-                  fileRequestIntent: fileRequestIntent)
+                  shareUri: shareUri,
+                  authentication: credential.AsPolicy(options),
+                  options: options ?? new ShareClientOptions(),
+                  storageSharedKeyCredential: default)
         {
             Errors.VerifyHttpsTokenAuth(shareUri);
         }
@@ -292,9 +298,6 @@ namespace Azure.Storage.Files.Shares
         /// policies for authentication, retries, etc., that are applied to
         /// every request.
         /// </param>
-        /// <param name="fileRequestIntent">
-        /// File request intent.
-        /// </param>
         /// <param name="storageSharedKeyCredential">
         /// The shared key credential used to sign requests.
         /// </param>
@@ -302,8 +305,7 @@ namespace Azure.Storage.Files.Shares
             Uri shareUri,
             HttpPipelinePolicy authentication,
             ShareClientOptions options,
-            StorageSharedKeyCredential storageSharedKeyCredential,
-            ShareFileRequestIntent? fileRequestIntent)
+            StorageSharedKeyCredential storageSharedKeyCredential)
         {
             Argument.AssertNotNull(shareUri, nameof(shareUri));
             options ??= new ShareClientOptions();
@@ -313,8 +315,7 @@ namespace Azure.Storage.Files.Shares
                 sharedKeyCredential: storageSharedKeyCredential,
                 sasCredential: default,
                 clientDiagnostics: new ClientDiagnostics(options),
-                clientOptions: options,
-                fileRequestIntent: fileRequestIntent);
+                clientOptions: options);
             _shareRestClient = BuildShareRestClient(shareUri);
         }
 
@@ -381,7 +382,7 @@ namespace Azure.Storage.Files.Shares
                 _clientConfiguration.Pipeline,
                 uri.AbsoluteUri,
                 _clientConfiguration.ClientOptions.Version.ToVersionString(),
-                _clientConfiguration.FileRequestIntent);
+                _clientConfiguration.ClientOptions.ShareTokenIntent);
         }
         #endregion ctors
 

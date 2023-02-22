@@ -13,14 +13,12 @@ namespace Azure.Storage.Files.Shares
 
         public TransferValidationOptions TransferValidation { get; internal set; }
 
-        public ShareFileRequestIntent? FileRequestIntent { get; internal set; }
-
         public ShareClientConfiguration(
             HttpPipeline pipeline,
             StorageSharedKeyCredential sharedKeyCredential,
             ClientDiagnostics clientDiagnostics,
             ShareClientOptions clientOptions)
-            : this(pipeline, sharedKeyCredential, default, clientDiagnostics, clientOptions, default)
+            : this(pipeline, sharedKeyCredential, default, clientDiagnostics, clientOptions)
         {
         }
 
@@ -29,7 +27,7 @@ namespace Azure.Storage.Files.Shares
             AzureSasCredential sasCredential,
             ClientDiagnostics clientDiagnostics,
             ShareClientOptions clientOptions)
-            : this(pipeline, default, sasCredential, clientDiagnostics, clientOptions, default)
+            : this(pipeline, default, sasCredential, clientDiagnostics, clientOptions)
         {
         }
 
@@ -38,13 +36,11 @@ namespace Azure.Storage.Files.Shares
             StorageSharedKeyCredential sharedKeyCredential,
             AzureSasCredential sasCredential,
             ClientDiagnostics clientDiagnostics,
-            ShareClientOptions clientOptions,
-            ShareFileRequestIntent? fileRequestIntent)
+            ShareClientOptions clientOptions)
             : base(pipeline, sharedKeyCredential, sasCredential, default, clientDiagnostics)
         {
             ClientOptions = clientOptions;
             TransferValidation = clientOptions.TransferValidation;
-            FileRequestIntent = fileRequestIntent;
         }
     }
 }

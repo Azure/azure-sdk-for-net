@@ -44,7 +44,6 @@ namespace Azure.Storage.Queues.Tests
                 (uri, clientOptions) => new QueueServiceClient(uri, clientOptions),
                 (uri, sharedKeyCredential, clientOptions) => new QueueServiceClient(uri, sharedKeyCredential, clientOptions),
                 (uri, tokenCredential, clientOptions) => new QueueServiceClient(uri, tokenCredential, clientOptions),
-                default,
                 (uri, azureSasCredential, clientOptions) => new QueueServiceClient(uri, azureSasCredential, clientOptions),
                 () => new QueueClientOptions());
         }
