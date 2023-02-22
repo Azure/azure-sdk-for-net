@@ -8,7 +8,7 @@
 
 ### Bugs Fixed
 
-- Fixed issue https://github.com/Azure/azure-sdk-for-net/issues/34094. Please use `EffectiveNetworkSecurityGroup.TagDict` instead of `EffectiveNetworkSecurityGroup.TagMap`.
+- Fixed issue https://github.com/Azure/azure-sdk-for-net/issues/34094. Please use `EffectiveNetworkSecurityGroup.TagToIPAddresses` instead of `EffectiveNetworkSecurityGroup.TagMap`.
 
 ### Other Changes
 
