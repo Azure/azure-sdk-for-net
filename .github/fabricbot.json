@@ -1086,6 +1086,12 @@
           ]
         },
         {
+          "label": "Communication - Rooms",
+          "pathFilter": [
+            "/sdk/communication/Azure.Communication.Room/"
+          ]
+        },
+        {
           "label": "Mixed Reality",
           "pathFilter": [
             "/sdk/mixedreality/",
