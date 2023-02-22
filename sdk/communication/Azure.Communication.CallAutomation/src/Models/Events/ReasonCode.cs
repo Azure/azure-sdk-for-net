@@ -30,9 +30,12 @@ namespace Azure.Communication.CallAutomation
         private const string RecognizeStopToneDetectedValue = "8514";
         private const string RecognizeSpeechOptionMatchedValue = "8545";
         private const string RecognizeSpeechOptionNotMatchedValue = "8547";
+        private const string RecognizeSpeechNotRecognizedValue = "8563";
+        private const string RecognizeSpeechServiceConnectionErrorValue = "8564";
 
         private const string PlayDownloadFailedValue = "8536";
         private const string PlayInvalidFileFormatValue = "8535";
+        private const string PlayCognitiveServicesPlayErrorValue = "8565";
 
         private const string CompletedSuccessfullyValue = "0";
         private const string UnspecifiedErrorValue = "9999";
@@ -51,18 +54,22 @@ namespace Azure.Communication.CallAutomation
 
         /// <summary> Action failed, play source not working. </summary>
         public static ReasonCode RecognizeDtmfOptionMatched { get; } = new ReasonCode(RecognizeDtmfOptionMatchedValue);
-        /// <summary> Speeach option matched. </summary>
+        /// <summary> Speech option matched. </summary>
         public static ReasonCode RecognizeSpeechOptionMatched { get; } = new ReasonCode(RecognizeSpeechOptionMatchedValue);
-        /// <summary> Speeach option  not matched. </summary>
+        /// <summary> Speech option not matched. </summary>
         public static ReasonCode RecognizeSpeechOptionNotMatched { get; } = new ReasonCode(RecognizeSpeechOptionNotMatchedValue);
         /// <summary> Recognize with Choice that incorrect tone detected. </summary>
         public static ReasonCode RecognizeIncorrectToneDetected { get; } = new ReasonCode(RecognizeIncorrectToneDetectedValue);
-
+        /// <summary> Speech not recognized. </summary>
+        public static ReasonCode RecognizeSpeechNotRecognized { get; } = new ReasonCode(RecognizeSpeechNotRecognizedValue);
+        /// <summary> Speech service connection error. </summary>
+        public static ReasonCode RecognizeSpeechServiceConnectionError { get; } = new ReasonCode(RecognizeSpeechServiceConnectionErrorValue);
         /// <summary> Action failed, file could not be downloaded. </summary>
         public static ReasonCode PlayDownloadFailed { get; } = new ReasonCode(PlayDownloadFailedValue);
         /// <summary> Action failed, file could not be downloaded. </summary>
         public static ReasonCode PlayInvalidFileFormat { get; } = new ReasonCode(PlayInvalidFileFormatValue);
-
+        /// <summary> Action failed, cognitive service error. </summary>
+        public static ReasonCode PlayCognitiveServicesPlayError { get; } = new ReasonCode(PlayCognitiveServicesPlayErrorValue);
         /// <summary> Action completed successfully. </summary>
         public static ReasonCode CompletedSuccessfully { get; } = new ReasonCode (CompletedSuccessfullyValue);
         /// <summary> Unknown internal server error. </summary>
