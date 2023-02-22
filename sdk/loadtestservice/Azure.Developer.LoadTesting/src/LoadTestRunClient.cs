@@ -20,7 +20,7 @@ namespace Azure.Developer.LoadTesting
         /// <exception cref="ArgumentException"> <paramref name="testRunId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        public virtual TestRunOperation BeginTestRun(WaitUntil waitUntil, string testRunId, RequestContent content, TimeSpan? timeSpan = null, string oldTestRunId = null, RequestContext context = null)
+        public virtual TestRunResultOperation BeginTestRun(WaitUntil waitUntil, string testRunId, RequestContent content, TimeSpan? timeSpan = null, string oldTestRunId = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(testRunId, nameof(testRunId));
             Argument.AssertNotNull(content, nameof(content));
@@ -36,7 +36,7 @@ namespace Azure.Developer.LoadTesting
             try
             {
                 Response initialResponse = CreateOrUpdateTestRun(testRunId, content, oldTestRunId, context);
-                TestRunOperation operation = new(testRunId, this, initialResponse);
+                TestRunResultOperation operation = new(testRunId, this, initialResponse);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     operation.WaitForCompletion((TimeSpan)timeSpan, cancellationToken: default);
@@ -61,7 +61,7 @@ namespace Azure.Developer.LoadTesting
         /// <exception cref="ArgumentException"> <paramref name="testRunId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        public virtual async Task<TestRunOperation> BeginTestRunAsync(WaitUntil waitUntil, string testRunId, RequestContent content, TimeSpan? timeSpan = null, string oldTestRunId = null, RequestContext context = null)
+        public virtual async Task<TestRunResultOperation> BeginTestRunAsync(WaitUntil waitUntil, string testRunId, RequestContent content, TimeSpan? timeSpan = null, string oldTestRunId = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(testRunId, nameof(testRunId));
             Argument.AssertNotNull(content, nameof(content));
@@ -77,7 +77,7 @@ namespace Azure.Developer.LoadTesting
             try
             {
                 Response initialResponse = await CreateOrUpdateTestRunAsync(testRunId, content, oldTestRunId, context).ConfigureAwait(false);
-                TestRunOperation operation = new(testRunId, this, initialResponse);
+                TestRunResultOperation operation = new(testRunId, this, initialResponse);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     await operation.WaitForCompletionAsync((TimeSpan)timeSpan, cancellationToken: default).ConfigureAwait(false);

@@ -15,9 +15,9 @@ using Azure.Core;
 namespace Azure.Developer.LoadTesting
 {
     /// <summary>
-    /// FileUploadOperation.
+    /// FileUploadResultOperation.
     /// </summary>
-    public class FileUploadOperation : Operation<BinaryData>
+    public class FileUploadResultOperation : Operation<BinaryData>
     {
         private bool _completed;
         private Response _response;
@@ -68,12 +68,12 @@ namespace Azure.Developer.LoadTesting
         /// <summary>
         /// FileUploadOperation.
         /// </summary>
-        protected FileUploadOperation() { }
+        protected FileUploadResultOperation() { }
 
         /// <summary>
         /// FileUploadOperation.
         /// </summary>
-        public FileUploadOperation(string testId, string fileName, LoadTestAdministrationClient client, Response initialResponse = null)
+        public FileUploadResultOperation(string testId, string fileName, LoadTestAdministrationClient client, Response initialResponse = null)
         {
             _testId = testId;
             _fileName = fileName;

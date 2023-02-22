@@ -14,7 +14,7 @@ namespace Azure.Developer.LoadTesting
     /// <summary>
     /// Represents a long-running operation for TestRun.
     /// </summary>
-    public class TestRunOperation : Operation<BinaryData>
+    public class TestRunResultOperation : Operation<BinaryData>
     {
         private bool _completed;
         private Response _response;
@@ -63,12 +63,12 @@ namespace Azure.Developer.LoadTesting
         /// <summary>
         /// FileUploadOperation.
         /// </summary>
-        protected TestRunOperation() { }
+        protected TestRunResultOperation() { }
 
         /// <summary>
         /// FileUploadOperation.
         /// </summary>
-        public TestRunOperation(string testRunId, LoadTestRunClient client, Response initialResponse = null)
+        public TestRunResultOperation(string testRunId, LoadTestRunClient client, Response initialResponse = null)
         {
             _testRunId = Id = testRunId;
             _client = client;
