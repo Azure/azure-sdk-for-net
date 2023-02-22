@@ -8,6 +8,8 @@
 
 ### Bugs Fixed
 
+- Reverted the flattening of `KeyVaultProperties` in `ServiceAccountEncryptionProperties` as service side does not support passing empty object for this property.
+
 ### Other Changes
 
 ## 1.2.1 (2023-02-20)
