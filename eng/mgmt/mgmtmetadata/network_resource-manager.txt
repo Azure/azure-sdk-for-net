@@ -3,13 +3,18 @@ AutoRest installed successfully.
 Commencing code generation
 Generating CSharp code
 Executing AutoRest command
-cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/main/specification/network/resource-manager/readme.md --csharp --version=2.0.4421 --reflect-api-versions --csharp-sdks-folder=D:\GitRepos\ForkAzureSDKForNet_2022_07_01\sdk
+cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/main/specification/network/resource-manager/readme.md --csharp --version=2.0.4421 --reflect-api-versions --csharp-sdks-folder=D:\GitRepos\AzureSdkForNet3\sdk
 Autorest CSharp Version: 2.3.82
-2022-11-09 18:09:03 UTC
+2023-02-22 14:33:38 UTC
 Azure-rest-api-specs repository information
 GitHub fork: Azure
 Branch:      main
-Commit:      3c560b167d153ca3f3d7a8dee387465289f143dd
+Commit:      382192a08796a202d9d1915e4d2e339dfd4d110d
 AutoRest information
 Requested version: 2.0.4421
 Bootstrapper version:    autorest@2.0.4413
+npm notice 
+npm notice New major version of npm available! 7.24.0 -> 9.5.0
+npm notice Changelog: <https://github.com/npm/cli/releases/tag/v9.5.0>
+npm notice Run `npm install -g npm@9.5.0` to update!
+npm notice
