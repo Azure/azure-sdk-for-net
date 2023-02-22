@@ -29,7 +29,7 @@ namespace Azure.Developer.LoadTesting.Tests
         internal const string UPLOAD_TEST_FILE = "UploadTestFile";
         internal const string SKIP_TEST_RUN = "SkipTestRun";
         internal const string SKIP_DELETE_TEST_RUN = "SkipDeleteTestRun";
-        internal TestRunOperation _testRunOperation;
+        internal TestRunResultOperation _testRunOperation;
 
         internal bool CheckForSkipSetUp()
         {
@@ -61,7 +61,7 @@ namespace Azure.Developer.LoadTesting.Tests
             return categories != null && categories.Contains(SKIP_DELETE_TEST_RUN);
         }
 
-        public LoadTestTestsBase(bool isAsync) : base(isAsync)
+        public LoadTestTestsBase(bool isAsync) : base(isAsync, RecordedTestMode.Playback)
         {
             _testId = "test-from-csharp-sdk-testing-framework";
             _fileName = "sample.jmx";
