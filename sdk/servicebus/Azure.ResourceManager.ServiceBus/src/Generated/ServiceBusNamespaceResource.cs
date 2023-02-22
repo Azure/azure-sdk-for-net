@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <returns> Returns a <see cref="ServiceBusNetworkRuleSetResource" /> object. </returns>
         public virtual ServiceBusNetworkRuleSetResource GetServiceBusNetworkRuleSet()
         {
-            return new ServiceBusNetworkRuleSetResource(Client, new ResourceIdentifier(Id.ToString() + "/networkRuleSets/default"));
+            return new ServiceBusNetworkRuleSetResource(Client, Id.AppendChildResource("networkRuleSets", "default"));
         }
 
         /// <summary> Gets a collection of ServiceBusPrivateEndpointConnectionResources in the ServiceBusNamespace. </summary>
