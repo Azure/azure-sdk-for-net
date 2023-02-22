@@ -17,7 +17,7 @@ namespace Azure.Communication.Email
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Headers))
             {
-                writer.WritePropertyName("headers");
+                writer.WritePropertyName("headers"u8);
                 writer.WriteStartObject();
                 foreach (var item in Headers)
                 {
@@ -26,11 +26,11 @@ namespace Azure.Communication.Email
                 }
                 writer.WriteEndObject();
             }
-            writer.WritePropertyName("senderAddress");
+            writer.WritePropertyName("senderAddress"u8);
             writer.WriteStringValue(SenderAddress);
-            writer.WritePropertyName("content");
+            writer.WritePropertyName("content"u8);
             writer.WriteObjectValue(Content);
-            writer.WritePropertyName("recipients");
+            writer.WritePropertyName("recipients"u8);
             writer.WriteObjectValue(Recipients);
             if (Optional.IsCollectionDefined(Attachments))
             {

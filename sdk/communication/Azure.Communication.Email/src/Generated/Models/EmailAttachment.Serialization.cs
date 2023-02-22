@@ -17,9 +17,9 @@ namespace Azure.Communication.Email
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            writer.WritePropertyName("contentType");
+            writer.WritePropertyName("contentType"u8);
             writer.WriteStringValue(ContentType);
-            writer.WritePropertyName("contentInBase64");
+            writer.WritePropertyName("contentInBase64"u8);
             writer.WriteStringValue(ContentInBase64);
             writer.WriteEndObject();
         }

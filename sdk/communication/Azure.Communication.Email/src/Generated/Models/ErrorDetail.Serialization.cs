@@ -52,7 +52,7 @@ namespace Azure.Communication.Email
                     details = array;
                     continue;
                 }
-                if (property.NameEquals("additionalInfo"))
+                if (property.NameEquals("additionalInfo"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
