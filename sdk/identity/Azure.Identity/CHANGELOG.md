@@ -1,6 +1,6 @@
 # Release History
 
-## 1.9.0-beta.2 (Unreleased)
+## 1.9.0-beta.2 (2023-02-21)
 
 ### Features Added
  - Allow `VisualStudioCredential` on non-Windows platforms
