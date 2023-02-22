@@ -63,115 +63,22 @@ param (
   #    Remove the obsolete, prefix-based CODEOWNERS matcher & related tests
   #    https://github.com/Azure/azure-sdk-tools/pull/5431
   [string]$ToolVersion = "1.0.0-dev.20230223.4",
-  [string]$ToolPath = (Join-Path ([System.IO.Path]::GetTempPath()) "codeowners-tool-path"),
+  [string]$ToolPath = (Join-Path ([System.IO.Path]::GetTempPath()) "codeowners-tool"),
   [string]$DevOpsFeed = "https://pkgs.dev.azure.com/azure-sdk/public/_packaging/azure-sdk-for-net/nuget/v3/index.json",
   [string]$VsoVariable = "",
   [switch]$IncludeNonUserAliases,
   [switch]$Test
 )
 
-function Get-CodeownersTool()
-{
-  $codeownersToolCommand = Join-Path $ToolPath "retrieve-codeowners"
-  # Check if the retrieve-codeowners tool exists or not.
-  if (Get-Command $codeownersToolCommand -errorAction SilentlyContinue) {
-    return $codeownersToolCommand
-  }
-  if (!(Test-Path $ToolPath)) {
-    New-Item -ItemType Directory -Path $ToolPath | Out-Null
-  }
-  Write-Host "Installing the retrieve-codeowners tool under tool path: $ToolPath ..."
+. $PSScriptRoot/get-codeowners-functions.ps1
 
-  # Run command under tool path to avoid dotnet tool install command checking .csproj files. 
-  # This is a bug for dotnet tool command. Issue: https://github.com/dotnet/sdk/issues/9623
-  Push-Location $ToolPath
-  dotnet tool install --tool-path $ToolPath --add-source $DevOpsFeed --version $ToolVersion "Azure.Sdk.Tools.RetrieveCodeOwners" | Out-Null
-  Pop-Location
-  # Test to see if the tool properly installed.
-  if (!(Get-Command $codeownersToolCommand -errorAction SilentlyContinue)) {
-    Write-Error "The retrieve-codeowners tool is not properly installed. Please check your tool path: $ToolPath"
-    return 
-  }
-  return $codeownersToolCommand
-}
+return Get-Codeowners `
+  -ToolVersion $ToolVersion `
+  -ToolPath $ToolPath `
+  -DevOpsFeed $DevOpsFeed `
+  -VsoVariable $VsoVariable `
+  -targetPath $TargetPath `
+  -targetDirectory $TargetDirectory `
+  -codeownersFileLocation $CodeOwnerFileLocation `
+  -includeNonUserAliases $IncludeNonUserAliases
 
-function Get-Codeowners(
-  [string]$targetPath,
-  [string]$targetDirectory,
-  [string]$codeownersFileLocation,
-  [bool]$includeNonUserAliases = $false)
-{
-  # Backward compaitiblity: if $targetPath is not provided, fall-back to the legacy $targetDirectory
-  if ([string]::IsNullOrWhiteSpace($targetPath)) {
-    $targetPath = $targetDirectory
-  }
-  if ([string]::IsNullOrWhiteSpace($targetPath)) {
-    Write-Error "TargetPath (or TargetDirectory) parameter must be neither null nor whitespace."
-    return ,@()
-  }
-
-  $codeownersToolCommand = Get-CodeownersTool
-  Write-Host "Executing: & $codeownersToolCommand --target-path $targetPath --codeowners-file-path-or-url $codeownersFileLocation --exclude-non-user-aliases:$(!$includeNonUserAliases)"
-  $commandOutput = & $codeownersToolCommand `
-      --target-path $targetPath `
-      --codeowners-file-path-or-url $codeownersFileLocation `
-      --exclude-non-user-aliases:$(!$includeNonUserAliases) `
-      2>&1
-
-  if ($LASTEXITCODE -ne 0) {
-    Write-Host "Command $codeownersToolCommand execution failed (exit code = $LASTEXITCODE). Output string: $commandOutput"
-    return ,@()
-  } else
-  {
-    Write-Host "Command $codeownersToolCommand executed successfully (exit code = 0). Output string length: $($commandOutput.length)"
-  }
-
-# Assert: $commandOutput is a valid JSON representing:
-# - a single CodeownersEntry, if the $targetPath was a single path
-# - or a dictionary of CodeownerEntries, keyes by each path resolved from a $targetPath glob path.
-#
-# For implementation details, see Azure.Sdk.Tools.RetrieveCodeOwners.Program.Main
-
-$codeownersJson = $commandOutput | ConvertFrom-Json
-  
-  if ($VsoVariable) {
-    $codeowners = $codeownersJson.Owners -join ","
-    Write-Host "##vso[task.setvariable variable=$VsoVariable;]$codeowners"
-  }
-
-  return ,@($codeownersJson.Owners)
-}
-
-function TestGetCodeowners([string]$targetPath, [string]$codeownersFileLocation, [bool]$includeNonUserAliases = $false, [string[]]$expectReturn) {
-  Write-Host "Test: find owners matching '$targetPath' ..."
-  
-  $actualReturn = Get-Codeowners -targetPath $targetPath -codeownersFileLocation $codeownersFileLocation -includeNonUserAliases $IncludeNonUserAliases
-
-  if ($actualReturn.Count -ne $expectReturn.Count) {
-    Write-Error "The length of actual result is not as expected. Expected length: $($expectReturn.Count), Actual length: $($actualReturn.Count)."
-    exit 1
-  }
-  for ($i = 0; $i -lt $expectReturn.Count; $i++) {
-    if ($expectReturn[$i] -ne $actualReturn[$i]) {
-      Write-Error "Expect result $expectReturn[$i] is different than actual result $actualReturn[$i]."
-      exit 1
-    }
-  }
-}
-
-if ($Test) {
-  # Most of tests here have been removed; now instead we should run tests from RetrieveCodeOwnersProgramTests, and in a way as explained in:
-  # https://github.com/Azure/azure-sdk-tools/issues/5434
-  # https://github.com/Azure/azure-sdk-tools/pull/5103#discussion_r1068680818
-  Write-Host "Running reduced test suite at `$PSScriptRoot of $PSSCriptRoot. Please see https://github.com/Azure/azure-sdk-tools/issues/5434 for more."
-
-  $azSdkToolsCodeowners = (Resolve-Path "$PSScriptRoot/../../../.github/CODEOWNERS")
-  TestGetCodeowners -targetPath "eng/common/scripts/get-codeowners.ps1" -codeownersFileLocation $azSdkToolsCodeowners -includeNonUserAliases $true -expectReturn @("konrad-jamrozik", "weshaggard", "benbp")
-  
-  $testCodeowners = (Resolve-Path "$PSScriptRoot/../../../tools/code-owners-parser/Azure.Sdk.Tools.RetrieveCodeOwners.Tests/TestData/test_CODEOWNERS")
-  TestGetCodeowners -targetPath "tools/code-owners-parser/Azure.Sdk.Tools.RetrieveCodeOwners.Tests/TestData/InputDir/a.txt" -codeownersFileLocation $testCodeowners -includeNonUserAliases $true -expectReturn @("2star")
-  exit 0
-}
-else {
-  return Get-Codeowners -targetPath $TargetPath -targetDirectory $TargetDirectory -codeownersFileLocation $CodeOwnerFileLocation -includeNonUserAliases $IncludeNonUserAliases
-}

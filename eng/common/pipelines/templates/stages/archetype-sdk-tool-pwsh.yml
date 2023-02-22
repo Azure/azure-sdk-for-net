@@ -15,20 +15,20 @@ variables:
   - template: /eng/pipelines/templates/variables/globals.yml
 
 stages:
-  - stage: 'eng_script_tests'
+  - stage: Run_PowerShell_Tests
     jobs:
-      - job: 'Test'
+      - job: Test
         strategy:
           matrix:
             Windows:
-              Pool: 'azsdk-pool-mms-win-2022-general'
-              Image: 'windows-2022'
+              Pool: azsdk-pool-mms-win-2022-general
+              Image: windows-2022
             Linux:
               Pool: azsdk-pool-mms-ubuntu-2204-general
               Image: MMSUbuntu22.04
             Mac:
-              Pool: 'Azure Pipelines'
-              Image: 'macos-11'
+              Pool: Azure Pipelines
+              Image: macos-11
 
         pool:
           name: $(Pool)
