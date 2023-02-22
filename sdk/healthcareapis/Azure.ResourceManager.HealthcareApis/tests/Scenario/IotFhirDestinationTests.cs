@@ -36,6 +36,7 @@ namespace Azure.ResourceManager.HealthcareApis.Tests
         }
 
         [RecordedTest]
+        [Ignore("Pipeline .net7.0 playback error")]
         public async Task CreateOrUpdateExistGetGetAllDelete()
         {
             // CreateOrUpdate
