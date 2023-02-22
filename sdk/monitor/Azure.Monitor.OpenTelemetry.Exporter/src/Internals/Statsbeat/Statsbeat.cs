@@ -217,7 +217,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             }
             catch (Exception ex)
             {
-                AzureMonitorExporterEventSource.Log.WriteInformational("Failed to get VM metadata details", ex.ToInvariantString());
+                AzureMonitorExporterEventSource.Log.WriteInformational("Failed to get VM metadata details", ex);
                 return null;
             }
         }
