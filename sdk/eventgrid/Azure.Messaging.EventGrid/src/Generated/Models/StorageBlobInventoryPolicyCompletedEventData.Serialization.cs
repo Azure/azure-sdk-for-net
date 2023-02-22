@@ -26,7 +26,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             Optional<string> manifestBlobUrl = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("scheduleDateTime"))
+                if (property.NameEquals("scheduleDateTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -36,32 +36,32 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     scheduleDateTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("accountName"))
+                if (property.NameEquals("accountName"u8))
                 {
                     accountName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("ruleName"))
+                if (property.NameEquals("ruleName"u8))
                 {
                     ruleName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("policyRunStatus"))
+                if (property.NameEquals("policyRunStatus"u8))
                 {
                     policyRunStatus = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("policyRunStatusMessage"))
+                if (property.NameEquals("policyRunStatusMessage"u8))
                 {
                     policyRunStatusMessage = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("policyRunId"))
+                if (property.NameEquals("policyRunId"u8))
                 {
                     policyRunId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("manifestBlobUrl"))
+                if (property.NameEquals("manifestBlobUrl"u8))
                 {
                     manifestBlobUrl = property.Value.GetString();
                     continue;

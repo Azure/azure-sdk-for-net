@@ -1,21 +1,24 @@
 # Performing named entity recognition (NER)
+
 This sample demonstrates how to recognize named entities in one or more documents.
 
 ## Create a `TextAnalyticsClient`
-To create a new `TextAnalyticsClient`, you will need the service endpoint and credentials of your Language resource. To authenticate, you can use the [`DefaultAzureCredential`][DefaultAzureCredential], which combines credentials commonly used to authenticate when deployed on Azure, with credentials used to authenticate in a development environment. In this sample, however, you will use an `AzureKeyCredential`, which you can create simply with an API key.
+
+To create a new `TextAnalyticsClient`, you will need the service endpoint and credentials of your Language resource. To authenticate, you can use the [`DefaultAzureCredential`][DefaultAzureCredential], which combines credentials commonly used to authenticate when deployed on Azure, with credentials used to authenticate in a development environment. In this sample, however, you will use an `AzureKeyCredential`, which you can create with an API key.
 
 ```C# Snippet:CreateTextAnalyticsClient
-string endpoint = "<endpoint>";
-string apiKey = "<apiKey>";
-TextAnalyticsClient client = new(new Uri(endpoint), new AzureKeyCredential(apiKey));
+Uri endpoint = new("<endpoint>");
+AzureKeyCredential credential = new("<apiKey>");
+TextAnalyticsClient client = new(endpoint, credential);
 ```
 
 The values of the `endpoint` and `apiKey` variables can be retrieved from environment variables, configuration settings, or any other secure approach that works for your application.
 
 ## Recognize entities in a single document
+
 To recognize entities in a document, call `RecognizeEntities` on the `TextAnalyticsClient`, which returns a `CategorizedEntityCollection`.
 
-```C# Snippet:RecognizeEntities
+```C# Snippet:Sample4_RecognizeEntities
 string document =
     "We love this trail and make the trip every year. The views are breathtaking and well worth the hike!"
     + " Yesterday was foggy though, so we missed the spectacular views. We tried again today and it was"
@@ -49,9 +52,10 @@ catch (RequestFailedException exception)
 ```
 
 ## Recognize entities in multiple documents
+
 To recognize entities in multiple documents, call `RecognizeEntitiesBatch` on the `TextAnalyticsClient` by passing the documents as an `IEnumerable<string>` parameter. This returns a `RecognizeEntitiesResultCollection`.
 
-```C# Snippet:TextAnalyticsSample4RecognizeEntitiesConvenience
+```C# Snippet:Sample4_RecognizeEntitiesBatchConvenience
 string documentA =
     "We love this trail and make the trip every year. The views are breathtaking and well worth the hike!"
     + " Yesterday was foggy though, so we missed the spectacular views. We tried again today and it was"
@@ -72,7 +76,9 @@ string documentC =
 
 string documentD = string.Empty;
 
-List<string> documents = new()
+// Prepare the input of the text analysis operation. You can add multiple documents to this list and
+// perform the same operation on all of them simultaneously.
+List<string> batchedDocuments = new()
 {
     documentA,
     documentB,
@@ -80,39 +86,38 @@ List<string> documents = new()
     documentD
 };
 
-Response<RecognizeEntitiesResultCollection> response = client.RecognizeEntitiesBatch(documents);
+Response<RecognizeEntitiesResultCollection> response = client.RecognizeEntitiesBatch(batchedDocuments);
 RecognizeEntitiesResultCollection entititesPerDocuments = response.Value;
 
 int i = 0;
-Console.WriteLine($"Results of \"Named Entity Recognition\" Model, version: \"{entititesPerDocuments.ModelVersion}\"");
+Console.WriteLine($"Recognize Entities, model version: \"{entititesPerDocuments.ModelVersion}\"");
 Console.WriteLine();
 
-foreach (RecognizeEntitiesResult entitiesInDocument in entititesPerDocuments)
+foreach (RecognizeEntitiesResult documentResult in entititesPerDocuments)
 {
-    Console.WriteLine($"On document with Text: \"{documents[i++]}\"");
-    Console.WriteLine();
+    Console.WriteLine($"Result for document with Text = \"{batchedDocuments[i++]}\"");
 
-    if (entitiesInDocument.HasError)
+    if (documentResult.HasError)
     {
-        Console.WriteLine("  Error!");
-        Console.WriteLine($"  Document error code: {entitiesInDocument.Error.ErrorCode}.");
-        Console.WriteLine($"  Message: {entitiesInDocument.Error.Message}");
+        Console.WriteLine($"  Error!");
+        Console.WriteLine($"  Document error code: {documentResult.Error.ErrorCode}");
+        Console.WriteLine($"  Message: {documentResult.Error.Message}");
+        Console.WriteLine();
+        continue;
     }
-    else
-    {
-        Console.WriteLine($"  Recognized the following {entitiesInDocument.Entities.Count} entities:");
 
-        foreach (CategorizedEntity entity in entitiesInDocument.Entities)
-        {
-            Console.WriteLine($"    Text: {entity.Text}");
-            Console.WriteLine($"    Offset: {entity.Offset}");
-            Console.WriteLine($"    Length: {entity.Length}");
-            Console.WriteLine($"    Category: {entity.Category}");
-            if (!string.IsNullOrEmpty(entity.SubCategory))
-                Console.WriteLine($"    SubCategory: {entity.SubCategory}");
-            Console.WriteLine($"    Confidence score: {entity.ConfidenceScore}");
-            Console.WriteLine();
-        }
+    Console.WriteLine($"  Recognized {documentResult.Entities.Count} entities:");
+
+    foreach (CategorizedEntity entity in documentResult.Entities)
+    {
+        Console.WriteLine($"    Text: {entity.Text}");
+        Console.WriteLine($"    Offset: {entity.Offset}");
+        Console.WriteLine($"    Length: {entity.Length}");
+        Console.WriteLine($"    Category: {entity.Category}");
+        if (!string.IsNullOrEmpty(entity.SubCategory))
+            Console.WriteLine($"    SubCategory: {entity.SubCategory}");
+        Console.WriteLine($"    Confidence score: {entity.ConfidenceScore}");
+        Console.WriteLine();
     }
     Console.WriteLine();
 }
@@ -120,7 +125,7 @@ foreach (RecognizeEntitiesResult entitiesInDocument in entititesPerDocuments)
 
 To recognize entities in multiple documents in different languages, call `RecognizeEntitiesBatch` on the `TextAnalyticsClient` by passing the documents as an `IEnumerable<TextDocumentInput>` parameter, having set the `Language` property on each `TextInputDocument` object accordingly.
 
-```C# Snippet:TextAnalyticsSample4RecognizeEntitiesBatch
+```C# Snippet:Sample4_RecognizeEntitiesBatch
 string documentA =
     "We love this trail and make the trip every year. The views are breathtaking and well worth the hike!"
     + " Yesterday was foggy though, so we missed the spectacular views. We tried again today and it was"
@@ -141,7 +146,9 @@ string documentC =
 
 string documentD = string.Empty;
 
-List<TextDocumentInput> documents = new()
+// Prepare the input of the text analysis operation. You can add multiple documents to this list and
+// perform the same operation on all of them simultaneously.
+List<TextDocumentInput> batchedDocuments = new()
 {
     new TextDocumentInput("1", documentA)
     {
@@ -159,78 +166,45 @@ List<TextDocumentInput> documents = new()
 };
 
 TextAnalyticsRequestOptions options = new() { IncludeStatistics = true };
-Response<RecognizeEntitiesResultCollection> response = client.RecognizeEntitiesBatch(documents, options);
+Response<RecognizeEntitiesResultCollection> response = client.RecognizeEntitiesBatch(batchedDocuments, options);
 RecognizeEntitiesResultCollection entitiesInDocuments = response.Value;
 
 int i = 0;
-Console.WriteLine($"Results of \"Named Entity Recognition\" Model, version: \"{entitiesInDocuments.ModelVersion}\"");
+Console.WriteLine($"Recognize Entities, model version: \"{entitiesInDocuments.ModelVersion}\"");
 Console.WriteLine();
 
-foreach (RecognizeEntitiesResult entitiesInDocument in entitiesInDocuments)
+foreach (RecognizeEntitiesResult documentResult in entitiesInDocuments)
 {
-    TextDocumentInput document = documents[i++];
+    TextDocumentInput document = batchedDocuments[i++];
 
-    Console.WriteLine($"On document (Id={document.Id}, Language=\"{document.Language}\"):");
+    Console.WriteLine($"Result for document with Id = \"{document.Id}\" and Language = \"{document.Language}\":");
 
-    if (entitiesInDocument.HasError)
+    if (documentResult.HasError)
     {
-        Console.WriteLine("  Error!");
-        Console.WriteLine($"  Document error code: {entitiesInDocument.Error.ErrorCode}.");
-        Console.WriteLine($"  Message: {entitiesInDocument.Error.Message}");
+        Console.WriteLine($"  Error!");
+        Console.WriteLine($"  Document error code: {documentResult.Error.ErrorCode}");
+        Console.WriteLine($"  Message: {documentResult.Error.Message}");
+        Console.WriteLine();
+        continue;
     }
-    else
+
+    Console.WriteLine($"  Recognized {documentResult.Entities.Count} entities:");
+
+    foreach (CategorizedEntity entity in documentResult.Entities)
     {
-        Console.WriteLine($"  Recognized the following {entitiesInDocument.Entities.Count} entities:");
-
-        foreach (CategorizedEntity entity in entitiesInDocument.Entities)
-        {
-            Console.WriteLine($"    Text: {entity.Text}");
-            Console.WriteLine($"    Offset: {entity.Offset}");
-            Console.WriteLine($"    Length: {entity.Length}");
-            Console.WriteLine($"    Category: {entity.Category}");
-            if (!string.IsNullOrEmpty(entity.SubCategory))
-                Console.WriteLine($"    SubCategory: {entity.SubCategory}");
-            Console.WriteLine($"    Confidence score: {entity.ConfidenceScore}");
-            if (entity.Resolutions.Count > 0)
-            {
-                Console.WriteLine($"    Resolutions:");
-                foreach (BaseResolution resolution in entity.Resolutions)
-                {
-                    // There are several different kinds of resolutions. In this particular sample, we are
-                    // interested in viewing those of type DateTimeResolution and TemporalSpanResolution.
-
-                    if (resolution is DateTimeResolution dateTime)
-                    {
-                        Console.WriteLine($"      Value: {dateTime.Value} ");
-                        Console.WriteLine($"      DateTimeSubKind: {dateTime.DateTimeSubKind} ");
-                        if (!string.IsNullOrEmpty(dateTime.Timex))
-                            Console.WriteLine($"      Timex: {dateTime.Timex}");
-                        if (dateTime.Modifier is not null)
-                            Console.WriteLine($"      Modifier: {dateTime.Modifier}");
-                    }
-
-                    if (resolution is TemporalSpanResolution temporalSpan)
-                    {
-                        if (!string.IsNullOrEmpty(temporalSpan.Begin))
-                            Console.WriteLine($"      Begin: {temporalSpan.Begin}");
-                        if (!string.IsNullOrEmpty(temporalSpan.End))
-                            Console.WriteLine($"      End: {temporalSpan.End}");
-                        if (!string.IsNullOrEmpty(temporalSpan.Duration))
-                            Console.WriteLine($"      Duration: {temporalSpan.Duration}");
-                        if (!string.IsNullOrEmpty(temporalSpan.End))
-                            Console.WriteLine($"      Timex: {temporalSpan.Timex}");
-                        if (temporalSpan.Modifier is not null)
-                            Console.WriteLine($"      Modifier: {temporalSpan.Modifier}");
-                    }
-                }
-            }
-            Console.WriteLine();
-        }
-
-        Console.WriteLine($"  Document statistics:");
-        Console.WriteLine($"    Character count: {entitiesInDocument.Statistics.CharacterCount}");
-        Console.WriteLine($"    Transaction count: {entitiesInDocument.Statistics.TransactionCount}");
+        Console.WriteLine($"    Text: {entity.Text}");
+        Console.WriteLine($"    Offset: {entity.Offset}");
+        Console.WriteLine($"    Length: {entity.Length}");
+        Console.WriteLine($"    Category: {entity.Category}");
+        if (!string.IsNullOrEmpty(entity.SubCategory))
+            Console.WriteLine($"    SubCategory: {entity.SubCategory}");
+        Console.WriteLine($"    Confidence score: {entity.ConfidenceScore}");
+        Console.WriteLine();
     }
+
+    Console.WriteLine($"  Document statistics:");
+    Console.WriteLine($"    Character count: {documentResult.Statistics.CharacterCount}");
+    Console.WriteLine($"    Transaction count: {documentResult.Statistics.TransactionCount}");
     Console.WriteLine();
 }
 
@@ -242,7 +216,7 @@ Console.WriteLine($"  Transaction count: {entitiesInDocuments.Statistics.Transac
 Console.WriteLine();
 ```
 
-See the [README][README] of the Text Analytics client library for more information, including useful links and instructions.
+See the [README] of the Text Analytics client library for more information, including useful links and instructions.
 
 [DefaultAzureCredential]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/README.md
 [README]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/textanalytics/Azure.AI.TextAnalytics/README.md

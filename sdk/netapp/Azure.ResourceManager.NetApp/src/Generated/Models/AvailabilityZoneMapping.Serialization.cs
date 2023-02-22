@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.NetApp.Models
             Optional<bool> isAvailable = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("availabilityZone"))
+                if (property.NameEquals("availabilityZone"u8))
                 {
                     availabilityZone = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("isAvailable"))
+                if (property.NameEquals("isAvailable"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

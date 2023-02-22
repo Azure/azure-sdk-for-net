@@ -19,12 +19,12 @@ namespace Azure.IoT.TimeSeriesInsights
             Optional<SearchHierarchyNodesResponse> hierarchyNodes = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("cumulativeInstanceCount"))
+                if (property.NameEquals("cumulativeInstanceCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -34,7 +34,7 @@ namespace Azure.IoT.TimeSeriesInsights
                     cumulativeInstanceCount = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("hierarchyNodes"))
+                if (property.NameEquals("hierarchyNodes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

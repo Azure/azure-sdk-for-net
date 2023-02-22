@@ -2620,7 +2620,7 @@ namespace Azure.Storage.Files.DataLake.Tests
 
             DataLakeFileAppendOptions options = new DataLakeFileAppendOptions
             {
-                LeaseAction = LeaseAction.Acquire,
+                LeaseAction = DataLakeLeaseAction.Acquire,
                 ProposedLeaseId = proposedLeaseId,
                 LeaseDuration = duration
             };
@@ -2655,7 +2655,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             DataLakeFileAppendOptions options = new DataLakeFileAppendOptions
             {
                 LeaseId = leaseId,
-                LeaseAction = LeaseAction.AutoRenew
+                LeaseAction = DataLakeLeaseAction.AutoRenew
             };
 
             // Act
@@ -2688,7 +2688,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             DataLakeFileAppendOptions options = new DataLakeFileAppendOptions
             {
                 LeaseId = leaseId,
-                LeaseAction = LeaseAction.Release,
+                LeaseAction = DataLakeLeaseAction.Release,
                 Flush = true
             };
 
@@ -2718,7 +2718,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             DataLakeFileAppendOptions options = new DataLakeFileAppendOptions
             {
                 Flush = true,
-                LeaseAction = LeaseAction.AcquireRelease,
+                LeaseAction = DataLakeLeaseAction.AcquireRelease,
                 ProposedLeaseId = proposedLeaseId,
                 LeaseDuration = duration
             };
@@ -3077,7 +3077,7 @@ namespace Azure.Storage.Files.DataLake.Tests
 
             DataLakeFileFlushOptions options = new DataLakeFileFlushOptions
             {
-                LeaseAction = LeaseAction.Acquire,
+                LeaseAction = DataLakeLeaseAction.Acquire,
                 ProposedLeaseId = leaseId,
                 LeaseDuration = duration
             };
@@ -3110,7 +3110,7 @@ namespace Azure.Storage.Files.DataLake.Tests
 
             DataLakeFileAppendOptions appendOptions = new DataLakeFileAppendOptions
             {
-                LeaseAction = LeaseAction.Acquire,
+                LeaseAction = DataLakeLeaseAction.Acquire,
                 ProposedLeaseId = leaseId,
                 LeaseDuration = duration
             };
@@ -3119,7 +3119,7 @@ namespace Azure.Storage.Files.DataLake.Tests
 
             DataLakeFileFlushOptions options = new DataLakeFileFlushOptions
             {
-                LeaseAction = LeaseAction.AutoRenew,
+                LeaseAction = DataLakeLeaseAction.AutoRenew,
                 Conditions = new DataLakeRequestConditions
                 {
                     LeaseId = leaseId
@@ -3154,7 +3154,7 @@ namespace Azure.Storage.Files.DataLake.Tests
 
             DataLakeFileAppendOptions appendOptions = new DataLakeFileAppendOptions
             {
-                LeaseAction = LeaseAction.Acquire,
+                LeaseAction = DataLakeLeaseAction.Acquire,
                 ProposedLeaseId = leaseId,
                 LeaseDuration = duration
             };
@@ -3163,7 +3163,7 @@ namespace Azure.Storage.Files.DataLake.Tests
 
             DataLakeFileFlushOptions options = new DataLakeFileFlushOptions
             {
-                LeaseAction = LeaseAction.Release,
+                LeaseAction = DataLakeLeaseAction.Release,
                 Conditions = new DataLakeRequestConditions
                 {
                     LeaseId = leaseId
@@ -3199,7 +3199,7 @@ namespace Azure.Storage.Files.DataLake.Tests
 
             DataLakeFileFlushOptions options = new DataLakeFileFlushOptions
             {
-                LeaseAction = LeaseAction.AcquireRelease,
+                LeaseAction = DataLakeLeaseAction.AcquireRelease,
                 ProposedLeaseId = leaseId,
                 LeaseDuration = duration
             };
@@ -3239,6 +3239,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             Assert.IsNotNull(response.Value.Properties.LeaseStatus);
             Assert.IsNotNull(response.Value.Properties.LeaseState);
             Assert.IsNotNull(response.Value.Properties.IsServerEncrypted);
+            Assert.IsNotNull(response.Value.Properties.CreatedOn);
 
             var actual = new MemoryStream();
             await response.Value.Content.CopyToAsync(actual);

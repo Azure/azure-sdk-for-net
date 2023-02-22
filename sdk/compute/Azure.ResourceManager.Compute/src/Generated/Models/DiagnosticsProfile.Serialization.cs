@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Compute.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(BootDiagnostics))
             {
-                writer.WritePropertyName("bootDiagnostics");
+                writer.WritePropertyName("bootDiagnostics"u8);
                 writer.WriteObjectValue(BootDiagnostics);
             }
             writer.WriteEndObject();
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Compute.Models
             Optional<BootDiagnostics> bootDiagnostics = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("bootDiagnostics"))
+                if (property.NameEquals("bootDiagnostics"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

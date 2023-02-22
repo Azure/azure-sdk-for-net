@@ -17,27 +17,27 @@ namespace Azure.ResourceManager.AppContainers.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(IsEnabled))
             {
-                writer.WritePropertyName("enabled");
+                writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
             if (Optional.IsDefined(Registration))
             {
-                writer.WritePropertyName("registration");
+                writer.WritePropertyName("registration"u8);
                 writer.WriteObjectValue(Registration);
             }
             if (Optional.IsDefined(Login))
             {
-                writer.WritePropertyName("login");
+                writer.WritePropertyName("login"u8);
                 writer.WriteObjectValue(Login);
             }
             if (Optional.IsDefined(Validation))
             {
-                writer.WritePropertyName("validation");
+                writer.WritePropertyName("validation"u8);
                 writer.WriteObjectValue(Validation);
             }
             if (Optional.IsDefined(IsAutoProvisioned))
             {
-                writer.WritePropertyName("isAutoProvisioned");
+                writer.WritePropertyName("isAutoProvisioned"u8);
                 writer.WriteBooleanValue(IsAutoProvisioned.Value);
             }
             writer.WriteEndObject();
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             Optional<bool> isAutoProvisioned = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("enabled"))
+                if (property.NameEquals("enabled"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     enabled = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("registration"))
+                if (property.NameEquals("registration"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     registration = ContainerAppAzureActiveDirectoryRegistrationConfiguration.DeserializeContainerAppAzureActiveDirectoryRegistrationConfiguration(property.Value);
                     continue;
                 }
-                if (property.NameEquals("login"))
+                if (property.NameEquals("login"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     login = ContainerAppAzureActiveDirectoryLoginConfiguration.DeserializeContainerAppAzureActiveDirectoryLoginConfiguration(property.Value);
                     continue;
                 }
-                if (property.NameEquals("validation"))
+                if (property.NameEquals("validation"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     validation = ContainerAppAzureActiveDirectoryValidationConfiguration.DeserializeContainerAppAzureActiveDirectoryValidationConfiguration(property.Value);
                     continue;
                 }
-                if (property.NameEquals("isAutoProvisioned"))
+                if (property.NameEquals("isAutoProvisioned"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

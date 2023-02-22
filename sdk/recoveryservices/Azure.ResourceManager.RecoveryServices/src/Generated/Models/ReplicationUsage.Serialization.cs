@@ -14,35 +14,35 @@ namespace Azure.ResourceManager.RecoveryServices.Models
     {
         internal static ReplicationUsage DeserializeReplicationUsage(JsonElement element)
         {
-            Optional<MonitoringSummary> monitoringSummary = default;
-            Optional<JobsSummary> jobsSummary = default;
+            Optional<VaultMonitoringSummary> monitoringSummary = default;
+            Optional<ReplicationJobSummary> jobsSummary = default;
             Optional<int> protectedItemCount = default;
             Optional<int> recoveryPlanCount = default;
             Optional<int> registeredServersCount = default;
             Optional<int> recoveryServicesProviderAuthType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("monitoringSummary"))
+                if (property.NameEquals("monitoringSummary"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    monitoringSummary = MonitoringSummary.DeserializeMonitoringSummary(property.Value);
+                    monitoringSummary = VaultMonitoringSummary.DeserializeVaultMonitoringSummary(property.Value);
                     continue;
                 }
-                if (property.NameEquals("jobsSummary"))
+                if (property.NameEquals("jobsSummary"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    jobsSummary = JobsSummary.DeserializeJobsSummary(property.Value);
+                    jobsSummary = ReplicationJobSummary.DeserializeReplicationJobSummary(property.Value);
                     continue;
                 }
-                if (property.NameEquals("protectedItemCount"))
+                if (property.NameEquals("protectedItemCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                     protectedItemCount = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("recoveryPlanCount"))
+                if (property.NameEquals("recoveryPlanCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                     recoveryPlanCount = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("registeredServersCount"))
+                if (property.NameEquals("registeredServersCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                     registeredServersCount = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("recoveryServicesProviderAuthType"))
+                if (property.NameEquals("recoveryServicesProviderAuthType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

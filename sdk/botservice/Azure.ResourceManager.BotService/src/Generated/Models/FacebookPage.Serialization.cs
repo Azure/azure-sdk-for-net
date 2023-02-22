@@ -15,11 +15,11 @@ namespace Azure.ResourceManager.BotService.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("id");
+            writer.WritePropertyName("id"u8);
             writer.WriteStringValue(Id);
             if (Optional.IsDefined(AccessToken))
             {
-                writer.WritePropertyName("accessToken");
+                writer.WritePropertyName("accessToken"u8);
                 writer.WriteStringValue(AccessToken);
             }
             writer.WriteEndObject();
@@ -31,12 +31,12 @@ namespace Azure.ResourceManager.BotService.Models
             Optional<string> accessToken = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("accessToken"))
+                if (property.NameEquals("accessToken"u8))
                 {
                     accessToken = property.Value.GetString();
                     continue;

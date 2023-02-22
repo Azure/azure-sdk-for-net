@@ -19,17 +19,17 @@ namespace Azure.ResourceManager.ApiManagement.Models
             Optional<string> resourceOwnerPassword = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("clientSecret"))
+                if (property.NameEquals("clientSecret"u8))
                 {
                     clientSecret = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("resourceOwnerUsername"))
+                if (property.NameEquals("resourceOwnerUsername"u8))
                 {
                     resourceOwnerUsername = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("resourceOwnerPassword"))
+                if (property.NameEquals("resourceOwnerPassword"u8))
                 {
                     resourceOwnerPassword = property.Value.GetString();
                     continue;

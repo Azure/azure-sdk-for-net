@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Sql.Models
             IReadOnlyList<ServiceObjectiveData> value = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     List<ServiceObjectiveData> array = new List<ServiceObjectiveData>();
                     foreach (var item in property.Value.EnumerateArray())

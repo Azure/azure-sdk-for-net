@@ -15,11 +15,11 @@ namespace Azure.ResourceManager.Network.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("minCapacity");
+            writer.WritePropertyName("minCapacity"u8);
             writer.WriteNumberValue(MinCapacity);
             if (Optional.IsDefined(MaxCapacity))
             {
-                writer.WritePropertyName("maxCapacity");
+                writer.WritePropertyName("maxCapacity"u8);
                 writer.WriteNumberValue(MaxCapacity.Value);
             }
             writer.WriteEndObject();
@@ -31,12 +31,12 @@ namespace Azure.ResourceManager.Network.Models
             Optional<int> maxCapacity = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("minCapacity"))
+                if (property.NameEquals("minCapacity"u8))
                 {
                     minCapacity = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("maxCapacity"))
+                if (property.NameEquals("maxCapacity"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

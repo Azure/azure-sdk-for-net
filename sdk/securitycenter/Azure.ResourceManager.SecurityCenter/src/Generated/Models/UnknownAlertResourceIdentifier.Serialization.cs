@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             ResourceIdentifierType type = "Unknown";
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceIdentifierType(property.Value.GetString());
                     continue;

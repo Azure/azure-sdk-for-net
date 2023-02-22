@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             string instanceType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("location"))
+                if (property.NameEquals("location"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("containerIds"))
+                if (property.NameEquals("containerIds"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     containerIds = array;
                     continue;
                 }
-                if (property.NameEquals("zones"))
+                if (property.NameEquals("zones"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     zones = array;
                     continue;
                 }
-                if (property.NameEquals("extendedLocations"))
+                if (property.NameEquals("extendedLocations"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     extendedLocations = array;
                     continue;
                 }
-                if (property.NameEquals("instanceType"))
+                if (property.NameEquals("instanceType"u8))
                 {
                     instanceType = property.Value.GetString();
                     continue;

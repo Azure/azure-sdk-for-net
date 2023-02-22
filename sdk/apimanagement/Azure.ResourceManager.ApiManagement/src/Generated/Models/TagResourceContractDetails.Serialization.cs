@@ -20,12 +20,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
             Optional<AssociatedProductProperties> product = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("tag"))
+                if (property.NameEquals("tag"u8))
                 {
                     tag = AssociatedTagProperties.DeserializeAssociatedTagProperties(property.Value);
                     continue;
                 }
-                if (property.NameEquals("api"))
+                if (property.NameEquals("api"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     api = AssociatedApiProperties.DeserializeAssociatedApiProperties(property.Value);
                     continue;
                 }
-                if (property.NameEquals("operation"))
+                if (property.NameEquals("operation"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     operation = AssociatedOperationProperties.DeserializeAssociatedOperationProperties(property.Value);
                     continue;
                 }
-                if (property.NameEquals("product"))
+                if (property.NameEquals("product"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

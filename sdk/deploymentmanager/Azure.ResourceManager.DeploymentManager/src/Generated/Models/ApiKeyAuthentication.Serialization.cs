@@ -15,13 +15,13 @@ namespace Azure.ResourceManager.DeploymentManager.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("name");
+            writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            writer.WritePropertyName("in");
+            writer.WritePropertyName("in"u8);
             writer.WriteStringValue(In.ToSerialString());
-            writer.WritePropertyName("value");
+            writer.WritePropertyName("value"u8);
             writer.WriteStringValue(Value);
-            writer.WritePropertyName("type");
+            writer.WritePropertyName("type"u8);
             writer.WriteStringValue(AuthType.ToSerialString());
             writer.WriteEndObject();
         }
@@ -34,22 +34,22 @@ namespace Azure.ResourceManager.DeploymentManager.Models
             RestAuthType type = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("in"))
+                if (property.NameEquals("in"u8))
                 {
                     @in = property.Value.GetString().ToRestAuthLocation();
                     continue;
                 }
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     value = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = property.Value.GetString().ToRestAuthType();
                     continue;

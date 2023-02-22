@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(IsClientCertEnabled))
             {
-                writer.WritePropertyName("clientCertEnabled");
+                writer.WritePropertyName("clientCertEnabled"u8);
                 writer.WriteBooleanValue(IsClientCertEnabled.Value);
             }
             writer.WriteEndObject();
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
             Optional<bool> clientCertEnabled = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("clientCertEnabled"))
+                if (property.NameEquals("clientCertEnabled"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

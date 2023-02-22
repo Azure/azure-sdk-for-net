@@ -17,17 +17,17 @@ namespace Azure.ResourceManager.AppContainers.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Convention))
             {
-                writer.WritePropertyName("convention");
+                writer.WritePropertyName("convention"u8);
                 writer.WriteStringValue(Convention.Value.ToSerialString());
             }
             if (Optional.IsDefined(CustomHostHeaderName))
             {
-                writer.WritePropertyName("customHostHeaderName");
+                writer.WritePropertyName("customHostHeaderName"u8);
                 writer.WriteStringValue(CustomHostHeaderName);
             }
             if (Optional.IsDefined(CustomProtoHeaderName))
             {
-                writer.WritePropertyName("customProtoHeaderName");
+                writer.WritePropertyName("customProtoHeaderName"u8);
                 writer.WriteStringValue(CustomProtoHeaderName);
             }
             writer.WriteEndObject();
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             Optional<string> customProtoHeaderName = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("convention"))
+                if (property.NameEquals("convention"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -50,12 +50,12 @@ namespace Azure.ResourceManager.AppContainers.Models
                     convention = property.Value.GetString().ToContainerAppForwardProxyConvention();
                     continue;
                 }
-                if (property.NameEquals("customHostHeaderName"))
+                if (property.NameEquals("customHostHeaderName"u8))
                 {
                     customHostHeaderName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("customProtoHeaderName"))
+                if (property.NameEquals("customProtoHeaderName"u8))
                 {
                     customProtoHeaderName = property.Value.GetString();
                     continue;

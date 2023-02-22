@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.StoragePool.Models
             Optional<StoragePoolSkuRestrictionsReasonCode> reasonCode = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.StoragePool.Models
                     type = property.Value.GetString().ToStoragePoolSkuRestrictionsType();
                     continue;
                 }
-                if (property.NameEquals("values"))
+                if (property.NameEquals("values"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.StoragePool.Models
                     values = array;
                     continue;
                 }
-                if (property.NameEquals("restrictionInfo"))
+                if (property.NameEquals("restrictionInfo"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.StoragePool.Models
                     restrictionInfo = StoragePoolSkuRestrictionInfo.DeserializeStoragePoolSkuRestrictionInfo(property.Value);
                     continue;
                 }
-                if (property.NameEquals("reasonCode"))
+                if (property.NameEquals("reasonCode"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

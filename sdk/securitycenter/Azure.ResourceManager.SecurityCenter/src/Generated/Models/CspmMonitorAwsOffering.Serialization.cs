@@ -17,10 +17,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(NativeCloudConnection))
             {
-                writer.WritePropertyName("nativeCloudConnection");
+                writer.WritePropertyName("nativeCloudConnection"u8);
                 writer.WriteObjectValue(NativeCloudConnection);
             }
-            writer.WritePropertyName("offeringType");
+            writer.WritePropertyName("offeringType"u8);
             writer.WriteStringValue(OfferingType.ToString());
             writer.WriteEndObject();
         }
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             Optional<string> description = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("nativeCloudConnection"))
+                if (property.NameEquals("nativeCloudConnection"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -42,12 +42,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     nativeCloudConnection = CspmMonitorAwsOfferingNativeCloudConnection.DeserializeCspmMonitorAwsOfferingNativeCloudConnection(property.Value);
                     continue;
                 }
-                if (property.NameEquals("offeringType"))
+                if (property.NameEquals("offeringType"u8))
                 {
                     offeringType = new OfferingType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("description"))
+                if (property.NameEquals("description"u8))
                 {
                     description = property.Value.GetString();
                     continue;

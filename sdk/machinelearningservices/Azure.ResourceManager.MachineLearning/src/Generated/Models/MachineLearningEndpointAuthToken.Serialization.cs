@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Optional<string> tokenType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("accessToken"))
+                if (property.NameEquals("accessToken"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     accessToken = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("expiryTimeUtc"))
+                if (property.NameEquals("expiryTimeUtc"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     expiryTimeUtc = property.Value.GetDateTimeOffset("U");
                     continue;
                 }
-                if (property.NameEquals("refreshAfterTimeUtc"))
+                if (property.NameEquals("refreshAfterTimeUtc"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     refreshAfterTimeUtc = property.Value.GetDateTimeOffset("U");
                     continue;
                 }
-                if (property.NameEquals("tokenType"))
+                if (property.NameEquals("tokenType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

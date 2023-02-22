@@ -17,27 +17,27 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Permissions))
             {
-                writer.WritePropertyName("permissions");
+                writer.WritePropertyName("permissions"u8);
                 writer.WriteStringValue(Permissions);
             }
             if (Optional.IsDefined(AccessResourcePath))
             {
-                writer.WritePropertyName("accessResourcePath");
+                writer.WritePropertyName("accessResourcePath"u8);
                 writer.WriteStringValue(AccessResourcePath);
             }
             if (Optional.IsDefined(ProfileName))
             {
-                writer.WritePropertyName("profileName");
+                writer.WritePropertyName("profileName"u8);
                 writer.WriteStringValue(ProfileName);
             }
             if (Optional.IsDefined(StartTime))
             {
-                writer.WritePropertyName("startTime");
+                writer.WritePropertyName("startTime"u8);
                 writer.WriteStringValue(StartTime);
             }
             if (Optional.IsDefined(ExpireTime))
             {
-                writer.WritePropertyName("expireTime");
+                writer.WritePropertyName("expireTime"u8);
                 writer.WriteStringValue(ExpireTime);
             }
             writer.WriteEndObject();
@@ -52,27 +52,27 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<string> expireTime = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("permissions"))
+                if (property.NameEquals("permissions"u8))
                 {
                     permissions = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("accessResourcePath"))
+                if (property.NameEquals("accessResourcePath"u8))
                 {
                     accessResourcePath = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("profileName"))
+                if (property.NameEquals("profileName"u8))
                 {
                     profileName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("startTime"))
+                if (property.NameEquals("startTime"u8))
                 {
                     startTime = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("expireTime"))
+                if (property.NameEquals("expireTime"u8))
                 {
                     expireTime = property.Value.GetString();
                     continue;

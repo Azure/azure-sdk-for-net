@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             Optional<string> commandOutput = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("commandOutput"))
+                if (property.NameEquals("commandOutput"u8))
                 {
                     commandOutput = property.Value.GetString();
                     continue;

@@ -18,11 +18,11 @@ namespace Azure.ResourceManager.ApiManagement
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(TemplateParameters))
             {
-                writer.WritePropertyName("templateParameters");
+                writer.WritePropertyName("templateParameters"u8);
                 writer.WriteStartArray();
                 foreach (var item in TemplateParameters)
                 {
@@ -32,17 +32,17 @@ namespace Azure.ResourceManager.ApiManagement
             }
             if (Optional.IsDefined(Description))
             {
-                writer.WritePropertyName("description");
+                writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
             if (Optional.IsDefined(Request))
             {
-                writer.WritePropertyName("request");
+                writer.WritePropertyName("request"u8);
                 writer.WriteObjectValue(Request);
             }
             if (Optional.IsCollectionDefined(Responses))
             {
-                writer.WritePropertyName("responses");
+                writer.WritePropertyName("responses"u8);
                 writer.WriteStartArray();
                 foreach (var item in Responses)
                 {
@@ -52,22 +52,22 @@ namespace Azure.ResourceManager.ApiManagement
             }
             if (Optional.IsDefined(Policies))
             {
-                writer.WritePropertyName("policies");
+                writer.WritePropertyName("policies"u8);
                 writer.WriteStringValue(Policies);
             }
             if (Optional.IsDefined(DisplayName))
             {
-                writer.WritePropertyName("displayName");
+                writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
             if (Optional.IsDefined(Method))
             {
-                writer.WritePropertyName("method");
+                writer.WritePropertyName("method"u8);
                 writer.WriteStringValue(Method);
             }
             if (Optional.IsDefined(UriTemplate))
             {
-                writer.WritePropertyName("urlTemplate");
+                writer.WritePropertyName("urlTemplate"u8);
                 writer.WriteStringValue(UriTemplate);
             }
             writer.WriteEndObject();
@@ -90,22 +90,22 @@ namespace Azure.ResourceManager.ApiManagement
             Optional<string> uriTemplate = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.ApiManagement
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.ApiManagement
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("templateParameters"))
+                        if (property0.NameEquals("templateParameters"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -139,12 +139,12 @@ namespace Azure.ResourceManager.ApiManagement
                             templateParameters = array;
                             continue;
                         }
-                        if (property0.NameEquals("description"))
+                        if (property0.NameEquals("description"u8))
                         {
                             description = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("request"))
+                        if (property0.NameEquals("request"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.ApiManagement
                             request = RequestContract.DeserializeRequestContract(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("responses"))
+                        if (property0.NameEquals("responses"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -169,22 +169,22 @@ namespace Azure.ResourceManager.ApiManagement
                             responses = array;
                             continue;
                         }
-                        if (property0.NameEquals("policies"))
+                        if (property0.NameEquals("policies"u8))
                         {
                             policies = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("displayName"))
+                        if (property0.NameEquals("displayName"u8))
                         {
                             displayName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("method"))
+                        if (property0.NameEquals("method"u8))
                         {
                             method = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("urlTemplate"))
+                        if (property0.NameEquals("urlTemplate"u8))
                         {
                             uriTemplate = property0.Value.GetString();
                             continue;

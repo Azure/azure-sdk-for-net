@@ -21,7 +21,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Language))
             {
-                writer.WritePropertyName("language");
+                writer.WritePropertyName("language"u8);
                 writer.WriteStringValue(Language);
             }
             foreach (var item in AdditionalProperties)
@@ -39,7 +39,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("language"))
+                if (property.NameEquals("language"u8))
                 {
                     language = property.Value.GetString();
                     continue;

@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(IPAddress))
             {
-                writer.WritePropertyName("ipAddress");
+                writer.WritePropertyName("ipAddress"u8);
                 writer.WriteStringValue(IPAddress.ToString());
             }
             if (Optional.IsDefined(SubnetResourceId))
             {
-                writer.WritePropertyName("subnetResourceId");
+                writer.WritePropertyName("subnetResourceId"u8);
                 writer.WriteStringValue(SubnetResourceId);
             }
             writer.WriteEndObject();
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             Optional<ResourceIdentifier> subnetResourceId = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("ipAddress"))
+                if (property.NameEquals("ipAddress"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                     ipAddress = IPAddress.Parse(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("subnetResourceId"))
+                if (property.NameEquals("subnetResourceId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

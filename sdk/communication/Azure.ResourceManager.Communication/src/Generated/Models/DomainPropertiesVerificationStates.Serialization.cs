@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Communication.Models
             Optional<DomainVerificationStatusRecord> dmarc = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("Domain"))
+                if (property.NameEquals("Domain"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Communication.Models
                     domain = DomainVerificationStatusRecord.DeserializeDomainVerificationStatusRecord(property.Value);
                     continue;
                 }
-                if (property.NameEquals("SPF"))
+                if (property.NameEquals("SPF"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Communication.Models
                     spf = DomainVerificationStatusRecord.DeserializeDomainVerificationStatusRecord(property.Value);
                     continue;
                 }
-                if (property.NameEquals("DKIM"))
+                if (property.NameEquals("DKIM"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Communication.Models
                     dkim = DomainVerificationStatusRecord.DeserializeDomainVerificationStatusRecord(property.Value);
                     continue;
                 }
-                if (property.NameEquals("DKIM2"))
+                if (property.NameEquals("DKIM2"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Communication.Models
                     dkiM2 = DomainVerificationStatusRecord.DeserializeDomainVerificationStatusRecord(property.Value);
                     continue;
                 }
-                if (property.NameEquals("DMARC"))
+                if (property.NameEquals("DMARC"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

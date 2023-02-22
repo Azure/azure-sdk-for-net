@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.RecoveryServices
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal HttpMessage CreateCheckNameAvailabilityRequest(string subscriptionId, string resourceGroupName, AzureLocation location, CheckNameAvailabilityContent content)
+        internal HttpMessage CreateCheckNameAvailabilityRequest(string subscriptionId, string resourceGroupName, AzureLocation location, RecoveryServicesNameAvailabilityContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.RecoveryServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<CheckNameAvailabilityResult>> CheckNameAvailabilityAsync(string subscriptionId, string resourceGroupName, AzureLocation location, CheckNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public async Task<Response<RecoveryServicesNameAvailabilityResult>> CheckNameAvailabilityAsync(string subscriptionId, string resourceGroupName, AzureLocation location, RecoveryServicesNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -86,9 +86,9 @@ namespace Azure.ResourceManager.RecoveryServices
             {
                 case 200:
                     {
-                        CheckNameAvailabilityResult value = default;
+                        RecoveryServicesNameAvailabilityResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = CheckNameAvailabilityResult.DeserializeCheckNameAvailabilityResult(document.RootElement);
+                        value = RecoveryServicesNameAvailabilityResult.DeserializeRecoveryServicesNameAvailabilityResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.RecoveryServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<CheckNameAvailabilityResult> CheckNameAvailability(string subscriptionId, string resourceGroupName, AzureLocation location, CheckNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public Response<RecoveryServicesNameAvailabilityResult> CheckNameAvailability(string subscriptionId, string resourceGroupName, AzureLocation location, RecoveryServicesNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -120,9 +120,9 @@ namespace Azure.ResourceManager.RecoveryServices
             {
                 case 200:
                     {
-                        CheckNameAvailabilityResult value = default;
+                        RecoveryServicesNameAvailabilityResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = CheckNameAvailabilityResult.DeserializeCheckNameAvailabilityResult(document.RootElement);
+                        value = RecoveryServicesNameAvailabilityResult.DeserializeRecoveryServicesNameAvailabilityResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

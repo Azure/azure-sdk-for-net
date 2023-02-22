@@ -150,6 +150,11 @@ namespace Azure.Storage.Files.DataLake.Models
 #pragma warning restore CA1819 // Properties should not return arrays
 
         /// <summary>
+        /// Returns the date and time the blob was created on.
+        /// </summary>
+        public DateTimeOffset CreatedOn { get; internal set; }
+
+        /// <summary>
         /// Encryption context of the file.  Encryption context is metadata that is not encrypted when stored on the file.
         /// The primary application of this field is to store non-encrypted data that can be used to derive the customer-provided key
         /// for a file.

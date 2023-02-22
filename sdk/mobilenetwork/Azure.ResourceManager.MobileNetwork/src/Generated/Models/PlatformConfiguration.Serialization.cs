@@ -17,26 +17,26 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("type");
+            writer.WritePropertyName("type"u8);
             writer.WriteStringValue(PlatformType.ToString());
             if (Optional.IsDefined(AzureStackEdgeDevice))
             {
-                writer.WritePropertyName("azureStackEdgeDevice");
+                writer.WritePropertyName("azureStackEdgeDevice"u8);
                 JsonSerializer.Serialize(writer, AzureStackEdgeDevice);
             }
             if (Optional.IsDefined(AzureStackHciCluster))
             {
-                writer.WritePropertyName("azureStackHciCluster");
+                writer.WritePropertyName("azureStackHciCluster"u8);
                 JsonSerializer.Serialize(writer, AzureStackHciCluster);
             }
             if (Optional.IsDefined(ConnectedCluster))
             {
-                writer.WritePropertyName("connectedCluster");
+                writer.WritePropertyName("connectedCluster"u8);
                 JsonSerializer.Serialize(writer, ConnectedCluster);
             }
             if (Optional.IsDefined(CustomLocation))
             {
-                writer.WritePropertyName("customLocation");
+                writer.WritePropertyName("customLocation"u8);
                 JsonSerializer.Serialize(writer, CustomLocation);
             }
             writer.WriteEndObject();
@@ -52,12 +52,12 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             Optional<WritableSubResource> customLocation = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new PlatformType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("azureStackEdgeDevice"))
+                if (property.NameEquals("azureStackEdgeDevice"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                     azureStackEdgeDevice = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("azureStackEdgeDevices"))
+                if (property.NameEquals("azureStackEdgeDevices"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                     azureStackEdgeDevices = array;
                     continue;
                 }
-                if (property.NameEquals("azureStackHciCluster"))
+                if (property.NameEquals("azureStackHciCluster"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                     azureStackHciCluster = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("connectedCluster"))
+                if (property.NameEquals("connectedCluster"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                     connectedCluster = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("customLocation"))
+                if (property.NameEquals("customLocation"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

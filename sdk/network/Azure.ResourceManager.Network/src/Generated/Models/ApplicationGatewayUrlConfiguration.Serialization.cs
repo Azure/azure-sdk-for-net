@@ -17,17 +17,17 @@ namespace Azure.ResourceManager.Network.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(ModifiedPath))
             {
-                writer.WritePropertyName("modifiedPath");
+                writer.WritePropertyName("modifiedPath"u8);
                 writer.WriteStringValue(ModifiedPath);
             }
             if (Optional.IsDefined(ModifiedQueryString))
             {
-                writer.WritePropertyName("modifiedQueryString");
+                writer.WritePropertyName("modifiedQueryString"u8);
                 writer.WriteStringValue(ModifiedQueryString);
             }
             if (Optional.IsDefined(Reroute))
             {
-                writer.WritePropertyName("reroute");
+                writer.WritePropertyName("reroute"u8);
                 writer.WriteBooleanValue(Reroute.Value);
             }
             writer.WriteEndObject();
@@ -40,17 +40,17 @@ namespace Azure.ResourceManager.Network.Models
             Optional<bool> reroute = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("modifiedPath"))
+                if (property.NameEquals("modifiedPath"u8))
                 {
                     modifiedPath = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("modifiedQueryString"))
+                if (property.NameEquals("modifiedQueryString"u8))
                 {
                     modifiedQueryString = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("reroute"))
+                if (property.NameEquals("reroute"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

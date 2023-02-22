@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.WebPubSub.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(AuthType))
             {
-                writer.WritePropertyName("type");
+                writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(AuthType.Value.ToString());
             }
             if (Optional.IsDefined(ManagedIdentity))
             {
-                writer.WritePropertyName("managedIdentity");
+                writer.WritePropertyName("managedIdentity"u8);
                 writer.WriteObjectValue(ManagedIdentity);
             }
             writer.WriteEndObject();
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
             Optional<ManagedIdentitySettings> managedIdentity = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
                     type = new UpstreamAuthType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("managedIdentity"))
+                if (property.NameEquals("managedIdentity"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

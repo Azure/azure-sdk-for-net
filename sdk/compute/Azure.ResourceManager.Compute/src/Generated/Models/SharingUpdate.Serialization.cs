@@ -16,11 +16,11 @@ namespace Azure.ResourceManager.Compute.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("operationType");
+            writer.WritePropertyName("operationType"u8);
             writer.WriteStringValue(OperationType.ToString());
             if (Optional.IsCollectionDefined(Groups))
             {
-                writer.WritePropertyName("groups");
+                writer.WritePropertyName("groups"u8);
                 writer.WriteStartArray();
                 foreach (var item in Groups)
                 {
@@ -37,12 +37,12 @@ namespace Azure.ResourceManager.Compute.Models
             Optional<IList<SharingProfileGroup>> groups = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("operationType"))
+                if (property.NameEquals("operationType"u8))
                 {
                     operationType = new SharingUpdateOperationType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("groups"))
+                if (property.NameEquals("groups"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

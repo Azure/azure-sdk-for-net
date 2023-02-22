@@ -30,7 +30,7 @@ namespace Azure.Identity.Tests
         {
             var azdCliOptions = new AzureDeveloperCliCredentialOptions
             {
-                AdditionallyAllowedTenantsCore = config.AdditionallyAllowedTenants,
+                AdditionallyAllowedTenants = config.AdditionallyAllowedTenants,
                 TenantId = config.TenantId,
             };
             var (_, _, processOutput) = CredentialTestHelpers.CreateTokenForAzureDeveloperCli();

@@ -19,12 +19,12 @@ namespace Azure.ResourceManager.Media.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(BaseUri))
             {
-                writer.WritePropertyName("baseUri");
+                writer.WritePropertyName("baseUri"u8);
                 writer.WriteStringValue(BaseUri.AbsoluteUri);
             }
             if (Optional.IsCollectionDefined(Files))
             {
-                writer.WritePropertyName("files");
+                writer.WritePropertyName("files"u8);
                 writer.WriteStartArray();
                 foreach (var item in Files)
                 {
@@ -34,22 +34,22 @@ namespace Azure.ResourceManager.Media.Models
             }
             if (Optional.IsDefined(Start))
             {
-                writer.WritePropertyName("start");
+                writer.WritePropertyName("start"u8);
                 writer.WriteObjectValue(Start);
             }
             if (Optional.IsDefined(End))
             {
-                writer.WritePropertyName("end");
+                writer.WritePropertyName("end"u8);
                 writer.WriteObjectValue(End);
             }
             if (Optional.IsDefined(Label))
             {
-                writer.WritePropertyName("label");
+                writer.WritePropertyName("label"u8);
                 writer.WriteStringValue(Label);
             }
             if (Optional.IsCollectionDefined(InputDefinitions))
             {
-                writer.WritePropertyName("inputDefinitions");
+                writer.WritePropertyName("inputDefinitions"u8);
                 writer.WriteStartArray();
                 foreach (var item in InputDefinitions)
                 {
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Media.Models
                 }
                 writer.WriteEndArray();
             }
-            writer.WritePropertyName("@odata.type");
+            writer.WritePropertyName("@odata.type"u8);
             writer.WriteStringValue(OdataType);
             writer.WriteEndObject();
         }
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Media.Models
             string odataType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("baseUri"))
+                if (property.NameEquals("baseUri"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Media.Models
                     baseUri = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("files"))
+                if (property.NameEquals("files"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Media.Models
                     files = array;
                     continue;
                 }
-                if (property.NameEquals("start"))
+                if (property.NameEquals("start"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Media.Models
                     start = ClipTime.DeserializeClipTime(property.Value);
                     continue;
                 }
-                if (property.NameEquals("end"))
+                if (property.NameEquals("end"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -118,12 +118,12 @@ namespace Azure.ResourceManager.Media.Models
                     end = ClipTime.DeserializeClipTime(property.Value);
                     continue;
                 }
-                if (property.NameEquals("label"))
+                if (property.NameEquals("label"u8))
                 {
                     label = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("inputDefinitions"))
+                if (property.NameEquals("inputDefinitions"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Media.Models
                     inputDefinitions = array;
                     continue;
                 }
-                if (property.NameEquals("@odata.type"))
+                if (property.NameEquals("@odata.type"u8))
                 {
                     odataType = property.Value.GetString();
                     continue;

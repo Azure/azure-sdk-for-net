@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Optional<string> privateIPAddress = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("publicIpAddress"))
+                if (property.NameEquals("publicIpAddress"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     publicIPAddress = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("privateIpAddress"))
+                if (property.NameEquals("privateIpAddress"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("secretType");
+            writer.WritePropertyName("secretType"u8);
             writer.WriteStringValue(SecretType.ToString());
             writer.WriteEndObject();
         }

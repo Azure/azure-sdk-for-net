@@ -17,17 +17,17 @@ namespace Azure.ResourceManager.HealthcareApis.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(EventHubName))
             {
-                writer.WritePropertyName("eventHubName");
+                writer.WritePropertyName("eventHubName"u8);
                 writer.WriteStringValue(EventHubName);
             }
             if (Optional.IsDefined(ConsumerGroup))
             {
-                writer.WritePropertyName("consumerGroup");
+                writer.WritePropertyName("consumerGroup"u8);
                 writer.WriteStringValue(ConsumerGroup);
             }
             if (Optional.IsDefined(FullyQualifiedEventHubNamespace))
             {
-                writer.WritePropertyName("fullyQualifiedEventHubNamespace");
+                writer.WritePropertyName("fullyQualifiedEventHubNamespace"u8);
                 writer.WriteStringValue(FullyQualifiedEventHubNamespace);
             }
             writer.WriteEndObject();
@@ -40,17 +40,17 @@ namespace Azure.ResourceManager.HealthcareApis.Models
             Optional<string> fullyQualifiedEventHubNamespace = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("eventHubName"))
+                if (property.NameEquals("eventHubName"u8))
                 {
                     eventHubName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("consumerGroup"))
+                if (property.NameEquals("consumerGroup"u8))
                 {
                     consumerGroup = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("fullyQualifiedEventHubNamespace"))
+                if (property.NameEquals("fullyQualifiedEventHubNamespace"u8))
                 {
                     fullyQualifiedEventHubNamespace = property.Value.GetString();
                     continue;

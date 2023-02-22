@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.Media.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(DefaultKey))
             {
-                writer.WritePropertyName("defaultKey");
+                writer.WritePropertyName("defaultKey"u8);
                 writer.WriteObjectValue(DefaultKey);
             }
             if (Optional.IsCollectionDefined(KeyToTrackMappings))
             {
-                writer.WritePropertyName("keyToTrackMappings");
+                writer.WritePropertyName("keyToTrackMappings"u8);
                 writer.WriteStartArray();
                 foreach (var item in KeyToTrackMappings)
                 {
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Media.Models
             Optional<IList<StreamingPolicyContentKey>> keyToTrackMappings = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("defaultKey"))
+                if (property.NameEquals("defaultKey"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Media.Models
                     defaultKey = EncryptionSchemeDefaultKey.DeserializeEncryptionSchemeDefaultKey(property.Value);
                     continue;
                 }
-                if (property.NameEquals("keyToTrackMappings"))
+                if (property.NameEquals("keyToTrackMappings"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

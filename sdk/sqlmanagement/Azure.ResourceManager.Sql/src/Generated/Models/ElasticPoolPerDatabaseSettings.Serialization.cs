@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.Sql.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(MinCapacity))
             {
-                writer.WritePropertyName("minCapacity");
+                writer.WritePropertyName("minCapacity"u8);
                 writer.WriteNumberValue(MinCapacity.Value);
             }
             if (Optional.IsDefined(MaxCapacity))
             {
-                writer.WritePropertyName("maxCapacity");
+                writer.WritePropertyName("maxCapacity"u8);
                 writer.WriteNumberValue(MaxCapacity.Value);
             }
             writer.WriteEndObject();
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Sql.Models
             Optional<double> maxCapacity = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("minCapacity"))
+                if (property.NameEquals("minCapacity"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Sql.Models
                     minCapacity = property.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("maxCapacity"))
+                if (property.NameEquals("maxCapacity"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

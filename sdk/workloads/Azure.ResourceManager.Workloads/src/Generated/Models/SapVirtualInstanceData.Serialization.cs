@@ -20,12 +20,12 @@ namespace Azure.ResourceManager.Workloads
             writer.WriteStartObject();
             if (Optional.IsDefined(Identity))
             {
-                writer.WritePropertyName("identity");
+                writer.WritePropertyName("identity"u8);
                 writer.WriteObjectValue(Identity);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
-                writer.WritePropertyName("tags");
+                writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
                 foreach (var item in Tags)
                 {
@@ -34,19 +34,19 @@ namespace Azure.ResourceManager.Workloads
                 }
                 writer.WriteEndObject();
             }
-            writer.WritePropertyName("location");
+            writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            writer.WritePropertyName("environment");
+            writer.WritePropertyName("environment"u8);
             writer.WriteStringValue(Environment.ToString());
-            writer.WritePropertyName("sapProduct");
+            writer.WritePropertyName("sapProduct"u8);
             writer.WriteStringValue(SapProduct.ToString());
-            writer.WritePropertyName("configuration");
+            writer.WritePropertyName("configuration"u8);
             writer.WriteObjectValue(Configuration);
             if (Optional.IsDefined(ManagedResourceGroupConfiguration))
             {
-                writer.WritePropertyName("managedResourceGroupConfiguration");
+                writer.WritePropertyName("managedResourceGroupConfiguration"u8);
                 writer.WriteObjectValue(ManagedResourceGroupConfiguration);
             }
             writer.WriteEndObject();
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Workloads
             Optional<SapVirtualInstanceError> errors = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("identity"))
+                if (property.NameEquals("identity"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Workloads
                     identity = UserAssignedServiceIdentity.DeserializeUserAssignedServiceIdentity(property.Value);
                     continue;
                 }
-                if (property.NameEquals("tags"))
+                if (property.NameEquals("tags"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -98,27 +98,27 @@ namespace Azure.ResourceManager.Workloads
                     tags = dictionary;
                     continue;
                 }
-                if (property.NameEquals("location"))
+                if (property.NameEquals("location"u8))
                 {
                     location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Workloads
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -137,22 +137,22 @@ namespace Azure.ResourceManager.Workloads
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("environment"))
+                        if (property0.NameEquals("environment"u8))
                         {
                             environment = new SapEnvironmentType(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("sapProduct"))
+                        if (property0.NameEquals("sapProduct"u8))
                         {
                             sapProduct = new SapProductType(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("configuration"))
+                        if (property0.NameEquals("configuration"u8))
                         {
                             configuration = SapConfiguration.DeserializeSapConfiguration(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("managedResourceGroupConfiguration"))
+                        if (property0.NameEquals("managedResourceGroupConfiguration"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.Workloads
                             managedResourceGroupConfiguration = ManagedRGConfiguration.DeserializeManagedRGConfiguration(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("status"))
+                        if (property0.NameEquals("status"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.Workloads
                             status = new SapVirtualInstanceStatus(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("health"))
+                        if (property0.NameEquals("health"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.Workloads
                             health = new SapHealthState(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("state"))
+                        if (property0.NameEquals("state"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.Workloads
                             state = new SapVirtualInstanceState(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("provisioningState"))
+                        if (property0.NameEquals("provisioningState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.Workloads
                             provisioningState = new SapVirtualInstanceProvisioningState(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("errors"))
+                        if (property0.NameEquals("errors"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

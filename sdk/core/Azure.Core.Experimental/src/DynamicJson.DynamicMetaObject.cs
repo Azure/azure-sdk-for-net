@@ -47,22 +47,26 @@ namespace Azure.Core.Dynamic
                 Expression this_ = Expression.Convert(Expression, LimitType);
                 BindingRestrictions restrictions = BindingRestrictions.GetTypeRestriction(Expression, LimitType);
 
-                MethodCallExpression convertCall;
-
                 if (binder.Type == typeof(IEnumerable))
                 {
-                    convertCall = Expression.Call(this_, GetEnumerableMethod);
-                    return new DynamicMetaObject(convertCall, restrictions);
+                    MethodCallExpression getEnumerable = Expression.Call(this_, GetEnumerableMethod);
+                    return new DynamicMetaObject(getEnumerable, restrictions);
+                }
+
+                if (binder.Type == typeof(IDisposable))
+                {
+                    UnaryExpression makeIDisposable = Expression.Convert(this_, binder.Type);
+                    return new DynamicMetaObject(makeIDisposable, restrictions);
                 }
 
                 if (CastFromOperators.TryGetValue(binder.Type, out MethodInfo? castOperator))
                 {
-                    convertCall = Expression.Call(castOperator, this_);
-                    return new DynamicMetaObject(convertCall, restrictions);
+                    MethodCallExpression cast = Expression.Call(castOperator, this_);
+                    return new DynamicMetaObject(cast, restrictions);
                 }
 
-                convertCall = Expression.Call(this_, nameof(ConvertTo), new Type[] { binder.Type });
-                return new DynamicMetaObject(convertCall, restrictions);
+                MethodCallExpression convertTo = Expression.Call(this_, nameof(ConvertTo), new Type[] { binder.Type });
+                return new DynamicMetaObject(convertTo, restrictions);
             }
 
             public override DynamicMetaObject BindSetMember(SetMemberBinder binder, DynamicMetaObject value)

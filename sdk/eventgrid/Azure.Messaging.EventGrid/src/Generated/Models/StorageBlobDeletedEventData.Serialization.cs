@@ -28,47 +28,47 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             Optional<object> storageDiagnostics = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("api"))
+                if (property.NameEquals("api"u8))
                 {
                     api = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("clientRequestId"))
+                if (property.NameEquals("clientRequestId"u8))
                 {
                     clientRequestId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("requestId"))
+                if (property.NameEquals("requestId"u8))
                 {
                     requestId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("contentType"))
+                if (property.NameEquals("contentType"u8))
                 {
                     contentType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("blobType"))
+                if (property.NameEquals("blobType"u8))
                 {
                     blobType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("url"))
+                if (property.NameEquals("url"u8))
                 {
                     url = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("sequencer"))
+                if (property.NameEquals("sequencer"u8))
                 {
                     sequencer = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("identity"))
+                if (property.NameEquals("identity"u8))
                 {
                     identity = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("storageDiagnostics"))
+                if (property.NameEquals("storageDiagnostics"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

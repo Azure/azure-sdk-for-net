@@ -28,22 +28,22 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             Optional<DateTimeOffset> lastEnqueueTime = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("fileUrl"))
+                if (property.NameEquals("fileUrl"u8))
                 {
                     fileUrl = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("fileType"))
+                if (property.NameEquals("fileType"u8))
                 {
                     fileType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("partitionId"))
+                if (property.NameEquals("partitionId"u8))
                 {
                     partitionId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("sizeInBytes"))
+                if (property.NameEquals("sizeInBytes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -53,7 +53,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     sizeInBytes = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("eventCount"))
+                if (property.NameEquals("eventCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -63,7 +63,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     eventCount = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("firstSequenceNumber"))
+                if (property.NameEquals("firstSequenceNumber"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -73,7 +73,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     firstSequenceNumber = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("lastSequenceNumber"))
+                if (property.NameEquals("lastSequenceNumber"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -83,7 +83,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     lastSequenceNumber = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("firstEnqueueTime"))
+                if (property.NameEquals("firstEnqueueTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -93,7 +93,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     firstEnqueueTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("lastEnqueueTime"))
+                if (property.NameEquals("lastEnqueueTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

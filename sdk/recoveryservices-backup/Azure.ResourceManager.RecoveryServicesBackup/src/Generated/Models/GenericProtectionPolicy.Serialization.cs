@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(SubProtectionPolicy))
             {
-                writer.WritePropertyName("subProtectionPolicy");
+                writer.WritePropertyName("subProtectionPolicy"u8);
                 writer.WriteStartArray();
                 foreach (var item in SubProtectionPolicy)
                 {
@@ -28,24 +28,24 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
             if (Optional.IsDefined(TimeZone))
             {
-                writer.WritePropertyName("timeZone");
+                writer.WritePropertyName("timeZone"u8);
                 writer.WriteStringValue(TimeZone);
             }
             if (Optional.IsDefined(FabricName))
             {
-                writer.WritePropertyName("fabricName");
+                writer.WritePropertyName("fabricName"u8);
                 writer.WriteStringValue(FabricName);
             }
             if (Optional.IsDefined(ProtectedItemsCount))
             {
-                writer.WritePropertyName("protectedItemsCount");
+                writer.WritePropertyName("protectedItemsCount"u8);
                 writer.WriteNumberValue(ProtectedItemsCount.Value);
             }
-            writer.WritePropertyName("backupManagementType");
+            writer.WritePropertyName("backupManagementType"u8);
             writer.WriteStringValue(BackupManagementType);
             if (Optional.IsCollectionDefined(ResourceGuardOperationRequests))
             {
-                writer.WritePropertyName("resourceGuardOperationRequests");
+                writer.WritePropertyName("resourceGuardOperationRequests"u8);
                 writer.WriteStartArray();
                 foreach (var item in ResourceGuardOperationRequests)
                 {
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             Optional<IList<string>> resourceGuardOperationRequests = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("subProtectionPolicy"))
+                if (property.NameEquals("subProtectionPolicy"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -81,17 +81,17 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     subProtectionPolicy = array;
                     continue;
                 }
-                if (property.NameEquals("timeZone"))
+                if (property.NameEquals("timeZone"u8))
                 {
                     timeZone = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("fabricName"))
+                if (property.NameEquals("fabricName"u8))
                 {
                     fabricName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("protectedItemsCount"))
+                if (property.NameEquals("protectedItemsCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -101,12 +101,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     protectedItemsCount = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("backupManagementType"))
+                if (property.NameEquals("backupManagementType"u8))
                 {
                     backupManagementType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("resourceGuardOperationRequests"))
+                if (property.NameEquals("resourceGuardOperationRequests"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

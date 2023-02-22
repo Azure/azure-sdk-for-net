@@ -19,7 +19,7 @@ namespace Azure.Communication.CallingServer
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("values"))
+                if (property.NameEquals("values"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -34,7 +34,7 @@ namespace Azure.Communication.CallingServer
                     values = array;
                     continue;
                 }
-                if (property.NameEquals("nextLink"))
+                if (property.NameEquals("nextLink"u8))
                 {
                     nextLink = property.Value.GetString();
                     continue;

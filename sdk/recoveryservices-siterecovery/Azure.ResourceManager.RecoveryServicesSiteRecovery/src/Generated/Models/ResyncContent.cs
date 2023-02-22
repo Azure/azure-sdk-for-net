@@ -29,8 +29,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// The provider specific details.
         /// Please note <see cref="ResyncProviderSpecificInput"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="VMwareCbtResyncInput"/>.
-        /// Please note <see cref="ResyncProviderSpecificInput"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="VMwareCbtResyncInput"/>.
         /// </summary>
         public ResyncProviderSpecificInput ResyncInputProviderSpecificDetails
         {

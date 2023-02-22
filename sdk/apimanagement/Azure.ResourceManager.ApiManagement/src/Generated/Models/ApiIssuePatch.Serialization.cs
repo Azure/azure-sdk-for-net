@@ -15,36 +15,36 @@ namespace Azure.ResourceManager.ApiManagement.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(CreatedOn))
             {
-                writer.WritePropertyName("createdDate");
+                writer.WritePropertyName("createdDate"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
             if (Optional.IsDefined(State))
             {
-                writer.WritePropertyName("state");
+                writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
             if (Optional.IsDefined(ApiId))
             {
-                writer.WritePropertyName("apiId");
+                writer.WritePropertyName("apiId"u8);
                 writer.WriteStringValue(ApiId);
             }
             if (Optional.IsDefined(Title))
             {
-                writer.WritePropertyName("title");
+                writer.WritePropertyName("title"u8);
                 writer.WriteStringValue(Title);
             }
             if (Optional.IsDefined(Description))
             {
-                writer.WritePropertyName("description");
+                writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
             if (Optional.IsDefined(UserId))
             {
-                writer.WritePropertyName("userId");
+                writer.WritePropertyName("userId"u8);
                 writer.WriteStringValue(UserId);
             }
             writer.WriteEndObject();

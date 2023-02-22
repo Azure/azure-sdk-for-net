@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Media.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("bitrate");
+            writer.WritePropertyName("bitrate"u8);
             writer.WriteNumberValue(Bitrate);
             writer.WriteEndObject();
         }
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Media.Models
             int bitrate = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("bitrate"))
+                if (property.NameEquals("bitrate"u8))
                 {
                     bitrate = property.Value.GetInt32();
                     continue;

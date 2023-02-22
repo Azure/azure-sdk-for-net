@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("maxUnusedVersionsToKeep");
+            writer.WritePropertyName("maxUnusedVersionsToKeep"u8);
             writer.WriteNumberValue(MaxUnusedVersionsToKeep);
             writer.WriteEndObject();
         }
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             long maxUnusedVersionsToKeep = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("maxUnusedVersionsToKeep"))
+                if (property.NameEquals("maxUnusedVersionsToKeep"u8))
                 {
                     maxUnusedVersionsToKeep = property.Value.GetInt64();
                     continue;

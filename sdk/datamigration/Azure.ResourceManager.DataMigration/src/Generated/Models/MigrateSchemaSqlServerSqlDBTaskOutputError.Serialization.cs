@@ -20,22 +20,22 @@ namespace Azure.ResourceManager.DataMigration.Models
             string resultType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("commandText"))
+                if (property.NameEquals("commandText"u8))
                 {
                     commandText = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("errorText"))
+                if (property.NameEquals("errorText"u8))
                 {
                     errorText = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("resultType"))
+                if (property.NameEquals("resultType"u8))
                 {
                     resultType = property.Value.GetString();
                     continue;

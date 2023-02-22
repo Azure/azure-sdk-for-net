@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Network.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(HttpProtocolConfiguration))
             {
-                writer.WritePropertyName("HTTPConfiguration");
+                writer.WritePropertyName("HTTPConfiguration"u8);
                 writer.WriteObjectValue(HttpProtocolConfiguration);
             }
             writer.WriteEndObject();

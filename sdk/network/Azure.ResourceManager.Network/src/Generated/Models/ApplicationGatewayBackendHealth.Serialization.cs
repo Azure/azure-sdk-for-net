@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Network.Models
             Optional<IReadOnlyList<ApplicationGatewayBackendHealthPool>> backendAddressPools = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("backendAddressPools"))
+                if (property.NameEquals("backendAddressPools"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

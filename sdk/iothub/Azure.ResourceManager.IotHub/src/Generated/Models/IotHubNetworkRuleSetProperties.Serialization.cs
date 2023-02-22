@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.IotHub.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(DefaultAction))
             {
-                writer.WritePropertyName("defaultAction");
+                writer.WritePropertyName("defaultAction"u8);
                 writer.WriteStringValue(DefaultAction.Value.ToString());
             }
-            writer.WritePropertyName("applyToBuiltInEventHubEndpoint");
+            writer.WritePropertyName("applyToBuiltInEventHubEndpoint"u8);
             writer.WriteBooleanValue(ApplyToBuiltInEventHubEndpoint);
-            writer.WritePropertyName("ipRules");
+            writer.WritePropertyName("ipRules"u8);
             writer.WriteStartArray();
             foreach (var item in IPRules)
             {
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.IotHub.Models
             IList<IotHubNetworkRuleSetIPRule> ipRules = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("defaultAction"))
+                if (property.NameEquals("defaultAction"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -50,12 +50,12 @@ namespace Azure.ResourceManager.IotHub.Models
                     defaultAction = new IotHubNetworkRuleSetDefaultAction(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("applyToBuiltInEventHubEndpoint"))
+                if (property.NameEquals("applyToBuiltInEventHubEndpoint"u8))
                 {
                     applyToBuiltInEventHubEndpoint = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("ipRules"))
+                if (property.NameEquals("ipRules"u8))
                 {
                     List<IotHubNetworkRuleSetIPRule> array = new List<IotHubNetworkRuleSetIPRule>();
                     foreach (var item in property.Value.EnumerateArray())

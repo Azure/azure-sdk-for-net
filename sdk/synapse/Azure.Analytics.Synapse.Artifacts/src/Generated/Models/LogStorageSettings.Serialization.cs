@@ -19,21 +19,21 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("linkedServiceName");
+            writer.WritePropertyName("linkedServiceName"u8);
             writer.WriteObjectValue(LinkedServiceName);
             if (Optional.IsDefined(Path))
             {
-                writer.WritePropertyName("path");
+                writer.WritePropertyName("path"u8);
                 writer.WriteObjectValue(Path);
             }
             if (Optional.IsDefined(LogLevel))
             {
-                writer.WritePropertyName("logLevel");
+                writer.WritePropertyName("logLevel"u8);
                 writer.WriteObjectValue(LogLevel);
             }
             if (Optional.IsDefined(EnableReliableLogging))
             {
-                writer.WritePropertyName("enableReliableLogging");
+                writer.WritePropertyName("enableReliableLogging"u8);
                 writer.WriteObjectValue(EnableReliableLogging);
             }
             foreach (var item in AdditionalProperties)
@@ -54,12 +54,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("linkedServiceName"))
+                if (property.NameEquals("linkedServiceName"u8))
                 {
                     linkedServiceName = LinkedServiceReference.DeserializeLinkedServiceReference(property.Value);
                     continue;
                 }
-                if (property.NameEquals("path"))
+                if (property.NameEquals("path"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -69,7 +69,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     path = property.Value.GetObject();
                     continue;
                 }
-                if (property.NameEquals("logLevel"))
+                if (property.NameEquals("logLevel"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -79,7 +79,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     logLevel = property.Value.GetObject();
                     continue;
                 }
-                if (property.NameEquals("enableReliableLogging"))
+                if (property.NameEquals("enableReliableLogging"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -1122,7 +1122,11 @@ namespace Azure.Messaging.EventHubs.Tests
         private Func<ProcessErrorEventArgs, Task> CreateAssertingErrorHandler() =>
             args =>
             {
-                Assert.Fail($"Processor Error Surfaced: ({ args.Exception.GetType().Name })[{ args.Exception.Message }]");
+                // If there is an inner exception, it will have more interesting details for investigation.
+
+                var ex = args.Exception.InnerException ?? args.Exception;
+
+                Assert.Fail($"Processor Error Surfaced ({ ex.GetType().Name }): {Environment.NewLine}\t{ args.Exception }");
                 return Task.CompletedTask;
             };
 

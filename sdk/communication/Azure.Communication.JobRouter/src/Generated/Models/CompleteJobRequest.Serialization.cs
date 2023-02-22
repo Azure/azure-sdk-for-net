@@ -15,11 +15,11 @@ namespace Azure.Communication.JobRouter
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("assignmentId");
+            writer.WritePropertyName("assignmentId"u8);
             writer.WriteStringValue(AssignmentId);
             if (Optional.IsDefined(Note))
             {
-                writer.WritePropertyName("note");
+                writer.WritePropertyName("note"u8);
                 writer.WriteStringValue(Note);
             }
             writer.WriteEndObject();

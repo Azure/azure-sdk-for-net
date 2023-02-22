@@ -17,23 +17,23 @@ namespace Azure.ResourceManager.ApiManagement
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(ContentType))
             {
-                writer.WritePropertyName("contentType");
+                writer.WritePropertyName("contentType"u8);
                 writer.WriteStringValue(ContentType);
             }
-            writer.WritePropertyName("document");
+            writer.WritePropertyName("document"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(Value))
             {
-                writer.WritePropertyName("value");
+                writer.WritePropertyName("value"u8);
                 writer.WriteStringValue(Value);
             }
             if (Optional.IsDefined(Definitions))
             {
-                writer.WritePropertyName("definitions");
+                writer.WritePropertyName("definitions"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(Definitions);
 #else
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.ApiManagement
             }
             if (Optional.IsDefined(Components))
             {
-                writer.WritePropertyName("components");
+                writer.WritePropertyName("components"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(Components);
 #else
@@ -66,22 +66,22 @@ namespace Azure.ResourceManager.ApiManagement
             Optional<BinaryData> components = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.ApiManagement
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -100,12 +100,12 @@ namespace Azure.ResourceManager.ApiManagement
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("contentType"))
+                        if (property0.NameEquals("contentType"u8))
                         {
                             contentType = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("document"))
+                        if (property0.NameEquals("document"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -114,12 +114,12 @@ namespace Azure.ResourceManager.ApiManagement
                             }
                             foreach (var property1 in property0.Value.EnumerateObject())
                             {
-                                if (property1.NameEquals("value"))
+                                if (property1.NameEquals("value"u8))
                                 {
                                     value = property1.Value.GetString();
                                     continue;
                                 }
-                                if (property1.NameEquals("definitions"))
+                                if (property1.NameEquals("definitions"u8))
                                 {
                                     if (property1.Value.ValueKind == JsonValueKind.Null)
                                     {
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.ApiManagement
                                     definitions = BinaryData.FromString(property1.Value.GetRawText());
                                     continue;
                                 }
-                                if (property1.NameEquals("components"))
+                                if (property1.NameEquals("components"u8))
                                 {
                                     if (property1.Value.ValueKind == JsonValueKind.Null)
                                     {

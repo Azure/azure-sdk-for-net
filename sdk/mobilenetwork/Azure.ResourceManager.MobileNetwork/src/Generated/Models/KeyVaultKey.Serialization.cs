@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(KeyUri))
             {
-                writer.WritePropertyName("keyUrl");
+                writer.WritePropertyName("keyUrl"u8);
                 writer.WriteStringValue(KeyUri.AbsoluteUri);
             }
             writer.WriteEndObject();
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             Optional<Uri> keyUrl = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("keyUrl"))
+                if (property.NameEquals("keyUrl"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

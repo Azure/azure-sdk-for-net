@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.DataBox.Models
             Optional<JobSecrets> jobSecrets = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("jobName"))
+                if (property.NameEquals("jobName"u8))
                 {
                     jobName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("jobSecrets"))
+                if (property.NameEquals("jobSecrets"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
