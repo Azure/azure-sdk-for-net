@@ -18,12 +18,16 @@ namespace Azure.ResourceManager.Resources
 {
     public partial class ResourceGroupData : ISerializable<ResourceGroupData>
     {
-        ResourceGroupData ISerializable<ResourceGroupData>.TryDeserialize(ReadOnlySpan<byte> data, out int bytesConsumed, StandardFormat format)
+        internal ResourceGroupData(): base()
+        {
+        }
+
+        bool ISerializable<ResourceGroupData>.TryDeserialize(ReadOnlySpan<byte> data, out int bytesConsumed, StandardFormat format)
         {
             using var document = JsonDocument.Parse(data.ToString());
-            var model = ResourceGroupData.DeserializeResourceGroupData(document.RootElement);
+            Deserialize(document.RootElement);
             bytesConsumed = data.Length;
-            return model;
+            return true;
         }
 
         bool ISerializable<ResourceGroupData>.TrySerialize(Span<byte> buffer, out int bytesWritten, StandardFormat format)
@@ -32,6 +36,30 @@ namespace Azure.ResourceManager.Resources
             ((IUtf8JsonSerializable)this).Write(writer);
             bytesWritten = buffer.Length;
             return true;
+        }
+
+        /// <summary> Deserializes a <see cref="JsonElement"/> to a <see cref="ResourceGroupData"/>. </summary>
+        private new void Deserialize(JsonElement element)
+        {
+            base.Deserialize(element);
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("properties"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    Properties = ResourceGroupProperties.DeserializeResourceGroupProperties(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("managedBy"))
+                {
+                    ManagedBy = property.Value.GetString();
+                    continue;
+                }
+            }
         }
     }
 }

@@ -45,10 +45,10 @@ namespace Azure.ResourceManager
         /// <param name="id"> The id of the ArmOperation. </param>
         public ArmOperation(ArmClient client, string id)
         {
-            Argument.AssertNotNull(id, nameof(id));
+            Argument.AssertNotNullOrEmpty(id, nameof(id));
             Argument.AssertNotNull(client, nameof(client));
 
-            var nextLinkOperation = NextLinkOperationImplementation.Create(client.Pipeline, id, out string finalResponse);
+            var nextLinkOperation = NextLinkOperationImplementation.Create(client.Pipeline, id);
             // TODO: Do we need more specific OptionsNamespace, ProviderNamespace and OperationTypeName and possibly from id?
             var clientDiagnostics = new ClientDiagnostics("Azure.ResourceManager", "Microsoft.Resources", client.Diagnostics);
             _operation = new OperationInternal(clientDiagnostics, nextLinkOperation, null, operationTypeName: null, fallbackStrategy: new ExponentialDelayStrategy());
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager
 
         /// <inheritdoc />
         [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
-        public override string Id => _operation.GetOperationId();
+        public override string Id => HasCompleted ? string.Empty : _operation.GetOperationId();
 
         /// <inheritdoc />
         public override bool HasCompleted => _operation.HasCompleted;

@@ -17,6 +17,6 @@ namespace Azure.ResourceManager
         bool TrySerialize(Span<byte> buffer, out int bytesWritten, StandardFormat format = default);
 
         /// <summary> Try to deserialize the object from a buffer. </summary>
-        T TryDeserialize(ReadOnlySpan<byte> data, out int bytesConsumed, StandardFormat format = default);
+        bool TryDeserialize(ReadOnlySpan<byte> data, out int bytesConsumed, StandardFormat format = default);
     }
 }

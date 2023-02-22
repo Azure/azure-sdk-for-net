@@ -30,7 +30,8 @@ namespace Azure.ResourceManager
             ISerializable<T> serializable = (ISerializable<T>)Activator.CreateInstance(typeof(T), BindingFlags.NonPublic | BindingFlags.Instance, null, null);
             var memoryStream = new MemoryStream();
             response.ContentStream.CopyTo(memoryStream);
-            return serializable.TryDeserialize(new ReadOnlySpan<byte>(memoryStream.ToArray()), out int bytesConsumed);
+            serializable.TryDeserialize(new ReadOnlySpan<byte>(memoryStream.ToArray()), out int bytesConsumed);
+            return (T)serializable;
         }
 
         ValueTask<T> IOperationSource<T>.CreateResultAsync(Response response, CancellationToken cancellationToken)
@@ -38,7 +39,8 @@ namespace Azure.ResourceManager
             ISerializable<T> serializable = (ISerializable<T>)Activator.CreateInstance(typeof(T), BindingFlags.NonPublic | BindingFlags.Instance, null, null);
             var memoryStream = new MemoryStream();
             response.ContentStream.CopyTo(memoryStream);
-            return new ValueTask<T>(serializable.TryDeserialize(new ReadOnlySpan<byte>(memoryStream.ToArray()), out int bytesConsumed));
+            serializable.TryDeserialize(new ReadOnlySpan<byte>(memoryStream.ToArray()), out int bytesConsumed);
+            return new ValueTask<T>((T)serializable);
         }
     }
 }

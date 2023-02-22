@@ -43,8 +43,9 @@ namespace Azure.ResourceManager
         }
 
         /// <summary> Initializes a new instance of ArmOperation. </summary>
-        public static ArmOperation<TModel> Rehydrate<TModel>(ArmClient client, string id) where TModel: ISerializable<TModel>, new()
+        public static ArmOperation<TModel> Rehydrate<TModel>(ArmClient client, string id) where TModel: ISerializable<TModel>
         {
+            Argument.AssertNotNullOrEmpty(id, nameof(id));
             IOperationSource<TModel> source = new GenericOperationSource<TModel>(client);
             var nextLinkOperation = NextLinkOperationImplementation.Create(source, client.Pipeline, id);
             // TODO: Do we need more specific OptionsNamespace, ProviderNamespace and OperationTypeName and possibly from id?
@@ -55,7 +56,7 @@ namespace Azure.ResourceManager
 
         /// <inheritdoc />
         [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
-        public override string Id => _operation.GetOperationId();
+        public override string Id => HasCompleted ? string.Empty : _operation.GetOperationId();
 
         /// <inheritdoc />
         public override T Value => _operation.Value;

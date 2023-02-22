@@ -16,12 +16,12 @@ namespace Azure.ResourceManager.Resources.Models
 {
     public partial class ResourceGroupExportResult : ISerializable<ResourceGroupExportResult>
     {
-        ResourceGroupExportResult ISerializable<ResourceGroupExportResult>.TryDeserialize(ReadOnlySpan<byte> data, out int bytesConsumed, StandardFormat format)
+        bool ISerializable<ResourceGroupExportResult>.TryDeserialize(ReadOnlySpan<byte> data, out int bytesConsumed, StandardFormat format)
         {
             using var document = JsonDocument.Parse(data.ToString());
             var model = ResourceGroupExportResult.DeserializeResourceGroupExportResult(document.RootElement);
             bytesConsumed = data.Length;
-            return model;
+            return true;
         }
 
         bool ISerializable<ResourceGroupExportResult>.TrySerialize(Span<byte> buffer, out int bytesWritten, StandardFormat format)
@@ -30,6 +30,33 @@ namespace Azure.ResourceManager.Resources.Models
             ((IUtf8JsonSerializable)this).Write(writer);
             bytesWritten = buffer.Length;
             return true;
+        }
+
+        private void Deserialize(JsonElement element)
+        {
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("template"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    Template = BinaryData.FromString(property.Value.GetRawText());
+                    continue;
+                }
+                if (property.NameEquals("error"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    Error = JsonSerializer.Deserialize<ResponseError>(property.Value.GetRawText());
+                    continue;
+                }
+            }
         }
 
     }
