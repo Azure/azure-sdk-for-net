@@ -36,14 +36,15 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
             options.Retry.MaxRetries = 0;
 
-            _connectionVars = InitializeConnectionVars(options);
+            var connectionString = GetConnectionString(options);
+            _connectionVars = ConnectionStringParser.GetValues(connectionString);
 
             _applicationInsightsRestClient = InitializeRestClient(options, _connectionVars, credential);
 
             _fileBlobProvider = InitializeOfflineStorage(options);
 
             // TODO: uncomment following line for enablement.
-            // InitializeStatsbeat(options.ConnectionString);
+            // InitializeStatsbeat(connectionString);
         }
 
         private static void InitializeStatsbeat(string? connectionString)
@@ -217,23 +218,16 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             return null;
         }
 
-        private static ConnectionVars InitializeConnectionVars(AzureMonitorExporterOptions options)
+        private static string GetConnectionString(AzureMonitorExporterOptions options)
         {
             if (options.ConnectionString == null)
             {
-                var connectionString = Environment.GetEnvironmentVariable("APPLICATIONINSIGHTS_CONNECTION_STRING");
-
-                if (!string.IsNullOrWhiteSpace(connectionString))
-                {
-                    return ConnectionStringParser.GetValues(connectionString);
-                }
+                return Environment.GetEnvironmentVariable("APPLICATIONINSIGHTS_CONNECTION_STRING");
             }
             else
             {
-                return ConnectionStringParser.GetValues(options.ConnectionString);
+                return options.ConnectionString;
             }
-
-            throw new InvalidOperationException("A connection string was not found. This MUST be provided via either AzureMonitorExporterOptions or set in the environment variable 'APPLICATIONINSIGHTS_CONNECTION_STRING'");
         }
 
         private ExportResult HandleFailures(HttpMessage httpMessage)
