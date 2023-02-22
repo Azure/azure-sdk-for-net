@@ -326,10 +326,13 @@ namespace Azure.Messaging.ServiceBus
                     cancellationToken).ConfigureAwait(false);
             }
             catch (OperationCanceledException ex)
-                when (isProcessor && cancellationToken.IsCancellationRequested)
+                when (cancellationToken.IsCancellationRequested)
             {
                 scope.BackdateStart(startTime);
-                Logger.ProcessorStoppingReceiveCanceled(Identifier, ex.ToString());
+                if (isProcessor)
+                    Logger.ProcessorStoppingReceiveCanceled(Identifier, ex.ToString());
+                else
+                    Logger.ReceiveMessageCanceled(Identifier, ex.ToString());
                 scope.Failed(ex);
                 throw;
             }

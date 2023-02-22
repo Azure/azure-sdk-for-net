@@ -33,10 +33,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(PauseGC))
+            if (Optional.IsDefined(DoesPauseGC))
             {
                 writer.WritePropertyName("pauseGC"u8);
-                writer.WriteBooleanValue(PauseGC.Value);
+                writer.WriteBooleanValue(DoesPauseGC.Value);
             }
             writer.WriteEndObject();
         }

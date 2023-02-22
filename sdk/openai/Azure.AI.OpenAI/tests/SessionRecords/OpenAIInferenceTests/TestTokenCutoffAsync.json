@@ -1,0 +1,68 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://sdk2319.openai.azure.com/openai/deployments/text-davinci-002/completions?api-version=2022-12-01",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "api-key": "***********",
+        "Content-Length": "119",
+        "Content-Type": "application/json",
+        "traceparent": "00-4cc90f290669921e7e06f07f731380f9-96911a05e9597338-00",
+        "User-Agent": "azsdk-net-AI.OpenAI/1.0.0-alpha.20230217.1 (.NET 7.0.2; Microsoft Windows 10.0.22623)",
+        "x-ms-client-request-id": "ce449a61b752388d1803293deb2f64cf",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "prompt": [
+          "How long would it take an unladen swallow to travel between Seattle, WA and New York, NY?"
+        ],
+        "max_tokens": 3
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Access-Control-Allow-Origin": "*",
+        "apim-request-id": "c43142ab-b043-444f-aa94-f40f0f5a5e75",
+        "Cache-Control": "must-revalidate, no-cache",
+        "Content-Length": "269",
+        "Content-Type": "application/json",
+        "Date": "Fri, 17 Feb 2023 19:15:54 GMT",
+        "openai-model": "text-davinci-002",
+        "openai-processing-ms": "128.457",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "x-accel-buffering": "no",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "ce449a61b752388d1803293deb2f64cf",
+        "x-ms-region": "West Europe",
+        "X-Request-ID": "8363f7d8-78eb-4a41-9f2d-14faac3a580c"
+      },
+      "ResponseBody": {
+        "id": "cmpl-6l0V1lLPM7n4nv08IvPHCJ0EVUjqc",
+        "object": "text_completion",
+        "created": 1676661355,
+        "model": "text-davinci-002",
+        "choices": [
+          {
+            "text": "\n\nIt",
+            "index": 0,
+            "logprobs": null,
+            "finish_reason": "length"
+          }
+        ],
+        "usage": {
+          "prompt_tokens": 21,
+          "completion_tokens": 3,
+          "total_tokens": 24
+        }
+      }
+    }
+  ],
+  "Variables": {
+    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
+    "OPENAI_DEPLOYMENT_ID": "text-davinci-002",
+    "OPENAI_EMBEDDINGS_DEPLOYMENT_ID": "text-similarity-davinci-001",
+    "OPENAI_ENDPOINT": "https://sdk2319.openai.azure.com/",
+    "RandomSeed": "695364723",
+    "SUBSCRIPTION_ID": "e72e5254-f265-4e95-9bd2-9ee8e7329051"
+  }
+}

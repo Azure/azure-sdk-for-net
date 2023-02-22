@@ -16,11 +16,11 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("logicAppResourceId");
+            writer.WritePropertyName("logicAppResourceId"u8);
             writer.WriteStringValue(LogicAppResourceId);
             if (Optional.IsDefined(TenantId))
             {
-                writer.WritePropertyName("tenantId");
+                writer.WritePropertyName("tenantId"u8);
                 writer.WriteStringValue(TenantId.Value);
             }
             writer.WriteEndObject();
@@ -32,12 +32,12 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             Optional<Guid> tenantId = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("logicAppResourceId"))
+                if (property.NameEquals("logicAppResourceId"u8))
                 {
                     logicAppResourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("tenantId"))
+                if (property.NameEquals("tenantId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

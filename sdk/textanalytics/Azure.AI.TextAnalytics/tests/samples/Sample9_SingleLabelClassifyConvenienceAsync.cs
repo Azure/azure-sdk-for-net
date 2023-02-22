@@ -14,61 +14,58 @@ namespace Azure.AI.TextAnalytics.Samples
         [Test]
         public async Task SingleLabelClassifyConvenienceAsync()
         {
-            // Create a Text Analytics client.
-            string endpoint = TestEnvironment.StaticEndpoint;
-            string apiKey = TestEnvironment.StaticApiKey;
+            Uri endpoint = new(TestEnvironment.StaticEndpoint);
+            AzureKeyCredential credential = new(TestEnvironment.StaticApiKey);
+            TextAnalyticsClient client = new(endpoint, credential, CreateSampleOptions());
 
-            var client = new TextAnalyticsClient(new Uri(endpoint), new AzureKeyCredential(apiKey), CreateSampleOptions());
+            #region Snippet:Sample9_SingleLabelClassifyConvenienceAsync
+            string document =
+                "I need a reservation for an indoor restaurant in China. Please don't stop the music. Play music and"
+                + " add it to my playlist.";
 
-            #region Snippet:TextAnalyticsSingleLabelClassifyAsync
-            // Get input document.
-            string document = @"I need a reservation for an indoor restaurant in China. Please don't stop the music. Play music and add it to my playlist.";
-
-            // Prepare analyze operation input. You can add multiple documents to this list and perform the same
-            // operation to all of them.
-            var batchInput = new List<string>
+            // Prepare the input of the text analysis operation. You can add multiple documents to this list and
+            // perform the same operation on all of them simultaneously.
+            List<string> batchedDocuments = new()
             {
                 document
             };
 
-            // Set project and deployment names of the target model
+            // Specify the project and deployment names of the desired custom model. To train your own custom model to
+            // classify your documents, see https://aka.ms/azsdk/textanalytics/customfunctionalities.
 #if SNIPPET
-            // To train a model to classify your documents, see https://aka.ms/azsdk/textanalytics/customfunctionalities
             string projectName = "<projectName>";
             string deploymentName = "<deploymentName>";
 #else
             string projectName = TestEnvironment.SingleClassificationProjectName;
             string deploymentName = TestEnvironment.SingleClassificationDeploymentName;
 #endif
+            SingleLabelClassifyAction singleLabelClassifyAction = new(projectName, deploymentName);
 
-            var singleLabelClassifyAction = new SingleLabelClassifyAction(projectName, deploymentName);
-
-            TextAnalyticsActions actions = new TextAnalyticsActions()
+            TextAnalyticsActions actions = new()
             {
                 SingleLabelClassifyActions = new List<SingleLabelClassifyAction>() { singleLabelClassifyAction }
             };
 
-            // Start analysis process.
-            AnalyzeActionsOperation operation = await client.StartAnalyzeActionsAsync(batchInput, actions);
-
+            // Perform the text analysis operation.
+            AnalyzeActionsOperation operation = await client.StartAnalyzeActionsAsync(batchedDocuments, actions);
             await operation.WaitForCompletionAsync();
-            #endregion Snippet:TextAnalyticsSingleLabelClassifyAsync
+            #endregion
 
-            #region Snippet:TextAnalyticsSingleLabelClassifyOperationStatus
-            // View operation status.
-            Console.WriteLine($"AnalyzeActions operation has completed");
+            Console.WriteLine($"The operation has completed.");
             Console.WriteLine();
 
+            #region Snippet:Sample9_SingleLabelClassifyConvenienceAsync_ViewOperationStatus
+            // View the operation status.
             Console.WriteLine($"Created On   : {operation.CreatedOn}");
             Console.WriteLine($"Expires On   : {operation.ExpiresOn}");
             Console.WriteLine($"Id           : {operation.Id}");
             Console.WriteLine($"Status       : {operation.Status}");
             Console.WriteLine($"Last Modified: {operation.LastModified}");
             Console.WriteLine();
-            #endregion Snippet:TextAnalyticsSingleLabelClassifyOperationStatus
+            #endregion
 
-            #region Snippet:TextAnalyticsSingleLabelClassifyAsyncViewResults
-            // View operation results.
+            #region Snippet:Sample9_SingleLabelClassifyConvenienceAsync_ViewResults
+            // View the operation results.
             await foreach (AnalyzeActionsResult documentsInPage in operation.Value)
             {
                 IReadOnlyCollection<SingleLabelClassifyActionResult> singleClassificationActionResults = documentsInPage.SingleLabelClassifyResults;
@@ -76,16 +73,16 @@ namespace Azure.AI.TextAnalytics.Samples
                 foreach (SingleLabelClassifyActionResult classificationActionResults in singleClassificationActionResults)
                 {
                     Console.WriteLine($" Action name: {classificationActionResults.ActionName}");
-                    foreach (ClassifyDocumentResult documentResults in classificationActionResults.DocumentsResults)
+                    foreach (ClassifyDocumentResult documentResult in classificationActionResults.DocumentsResults)
                     {
-                        ClassificationCategory classification = documentResults.ClassificationCategories.First();
+                        ClassificationCategory classification = documentResult.ClassificationCategories.First();
 
                         Console.WriteLine($"  Class label \"{classification.Category}\" predicted with a confidence score of {classification.ConfidenceScore}.");
                         Console.WriteLine();
                     }
                 }
             }
-            #endregion Snippet:TextAnalyticsSingleLabelClassifyAsyncViewResults
+            #endregion
         }
     }
 }

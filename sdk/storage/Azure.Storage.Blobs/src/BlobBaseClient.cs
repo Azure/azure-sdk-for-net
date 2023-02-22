@@ -1474,7 +1474,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// <param name="async"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        private async Task<Response<BlobDownloadStreamingResult>> DownloadStreamingDirect(
+        private async ValueTask<Response<BlobDownloadStreamingResult>> DownloadStreamingDirect(
             HttpRange range,
             BlobRequestConditions conditions,
             DownloadTransferValidationOptions transferValidationOverride,
@@ -1537,7 +1537,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// Cancellation token.
         /// </param>
         /// <returns></returns>
-        internal virtual async Task<Response<BlobDownloadStreamingResult>> DownloadStreamingInternal(
+        internal virtual async ValueTask<Response<BlobDownloadStreamingResult>> DownloadStreamingInternal(
             HttpRange range,
             BlobRequestConditions conditions,
             DownloadTransferValidationOptions transferValidationOverride,
@@ -1682,7 +1682,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        private async Task<Response<BlobDownloadStreamingResult>> StartDownloadAsync(
+        private async ValueTask<Response<BlobDownloadStreamingResult>> StartDownloadAsync(
             HttpRange range,
             BlobRequestConditions conditions,
             DownloadTransferValidationOptions validationOptions,

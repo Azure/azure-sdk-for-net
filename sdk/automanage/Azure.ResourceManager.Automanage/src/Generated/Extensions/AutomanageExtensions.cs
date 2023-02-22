@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Automanage.Models;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Automanage
@@ -27,12 +28,12 @@ namespace Azure.ResourceManager.Automanage
             );
         }
 
-        /// <summary> Gets a collection of BestPracticeResources in the TenantResource. </summary>
+        /// <summary> Gets a collection of AutomanageBestPracticeResources in the TenantResource. </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of BestPracticeResources and their operations over a BestPracticeResource. </returns>
-        public static BestPracticeCollection GetBestPractices(this TenantResource tenantResource)
+        /// <returns> An object representing collection of AutomanageBestPracticeResources and their operations over a AutomanageBestPracticeResource. </returns>
+        public static AutomanageBestPracticeCollection GetAutomanageBestPractices(this TenantResource tenantResource)
         {
-            return GetExtensionClient(tenantResource).GetBestPractices();
+            return GetExtensionClient(tenantResource).GetAutomanageBestPractices();
         }
 
         /// <summary>
@@ -54,9 +55,9 @@ namespace Azure.ResourceManager.Automanage
         /// <exception cref="ArgumentException"> <paramref name="bestPracticeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="bestPracticeName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<BestPracticeResource>> GetBestPracticeAsync(this TenantResource tenantResource, string bestPracticeName, CancellationToken cancellationToken = default)
+        public static async Task<Response<AutomanageBestPracticeResource>> GetAutomanageBestPracticeAsync(this TenantResource tenantResource, string bestPracticeName, CancellationToken cancellationToken = default)
         {
-            return await tenantResource.GetBestPractices().GetAsync(bestPracticeName, cancellationToken).ConfigureAwait(false);
+            return await tenantResource.GetAutomanageBestPractices().GetAsync(bestPracticeName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -78,9 +79,9 @@ namespace Azure.ResourceManager.Automanage
         /// <exception cref="ArgumentException"> <paramref name="bestPracticeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="bestPracticeName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<BestPracticeResource> GetBestPractice(this TenantResource tenantResource, string bestPracticeName, CancellationToken cancellationToken = default)
+        public static Response<AutomanageBestPracticeResource> GetAutomanageBestPractice(this TenantResource tenantResource, string bestPracticeName, CancellationToken cancellationToken = default)
         {
-            return tenantResource.GetBestPractices().Get(bestPracticeName, cancellationToken);
+            return tenantResource.GetAutomanageBestPractices().Get(bestPracticeName, cancellationToken);
         }
 
         private static SubscriptionResourceExtensionClient GetExtensionClient(SubscriptionResource subscriptionResource)
@@ -92,12 +93,25 @@ namespace Azure.ResourceManager.Automanage
             );
         }
 
-        /// <summary> Gets an object representing a ServicePrincipalResource along with the instance operations that can be performed on it in the SubscriptionResource. </summary>
+        /// <summary>
+        /// Retrieve a list of configuration profile within a subscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Automanage/configurationProfiles</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ConfigurationProfiles_ListBySubscription</description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="ServicePrincipalResource" /> object. </returns>
-        public static ServicePrincipalResource GetServicePrincipal(this SubscriptionResource subscriptionResource)
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="AutomanageConfigurationProfileResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<AutomanageConfigurationProfileResource> GetAutomanageConfigurationProfilesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscriptionResource).GetServicePrincipal();
+            return GetExtensionClient(subscriptionResource).GetAutomanageConfigurationProfilesAsync(cancellationToken);
         }
 
         /// <summary>
@@ -115,31 +129,92 @@ namespace Azure.ResourceManager.Automanage
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ConfigurationProfileResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<ConfigurationProfileResource> GetConfigurationProfilesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="AutomanageConfigurationProfileResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<AutomanageConfigurationProfileResource> GetAutomanageConfigurationProfiles(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscriptionResource).GetConfigurationProfilesAsync(cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetAutomanageConfigurationProfiles(cancellationToken);
         }
 
         /// <summary>
-        /// Retrieve a list of configuration profile within a subscription
+        /// Get the Automanage AAD first party Application Service Principal details for the subscription id.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Automanage/configurationProfiles</description>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Automanage/servicePrincipals</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ConfigurationProfiles_ListBySubscription</description>
+        /// <description>ServicePrincipals_ListBySubscription</description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ConfigurationProfileResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<ConfigurationProfileResource> GetConfigurationProfiles(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="AutomanageServicePrincipalData" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<AutomanageServicePrincipalData> GetServicePrincipalsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscriptionResource).GetConfigurationProfiles(cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetServicePrincipalsAsync(cancellationToken);
+        }
+
+        /// <summary>
+        /// Get the Automanage AAD first party Application Service Principal details for the subscription id.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Automanage/servicePrincipals</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ServicePrincipals_ListBySubscription</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="AutomanageServicePrincipalData" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<AutomanageServicePrincipalData> GetServicePrincipals(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            return GetExtensionClient(subscriptionResource).GetServicePrincipals(cancellationToken);
+        }
+
+        /// <summary>
+        /// Get the Automanage AAD first party Application Service Principal details for the subscription id.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Automanage/servicePrincipals/default</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ServicePrincipals_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public static async Task<Response<AutomanageServicePrincipalData>> GetServicePrincipalAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            return await GetExtensionClient(subscriptionResource).GetServicePrincipalAsync(cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get the Automanage AAD first party Application Service Principal details for the subscription id.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Automanage/servicePrincipals/default</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ServicePrincipals_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public static Response<AutomanageServicePrincipalData> GetServicePrincipal(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            return GetExtensionClient(subscriptionResource).GetServicePrincipal(cancellationToken);
         }
 
         private static ResourceGroupResourceExtensionClient GetExtensionClient(ResourceGroupResource resourceGroupResource)
@@ -151,12 +226,12 @@ namespace Azure.ResourceManager.Automanage
             );
         }
 
-        /// <summary> Gets a collection of ConfigurationProfileResources in the ResourceGroupResource. </summary>
+        /// <summary> Gets a collection of AutomanageConfigurationProfileResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of ConfigurationProfileResources and their operations over a ConfigurationProfileResource. </returns>
-        public static ConfigurationProfileCollection GetConfigurationProfiles(this ResourceGroupResource resourceGroupResource)
+        /// <returns> An object representing collection of AutomanageConfigurationProfileResources and their operations over a AutomanageConfigurationProfileResource. </returns>
+        public static AutomanageConfigurationProfileCollection GetAutomanageConfigurationProfiles(this ResourceGroupResource resourceGroupResource)
         {
-            return GetExtensionClient(resourceGroupResource).GetConfigurationProfiles();
+            return GetExtensionClient(resourceGroupResource).GetAutomanageConfigurationProfiles();
         }
 
         /// <summary>
@@ -178,9 +253,9 @@ namespace Azure.ResourceManager.Automanage
         /// <exception cref="ArgumentException"> <paramref name="configurationProfileName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="configurationProfileName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<ConfigurationProfileResource>> GetConfigurationProfileAsync(this ResourceGroupResource resourceGroupResource, string configurationProfileName, CancellationToken cancellationToken = default)
+        public static async Task<Response<AutomanageConfigurationProfileResource>> GetAutomanageConfigurationProfileAsync(this ResourceGroupResource resourceGroupResource, string configurationProfileName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetConfigurationProfiles().GetAsync(configurationProfileName, cancellationToken).ConfigureAwait(false);
+            return await resourceGroupResource.GetAutomanageConfigurationProfiles().GetAsync(configurationProfileName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -202,9 +277,9 @@ namespace Azure.ResourceManager.Automanage
         /// <exception cref="ArgumentException"> <paramref name="configurationProfileName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="configurationProfileName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<ConfigurationProfileResource> GetConfigurationProfile(this ResourceGroupResource resourceGroupResource, string configurationProfileName, CancellationToken cancellationToken = default)
+        public static Response<AutomanageConfigurationProfileResource> GetAutomanageConfigurationProfile(this ResourceGroupResource resourceGroupResource, string configurationProfileName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetConfigurationProfiles().Get(configurationProfileName, cancellationToken);
+            return resourceGroupResource.GetAutomanageConfigurationProfiles().Get(configurationProfileName, cancellationToken);
         }
 
         private static ArmResourceExtensionClient GetExtensionClient(ArmClient client, ResourceIdentifier scope)
@@ -438,58 +513,58 @@ namespace Azure.ResourceManager.Automanage
             return client.GetAutomanageHciClusterConfigurationProfileAssignments(scope).Get(configurationProfileAssignmentName, cancellationToken);
         }
 
-        #region BestPracticeResource
+        #region AutomanageBestPracticeResource
         /// <summary>
-        /// Gets an object representing a <see cref="BestPracticeResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="BestPracticeResource.CreateResourceIdentifier" /> to create a <see cref="BestPracticeResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="AutomanageBestPracticeResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="AutomanageBestPracticeResource.CreateResourceIdentifier" /> to create an <see cref="AutomanageBestPracticeResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="BestPracticeResource" /> object. </returns>
-        public static BestPracticeResource GetBestPracticeResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="AutomanageBestPracticeResource" /> object. </returns>
+        public static AutomanageBestPracticeResource GetAutomanageBestPracticeResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                BestPracticeResource.ValidateResourceId(id);
-                return new BestPracticeResource(client, id);
+                AutomanageBestPracticeResource.ValidateResourceId(id);
+                return new AutomanageBestPracticeResource(client, id);
             }
             );
         }
         #endregion
 
-        #region ConfigurationProfileResource
+        #region AutomanageConfigurationProfileResource
         /// <summary>
-        /// Gets an object representing a <see cref="ConfigurationProfileResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ConfigurationProfileResource.CreateResourceIdentifier" /> to create a <see cref="ConfigurationProfileResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="AutomanageConfigurationProfileResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="AutomanageConfigurationProfileResource.CreateResourceIdentifier" /> to create an <see cref="AutomanageConfigurationProfileResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ConfigurationProfileResource" /> object. </returns>
-        public static ConfigurationProfileResource GetConfigurationProfileResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="AutomanageConfigurationProfileResource" /> object. </returns>
+        public static AutomanageConfigurationProfileResource GetAutomanageConfigurationProfileResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                ConfigurationProfileResource.ValidateResourceId(id);
-                return new ConfigurationProfileResource(client, id);
+                AutomanageConfigurationProfileResource.ValidateResourceId(id);
+                return new AutomanageConfigurationProfileResource(client, id);
             }
             );
         }
         #endregion
 
-        #region ConfigurationProfileVersionResource
+        #region AutomanageConfigurationProfileVersionResource
         /// <summary>
-        /// Gets an object representing a <see cref="ConfigurationProfileVersionResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ConfigurationProfileVersionResource.CreateResourceIdentifier" /> to create a <see cref="ConfigurationProfileVersionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="AutomanageConfigurationProfileVersionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="AutomanageConfigurationProfileVersionResource.CreateResourceIdentifier" /> to create an <see cref="AutomanageConfigurationProfileVersionResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ConfigurationProfileVersionResource" /> object. </returns>
-        public static ConfigurationProfileVersionResource GetConfigurationProfileVersionResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="AutomanageConfigurationProfileVersionResource" /> object. </returns>
+        public static AutomanageConfigurationProfileVersionResource GetAutomanageConfigurationProfileVersionResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                ConfigurationProfileVersionResource.ValidateResourceId(id);
-                return new ConfigurationProfileVersionResource(client, id);
+                AutomanageConfigurationProfileVersionResource.ValidateResourceId(id);
+                return new AutomanageConfigurationProfileVersionResource(client, id);
             }
             );
         }
@@ -604,25 +679,6 @@ namespace Azure.ResourceManager.Automanage
             {
                 AutomanageHciClusterConfigurationProfileAssignmentReportResource.ValidateResourceId(id);
                 return new AutomanageHciClusterConfigurationProfileAssignmentReportResource(client, id);
-            }
-            );
-        }
-        #endregion
-
-        #region ServicePrincipalResource
-        /// <summary>
-        /// Gets an object representing a <see cref="ServicePrincipalResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ServicePrincipalResource.CreateResourceIdentifier" /> to create a <see cref="ServicePrincipalResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ServicePrincipalResource" /> object. </returns>
-        public static ServicePrincipalResource GetServicePrincipalResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                ServicePrincipalResource.ValidateResourceId(id);
-                return new ServicePrincipalResource(client, id);
             }
             );
         }

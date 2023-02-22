@@ -1,6 +1,17 @@
 # Release History
 
-## 12.15.0-beta.2 (Unreleased)
+## 12.16.0-beta.1 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 12.15.0 (2023-02-21)
+- Includes all features from 12.15.0-beta.1.
 - Added BlobDownloadDetails.CreatedOn property.
 
 ## 12.15.0-beta.1 (2023-02-07)

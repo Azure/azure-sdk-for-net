@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Monitor
         /// <returns> Returns a <see cref="VmInsightsOnboardingStatusResource" /> object. </returns>
         public virtual VmInsightsOnboardingStatusResource GetVmInsightsOnboardingStatus()
         {
-            return new VmInsightsOnboardingStatusResource(Client, new ResourceIdentifier(Id.ToString() + "/providers/Microsoft.Insights/vmInsightsOnboardingStatuses/default"));
+            return new VmInsightsOnboardingStatusResource(Client, Id.AppendProviderResource("Microsoft.Insights", "vmInsightsOnboardingStatuses", "default"));
         }
 
         /// <summary> Gets a collection of DataCollectionRuleAssociationResources in the ArmResource. </summary>

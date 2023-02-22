@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             Optional<IReadOnlyList<SecurityInsightsAttackTactic>> tactics = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("alertsCount"))
+                if (property.NameEquals("alertsCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     alertsCount = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("bookmarksCount"))
+                if (property.NameEquals("bookmarksCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     bookmarksCount = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("commentsCount"))
+                if (property.NameEquals("commentsCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     commentsCount = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("alertProductNames"))
+                if (property.NameEquals("alertProductNames"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     alertProductNames = array;
                     continue;
                 }
-                if (property.NameEquals("tactics"))
+                if (property.NameEquals("tactics"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

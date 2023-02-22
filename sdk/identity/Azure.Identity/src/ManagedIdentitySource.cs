@@ -27,8 +27,7 @@ namespace Azure.Identity
 
         public virtual async ValueTask<AccessToken> AuthenticateAsync(bool async, TokenRequestContext context, CancellationToken cancellationToken)
         {
-            using Request request = CreateRequest(context.Scopes);
-            using HttpMessage message = CreateHttpMessage(request);
+            using HttpMessage message = CreateHttpMessage(CreateRequest(context.Scopes));
             if (async)
             {
                 await Pipeline.HttpPipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);

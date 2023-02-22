@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         internal static YearlyRetentionSchedule DeserializeYearlyRetentionSchedule(JsonElement element)
         {
             Optional<RetentionScheduleFormat> retentionScheduleFormatType = default;
-            Optional<IList<MonthOfYear>> monthsOfYear = default;
+            Optional<IList<BackupMonthOfYear>> monthsOfYear = default;
             Optional<DailyRetentionFormat> retentionScheduleDaily = default;
             Optional<WeeklyRetentionFormat> retentionScheduleWeekly = default;
             Optional<IList<DateTimeOffset>> retentionTimes = default;
@@ -87,10 +87,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<MonthOfYear> array = new List<MonthOfYear>();
+                    List<BackupMonthOfYear> array = new List<BackupMonthOfYear>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString().ToMonthOfYear());
+                        array.Add(item.GetString().ToBackupMonthOfYear());
                     }
                     monthsOfYear = array;
                     continue;

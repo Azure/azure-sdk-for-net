@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Automanage
 
         internal static AutomanageConfigurationProfileAssignmentData DeserializeAutomanageConfigurationProfileAssignmentData(JsonElement element)
         {
-            Optional<ConfigurationProfileAssignmentProperties> properties = default;
+            Optional<AutomanageConfigurationProfileAssignmentProperties> properties = default;
             Optional<string> managedBy = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Automanage
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    properties = ConfigurationProfileAssignmentProperties.DeserializeConfigurationProfileAssignmentProperties(property.Value);
+                    properties = AutomanageConfigurationProfileAssignmentProperties.DeserializeAutomanageConfigurationProfileAssignmentProperties(property.Value);
                     continue;
                 }
                 if (property.NameEquals("managedBy"u8))

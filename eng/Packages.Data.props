@@ -160,7 +160,7 @@
     All should have PrivateAssets="All" set so they don't become package dependencies
   -->
   <ItemGroup>
-    <PackageReference Update="Microsoft.Azure.AutoRest.CSharp" Version="3.0.0-beta.20230212.4" PrivateAssets="All" />
+    <PackageReference Update="Microsoft.Azure.AutoRest.CSharp" Version="3.0.0-beta.20230221.3" PrivateAssets="All" />
     <PackageReference Update="Azure.ClientSdk.Analyzers" Version="0.1.1-dev.20230131.1" PrivateAssets="All" />
     <PackageReference Update="coverlet.collector" Version="1.3.0" PrivateAssets="All" />
     <PackageReference Update="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="3.3.1" PrivateAssets="All" />
@@ -198,7 +198,7 @@
     <PackageReference Update="Azure.Security.KeyVault.Secrets" Version="4.2.0-beta.4" />
     <PackageReference Update="Azure.Storage.Blobs" Version="12.13.1" />
     <PackageReference Update="Azure.Storage.Files.DataLake" Version="12.8.0" />
-    <PackageReference Update="BenchmarkDotNet" Version="0.13.1" />
+    <PackageReference Update="BenchmarkDotNet" Version="0.13.4" />
     <PackageReference Update="Castle.Core" Version="5.1.0" />
     <PackageReference Update="CommandLineParser" Version="2.8.0" />
     <PackageReference Update="FluentAssertions" Version="5.10.3" />
@@ -239,7 +239,7 @@
     <PackageReference Update="Microsoft.Extensions.Configuration.Binder" Version="2.1.10" />
     <PackageReference Update="Microsoft.Extensions.Configuration.Json" Version="5.0.0" />
     <PackageReference Update="Microsoft.Extensions.Configuration" Version="5.0.0" />
-    <PackageReference Update="Microsoft.Extensions.DependencyInjection" Version="2.1.1" />
+    <PackageReference Update="Microsoft.Extensions.DependencyInjection" Version="3.1.32" />
     <PackageReference Update="Microsoft.Extensions.PlatformAbstractions" Version="1.1.0" />
 		<PackageReference Update="Microsoft.Graph" Version="4.52.0" />
     <PackageReference Update="Microsoft.NET.Test.Sdk" Version="17.0.0" />
@@ -278,8 +278,8 @@
     <PackageReference Update="System.ValueTuple" Version="4.5.0" />
     <PackageDownload Include="Azure.Sdk.Tools.Testproxy" Version="[$(TestProxyVersion)]" />
     <PackageReference Update="WindowsAzure.ServiceBus" Version="5.1.0" />
-    <PackageReference Update="xunit.runner.visualstudio" Version="2.4.1" />
-    <PackageReference Update="xunit" Version="2.4.1" />
+    <PackageReference Update="xunit.runner.visualstudio" Version="2.4.2" />
+    <PackageReference Update="xunit" Version="2.4.2" />
   </ItemGroup>
 
   <ItemGroup Condition="'$(TargetFramework)'=='netstandard2.0'">

@@ -27,7 +27,7 @@ namespace Azure.Identity.Tests
         [SetUp]
         public void Setup()
         {
-            _pipeline = new CredentialPipeline(new Uri("https://a.b.com"), new HttpPipeline(new MockTransport()), new ClientDiagnostics(new TokenCredentialOptions()));
+            _pipeline = new CredentialPipeline(new HttpPipeline(new MockTransport()), new ClientDiagnostics(new TokenCredentialOptions() { AuthorityHost = new Uri("https://a.b.com")}));
         }
 
         public class SimpleMockTokenCredential : TokenCredential
