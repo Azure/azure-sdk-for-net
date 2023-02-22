@@ -25,6 +25,7 @@ This release is the first stable release of the Monitor Management library.
 
 - The type of `MonitorScaleCapacity.minimum`, `MonitorScaleCapacity.maximum` and `MonitorScaleCapacity.default` were changed to `integer`.
 - The type of `RecurrentSchedule.Days` was changed to `MonitorDayOfWeek`.
+- Removed the extension methods `GetDiagnosticSettings` and `GetDiagnosticSetting` that extends from `ArmResource`.
 
 ### Other Changes
 
