@@ -31,6 +31,8 @@ extends:
     ServiceDirectory: batch
     ArtifactName: packages
     Artifacts:
+    - name: Azure.Compute.Batch
+      safeName: AzureComputeBatch
     - name: Microsoft.Azure.Batch
       safeName: MicrosoftAzureBatch
     - name: Microsoft.Azure.Batch.FileStaging
