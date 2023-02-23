@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Azure.Monitor.OpenTelemetry
@@ -16,24 +15,22 @@ namespace Azure.Monitor.OpenTelemetry
         /// Adds Azure Monitor OpenTelemetry into service collection.
         /// </summary>
         /// <param name="services">The <see cref="IServiceCollection" /> to add services to.</param>
-        /// <param name="options">The <see cref="AzureMonitorOpenTelemetryOptions" /> instance for configuration.</param>
         /// <returns>The <see cref="IServiceCollection"/> so that additional calls can be chained.</returns>
-        public static IServiceCollection AddAzureMonitorOpenTelemetry(this IServiceCollection services, AzureMonitorOpenTelemetryOptions? options = null)
+        public static IServiceCollection AddAzureMonitorOpenTelemetry(this IServiceCollection services)
         {
-            return AzureMonitorOpenTelemetryImplementations.AddAzureMonitorOpenTelemetryWithOptions(services, options);
+            return services.AddAzureMonitorOpenTelemetry(o => o = new AzureMonitorOpenTelemetryOptions());
         }
 
         /// <summary>
         /// Adds Azure Monitor OpenTelemetry into service collection.
         /// </summary>
         /// <param name="services">The <see cref="IServiceCollection" /> to add services to.</param>
-        /// <param name="configuration"><see cref="IConfiguration"/>.</param>
+        /// <param name="options">The <see cref="AzureMonitorOpenTelemetryOptions" /> instance for configuration.</param>
         /// <returns>The <see cref="IServiceCollection"/> so that additional calls can be chained.</returns>
-        public static IServiceCollection AddAzureMonitorOpenTelemetry(this IServiceCollection services, IConfiguration configuration)
+        public static IServiceCollection AddAzureMonitorOpenTelemetry(this IServiceCollection services, AzureMonitorOpenTelemetryOptions options)
         {
-            var options = new AzureMonitorOpenTelemetryOptions();
-            configuration.Bind(options);
-            return services.AddAzureMonitorOpenTelemetry(options);
+            options ??= new AzureMonitorOpenTelemetryOptions();
+            return services.AddAzureMonitorOpenTelemetry(o => o.Clone(options));
         }
 
         /// <summary>
@@ -41,11 +38,10 @@ namespace Azure.Monitor.OpenTelemetry
         /// </summary>
         /// <param name="services"><see cref="IServiceCollection"/>.</param>
         /// <param name="configureAzureMonitorOpenTelemetry">Callback action for configuring <see cref="AzureMonitorOpenTelemetryOptions"/>.</param>
-        /// <param name="name">Name which is used when retrieving options.</param>
         /// <returns><see cref="IServiceCollection"/>.</returns>
-        public static IServiceCollection AddAzureMonitorOpenTelemetry(this IServiceCollection services, Action<AzureMonitorOpenTelemetryOptions> configureAzureMonitorOpenTelemetry, string? name = null)
+        public static IServiceCollection AddAzureMonitorOpenTelemetry(this IServiceCollection services, Action<AzureMonitorOpenTelemetryOptions> configureAzureMonitorOpenTelemetry)
         {
-            return AzureMonitorOpenTelemetryImplementations.AddAzureMonitorOpenTelemetryWithAction(services, configureAzureMonitorOpenTelemetry, name);
+            return AzureMonitorOpenTelemetryImplementations.AddAzureMonitorOpenTelemetryWithAction(services, configureAzureMonitorOpenTelemetry);
         }
     }
 }

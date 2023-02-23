@@ -12,55 +12,16 @@ namespace Azure.Monitor.OpenTelemetry
 {
     internal class AzureMonitorOpenTelemetryImplementations
     {
-        internal static IServiceCollection AddAzureMonitorOpenTelemetryWithOptions(IServiceCollection services, AzureMonitorOpenTelemetryOptions? options)
+        internal static IServiceCollection AddAzureMonitorOpenTelemetryWithAction(IServiceCollection services, Action<AzureMonitorOpenTelemetryOptions> configureAzureMonitorOpenTelemetry)
         {
             if (services == null)
             {
                 throw new ArgumentNullException(nameof(services));
             }
-
-            options ??= new AzureMonitorOpenTelemetryOptions();
-            var builder = services.AddOpenTelemetry();
-
-            if (options.EnableTraces)
-            {
-                builder.WithTracing(b => b
-                             .AddAspNetCoreInstrumentation()
-                             .AddAzureMonitorTraceExporter(o =>
-                             {
-                                 o.ConnectionString = options.ConnectionString;
-                                 o.DisableOfflineStorage = options.DisableOfflineStorage;
-                                 o.StorageDirectory = options.StorageDirectory;
-                             }));
-            }
-
-            if (options.EnableMetrics)
-            {
-                builder.WithMetrics(b => b
-                             .AddAspNetCoreInstrumentation()
-                             .AddAzureMonitorMetricExporter(o =>
-                             {
-                                 o.ConnectionString = options.ConnectionString;
-                                 o.DisableOfflineStorage = options.DisableOfflineStorage;
-                                 o.StorageDirectory = options.StorageDirectory;
-                             }));
-            }
-
-            return services;
-        }
-
-        internal static IServiceCollection AddAzureMonitorOpenTelemetryWithAction(IServiceCollection services, Action<AzureMonitorOpenTelemetryOptions> configureAzureMonitorOpenTelemetry, string? name)
-        {
-            if (services == null)
-            {
-                throw new ArgumentNullException(nameof(services));
-            }
-
-            name ??= Options.DefaultName;
 
             if (configureAzureMonitorOpenTelemetry != null)
             {
-                services.Configure(name, configureAzureMonitorOpenTelemetry);
+                services.Configure(configureAzureMonitorOpenTelemetry);
             }
 
             var builder = services.AddOpenTelemetry();
@@ -105,7 +66,7 @@ namespace Azure.Monitor.OpenTelemetry
 
             services.AddSingleton(sp =>
             {
-                var options = sp.GetRequiredService<IOptionsMonitor<AzureMonitorOpenTelemetryOptions>>().Get(name);
+                var options = sp.GetRequiredService<IOptionsMonitor<AzureMonitorOpenTelemetryOptions>>().Get("");
                 if (!options.EnableTraces)
                 {
                     return new NoopTracerProvider();
@@ -121,7 +82,7 @@ namespace Azure.Monitor.OpenTelemetry
 
             services.AddSingleton(sp =>
             {
-                var options = sp.GetRequiredService<IOptionsMonitor<AzureMonitorOpenTelemetryOptions>>().Get(name);
+                var options = sp.GetRequiredService<IOptionsMonitor<AzureMonitorOpenTelemetryOptions>>().Get("");
                 if (!options.EnableMetrics)
                 {
                     return new NoopMeterProvider();
@@ -145,13 +106,14 @@ namespace Azure.Monitor.OpenTelemetry
         private static void SetValueToExporterOptions(IServiceProvider sp, AzureMonitorOpenTelemetryOptions options)
         {
             var exporterOptions = sp.GetRequiredService<IOptionsMonitor<AzureMonitorExporterOptions>>().Get("");
+            var defaultOptions = new AzureMonitorExporterOptions();
 
-            // TODO: Remove the hard-coded ConnectionString.
-            // If ConnectionString is not provided in config, exporter will throw.
-            // Modify exporter to include environment variable.
-            exporterOptions.ConnectionString = options.ConnectionString ?? "InstrumentationKey=00000000-0000-0000-0000-000000000000";
-            exporterOptions.DisableOfflineStorage = options.DisableOfflineStorage;
-            exporterOptions.StorageDirectory = options.StorageDirectory;
+            if (ReferenceEquals(exporterOptions, defaultOptions))
+            {
+                exporterOptions.ConnectionString = options.AzureMonitorExporterOptions.ConnectionString;
+                exporterOptions.DisableOfflineStorage = options.AzureMonitorExporterOptions.DisableOfflineStorage;
+                exporterOptions.StorageDirectory = options.AzureMonitorExporterOptions.StorageDirectory;
+            }
         }
 
         private sealed class NoopTracerProvider : TracerProvider
