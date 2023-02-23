@@ -36,57 +36,55 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.MessageInterop
             Assert.AreEqual(book, returned);
         }
 
-// TEMP (target scale release):
-        //[Test]
-        //public void ParameterBindingDataTest()
-        //{
-        //    var lockToken = Guid.NewGuid();
-        //    var message = ServiceBusModelFactory.ServiceBusReceivedMessage(
-        //        body: BinaryData.FromString("body"),
-        //        messageId: "messageId",
-        //        correlationId: "correlationId",
-        //        sessionId: "sessionId",
-        //        replyTo: "replyTo",
-        //        replyToSessionId: "replyToSessionId",
-        //        contentType: "contentType",
-        //        subject: "label",
-        //        to: "to",
-        //        partitionKey: "partitionKey",
-        //        viaPartitionKey: "viaPartitionKey",
-        //        deadLetterSource: "deadLetterSource",
-        //        enqueuedSequenceNumber: 1,
-        //        lockTokenGuid: lockToken);
+        [Test]
+        public void ParameterBindingDataTest()
+        {
+            var lockToken = Guid.NewGuid();
+            var message = ServiceBusModelFactory.ServiceBusReceivedMessage(
+                body: BinaryData.FromString("body"),
+                messageId: "messageId",
+                correlationId: "correlationId",
+                sessionId: "sessionId",
+                replyTo: "replyTo",
+                replyToSessionId: "replyToSessionId",
+                contentType: "contentType",
+                subject: "label",
+                to: "to",
+                partitionKey: "partitionKey",
+                viaPartitionKey: "viaPartitionKey",
+                deadLetterSource: "deadLetterSource",
+                enqueuedSequenceNumber: 1,
+                lockTokenGuid: lockToken);
 
-        //    var bindingData = ServiceBusExtensionConfigProvider.ConvertReceivedMessageToBindingData(message);
-        //    Assert.AreEqual("application/octet-stream", bindingData.ContentType);
-        //    Assert.AreEqual("1.0", bindingData.Version);
-        //    Assert.AreEqual("AzureServiceBusReceivedMessage", bindingData.Source);
+            var bindingData = ServiceBusExtensionConfigProvider.ConvertReceivedMessageToBindingData(message);
+            Assert.AreEqual("application/octet-stream", bindingData.ContentType);
+            Assert.AreEqual("1.0", bindingData.Version);
+            Assert.AreEqual("AzureServiceBusReceivedMessage", bindingData.Source);
 
-        //    var bytes = bindingData.Content.ToMemory();
-        //    var lockTokenBytes = bytes.Slice(0, 16).ToArray();
-        //    Assert.AreEqual(lockToken.ToByteArray(), lockTokenBytes);
+            var bytes = bindingData.Content.ToMemory();
+            var lockTokenBytes = bytes.Slice(0, 16).ToArray();
+            Assert.AreEqual(lockToken.ToByteArray(), lockTokenBytes);
 
-        //    var deserialized = ServiceBusReceivedMessage.FromAmqpMessage(
-        //        AmqpAnnotatedMessage.FromBytes(
-        //            BinaryData.FromBytes(bytes.Slice(16, bytes.Length - 16))),
-        //        BinaryData.FromBytes(lockTokenBytes));
+            var deserialized = ServiceBusReceivedMessage.FromAmqpMessage(
+                AmqpAnnotatedMessage.FromBytes(
+                    BinaryData.FromBytes(bytes.Slice(16, bytes.Length - 16))),
+                BinaryData.FromBytes(lockTokenBytes));
 
-        //    Assert.AreEqual(message.Body.ToArray(), deserialized.Body.ToArray());
-        //    Assert.AreEqual(message.MessageId, deserialized.MessageId);
-        //    Assert.AreEqual(message.CorrelationId, deserialized.CorrelationId);
-        //    Assert.AreEqual(message.SessionId, deserialized.SessionId);
-        //    Assert.AreEqual(message.ReplyTo, deserialized.ReplyTo);
-        //    Assert.AreEqual(message.ReplyToSessionId, deserialized.ReplyToSessionId);
-        //    Assert.AreEqual(message.ContentType, deserialized.ContentType);
-        //    Assert.AreEqual(message.Subject, deserialized.Subject);
-        //    Assert.AreEqual(message.To, deserialized.To);
-        //    Assert.AreEqual(message.PartitionKey, deserialized.PartitionKey);
-        //    Assert.AreEqual(message.TransactionPartitionKey, deserialized.TransactionPartitionKey);
-        //    Assert.AreEqual(message.DeadLetterSource, deserialized.DeadLetterSource);
-        //    Assert.AreEqual(message.EnqueuedSequenceNumber, deserialized.EnqueuedSequenceNumber);
-        //    Assert.AreEqual(message.LockToken, deserialized.LockToken);
-        //}
-// END TEMP
+            Assert.AreEqual(message.Body.ToArray(), deserialized.Body.ToArray());
+            Assert.AreEqual(message.MessageId, deserialized.MessageId);
+            Assert.AreEqual(message.CorrelationId, deserialized.CorrelationId);
+            Assert.AreEqual(message.SessionId, deserialized.SessionId);
+            Assert.AreEqual(message.ReplyTo, deserialized.ReplyTo);
+            Assert.AreEqual(message.ReplyToSessionId, deserialized.ReplyToSessionId);
+            Assert.AreEqual(message.ContentType, deserialized.ContentType);
+            Assert.AreEqual(message.Subject, deserialized.Subject);
+            Assert.AreEqual(message.To, deserialized.To);
+            Assert.AreEqual(message.PartitionKey, deserialized.PartitionKey);
+            Assert.AreEqual(message.TransactionPartitionKey, deserialized.TransactionPartitionKey);
+            Assert.AreEqual(message.DeadLetterSource, deserialized.DeadLetterSource);
+            Assert.AreEqual(message.EnqueuedSequenceNumber, deserialized.EnqueuedSequenceNumber);
+            Assert.AreEqual(message.LockToken, deserialized.LockToken);
+        }
 
         private ServiceBusMessage GetBrokeredMessage(XmlObjectSerializer serializer, TestBook book)
         {
