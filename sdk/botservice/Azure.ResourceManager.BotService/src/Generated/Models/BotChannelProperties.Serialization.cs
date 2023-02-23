@@ -43,6 +43,7 @@ namespace Azure.ResourceManager.BotService.Models
             {
                 switch (discriminator.GetString())
                 {
+                    case "AcsChatChannel": return AcsChatChannel.DeserializeAcsChatChannel(element);
                     case "AlexaChannel": return AlexaChannel.DeserializeAlexaChannel(element);
                     case "DirectLineChannel": return DirectLineChannel.DeserializeDirectLineChannel(element);
                     case "DirectLineSpeechChannel": return DirectLineSpeechChannel.DeserializeDirectLineSpeechChannel(element);
@@ -50,12 +51,16 @@ namespace Azure.ResourceManager.BotService.Models
                     case "FacebookChannel": return FacebookChannel.DeserializeFacebookChannel(element);
                     case "KikChannel": return KikChannel.DeserializeKikChannel(element);
                     case "LineChannel": return LineChannel.DeserializeLineChannel(element);
+                    case "M365Extensions": return M365Extensions.DeserializeM365Extensions(element);
                     case "MsTeamsChannel": return MsTeamsChannel.DeserializeMsTeamsChannel(element);
+                    case "Omnichannel": return Omnichannel.DeserializeOmnichannel(element);
                     case "OutlookChannel": return OutlookChannel.DeserializeOutlookChannel(element);
+                    case "SearchAssistant": return SearchAssistant.DeserializeSearchAssistant(element);
                     case "SkypeChannel": return SkypeChannel.DeserializeSkypeChannel(element);
                     case "SlackChannel": return SlackChannel.DeserializeSlackChannel(element);
                     case "SmsChannel": return SmsChannel.DeserializeSmsChannel(element);
                     case "TelegramChannel": return TelegramChannel.DeserializeTelegramChannel(element);
+                    case "TelephonyChannel": return TelephonyChannel.DeserializeTelephonyChannel(element);
                     case "WebChatChannel": return WebChatChannel.DeserializeWebChatChannel(element);
                 }
             }

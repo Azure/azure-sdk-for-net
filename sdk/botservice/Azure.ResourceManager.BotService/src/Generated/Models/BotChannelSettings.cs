@@ -30,7 +30,8 @@ namespace Azure.ResourceManager.BotService.Models
         /// <param name="botIconUri"> The bot icon url. </param>
         /// <param name="isEnabled"> Whether this channel is enabled for the bot. </param>
         /// <param name="disableLocalAuth"> Opt-out of local authentication and ensure only MSI and AAD can be used exclusively for authentication. </param>
-        internal BotChannelSettings(string extensionKey1, string extensionKey2, IList<BotChannelSite> sites, string channelId, string channelDisplayName, string botId, Uri botIconUri, bool? isEnabled, bool? disableLocalAuth)
+        /// <param name="requireTermsAgreement"> Whether customer needs to agree to new terms. </param>
+        internal BotChannelSettings(string extensionKey1, string extensionKey2, IList<BotChannelSite> sites, string channelId, string channelDisplayName, string botId, Uri botIconUri, bool? isEnabled, bool? disableLocalAuth, bool? requireTermsAgreement)
         {
             ExtensionKey1 = extensionKey1;
             ExtensionKey2 = extensionKey2;
@@ -41,12 +42,13 @@ namespace Azure.ResourceManager.BotService.Models
             BotIconUri = botIconUri;
             IsEnabled = isEnabled;
             DisableLocalAuth = disableLocalAuth;
+            RequireTermsAgreement = requireTermsAgreement;
         }
 
         /// <summary> The extensionKey1. </summary>
-        public string ExtensionKey1 { get; }
+        public string ExtensionKey1 { get; set; }
         /// <summary> The extensionKey2. </summary>
-        public string ExtensionKey2 { get; }
+        public string ExtensionKey2 { get; set; }
         /// <summary> The list of sites. </summary>
         public IList<BotChannelSite> Sites { get; }
         /// <summary> The channel id. </summary>
@@ -61,5 +63,7 @@ namespace Azure.ResourceManager.BotService.Models
         public bool? IsEnabled { get; set; }
         /// <summary> Opt-out of local authentication and ensure only MSI and AAD can be used exclusively for authentication. </summary>
         public bool? DisableLocalAuth { get; set; }
+        /// <summary> Whether customer needs to agree to new terms. </summary>
+        public bool? RequireTermsAgreement { get; set; }
     }
 }

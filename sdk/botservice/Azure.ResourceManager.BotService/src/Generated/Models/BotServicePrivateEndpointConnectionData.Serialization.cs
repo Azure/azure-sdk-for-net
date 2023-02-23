@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.BotService.Models;
@@ -30,6 +31,16 @@ namespace Azure.ResourceManager.BotService
                 writer.WritePropertyName("privateLinkServiceConnectionState"u8);
                 writer.WriteObjectValue(ConnectionState);
             }
+            if (Optional.IsCollectionDefined(GroupIds))
+            {
+                writer.WritePropertyName("groupIds"u8);
+                writer.WriteStartArray();
+                foreach (var item in GroupIds)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
@@ -43,6 +54,7 @@ namespace Azure.ResourceManager.BotService
             Optional<SubResource> privateEndpoint = default;
             Optional<BotServicePrivateLinkServiceConnectionState> privateLinkServiceConnectionState = default;
             Optional<BotServicePrivateEndpointConnectionProvisioningState> provisioningState = default;
+            Optional<IList<string>> groupIds = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -109,11 +121,26 @@ namespace Azure.ResourceManager.BotService
                             provisioningState = new BotServicePrivateEndpointConnectionProvisioningState(property0.Value.GetString());
                             continue;
                         }
+                        if (property0.NameEquals("groupIds"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            List<string> array = new List<string>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(item.GetString());
+                            }
+                            groupIds = array;
+                            continue;
+                        }
                     }
                     continue;
                 }
             }
-            return new BotServicePrivateEndpointConnectionData(id, name, type, systemData.Value, privateEndpoint, privateLinkServiceConnectionState.Value, Optional.ToNullable(provisioningState));
+            return new BotServicePrivateEndpointConnectionData(id, name, type, systemData.Value, privateEndpoint, privateLinkServiceConnectionState.Value, Optional.ToNullable(provisioningState), Optional.ToList(groupIds));
         }
     }
 }

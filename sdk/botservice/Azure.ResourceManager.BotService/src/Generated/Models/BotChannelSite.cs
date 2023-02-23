@@ -29,6 +29,7 @@ namespace Azure.ResourceManager.BotService.Models
         }
 
         /// <summary> Initializes a new instance of BotChannelSite. </summary>
+        /// <param name="tenantId"> Tenant Id. </param>
         /// <param name="siteId"> Site Id. </param>
         /// <param name="siteName"> Site name. </param>
         /// <param name="key"> Primary key. Value only returned through POST to the action Channel List API, otherwise empty. </param>
@@ -42,12 +43,14 @@ namespace Azure.ResourceManager.BotService.Models
         /// <param name="etag"> Entity Tag. </param>
         /// <param name="appId"> DirectLine application id. </param>
         /// <param name="isV1Enabled"> Whether this site is enabled for Bot Framework V1 protocol. </param>
-        /// <param name="isV3Enabled"> Whether this site is enabled for Bot Framework V1 protocol. </param>
+        /// <param name="isV3Enabled"> Whether this site is enabled for Bot Framework V3 protocol. </param>
         /// <param name="isSecureSiteEnabled"> Whether this site is enabled for authentication with Bot Framework. </param>
         /// <param name="trustedOrigins"> List of Trusted Origin URLs for this site. This field is applicable only if isSecureSiteEnabled is True. </param>
+        /// <param name="isWebChatSpeechEnabled"> Whether this site is enabled for Webchat Speech. </param>
         /// <param name="isWebchatPreviewEnabled"> Whether this site is enabled for preview versions of Webchat. </param>
-        internal BotChannelSite(string siteId, string siteName, string key, string key2, bool isEnabled, bool? isTokenEnabled, bool? isEndpointParametersEnabled, bool? isDetailedLoggingEnabled, bool? isBlockUserUploadEnabled, bool? isNoStorageEnabled, ETag? etag, string appId, bool? isV1Enabled, bool? isV3Enabled, bool? isSecureSiteEnabled, IList<string> trustedOrigins, bool? isWebchatPreviewEnabled)
+        internal BotChannelSite(Guid? tenantId, string siteId, string siteName, string key, string key2, bool isEnabled, bool? isTokenEnabled, bool? isEndpointParametersEnabled, bool? isDetailedLoggingEnabled, bool? isBlockUserUploadEnabled, bool? isNoStorageEnabled, ETag? etag, string appId, bool? isV1Enabled, bool? isV3Enabled, bool? isSecureSiteEnabled, IList<string> trustedOrigins, bool? isWebChatSpeechEnabled, bool? isWebchatPreviewEnabled)
         {
+            TenantId = tenantId;
             SiteId = siteId;
             SiteName = siteName;
             Key = key;
@@ -64,9 +67,12 @@ namespace Azure.ResourceManager.BotService.Models
             IsV3Enabled = isV3Enabled;
             IsSecureSiteEnabled = isSecureSiteEnabled;
             TrustedOrigins = trustedOrigins;
+            IsWebChatSpeechEnabled = isWebChatSpeechEnabled;
             IsWebchatPreviewEnabled = isWebchatPreviewEnabled;
         }
 
+        /// <summary> Tenant Id. </summary>
+        public Guid? TenantId { get; set; }
         /// <summary> Site Id. </summary>
         public string SiteId { get; }
         /// <summary> Site name. </summary>
@@ -93,12 +99,14 @@ namespace Azure.ResourceManager.BotService.Models
         public string AppId { get; set; }
         /// <summary> Whether this site is enabled for Bot Framework V1 protocol. </summary>
         public bool? IsV1Enabled { get; set; }
-        /// <summary> Whether this site is enabled for Bot Framework V1 protocol. </summary>
+        /// <summary> Whether this site is enabled for Bot Framework V3 protocol. </summary>
         public bool? IsV3Enabled { get; set; }
         /// <summary> Whether this site is enabled for authentication with Bot Framework. </summary>
         public bool? IsSecureSiteEnabled { get; set; }
         /// <summary> List of Trusted Origin URLs for this site. This field is applicable only if isSecureSiteEnabled is True. </summary>
         public IList<string> TrustedOrigins { get; }
+        /// <summary> Whether this site is enabled for Webchat Speech. </summary>
+        public bool? IsWebChatSpeechEnabled { get; set; }
         /// <summary> Whether this site is enabled for preview versions of Webchat. </summary>
         public bool? IsWebchatPreviewEnabled { get; set; }
     }

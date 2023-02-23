@@ -23,9 +23,9 @@ namespace Azure.ResourceManager.BotService.Models
         /// <summary> Initializes a new instance of BotServiceProviderProperties. </summary>
         /// <param name="id"> Id for Service Provider. </param>
         /// <param name="displayName"> Display Name of the Service Provider. </param>
-        /// <param name="serviceProviderName"> Display Name of the Service Provider. </param>
-        /// <param name="devPortalUri"> Display Name of the Service Provider. </param>
-        /// <param name="iconUri"> Display Name of the Service Provider. </param>
+        /// <param name="serviceProviderName"> Name of the Service Provider. </param>
+        /// <param name="devPortalUri"> URL of Dev Portal. </param>
+        /// <param name="iconUri"> The URL of icon. </param>
         /// <param name="parameters"> The list of parameters for the Service Provider. </param>
         internal BotServiceProviderProperties(string id, string displayName, string serviceProviderName, Uri devPortalUri, Uri iconUri, IReadOnlyList<BotServiceProviderParameter> parameters)
         {
@@ -41,11 +41,11 @@ namespace Azure.ResourceManager.BotService.Models
         public string Id { get; }
         /// <summary> Display Name of the Service Provider. </summary>
         public string DisplayName { get; }
-        /// <summary> Display Name of the Service Provider. </summary>
+        /// <summary> Name of the Service Provider. </summary>
         public string ServiceProviderName { get; }
-        /// <summary> Display Name of the Service Provider. </summary>
+        /// <summary> URL of Dev Portal. </summary>
         public Uri DevPortalUri { get; }
-        /// <summary> Display Name of the Service Provider. </summary>
+        /// <summary> The URL of icon. </summary>
         public Uri IconUri { get; }
         /// <summary> The list of parameters for the Service Provider. </summary>
         public IReadOnlyList<BotServiceProviderParameter> Parameters { get; }

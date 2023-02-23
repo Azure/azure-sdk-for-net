@@ -18,15 +18,19 @@ namespace Azure.ResourceManager.BotService.Models
         /// <summary> Initializes a new instance of BotServiceNameAvailabilityResult. </summary>
         /// <param name="isValid"> indicates if the bot name is valid. </param>
         /// <param name="message"> additional message from the bot management api showing why a bot name is not available. </param>
-        internal BotServiceNameAvailabilityResult(bool? isValid, string message)
+        /// <param name="absCode"> response code from ABS. </param>
+        internal BotServiceNameAvailabilityResult(bool? isValid, string message, string absCode)
         {
             IsValid = isValid;
             Message = message;
+            AbsCode = absCode;
         }
 
         /// <summary> indicates if the bot name is valid. </summary>
         public bool? IsValid { get; }
         /// <summary> additional message from the bot management api showing why a bot name is not available. </summary>
         public string Message { get; }
+        /// <summary> response code from ABS. </summary>
+        public string AbsCode { get; }
     }
 }

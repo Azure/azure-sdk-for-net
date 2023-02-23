@@ -17,6 +17,16 @@ namespace Azure.ResourceManager.BotService.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
+            if (Optional.IsDefined(ExtensionKey1))
+            {
+                writer.WritePropertyName("extensionKey1"u8);
+                writer.WriteStringValue(ExtensionKey1);
+            }
+            if (Optional.IsDefined(ExtensionKey2))
+            {
+                writer.WritePropertyName("extensionKey2"u8);
+                writer.WriteStringValue(ExtensionKey2);
+            }
             if (Optional.IsCollectionDefined(Sites))
             {
                 writer.WritePropertyName("sites"u8);
@@ -57,6 +67,11 @@ namespace Azure.ResourceManager.BotService.Models
                 writer.WritePropertyName("disableLocalAuth"u8);
                 writer.WriteBooleanValue(DisableLocalAuth.Value);
             }
+            if (Optional.IsDefined(RequireTermsAgreement))
+            {
+                writer.WritePropertyName("requireTermsAgreement"u8);
+                writer.WriteBooleanValue(RequireTermsAgreement.Value);
+            }
             writer.WriteEndObject();
         }
 
@@ -71,6 +86,7 @@ namespace Azure.ResourceManager.BotService.Models
             Optional<Uri> botIconUrl = default;
             Optional<bool> isEnabled = default;
             Optional<bool> disableLocalAuth = default;
+            Optional<bool> requireTermsAgreement = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("extensionKey1"u8))
@@ -143,8 +159,18 @@ namespace Azure.ResourceManager.BotService.Models
                     disableLocalAuth = property.Value.GetBoolean();
                     continue;
                 }
+                if (property.NameEquals("requireTermsAgreement"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    requireTermsAgreement = property.Value.GetBoolean();
+                    continue;
+                }
             }
-            return new BotChannelSettings(extensionKey1.Value, extensionKey2.Value, Optional.ToList(sites), channelId.Value, channelDisplayName.Value, botId.Value, botIconUrl.Value, Optional.ToNullable(isEnabled), Optional.ToNullable(disableLocalAuth));
+            return new BotChannelSettings(extensionKey1.Value, extensionKey2.Value, Optional.ToList(sites), channelId.Value, channelDisplayName.Value, botId.Value, botIconUrl.Value, Optional.ToNullable(isEnabled), Optional.ToNullable(disableLocalAuth), Optional.ToNullable(requireTermsAgreement));
         }
     }
 }

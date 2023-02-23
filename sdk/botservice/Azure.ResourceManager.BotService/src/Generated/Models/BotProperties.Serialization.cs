@@ -145,8 +145,15 @@ namespace Azure.ResourceManager.BotService.Models
             }
             if (Optional.IsDefined(SchemaTransformationVersion))
             {
-                writer.WritePropertyName("schemaTransformationVersion"u8);
-                writer.WriteStringValue(SchemaTransformationVersion);
+                if (SchemaTransformationVersion != null)
+                {
+                    writer.WritePropertyName("schemaTransformationVersion"u8);
+                    writer.WriteStringValue(SchemaTransformationVersion);
+                }
+                else
+                {
+                    writer.WriteNull("schemaTransformationVersion");
+                }
             }
             if (Optional.IsDefined(StorageResourceId))
             {
@@ -462,6 +469,11 @@ namespace Azure.ResourceManager.BotService.Models
                 }
                 if (property.NameEquals("schemaTransformationVersion"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        schemaTransformationVersion = null;
+                        continue;
+                    }
                     schemaTransformationVersion = property.Value.GetString();
                     continue;
                 }

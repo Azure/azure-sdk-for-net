@@ -190,6 +190,7 @@ namespace Azure.ResourceManager.BotService
     {
         public BotServicePrivateEndpointConnectionData() { }
         public Azure.ResourceManager.BotService.Models.BotServicePrivateLinkServiceConnectionState ConnectionState { get { throw null; } set { } }
+        public System.Collections.Generic.IList<string> GroupIds { get { throw null; } }
         public Azure.Core.ResourceIdentifier PrivateEndpointId { get { throw null; } }
         public Azure.ResourceManager.BotService.Models.BotServicePrivateEndpointConnectionProvisioningState? ProvisioningState { get { throw null; } }
     }
@@ -210,6 +211,10 @@ namespace Azure.ResourceManager.BotService
 }
 namespace Azure.ResourceManager.BotService.Models
 {
+    public partial class AcsChatChannel : Azure.ResourceManager.BotService.Models.BotChannelProperties
+    {
+        public AcsChatChannel() { }
+    }
     public partial class AlexaChannel : Azure.ResourceManager.BotService.Models.BotChannelProperties
     {
         public AlexaChannel() { }
@@ -243,6 +248,7 @@ namespace Azure.ResourceManager.BotService.Models
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public BotChannelName(string value) { throw null; }
+        public static Azure.ResourceManager.BotService.Models.BotChannelName AcsChatChannel { get { throw null; } }
         public static Azure.ResourceManager.BotService.Models.BotChannelName AlexaChannel { get { throw null; } }
         public static Azure.ResourceManager.BotService.Models.BotChannelName DirectLineChannel { get { throw null; } }
         public static Azure.ResourceManager.BotService.Models.BotChannelName DirectLineSpeechChannel { get { throw null; } }
@@ -250,9 +256,11 @@ namespace Azure.ResourceManager.BotService.Models
         public static Azure.ResourceManager.BotService.Models.BotChannelName FacebookChannel { get { throw null; } }
         public static Azure.ResourceManager.BotService.Models.BotChannelName KikChannel { get { throw null; } }
         public static Azure.ResourceManager.BotService.Models.BotChannelName LineChannel { get { throw null; } }
+        public static Azure.ResourceManager.BotService.Models.BotChannelName M365Extensions { get { throw null; } }
         public static Azure.ResourceManager.BotService.Models.BotChannelName MsTeamsChannel { get { throw null; } }
         public static Azure.ResourceManager.BotService.Models.BotChannelName Omnichannel { get { throw null; } }
         public static Azure.ResourceManager.BotService.Models.BotChannelName OutlookChannel { get { throw null; } }
+        public static Azure.ResourceManager.BotService.Models.BotChannelName SearchAssistant { get { throw null; } }
         public static Azure.ResourceManager.BotService.Models.BotChannelName SkypeChannel { get { throw null; } }
         public static Azure.ResourceManager.BotService.Models.BotChannelName SlackChannel { get { throw null; } }
         public static Azure.ResourceManager.BotService.Models.BotChannelName SmsChannel { get { throw null; } }
@@ -290,9 +298,10 @@ namespace Azure.ResourceManager.BotService.Models
         public string ChannelDisplayName { get { throw null; } set { } }
         public string ChannelId { get { throw null; } set { } }
         public bool? DisableLocalAuth { get { throw null; } set { } }
-        public string ExtensionKey1 { get { throw null; } }
-        public string ExtensionKey2 { get { throw null; } }
+        public string ExtensionKey1 { get { throw null; } set { } }
+        public string ExtensionKey2 { get { throw null; } set { } }
         public bool? IsEnabled { get { throw null; } set { } }
+        public bool? RequireTermsAgreement { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.BotService.Models.BotChannelSite> Sites { get { throw null; } }
     }
     public partial class BotChannelSite
@@ -310,10 +319,12 @@ namespace Azure.ResourceManager.BotService.Models
         public bool? IsV1Enabled { get { throw null; } set { } }
         public bool? IsV3Enabled { get { throw null; } set { } }
         public bool? IsWebchatPreviewEnabled { get { throw null; } set { } }
+        public bool? IsWebChatSpeechEnabled { get { throw null; } set { } }
         public string Key { get { throw null; } }
         public string Key2 { get { throw null; } }
         public string SiteId { get { throw null; } }
         public string SiteName { get { throw null; } set { } }
+        public System.Guid? TenantId { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> TrustedOrigins { get { throw null; } }
     }
     public partial class BotConnectionSettingParameter
@@ -327,8 +338,6 @@ namespace Azure.ResourceManager.BotService.Models
         public BotConnectionSettingProperties() { }
         public string ClientId { get { throw null; } set { } }
         public string ClientSecret { get { throw null; } set { } }
-        public string Id { get { throw null; } set { } }
-        public string Name { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.BotService.Models.BotConnectionSettingParameter> Parameters { get { throw null; } }
         public string ProvisioningState { get { throw null; } set { } }
         public string Scopes { get { throw null; } set { } }
@@ -448,6 +457,7 @@ namespace Azure.ResourceManager.BotService.Models
     public partial class BotServiceNameAvailabilityResult
     {
         internal BotServiceNameAvailabilityResult() { }
+        public string AbsCode { get { throw null; } }
         public bool? IsValid { get { throw null; } }
         public string Message { get { throw null; } }
     }
@@ -599,8 +609,8 @@ namespace Azure.ResourceManager.BotService.Models
     {
         public DirectLineChannelProperties() { }
         public string DirectLineEmbedCode { get { throw null; } set { } }
-        public string ExtensionKey1 { get { throw null; } }
-        public string ExtensionKey2 { get { throw null; } }
+        public string ExtensionKey1 { get { throw null; } set { } }
+        public string ExtensionKey2 { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.BotService.Models.DirectLineSite> Sites { get { throw null; } }
     }
     public partial class DirectLineSite : Azure.ResourceManager.BotService.Models.BotChannelSite
@@ -709,6 +719,10 @@ namespace Azure.ResourceManager.BotService.Models
         public string ChannelSecret { get { throw null; } set { } }
         public string GeneratedId { get { throw null; } }
     }
+    public partial class M365Extensions : Azure.ResourceManager.BotService.Models.BotChannelProperties
+    {
+        public M365Extensions() { }
+    }
     public partial class MsTeamsChannel : Azure.ResourceManager.BotService.Models.BotChannelProperties
     {
         public MsTeamsChannel() { }
@@ -724,6 +738,10 @@ namespace Azure.ResourceManager.BotService.Models
         public bool? IsCallingEnabled { get { throw null; } set { } }
         public bool IsEnabled { get { throw null; } set { } }
     }
+    public partial class Omnichannel : Azure.ResourceManager.BotService.Models.BotChannelProperties
+    {
+        public Omnichannel() { }
+    }
     public partial class OutlookChannel : Azure.ResourceManager.BotService.Models.BotChannelProperties
     {
         public OutlookChannel() { }
@@ -732,6 +750,10 @@ namespace Azure.ResourceManager.BotService.Models
     {
         WebChatChannel = 0,
         DirectLineChannel = 1,
+    }
+    public partial class SearchAssistant : Azure.ResourceManager.BotService.Models.BotChannelProperties
+    {
+        public SearchAssistant() { }
     }
     public partial class SkypeChannel : Azure.ResourceManager.BotService.Models.BotChannelProperties
     {
@@ -797,6 +819,46 @@ namespace Azure.ResourceManager.BotService.Models
         public string AccessToken { get { throw null; } set { } }
         public bool IsEnabled { get { throw null; } set { } }
         public bool? IsValidated { get { throw null; } set { } }
+    }
+    public partial class TelephonyChannel : Azure.ResourceManager.BotService.Models.BotChannelProperties
+    {
+        public TelephonyChannel() { }
+        public Azure.ResourceManager.BotService.Models.TelephonyChannelProperties Properties { get { throw null; } set { } }
+    }
+    public partial class TelephonyChannelProperties
+    {
+        public TelephonyChannelProperties() { }
+        public System.Collections.Generic.IList<Azure.ResourceManager.BotService.Models.TelephonyChannelResourceApiConfiguration> ApiConfigurations { get { throw null; } }
+        public string CognitiveServiceRegion { get { throw null; } set { } }
+        public string CognitiveServiceSubscriptionKey { get { throw null; } set { } }
+        public string DefaultLocale { get { throw null; } set { } }
+        public bool? IsEnabled { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.BotService.Models.TelephonyPhoneNumbers> PhoneNumbers { get { throw null; } }
+        public string PremiumSku { get { throw null; } set { } }
+    }
+    public partial class TelephonyChannelResourceApiConfiguration
+    {
+        public TelephonyChannelResourceApiConfiguration() { }
+        public string CognitiveServiceRegion { get { throw null; } set { } }
+        public string CognitiveServiceResourceId { get { throw null; } set { } }
+        public string CognitiveServiceSubscriptionKey { get { throw null; } set { } }
+        public string DefaultLocale { get { throw null; } set { } }
+        public string Id { get { throw null; } set { } }
+        public string ProviderName { get { throw null; } set { } }
+    }
+    public partial class TelephonyPhoneNumbers
+    {
+        public TelephonyPhoneNumbers() { }
+        public string AcsEndpoint { get { throw null; } set { } }
+        public string AcsResourceId { get { throw null; } set { } }
+        public string AcsSecret { get { throw null; } set { } }
+        public string CognitiveServiceRegion { get { throw null; } set { } }
+        public string CognitiveServiceResourceId { get { throw null; } set { } }
+        public string CognitiveServiceSubscriptionKey { get { throw null; } set { } }
+        public string DefaultLocale { get { throw null; } set { } }
+        public string Id { get { throw null; } set { } }
+        public string OfferType { get { throw null; } set { } }
+        public string PhoneNumber { get { throw null; } set { } }
     }
     public partial class WebChatChannel : Azure.ResourceManager.BotService.Models.BotChannelProperties
     {

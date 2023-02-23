@@ -16,6 +16,7 @@ namespace Azure.ResourceManager.BotService.Models
         {
             Optional<bool> valid = default;
             Optional<string> message = default;
+            Optional<string> absCode = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("valid"u8))
@@ -33,8 +34,13 @@ namespace Azure.ResourceManager.BotService.Models
                     message = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("absCode"u8))
+                {
+                    absCode = property.Value.GetString();
+                    continue;
+                }
             }
-            return new BotServiceNameAvailabilityResult(Optional.ToNullable(valid), message.Value);
+            return new BotServiceNameAvailabilityResult(Optional.ToNullable(valid), message.Value, absCode.Value);
         }
     }
 }

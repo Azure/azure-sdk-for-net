@@ -9,8 +9,8 @@ generate-model-factory: false
 csharp: true
 library-name: BotService
 namespace: Azure.ResourceManager.BotService
-# default tag is a preview version
-require: https://github.com/Azure/azure-rest-api-specs/blob/af1be2677e619e483210064ff658e62ec25053aa/specification/botservice/resource-manager/readme.md
+# default tag is now a stable version
+require: https://github.com/Azure/azure-rest-api-specs/blob/8468620c009664ed91a3148c04cf77b6c8eb7b6f/specification/botservice/resource-manager/readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true
@@ -46,6 +46,7 @@ rename-rules:
   SSO: Sso
   URI: Uri
   Etag: ETag|etag
+  SKU: Sku
 
 override-operation-name:
   Bots_GetCheckNameAvailability: CheckBotServiceNameAvailability
@@ -54,7 +55,7 @@ override-operation-name:
   Channels_ListWithKeys: GetChannelWithKeys
   QnAMakerEndpointKeys_Get: GetBotServiceQnAMakerEndpointKey
   BotConnection_ListServiceProviders: GetBotConnectionServiceProviders
-  DirectLine_RegenerateKeys: RegenerateKeys
+  DirectLine_RegenerateKeys: GetBotChannelWithRegenerateKeys
 
 rename-mapping:
   ConnectionSetting: BotConnectionSetting
