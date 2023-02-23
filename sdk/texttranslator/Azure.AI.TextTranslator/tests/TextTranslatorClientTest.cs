@@ -8,6 +8,7 @@ using System.Text;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.AI.TextTranslator.Models;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Core.TestFramework;
@@ -41,9 +42,10 @@ namespace Azure.AI.TextTranslator.Tests
         {
             var key = new AzureKeyCredential("");
             var client = new TranslatorClient(new Uri("https://api.cognitive.microsofttranslator.com"), key, "westus2");
-            var translate = await client.TranslateAsync(new[] { "cs" }, RequestContent.Create(Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(new object[] { new { Text = "This is a Test" } })))).ConfigureAwait(false);
+            var translate = await client.TranslateAsync(new[] { "cs" }, new object[] { new InputText { Text = "This is a Test" } }).ConfigureAwait(false);
 
-            Assert.AreEqual(200, translate.Status);
+            Assert.AreEqual(200, translate.GetRawResponse().Status);
+            Assert.AreEqual(1, translate.Value.Count);
         }
 
         [RecordedTest]
@@ -51,9 +53,10 @@ namespace Azure.AI.TextTranslator.Tests
         {
             var key = new AzureKeyCredential("");
             var client = new TranslatorClient(new Uri("https://mimat-cus-white.cognitiveservices.azure.com"), key);
-            var translate = await client.TranslateAsync(new[] { "cs" }, RequestContent.Create(Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(new object[] { new { Text = "This is a Test" } })))).ConfigureAwait(false);
+            var translate = await client.TranslateAsync(new[] { "cs" }, new object[] { new InputText { Text = "This is a Test" } }).ConfigureAwait(false);
 
-            Assert.AreEqual(200, translate.Status);
+            Assert.AreEqual(200, translate.GetRawResponse().Status);
+            Assert.AreEqual(1, translate.Value.Count);
         }
 
         [RecordedTest]
@@ -62,9 +65,10 @@ namespace Azure.AI.TextTranslator.Tests
             TokenCredential token = new StaticAccessTokenCredential(new AccessToken("", DateTimeOffset.Now.AddDays(1)));
 
             var client = new TranslatorClient(new Uri("https://api.cognitive.microsofttranslator.com"), token);
-            var translate = await client.TranslateAsync(new[] { "cs" }, RequestContent.Create(Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(new object[] { new { Text = "This is a Test" } })))).ConfigureAwait(false);
+            var translate = await client.TranslateAsync(new[] { "cs" }, new object[] { new InputText { Text = "This is a Test" } }).ConfigureAwait(false);
 
-            Assert.AreEqual(200, translate.Status);
+            Assert.AreEqual(200, translate.GetRawResponse().Status);
+            Assert.AreEqual(1, translate.Value.Count);
         }
 
         #region Helpers
