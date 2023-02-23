@@ -280,7 +280,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
                 var triggerInput = new EventHubTriggerInput
                 {
                     Events = events,
-                    ProcessorPartition = context //TODO could this ever change (in a bad way)? If it's the same partition
+                    ProcessorPartition = context
                 };
 
                 // Batch dispatch
@@ -323,7 +323,6 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
                 var hasStoredEventsPartition = _eventDatas.TryGetValue(context.PartitionId, out var storedEvents);
                 if (hasStoredEventsPartition && storedEvents.Any())
                 {
-                    // TODO do we need to check that the number of events isn't too big? Ideally no
                     await TriggerExecute(storedEvents.ToArray(), context, cts).ConfigureAwait(false);
                     eventToCheckpoint = storedEvents.Last();
                 }
