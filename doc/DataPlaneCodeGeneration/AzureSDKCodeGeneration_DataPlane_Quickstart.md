@@ -13,8 +13,7 @@ This tutorial has following sections:
   - [Setup your repository](#setup-your-repository)
   - [Create SDK Package](#create-sdk-package)
     - [Use Cadl as Input API spec](#use-cadl-as-input-api-spec)
-      - [Create Cadl project](#create-cadl-project)
-      - [Create SDK project directory](#create-sdk-project-directory)
+      - [Before you Start](#before-you-start)
       - [Generate SDK](#generate-sdk)
     - [Use swagger as Input API spec](#use-swagger-as-input-api-spec)
   - [Add package ship requirements](#add-package-ship-requirements)
@@ -64,93 +63,34 @@ sdk\<service name>\<package name>\<package name>.sln
 
 ### Use Cadl as Input API spec
 
-#### Create Cadl project
+#### Before you Start
   
-  You can download existing cadl project from [azure-rest-api-specs](https://github.com/Azure/azure-rest-api-specs) repo or you can follow following steps to create a new cadl project.
+  Make sure you have cadl project in [azure-rest-api-specs](https://github.com/Azure/azure-rest-api-specs) repo or you can follow [Cadl Getting Start](https://github.com/microsoft/typespec/#using-node--npm) to initialize your Cadl project, and refer to [Cadl Structure Guidelines](https://github.com/Azure/azure-rest-api-specs/blob/main/documentation/cadl-structure-guidelines.md) to configure your Cadl project.
 
-  ***Initialize Cadl Project***
+  We will generate SDK library under SDK project folder `sdk\<servie name>\<package name>` of `azure-sdk-for-net` repo. e.g. /home/azure-sdk-for-net/sdk/anomalydetector/Azure.AI.AnomalyDetector).
 
-  Follow [Cadl Getting Start](https://github.com/microsoft/typespec/#using-node--npm) to initialize your Cadl project.
-
-  Make sure `npx cadl compile .` runs correctly.
-
-  **Note**: It is recommended to configure Cadl Specs on [REST API specifications](https://github.com/Azure/azure-rest-api-specs). Please refer to the [Guidelines](https://github.com/Azure/azure-rest-api-specs/blob/main/documentation/cadl-structure-guidelines.md).
-
-  ***Configuration***
-
-  One can further configure the SDK generated, using the emitter options on @azure-tools/cadl-csharp.
-
-  Modify (or create) cadl-project.yaml, add emitter options under options/@azure-tools/cadl-csharp. Option `namespace` and `emitter-output-dir` are required.
-
-```diff
-parameters:
-  "python-sdk-folder":
-    default: "{cwd}/azure-sdk-for-python/"
-  "java-sdk-folder":
-    default: "{cwd}/azure-sdk-for-java/"
-  "js-sdk-folder":
-    default: "{cwd}/azure-sdk-for-js/"
-  "csharp-sdk-folder":
-    default: "{cwd}/azure-sdk-for-csharp/"
-  "openapi-folder":
-    default: "{project-root}/../dataplane/"
-  "service-directory-name":
-    default: mycadlproject
-emit:
-  - "@azure-tools/cadl-autorest"
-options:
-  "@azure-tools/cadl-csharp":
-+    namespace: Azure.Template.MyCadlProject
-+    "emitter-output-dir": "{csharp-sdk-folder}/sdk/{service-directory-name}/{namespace}/src"
-```
-
-  **Notes**:
-  
-  @azure-tools/cadl-csharp emitter options:  
-
-- `namespace` define the client library namespace. e.g. Azure.IoT.DeviceUpdate.
-- `emitter-output-dir` define the output dir path which will store the generated code.
-- `generate-protocol-methods` indicate if you want to generate **protocol method** for each operation. It is a boolean flag to shift the entire generation for the process (`true` by default)
-- `generate-convenience-methods` indicate if you want to generate **convenience method** for each operation. It is a boolean flag to shift the entire generation for the process (`true` by default)
-- `unreferenced-types-handling` define the strategy how to handle the unreferenced types. It can be `removeOrInternalize`, `internalize` or `keepAll`
-- `model-namespace` indicate if we want to put the models in their own namespace which is a sub namespace of the client library namespace plus ".Models". if it is set `false`, the models will be put in the same namespace of the client. The default value is `true`.
-- `clear-output-folder` indicate if you want to clear up the output folder.
-- `package-name` define the package folder name which will be used as service directory name under `sdk/` in azure-sdk-for-net repo.
-- `save-inputs` indicate if you want to keep the intermediate files for debug purpose, e.g. the model json file (cadl.json) parsed from cadl file.
-
-#### Create SDK project directory
-
-We will generate SDK library under `sdk\<servie name>\<package name>` directory of `azure-sdk-for-net` repo. e.g. /home/azure-sdk-for-net/sdk/anomalydetector/Azure.AI.AnomalyDetector).
-
-If the sdk project directory does not exist, you can refer to [SDK project directory Set up](https://github.com/Azure/azure-sdk-for-net/blob/main/doc/DataPlaneCodeGeneration/AzureSDKPackage_Setup.md) to create one.
+  Make sure that the SDK project folder exists in [azure-sdk-for-net](https://github.com/Azure/azure-sdk-for-net) repo. If the SDK project folder does not exist, you can refer to [SDK project directory Set up](https://github.com/Azure/azure-sdk-for-net/blob/main/doc/DataPlaneCodeGeneration/AzureSDKPackage_Setup.md) to create one.
 
 #### Generate SDK
 
 We will generate SDK under the SDK project directory.
 
-***configuration***
+***configuration (optional)***
 
 You can update `cadl-location.yaml` under sdk project directory to set the cadl project.
 
 You can refer to the [cadl-location.yaml](https://github.com/Azure/azure-sdk-tools/blob/main/doc/common/Cadl-Project-Scripts.md#cadl-locationyaml) which describes the supported properties in the file.
 
-Example:
-
-```yml
-directory: specification/cognitiveservices/OpenAI.Inference
-additionalDirectories:
-  - specification/cognitiveservices/OpenAI.Authoring
-commit: 14f11cab735354c3e253045f7fbd2f1b9f90f7ca
-repo: Azure/azure-rest-api-specs
-cleanup: false
-```
-
 **Note**: If you want to use a local specs repo that is already present, you can specify `spec-root-dir` to provide the path of the root directory of the specs repo, e.g. /home/azure-rest-api-specs, and don't provide the `commit` and `repo`.
 
 ***Generate Code***
 
-Enter `src` folder, e.g. /home/azure-sdk-for-net/sdk/anomalyDetector/Azure.AI.AnomalyDetector/src
-Run `dotnet build /t:GenerateCode` to generate the code.
+Enter `src` sub-directory of cadl project folder, e.g. /home/azure-sdk-for-net/sdk/anomalyDetector/Azure.AI.AnomalyDetector/src
+Run `dotnet build /t:GenerateCode`, and the code will be generated under `sdk\<servie name>\<package name>\src\Generated`
+
+```dotnetcli
+dotnet build /t:GenerateCode
+```
 
 ### Use swagger as Input API spec
 

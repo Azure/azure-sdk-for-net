@@ -53,7 +53,3 @@ When you run `eng\scripts\automation\Invoke-CadlDataPlaneGenerateSDKPackage.ps1`
 - Create a project folder, install template files from `sdk/template/Azure.Template`, and create `.csproj` and `.sln` files for your new library.
 
     These files are created following the guidance for the [Azure SDK Repository Structure](https://github.com/Azure/azure-sdk/blob/master/docs/policies/repostructure.md).
-
-- Generate the library source code files to the directory `<sdkPath>/sdk/<service>/<namespace>/src/Generated`
-- Build the library project to create the starter package binary.
-- Export the library's public API to the directory `<sdkPath>/sdk/<service>/<namespace>/api`

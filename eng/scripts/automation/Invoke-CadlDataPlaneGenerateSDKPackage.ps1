@@ -100,28 +100,5 @@ if ( $LASTEXITCODE ) {
   Write-Error "Failed to create sdk project folder. exit code: $LASTEXITCODE"
   exit $LASTEXITCODE
 }
-$outputJson = Get-Content $outputJsonFile | Out-String | ConvertFrom-Json
-$projectFolder = $outputJson.projectFolder
-$projectFolder = $projectFolder -replace "\\", "/"
-
-Write-Host "projectFolder:$projectFolder"
 Remove-Item $outputJsonFile
-# Generate Code
-$srcPath = Join-Path $projectFolder 'src'
-dotnet build /t:GenerateCode $srcPath
-if ($LASTEXITCODE) {
-  Write-Error "Failed to generate sdk."
-  exit $LASTEXITCODE
-}
-# Build
-dotnet build $projectFolder
-if ($LASTEXITCODE) {
-  Write-Error "Failed to build sdk. exit code: $LASTEXITCODE"
-  exit $LASTEXITCODE
-}
-# Generate APIs
-$repoRoot = (Join-Path $PSScriptRoot .. .. ..)
-Push-Location $repoRoot
-pwsh eng/scripts/Export-API.ps1 $service
-Pop-Location
 exit 0
