@@ -72,7 +72,7 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
 
                 if (messages.Count > 1)
                 {
-                    scope.AddAttribute(MessagingClientDiagnostics.BatchCount, messages.Count);
+                    scope.AddIntegerAttribute(MessagingClientDiagnostics.BatchCount, messages.Count);
                 }
             }
         }
@@ -88,7 +88,7 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
 
                 if (messages.Count > 1)
                 {
-                    scope.AddAttribute(MessagingClientDiagnostics.BatchCount, messages.Count);
+                    scope.AddIntegerAttribute(MessagingClientDiagnostics.BatchCount, messages.Count);
                 }
             }
         }
@@ -112,7 +112,7 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
 
                 if (messages.Count > 1)
                 {
-                    scope.AddAttribute(MessagingClientDiagnostics.BatchCount, messages.Count);
+                    scope.AddIntegerAttribute(MessagingClientDiagnostics.BatchCount, messages.Count);
                 }
             }
         }
