@@ -1,24 +1,24 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://ads-dev-eastus-pv.purview.azure.com/share/receivedShares/attached?referenceName=%2Fsubscriptions%2F0f3dcfc3-18f8-4099-b381-8353e19d43a7%2FresourceGroups%2Ffaisalaltell%2Fproviders%2FMicrosoft.Storage%2FstorageAccounts%2Fftreceiversan\u0026api-version=2023-02-15-preview",
+      "RequestUri": "https://myaccountname.purview.azure.com/share/receivedShares/attached?referenceName=%2Fsubscriptions%2F0f3dcfc3-18f8-4099-b381-8353e19d43a7%2FresourceGroups%2Ffaisalaltell%2Fproviders%2FMicrosoft.Storage%2FstorageAccounts%2Fftreceiversan\u0026api-version=2023-02-15-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "User-Agent": "azsdk-net-Analytics.Purview/1.0.3-alpha.20230221.1 (.NET 6.0.14; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "4bd1d0f58e1fc0becdb1675047bb242d",
+        "User-Agent": "azsdk-net-Analytics.Purview/1.0.3-alpha.20230221.1 (.NET 7.0.3; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "72b7e93da37b6923d7c57dcd1a6714bd",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "Content-Length": "1715",
+        "Content-Length": "2568",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 21 Feb 2023 17:56:05 GMT",
+        "Date": "Thu, 23 Feb 2023 02:18:43 GMT",
         "Server": "Kestrel",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
-        "x-ms-correlation-request-id": "d554d935-eb27-465b-8e91-1dcb21e4112c"
+        "x-ms-correlation-request-id": "26fce43e-0dae-47fd-83c8-d89116e9b0ed"
       },
       "ResponseBody": {
         "value": [
@@ -56,8 +56,8 @@
           },
           {
             "properties": {
-              "createdAt": "2023-02-21T17:47:56.5196741Z",
-              "sharedAt": "2023-02-21T17:47:56.5196741Z",
+              "createdAt": "2023-02-22T19:23:00.2314762Z",
+              "sharedAt": "2023-02-22T19:23:00.2314762Z",
               "displayName": "testDisplayName1",
               "state": "Succeeded",
               "shareStatus": "Attached",
@@ -70,8 +70,8 @@
               "assetStoreKind": "AdlsGen2Account",
               "sink": {
                 "properties": {
-                  "containerName": "container221952",
-                  "folder": "folder221952",
+                  "containerName": "container2221124",
+                  "folder": "folder2221124",
                   "mountPath": "",
                   "location": "southafricanorth"
                 },
@@ -83,7 +83,39 @@
               }
             },
             "shareKind": "InPlace",
-            "id": "6b47a0d9-6fc1-4e48-b7cd-978c7082a177",
+            "id": "7ea17493-4265-4126-971a-5ca50cc7ea55",
+            "type": "ReceivedShare"
+          },
+          {
+            "properties": {
+              "createdAt": "2023-02-23T02:09:34.9772646Z",
+              "sharedAt": "2023-02-23T02:09:34.9772646Z",
+              "displayName": "testDisplayName1",
+              "state": "Succeeded",
+              "shareStatus": "Attached",
+              "sentShareDescription": "updatedDescription",
+              "receiverName": "SyMS",
+              "receiverTenantName": "Microsoft",
+              "senderName": "SyMS",
+              "senderTenantName": "Microsoft",
+              "assetLocation": "southafricanorth",
+              "assetStoreKind": "AdlsGen2Account",
+              "sink": {
+                "properties": {
+                  "containerName": "container222613",
+                  "folder": "folder222613",
+                  "mountPath": "",
+                  "location": "southafricanorth"
+                },
+                "storeKind": "AdlsGen2Account",
+                "storeReference": {
+                  "referenceName": "/subscriptions/0f3dcfc3-18f8-4099-b381-8353e19d43a7/resourceGroups/faisalaltell/providers/Microsoft.Storage/storageAccounts/ftreceiversan",
+                  "type": "ArmResourceReference"
+                }
+              }
+            },
+            "shareKind": "InPlace",
+            "id": "d18fc2a2-9cba-41bd-a869-462fa56f4b34",
             "type": "ReceivedShare"
           }
         ]
@@ -93,6 +125,6 @@
   "Variables": {
     "AZURE_AUTHORITY_HOST": null,
     "PURVIEW_SHARE_URL": "https://ads-dev-eastus-pv.purview.azure.com/share",
-    "RandomSeed": "1778488598"
+    "RandomSeed": "1515067968"
   }
 }

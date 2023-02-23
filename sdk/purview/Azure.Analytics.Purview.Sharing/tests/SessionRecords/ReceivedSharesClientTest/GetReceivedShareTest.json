@@ -1,14 +1,14 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://ads-dev-eastus-pv.purview.azure.com/share/receivedShares/6b47a0d9-6fc1-4e48-b7cd-978c7082a177?api-version=2023-02-15-preview",
+      "RequestUri": "https://myaccountname.purview.azure.com/share/receivedShares/d18fc2a2-9cba-41bd-a869-462fa56f4b34?api-version=2023-02-15-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-171d1f2f73e3769aa4dfd1fffd51c80d-4cb53f618451e87c-00",
-        "User-Agent": "azsdk-net-Analytics.Purview/1.0.3-alpha.20230221.1 (.NET 6.0.14; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "d43fd3724209f709b6dfa7db56ae00d5",
+        "traceparent": "00-342126de5a980c4685fb58febba36539-7a4d919a60b46c9f-00",
+        "User-Agent": "azsdk-net-Analytics.Purview/1.0.3-alpha.20230221.1 (.NET 7.0.3; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "9dafe11ac1bb2d90677108bbfe08eb5c",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -16,15 +16,15 @@
       "ResponseHeaders": {
         "Content-Length": "433",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 21 Feb 2023 17:52:13 GMT",
+        "Date": "Thu, 23 Feb 2023 02:12:27 GMT",
         "Server": "Kestrel",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
-        "x-ms-correlation-request-id": "46d55bf7-6148-44b9-8c2e-bf0c1b48dcdd"
+        "x-ms-correlation-request-id": "e873b194-562b-43cc-98f6-1dd783da5b06"
       },
       "ResponseBody": {
         "properties": {
-          "createdAt": "2023-02-21T17:47:56.5196741Z",
-          "sharedAt": "2023-02-21T17:47:56.5196741Z",
+          "createdAt": "2023-02-23T02:09:34.9772646Z",
+          "sharedAt": "2023-02-23T02:09:34.9772646Z",
           "displayName": "testDisplayName1",
           "state": "Succeeded",
           "shareStatus": "Detached",
@@ -35,7 +35,7 @@
           "assetStoreKind": "AdlsGen2Account"
         },
         "shareKind": "InPlace",
-        "id": "6b47a0d9-6fc1-4e48-b7cd-978c7082a177",
+        "id": "d18fc2a2-9cba-41bd-a869-462fa56f4b34",
         "type": "ReceivedShare"
       }
     }
@@ -43,6 +43,6 @@
   "Variables": {
     "AZURE_AUTHORITY_HOST": null,
     "PURVIEW_SHARE_URL": "https://ads-dev-eastus-pv.purview.azure.com/share",
-    "RandomSeed": "423535146"
+    "RandomSeed": "822379811"
   }
 }
