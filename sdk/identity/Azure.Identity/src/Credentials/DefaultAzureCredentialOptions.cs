@@ -186,6 +186,11 @@ namespace Azure.Identity
         public string InteractiveBrowserCredentialClientId { get; set; }
 
         /// <summary>
+        /// Specifies the client id of the application the workload identity will authenticate.
+        /// </summary>
+        public string WorkloadIdentityClientId { get; set; } = EnvironmentVariables.ClientId;
+
+        /// <summary>
         /// Specifies the client id of a user assigned ManagedIdentity. If this value is configured, then <see cref="ManagedIdentityResourceId"/> should not be configured.
         /// </summary>
         public string ManagedIdentityClientId { get; set; } = EnvironmentVariables.ClientId;
@@ -205,6 +210,12 @@ namespace Azure.Identity
         /// authentication details from the process' environment variables.
         /// </summary>
         public bool ExcludeEnvironmentCredential { get; set; }
+
+        /// <summary>
+        /// Specifies whether the <see cref="WorkloadIdentityCredential"/> will be excluded from the authentication flow. Setting to true disables reading
+        /// authentication details from the process' environment variables.
+        /// </summary>
+        public bool ExcludeWorkloadIdentityCredential { get; set; }
 
         /// <summary>
         /// Specifies whether the <see cref="ManagedIdentityCredential"/> will be excluded from the <see cref="DefaultAzureCredential"/> authentication flow.
@@ -268,10 +279,12 @@ namespace Azure.Identity
                 dacClone._visualStudioCodeTenantId = _visualStudioCodeTenantId;
                 dacClone.SharedTokenCacheUsername = SharedTokenCacheUsername;
                 dacClone.InteractiveBrowserCredentialClientId = InteractiveBrowserCredentialClientId;
+                dacClone.WorkloadIdentityClientId = WorkloadIdentityClientId;
                 dacClone.ManagedIdentityClientId = ManagedIdentityClientId;
                 dacClone.ManagedIdentityResourceId = ManagedIdentityResourceId;
                 dacClone.DeveloperCredentialTimeout = DeveloperCredentialTimeout;
                 dacClone.ExcludeEnvironmentCredential = ExcludeEnvironmentCredential;
+                dacClone.ExcludeWorkloadIdentityCredential = ExcludeWorkloadIdentityCredential;
                 dacClone.ExcludeManagedIdentityCredential = ExcludeManagedIdentityCredential;
                 dacClone.ExcludeAzureDeveloperCliCredential = ExcludeAzureDeveloperCliCredential;
                 dacClone.ExcludeSharedTokenCacheCredential = ExcludeSharedTokenCacheCredential;
