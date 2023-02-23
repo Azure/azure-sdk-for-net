@@ -23,11 +23,11 @@ namespace Azure.ResourceManager.AppService.Models
 
         public static AppServiceOperationStatus ToAppServiceOperationStatus(this string value)
         {
-            if (string.Equals(value, "InProgress", StringComparison.InvariantCultureIgnoreCase)) return AppServiceOperationStatus.InProgress;
-            if (string.Equals(value, "Failed", StringComparison.InvariantCultureIgnoreCase)) return AppServiceOperationStatus.Failed;
-            if (string.Equals(value, "Succeeded", StringComparison.InvariantCultureIgnoreCase)) return AppServiceOperationStatus.Succeeded;
-            if (string.Equals(value, "TimedOut", StringComparison.InvariantCultureIgnoreCase)) return AppServiceOperationStatus.TimedOut;
-            if (string.Equals(value, "Created", StringComparison.InvariantCultureIgnoreCase)) return AppServiceOperationStatus.Created;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "InProgress")) return AppServiceOperationStatus.InProgress;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Failed")) return AppServiceOperationStatus.Failed;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Succeeded")) return AppServiceOperationStatus.Succeeded;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "TimedOut")) return AppServiceOperationStatus.TimedOut;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Created")) return AppServiceOperationStatus.Created;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown AppServiceOperationStatus value.");
         }
     }

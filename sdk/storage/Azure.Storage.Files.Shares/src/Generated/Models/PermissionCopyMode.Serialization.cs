@@ -20,8 +20,8 @@ namespace Azure.Storage.Files.Shares.Models
 
         public static PermissionCopyMode ToPermissionCopyMode(this string value)
         {
-            if (string.Equals(value, "source", StringComparison.InvariantCultureIgnoreCase)) return PermissionCopyMode.Source;
-            if (string.Equals(value, "override", StringComparison.InvariantCultureIgnoreCase)) return PermissionCopyMode.Override;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "source")) return PermissionCopyMode.Source;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "override")) return PermissionCopyMode.Override;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown PermissionCopyMode value.");
         }
     }

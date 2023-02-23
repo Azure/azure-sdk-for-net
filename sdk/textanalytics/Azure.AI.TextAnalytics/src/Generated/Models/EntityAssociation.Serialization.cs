@@ -20,8 +20,8 @@ namespace Azure.AI.TextAnalytics
 
         public static EntityAssociation ToEntityAssociation(this string value)
         {
-            if (string.Equals(value, "subject", StringComparison.InvariantCultureIgnoreCase)) return EntityAssociation.Subject;
-            if (string.Equals(value, "other", StringComparison.InvariantCultureIgnoreCase)) return EntityAssociation.Other;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "subject")) return EntityAssociation.Subject;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "other")) return EntityAssociation.Other;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown EntityAssociation value.");
         }
     }
