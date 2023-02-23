@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.LiftrQumulo.Models
 {
-    public partial class JobDefinitionPatch : IUtf8JsonSerializable
+    public partial class QumuloQumuloProjectPatch : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -21,16 +21,6 @@ namespace Azure.ResourceManager.LiftrQumulo.Models
             {
                 writer.WritePropertyName("description");
                 writer.WriteStringValue(Description);
-            }
-            if (Optional.IsDefined(CopyMode))
-            {
-                writer.WritePropertyName("copyMode");
-                writer.WriteStringValue(CopyMode.Value.ToString());
-            }
-            if (Optional.IsDefined(QumuloAgentName))
-            {
-                writer.WritePropertyName("agentName");
-                writer.WriteStringValue(QumuloAgentName);
             }
             writer.WriteEndObject();
             writer.WriteEndObject();

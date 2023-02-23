@@ -31,11 +31,11 @@ namespace Azure.ResourceManager.LiftrQumulo
             return apiVersion;
         }
 
-        /// <summary> Gets a collection of StorageMoverResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of StorageMoverResources and their operations over a StorageMoverResource. </returns>
-        public virtual StorageMoverCollection GetStorageMovers()
+        /// <summary> Gets a collection of QumuloStorageMoverResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of QumuloStorageMoverResources and their operations over a QumuloStorageMoverResource. </returns>
+        public virtual QumuloStorageMoverCollection GetQumuloStorageMovers()
         {
-            return GetCachedClient(Client => new StorageMoverCollection(Client, Id));
+            return GetCachedClient(Client => new QumuloStorageMoverCollection(Client, Id));
         }
     }
 }

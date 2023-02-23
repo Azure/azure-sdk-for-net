@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.LiftrQumulo
     /// <summary> A class to add extension methods to SubscriptionResource. </summary>
     internal partial class SubscriptionResourceExtensionClient : ArmResource
     {
-        private ClientDiagnostics _storageMoverClientDiagnostics;
-        private StorageMoversRestOperations _storageMoverRestClient;
+        private ClientDiagnostics _qumuloQumuloStorageMoverStorageMoversClientDiagnostics;
+        private StorageMoversRestOperations _qumuloQumuloStorageMoverStorageMoversRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="SubscriptionResourceExtensionClient"/> class for mocking. </summary>
         protected SubscriptionResourceExtensionClient()
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.LiftrQumulo
         {
         }
 
-        private ClientDiagnostics StorageMoverClientDiagnostics => _storageMoverClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.LiftrQumulo", StorageMoverResource.ResourceType.Namespace, Diagnostics);
-        private StorageMoversRestOperations StorageMoverRestClient => _storageMoverRestClient ??= new StorageMoversRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(StorageMoverResource.ResourceType));
+        private ClientDiagnostics QumuloStorageMoverStorageMoversClientDiagnostics => _qumuloQumuloStorageMoverStorageMoversClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.LiftrQumulo", QumuloStorageMoverResource.ResourceType.Namespace, Diagnostics);
+        private StorageMoversRestOperations QumuloStorageMoverStorageMoversRestClient => _qumuloQumuloStorageMoverStorageMoversRestClient ??= new StorageMoversRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(QumuloStorageMoverResource.ResourceType));
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
@@ -49,17 +49,17 @@ namespace Azure.ResourceManager.LiftrQumulo
         /// Operation Id: StorageMovers_ListBySubscription
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="StorageMoverResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<StorageMoverResource> GetStorageMoversAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="QumuloStorageMoverResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<QumuloStorageMoverResource> GetQumuloStorageMoversAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<StorageMoverResource>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<QumuloStorageMoverResource>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = StorageMoverClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetStorageMovers");
+                using var scope = QumuloStorageMoverStorageMoversClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetQumuloStorageMovers");
                 scope.Start();
                 try
                 {
-                    var response = await StorageMoverRestClient.ListBySubscriptionAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new StorageMoverResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await QumuloStorageMoverStorageMoversRestClient.ListBySubscriptionAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new QumuloStorageMoverResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -67,14 +67,14 @@ namespace Azure.ResourceManager.LiftrQumulo
                     throw;
                 }
             }
-            async Task<Page<StorageMoverResource>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<QumuloStorageMoverResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = StorageMoverClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetStorageMovers");
+                using var scope = QumuloStorageMoverStorageMoversClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetQumuloStorageMovers");
                 scope.Start();
                 try
                 {
-                    var response = await StorageMoverRestClient.ListBySubscriptionNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new StorageMoverResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await QumuloStorageMoverStorageMoversRestClient.ListBySubscriptionNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new QumuloStorageMoverResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -91,17 +91,17 @@ namespace Azure.ResourceManager.LiftrQumulo
         /// Operation Id: StorageMovers_ListBySubscription
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="StorageMoverResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<StorageMoverResource> GetStorageMovers(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="QumuloStorageMoverResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<QumuloStorageMoverResource> GetQumuloStorageMovers(CancellationToken cancellationToken = default)
         {
-            Page<StorageMoverResource> FirstPageFunc(int? pageSizeHint)
+            Page<QumuloStorageMoverResource> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = StorageMoverClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetStorageMovers");
+                using var scope = QumuloStorageMoverStorageMoversClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetQumuloStorageMovers");
                 scope.Start();
                 try
                 {
-                    var response = StorageMoverRestClient.ListBySubscription(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new StorageMoverResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = QumuloStorageMoverStorageMoversRestClient.ListBySubscription(Id.SubscriptionId, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new QumuloStorageMoverResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -109,14 +109,14 @@ namespace Azure.ResourceManager.LiftrQumulo
                     throw;
                 }
             }
-            Page<StorageMoverResource> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<QumuloStorageMoverResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = StorageMoverClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetStorageMovers");
+                using var scope = QumuloStorageMoverStorageMoversClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetQumuloStorageMovers");
                 scope.Start();
                 try
                 {
-                    var response = StorageMoverRestClient.ListBySubscriptionNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new StorageMoverResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = QumuloStorageMoverStorageMoversRestClient.ListBySubscriptionNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new QumuloStorageMoverResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {

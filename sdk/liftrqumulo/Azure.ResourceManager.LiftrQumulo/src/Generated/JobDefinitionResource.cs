@@ -21,14 +21,14 @@ namespace Azure.ResourceManager.LiftrQumulo
     /// A Class representing a JobDefinition along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="JobDefinitionResource" />
     /// from an instance of <see cref="ArmClient" /> using the GetJobDefinitionResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ProjectResource" /> using the GetJobDefinition method.
+    /// Otherwise you can get one from its parent resource <see cref="QumuloProjectResource" /> using the GetJobDefinition method.
     /// </summary>
     public partial class JobDefinitionResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="JobDefinitionResource"/> instance. </summary>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string storageMoverName, string projectName, string jobDefinitionName)
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string qumuloStorageMoverName, string qumuloProjectName, string jobDefinitionName)
         {
-            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageMover/storageMovers/{storageMoverName}/projects/{projectName}/jobDefinitions/{jobDefinitionName}";
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageMover/storageMovers/{qumuloStorageMoverName}/projects/{qumuloProjectName}/jobDefinitions/{jobDefinitionName}";
             return new ResourceIdentifier(resourceId);
         }
 
@@ -87,11 +87,11 @@ namespace Azure.ResourceManager.LiftrQumulo
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of JobRunResources in the JobDefinition. </summary>
-        /// <returns> An object representing collection of JobRunResources and their operations over a JobRunResource. </returns>
-        public virtual JobRunCollection GetJobRuns()
+        /// <summary> Gets a collection of QumuloJobRunResources in the JobDefinition. </summary>
+        /// <returns> An object representing collection of QumuloJobRunResources and their operations over a QumuloJobRunResource. </returns>
+        public virtual QumuloJobRunCollection GetQumuloJobRuns()
         {
-            return GetCachedClient(Client => new JobRunCollection(Client, Id));
+            return GetCachedClient(Client => new QumuloJobRunCollection(Client, Id));
         }
 
         /// <summary>
@@ -99,14 +99,14 @@ namespace Azure.ResourceManager.LiftrQumulo
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageMover/storageMovers/{storageMoverName}/projects/{projectName}/jobDefinitions/{jobDefinitionName}/jobRuns/{jobRunName}
         /// Operation Id: JobRuns_Get
         /// </summary>
-        /// <param name="jobRunName"> The name of the Job Run resource. </param>
+        /// <param name="qumuloJobRunName"> The name of the Job Run resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="jobRunName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="jobRunName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="qumuloJobRunName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="qumuloJobRunName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<JobRunResource>> GetJobRunAsync(string jobRunName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<QumuloJobRunResource>> GetQumuloJobRunAsync(string qumuloJobRunName, CancellationToken cancellationToken = default)
         {
-            return await GetJobRuns().GetAsync(jobRunName, cancellationToken).ConfigureAwait(false);
+            return await GetQumuloJobRuns().GetAsync(qumuloJobRunName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -114,14 +114,14 @@ namespace Azure.ResourceManager.LiftrQumulo
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageMover/storageMovers/{storageMoverName}/projects/{projectName}/jobDefinitions/{jobDefinitionName}/jobRuns/{jobRunName}
         /// Operation Id: JobRuns_Get
         /// </summary>
-        /// <param name="jobRunName"> The name of the Job Run resource. </param>
+        /// <param name="qumuloJobRunName"> The name of the Job Run resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="jobRunName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="jobRunName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="qumuloJobRunName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="qumuloJobRunName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<JobRunResource> GetJobRun(string jobRunName, CancellationToken cancellationToken = default)
+        public virtual Response<QumuloJobRunResource> GetQumuloJobRun(string qumuloJobRunName, CancellationToken cancellationToken = default)
         {
-            return GetJobRuns().Get(jobRunName, cancellationToken);
+            return GetQumuloJobRuns().Get(qumuloJobRunName, cancellationToken);
         }
 
         /// <summary>
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.LiftrQumulo
         /// Operation Id: JobDefinitions_StartJob
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<JobRunResourceId>> StartJobAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<QumuloJobRunResourceId>> StartJobAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _jobDefinitionClientDiagnostics.CreateScope("JobDefinitionResource.StartJob");
             scope.Start();
@@ -304,7 +304,7 @@ namespace Azure.ResourceManager.LiftrQumulo
         /// Operation Id: JobDefinitions_StartJob
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<JobRunResourceId> StartJob(CancellationToken cancellationToken = default)
+        public virtual Response<QumuloJobRunResourceId> StartJob(CancellationToken cancellationToken = default)
         {
             using var scope = _jobDefinitionClientDiagnostics.CreateScope("JobDefinitionResource.StartJob");
             scope.Start();
@@ -326,7 +326,7 @@ namespace Azure.ResourceManager.LiftrQumulo
         /// Operation Id: JobDefinitions_StopJob
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<JobRunResourceId>> StopJobAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<QumuloJobRunResourceId>> StopJobAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _jobDefinitionClientDiagnostics.CreateScope("JobDefinitionResource.StopJob");
             scope.Start();
@@ -348,7 +348,7 @@ namespace Azure.ResourceManager.LiftrQumulo
         /// Operation Id: JobDefinitions_StopJob
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<JobRunResourceId> StopJob(CancellationToken cancellationToken = default)
+        public virtual Response<QumuloJobRunResourceId> StopJob(CancellationToken cancellationToken = default)
         {
             using var scope = _jobDefinitionClientDiagnostics.CreateScope("JobDefinitionResource.StopJob");
             scope.Start();

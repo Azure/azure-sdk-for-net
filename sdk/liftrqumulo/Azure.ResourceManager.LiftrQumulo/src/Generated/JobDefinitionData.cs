@@ -43,13 +43,13 @@ namespace Azure.ResourceManager.LiftrQumulo
         /// <param name="targetName"> The name of the target Endpoint. </param>
         /// <param name="targetResourceId"> Fully qualified resource ID of the target Endpoint. </param>
         /// <param name="targetSubpath"> The subpath to use when writing to the target Endpoint. </param>
-        /// <param name="latestJobRunName"> The name of the Job Run in a non-terminal state, if exists. </param>
-        /// <param name="latestJobRunResourceId"> The fully qualified resource ID of the Job Run in a non-terminal state, if exists. </param>
-        /// <param name="latestJobRunStatus"> The current status of the Job Run in a non-terminal state, if exists. </param>
-        /// <param name="agentName"> Name of the Agent to assign for new Job Runs of this Job Definition. </param>
-        /// <param name="agentResourceId"> Fully qualified resource id of the Agent to assign for new Job Runs of this Job Definition. </param>
+        /// <param name="latestQumuloJobRunName"> The name of the Job Run in a non-terminal state, if exists. </param>
+        /// <param name="latestQumuloJobRunResourceId"> The fully qualified resource ID of the Job Run in a non-terminal state, if exists. </param>
+        /// <param name="latestQumuloJobRunStatus"> The current status of the Job Run in a non-terminal state, if exists. </param>
+        /// <param name="qumuloAgentName"> Name of the Agent to assign for new Job Runs of this Job Definition. </param>
+        /// <param name="qumuloAgentResourceId"> Fully qualified resource id of the Agent to assign for new Job Runs of this Job Definition. </param>
         /// <param name="provisioningState"> The provisioning state of this resource. </param>
-        internal JobDefinitionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string description, CopyMode copyMode, string sourceName, string sourceResourceId, string sourceSubpath, string targetName, string targetResourceId, string targetSubpath, string latestJobRunName, string latestJobRunResourceId, JobRunStatus? latestJobRunStatus, string agentName, string agentResourceId, ProvisioningState? provisioningState) : base(id, name, resourceType, systemData)
+        internal JobDefinitionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string description, CopyMode copyMode, string sourceName, string sourceResourceId, string sourceSubpath, string targetName, string targetResourceId, string targetSubpath, string latestQumuloJobRunName, string latestQumuloJobRunResourceId, QumuloJobRunStatus? latestQumuloJobRunStatus, string qumuloAgentName, string qumuloAgentResourceId, ProvisioningState? provisioningState) : base(id, name, resourceType, systemData)
         {
             Description = description;
             CopyMode = copyMode;
@@ -59,11 +59,11 @@ namespace Azure.ResourceManager.LiftrQumulo
             TargetName = targetName;
             TargetResourceId = targetResourceId;
             TargetSubpath = targetSubpath;
-            LatestJobRunName = latestJobRunName;
-            LatestJobRunResourceId = latestJobRunResourceId;
-            LatestJobRunStatus = latestJobRunStatus;
-            AgentName = agentName;
-            AgentResourceId = agentResourceId;
+            LatestQumuloJobRunName = latestQumuloJobRunName;
+            LatestQumuloJobRunResourceId = latestQumuloJobRunResourceId;
+            LatestQumuloJobRunStatus = latestQumuloJobRunStatus;
+            QumuloAgentName = qumuloAgentName;
+            QumuloAgentResourceId = qumuloAgentResourceId;
             ProvisioningState = provisioningState;
         }
 
@@ -84,15 +84,15 @@ namespace Azure.ResourceManager.LiftrQumulo
         /// <summary> The subpath to use when writing to the target Endpoint. </summary>
         public string TargetSubpath { get; set; }
         /// <summary> The name of the Job Run in a non-terminal state, if exists. </summary>
-        public string LatestJobRunName { get; }
+        public string LatestQumuloJobRunName { get; }
         /// <summary> The fully qualified resource ID of the Job Run in a non-terminal state, if exists. </summary>
-        public string LatestJobRunResourceId { get; }
+        public string LatestQumuloJobRunResourceId { get; }
         /// <summary> The current status of the Job Run in a non-terminal state, if exists. </summary>
-        public JobRunStatus? LatestJobRunStatus { get; }
+        public QumuloJobRunStatus? LatestQumuloJobRunStatus { get; }
         /// <summary> Name of the Agent to assign for new Job Runs of this Job Definition. </summary>
-        public string AgentName { get; set; }
+        public string QumuloAgentName { get; set; }
         /// <summary> Fully qualified resource id of the Agent to assign for new Job Runs of this Job Definition. </summary>
-        public string AgentResourceId { get; }
+        public string QumuloAgentResourceId { get; }
         /// <summary> The provisioning state of this resource. </summary>
         public ProvisioningState? ProvisioningState { get; }
     }

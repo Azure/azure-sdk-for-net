@@ -21,8 +21,8 @@ namespace Azure.ResourceManager.LiftrQumulo
 {
     /// <summary>
     /// A class representing a collection of <see cref="JobDefinitionResource" /> and their operations.
-    /// Each <see cref="JobDefinitionResource" /> in the collection will belong to the same instance of <see cref="ProjectResource" />.
-    /// To get a <see cref="JobDefinitionCollection" /> instance call the GetJobDefinitions method from an instance of <see cref="ProjectResource" />.
+    /// Each <see cref="JobDefinitionResource" /> in the collection will belong to the same instance of <see cref="QumuloProjectResource" />.
+    /// To get a <see cref="JobDefinitionCollection" /> instance call the GetJobDefinitions method from an instance of <see cref="QumuloProjectResource" />.
     /// </summary>
     public partial class JobDefinitionCollection : ArmCollection, IEnumerable<JobDefinitionResource>, IAsyncEnumerable<JobDefinitionResource>
     {
@@ -49,8 +49,8 @@ namespace Azure.ResourceManager.LiftrQumulo
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != ProjectResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ProjectResource.ResourceType), nameof(id));
+            if (id.ResourceType != QumuloProjectResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, QumuloProjectResource.ResourceType), nameof(id));
         }
 
         /// <summary>

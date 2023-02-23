@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.LiftrQumulo.Models;
@@ -12,7 +13,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.LiftrQumulo
 {
-    public partial class JobDefinitionData : IUtf8JsonSerializable
+    public partial class QumuloAgentData : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -24,50 +25,31 @@ namespace Azure.ResourceManager.LiftrQumulo
                 writer.WritePropertyName("description");
                 writer.WriteStringValue(Description);
             }
-            writer.WritePropertyName("copyMode");
-            writer.WriteStringValue(CopyMode.ToString());
-            writer.WritePropertyName("sourceName");
-            writer.WriteStringValue(SourceName);
-            if (Optional.IsDefined(SourceSubpath))
-            {
-                writer.WritePropertyName("sourceSubpath");
-                writer.WriteStringValue(SourceSubpath);
-            }
-            writer.WritePropertyName("targetName");
-            writer.WriteStringValue(TargetName);
-            if (Optional.IsDefined(TargetSubpath))
-            {
-                writer.WritePropertyName("targetSubpath");
-                writer.WriteStringValue(TargetSubpath);
-            }
-            if (Optional.IsDefined(QumuloAgentName))
-            {
-                writer.WritePropertyName("agentName");
-                writer.WriteStringValue(QumuloAgentName);
-            }
+            writer.WritePropertyName("arcResourceId");
+            writer.WriteStringValue(ArcResourceId);
+            writer.WritePropertyName("arcVmUuid");
+            writer.WriteStringValue(ArcVmUuid);
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
 
-        internal static JobDefinitionData DeserializeJobDefinitionData(JsonElement element)
+        internal static QumuloAgentData DeserializeQumuloAgentData(JsonElement element)
         {
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
             Optional<string> description = default;
-            CopyMode copyMode = default;
-            string sourceName = default;
-            Optional<string> sourceResourceId = default;
-            Optional<string> sourceSubpath = default;
-            string targetName = default;
-            Optional<string> targetResourceId = default;
-            Optional<string> targetSubpath = default;
-            Optional<string> latestQumuloJobRunName = default;
-            Optional<string> latestQumuloJobRunResourceId = default;
-            Optional<QumuloJobRunStatus> latestQumuloJobRunStatus = default;
-            Optional<string> qumuloAgentName = default;
-            Optional<string> qumuloAgentResourceId = default;
+            Optional<string> qumuloAgentVersion = default;
+            string arcResourceId = default;
+            string arcVmUuid = default;
+            Optional<QumuloAgentStatus> qumuloAgentStatus = default;
+            Optional<DateTimeOffset> lastStatusUpdate = default;
+            Optional<string> localIPAddress = default;
+            Optional<long> memoryInMB = default;
+            Optional<long> numberOfCores = default;
+            Optional<long> uptimeInSeconds = default;
+            Optional<QumuloAgentPropertiesErrorDetails> errorDetails = default;
             Optional<ProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -110,69 +92,84 @@ namespace Azure.ResourceManager.LiftrQumulo
                             description = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("copyMode"))
+                        if (property0.NameEquals("agentVersion"))
                         {
-                            copyMode = new CopyMode(property0.Value.GetString());
+                            qumuloAgentVersion = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("sourceName"))
+                        if (property0.NameEquals("arcResourceId"))
                         {
-                            sourceName = property0.Value.GetString();
+                            arcResourceId = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("sourceResourceId"))
+                        if (property0.NameEquals("arcVmUuid"))
                         {
-                            sourceResourceId = property0.Value.GetString();
+                            arcVmUuid = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("sourceSubpath"))
-                        {
-                            sourceSubpath = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("targetName"))
-                        {
-                            targetName = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("targetResourceId"))
-                        {
-                            targetResourceId = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("targetSubpath"))
-                        {
-                            targetSubpath = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("latestJobRunName"))
-                        {
-                            latestQumuloJobRunName = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("latestJobRunResourceId"))
-                        {
-                            latestQumuloJobRunResourceId = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("latestJobRunStatus"))
+                        if (property0.NameEquals("agentStatus"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            latestQumuloJobRunStatus = new QumuloJobRunStatus(property0.Value.GetString());
+                            qumuloAgentStatus = new QumuloAgentStatus(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("agentName"))
+                        if (property0.NameEquals("lastStatusUpdate"))
                         {
-                            qumuloAgentName = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            lastStatusUpdate = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("agentResourceId"))
+                        if (property0.NameEquals("localIPAddress"))
                         {
-                            qumuloAgentResourceId = property0.Value.GetString();
+                            localIPAddress = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("memoryInMB"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            memoryInMB = property0.Value.GetInt64();
+                            continue;
+                        }
+                        if (property0.NameEquals("numberOfCores"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            numberOfCores = property0.Value.GetInt64();
+                            continue;
+                        }
+                        if (property0.NameEquals("uptimeInSeconds"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            uptimeInSeconds = property0.Value.GetInt64();
+                            continue;
+                        }
+                        if (property0.NameEquals("errorDetails"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            errorDetails = QumuloAgentPropertiesErrorDetails.DeserializeQumuloAgentPropertiesErrorDetails(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"))
@@ -189,7 +186,7 @@ namespace Azure.ResourceManager.LiftrQumulo
                     continue;
                 }
             }
-            return new JobDefinitionData(id, name, type, systemData.Value, description.Value, copyMode, sourceName, sourceResourceId.Value, sourceSubpath.Value, targetName, targetResourceId.Value, targetSubpath.Value, latestQumuloJobRunName.Value, latestQumuloJobRunResourceId.Value, Optional.ToNullable(latestQumuloJobRunStatus), qumuloAgentName.Value, qumuloAgentResourceId.Value, Optional.ToNullable(provisioningState));
+            return new QumuloAgentData(id, name, type, systemData.Value, description.Value, qumuloAgentVersion.Value, arcResourceId, arcVmUuid, Optional.ToNullable(qumuloAgentStatus), Optional.ToNullable(lastStatusUpdate), localIPAddress.Value, Optional.ToNullable(memoryInMB), Optional.ToNullable(numberOfCores), Optional.ToNullable(uptimeInSeconds), errorDetails.Value, Optional.ToNullable(provisioningState));
         }
     }
 }

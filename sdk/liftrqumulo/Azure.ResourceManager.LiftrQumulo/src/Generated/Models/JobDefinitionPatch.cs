@@ -20,6 +20,6 @@ namespace Azure.ResourceManager.LiftrQumulo.Models
         /// <summary> Strategy to use for copy. </summary>
         public CopyMode? CopyMode { get; set; }
         /// <summary> Name of the Agent to assign for new Job Runs of this Job Definition. </summary>
-        public string AgentName { get; set; }
+        public string QumuloAgentName { get; set; }
     }
 }

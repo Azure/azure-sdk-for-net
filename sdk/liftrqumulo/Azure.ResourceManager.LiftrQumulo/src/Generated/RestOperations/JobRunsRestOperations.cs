@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.LiftrQumulo
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal HttpMessage CreateListRequest(string subscriptionId, string resourceGroupName, string storageMoverName, string projectName, string jobDefinitionName)
+        internal HttpMessage CreateListRequest(string subscriptionId, string resourceGroupName, string qumuloStorageMoverName, string qumuloProjectName, string jobDefinitionName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -49,9 +49,9 @@ namespace Azure.ResourceManager.LiftrQumulo
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.StorageMover/storageMovers/", false);
-            uri.AppendPath(storageMoverName, true);
+            uri.AppendPath(qumuloStorageMoverName, true);
             uri.AppendPath("/projects/", false);
-            uri.AppendPath(projectName, true);
+            uri.AppendPath(qumuloProjectName, true);
             uri.AppendPath("/jobDefinitions/", false);
             uri.AppendPath(jobDefinitionName, true);
             uri.AppendPath("/jobRuns", false);
@@ -65,29 +65,29 @@ namespace Azure.ResourceManager.LiftrQumulo
         /// <summary> Lists all Job Runs in a Job Definition. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="storageMoverName"> The name of the Storage Mover resource. </param>
-        /// <param name="projectName"> The name of the Project resource. </param>
+        /// <param name="qumuloStorageMoverName"> The name of the Storage Mover resource. </param>
+        /// <param name="qumuloProjectName"> The name of the Project resource. </param>
         /// <param name="jobDefinitionName"> The name of the Job Definition resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="storageMoverName"/>, <paramref name="projectName"/> or <paramref name="jobDefinitionName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="storageMoverName"/>, <paramref name="projectName"/> or <paramref name="jobDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<JobRunList>> ListAsync(string subscriptionId, string resourceGroupName, string storageMoverName, string projectName, string jobDefinitionName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="qumuloStorageMoverName"/>, <paramref name="qumuloProjectName"/> or <paramref name="jobDefinitionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="qumuloStorageMoverName"/>, <paramref name="qumuloProjectName"/> or <paramref name="jobDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<QumuloJobRunList>> ListAsync(string subscriptionId, string resourceGroupName, string qumuloStorageMoverName, string qumuloProjectName, string jobDefinitionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(storageMoverName, nameof(storageMoverName));
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(qumuloStorageMoverName, nameof(qumuloStorageMoverName));
+            Argument.AssertNotNullOrEmpty(qumuloProjectName, nameof(qumuloProjectName));
             Argument.AssertNotNullOrEmpty(jobDefinitionName, nameof(jobDefinitionName));
 
-            using var message = CreateListRequest(subscriptionId, resourceGroupName, storageMoverName, projectName, jobDefinitionName);
+            using var message = CreateListRequest(subscriptionId, resourceGroupName, qumuloStorageMoverName, qumuloProjectName, jobDefinitionName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        JobRunList value = default;
+                        QumuloJobRunList value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = JobRunList.DeserializeJobRunList(document.RootElement);
+                        value = QumuloJobRunList.DeserializeQumuloJobRunList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -98,29 +98,29 @@ namespace Azure.ResourceManager.LiftrQumulo
         /// <summary> Lists all Job Runs in a Job Definition. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="storageMoverName"> The name of the Storage Mover resource. </param>
-        /// <param name="projectName"> The name of the Project resource. </param>
+        /// <param name="qumuloStorageMoverName"> The name of the Storage Mover resource. </param>
+        /// <param name="qumuloProjectName"> The name of the Project resource. </param>
         /// <param name="jobDefinitionName"> The name of the Job Definition resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="storageMoverName"/>, <paramref name="projectName"/> or <paramref name="jobDefinitionName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="storageMoverName"/>, <paramref name="projectName"/> or <paramref name="jobDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<JobRunList> List(string subscriptionId, string resourceGroupName, string storageMoverName, string projectName, string jobDefinitionName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="qumuloStorageMoverName"/>, <paramref name="qumuloProjectName"/> or <paramref name="jobDefinitionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="qumuloStorageMoverName"/>, <paramref name="qumuloProjectName"/> or <paramref name="jobDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<QumuloJobRunList> List(string subscriptionId, string resourceGroupName, string qumuloStorageMoverName, string qumuloProjectName, string jobDefinitionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(storageMoverName, nameof(storageMoverName));
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(qumuloStorageMoverName, nameof(qumuloStorageMoverName));
+            Argument.AssertNotNullOrEmpty(qumuloProjectName, nameof(qumuloProjectName));
             Argument.AssertNotNullOrEmpty(jobDefinitionName, nameof(jobDefinitionName));
 
-            using var message = CreateListRequest(subscriptionId, resourceGroupName, storageMoverName, projectName, jobDefinitionName);
+            using var message = CreateListRequest(subscriptionId, resourceGroupName, qumuloStorageMoverName, qumuloProjectName, jobDefinitionName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        JobRunList value = default;
+                        QumuloJobRunList value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = JobRunList.DeserializeJobRunList(document.RootElement);
+                        value = QumuloJobRunList.DeserializeQumuloJobRunList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.LiftrQumulo
             }
         }
 
-        internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string storageMoverName, string projectName, string jobDefinitionName, string jobRunName)
+        internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string qumuloStorageMoverName, string qumuloProjectName, string jobDefinitionName, string qumuloJobRunName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -140,13 +140,13 @@ namespace Azure.ResourceManager.LiftrQumulo
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.StorageMover/storageMovers/", false);
-            uri.AppendPath(storageMoverName, true);
+            uri.AppendPath(qumuloStorageMoverName, true);
             uri.AppendPath("/projects/", false);
-            uri.AppendPath(projectName, true);
+            uri.AppendPath(qumuloProjectName, true);
             uri.AppendPath("/jobDefinitions/", false);
             uri.AppendPath(jobDefinitionName, true);
             uri.AppendPath("/jobRuns/", false);
-            uri.AppendPath(jobRunName, true);
+            uri.AppendPath(qumuloJobRunName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -157,35 +157,35 @@ namespace Azure.ResourceManager.LiftrQumulo
         /// <summary> Gets a Job Run resource. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="storageMoverName"> The name of the Storage Mover resource. </param>
-        /// <param name="projectName"> The name of the Project resource. </param>
+        /// <param name="qumuloStorageMoverName"> The name of the Storage Mover resource. </param>
+        /// <param name="qumuloProjectName"> The name of the Project resource. </param>
         /// <param name="jobDefinitionName"> The name of the Job Definition resource. </param>
-        /// <param name="jobRunName"> The name of the Job Run resource. </param>
+        /// <param name="qumuloJobRunName"> The name of the Job Run resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="storageMoverName"/>, <paramref name="projectName"/>, <paramref name="jobDefinitionName"/> or <paramref name="jobRunName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="storageMoverName"/>, <paramref name="projectName"/>, <paramref name="jobDefinitionName"/> or <paramref name="jobRunName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<JobRunData>> GetAsync(string subscriptionId, string resourceGroupName, string storageMoverName, string projectName, string jobDefinitionName, string jobRunName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="qumuloStorageMoverName"/>, <paramref name="qumuloProjectName"/>, <paramref name="jobDefinitionName"/> or <paramref name="qumuloJobRunName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="qumuloStorageMoverName"/>, <paramref name="qumuloProjectName"/>, <paramref name="jobDefinitionName"/> or <paramref name="qumuloJobRunName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<QumuloJobRunData>> GetAsync(string subscriptionId, string resourceGroupName, string qumuloStorageMoverName, string qumuloProjectName, string jobDefinitionName, string qumuloJobRunName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(storageMoverName, nameof(storageMoverName));
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(qumuloStorageMoverName, nameof(qumuloStorageMoverName));
+            Argument.AssertNotNullOrEmpty(qumuloProjectName, nameof(qumuloProjectName));
             Argument.AssertNotNullOrEmpty(jobDefinitionName, nameof(jobDefinitionName));
-            Argument.AssertNotNullOrEmpty(jobRunName, nameof(jobRunName));
+            Argument.AssertNotNullOrEmpty(qumuloJobRunName, nameof(qumuloJobRunName));
 
-            using var message = CreateGetRequest(subscriptionId, resourceGroupName, storageMoverName, projectName, jobDefinitionName, jobRunName);
+            using var message = CreateGetRequest(subscriptionId, resourceGroupName, qumuloStorageMoverName, qumuloProjectName, jobDefinitionName, qumuloJobRunName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        JobRunData value = default;
+                        QumuloJobRunData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = JobRunData.DeserializeJobRunData(document.RootElement);
+                        value = QumuloJobRunData.DeserializeQumuloJobRunData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((JobRunData)null, message.Response);
+                    return Response.FromValue((QumuloJobRunData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -194,41 +194,41 @@ namespace Azure.ResourceManager.LiftrQumulo
         /// <summary> Gets a Job Run resource. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="storageMoverName"> The name of the Storage Mover resource. </param>
-        /// <param name="projectName"> The name of the Project resource. </param>
+        /// <param name="qumuloStorageMoverName"> The name of the Storage Mover resource. </param>
+        /// <param name="qumuloProjectName"> The name of the Project resource. </param>
         /// <param name="jobDefinitionName"> The name of the Job Definition resource. </param>
-        /// <param name="jobRunName"> The name of the Job Run resource. </param>
+        /// <param name="qumuloJobRunName"> The name of the Job Run resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="storageMoverName"/>, <paramref name="projectName"/>, <paramref name="jobDefinitionName"/> or <paramref name="jobRunName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="storageMoverName"/>, <paramref name="projectName"/>, <paramref name="jobDefinitionName"/> or <paramref name="jobRunName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<JobRunData> Get(string subscriptionId, string resourceGroupName, string storageMoverName, string projectName, string jobDefinitionName, string jobRunName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="qumuloStorageMoverName"/>, <paramref name="qumuloProjectName"/>, <paramref name="jobDefinitionName"/> or <paramref name="qumuloJobRunName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="qumuloStorageMoverName"/>, <paramref name="qumuloProjectName"/>, <paramref name="jobDefinitionName"/> or <paramref name="qumuloJobRunName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<QumuloJobRunData> Get(string subscriptionId, string resourceGroupName, string qumuloStorageMoverName, string qumuloProjectName, string jobDefinitionName, string qumuloJobRunName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(storageMoverName, nameof(storageMoverName));
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(qumuloStorageMoverName, nameof(qumuloStorageMoverName));
+            Argument.AssertNotNullOrEmpty(qumuloProjectName, nameof(qumuloProjectName));
             Argument.AssertNotNullOrEmpty(jobDefinitionName, nameof(jobDefinitionName));
-            Argument.AssertNotNullOrEmpty(jobRunName, nameof(jobRunName));
+            Argument.AssertNotNullOrEmpty(qumuloJobRunName, nameof(qumuloJobRunName));
 
-            using var message = CreateGetRequest(subscriptionId, resourceGroupName, storageMoverName, projectName, jobDefinitionName, jobRunName);
+            using var message = CreateGetRequest(subscriptionId, resourceGroupName, qumuloStorageMoverName, qumuloProjectName, jobDefinitionName, qumuloJobRunName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        JobRunData value = default;
+                        QumuloJobRunData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = JobRunData.DeserializeJobRunData(document.RootElement);
+                        value = QumuloJobRunData.DeserializeQumuloJobRunData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((JobRunData)null, message.Response);
+                    return Response.FromValue((QumuloJobRunData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateListNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string storageMoverName, string projectName, string jobDefinitionName)
+        internal HttpMessage CreateListNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string qumuloStorageMoverName, string qumuloProjectName, string jobDefinitionName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -246,30 +246,30 @@ namespace Azure.ResourceManager.LiftrQumulo
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="storageMoverName"> The name of the Storage Mover resource. </param>
-        /// <param name="projectName"> The name of the Project resource. </param>
+        /// <param name="qumuloStorageMoverName"> The name of the Storage Mover resource. </param>
+        /// <param name="qumuloProjectName"> The name of the Project resource. </param>
         /// <param name="jobDefinitionName"> The name of the Job Definition resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="storageMoverName"/>, <paramref name="projectName"/> or <paramref name="jobDefinitionName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="storageMoverName"/>, <paramref name="projectName"/> or <paramref name="jobDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<JobRunList>> ListNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string storageMoverName, string projectName, string jobDefinitionName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="qumuloStorageMoverName"/>, <paramref name="qumuloProjectName"/> or <paramref name="jobDefinitionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="qumuloStorageMoverName"/>, <paramref name="qumuloProjectName"/> or <paramref name="jobDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<QumuloJobRunList>> ListNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string qumuloStorageMoverName, string qumuloProjectName, string jobDefinitionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(storageMoverName, nameof(storageMoverName));
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(qumuloStorageMoverName, nameof(qumuloStorageMoverName));
+            Argument.AssertNotNullOrEmpty(qumuloProjectName, nameof(qumuloProjectName));
             Argument.AssertNotNullOrEmpty(jobDefinitionName, nameof(jobDefinitionName));
 
-            using var message = CreateListNextPageRequest(nextLink, subscriptionId, resourceGroupName, storageMoverName, projectName, jobDefinitionName);
+            using var message = CreateListNextPageRequest(nextLink, subscriptionId, resourceGroupName, qumuloStorageMoverName, qumuloProjectName, jobDefinitionName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        JobRunList value = default;
+                        QumuloJobRunList value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = JobRunList.DeserializeJobRunList(document.RootElement);
+                        value = QumuloJobRunList.DeserializeQumuloJobRunList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -281,30 +281,30 @@ namespace Azure.ResourceManager.LiftrQumulo
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="storageMoverName"> The name of the Storage Mover resource. </param>
-        /// <param name="projectName"> The name of the Project resource. </param>
+        /// <param name="qumuloStorageMoverName"> The name of the Storage Mover resource. </param>
+        /// <param name="qumuloProjectName"> The name of the Project resource. </param>
         /// <param name="jobDefinitionName"> The name of the Job Definition resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="storageMoverName"/>, <paramref name="projectName"/> or <paramref name="jobDefinitionName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="storageMoverName"/>, <paramref name="projectName"/> or <paramref name="jobDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<JobRunList> ListNextPage(string nextLink, string subscriptionId, string resourceGroupName, string storageMoverName, string projectName, string jobDefinitionName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="qumuloStorageMoverName"/>, <paramref name="qumuloProjectName"/> or <paramref name="jobDefinitionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="qumuloStorageMoverName"/>, <paramref name="qumuloProjectName"/> or <paramref name="jobDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<QumuloJobRunList> ListNextPage(string nextLink, string subscriptionId, string resourceGroupName, string qumuloStorageMoverName, string qumuloProjectName, string jobDefinitionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(storageMoverName, nameof(storageMoverName));
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(qumuloStorageMoverName, nameof(qumuloStorageMoverName));
+            Argument.AssertNotNullOrEmpty(qumuloProjectName, nameof(qumuloProjectName));
             Argument.AssertNotNullOrEmpty(jobDefinitionName, nameof(jobDefinitionName));
 
-            using var message = CreateListNextPageRequest(nextLink, subscriptionId, resourceGroupName, storageMoverName, projectName, jobDefinitionName);
+            using var message = CreateListNextPageRequest(nextLink, subscriptionId, resourceGroupName, qumuloStorageMoverName, qumuloProjectName, jobDefinitionName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        JobRunList value = default;
+                        QumuloJobRunList value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = JobRunList.DeserializeJobRunList(document.RootElement);
+                        value = QumuloJobRunList.DeserializeQumuloJobRunList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

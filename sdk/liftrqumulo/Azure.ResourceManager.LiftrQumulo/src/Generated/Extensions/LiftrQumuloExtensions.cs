@@ -34,10 +34,10 @@ namespace Azure.ResourceManager.LiftrQumulo
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="StorageMoverResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<StorageMoverResource> GetStorageMoversAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="QumuloStorageMoverResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<QumuloStorageMoverResource> GetQumuloStorageMoversAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscriptionResource).GetStorageMoversAsync(cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetQumuloStorageMoversAsync(cancellationToken);
         }
 
         /// <summary>
@@ -47,10 +47,10 @@ namespace Azure.ResourceManager.LiftrQumulo
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="StorageMoverResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<StorageMoverResource> GetStorageMovers(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="QumuloStorageMoverResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<QumuloStorageMoverResource> GetQumuloStorageMovers(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscriptionResource).GetStorageMovers(cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetQumuloStorageMovers(cancellationToken);
         }
 
         private static ResourceGroupResourceExtensionClient GetExtensionClient(ResourceGroupResource resourceGroupResource)
@@ -62,12 +62,12 @@ namespace Azure.ResourceManager.LiftrQumulo
             );
         }
 
-        /// <summary> Gets a collection of StorageMoverResources in the ResourceGroupResource. </summary>
+        /// <summary> Gets a collection of QumuloStorageMoverResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of StorageMoverResources and their operations over a StorageMoverResource. </returns>
-        public static StorageMoverCollection GetStorageMovers(this ResourceGroupResource resourceGroupResource)
+        /// <returns> An object representing collection of QumuloStorageMoverResources and their operations over a QumuloStorageMoverResource. </returns>
+        public static QumuloStorageMoverCollection GetQumuloStorageMovers(this ResourceGroupResource resourceGroupResource)
         {
-            return GetExtensionClient(resourceGroupResource).GetStorageMovers();
+            return GetExtensionClient(resourceGroupResource).GetQumuloStorageMovers();
         }
 
         /// <summary>
@@ -76,14 +76,14 @@ namespace Azure.ResourceManager.LiftrQumulo
         /// Operation Id: StorageMovers_Get
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="storageMoverName"> The name of the Storage Mover resource. </param>
+        /// <param name="qumuloStorageMoverName"> The name of the Storage Mover resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="storageMoverName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="storageMoverName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="qumuloStorageMoverName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="qumuloStorageMoverName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<StorageMoverResource>> GetStorageMoverAsync(this ResourceGroupResource resourceGroupResource, string storageMoverName, CancellationToken cancellationToken = default)
+        public static async Task<Response<QumuloStorageMoverResource>> GetQumuloStorageMoverAsync(this ResourceGroupResource resourceGroupResource, string qumuloStorageMoverName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetStorageMovers().GetAsync(storageMoverName, cancellationToken).ConfigureAwait(false);
+            return await resourceGroupResource.GetQumuloStorageMovers().GetAsync(qumuloStorageMoverName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -92,87 +92,87 @@ namespace Azure.ResourceManager.LiftrQumulo
         /// Operation Id: StorageMovers_Get
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="storageMoverName"> The name of the Storage Mover resource. </param>
+        /// <param name="qumuloStorageMoverName"> The name of the Storage Mover resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="storageMoverName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="storageMoverName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="qumuloStorageMoverName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="qumuloStorageMoverName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<StorageMoverResource> GetStorageMover(this ResourceGroupResource resourceGroupResource, string storageMoverName, CancellationToken cancellationToken = default)
+        public static Response<QumuloStorageMoverResource> GetQumuloStorageMover(this ResourceGroupResource resourceGroupResource, string qumuloStorageMoverName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetStorageMovers().Get(storageMoverName, cancellationToken);
+            return resourceGroupResource.GetQumuloStorageMovers().Get(qumuloStorageMoverName, cancellationToken);
         }
 
-        #region StorageMoverResource
+        #region QumuloStorageMoverResource
         /// <summary>
-        /// Gets an object representing a <see cref="StorageMoverResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="StorageMoverResource.CreateResourceIdentifier" /> to create a <see cref="StorageMoverResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="QumuloStorageMoverResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="QumuloStorageMoverResource.CreateResourceIdentifier" /> to create a <see cref="QumuloStorageMoverResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="StorageMoverResource" /> object. </returns>
-        public static StorageMoverResource GetStorageMoverResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="QumuloStorageMoverResource" /> object. </returns>
+        public static QumuloStorageMoverResource GetQumuloStorageMoverResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                StorageMoverResource.ValidateResourceId(id);
-                return new StorageMoverResource(client, id);
+                QumuloStorageMoverResource.ValidateResourceId(id);
+                return new QumuloStorageMoverResource(client, id);
             }
             );
         }
         #endregion
 
-        #region AgentResource
+        #region QumuloAgentResource
         /// <summary>
-        /// Gets an object representing an <see cref="AgentResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="AgentResource.CreateResourceIdentifier" /> to create an <see cref="AgentResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="QumuloAgentResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="QumuloAgentResource.CreateResourceIdentifier" /> to create a <see cref="QumuloAgentResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="AgentResource" /> object. </returns>
-        public static AgentResource GetAgentResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="QumuloAgentResource" /> object. </returns>
+        public static QumuloAgentResource GetQumuloAgentResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                AgentResource.ValidateResourceId(id);
-                return new AgentResource(client, id);
+                QumuloAgentResource.ValidateResourceId(id);
+                return new QumuloAgentResource(client, id);
             }
             );
         }
         #endregion
 
-        #region EndpointResource
+        #region QumuloEndpointResource
         /// <summary>
-        /// Gets an object representing an <see cref="EndpointResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="EndpointResource.CreateResourceIdentifier" /> to create an <see cref="EndpointResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="QumuloEndpointResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="QumuloEndpointResource.CreateResourceIdentifier" /> to create a <see cref="QumuloEndpointResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="EndpointResource" /> object. </returns>
-        public static EndpointResource GetEndpointResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="QumuloEndpointResource" /> object. </returns>
+        public static QumuloEndpointResource GetQumuloEndpointResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                EndpointResource.ValidateResourceId(id);
-                return new EndpointResource(client, id);
+                QumuloEndpointResource.ValidateResourceId(id);
+                return new QumuloEndpointResource(client, id);
             }
             );
         }
         #endregion
 
-        #region ProjectResource
+        #region QumuloProjectResource
         /// <summary>
-        /// Gets an object representing a <see cref="ProjectResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ProjectResource.CreateResourceIdentifier" /> to create a <see cref="ProjectResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="QumuloProjectResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="QumuloProjectResource.CreateResourceIdentifier" /> to create a <see cref="QumuloProjectResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ProjectResource" /> object. </returns>
-        public static ProjectResource GetProjectResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="QumuloProjectResource" /> object. </returns>
+        public static QumuloProjectResource GetQumuloProjectResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                ProjectResource.ValidateResourceId(id);
-                return new ProjectResource(client, id);
+                QumuloProjectResource.ValidateResourceId(id);
+                return new QumuloProjectResource(client, id);
             }
             );
         }
@@ -197,20 +197,20 @@ namespace Azure.ResourceManager.LiftrQumulo
         }
         #endregion
 
-        #region JobRunResource
+        #region QumuloJobRunResource
         /// <summary>
-        /// Gets an object representing a <see cref="JobRunResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="JobRunResource.CreateResourceIdentifier" /> to create a <see cref="JobRunResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="QumuloJobRunResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="QumuloJobRunResource.CreateResourceIdentifier" /> to create a <see cref="QumuloJobRunResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="JobRunResource" /> object. </returns>
-        public static JobRunResource GetJobRunResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="QumuloJobRunResource" /> object. </returns>
+        public static QumuloJobRunResource GetQumuloJobRunResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                JobRunResource.ValidateResourceId(id);
-                return new JobRunResource(client, id);
+                QumuloJobRunResource.ValidateResourceId(id);
+                return new QumuloJobRunResource(client, id);
             }
             );
         }
