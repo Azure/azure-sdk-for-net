@@ -114,6 +114,10 @@ namespace Azure.Monitor.OpenTelemetry
                 exporterOptions.DisableOfflineStorage = options.AzureMonitorExporterOptions.DisableOfflineStorage;
                 exporterOptions.StorageDirectory = options.AzureMonitorExporterOptions.StorageDirectory;
             }
+            else if (exporterOptions.ConnectionString == null)
+            {
+                exporterOptions.ConnectionString = options.AzureMonitorExporterOptions.ConnectionString;
+            }
         }
 
         private sealed class NoopTracerProvider : TracerProvider
