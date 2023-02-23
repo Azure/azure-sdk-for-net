@@ -1,6 +1,8 @@
 # Microsoft Azure LiftrQumulo management client library for .NET
 
-**[Describe the service briefly first.]**
+Qumulo is a filesystem storage solution that provides File System and Object Storage. Qumulo provides a highly scalable, performant, and simple to use Azure-native filesystem that can support a wide variety of data workloads via standard file sharing protocols (NFS, SMB, FTP) as well as S3.
+
+This library supports managing Microsoft Azure Qumulo resources.
 
 This library follows the [new Azure SDK guidelines](https://azure.github.io/azure-sdk/general_introduction.html), and provides many core capabilities:
 
@@ -10,7 +12,7 @@ This library follows the [new Azure SDK guidelines](https://azure.github.io/azur
     - Better error-handling.
     - Support uniform telemetry across all languages.
 
-## Getting started 
+## Getting started
 
 ### Install the package
 
@@ -22,7 +24,7 @@ dotnet add package Azure.ResourceManager.LiftrQumulo --prerelease
 
 ### Prerequisites
 
-* You must have an [Microsoft Azure subscription](https://azure.microsoft.com/free/dotnet/).
+-   You must have an [Microsoft Azure subscription](https://azure.microsoft.com/free/dotnet/).
 
 ### Authenticate the Client
 
@@ -36,14 +38,15 @@ Key concepts of the Microsoft Azure SDK for .NET can be found [here](https://azu
 
 Documentation is available to help you learn how to use this package:
 
-- [Quickstart](https://github.com/Azure/azure-sdk-for-net/blob/main/doc/dev/mgmt_quickstart.md).
-- [API References](https://docs.microsoft.com/dotnet/api/?view=azure-dotnet).
-- [Authentication](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/README.md).
+-   [Quickstart](https://github.com/Azure/azure-sdk-for-net/blob/main/doc/dev/mgmt_quickstart.md).
+-   [API References](https://docs.microsoft.com/dotnet/api/?view=azure-dotnet).
+-   [Authentication](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/README.md).
 
 ## Examples
 
 Code samples for using the management library for .NET can be found in the following locations
-- [.NET Management Library Code Samples](https://aka.ms/azuresdk-net-mgmt-samples)
+
+-   [.NET Management Library Code Samples](https://aka.ms/azuresdk-net-mgmt-samples)
 
 ## Troubleshooting
 
@@ -75,6 +78,7 @@ more information, see the [Code of Conduct FAQ][coc_faq] or contact
 <opencode@microsoft.com> with any other questions or comments.
 
 <!-- LINKS -->
+
 [cg]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/resourcemanager/Azure.ResourceManager/docs/CONTRIBUTING.md
 [coc]: https://opensource.microsoft.com/codeofconduct/
 [coc_faq]: https://opensource.microsoft.com/codeofconduct/faq/

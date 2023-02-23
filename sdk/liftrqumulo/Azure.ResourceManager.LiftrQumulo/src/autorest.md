@@ -43,4 +43,20 @@ rename-rules:
     SSO: Sso
     URI: Uri
     Etag: ETag|etag
+    Agent: QumuloAgent
+    Endpoint: QumuloEndpoint
+    JobDefinitionData: QumuloJobDefinitionData
+    JobRun: QumuloJobRun
+    Project: QumuloProject
+    StorageMover: QumuloStorageMover
+
+rename-mapping:
+    AgentData.ArcResourceId: -|uuid
+    AgentData.ArcVmUuid: -|uuid
+    JobDefinitionData.AgentResourceId: -|uuid
+    JobDefinitionData.LatestJobRunResourceId: -|uuid
+    JobDefinitionData.SourceResourceId: -|uuid
+    JobDefinitionData.TargetResourceId: -|uuid
+    JobRunData.AgentResourceId: -|uuid
+    JobRunData.SourceResourceId: -|uuid
 ```
