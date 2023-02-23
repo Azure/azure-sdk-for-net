@@ -55,3 +55,13 @@ namespace Azure.Analytics.Purview.Sharing
         public virtual System.Threading.Tasks.Task<Azure.Response> NotifyUserSentShareInvitationAsync(string sentShareId, string sentShareInvitationId, string repeatabilityRequestId = null, Azure.RequestContext context = null) { throw null; }
     }
 }
+namespace Microsoft.Extensions.Azure
+{
+    public static partial class PurviewShareClientBuilderExtensions
+    {
+        public static Azure.Core.Extensions.IAzureClientBuilder<Azure.Analytics.Purview.Sharing.ReceivedSharesClient, Azure.Analytics.Purview.Sharing.PurviewShareClientOptions> AddReceivedSharesClient<TBuilder>(this TBuilder builder, string endpoint) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithCredential { throw null; }
+        public static Azure.Core.Extensions.IAzureClientBuilder<Azure.Analytics.Purview.Sharing.ReceivedSharesClient, Azure.Analytics.Purview.Sharing.PurviewShareClientOptions> AddReceivedSharesClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithConfiguration<TConfiguration> { throw null; }
+        public static Azure.Core.Extensions.IAzureClientBuilder<Azure.Analytics.Purview.Sharing.SentSharesClient, Azure.Analytics.Purview.Sharing.PurviewShareClientOptions> AddSentSharesClient<TBuilder>(this TBuilder builder, string endpoint) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithCredential { throw null; }
+        public static Azure.Core.Extensions.IAzureClientBuilder<Azure.Analytics.Purview.Sharing.SentSharesClient, Azure.Analytics.Purview.Sharing.PurviewShareClientOptions> AddSentSharesClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithConfiguration<TConfiguration> { throw null; }
+    }
+}
