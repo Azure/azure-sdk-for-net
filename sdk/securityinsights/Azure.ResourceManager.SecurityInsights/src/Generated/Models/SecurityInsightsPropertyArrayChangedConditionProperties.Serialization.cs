@@ -17,10 +17,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(ConditionProperties))
             {
-                writer.WritePropertyName("conditionProperties");
+                writer.WritePropertyName("conditionProperties"u8);
                 writer.WriteObjectValue(ConditionProperties);
             }
-            writer.WritePropertyName("conditionType");
+            writer.WritePropertyName("conditionType"u8);
             writer.WriteStringValue(ConditionType.ToString());
             writer.WriteEndObject();
         }
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             ConditionType conditionType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("conditionProperties"))
+                if (property.NameEquals("conditionProperties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     conditionProperties = AutomationRulePropertyArrayChangedValuesCondition.DeserializeAutomationRulePropertyArrayChangedValuesCondition(property.Value);
                     continue;
                 }
-                if (property.NameEquals("conditionType"))
+                if (property.NameEquals("conditionType"u8))
                 {
                     conditionType = new ConditionType(property.Value.GetString());
                     continue;

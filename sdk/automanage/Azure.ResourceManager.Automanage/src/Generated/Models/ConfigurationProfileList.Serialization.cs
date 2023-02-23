@@ -16,20 +16,20 @@ namespace Azure.ResourceManager.Automanage.Models
     {
         internal static ConfigurationProfileList DeserializeConfigurationProfileList(JsonElement element)
         {
-            Optional<IReadOnlyList<ConfigurationProfileData>> value = default;
+            Optional<IReadOnlyList<AutomanageConfigurationProfileData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<ConfigurationProfileData> array = new List<ConfigurationProfileData>();
+                    List<AutomanageConfigurationProfileData> array = new List<AutomanageConfigurationProfileData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ConfigurationProfileData.DeserializeConfigurationProfileData(item));
+                        array.Add(AutomanageConfigurationProfileData.DeserializeAutomanageConfigurationProfileData(item));
                     }
                     value = array;
                     continue;

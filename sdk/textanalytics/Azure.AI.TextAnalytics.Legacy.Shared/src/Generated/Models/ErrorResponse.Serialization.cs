@@ -17,7 +17,7 @@ namespace Azure.AI.TextAnalytics.Legacy
             TextAnalyticsError error = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("error"))
+                if (property.NameEquals("error"u8))
                 {
                     error = TextAnalyticsError.DeserializeTextAnalyticsError(property.Value);
                     continue;

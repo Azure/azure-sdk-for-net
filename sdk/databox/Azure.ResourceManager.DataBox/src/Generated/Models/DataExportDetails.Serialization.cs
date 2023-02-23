@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.DataBox.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("transferConfiguration");
+            writer.WritePropertyName("transferConfiguration"u8);
             writer.WriteObjectValue(TransferConfiguration);
             if (Optional.IsDefined(LogCollectionLevel))
             {
-                writer.WritePropertyName("logCollectionLevel");
+                writer.WritePropertyName("logCollectionLevel"u8);
                 writer.WriteStringValue(LogCollectionLevel.Value.ToSerialString());
             }
-            writer.WritePropertyName("accountDetails");
+            writer.WritePropertyName("accountDetails"u8);
             writer.WriteObjectValue(AccountDetails);
             writer.WriteEndObject();
         }
@@ -34,12 +34,12 @@ namespace Azure.ResourceManager.DataBox.Models
             DataAccountDetails accountDetails = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("transferConfiguration"))
+                if (property.NameEquals("transferConfiguration"u8))
                 {
                     transferConfiguration = TransferConfiguration.DeserializeTransferConfiguration(property.Value);
                     continue;
                 }
-                if (property.NameEquals("logCollectionLevel"))
+                if (property.NameEquals("logCollectionLevel"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     logCollectionLevel = property.Value.GetString().ToLogCollectionLevel();
                     continue;
                 }
-                if (property.NameEquals("accountDetails"))
+                if (property.NameEquals("accountDetails"u8))
                 {
                     accountDetails = DataAccountDetails.DeserializeDataAccountDetails(property.Value);
                     continue;

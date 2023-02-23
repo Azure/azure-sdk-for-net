@@ -24,22 +24,22 @@ namespace Azure.ResourceManager.Resources.Models
             Optional<IReadOnlyList<WhatIfPropertyChange>> delta = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("resourceId"))
+                if (property.NameEquals("resourceId"u8))
                 {
                     resourceId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("changeType"))
+                if (property.NameEquals("changeType"u8))
                 {
                     changeType = property.Value.GetString().ToWhatIfChangeType();
                     continue;
                 }
-                if (property.NameEquals("unsupportedReason"))
+                if (property.NameEquals("unsupportedReason"u8))
                 {
                     unsupportedReason = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("before"))
+                if (property.NameEquals("before"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Resources.Models
                     before = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("after"))
+                if (property.NameEquals("after"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Resources.Models
                     after = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("delta"))
+                if (property.NameEquals("delta"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

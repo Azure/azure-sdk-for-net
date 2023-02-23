@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using System.Threading;
 using Azure;
 using Azure.Core;
@@ -51,8 +50,16 @@ namespace Azure.ResourceManager.MobileNetwork
 
         /// <summary>
         /// Lists all the mobile networks in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.MobileNetwork/mobileNetworks
-        /// Operation Id: MobileNetworks_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.MobileNetwork/mobileNetworks</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>MobileNetworks_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="MobileNetworkResource" /> that may take multiple service requests to iterate over. </returns>
@@ -65,8 +72,16 @@ namespace Azure.ResourceManager.MobileNetwork
 
         /// <summary>
         /// Lists all the mobile networks in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.MobileNetwork/mobileNetworks
-        /// Operation Id: MobileNetworks_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.MobileNetwork/mobileNetworks</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>MobileNetworks_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="MobileNetworkResource" /> that may take multiple service requests to iterate over. </returns>
@@ -79,8 +94,16 @@ namespace Azure.ResourceManager.MobileNetwork
 
         /// <summary>
         /// Lists all the packet core control planes in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.MobileNetwork/packetCoreControlPlanes
-        /// Operation Id: PacketCoreControlPlanes_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.MobileNetwork/packetCoreControlPlanes</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PacketCoreControlPlanes_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="PacketCoreControlPlaneResource" /> that may take multiple service requests to iterate over. </returns>
@@ -93,8 +116,16 @@ namespace Azure.ResourceManager.MobileNetwork
 
         /// <summary>
         /// Lists all the packet core control planes in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.MobileNetwork/packetCoreControlPlanes
-        /// Operation Id: PacketCoreControlPlanes_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.MobileNetwork/packetCoreControlPlanes</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PacketCoreControlPlanes_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="PacketCoreControlPlaneResource" /> that may take multiple service requests to iterate over. </returns>
@@ -107,8 +138,16 @@ namespace Azure.ResourceManager.MobileNetwork
 
         /// <summary>
         /// Gets all the SIM groups in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.MobileNetwork/simGroups
-        /// Operation Id: SimGroups_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.MobileNetwork/simGroups</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SimGroups_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="SimGroupResource" /> that may take multiple service requests to iterate over. </returns>
@@ -121,8 +160,16 @@ namespace Azure.ResourceManager.MobileNetwork
 
         /// <summary>
         /// Gets all the SIM groups in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.MobileNetwork/simGroups
-        /// Operation Id: SimGroups_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.MobileNetwork/simGroups</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SimGroups_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="SimGroupResource" /> that may take multiple service requests to iterate over. </returns>

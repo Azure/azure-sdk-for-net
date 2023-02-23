@@ -16,13 +16,13 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("imageRepositoryUrl");
+            writer.WritePropertyName("imageRepositoryUrl"u8);
             writer.WriteStringValue(ImageRepositoryUri.AbsoluteUri);
-            writer.WritePropertyName("userName");
+            writer.WritePropertyName("userName"u8);
             writer.WriteStringValue(UserName);
             if (Optional.IsDefined(Password))
             {
-                writer.WritePropertyName("password");
+                writer.WritePropertyName("password"u8);
                 writer.WriteObjectValue(Password);
             }
             writer.WriteEndObject();
@@ -35,17 +35,17 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             Optional<AsymmetricEncryptedSecret> password = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("imageRepositoryUrl"))
+                if (property.NameEquals("imageRepositoryUrl"u8))
                 {
                     imageRepositoryUrl = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("userName"))
+                if (property.NameEquals("userName"u8))
                 {
                     userName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("password"))
+                if (property.NameEquals("password"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

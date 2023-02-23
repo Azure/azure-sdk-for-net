@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<string> initialReplicationProgressPercentage = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("initialReplicationType"))
+                if (property.NameEquals("initialReplicationType"u8))
                 {
                     initialReplicationType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("initialReplicationProgressPercentage"))
+                if (property.NameEquals("initialReplicationProgressPercentage"u8))
                 {
                     initialReplicationProgressPercentage = property.Value.GetString();
                     continue;

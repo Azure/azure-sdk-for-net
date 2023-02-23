@@ -19,12 +19,12 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             Optional<DateTimeOffset> recoveryPointTime = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("recoveryPointID"))
+                if (property.NameEquals("recoveryPointID"u8))
                 {
                     recoveryPointId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("recoveryPointTime"))
+                if (property.NameEquals("recoveryPointTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Compute.Models
             Optional<InstanceViewStatus> status = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("status"))
+                if (property.NameEquals("status"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

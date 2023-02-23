@@ -15,9 +15,9 @@ namespace Azure.ResourceManager.Monitor.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("numberOfEvaluationPeriods");
+            writer.WritePropertyName("numberOfEvaluationPeriods"u8);
             writer.WriteNumberValue(NumberOfEvaluationPeriods);
-            writer.WritePropertyName("minFailingPeriodsToAlert");
+            writer.WritePropertyName("minFailingPeriodsToAlert"u8);
             writer.WriteNumberValue(MinFailingPeriodsToAlert);
             writer.WriteEndObject();
         }
@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.Monitor.Models
             float minFailingPeriodsToAlert = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("numberOfEvaluationPeriods"))
+                if (property.NameEquals("numberOfEvaluationPeriods"u8))
                 {
                     numberOfEvaluationPeriods = property.Value.GetSingle();
                     continue;
                 }
-                if (property.NameEquals("minFailingPeriodsToAlert"))
+                if (property.NameEquals("minFailingPeriodsToAlert"u8))
                 {
                     minFailingPeriodsToAlert = property.Value.GetSingle();
                     continue;

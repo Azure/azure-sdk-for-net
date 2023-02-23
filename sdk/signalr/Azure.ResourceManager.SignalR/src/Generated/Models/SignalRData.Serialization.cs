@@ -20,22 +20,22 @@ namespace Azure.ResourceManager.SignalR
             writer.WriteStartObject();
             if (Optional.IsDefined(Sku))
             {
-                writer.WritePropertyName("sku");
+                writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
             }
             if (Optional.IsDefined(Kind))
             {
-                writer.WritePropertyName("kind");
+                writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind.Value.ToString());
             }
             if (Optional.IsDefined(Identity))
             {
-                writer.WritePropertyName("identity");
+                writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
-                writer.WritePropertyName("tags");
+                writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
                 foreach (var item in Tags)
                 {
@@ -44,18 +44,18 @@ namespace Azure.ResourceManager.SignalR
                 }
                 writer.WriteEndObject();
             }
-            writer.WritePropertyName("location");
+            writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(Tls))
             {
-                writer.WritePropertyName("tls");
+                writer.WritePropertyName("tls"u8);
                 writer.WriteObjectValue(Tls);
             }
             if (Optional.IsCollectionDefined(Features))
             {
-                writer.WritePropertyName("features");
+                writer.WritePropertyName("features"u8);
                 writer.WriteStartArray();
                 foreach (var item in Features)
                 {
@@ -65,42 +65,42 @@ namespace Azure.ResourceManager.SignalR
             }
             if (Optional.IsDefined(LiveTraceConfiguration))
             {
-                writer.WritePropertyName("liveTraceConfiguration");
+                writer.WritePropertyName("liveTraceConfiguration"u8);
                 writer.WriteObjectValue(LiveTraceConfiguration);
             }
             if (Optional.IsDefined(ResourceLogConfiguration))
             {
-                writer.WritePropertyName("resourceLogConfiguration");
+                writer.WritePropertyName("resourceLogConfiguration"u8);
                 writer.WriteObjectValue(ResourceLogConfiguration);
             }
             if (Optional.IsDefined(Cors))
             {
-                writer.WritePropertyName("cors");
+                writer.WritePropertyName("cors"u8);
                 writer.WriteObjectValue(Cors);
             }
             if (Optional.IsDefined(Upstream))
             {
-                writer.WritePropertyName("upstream");
+                writer.WritePropertyName("upstream"u8);
                 writer.WriteObjectValue(Upstream);
             }
             if (Optional.IsDefined(NetworkACLs))
             {
-                writer.WritePropertyName("networkACLs");
+                writer.WritePropertyName("networkACLs"u8);
                 writer.WriteObjectValue(NetworkACLs);
             }
             if (Optional.IsDefined(PublicNetworkAccess))
             {
-                writer.WritePropertyName("publicNetworkAccess");
+                writer.WritePropertyName("publicNetworkAccess"u8);
                 writer.WriteStringValue(PublicNetworkAccess);
             }
             if (Optional.IsDefined(DisableLocalAuth))
             {
-                writer.WritePropertyName("disableLocalAuth");
+                writer.WritePropertyName("disableLocalAuth"u8);
                 writer.WriteBooleanValue(DisableLocalAuth.Value);
             }
             if (Optional.IsDefined(DisableAadAuth))
             {
-                writer.WritePropertyName("disableAadAuth");
+                writer.WritePropertyName("disableAadAuth"u8);
                 writer.WriteBooleanValue(DisableAadAuth.Value);
             }
             writer.WriteEndObject();
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.SignalR
             Optional<bool> disableAadAuth = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("sku"))
+                if (property.NameEquals("sku"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.SignalR
                     sku = SignalRResourceSku.DeserializeSignalRResourceSku(property.Value);
                     continue;
                 }
-                if (property.NameEquals("kind"))
+                if (property.NameEquals("kind"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.SignalR
                     kind = new SignalRServiceKind(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("identity"))
+                if (property.NameEquals("identity"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.SignalR
                     identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("tags"))
+                if (property.NameEquals("tags"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -184,27 +184,27 @@ namespace Azure.ResourceManager.SignalR
                     tags = dictionary;
                     continue;
                 }
-                if (property.NameEquals("location"))
+                if (property.NameEquals("location"u8))
                 {
                     location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.SignalR
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.SignalR
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("provisioningState"))
+                        if (property0.NameEquals("provisioningState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -233,17 +233,17 @@ namespace Azure.ResourceManager.SignalR
                             provisioningState = new SignalRProvisioningState(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("externalIP"))
+                        if (property0.NameEquals("externalIP"u8))
                         {
                             externalIP = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("hostName"))
+                        if (property0.NameEquals("hostName"u8))
                         {
                             hostName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("publicPort"))
+                        if (property0.NameEquals("publicPort"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.SignalR
                             publicPort = property0.Value.GetInt32();
                             continue;
                         }
-                        if (property0.NameEquals("serverPort"))
+                        if (property0.NameEquals("serverPort"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -263,12 +263,12 @@ namespace Azure.ResourceManager.SignalR
                             serverPort = property0.Value.GetInt32();
                             continue;
                         }
-                        if (property0.NameEquals("version"))
+                        if (property0.NameEquals("version"u8))
                         {
                             version = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("privateEndpointConnections"))
+                        if (property0.NameEquals("privateEndpointConnections"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -283,7 +283,7 @@ namespace Azure.ResourceManager.SignalR
                             privateEndpointConnections = array;
                             continue;
                         }
-                        if (property0.NameEquals("sharedPrivateLinkResources"))
+                        if (property0.NameEquals("sharedPrivateLinkResources"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -298,7 +298,7 @@ namespace Azure.ResourceManager.SignalR
                             sharedPrivateLinkResources = array;
                             continue;
                         }
-                        if (property0.NameEquals("tls"))
+                        if (property0.NameEquals("tls"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -308,12 +308,12 @@ namespace Azure.ResourceManager.SignalR
                             tls = SignalRTlsSettings.DeserializeSignalRTlsSettings(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("hostNamePrefix"))
+                        if (property0.NameEquals("hostNamePrefix"u8))
                         {
                             hostNamePrefix = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("features"))
+                        if (property0.NameEquals("features"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -328,7 +328,7 @@ namespace Azure.ResourceManager.SignalR
                             features = array;
                             continue;
                         }
-                        if (property0.NameEquals("liveTraceConfiguration"))
+                        if (property0.NameEquals("liveTraceConfiguration"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -338,7 +338,7 @@ namespace Azure.ResourceManager.SignalR
                             liveTraceConfiguration = SignalRLiveTraceConfiguration.DeserializeSignalRLiveTraceConfiguration(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("resourceLogConfiguration"))
+                        if (property0.NameEquals("resourceLogConfiguration"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -348,7 +348,7 @@ namespace Azure.ResourceManager.SignalR
                             resourceLogConfiguration = SignalRResourceLogCategoryListResult.DeserializeSignalRResourceLogCategoryListResult(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("cors"))
+                        if (property0.NameEquals("cors"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -358,7 +358,7 @@ namespace Azure.ResourceManager.SignalR
                             cors = SignalRCorsSettings.DeserializeSignalRCorsSettings(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("upstream"))
+                        if (property0.NameEquals("upstream"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -368,7 +368,7 @@ namespace Azure.ResourceManager.SignalR
                             upstream = ServerlessUpstreamSettings.DeserializeServerlessUpstreamSettings(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("networkACLs"))
+                        if (property0.NameEquals("networkACLs"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -378,12 +378,12 @@ namespace Azure.ResourceManager.SignalR
                             networkACLs = SignalRNetworkAcls.DeserializeSignalRNetworkAcls(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("publicNetworkAccess"))
+                        if (property0.NameEquals("publicNetworkAccess"u8))
                         {
                             publicNetworkAccess = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("disableLocalAuth"))
+                        if (property0.NameEquals("disableLocalAuth"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -393,7 +393,7 @@ namespace Azure.ResourceManager.SignalR
                             disableLocalAuth = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("disableAadAuth"))
+                        if (property0.NameEquals("disableAadAuth"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

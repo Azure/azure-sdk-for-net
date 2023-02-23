@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(CloudRoleArn))
             {
-                writer.WritePropertyName("cloudRoleArn");
+                writer.WritePropertyName("cloudRoleArn"u8);
                 writer.WriteStringValue(CloudRoleArn);
             }
             writer.WriteEndObject();
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             Optional<string> cloudRoleArn = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("cloudRoleArn"))
+                if (property.NameEquals("cloudRoleArn"u8))
                 {
                     cloudRoleArn = property.Value.GetString();
                     continue;

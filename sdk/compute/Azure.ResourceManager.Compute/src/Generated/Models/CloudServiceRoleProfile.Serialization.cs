@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Compute.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Roles))
             {
-                writer.WritePropertyName("roles");
+                writer.WritePropertyName("roles"u8);
                 writer.WriteStartArray();
                 foreach (var item in Roles)
                 {
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Compute.Models
             Optional<IList<CloudServiceRoleProfileProperties>> roles = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("roles"))
+                if (property.NameEquals("roles"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

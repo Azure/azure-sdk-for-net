@@ -17,26 +17,26 @@ namespace Azure.ResourceManager.Automation.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("operatingSystem");
+            writer.WritePropertyName("operatingSystem"u8);
             writer.WriteStringValue(OperatingSystem.ToSerialString());
             if (Optional.IsDefined(Windows))
             {
-                writer.WritePropertyName("windows");
+                writer.WritePropertyName("windows"u8);
                 writer.WriteObjectValue(Windows);
             }
             if (Optional.IsDefined(Linux))
             {
-                writer.WritePropertyName("linux");
+                writer.WritePropertyName("linux"u8);
                 writer.WriteObjectValue(Linux);
             }
             if (Optional.IsDefined(Duration))
             {
-                writer.WritePropertyName("duration");
+                writer.WritePropertyName("duration"u8);
                 writer.WriteStringValue(Duration.Value, "P");
             }
             if (Optional.IsCollectionDefined(AzureVirtualMachines))
             {
-                writer.WritePropertyName("azureVirtualMachines");
+                writer.WritePropertyName("azureVirtualMachines"u8);
                 writer.WriteStartArray();
                 foreach (var item in AzureVirtualMachines)
                 {
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Automation.Models
             }
             if (Optional.IsCollectionDefined(NonAzureComputerNames))
             {
-                writer.WritePropertyName("nonAzureComputerNames");
+                writer.WritePropertyName("nonAzureComputerNames"u8);
                 writer.WriteStartArray();
                 foreach (var item in NonAzureComputerNames)
                 {
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Automation.Models
             }
             if (Optional.IsDefined(Targets))
             {
-                writer.WritePropertyName("targets");
+                writer.WritePropertyName("targets"u8);
                 writer.WriteObjectValue(Targets);
             }
             writer.WriteEndObject();
@@ -73,12 +73,12 @@ namespace Azure.ResourceManager.Automation.Models
             Optional<SoftwareUpdateConfigurationTargetProperties> targets = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("operatingSystem"))
+                if (property.NameEquals("operatingSystem"u8))
                 {
                     operatingSystem = property.Value.GetString().ToSoftwareUpdateConfigurationOperatingSystemType();
                     continue;
                 }
-                if (property.NameEquals("windows"))
+                if (property.NameEquals("windows"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Automation.Models
                     windows = WindowsUpdateConfigurationProperties.DeserializeWindowsUpdateConfigurationProperties(property.Value);
                     continue;
                 }
-                if (property.NameEquals("linux"))
+                if (property.NameEquals("linux"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Automation.Models
                     linux = LinuxUpdateConfigurationProperties.DeserializeLinuxUpdateConfigurationProperties(property.Value);
                     continue;
                 }
-                if (property.NameEquals("duration"))
+                if (property.NameEquals("duration"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Automation.Models
                     duration = property.Value.GetTimeSpan("P");
                     continue;
                 }
-                if (property.NameEquals("azureVirtualMachines"))
+                if (property.NameEquals("azureVirtualMachines"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Automation.Models
                     azureVirtualMachines = array;
                     continue;
                 }
-                if (property.NameEquals("nonAzureComputerNames"))
+                if (property.NameEquals("nonAzureComputerNames"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Automation.Models
                     nonAzureComputerNames = array;
                     continue;
                 }
-                if (property.NameEquals("targets"))
+                if (property.NameEquals("targets"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

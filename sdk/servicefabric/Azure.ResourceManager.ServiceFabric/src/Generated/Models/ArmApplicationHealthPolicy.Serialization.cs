@@ -18,22 +18,22 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(ConsiderWarningAsError))
             {
-                writer.WritePropertyName("considerWarningAsError");
+                writer.WritePropertyName("considerWarningAsError"u8);
                 writer.WriteBooleanValue(ConsiderWarningAsError.Value);
             }
             if (Optional.IsDefined(MaxPercentUnhealthyDeployedApplications))
             {
-                writer.WritePropertyName("maxPercentUnhealthyDeployedApplications");
+                writer.WritePropertyName("maxPercentUnhealthyDeployedApplications"u8);
                 writer.WriteNumberValue(MaxPercentUnhealthyDeployedApplications.Value);
             }
             if (Optional.IsDefined(DefaultServiceTypeHealthPolicy))
             {
-                writer.WritePropertyName("defaultServiceTypeHealthPolicy");
+                writer.WritePropertyName("defaultServiceTypeHealthPolicy"u8);
                 writer.WriteObjectValue(DefaultServiceTypeHealthPolicy);
             }
             if (Optional.IsCollectionDefined(ServiceTypeHealthPolicyMap))
             {
-                writer.WritePropertyName("serviceTypeHealthPolicyMap");
+                writer.WritePropertyName("serviceTypeHealthPolicyMap"u8);
                 writer.WriteStartObject();
                 foreach (var item in ServiceTypeHealthPolicyMap)
                 {
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             Optional<IDictionary<string, ArmServiceTypeHealthPolicy>> serviceTypeHealthPolicyMap = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("considerWarningAsError"))
+                if (property.NameEquals("considerWarningAsError"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                     considerWarningAsError = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("maxPercentUnhealthyDeployedApplications"))
+                if (property.NameEquals("maxPercentUnhealthyDeployedApplications"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                     maxPercentUnhealthyDeployedApplications = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("defaultServiceTypeHealthPolicy"))
+                if (property.NameEquals("defaultServiceTypeHealthPolicy"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                     defaultServiceTypeHealthPolicy = ArmServiceTypeHealthPolicy.DeserializeArmServiceTypeHealthPolicy(property.Value);
                     continue;
                 }
-                if (property.NameEquals("serviceTypeHealthPolicyMap"))
+                if (property.NameEquals("serviceTypeHealthPolicyMap"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

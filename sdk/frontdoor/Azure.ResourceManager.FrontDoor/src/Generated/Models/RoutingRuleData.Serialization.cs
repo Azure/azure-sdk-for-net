@@ -19,19 +19,19 @@ namespace Azure.ResourceManager.FrontDoor.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Id))
             {
-                writer.WritePropertyName("id");
+                writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
             if (Optional.IsDefined(Name))
             {
-                writer.WritePropertyName("name");
+                writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(FrontendEndpoints))
             {
-                writer.WritePropertyName("frontendEndpoints");
+                writer.WritePropertyName("frontendEndpoints"u8);
                 writer.WriteStartArray();
                 foreach (var item in FrontendEndpoints)
                 {
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
             }
             if (Optional.IsCollectionDefined(AcceptedProtocols))
             {
-                writer.WritePropertyName("acceptedProtocols");
+                writer.WritePropertyName("acceptedProtocols"u8);
                 writer.WriteStartArray();
                 foreach (var item in AcceptedProtocols)
                 {
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
             }
             if (Optional.IsCollectionDefined(PatternsToMatch))
             {
-                writer.WritePropertyName("patternsToMatch");
+                writer.WritePropertyName("patternsToMatch"u8);
                 writer.WriteStartArray();
                 foreach (var item in PatternsToMatch)
                 {
@@ -61,22 +61,22 @@ namespace Azure.ResourceManager.FrontDoor.Models
             }
             if (Optional.IsDefined(EnabledState))
             {
-                writer.WritePropertyName("enabledState");
+                writer.WritePropertyName("enabledState"u8);
                 writer.WriteStringValue(EnabledState.Value.ToString());
             }
             if (Optional.IsDefined(RouteConfiguration))
             {
-                writer.WritePropertyName("routeConfiguration");
+                writer.WritePropertyName("routeConfiguration"u8);
                 writer.WriteObjectValue(RouteConfiguration);
             }
             if (Optional.IsDefined(RulesEngine))
             {
-                writer.WritePropertyName("rulesEngine");
+                writer.WritePropertyName("rulesEngine"u8);
                 JsonSerializer.Serialize(writer, RulesEngine);
             }
             if (Optional.IsDefined(WebApplicationFirewallPolicyLink))
             {
-                writer.WritePropertyName("webApplicationFirewallPolicyLink");
+                writer.WritePropertyName("webApplicationFirewallPolicyLink"u8);
                 JsonSerializer.Serialize(writer, WebApplicationFirewallPolicyLink);
             }
             writer.WriteEndObject();
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
             Optional<FrontDoorResourceState> resourceState = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -108,12 +108,12 @@ namespace Azure.ResourceManager.FrontDoor.Models
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("frontendEndpoints"))
+                        if (property0.NameEquals("frontendEndpoints"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                             frontendEndpoints = array;
                             continue;
                         }
-                        if (property0.NameEquals("acceptedProtocols"))
+                        if (property0.NameEquals("acceptedProtocols"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                             acceptedProtocols = array;
                             continue;
                         }
-                        if (property0.NameEquals("patternsToMatch"))
+                        if (property0.NameEquals("patternsToMatch"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                             patternsToMatch = array;
                             continue;
                         }
-                        if (property0.NameEquals("enabledState"))
+                        if (property0.NameEquals("enabledState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                             enabledState = new RoutingRuleEnabledState(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("routeConfiguration"))
+                        if (property0.NameEquals("routeConfiguration"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                             routeConfiguration = RouteConfiguration.DeserializeRouteConfiguration(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("rulesEngine"))
+                        if (property0.NameEquals("rulesEngine"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                             rulesEngine = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
                             continue;
                         }
-                        if (property0.NameEquals("webApplicationFirewallPolicyLink"))
+                        if (property0.NameEquals("webApplicationFirewallPolicyLink"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                             webApplicationFirewallPolicyLink = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
                             continue;
                         }
-                        if (property0.NameEquals("resourceState"))
+                        if (property0.NameEquals("resourceState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

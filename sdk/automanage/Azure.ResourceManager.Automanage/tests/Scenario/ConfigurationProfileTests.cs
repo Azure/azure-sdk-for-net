@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Automanage.Tests.Scenario
             var rg = await CreateResourceGroup("SDKAutomanage-", DefaultLocation);
 
             // fetch configuration profile collection
-            var collection = rg.GetConfigurationProfiles();
+            var collection = rg.GetAutomanageConfigurationProfiles();
 
             // create configuration profile
             await CreateConfigurationProfile(collection, profileName);
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Automanage.Tests.Scenario
             var rg = await CreateResourceGroup("SDKAutomanage-", DefaultLocation);
 
             // fetch configuration profile collection
-            var collection = rg.GetConfigurationProfiles();
+            var collection = rg.GetAutomanageConfigurationProfiles();
 
             // create configuration profile
             for (int i = 0; i < 4; i++)
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Automanage.Tests.Scenario
             var rg = await CreateResourceGroup("SDKAutomanage-", DefaultLocation);
 
             // fetch configuration profile collection
-            var collection = rg.GetConfigurationProfiles();
+            var collection = rg.GetAutomanageConfigurationProfiles();
 
             // create configuration profile
             await CreateConfigurationProfile(collection, profileName);
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Automanage.Tests.Scenario
             var rg = await CreateResourceGroup("SDKAutomanage-", DefaultLocation);
 
             // fetch configuration profile collection
-            var collection = rg.GetConfigurationProfiles();
+            var collection = rg.GetAutomanageConfigurationProfiles();
 
             // create configuration profile
             await CreateConfigurationProfile(collection, profileName);

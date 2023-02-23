@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Media.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Layers))
             {
-                writer.WritePropertyName("layers");
+                writer.WritePropertyName("layers"u8);
                 writer.WriteStartArray();
                 foreach (var item in Layers)
                 {
@@ -27,38 +27,38 @@ namespace Azure.ResourceManager.Media.Models
                 }
                 writer.WriteEndArray();
             }
-            writer.WritePropertyName("start");
+            writer.WritePropertyName("start"u8);
             writer.WriteStringValue(Start);
             if (Optional.IsDefined(Step))
             {
-                writer.WritePropertyName("step");
+                writer.WritePropertyName("step"u8);
                 writer.WriteStringValue(Step);
             }
             if (Optional.IsDefined(Range))
             {
-                writer.WritePropertyName("range");
+                writer.WritePropertyName("range"u8);
                 writer.WriteStringValue(Range);
             }
             if (Optional.IsDefined(KeyFrameInterval))
             {
-                writer.WritePropertyName("keyFrameInterval");
+                writer.WritePropertyName("keyFrameInterval"u8);
                 writer.WriteStringValue(KeyFrameInterval.Value, "P");
             }
             if (Optional.IsDefined(StretchMode))
             {
-                writer.WritePropertyName("stretchMode");
+                writer.WritePropertyName("stretchMode"u8);
                 writer.WriteStringValue(StretchMode.Value.ToString());
             }
             if (Optional.IsDefined(SyncMode))
             {
-                writer.WritePropertyName("syncMode");
+                writer.WritePropertyName("syncMode"u8);
                 writer.WriteStringValue(SyncMode.Value.ToString());
             }
-            writer.WritePropertyName("@odata.type");
+            writer.WritePropertyName("@odata.type"u8);
             writer.WriteStringValue(OdataType);
             if (Optional.IsDefined(Label))
             {
-                writer.WritePropertyName("label");
+                writer.WritePropertyName("label"u8);
                 writer.WriteStringValue(Label);
             }
             writer.WriteEndObject();
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Media.Models
             Optional<string> label = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("layers"))
+                if (property.NameEquals("layers"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -92,22 +92,22 @@ namespace Azure.ResourceManager.Media.Models
                     layers = array;
                     continue;
                 }
-                if (property.NameEquals("start"))
+                if (property.NameEquals("start"u8))
                 {
                     start = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("step"))
+                if (property.NameEquals("step"u8))
                 {
                     step = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("range"))
+                if (property.NameEquals("range"u8))
                 {
                     range = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("keyFrameInterval"))
+                if (property.NameEquals("keyFrameInterval"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Media.Models
                     keyFrameInterval = property.Value.GetTimeSpan("P");
                     continue;
                 }
-                if (property.NameEquals("stretchMode"))
+                if (property.NameEquals("stretchMode"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Media.Models
                     stretchMode = new InputVideoStretchMode(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("syncMode"))
+                if (property.NameEquals("syncMode"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -137,12 +137,12 @@ namespace Azure.ResourceManager.Media.Models
                     syncMode = new VideoSyncMode(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("@odata.type"))
+                if (property.NameEquals("@odata.type"u8))
                 {
                     odataType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("label"))
+                if (property.NameEquals("label"u8))
                 {
                     label = property.Value.GetString();
                     continue;

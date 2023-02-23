@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Synapse.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(InitialWorkspaceAdminObjectId))
             {
-                writer.WritePropertyName("initialWorkspaceAdminObjectId");
+                writer.WritePropertyName("initialWorkspaceAdminObjectId"u8);
                 writer.WriteStringValue(InitialWorkspaceAdminObjectId.Value);
             }
             writer.WriteEndObject();
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Synapse.Models
             Optional<Guid> initialWorkspaceAdminObjectId = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("initialWorkspaceAdminObjectId"))
+                if (property.NameEquals("initialWorkspaceAdminObjectId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

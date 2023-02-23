@@ -17,17 +17,11 @@ namespace Azure.Communication.CallAutomation
         public HangUpOptions(bool forEveryone)
         {
             ForEveryone = forEveryone;
-            RepeatabilityHeaders = new RepeatabilityHeaders();
         }
 
         /// <summary>
         /// If true, this will terminate the call and hang up on all participants in this call.
         /// </summary>
         public bool ForEveryone { get; }
-
-        /// <summary>
-        /// Repeatability Headers.
-        /// </summary>
-        public RepeatabilityHeaders RepeatabilityHeaders { get; set; }
     }
 }

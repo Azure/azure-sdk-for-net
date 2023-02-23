@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Cdn
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Tags))
             {
-                writer.WritePropertyName("tags");
+                writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
                 foreach (var item in Tags)
                 {
@@ -29,18 +29,18 @@ namespace Azure.ResourceManager.Cdn
                 }
                 writer.WriteEndObject();
             }
-            writer.WritePropertyName("location");
+            writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(OriginPath))
             {
-                writer.WritePropertyName("originPath");
+                writer.WritePropertyName("originPath"u8);
                 writer.WriteStringValue(OriginPath);
             }
             if (Optional.IsCollectionDefined(ContentTypesToCompress))
             {
-                writer.WritePropertyName("contentTypesToCompress");
+                writer.WritePropertyName("contentTypesToCompress"u8);
                 writer.WriteStartArray();
                 foreach (var item in ContentTypesToCompress)
                 {
@@ -50,34 +50,34 @@ namespace Azure.ResourceManager.Cdn
             }
             if (Optional.IsDefined(OriginHostHeader))
             {
-                writer.WritePropertyName("originHostHeader");
+                writer.WritePropertyName("originHostHeader"u8);
                 writer.WriteStringValue(OriginHostHeader);
             }
             if (Optional.IsDefined(IsCompressionEnabled))
             {
-                writer.WritePropertyName("isCompressionEnabled");
+                writer.WritePropertyName("isCompressionEnabled"u8);
                 writer.WriteBooleanValue(IsCompressionEnabled.Value);
             }
             if (Optional.IsDefined(IsHttpAllowed))
             {
-                writer.WritePropertyName("isHttpAllowed");
+                writer.WritePropertyName("isHttpAllowed"u8);
                 writer.WriteBooleanValue(IsHttpAllowed.Value);
             }
             if (Optional.IsDefined(IsHttpsAllowed))
             {
-                writer.WritePropertyName("isHttpsAllowed");
+                writer.WritePropertyName("isHttpsAllowed"u8);
                 writer.WriteBooleanValue(IsHttpsAllowed.Value);
             }
             if (Optional.IsDefined(QueryStringCachingBehavior))
             {
-                writer.WritePropertyName("queryStringCachingBehavior");
+                writer.WritePropertyName("queryStringCachingBehavior"u8);
                 writer.WriteStringValue(QueryStringCachingBehavior.Value.ToSerialString());
             }
             if (Optional.IsDefined(OptimizationType))
             {
                 if (OptimizationType != null)
                 {
-                    writer.WritePropertyName("optimizationType");
+                    writer.WritePropertyName("optimizationType"u8);
                     writer.WriteStringValue(OptimizationType.Value.ToString());
                 }
                 else
@@ -87,12 +87,12 @@ namespace Azure.ResourceManager.Cdn
             }
             if (Optional.IsDefined(ProbePath))
             {
-                writer.WritePropertyName("probePath");
+                writer.WritePropertyName("probePath"u8);
                 writer.WriteStringValue(ProbePath);
             }
             if (Optional.IsCollectionDefined(GeoFilters))
             {
-                writer.WritePropertyName("geoFilters");
+                writer.WritePropertyName("geoFilters"u8);
                 writer.WriteStartArray();
                 foreach (var item in GeoFilters)
                 {
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Cdn
             {
                 if (DefaultOriginGroup != null)
                 {
-                    writer.WritePropertyName("defaultOriginGroup");
+                    writer.WritePropertyName("defaultOriginGroup"u8);
                     writer.WriteObjectValue(DefaultOriginGroup);
                 }
                 else
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Cdn
             {
                 if (UriSigningKeys != null)
                 {
-                    writer.WritePropertyName("urlSigningKeys");
+                    writer.WritePropertyName("urlSigningKeys"u8);
                     writer.WriteStartArray();
                     foreach (var item in UriSigningKeys)
                     {
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.Cdn
             {
                 if (DeliveryPolicy != null)
                 {
-                    writer.WritePropertyName("deliveryPolicy");
+                    writer.WritePropertyName("deliveryPolicy"u8);
                     writer.WriteObjectValue(DeliveryPolicy);
                 }
                 else
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.Cdn
             {
                 if (WebApplicationFirewallPolicyLink != null)
                 {
-                    writer.WritePropertyName("webApplicationFirewallPolicyLink");
+                    writer.WritePropertyName("webApplicationFirewallPolicyLink"u8);
                     writer.WriteObjectValue(WebApplicationFirewallPolicyLink);
                 }
                 else
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.Cdn
             }
             if (Optional.IsCollectionDefined(Origins))
             {
-                writer.WritePropertyName("origins");
+                writer.WritePropertyName("origins"u8);
                 writer.WriteStartArray();
                 foreach (var item in Origins)
                 {
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.Cdn
             }
             if (Optional.IsCollectionDefined(OriginGroups))
             {
-                writer.WritePropertyName("originGroups");
+                writer.WritePropertyName("originGroups"u8);
                 writer.WriteStartArray();
                 foreach (var item in OriginGroups)
                 {
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.Cdn
             Optional<CdnEndpointProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("tags"))
+                if (property.NameEquals("tags"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -222,27 +222,27 @@ namespace Azure.ResourceManager.Cdn
                     tags = dictionary;
                     continue;
                 }
-                if (property.NameEquals("location"))
+                if (property.NameEquals("location"u8))
                 {
                     location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.Cdn
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -261,12 +261,12 @@ namespace Azure.ResourceManager.Cdn
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("originPath"))
+                        if (property0.NameEquals("originPath"u8))
                         {
                             originPath = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("contentTypesToCompress"))
+                        if (property0.NameEquals("contentTypesToCompress"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -281,12 +281,12 @@ namespace Azure.ResourceManager.Cdn
                             contentTypesToCompress = array;
                             continue;
                         }
-                        if (property0.NameEquals("originHostHeader"))
+                        if (property0.NameEquals("originHostHeader"u8))
                         {
                             originHostHeader = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("isCompressionEnabled"))
+                        if (property0.NameEquals("isCompressionEnabled"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -296,7 +296,7 @@ namespace Azure.ResourceManager.Cdn
                             isCompressionEnabled = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("isHttpAllowed"))
+                        if (property0.NameEquals("isHttpAllowed"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -306,7 +306,7 @@ namespace Azure.ResourceManager.Cdn
                             isHttpAllowed = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("isHttpsAllowed"))
+                        if (property0.NameEquals("isHttpsAllowed"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -316,7 +316,7 @@ namespace Azure.ResourceManager.Cdn
                             isHttpsAllowed = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("queryStringCachingBehavior"))
+                        if (property0.NameEquals("queryStringCachingBehavior"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -326,7 +326,7 @@ namespace Azure.ResourceManager.Cdn
                             queryStringCachingBehavior = property0.Value.GetString().ToQueryStringCachingBehavior();
                             continue;
                         }
-                        if (property0.NameEquals("optimizationType"))
+                        if (property0.NameEquals("optimizationType"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -336,12 +336,12 @@ namespace Azure.ResourceManager.Cdn
                             optimizationType = new OptimizationType(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("probePath"))
+                        if (property0.NameEquals("probePath"u8))
                         {
                             probePath = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("geoFilters"))
+                        if (property0.NameEquals("geoFilters"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -356,7 +356,7 @@ namespace Azure.ResourceManager.Cdn
                             geoFilters = array;
                             continue;
                         }
-                        if (property0.NameEquals("defaultOriginGroup"))
+                        if (property0.NameEquals("defaultOriginGroup"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -366,7 +366,7 @@ namespace Azure.ResourceManager.Cdn
                             defaultOriginGroup = EndpointPropertiesUpdateParametersDefaultOriginGroup.DeserializeEndpointPropertiesUpdateParametersDefaultOriginGroup(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("urlSigningKeys"))
+                        if (property0.NameEquals("urlSigningKeys"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -381,7 +381,7 @@ namespace Azure.ResourceManager.Cdn
                             uriSigningKeys = array;
                             continue;
                         }
-                        if (property0.NameEquals("deliveryPolicy"))
+                        if (property0.NameEquals("deliveryPolicy"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -391,7 +391,7 @@ namespace Azure.ResourceManager.Cdn
                             deliveryPolicy = EndpointDeliveryPolicy.DeserializeEndpointDeliveryPolicy(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("webApplicationFirewallPolicyLink"))
+                        if (property0.NameEquals("webApplicationFirewallPolicyLink"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -401,12 +401,12 @@ namespace Azure.ResourceManager.Cdn
                             webApplicationFirewallPolicyLink = EndpointPropertiesUpdateParametersWebApplicationFirewallPolicyLink.DeserializeEndpointPropertiesUpdateParametersWebApplicationFirewallPolicyLink(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("hostName"))
+                        if (property0.NameEquals("hostName"u8))
                         {
                             hostName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("origins"))
+                        if (property0.NameEquals("origins"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -421,7 +421,7 @@ namespace Azure.ResourceManager.Cdn
                             origins = array;
                             continue;
                         }
-                        if (property0.NameEquals("originGroups"))
+                        if (property0.NameEquals("originGroups"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -436,7 +436,7 @@ namespace Azure.ResourceManager.Cdn
                             originGroups = array;
                             continue;
                         }
-                        if (property0.NameEquals("customDomains"))
+                        if (property0.NameEquals("customDomains"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -451,7 +451,7 @@ namespace Azure.ResourceManager.Cdn
                             customDomains = array;
                             continue;
                         }
-                        if (property0.NameEquals("resourceState"))
+                        if (property0.NameEquals("resourceState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -461,7 +461,7 @@ namespace Azure.ResourceManager.Cdn
                             resourceState = new EndpointResourceState(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("provisioningState"))
+                        if (property0.NameEquals("provisioningState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

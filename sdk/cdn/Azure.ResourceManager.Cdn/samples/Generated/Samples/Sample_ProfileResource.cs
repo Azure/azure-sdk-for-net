@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
@@ -100,26 +99,23 @@ namespace Azure.ResourceManager.Cdn.Samples
             ProfileResource profile = client.GetProfileResource(profileResourceId);
 
             // invoke the operation
-            IEnumerable<LogMetric> metrics = new LogMetric[]
+            ProfileResourceGetLogAnalyticsMetricsOptions options = new ProfileResourceGetLogAnalyticsMetricsOptions(metrics: new LogMetric[]
             {
 LogMetric.ClientRequestCount
-            };
-            DateTimeOffset dateTimeBegin = DateTimeOffset.Parse("2020-11-04T04:30:00.000Z");
-            DateTimeOffset dateTimeEnd = DateTimeOffset.Parse("2020-11-04T05:00:00.000Z");
-            LogMetricsGranularity granularity = LogMetricsGranularity.PT5M;
-            IEnumerable<string> customDomains = new string[]
+            }, dateTimeBegin: DateTimeOffset.Parse("2020-11-04T04:30:00.000Z"), dateTimeEnd: DateTimeOffset.Parse("2020-11-04T05:00:00.000Z"), granularity: LogMetricsGranularity.PT5M, customDomains: new string[]
             {
 "customdomain1.azurecdn.net","customdomain2.azurecdn.net"
-            };
-            IEnumerable<string> protocols = new string[]
+            }, protocols: new string[]
             {
 "https"
-            };
-            IEnumerable<LogMetricsGroupBy> groupBy = new LogMetricsGroupBy[]
+            })
+            {
+                GroupBy = new LogMetricsGroupBy[]
             {
 LogMetricsGroupBy.Protocol
+            }
             };
-            MetricsResponse result = await profile.GetLogAnalyticsMetricsAsync(metrics, dateTimeBegin, dateTimeEnd, granularity, customDomains, protocols, groupBy: groupBy);
+            MetricsResponse result = await profile.GetLogAnalyticsMetricsAsync(options);
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -146,18 +142,15 @@ LogMetricsGroupBy.Protocol
             ProfileResource profile = client.GetProfileResource(profileResourceId);
 
             // invoke the operation
-            IEnumerable<LogRanking> rankings = new LogRanking[]
+            ProfileResourceGetLogAnalyticsRankingsOptions options = new ProfileResourceGetLogAnalyticsRankingsOptions(rankings: new LogRanking[]
             {
 LogRanking.Uri
-            };
-            IEnumerable<LogRankingMetric> metrics = new LogRankingMetric[]
+            }, metrics: new LogRankingMetric[]
             {
 LogRankingMetric.ClientRequestCount
-            };
-            int maxRanking = 5;
-            DateTimeOffset dateTimeBegin = DateTimeOffset.Parse("2020-11-04T06:49:27.554Z");
-            DateTimeOffset dateTimeEnd = DateTimeOffset.Parse("2020-11-04T09:49:27.554Z");
-            RankingsResponse result = await profile.GetLogAnalyticsRankingsAsync(rankings, metrics, maxRanking, dateTimeBegin, dateTimeEnd);
+            }, maxRanking: 5, dateTimeBegin: DateTimeOffset.Parse("2020-11-04T06:49:27.554Z"), dateTimeEnd: DateTimeOffset.Parse("2020-11-04T09:49:27.554Z"))
+            { };
+            RankingsResponse result = await profile.GetLogAnalyticsRankingsAsync(options);
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -238,18 +231,17 @@ LogRankingMetric.ClientRequestCount
             ProfileResource profile = client.GetProfileResource(profileResourceId);
 
             // invoke the operation
-            IEnumerable<WafMetric> metrics = new WafMetric[]
+            ProfileResourceGetWafLogAnalyticsMetricsOptions options = new ProfileResourceGetWafLogAnalyticsMetricsOptions(metrics: new WafMetric[]
             {
 WafMetric.ClientRequestCount
-            };
-            DateTimeOffset dateTimeBegin = DateTimeOffset.Parse("2020-11-04T06:49:27.554Z");
-            DateTimeOffset dateTimeEnd = DateTimeOffset.Parse("2020-11-04T09:49:27.554Z");
-            WafGranularity granularity = WafGranularity.PT5M;
-            IEnumerable<WafAction> actions = new WafAction[]
+            }, dateTimeBegin: DateTimeOffset.Parse("2020-11-04T06:49:27.554Z"), dateTimeEnd: DateTimeOffset.Parse("2020-11-04T09:49:27.554Z"), granularity: WafGranularity.PT5M)
+            {
+                Actions = new WafAction[]
             {
 WafAction.Block,WafAction.Log
+            }
             };
-            WafMetricsResponse result = await profile.GetWafLogAnalyticsMetricsAsync(metrics, dateTimeBegin, dateTimeEnd, granularity, actions: actions);
+            WafMetricsResponse result = await profile.GetWafLogAnalyticsMetricsAsync(options);
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -276,18 +268,15 @@ WafAction.Block,WafAction.Log
             ProfileResource profile = client.GetProfileResource(profileResourceId);
 
             // invoke the operation
-            IEnumerable<WafMetric> metrics = new WafMetric[]
+            ProfileResourceGetWafLogAnalyticsRankingsOptions options = new ProfileResourceGetWafLogAnalyticsRankingsOptions(metrics: new WafMetric[]
             {
 WafMetric.ClientRequestCount
-            };
-            DateTimeOffset dateTimeBegin = DateTimeOffset.Parse("2020-11-04T06:49:27.554Z");
-            DateTimeOffset dateTimeEnd = DateTimeOffset.Parse("2020-11-04T09:49:27.554Z");
-            int maxRanking = 5;
-            IEnumerable<WafRankingType> rankings = new WafRankingType[]
+            }, dateTimeBegin: DateTimeOffset.Parse("2020-11-04T06:49:27.554Z"), dateTimeEnd: DateTimeOffset.Parse("2020-11-04T09:49:27.554Z"), maxRanking: 5, rankings: new WafRankingType[]
             {
 WafRankingType.RuleId
-            };
-            WafRankingsResponse result = await profile.GetWafLogAnalyticsRankingsAsync(metrics, dateTimeBegin, dateTimeEnd, maxRanking, rankings);
+            })
+            { };
+            WafRankingsResponse result = await profile.GetWafLogAnalyticsRankingsAsync(options);
 
             Console.WriteLine($"Succeeded: {result}");
         }

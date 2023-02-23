@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Monitor.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("recordStartTimestampFormat");
+            writer.WritePropertyName("recordStartTimestampFormat"u8);
             writer.WriteStringValue(RecordStartTimestampFormat.ToString());
             writer.WriteEndObject();
         }
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Monitor.Models
             LogFileTextSettingsRecordStartTimestampFormat recordStartTimestampFormat = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("recordStartTimestampFormat"))
+                if (property.NameEquals("recordStartTimestampFormat"u8))
                 {
                     recordStartTimestampFormat = new LogFileTextSettingsRecordStartTimestampFormat(property.Value.GetString());
                     continue;

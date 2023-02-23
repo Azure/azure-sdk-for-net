@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Indicators))
             {
-                writer.WritePropertyName("indicators");
+                writer.WritePropertyName("indicators"u8);
                 writer.WriteObjectValue(Indicators);
             }
             writer.WriteEndObject();
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             Optional<TIDataConnectorDataTypesIndicators> indicators = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("indicators"))
+                if (property.NameEquals("indicators"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

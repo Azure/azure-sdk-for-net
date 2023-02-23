@@ -15,19 +15,19 @@ namespace Azure.ResourceManager.Logic.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("dataElementSeparator");
+            writer.WritePropertyName("dataElementSeparator"u8);
             writer.WriteNumberValue(DataElementSeparator);
-            writer.WritePropertyName("componentSeparator");
+            writer.WritePropertyName("componentSeparator"u8);
             writer.WriteNumberValue(ComponentSeparator);
-            writer.WritePropertyName("replaceSeparatorsInPayload");
+            writer.WritePropertyName("replaceSeparatorsInPayload"u8);
             writer.WriteBooleanValue(ReplaceSeparatorsInPayload);
-            writer.WritePropertyName("replaceCharacter");
+            writer.WritePropertyName("replaceCharacter"u8);
             writer.WriteNumberValue(ReplaceCharacter);
-            writer.WritePropertyName("segmentTerminator");
+            writer.WritePropertyName("segmentTerminator"u8);
             writer.WriteNumberValue(SegmentTerminator);
-            writer.WritePropertyName("characterSet");
+            writer.WritePropertyName("characterSet"u8);
             writer.WriteStringValue(CharacterSet.ToString());
-            writer.WritePropertyName("segmentTerminatorSuffix");
+            writer.WritePropertyName("segmentTerminatorSuffix"u8);
             writer.WriteStringValue(SegmentTerminatorSuffix.ToSerialString());
             writer.WriteEndObject();
         }
@@ -43,37 +43,37 @@ namespace Azure.ResourceManager.Logic.Models
             SegmentTerminatorSuffix segmentTerminatorSuffix = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("dataElementSeparator"))
+                if (property.NameEquals("dataElementSeparator"u8))
                 {
                     dataElementSeparator = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("componentSeparator"))
+                if (property.NameEquals("componentSeparator"u8))
                 {
                     componentSeparator = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("replaceSeparatorsInPayload"))
+                if (property.NameEquals("replaceSeparatorsInPayload"u8))
                 {
                     replaceSeparatorsInPayload = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("replaceCharacter"))
+                if (property.NameEquals("replaceCharacter"u8))
                 {
                     replaceCharacter = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("segmentTerminator"))
+                if (property.NameEquals("segmentTerminator"u8))
                 {
                     segmentTerminator = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("characterSet"))
+                if (property.NameEquals("characterSet"u8))
                 {
                     characterSet = new X12CharacterSet(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("segmentTerminatorSuffix"))
+                if (property.NameEquals("segmentTerminatorSuffix"u8))
                 {
                     segmentTerminatorSuffix = property.Value.GetString().ToSegmentTerminatorSuffix();
                     continue;

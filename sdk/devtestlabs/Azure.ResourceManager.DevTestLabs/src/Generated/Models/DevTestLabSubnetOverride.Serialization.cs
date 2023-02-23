@@ -17,32 +17,32 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(ResourceId))
             {
-                writer.WritePropertyName("resourceId");
+                writer.WritePropertyName("resourceId"u8);
                 writer.WriteStringValue(ResourceId);
             }
             if (Optional.IsDefined(LabSubnetName))
             {
-                writer.WritePropertyName("labSubnetName");
+                writer.WritePropertyName("labSubnetName"u8);
                 writer.WriteStringValue(LabSubnetName);
             }
             if (Optional.IsDefined(UseInVmCreationPermission))
             {
-                writer.WritePropertyName("useInVmCreationPermission");
+                writer.WritePropertyName("useInVmCreationPermission"u8);
                 writer.WriteStringValue(UseInVmCreationPermission.Value.ToString());
             }
             if (Optional.IsDefined(UsePublicIPAddressPermission))
             {
-                writer.WritePropertyName("usePublicIpAddressPermission");
+                writer.WritePropertyName("usePublicIpAddressPermission"u8);
                 writer.WriteStringValue(UsePublicIPAddressPermission.Value.ToString());
             }
             if (Optional.IsDefined(SharedPublicIPAddressConfiguration))
             {
-                writer.WritePropertyName("sharedPublicIpAddressConfiguration");
+                writer.WritePropertyName("sharedPublicIpAddressConfiguration"u8);
                 writer.WriteObjectValue(SharedPublicIPAddressConfiguration);
             }
             if (Optional.IsDefined(VirtualNetworkPoolName))
             {
-                writer.WritePropertyName("virtualNetworkPoolName");
+                writer.WritePropertyName("virtualNetworkPoolName"u8);
                 writer.WriteStringValue(VirtualNetworkPoolName);
             }
             writer.WriteEndObject();
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             Optional<string> virtualNetworkPoolName = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("resourceId"))
+                if (property.NameEquals("resourceId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -68,12 +68,12 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                     resourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("labSubnetName"))
+                if (property.NameEquals("labSubnetName"u8))
                 {
                     labSubnetName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("useInVmCreationPermission"))
+                if (property.NameEquals("useInVmCreationPermission"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                     useInVmCreationPermission = new DevTestLabUsagePermissionType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("usePublicIpAddressPermission"))
+                if (property.NameEquals("usePublicIpAddressPermission"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                     usePublicIPAddressPermission = new DevTestLabUsagePermissionType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("sharedPublicIpAddressConfiguration"))
+                if (property.NameEquals("sharedPublicIpAddressConfiguration"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                     sharedPublicIPAddressConfiguration = SubnetSharedPublicIPAddressConfiguration.DeserializeSubnetSharedPublicIPAddressConfiguration(property.Value);
                     continue;
                 }
-                if (property.NameEquals("virtualNetworkPoolName"))
+                if (property.NameEquals("virtualNetworkPoolName"u8))
                 {
                     virtualNetworkPoolName = property.Value.GetString();
                     continue;

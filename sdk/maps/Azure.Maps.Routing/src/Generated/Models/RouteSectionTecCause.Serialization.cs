@@ -18,7 +18,7 @@ namespace Azure.Maps.Routing.Models
             Optional<int> subCauseCode = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("mainCauseCode"))
+                if (property.NameEquals("mainCauseCode"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -28,7 +28,7 @@ namespace Azure.Maps.Routing.Models
                     mainCauseCode = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("subCauseCode"))
+                if (property.NameEquals("subCauseCode"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

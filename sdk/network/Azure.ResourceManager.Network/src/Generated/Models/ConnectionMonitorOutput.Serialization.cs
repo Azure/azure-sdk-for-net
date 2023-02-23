@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.Network.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(OutputType))
             {
-                writer.WritePropertyName("type");
+                writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(OutputType.Value.ToString());
             }
             if (Optional.IsDefined(WorkspaceSettings))
             {
-                writer.WritePropertyName("workspaceSettings");
+                writer.WritePropertyName("workspaceSettings"u8);
                 writer.WriteObjectValue(WorkspaceSettings);
             }
             writer.WriteEndObject();
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Network.Models
             Optional<ConnectionMonitorWorkspaceSettings> workspaceSettings = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Network.Models
                     type = new OutputType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("workspaceSettings"))
+                if (property.NameEquals("workspaceSettings"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

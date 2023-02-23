@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Datadog;
 using Azure.ResourceManager.Datadog.Models;
 using Azure.ResourceManager.Resources;
 

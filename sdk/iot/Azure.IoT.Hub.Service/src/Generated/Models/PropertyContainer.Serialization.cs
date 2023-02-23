@@ -17,7 +17,7 @@ namespace Azure.IoT.Hub.Service.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Desired))
             {
-                writer.WritePropertyName("desired");
+                writer.WritePropertyName("desired"u8);
                 writer.WriteStartObject();
                 foreach (var item in Desired)
                 {
@@ -28,7 +28,7 @@ namespace Azure.IoT.Hub.Service.Models
             }
             if (Optional.IsCollectionDefined(Reported))
             {
-                writer.WritePropertyName("reported");
+                writer.WritePropertyName("reported"u8);
                 writer.WriteStartObject();
                 foreach (var item in Reported)
                 {

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Workloads.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("backupEnabled");
+            writer.WritePropertyName("backupEnabled"u8);
             writer.WriteStringValue(BackupEnabled.ToString());
             writer.WriteEndObject();
         }
@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Workloads.Models
             Optional<ResourceIdentifier> vaultResourceId = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("backupEnabled"))
+                if (property.NameEquals("backupEnabled"u8))
                 {
                     backupEnabled = new EnableBackup(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("vaultResourceId"))
+                if (property.NameEquals("vaultResourceId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

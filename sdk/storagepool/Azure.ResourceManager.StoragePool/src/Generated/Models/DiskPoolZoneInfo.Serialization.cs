@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.StoragePool.Models
             Optional<StoragePoolSku> sku = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("availabilityZones"))
+                if (property.NameEquals("availabilityZones"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.StoragePool.Models
                     availabilityZones = array;
                     continue;
                 }
-                if (property.NameEquals("additionalCapabilities"))
+                if (property.NameEquals("additionalCapabilities"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.StoragePool.Models
                     additionalCapabilities = array;
                     continue;
                 }
-                if (property.NameEquals("sku"))
+                if (property.NameEquals("sku"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

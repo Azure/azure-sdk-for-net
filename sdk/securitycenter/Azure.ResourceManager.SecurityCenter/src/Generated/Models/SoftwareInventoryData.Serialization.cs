@@ -18,51 +18,51 @@ namespace Azure.ResourceManager.SecurityCenter
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(DeviceId))
             {
-                writer.WritePropertyName("deviceId");
+                writer.WritePropertyName("deviceId"u8);
                 writer.WriteStringValue(DeviceId);
             }
             if (Optional.IsDefined(OSPlatform))
             {
-                writer.WritePropertyName("osPlatform");
+                writer.WritePropertyName("osPlatform"u8);
                 writer.WriteStringValue(OSPlatform);
             }
             if (Optional.IsDefined(Vendor))
             {
-                writer.WritePropertyName("vendor");
+                writer.WritePropertyName("vendor"u8);
                 writer.WriteStringValue(Vendor);
             }
             if (Optional.IsDefined(SoftwareName))
             {
-                writer.WritePropertyName("softwareName");
+                writer.WritePropertyName("softwareName"u8);
                 writer.WriteStringValue(SoftwareName);
             }
             if (Optional.IsDefined(Version))
             {
-                writer.WritePropertyName("version");
+                writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version);
             }
             if (Optional.IsDefined(EndOfSupportStatus))
             {
-                writer.WritePropertyName("endOfSupportStatus");
+                writer.WritePropertyName("endOfSupportStatus"u8);
                 writer.WriteStringValue(EndOfSupportStatus.Value.ToString());
             }
             if (Optional.IsDefined(EndOfSupportDate))
             {
-                writer.WritePropertyName("endOfSupportDate");
+                writer.WritePropertyName("endOfSupportDate"u8);
                 writer.WriteStringValue(EndOfSupportDate);
             }
             if (Optional.IsDefined(NumberOfKnownVulnerabilities))
             {
-                writer.WritePropertyName("numberOfKnownVulnerabilities");
+                writer.WritePropertyName("numberOfKnownVulnerabilities"u8);
                 writer.WriteNumberValue(NumberOfKnownVulnerabilities.Value);
             }
             if (Optional.IsDefined(FirstSeenOn))
             {
-                writer.WritePropertyName("firstSeenAt");
+                writer.WritePropertyName("firstSeenAt"u8);
                 writer.WriteStringValue(FirstSeenOn.Value, "O");
             }
             writer.WriteEndObject();
@@ -86,22 +86,22 @@ namespace Azure.ResourceManager.SecurityCenter
             Optional<DateTimeOffset> firstSeenAt = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.SecurityCenter
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -120,32 +120,32 @@ namespace Azure.ResourceManager.SecurityCenter
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("deviceId"))
+                        if (property0.NameEquals("deviceId"u8))
                         {
                             deviceId = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("osPlatform"))
+                        if (property0.NameEquals("osPlatform"u8))
                         {
                             osPlatform = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("vendor"))
+                        if (property0.NameEquals("vendor"u8))
                         {
                             vendor = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("softwareName"))
+                        if (property0.NameEquals("softwareName"u8))
                         {
                             softwareName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("version"))
+                        if (property0.NameEquals("version"u8))
                         {
                             version = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("endOfSupportStatus"))
+                        if (property0.NameEquals("endOfSupportStatus"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -155,12 +155,12 @@ namespace Azure.ResourceManager.SecurityCenter
                             endOfSupportStatus = new EndOfSupportStatus(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("endOfSupportDate"))
+                        if (property0.NameEquals("endOfSupportDate"u8))
                         {
                             endOfSupportDate = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("numberOfKnownVulnerabilities"))
+                        if (property0.NameEquals("numberOfKnownVulnerabilities"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.SecurityCenter
                             numberOfKnownVulnerabilities = property0.Value.GetInt32();
                             continue;
                         }
-                        if (property0.NameEquals("firstSeenAt"))
+                        if (property0.NameEquals("firstSeenAt"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

@@ -11,6 +11,7 @@ using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Maintenance;
+using Azure.ResourceManager.Maintenance.Models;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Maintenance.Samples
@@ -38,13 +39,8 @@ namespace Azure.ResourceManager.Maintenance.Samples
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // invoke the operation
-            string providerName = "Microsoft.Compute";
-            string resourceParentType = "virtualMachineScaleSets";
-            string resourceParentName = "smdtest1";
-            string resourceType = "virtualMachines";
-            string resourceName = "smdvm1";
-            string applyUpdateName = "e9b9685d-78e4-44c4-a81c-64a14f9b87b6";
-            MaintenanceApplyUpdateResource result = await resourceGroupResource.GetApplyUpdatesByParentAsync(providerName, resourceParentType, resourceParentName, resourceType, resourceName, applyUpdateName);
+            ResourceGroupResourceGetApplyUpdatesByParentOptions options = new ResourceGroupResourceGetApplyUpdatesByParentOptions(providerName: "Microsoft.Compute", resourceParentType: "virtualMachineScaleSets", resourceParentName: "smdtest1", resourceType: "virtualMachines", resourceName: "smdvm1", applyUpdateName: "e9b9685d-78e4-44c4-a81c-64a14f9b87b6") { };
+            MaintenanceApplyUpdateResource result = await resourceGroupResource.GetApplyUpdatesByParentAsync(options);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance

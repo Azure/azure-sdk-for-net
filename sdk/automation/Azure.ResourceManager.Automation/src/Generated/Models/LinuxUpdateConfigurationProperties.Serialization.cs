@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.Automation.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(IncludedPackageClassifications))
             {
-                writer.WritePropertyName("includedPackageClassifications");
+                writer.WritePropertyName("includedPackageClassifications"u8);
                 writer.WriteStringValue(IncludedPackageClassifications.Value.ToString());
             }
             if (Optional.IsCollectionDefined(ExcludedPackageNameMasks))
             {
-                writer.WritePropertyName("excludedPackageNameMasks");
+                writer.WritePropertyName("excludedPackageNameMasks"u8);
                 writer.WriteStartArray();
                 foreach (var item in ExcludedPackageNameMasks)
                 {
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Automation.Models
             }
             if (Optional.IsCollectionDefined(IncludedPackageNameMasks))
             {
-                writer.WritePropertyName("includedPackageNameMasks");
+                writer.WritePropertyName("includedPackageNameMasks"u8);
                 writer.WriteStartArray();
                 foreach (var item in IncludedPackageNameMasks)
                 {
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Automation.Models
             }
             if (Optional.IsDefined(RebootSetting))
             {
-                writer.WritePropertyName("rebootSetting");
+                writer.WritePropertyName("rebootSetting"u8);
                 writer.WriteStringValue(RebootSetting);
             }
             writer.WriteEndObject();
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Automation.Models
             Optional<string> rebootSetting = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("includedPackageClassifications"))
+                if (property.NameEquals("includedPackageClassifications"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Automation.Models
                     includedPackageClassifications = new LinuxUpdateClassification(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("excludedPackageNameMasks"))
+                if (property.NameEquals("excludedPackageNameMasks"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Automation.Models
                     excludedPackageNameMasks = array;
                     continue;
                 }
-                if (property.NameEquals("includedPackageNameMasks"))
+                if (property.NameEquals("includedPackageNameMasks"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Automation.Models
                     includedPackageNameMasks = array;
                     continue;
                 }
-                if (property.NameEquals("rebootSetting"))
+                if (property.NameEquals("rebootSetting"u8))
                 {
                     rebootSetting = property.Value.GetString();
                     continue;

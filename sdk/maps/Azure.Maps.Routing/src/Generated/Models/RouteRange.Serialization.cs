@@ -19,7 +19,7 @@ namespace Azure.Maps.Routing.Models
             Optional<IReadOnlyList<LatLongPair>> boundary = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("center"))
+                if (property.NameEquals("center"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -29,7 +29,7 @@ namespace Azure.Maps.Routing.Models
                     center = LatLongPair.DeserializeLatLongPair(property.Value);
                     continue;
                 }
-                if (property.NameEquals("boundary"))
+                if (property.NameEquals("boundary"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

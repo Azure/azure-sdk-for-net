@@ -17,22 +17,22 @@ namespace Azure.ResourceManager.Monitor.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("criterionType");
+            writer.WritePropertyName("criterionType"u8);
             writer.WriteStringValue(CriterionType.ToString());
-            writer.WritePropertyName("name");
+            writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            writer.WritePropertyName("metricName");
+            writer.WritePropertyName("metricName"u8);
             writer.WriteStringValue(MetricName);
             if (Optional.IsDefined(MetricNamespace))
             {
-                writer.WritePropertyName("metricNamespace");
+                writer.WritePropertyName("metricNamespace"u8);
                 writer.WriteStringValue(MetricNamespace);
             }
-            writer.WritePropertyName("timeAggregation");
+            writer.WritePropertyName("timeAggregation"u8);
             writer.WriteStringValue(TimeAggregation.ToString());
             if (Optional.IsCollectionDefined(Dimensions))
             {
-                writer.WritePropertyName("dimensions");
+                writer.WritePropertyName("dimensions"u8);
                 writer.WriteStartArray();
                 foreach (var item in Dimensions)
                 {
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Monitor.Models
             }
             if (Optional.IsDefined(SkipMetricValidation))
             {
-                writer.WritePropertyName("skipMetricValidation");
+                writer.WritePropertyName("skipMetricValidation"u8);
                 writer.WriteBooleanValue(SkipMetricValidation.Value);
             }
             foreach (var item in AdditionalProperties)
@@ -70,32 +70,32 @@ namespace Azure.ResourceManager.Monitor.Models
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("criterionType"))
+                if (property.NameEquals("criterionType"u8))
                 {
                     criterionType = new CriterionType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("metricName"))
+                if (property.NameEquals("metricName"u8))
                 {
                     metricName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("metricNamespace"))
+                if (property.NameEquals("metricNamespace"u8))
                 {
                     metricNamespace = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("timeAggregation"))
+                if (property.NameEquals("timeAggregation"u8))
                 {
                     timeAggregation = new MetricCriteriaTimeAggregationType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("dimensions"))
+                if (property.NameEquals("dimensions"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     dimensions = array;
                     continue;
                 }
-                if (property.NameEquals("skipMetricValidation"))
+                if (property.NameEquals("skipMetricValidation"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

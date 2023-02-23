@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Sql.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("currentValue");
+            writer.WritePropertyName("currentValue"u8);
             writer.WriteStringValue(CurrentValue.ToString());
             writer.WriteEndObject();
         }
@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.Sql.Models
             Optional<DateTimeOffset> lastModified = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("currentValue"))
+                if (property.NameEquals("currentValue"u8))
                 {
                     currentValue = new RecommendedActionCurrentState(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("actionInitiatedBy"))
+                if (property.NameEquals("actionInitiatedBy"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Sql.Models
                     actionInitiatedBy = property.Value.GetString().ToRecommendedActionInitiatedBy();
                     continue;
                 }
-                if (property.NameEquals("lastModified"))
+                if (property.NameEquals("lastModified"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

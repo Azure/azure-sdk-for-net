@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             {
                 if (Value != null)
                 {
-                    writer.WritePropertyName("value");
+                    writer.WritePropertyName("value"u8);
                     writer.WriteStringValue(Value);
                 }
                 else
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                     writer.WriteNull("value");
                 }
             }
-            writer.WritePropertyName("secretType");
+            writer.WritePropertyName("secretType"u8);
             writer.WriteStringValue(SecretType.ToString());
             writer.WriteEndObject();
         }
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             LinkerSecretType secretType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                     value = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("secretType"))
+                if (property.NameEquals("secretType"u8))
                 {
                     secretType = new LinkerSecretType(property.Value.GetString());
                     continue;

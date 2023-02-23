@@ -16,14 +16,14 @@ namespace Azure.Maps.Search.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("geometries");
+            writer.WritePropertyName("geometries"u8);
             writer.WriteStartArray();
             foreach (var item in Geometries)
             {
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            writer.WritePropertyName("type");
+            writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type.ToSerialString());
             writer.WriteEndObject();
         }
@@ -34,7 +34,7 @@ namespace Azure.Maps.Search.Models
             GeoJsonObjectType type = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("geometries"))
+                if (property.NameEquals("geometries"u8))
                 {
                     List<GeoJsonGeometry> array = new List<GeoJsonGeometry>();
                     foreach (var item in property.Value.EnumerateArray())
@@ -44,7 +44,7 @@ namespace Azure.Maps.Search.Models
                     geometries = array;
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = property.Value.GetString().ToGeoJsonObjectType();
                     continue;

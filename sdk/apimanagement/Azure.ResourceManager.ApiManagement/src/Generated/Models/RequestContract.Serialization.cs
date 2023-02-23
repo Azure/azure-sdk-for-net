@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Description))
             {
-                writer.WritePropertyName("description");
+                writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
             if (Optional.IsCollectionDefined(QueryParameters))
             {
-                writer.WritePropertyName("queryParameters");
+                writer.WritePropertyName("queryParameters"u8);
                 writer.WriteStartArray();
                 foreach (var item in QueryParameters)
                 {
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             }
             if (Optional.IsCollectionDefined(Headers))
             {
-                writer.WritePropertyName("headers");
+                writer.WritePropertyName("headers"u8);
                 writer.WriteStartArray();
                 foreach (var item in Headers)
                 {
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             }
             if (Optional.IsCollectionDefined(Representations))
             {
-                writer.WritePropertyName("representations");
+                writer.WritePropertyName("representations"u8);
                 writer.WriteStartArray();
                 foreach (var item in Representations)
                 {
@@ -62,12 +62,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
             Optional<IList<RepresentationContract>> representations = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("description"))
+                if (property.NameEquals("description"u8))
                 {
                     description = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("queryParameters"))
+                if (property.NameEquals("queryParameters"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     queryParameters = array;
                     continue;
                 }
-                if (property.NameEquals("headers"))
+                if (property.NameEquals("headers"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     headers = array;
                     continue;
                 }
-                if (property.NameEquals("representations"))
+                if (property.NameEquals("representations"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

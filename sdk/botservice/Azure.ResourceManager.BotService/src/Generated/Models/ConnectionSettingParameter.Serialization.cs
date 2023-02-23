@@ -17,14 +17,14 @@ namespace Azure.ResourceManager.BotService.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Key))
             {
-                writer.WritePropertyName("key");
+                writer.WritePropertyName("key"u8);
                 writer.WriteStringValue(Key);
             }
             if (Optional.IsDefined(Value))
             {
                 if (Value != null)
                 {
-                    writer.WritePropertyName("value");
+                    writer.WritePropertyName("value"u8);
                     writer.WriteStringValue(Value);
                 }
                 else
@@ -41,12 +41,12 @@ namespace Azure.ResourceManager.BotService.Models
             Optional<string> value = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("key"))
+                if (property.NameEquals("key"u8))
                 {
                     key = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(InfraVnetProfile))
             {
-                writer.WritePropertyName("infraVnetProfile");
+                writer.WritePropertyName("infraVnetProfile"u8);
                 writer.WriteObjectValue(InfraVnetProfile);
             }
             if (Optional.IsCollectionDefined(VipPool))
             {
-                writer.WritePropertyName("vipPool");
+                writer.WritePropertyName("vipPool"u8);
                 writer.WriteStartArray();
                 foreach (var item in VipPool)
                 {
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             }
             if (Optional.IsCollectionDefined(VmipPool))
             {
-                writer.WritePropertyName("vmipPool");
+                writer.WritePropertyName("vmipPool"u8);
                 writer.WriteStartArray();
                 foreach (var item in VmipPool)
                 {
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             Optional<VirtualNetworksPropertiesStatus> status = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("infraVnetProfile"))
+                if (property.NameEquals("infraVnetProfile"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                     infraVnetProfile = VirtualNetworksPropertiesInfraVnetProfile.DeserializeVirtualNetworksPropertiesInfraVnetProfile(property.Value);
                     continue;
                 }
-                if (property.NameEquals("vipPool"))
+                if (property.NameEquals("vipPool"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                     vipPool = array;
                     continue;
                 }
-                if (property.NameEquals("vmipPool"))
+                if (property.NameEquals("vmipPool"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                     vmipPool = array;
                     continue;
                 }
-                if (property.NameEquals("dhcpServers"))
+                if (property.NameEquals("dhcpServers"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                     dhcpServers = array;
                     continue;
                 }
-                if (property.NameEquals("dnsServers"))
+                if (property.NameEquals("dnsServers"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -128,22 +128,22 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                     dnsServers = array;
                     continue;
                 }
-                if (property.NameEquals("gateway"))
+                if (property.NameEquals("gateway"u8))
                 {
                     gateway = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("ipAddressPrefix"))
+                if (property.NameEquals("ipAddressPrefix"u8))
                 {
                     ipAddressPrefix = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("vlanID"))
+                if (property.NameEquals("vlanID"u8))
                 {
                     vlanId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("provisioningState"))
+                if (property.NameEquals("provisioningState"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                     provisioningState = new ProvisioningState(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("status"))
+                if (property.NameEquals("status"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

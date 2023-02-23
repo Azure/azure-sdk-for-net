@@ -120,11 +120,11 @@ namespace Azure.ResourceManager.LoadTesting.Samples
 },
                 },
                 Description = "This is new load test resource",
-                Encryption = new CustomerManagedKeyEncryptionProperties()
+                Encryption = new LoadTestingCmkEncryptionProperties()
                 {
-                    Identity = new CustomerManagedKeyIdentity()
+                    Identity = new LoadTestingCmkIdentity()
                     {
-                        IdentityType = CustomerManagedKeyIdentityType.SystemAssigned,
+                        IdentityType = LoadTestingCmkIdentityType.SystemAssigned,
                         ResourceId = null,
                     },
                     KeyUri = new Uri("https://dummy.vault.azure.net/keys/dummykey1"),
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.LoadTesting.Samples
             LoadTestingResource loadTestingResource = client.GetLoadTestingResource(loadTestingResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (OutboundEnvironmentEndpoint item in loadTestingResource.GetOutboundNetworkDependenciesEndpointsAsync())
+            await foreach (LoadTestingOutboundEnvironmentEndpoint item in loadTestingResource.GetOutboundNetworkDependenciesEndpointsAsync())
             {
                 Console.WriteLine($"Succeeded: {item}");
             }

@@ -17,7 +17,7 @@ namespace Azure.Containers.ContainerRegistry
             Optional<string> accessToken = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("access_token"))
+                if (property.NameEquals("access_token"u8))
                 {
                     accessToken = property.Value.GetString();
                     continue;

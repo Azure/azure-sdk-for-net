@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Compute.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(InstanceIds))
             {
-                writer.WritePropertyName("instanceIds");
+                writer.WritePropertyName("instanceIds"u8);
                 writer.WriteStartArray();
                 foreach (var item in InstanceIds)
                 {
@@ -27,8 +27,18 @@ namespace Azure.ResourceManager.Compute.Models
             }
             if (Optional.IsDefined(TempDisk))
             {
-                writer.WritePropertyName("tempDisk");
+                writer.WritePropertyName("tempDisk"u8);
                 writer.WriteBooleanValue(TempDisk.Value);
+            }
+            if (Optional.IsDefined(ExactVersion))
+            {
+                writer.WritePropertyName("exactVersion"u8);
+                writer.WriteStringValue(ExactVersion);
+            }
+            if (Optional.IsDefined(OSProfile))
+            {
+                writer.WritePropertyName("osProfile"u8);
+                writer.WriteObjectValue(OSProfile);
             }
             writer.WriteEndObject();
         }

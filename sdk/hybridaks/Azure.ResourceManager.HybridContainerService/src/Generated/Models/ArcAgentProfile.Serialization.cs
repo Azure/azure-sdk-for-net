@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(AgentVersion))
             {
-                writer.WritePropertyName("agentVersion");
+                writer.WritePropertyName("agentVersion"u8);
                 writer.WriteStringValue(AgentVersion);
             }
             if (Optional.IsDefined(AgentAutoUpgrade))
             {
-                writer.WritePropertyName("agentAutoUpgrade");
+                writer.WritePropertyName("agentAutoUpgrade"u8);
                 writer.WriteStringValue(AgentAutoUpgrade.Value.ToString());
             }
             writer.WriteEndObject();
@@ -34,12 +34,12 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             Optional<AutoUpgradeOption> agentAutoUpgrade = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("agentVersion"))
+                if (property.NameEquals("agentVersion"u8))
                 {
                     agentVersion = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("agentAutoUpgrade"))
+                if (property.NameEquals("agentAutoUpgrade"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

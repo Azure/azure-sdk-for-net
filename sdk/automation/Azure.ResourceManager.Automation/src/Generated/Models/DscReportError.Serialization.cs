@@ -22,32 +22,32 @@ namespace Azure.ResourceManager.Automation.Models
             Optional<string> errorDetails = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("errorSource"))
+                if (property.NameEquals("errorSource"u8))
                 {
                     errorSource = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("resourceId"))
+                if (property.NameEquals("resourceId"u8))
                 {
                     resourceId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("errorCode"))
+                if (property.NameEquals("errorCode"u8))
                 {
                     errorCode = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("errorMessage"))
+                if (property.NameEquals("errorMessage"u8))
                 {
                     errorMessage = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("locale"))
+                if (property.NameEquals("locale"u8))
                 {
                     locale = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("errorDetails"))
+                if (property.NameEquals("errorDetails"u8))
                 {
                     errorDetails = property.Value.GetString();
                     continue;

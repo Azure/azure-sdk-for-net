@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Hci
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Tags))
             {
-                writer.WritePropertyName("tags");
+                writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
                 foreach (var item in Tags)
                 {
@@ -30,33 +30,33 @@ namespace Azure.ResourceManager.Hci
                 }
                 writer.WriteEndObject();
             }
-            writer.WritePropertyName("location");
+            writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(CloudManagementEndpoint))
             {
-                writer.WritePropertyName("cloudManagementEndpoint");
+                writer.WritePropertyName("cloudManagementEndpoint"u8);
                 writer.WriteStringValue(CloudManagementEndpoint);
             }
             if (Optional.IsDefined(AadClientId))
             {
-                writer.WritePropertyName("aadClientId");
+                writer.WritePropertyName("aadClientId"u8);
                 writer.WriteStringValue(AadClientId.Value);
             }
             if (Optional.IsDefined(AadTenantId))
             {
-                writer.WritePropertyName("aadTenantId");
+                writer.WritePropertyName("aadTenantId"u8);
                 writer.WriteStringValue(AadTenantId.Value);
             }
             if (Optional.IsDefined(AadApplicationObjectId))
             {
-                writer.WritePropertyName("aadApplicationObjectId");
+                writer.WritePropertyName("aadApplicationObjectId"u8);
                 writer.WriteStringValue(AadApplicationObjectId.Value);
             }
             if (Optional.IsDefined(AadServicePrincipalObjectId))
             {
-                writer.WritePropertyName("aadServicePrincipalObjectId");
+                writer.WritePropertyName("aadServicePrincipalObjectId"u8);
                 writer.WriteStringValue(AadServicePrincipalObjectId.Value);
             }
             if (Optional.IsDefined(SoftwareAssuranceProperties))
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Hci
             }
             if (Optional.IsDefined(DesiredProperties))
             {
-                writer.WritePropertyName("desiredProperties");
+                writer.WritePropertyName("desiredProperties"u8);
                 writer.WriteObjectValue(DesiredProperties);
             }
             writer.WriteEndObject();
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Hci
             Optional<IDictionary<string, UserAssignedIdentity>> userAssignedIdentities = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("tags"))
+                if (property.NameEquals("tags"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -139,27 +139,27 @@ namespace Azure.ResourceManager.Hci
                     tags = dictionary;
                     continue;
                 }
-                if (property.NameEquals("location"))
+                if (property.NameEquals("location"u8))
                 {
                     location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.Hci
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.Hci
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("provisioningState"))
+                        if (property0.NameEquals("provisioningState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.Hci
                             provisioningState = new HciProvisioningState(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("status"))
+                        if (property0.NameEquals("status"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.Hci
                             status = new HciClusterStatus(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("cloudId"))
+                        if (property0.NameEquals("cloudId"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -208,12 +208,12 @@ namespace Azure.ResourceManager.Hci
                             cloudId = property0.Value.GetGuid();
                             continue;
                         }
-                        if (property0.NameEquals("cloudManagementEndpoint"))
+                        if (property0.NameEquals("cloudManagementEndpoint"u8))
                         {
                             cloudManagementEndpoint = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("aadClientId"))
+                        if (property0.NameEquals("aadClientId"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.Hci
                             aadClientId = property0.Value.GetGuid();
                             continue;
                         }
-                        if (property0.NameEquals("aadTenantId"))
+                        if (property0.NameEquals("aadTenantId"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.Hci
                             aadTenantId = property0.Value.GetGuid();
                             continue;
                         }
-                        if (property0.NameEquals("aadApplicationObjectId"))
+                        if (property0.NameEquals("aadApplicationObjectId"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -243,7 +243,7 @@ namespace Azure.ResourceManager.Hci
                             aadApplicationObjectId = property0.Value.GetGuid();
                             continue;
                         }
-                        if (property0.NameEquals("aadServicePrincipalObjectId"))
+                        if (property0.NameEquals("aadServicePrincipalObjectId"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -273,7 +273,7 @@ namespace Azure.ResourceManager.Hci
                             desiredProperties = HciClusterDesiredProperties.DeserializeHciClusterDesiredProperties(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("reportedProperties"))
+                        if (property0.NameEquals("reportedProperties"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -283,7 +283,7 @@ namespace Azure.ResourceManager.Hci
                             reportedProperties = HciClusterReportedProperties.DeserializeHciClusterReportedProperties(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("trialDaysRemaining"))
+                        if (property0.NameEquals("trialDaysRemaining"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -293,12 +293,12 @@ namespace Azure.ResourceManager.Hci
                             trialDaysRemaining = property0.Value.GetSingle();
                             continue;
                         }
-                        if (property0.NameEquals("billingModel"))
+                        if (property0.NameEquals("billingModel"u8))
                         {
                             billingModel = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("registrationTimestamp"))
+                        if (property0.NameEquals("registrationTimestamp"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -308,7 +308,7 @@ namespace Azure.ResourceManager.Hci
                             registrationTimestamp = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("lastSyncTimestamp"))
+                        if (property0.NameEquals("lastSyncTimestamp"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -318,7 +318,7 @@ namespace Azure.ResourceManager.Hci
                             lastSyncTimestamp = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("lastBillingTimestamp"))
+                        if (property0.NameEquals("lastBillingTimestamp"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -328,7 +328,7 @@ namespace Azure.ResourceManager.Hci
                             lastBillingTimestamp = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("serviceEndpoint"))
+                        if (property0.NameEquals("serviceEndpoint"u8))
                         {
                             serviceEndpoint = property0.Value.GetString();
                             continue;
