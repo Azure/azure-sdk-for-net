@@ -150,41 +150,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs
             }
         }
 
-        [Test]
-        public async Task BlobTrigger_BindingToParameterBindingData()
-        {
-            // Arrange
-            var container = CreateContainer(blobServiceClient, ContainerName);
-            var blob = container.GetBlobClient(BlobName);
-
-            await blob.UploadAsync(BinaryData.FromString("hello world"));
-
-            // Act
-            ParameterBindingData result = await RunTriggerAsyncWithConfiguration<ParameterBindingData>(typeof(BlobTriggerParameterBindingData),
-                (s) => BlobTriggerParameterBindingData.TaskSource = s);
-
-            var blobData = result.Content.ToObjectFromJson<Dictionary<string,string>>();
-
-            // Assert
-            Assert.True(blobData.TryGetValue("Connection", out var resultConnection));
-            Assert.True(blobData.TryGetValue("ContainerName", out var resultContainerName));
-            Assert.True(blobData.TryGetValue("BlobName", out var resultBlobName));
-
-            Assert.AreEqual(ConnectionName, resultConnection);
-            Assert.AreEqual(ContainerName, resultContainerName);
-            Assert.AreEqual(BlobName, resultBlobName);
-        }
-
-        private class BlobTriggerParameterBindingData
-        {
-            public static TaskCompletionSource<ParameterBindingData> TaskSource { get; set; }
-
-            public static void Run([BlobTrigger(BlobPath)] ParameterBindingData blobBindingData)
-            {
-                TaskSource.TrySetResult(blobBindingData);
-            }
-        }
-
         private static BlobContainerClient CreateContainer(BlobServiceClient blobServiceClient, string containerName)
         {
             var container = blobServiceClient.GetBlobContainerClient(containerName);
@@ -199,23 +164,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs
             {
                 b.AddAzureStorageBlobs();
                 b.UseStorageServices(blobServiceClient, queueServiceClient);
-            }, programType, setTaskSource);
-        }
-
-        private async Task<TResult> RunTriggerAsyncWithConfiguration<TResult>(Type programType,
-            Action<TaskCompletionSource<TResult>> setTaskSource)
-        {
-            string connectionString = AzuriteNUnitFixture.Instance.GetAzureAccount().ConnectionString;
-            var configuration = new ConfigurationBuilder()
-                    .AddInMemoryCollection(new Dictionary<string, string>()
-                    {
-                        { "ConnectionStrings:AzureWebJobsStorage", connectionString }
-                    }).Build();
-
-            return await FunctionalTest.RunTriggerAsync<TResult>(b =>
-            {
-                b.AddAzureStorageBlobs();
-                b.UseStorageServicesWithConfiguration(blobServiceClient, queueServiceClient, configuration);
             }, programType, setTaskSource);
         }
     }

@@ -17,11 +17,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs
             _blobServiceClient = blobServiceClient;
         }
 
-        public FakeBlobServiceClientProvider(BlobServiceClient blobServiceClient, IConfiguration configuration)
-            : base(configuration, null, null, null) {
-            _blobServiceClient = blobServiceClient;
-        }
-
         public override BlobServiceClient Get(string name)
         {
             return _blobServiceClient;

@@ -16,12 +16,5 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs
             builder.Services.AddSingleton<QueueServiceClientProvider>(new FakeQueueServiceClientProvider(queueServiceClient));
             return builder;
         }
-
-        public static IWebJobsBuilder UseStorageServicesWithConfiguration(this IWebJobsBuilder builder, BlobServiceClient blobServiceClient, QueueServiceClient queueServiceClient, IConfiguration configuration)
-        {
-            builder.Services.AddSingleton<BlobServiceClientProvider>(new FakeBlobServiceClientProvider(blobServiceClient, configuration));
-            builder.Services.AddSingleton<QueueServiceClientProvider>(new FakeQueueServiceClientProvider(queueServiceClient));
-            return builder;
-        }
     }
 }
