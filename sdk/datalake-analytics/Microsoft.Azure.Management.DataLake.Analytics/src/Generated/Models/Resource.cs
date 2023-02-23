@@ -54,7 +54,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets the resource identifer.
+        /// Gets the resource identifier.
         /// </summary>
         [JsonProperty(PropertyName = "id")]
         public string Id { get; private set; }
