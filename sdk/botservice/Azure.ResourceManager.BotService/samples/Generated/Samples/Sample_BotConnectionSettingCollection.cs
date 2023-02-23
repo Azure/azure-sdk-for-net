@@ -16,14 +16,14 @@ using Azure.ResourceManager.BotService.Models;
 
 namespace Azure.ResourceManager.BotService.Samples
 {
-    public partial class Sample_ConnectionSettingCollection
+    public partial class Sample_BotConnectionSettingCollection
     {
         // Create Connection Setting
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_CreateConnectionSetting()
         {
-            // Generated from example definition: specification/botservice/resource-manager/Microsoft.BotService/preview/2022-06-15-preview/examples/PutConnection.json
+            // Generated from example definition: specification/botservice/resource-manager/Microsoft.BotService/stable/2022-09-15/examples/PutConnection.json
             // this example is just showing the usage of "BotConnection_Create" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -39,14 +39,14 @@ namespace Azure.ResourceManager.BotService.Samples
             ResourceIdentifier botResourceId = BotResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, resourceName);
             BotResource bot = client.GetBotResource(botResourceId);
 
-            // get the collection of this ConnectionSettingResource
-            ConnectionSettingCollection collection = bot.GetConnectionSettings();
+            // get the collection of this BotConnectionSettingResource
+            BotConnectionSettingCollection collection = bot.GetBotConnectionSettings();
 
             // invoke the operation
             string connectionName = "sampleConnection";
-            ConnectionSettingData data = new ConnectionSettingData(new AzureLocation("West US"))
+            BotConnectionSettingData data = new BotConnectionSettingData(new AzureLocation("West US"))
             {
-                Properties = new ConnectionSettingProperties()
+                Properties = new BotConnectionSettingProperties()
                 {
                     ClientId = "sampleclientid",
                     ClientSecret = "samplesecret",
@@ -54,11 +54,11 @@ namespace Azure.ResourceManager.BotService.Samples
                     ServiceProviderId = "serviceproviderid",
                     Parameters =
 {
-new ConnectionSettingParameter()
+new BotConnectionSettingParameter()
 {
 Key = "key1",
 Value = "value1",
-},new ConnectionSettingParameter()
+},new BotConnectionSettingParameter()
 {
 Key = "key2",
 Value = "value2",
@@ -67,12 +67,12 @@ Value = "value2",
                 },
                 ETag = new ETag("etag1"),
             };
-            ArmOperation<ConnectionSettingResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, connectionName, data);
-            ConnectionSettingResource result = lro.Value;
+            ArmOperation<BotConnectionSettingResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, connectionName, data);
+            BotConnectionSettingResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            ConnectionSettingData resourceData = result.Data;
+            BotConnectionSettingData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -82,7 +82,7 @@ Value = "value2",
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_GetConnectionSetting()
         {
-            // Generated from example definition: specification/botservice/resource-manager/Microsoft.BotService/preview/2022-06-15-preview/examples/GetConnection.json
+            // Generated from example definition: specification/botservice/resource-manager/Microsoft.BotService/stable/2022-09-15/examples/GetConnection.json
             // this example is just showing the usage of "BotConnection_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -98,16 +98,16 @@ Value = "value2",
             ResourceIdentifier botResourceId = BotResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, resourceName);
             BotResource bot = client.GetBotResource(botResourceId);
 
-            // get the collection of this ConnectionSettingResource
-            ConnectionSettingCollection collection = bot.GetConnectionSettings();
+            // get the collection of this BotConnectionSettingResource
+            BotConnectionSettingCollection collection = bot.GetBotConnectionSettings();
 
             // invoke the operation
             string connectionName = "sampleConnection";
-            ConnectionSettingResource result = await collection.GetAsync(connectionName);
+            BotConnectionSettingResource result = await collection.GetAsync(connectionName);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            ConnectionSettingData resourceData = result.Data;
+            BotConnectionSettingData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -117,7 +117,7 @@ Value = "value2",
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Exists_GetConnectionSetting()
         {
-            // Generated from example definition: specification/botservice/resource-manager/Microsoft.BotService/preview/2022-06-15-preview/examples/GetConnection.json
+            // Generated from example definition: specification/botservice/resource-manager/Microsoft.BotService/stable/2022-09-15/examples/GetConnection.json
             // this example is just showing the usage of "BotConnection_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -133,8 +133,8 @@ Value = "value2",
             ResourceIdentifier botResourceId = BotResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, resourceName);
             BotResource bot = client.GetBotResource(botResourceId);
 
-            // get the collection of this ConnectionSettingResource
-            ConnectionSettingCollection collection = bot.GetConnectionSettings();
+            // get the collection of this BotConnectionSettingResource
+            BotConnectionSettingCollection collection = bot.GetBotConnectionSettings();
 
             // invoke the operation
             string connectionName = "sampleConnection";
@@ -148,7 +148,7 @@ Value = "value2",
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetAll_ListConnectionSettings()
         {
-            // Generated from example definition: specification/botservice/resource-manager/Microsoft.BotService/preview/2022-06-15-preview/examples/ListConnectionsByBotService.json
+            // Generated from example definition: specification/botservice/resource-manager/Microsoft.BotService/stable/2022-09-15/examples/ListConnectionsByBotService.json
             // this example is just showing the usage of "BotConnection_ListByBotService" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -164,15 +164,15 @@ Value = "value2",
             ResourceIdentifier botResourceId = BotResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, resourceName);
             BotResource bot = client.GetBotResource(botResourceId);
 
-            // get the collection of this ConnectionSettingResource
-            ConnectionSettingCollection collection = bot.GetConnectionSettings();
+            // get the collection of this BotConnectionSettingResource
+            BotConnectionSettingCollection collection = bot.GetBotConnectionSettings();
 
             // invoke the operation and iterate over the result
-            await foreach (ConnectionSettingResource item in collection.GetAllAsync())
+            await foreach (BotConnectionSettingResource item in collection.GetAllAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                ConnectionSettingData resourceData = item.Data;
+                BotConnectionSettingData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
