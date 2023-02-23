@@ -12,7 +12,7 @@ using NUnit.Framework;
 
 namespace Azure.Compute.Tests
 {
-    public class ClientTest: RecordedTestBase<BatchClientTestEnvironment>
+    public class ClientTest: RecordedTestBase<ClientTestEnvironment>
     {
         public ClientTest(bool isAsync) : base(isAsync)
         {

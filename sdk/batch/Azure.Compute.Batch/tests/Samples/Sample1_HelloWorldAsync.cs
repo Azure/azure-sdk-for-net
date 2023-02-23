@@ -11,7 +11,7 @@ using NUnit.Framework;
 
 namespace Azure.Compute.Tests.Samples
 {
-    public partial class BatchSamples: SamplesBase<BatchClientTestEnvironment>
+    public partial class BatchSamples: SamplesBase<ClientTestEnvironment>
     {
         /* please refer to https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/template/Azure.Template/tests/Samples/Sample1.HelloWorldAsync.cs to write samples. */
         [Test]
