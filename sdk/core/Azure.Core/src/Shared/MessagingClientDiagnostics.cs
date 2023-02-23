@@ -9,6 +9,10 @@ using Azure.Core.Pipeline;
 
 namespace Azure.Core.Shared
 {
+    /// <summary>
+    /// Client Diagnostics support for messaging clients. Currently, this is only used for AMQP clients.
+    /// HTTP libraries should use <see cref="ClientDiagnostics"/> instead.
+    /// </summary>
     internal class MessagingClientDiagnostics
     {
         private readonly string _fullyQualifiedNamespace;
@@ -65,14 +69,13 @@ namespace Azure.Core.Shared
         }
 
         /// <summary>
-        ///   Extracts a diagnostic id from a message's properties.
+        ///   Attempts to extract a diagnostic id from a message's properties.
         /// </summary>
         ///
         /// <param name="properties">The properties holding the diagnostic id.</param>
         /// <param name="id">The value of the diagnostics identifier assigned to the event. </param>
         ///
-        /// <returns><c>true</c> if the event was contained the diagnostic id; otherwise, <c>false</c>.</returns>
-        ///
+        /// <returns><c>true</c> if the message properties contained the diagnostic id; otherwise, <c>false</c>.</returns>
         public static bool TryExtractDiagnosticId(IReadOnlyDictionary<string, object> properties, out string? id)
         {
             id = null;
@@ -87,14 +90,13 @@ namespace Azure.Core.Shared
         }
 
         /// <summary>
-        ///   Extracts a diagnostic id from a message's properties.
+        ///   Attempts to extract a diagnostic id from a message's properties.
         /// </summary>
         ///
         /// <param name="properties">The properties holding the diagnostic id.</param>
         /// <param name="id">The value of the diagnostics identifier assigned to the event. </param>
         ///
-        /// <returns><c>true</c> if the event was contained the diagnostic id; otherwise, <c>false</c>.</returns>
-        ///
+        /// <returns><c>true</c> if the message properties contained the diagnostic id; otherwise, <c>false</c>.</returns>
         public static bool TryExtractDiagnosticId(IDictionary<string, object> properties, out string? id)
         {
             id = null;
@@ -108,6 +110,11 @@ namespace Azure.Core.Shared
             return false;
         }
 
+        /// <summary>
+        /// Instrument the message properties for tracing.
+        /// </summary>
+        /// <param name="properties">The dictionary of application message properties.</param>
+        /// <param name="activityName">The activity name to use for the diagnostic scope.</param>
         public void InstrumentMessage(IDictionary<string, object> properties, string activityName)
         {
             if (!properties.ContainsKey(DiagnosticIdAttribute))

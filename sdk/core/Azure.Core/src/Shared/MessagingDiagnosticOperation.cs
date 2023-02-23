@@ -7,11 +7,16 @@ using System;
 
 namespace Azure.Core.Shared
 {
+    /// <summary>
+    /// Represents the common set of operations for messaging diagnostics, as per the Open Telemetry semantic conventions.
+    /// This is defined as a partial struct so that it can be extended by other libraries.
+    /// <seealso href="https://github.com/open-telemetry/opentelemetry-specification/blob/main/specification/trace/semantic_conventions/messaging.md#operation-names"/>
+    /// </summary>
     internal readonly partial struct MessagingDiagnosticOperation : IEquatable<MessagingDiagnosticOperation>
     {
         private readonly string _operation;
 
-        public MessagingDiagnosticOperation(string operation)
+        private MessagingDiagnosticOperation(string operation)
         {
             Argument.AssertNotNull(operation, nameof(operation));
             _operation = operation;
