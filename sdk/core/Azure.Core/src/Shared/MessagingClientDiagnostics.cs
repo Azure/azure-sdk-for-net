@@ -39,6 +39,10 @@ namespace Azure.Core.Shared
 
         public MessagingClientDiagnostics(string clientNamespace, string? resourceProviderNamespace, string messagingSystem, string fullyQualifiedNamespace, string entityPath)
         {
+            Argument.AssertNotNull(messagingSystem, nameof(messagingSystem));
+            Argument.AssertNotNull(fullyQualifiedNamespace, nameof(fullyQualifiedNamespace));
+            Argument.AssertNotNull(entityPath, nameof(entityPath));
+
             _messagingSystem = messagingSystem;
             _fullyQualifiedNamespace = fullyQualifiedNamespace;
             _entityPath = entityPath;
@@ -111,7 +115,8 @@ namespace Azure.Core.Shared
         }
 
         /// <summary>
-        /// Instrument the message properties for tracing.
+        /// Instrument the message properties for tracing. If tracing is enabled, a diagnostic id will be added to the message properties,
+        /// which alters the message size.
         /// </summary>
         /// <param name="properties">The dictionary of application message properties.</param>
         /// <param name="activityName">The activity name to use for the diagnostic scope.</param>
