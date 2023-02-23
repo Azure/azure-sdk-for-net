@@ -6,7 +6,7 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 
-namespace Azure.Analytics.Purview.Share.Tests.Samples
+namespace Azure.Analytics.Purview.Sharing.Tests.Samples
 {
     public class Sample4_ListSentShareInvitations : SentSharesClientTestBase
     {

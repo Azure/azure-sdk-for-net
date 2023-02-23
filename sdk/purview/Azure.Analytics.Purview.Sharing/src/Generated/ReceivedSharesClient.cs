@@ -11,7 +11,7 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
-namespace Azure.Analytics.Purview
+namespace Azure.Analytics.Purview.Sharing
 {
     // Data plane generated client.
     /// <summary> The ReceivedShares service client. </summary>

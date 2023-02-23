@@ -6,13 +6,17 @@ using Azure.Core.Pipeline;
 using Azure.Core.TestFramework;
 using Azure.Analytics.Purview.Tests;
 
-namespace Azure.Analytics.Purview.Share.Tests
+namespace Azure.Analytics.Purview.Sharing.Tests
 {
     public class SentSharesClientTestBase : RecordedTestBase<PurviewShareTestEnvironment>
     {
         public SentSharesClientTestBase(bool isAsync, RecordedTestMode? mode = default) : base(isAsync, mode)
         {
             this.AddPurviewSanitizers();
+            this.BodyKeySanitizers.Add(new Core.TestFramework.Models.BodyKeySanitizer("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/testResourceGroup/providers/Microsoft.Storage/storageAccounts/providerTestStorageAccount") { JsonPath = "properties.artifact.storeReference.referenceName" });
+            this.UriRegexSanitizers.Add(new Core.TestFramework.Models.UriRegexSanitizer(@"[A-Za-z0-9-\-]*.purview.azure.com", "myaccountname.purview.azure.com"));
+            this.SanitizedHeaders.Add("Operation-Location");
+            this.SanitizedHeaders.Add("Operation-Id");
         }
 
         public SentSharesClient GetSentSharesClient()

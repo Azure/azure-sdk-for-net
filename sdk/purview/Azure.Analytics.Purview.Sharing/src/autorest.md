@@ -7,8 +7,8 @@ Run `dotnet build /t:GenerateCode` to generate code.
 
 ``` yaml
 input-file: 
-- C:\Users\faisalaltell\source\repos\Share\src\Tools\SwaggerValidator\data-plane\Azure.Analytics.Purview.Sharing\preview\2023-02-15-preview\sharing.json
-namespace: Azure.Analytics.Purview
+- https://github.com/Azure/azure-rest-api-specs/blob/main/specification/purview/data-plane/Azure.Analytics.Purview.Share/preview/2023-02-15-preview/share.json
+namespace: Azure.Analytics.Purview.Sharing
 
  
  
