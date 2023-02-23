@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.Batch.Models
 
         public static BatchInboundEndpointProtocol ToBatchInboundEndpointProtocol(this string value)
         {
-            if (string.Equals(value, "TCP", StringComparison.InvariantCultureIgnoreCase)) return BatchInboundEndpointProtocol.Tcp;
-            if (string.Equals(value, "UDP", StringComparison.InvariantCultureIgnoreCase)) return BatchInboundEndpointProtocol.Udp;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "TCP")) return BatchInboundEndpointProtocol.Tcp;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "UDP")) return BatchInboundEndpointProtocol.Udp;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown BatchInboundEndpointProtocol value.");
         }
     }
