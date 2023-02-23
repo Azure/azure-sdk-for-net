@@ -564,8 +564,7 @@ Schema for <c>ReceivedShareListValue</c>:
     <member name="CreateOrReplaceReceivedShareAsync(WaitUntil,String,RequestContent,RequestContext)">
 <example>
 This sample shows how to call CreateOrReplaceReceivedShareAsync with required parameters and request content, and how to parse the result.
-<code>
-  <![CDATA[
+<code><![CDATA[
 var credential = new DefaultAzureCredential();
 var client = new ReceivedSharesClient("<https://my-service.azure.com>", credential);
 
