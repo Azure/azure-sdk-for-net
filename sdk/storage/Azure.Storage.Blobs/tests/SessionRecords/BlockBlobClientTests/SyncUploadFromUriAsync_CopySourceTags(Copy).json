@@ -79,7 +79,7 @@
         ],
         "x-ms-blob-type": "BlockBlob",
         "x-ms-client-request-id": "f5cab734-4bf0-793b-f0f0-2d91e7208771",
-        "x-ms-copy-source": "https://0c2xscnapby3pev24a.blob.preprod.core.windows.net/test-container-bd4cf9c4-9fa8-7920-f173-b264be8e12ef/test-blob-cecddf30-d574-2fd7-4a5c-620f75d1c8b2?sv=2022-11-02\u0026se=2022-01-11T22%3A07%3A52Z\u0026sr=b\u0026sp=racwdxyltmei\u0026sig=Sanitized",
+        "x-ms-copy-source": "https://0c2xscnapby3pev24a.blob.preprod.core.windows.net/test-container-bd4cf9c4-9fa8-7920-f173-b264be8e12ef/test-blob-cecddf30-d574-2fd7-4a5c-620f75d1c8b2?sv=2023-01-03\u0026se=2022-01-11T22%3A07%3A52Z\u0026sr=b\u0026sp=racwdxyltmei\u0026sig=Sanitized",
         "x-ms-copy-source-tag-option": "COPY",
         "x-ms-date": "Mon, 10 Jan 2022 22:07:52 GMT",
         "x-ms-return-client-request-id": "true",

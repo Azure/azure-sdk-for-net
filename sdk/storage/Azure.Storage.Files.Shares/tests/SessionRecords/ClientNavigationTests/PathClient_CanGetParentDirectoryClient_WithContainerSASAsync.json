@@ -28,7 +28,7 @@
       "ResponseBody": []
     },
     {
-      "RequestUri": "http://seanmcccanary3.file.core.windows.net/test-share-fd537983-9a84-7cdf-51d7-02be9089029d/test-directory-1eea76eb-5902-ec37-5f54-1bb151b1b425?sv=2022-11-02\u0026st=2022-02-03T20%3A44%3A49Z\u0026se=2022-02-03T22%3A44%3A49Z\u0026sr=s\u0026sp=rcwdl\u0026sig=Sanitized\u0026restype=directory",
+      "RequestUri": "http://seanmcccanary3.file.core.windows.net/test-share-fd537983-9a84-7cdf-51d7-02be9089029d/test-directory-1eea76eb-5902-ec37-5f54-1bb151b1b425?sv=2023-01-03\u0026st=2022-02-03T20%3A44%3A49Z\u0026se=2022-02-03T22%3A44%3A49Z\u0026sr=s\u0026sp=rcwdl\u0026sig=Sanitized\u0026restype=directory",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/xml",
@@ -65,7 +65,7 @@
       "ResponseBody": []
     },
     {
-      "RequestUri": "http://seanmcccanary3.file.core.windows.net/test-share-fd537983-9a84-7cdf-51d7-02be9089029d/test-directory-1eea76eb-5902-ec37-5f54-1bb151b1b425/test-file-4e362bc0-79d1-25c4-4ba4-6013f75eff5d?sv=2022-11-02\u0026st=2022-02-03T20%3A44%3A49Z\u0026se=2022-02-03T22%3A44%3A49Z\u0026sr=s\u0026sp=rcwdl\u0026sig=Sanitized",
+      "RequestUri": "http://seanmcccanary3.file.core.windows.net/test-share-fd537983-9a84-7cdf-51d7-02be9089029d/test-directory-1eea76eb-5902-ec37-5f54-1bb151b1b425/test-file-4e362bc0-79d1-25c4-4ba4-6013f75eff5d?sv=2023-01-03\u0026st=2022-02-03T20%3A44%3A49Z\u0026se=2022-02-03T22%3A44%3A49Z\u0026sr=s\u0026sp=rcwdl\u0026sig=Sanitized",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/xml",
@@ -104,7 +104,7 @@
       "ResponseBody": []
     },
     {
-      "RequestUri": "http://seanmcccanary3.file.core.windows.net/test-share-fd537983-9a84-7cdf-51d7-02be9089029d/test-directory-1eea76eb-5902-ec37-5f54-1bb151b1b425?sv=2022-11-02\u0026st=2022-02-03T20%3A44%3A49Z\u0026se=2022-02-03T22%3A44%3A49Z\u0026sr=s\u0026sp=rcwdl\u0026sig=Sanitized\u0026restype=directory\u0026comp=list",
+      "RequestUri": "http://seanmcccanary3.file.core.windows.net/test-share-fd537983-9a84-7cdf-51d7-02be9089029d/test-directory-1eea76eb-5902-ec37-5f54-1bb151b1b425?sv=2023-01-03\u0026st=2022-02-03T20%3A44%3A49Z\u0026se=2022-02-03T22%3A44%3A49Z\u0026sr=s\u0026sp=rcwdl\u0026sig=Sanitized\u0026restype=directory\u0026comp=list",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/xml",

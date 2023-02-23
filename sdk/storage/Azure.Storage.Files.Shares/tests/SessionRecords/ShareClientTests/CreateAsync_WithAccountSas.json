@@ -1,7 +1,7 @@
 ﻿{
   "Entries": [
     {
-      "RequestUri": "https://seanmcccanary.file.core.windows.net/test-share-ae42f204-8291-6122-0ae0-3f9ff58ff80b?sv=2022-11-02&ss=f&srt=c&st=2020-06-01T19%3A21%3A30Z&se=2020-06-01T21%3A21%3A30Z&sp=dc&sig=Sanitized&restype=share",
+      "RequestUri": "https://seanmcccanary.file.core.windows.net/test-share-ae42f204-8291-6122-0ae0-3f9ff58ff80b?sv=2023-01-03&ss=f&srt=c&st=2020-06-01T19%3A21%3A30Z&se=2020-06-01T21%3A21%3A30Z&sp=dc&sig=Sanitized&restype=share",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "traceparent": "00-105d2099dadc774080831368c0bece48-00ab2daaa2ceae4f-00",
@@ -33,7 +33,7 @@
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://seanmcccanary.file.core.windows.net/test-share-ae42f204-8291-6122-0ae0-3f9ff58ff80b?sv=2022-11-02&ss=f&srt=c&st=2020-06-01T19%3A21%3A30Z&se=2020-06-01T21%3A21%3A30Z&sp=dc&sig=Sanitized&restype=share",
+      "RequestUri": "https://seanmcccanary.file.core.windows.net/test-share-ae42f204-8291-6122-0ae0-3f9ff58ff80b?sv=2023-01-03&ss=f&srt=c&st=2020-06-01T19%3A21%3A30Z&se=2020-06-01T21%3A21%3A30Z&sp=dc&sig=Sanitized&restype=share",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "traceparent": "00-aeae998e17974e41b27377e530bc087c-2da78f5e422adb43-00",

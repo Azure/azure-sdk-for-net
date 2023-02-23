@@ -71,7 +71,7 @@
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://712xscnapby3pev55a.file.preprod.core.windows.net/test-share-d5a900b2-f406-cfa9-2749-8d083b7f7318/test-directory-19596bdd-5252-2a26-6bab-3cc319c4f38a?sv=2022-11-02\u0026se=2021-10-30T19%3A39%3A35Z\u0026sr=s\u0026sp=rcwdl\u0026sig=Sanitized\u0026restype=directory\u0026comp=rename",
+      "RequestUri": "https://712xscnapby3pev55a.file.preprod.core.windows.net/test-share-d5a900b2-f406-cfa9-2749-8d083b7f7318/test-directory-19596bdd-5252-2a26-6bab-3cc319c4f38a?sv=2023-01-03\u0026se=2021-10-30T19%3A39%3A35Z\u0026sr=s\u0026sp=rcwdl\u0026sig=Sanitized\u0026restype=directory\u0026comp=rename",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/xml",
@@ -81,7 +81,7 @@
           "(.NET 5.0.11; Microsoft Windows 10.0.19043)"
         ],
         "x-ms-client-request-id": "ac172b73-5277-5a85-140a-17a6f6614eb1",
-        "x-ms-file-rename-source": "https://712xscnapby3pev55a.file.preprod.core.windows.net/test-share-d5a900b2-f406-cfa9-2749-8d083b7f7318/test-directory-9bb02241-711c-0bb9-5bd7-7bfd24332a24?sv=2022-11-02&se=2021-10-30T19%3A39%3A35Z&sr=s&sp=rcwdl&sig=Sanitized",
+        "x-ms-file-rename-source": "https://712xscnapby3pev55a.file.preprod.core.windows.net/test-share-d5a900b2-f406-cfa9-2749-8d083b7f7318/test-directory-9bb02241-711c-0bb9-5bd7-7bfd24332a24?sv=2023-01-03&se=2021-10-30T19%3A39%3A35Z&sr=s&sp=rcwdl&sig=Sanitized",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2021-06-08"
       },
@@ -107,7 +107,7 @@
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://712xscnapby3pev55a.file.preprod.core.windows.net/test-share-d5a900b2-f406-cfa9-2749-8d083b7f7318/test-directory-19596bdd-5252-2a26-6bab-3cc319c4f38a?sv=2022-11-02\u0026se=2021-10-30T19%3A39%3A35Z\u0026sr=s\u0026sp=rcwdl\u0026sig=Sanitized\u0026restype=directory",
+      "RequestUri": "https://712xscnapby3pev55a.file.preprod.core.windows.net/test-share-d5a900b2-f406-cfa9-2749-8d083b7f7318/test-directory-19596bdd-5252-2a26-6bab-3cc319c4f38a?sv=2023-01-03\u0026se=2021-10-30T19%3A39%3A35Z\u0026sr=s\u0026sp=rcwdl\u0026sig=Sanitized\u0026restype=directory",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/xml",

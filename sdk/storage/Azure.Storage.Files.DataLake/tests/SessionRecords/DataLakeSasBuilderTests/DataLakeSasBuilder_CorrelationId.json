@@ -130,7 +130,7 @@
       "ResponseBody": "﻿<?xml version=\"1.0\" encoding=\"utf-8\"?><UserDelegationKey><SignedOid>c4f48289-bb84-4086-b250-6f94a8f64cee</SignedOid><SignedTid>72f988bf-86f1-41af-91ab-2d7cd011db47</SignedTid><SignedStart>2021-02-19T18:58:00Z</SignedStart><SignedExpiry>2021-02-19T19:58:01Z</SignedExpiry><SignedService>b</SignedService><SignedVersion>2020-06-12</SignedVersion><Value>U5/2p4lNt8HtBrnltNyjj33x6b4ay/o+I6xP4uh188I=</Value></UserDelegationKey>"
     },
     {
-      "RequestUri": "https://seannse.dfs.core.windows.net/test-filesystem-48465708-c8ac-b47d-c1f0-893a06da8169?skoid=c4f48289-bb84-4086-b250-6f94a8f64cee&sktid=72f988bf-86f1-41af-91ab-2d7cd011db47&skt=2021-02-19T18%3A58%3A00Z&ske=2021-02-19T19%3A58%3A01Z&sks=b&skv=2020-06-12&sv=2022-11-02&st=2021-02-19T17%3A58%3A01Z&se=2021-02-19T19%3A58%3A01Z&sr=c&sp=l&scid=02b2db09-a170-4088-882c-2639ebf02cc0&sig=Sanitized&resource=filesystem&recursive=false&upn=false",
+      "RequestUri": "https://seannse.dfs.core.windows.net/test-filesystem-48465708-c8ac-b47d-c1f0-893a06da8169?skoid=c4f48289-bb84-4086-b250-6f94a8f64cee&sktid=72f988bf-86f1-41af-91ab-2d7cd011db47&skt=2021-02-19T18%3A58%3A00Z&ske=2021-02-19T19%3A58%3A01Z&sks=b&skv=2020-06-12&sv=2023-01-03&st=2021-02-19T17%3A58%3A01Z&se=2021-02-19T19%3A58%3A01Z&sr=c&sp=l&scid=02b2db09-a170-4088-882c-2639ebf02cc0&sig=Sanitized&resource=filesystem&recursive=false&upn=false",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
