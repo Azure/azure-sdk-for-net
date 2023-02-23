@@ -46,6 +46,6 @@ namespace Azure.Communication.Email
         /// <summary> Email addresses where recipients&apos; replies will be sent to. </summary>
         public IList<EmailAddress> ReplyTo { get; }
         /// <summary> Indicates whether user engagement tracking should be disabled for this request if the resource-level user engagement tracking setting was already enabled in the control plane. </summary>
-        public bool? DisableUserEngagementTracking { get; set; }
+        public bool? UserEngagementTrackingDisabled { get; set; }
     }
 }

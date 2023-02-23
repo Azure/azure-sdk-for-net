@@ -52,10 +52,10 @@ namespace Azure.Communication.Email
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(DisableUserEngagementTracking))
+            if (Optional.IsDefined(UserEngagementTrackingDisabled))
             {
-                writer.WritePropertyName("disableUserEngagementTracking"u8);
-                writer.WriteBooleanValue(DisableUserEngagementTracking.Value);
+                writer.WritePropertyName("userEngagementTrackingDisabled"u8);
+                writer.WriteBooleanValue(UserEngagementTrackingDisabled.Value);
             }
             writer.WriteEndObject();
         }
