@@ -5,6 +5,7 @@ using System;
 using System.Text;
 using Azure.Core.Pipeline;
 using System.Collections.Generic;
+using Azure.Core.Shared;
 using Microsoft.Azure.Amqp;
 using Microsoft.Azure.Amqp.Framing;
 
@@ -24,7 +25,7 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
 
         public static void SetMessageAsParent(this DiagnosticScope scope, ServiceBusReceivedMessage message)
         {
-            if (EntityScopeFactory.TryExtractDiagnosticId(
+            if (MessagingClientDiagnostics.TryExtractDiagnosticId(
                     message.ApplicationProperties,
                     out string diagnosticId))
             {
@@ -68,6 +69,11 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
                 {
                     AddLinkedDiagnostics(scope, message.ApplicationProperties);
                 }
+
+                if (messages.Count > 1)
+                {
+                    scope.AddAttribute(MessagingClientDiagnostics.BatchCount, messages.Count);
+                }
             }
         }
 
@@ -78,6 +84,11 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
                 foreach (AmqpMessage message in messages)
                 {
                     AddLinkedDiagnostics(scope, message.ApplicationProperties.Map);
+                }
+
+                if (messages.Count > 1)
+                {
+                    scope.AddAttribute(MessagingClientDiagnostics.BatchCount, messages.Count);
                 }
             }
         }
@@ -98,12 +109,17 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
                 {
                     AddLinkedDiagnostics(scope, message.ApplicationProperties);
                 }
+
+                if (messages.Count > 1)
+                {
+                    scope.AddAttribute(MessagingClientDiagnostics.BatchCount, messages.Count);
+                }
             }
         }
 
         private static void AddLinkedDiagnostics(this DiagnosticScope scope, IReadOnlyDictionary<string, object> properties)
         {
-            if (EntityScopeFactory.TryExtractDiagnosticId(
+            if (MessagingClientDiagnostics.TryExtractDiagnosticId(
                     properties,
                     out string diagnosticId))
             {
@@ -113,7 +129,7 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
 
         private static void AddLinkedDiagnostics(this DiagnosticScope scope, PropertiesMap properties)
         {
-            if (EntityScopeFactory.TryExtractDiagnosticId(
+            if (TryExtractDiagnosticId(
                     properties,
                     out string diagnosticId))
             {
@@ -123,12 +139,34 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
 
         private static void AddLinkedDiagnostics(this DiagnosticScope scope, IDictionary<string, object> properties)
         {
-            if (EntityScopeFactory.TryExtractDiagnosticId(
+            if (MessagingClientDiagnostics.TryExtractDiagnosticId(
                 properties,
                 out string diagnosticId))
             {
                 scope.AddLink(diagnosticId, null);
             }
+        }
+
+        /// <summary>
+        ///   Extracts a diagnostic id from a message's properties.
+        /// </summary>
+        ///
+        /// <param name="properties">The properties holding the diagnostic id.</param>
+        /// <param name="id">The value of the diagnostics identifier assigned to the event. </param>
+        ///
+        /// <returns><c>true</c> if the event was contained the diagnostic id; otherwise, <c>false</c>.</returns>
+        ///
+        public static bool TryExtractDiagnosticId(PropertiesMap properties, out string id)
+        {
+            id = null;
+
+            if (properties.TryGetValue<string>(MessagingClientDiagnostics.DiagnosticIdAttribute, out string stringId))
+            {
+                id = stringId;
+                return true;
+            }
+
+            return false;
         }
     }
 }

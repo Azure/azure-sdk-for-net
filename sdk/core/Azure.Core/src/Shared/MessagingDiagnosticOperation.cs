@@ -1,0 +1,41 @@
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+#nullable enable
+
+using System;
+
+namespace Azure.Core.Shared
+{
+    internal readonly partial struct MessagingDiagnosticOperation : IEquatable<MessagingDiagnosticOperation>
+    {
+        private readonly string _operation;
+
+        public MessagingDiagnosticOperation(string operation)
+        {
+            Argument.AssertNotNull(operation, nameof(operation));
+            _operation = operation;
+        }
+
+        public static MessagingDiagnosticOperation Publish = new("publish");
+        public static MessagingDiagnosticOperation Receive = new("receive");
+        public static MessagingDiagnosticOperation Process = new("process");
+        public override string ToString() => _operation;
+
+        public static bool operator ==(MessagingDiagnosticOperation left, MessagingDiagnosticOperation right) => left.Equals(right);
+        public static bool operator !=(MessagingDiagnosticOperation left, MessagingDiagnosticOperation right) => !left.Equals(right);
+        public static implicit operator MessagingDiagnosticOperation(string value) => new MessagingDiagnosticOperation(value);
+
+        public bool Equals(MessagingDiagnosticOperation other)
+        {
+            return _operation == other._operation;
+        }
+
+        public override bool Equals(object obj)
+        {
+            return obj is MessagingDiagnosticOperation other && Equals(other);
+        }
+
+        public override int GetHashCode() => _operation.GetHashCode();
+    }
+}
