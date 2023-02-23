@@ -49,7 +49,7 @@ while (true)
     {
         break;
     }
-    await Task.Delay(1000);
+    await Task.Delay(10);
 }
 
 if (emailSendOperation.HasValue)
