@@ -53,6 +53,14 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                 // Do not initialize statsbeat for statsbeat.
                 if (connectionVars != null && connectionVars.InstrumentationKey != ConnectionStringParser.GetValues(Statsbeat.Statsbeat_ConnectionString_EU).InstrumentationKey && connectionVars.InstrumentationKey != ConnectionStringParser.GetValues(Statsbeat.Statsbeat_ConnectionString_NonEU).InstrumentationKey)
                 {
+                    var disableStatsbeat = Environment.GetEnvironmentVariable("APPLICATIONINSIGHTS_STATSBEAT_DISABLED");
+                    if (string.Equals(disableStatsbeat, "true", StringComparison.OrdinalIgnoreCase))
+                    {
+                        AzureMonitorExporterEventSource.Log.WriteInformational("StatsbeatInitialization: ", "Statsbeat was disabled via environment variable");
+
+                        return;
+                    }
+
                     // TODO: Implement IDisposable for transmitter and dispose statsbeat.
                     _ = new Statsbeat(connectionVars);
                 }
