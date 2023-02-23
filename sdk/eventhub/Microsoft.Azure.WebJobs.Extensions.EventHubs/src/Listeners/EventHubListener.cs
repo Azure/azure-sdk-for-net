@@ -179,8 +179,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
                     {
                         if (_numStoredEvents > 0)
                         {
-                            await ProcessStoredEvents(context, events, linkedCts).ConfigureAwait(false);
-                            eventToCheckpoint = events.Last();
+                            eventToCheckpoint = await ProcessStoredEventsOnly(context, linkedCts).ConfigureAwait(false);
                         }
                     }
 
@@ -317,16 +316,21 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
                 context.PartitionContext.IsCheckpointingAfterInvocation = isCheckpointingAfterInvocation;
             }
 
-            private async Task ProcessStoredEvents(EventProcessorHostPartition context, EventData[] messages, CancellationTokenSource cts)
+            private async Task<EventData> ProcessStoredEventsOnly(EventProcessorHostPartition context, CancellationTokenSource cts)
             {
+                EventData eventToCheckpoint = null;
+
                 var hasStoredEventsPartition = _eventDatas.TryGetValue(context.PartitionId, out var storedEvents);
                 if (hasStoredEventsPartition && storedEvents.Any())
                 {
                     // TODO do we need to check that the number of events isn't too big? Ideally no
-                    await TriggerExecute(messages, context, cts).ConfigureAwait(false);
+                    await TriggerExecute(storedEvents.ToArray(), context, cts).ConfigureAwait(false);
+                    eventToCheckpoint = storedEvents.Last();
                 }
                 _numStoredEvents -= storedEvents.Count;
                 storedEvents.Clear();
+
+                return eventToCheckpoint;
             }
 
             private async Task CheckpointAsync(EventData checkpointEvent, EventProcessorHostPartition context)
