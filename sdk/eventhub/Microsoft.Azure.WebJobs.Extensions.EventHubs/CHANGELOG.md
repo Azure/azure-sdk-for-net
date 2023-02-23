@@ -18,7 +18,7 @@
 
 - Target-based scaling support has been added, allowing instances for Event Hubs-triggered Functions to more accurately calculate their scale needs and adjust more quickly as the number of events waiting to be processed changes. This will also reduce duplicate event processing as the instance count changes.
 
-- A new setting, `UnprocessedEventThreshold` has been added to help tune target-based scaling.  More details can be found in the [host.json documentation](https://learn.microsoft.com/azure/azure-functions/functions-bindings-event-hubs?tabs=in-process%2Cextensionv5&pivots=programming-language-csharp#hostjson-settings).
+- A new setting, `UnprocessedEventThreshold`, has been added to help tune target-based scaling.  More details can be found in the [host.json documentation](https://learn.microsoft.com/azure/azure-functions/functions-bindings-event-hubs?tabs=in-process%2Cextensionv5&pivots=programming-language-csharp#hostjson-settings).
 
 ### Bugs Fixed
 
