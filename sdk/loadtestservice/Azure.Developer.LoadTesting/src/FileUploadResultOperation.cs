@@ -5,27 +5,31 @@
 
 using System;
 using System.Collections.Generic;
+using System.Globalization;
+using System.Text;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core;
 
 namespace Azure.Developer.LoadTesting
 {
     /// <summary>
-    /// Represents a long-running operation for TestRun.
+    /// FileUploadResultOperation.
     /// </summary>
-    public class TestRunOperation : Operation<BinaryData>
+    public class FileUploadResultOperation : Operation<BinaryData>
     {
         private bool _completed;
         private Response _response;
         private BinaryData _value;
-        private readonly string _testRunId;
-        private readonly LoadTestRunClient _client;
+        private readonly string _testId;
+        private readonly string _fileName;
+        private readonly LoadTestAdministrationClient _client;
         private readonly List<string> _terminalStatus = new()
             {
-                "DONE",
-                "FAILED",
-                "CANCELLED"
+                "VALIDATION_SUCCESS",
+                "VALIDATION_FAILURE",
+                "VALIDATION_NOT_REQUIRED"
             };
 
         /// <summary>
@@ -33,7 +37,8 @@ namespace Azure.Developer.LoadTesting
         /// </summary>
         public override BinaryData Value
         {
-            get {
+            get
+            {
                 if (HasCompleted && !HasValue)
                 {
                     throw new InvalidOperationException("The operation is not complete.");
@@ -63,15 +68,17 @@ namespace Azure.Developer.LoadTesting
         /// <summary>
         /// FileUploadOperation.
         /// </summary>
-        protected TestRunOperation() { }
+        protected FileUploadResultOperation() { }
 
         /// <summary>
         /// FileUploadOperation.
         /// </summary>
-        public TestRunOperation(string testRunId, LoadTestRunClient client, Response initialResponse = null)
+        public FileUploadResultOperation(string testId, string fileName, LoadTestAdministrationClient client, Response initialResponse = null)
         {
-            _testRunId = Id = testRunId;
+            _testId = testId;
+            _fileName = fileName;
             _client = client;
+            Id = $"{_testId}/{_fileName}";
             _completed = false;
             if (initialResponse != null)
             {
@@ -99,7 +106,7 @@ namespace Azure.Developer.LoadTesting
                 return GetRawResponse();
             }
 
-            _response = _client.GetTestRun(_testRunId);
+            _response = _client.GetTestFile(_testId, _fileName);
             _value = _response.Content;
 
             return GetCompletionResponse();
@@ -117,7 +124,7 @@ namespace Azure.Developer.LoadTesting
 
             try
             {
-                _response = await _client.GetTestRunAsync(_testRunId).ConfigureAwait(false);
+                _response = await _client.GetTestFileAsync(_testId, _fileName).ConfigureAwait(false);
                 _value = _response.Content;
             }
             catch
@@ -130,7 +137,7 @@ namespace Azure.Developer.LoadTesting
 
         private Response GetCompletionResponse()
         {
-            string testRunStatus;
+            string fileValidationStatus;
             JsonDocument jsonDocument;
 
             try
@@ -139,19 +146,19 @@ namespace Azure.Developer.LoadTesting
             }
             catch (Exception e)
             {
-                throw new RequestFailedException("Unable to parse JOSN: " + e.Message);
+                throw new RequestFailedException("Unable to parse JOSN " + e.Message);
             }
 
             try
             {
-                testRunStatus = jsonDocument.RootElement.GetProperty("status").GetString();
+                fileValidationStatus = jsonDocument.RootElement.GetProperty("validationStatus").GetString();
             }
             catch
             {
                 throw new RequestFailedException("No property validationStatus in reposne JSON: " + _value.ToString());
             }
 
-            if (_terminalStatus.Contains(testRunStatus))
+            if (_terminalStatus.Contains(fileValidationStatus))
             {
                 _completed = true;
             }

@@ -22,7 +22,7 @@ namespace Azure.Developer.LoadTesting
         /// <exception cref="ArgumentException"> <paramref name="testId"/> or <paramref name="fileName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        public virtual FileUploadOperation UploadTestFile(WaitUntil waitUntil, string testId, string fileName, RequestContent content, TimeSpan? timeSpan = null, string fileType = null, RequestContext context = null)
+        public virtual FileUploadResultOperation UploadTestFile(WaitUntil waitUntil, string testId, string fileName, RequestContent content, TimeSpan? timeSpan = null, string fileType = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(testId, nameof(testId));
             Argument.AssertNotNullOrEmpty(fileName, nameof(fileName));
@@ -39,7 +39,7 @@ namespace Azure.Developer.LoadTesting
             try
             {
                 Response initialResponse = UploadTestFile(testId, fileName, content, fileType, context);
-                FileUploadOperation operation = new(testId, fileName, this, initialResponse);
+                FileUploadResultOperation operation = new(testId, fileName, this, initialResponse);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     operation.WaitForCompletion((TimeSpan)timeSpan, cancellationToken: default);
@@ -65,7 +65,7 @@ namespace Azure.Developer.LoadTesting
         /// <exception cref="ArgumentException"> <paramref name="testId"/> or <paramref name="fileName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        public virtual async Task<FileUploadOperation> UploadTestFileAsync(WaitUntil waitUntil, string testId, string fileName, RequestContent content, TimeSpan? timeSpan = null, string fileType = null, RequestContext context = null)
+        public virtual async Task<FileUploadResultOperation> UploadTestFileAsync(WaitUntil waitUntil, string testId, string fileName, RequestContent content, TimeSpan? timeSpan = null, string fileType = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(testId, nameof(testId));
             Argument.AssertNotNullOrEmpty(fileName, nameof(fileName));
@@ -82,7 +82,7 @@ namespace Azure.Developer.LoadTesting
             try
             {
                 Response initialResponse = await UploadTestFileAsync(testId, fileName, content, fileType, context).ConfigureAwait(false);
-                FileUploadOperation operation = new(testId, fileName, this, initialResponse);
+                FileUploadResultOperation operation = new(testId, fileName, this, initialResponse);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     await operation.WaitForCompletionAsync((TimeSpan)timeSpan, cancellationToken: default).ConfigureAwait(false);
