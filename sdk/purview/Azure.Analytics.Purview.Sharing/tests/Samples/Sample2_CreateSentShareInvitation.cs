@@ -44,7 +44,7 @@ namespace Azure.Analytics.Purview.Sharing.Tests.Samples
 #if SNIPPET
             Response response = await sentShareClient.CreateSentShareInvitationAsync(<sentShareId>, <sentShareInvitationId>, RequestContent.Create(data));
 #else
-            Response response = await sentShareClient.CreateSentShareInvitationAsync("e802f487-92bf-4dc3-bf1d-86afe0d757a3", "e322785e-8fb0-4d7b-b7b3-521e0d602fae", RequestContent.Create(data));
+            Response response = await sentShareClient.CreateSentShareInvitationAsync("7911b09b-9cb3-416a-a3f0-e242c0bfd574", "91c4b19f-8bad-4bcc-b623-f19673fb0f83", RequestContent.Create(data));
 #endif
 
 #endregion

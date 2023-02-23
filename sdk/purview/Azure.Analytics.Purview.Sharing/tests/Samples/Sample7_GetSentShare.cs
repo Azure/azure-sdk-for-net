@@ -26,7 +26,7 @@ namespace Azure.Analytics.Purview.Sharing.Tests.Samples
 #else
             var sentShareClient = GetSentSharesClient();
 
-            Response response = await sentShareClient.GetSentShareAsync("e802f487-92bf-4dc3-bf1d-86afe0d757a3");
+            Response response = await sentShareClient.GetSentShareAsync("7911b09b-9cb3-416a-a3f0-e242c0bfd574");
 #endif
 
             #endregion

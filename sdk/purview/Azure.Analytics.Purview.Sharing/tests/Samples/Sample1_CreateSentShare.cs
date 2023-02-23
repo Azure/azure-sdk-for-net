@@ -80,7 +80,7 @@ namespace Azure.Analytics.Purview.Sharing.Tests.Samples
 #if SNIPPET
             Operation<BinaryData> createResponse = await sentShareClient.CreateOrReplaceSentShareAsync(WaitUntil.Completed, <sentShareId>, RequestContent.Create(data));
 #else
-            Operation<BinaryData> createResponse = await sentShareClient.CreateOrReplaceSentShareAsync(WaitUntil.Completed, "e802f487-92bf-4dc3-bf1d-86afe0d757a3", RequestContent.Create(data));
+            Operation<BinaryData> createResponse = await sentShareClient.CreateOrReplaceSentShareAsync(WaitUntil.Completed, "7911b09b-9cb3-416a-a3f0-e242c0bfd574", RequestContent.Create(data));
 #endif
 
             #endregion
