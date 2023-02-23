@@ -11,7 +11,7 @@ namespace Azure.Core.Shared
 {
     /// <summary>
     /// Client Diagnostics support for messaging clients. Currently, this is only used for AMQP clients.
-    /// HTTP libraries should use <see cref="ClientDiagnostics"/> instead.
+    /// HTTP libraries should use the ClientDiagnostics type instead.
     /// </summary>
     internal class MessagingClientDiagnostics
     {
