@@ -1103,14 +1103,14 @@ Response Body:
 
 </remarks>
     </member>
-    <member name="DeleteAsync(WaitUntil,String,RequestContext)">
+    <member name="DeleteSentShareAsync(WaitUntil,String,RequestContext)">
 <example>
-This sample shows how to call DeleteAsync with required parameters and parse the result.
+This sample shows how to call DeleteSentShareAsync with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var client = new SentSharesClient("<https://my-service.azure.com>", credential);
 
-var operation = await client.DeleteAsync(WaitUntil.Completed, "<sentShareId>");
+var operation = await client.DeleteSentShareAsync(WaitUntil.Completed, "<sentShareId>");
 
 BinaryData data = operation.Value;
 JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
@@ -1147,14 +1147,14 @@ Schema for <c>OperationResponse</c>:
 
 </remarks>
     </member>
-    <member name="Delete(WaitUntil,String,RequestContext)">
+    <member name="DeleteSentShare(WaitUntil,String,RequestContext)">
 <example>
-This sample shows how to call Delete with required parameters and parse the result.
+This sample shows how to call DeleteSentShare with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var client = new SentSharesClient("<https://my-service.azure.com>", credential);
 
-var operation = client.Delete(WaitUntil.Completed, "<sentShareId>");
+var operation = client.DeleteSentShare(WaitUntil.Completed, "<sentShareId>");
 
 BinaryData data = operation.Value;
 JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
