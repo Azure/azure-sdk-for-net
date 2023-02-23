@@ -24,8 +24,14 @@ string testRunId = "my-loadtest-run";
 // all other data to be sent to testRun
 var data = new
 {
-    testid = testId,
-    displayName = "My display name"
+    filters = new[]
+    {
+        new
+        {
+            name = "SamplerName",
+            values= new[] { "HTTP Request" }
+        }
+    },
 };
 
 try
@@ -45,7 +51,8 @@ try
             testRunId,
             metricNamespacesJson.RootElement.GetProperty("value")[0].GetProperty("name").GetString(),
             metricDefinitionsJson.RootElement.GetProperty("value")[0].GetProperty("name").GetString(),
-            testRunJson.RootElement.GetProperty("startDateTime").GetString() + "/" + testRunJson.RootElement.GetProperty("endDateTime")
+            testRunJson.RootElement.GetProperty("startDateTime").GetString() + "/" + testRunJson.RootElement.GetProperty("endDateTime"),
+            RequestContent.Create(data)
         );
 }
 catch (Exception ex)
