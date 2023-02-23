@@ -203,7 +203,7 @@
       "ResponseBody": "﻿<?xml version=\"1.0\" encoding=\"utf-8\"?><EnumerationResults ServiceEndpoint=\"https://seanmcccanary3.file.core.windows.net/\" ShareName=\"test-share-d69b8cb6-35a9-0112-b873-04d9a5044367\" DirectoryPath=\"directory\"><Entries><File><Name>file</Name><Properties><Content-Length>1024</Content-Length></Properties></File></Entries><NextMarker /></EnumerationResults>"
     },
     {
-      "RequestUri": "https://seanmcccanary3.file.core.windows.net/test-share-d69b8cb6-35a9-0112-b873-04d9a5044367/directory/file?sv=2022-11-02&st=2021-01-26T18%3A27%3A10Z&se=2021-01-26T20%3A27%3A10Z&sr=f&sp=rcwd&sig=Sanitized",
+      "RequestUri": "https://seanmcccanary3.file.core.windows.net/test-share-d69b8cb6-35a9-0112-b873-04d9a5044367/directory/file?sv=2023-01-03&st=2021-01-26T18%3A27%3A10Z&se=2021-01-26T20%3A27%3A10Z&sr=f&sp=rcwd&sig=Sanitized",
       "RequestMethod": "HEAD",
       "RequestHeaders": {
         "Accept": "application/xml",

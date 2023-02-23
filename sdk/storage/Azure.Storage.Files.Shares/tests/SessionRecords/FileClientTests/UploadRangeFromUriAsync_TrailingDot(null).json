@@ -196,7 +196,7 @@
         "User-Agent": "azsdk-net-Storage.Files.Shares/12.13.0-alpha.20221206.1 (.NET 6.0.11; Microsoft Windows 10.0.19045)",
         "x-ms-allow-trailing-dot": "true",
         "x-ms-client-request-id": "87cb8677-fbfd-030d-fdc3-b08c8f6065c6",
-        "x-ms-copy-source": "https://2iqxscnapby3pev24a.file.preprod.core.windows.net/test-share-f12e0346-4881-df31-1cd3-839778344e7a/test-directory-e54318fb-926b-65cc-3798-b62a9eaebe2f/test-file-4f8707aa-b63d-acc6-d8f8-2502cca8ba42.?sv=2022-11-02\u0026se=2022-12-08T04%3A02%3A45Z\u0026sr=f\u0026sp=rcwd\u0026sig=Sanitized",
+        "x-ms-copy-source": "https://2iqxscnapby3pev24a.file.preprod.core.windows.net/test-share-f12e0346-4881-df31-1cd3-839778344e7a/test-directory-e54318fb-926b-65cc-3798-b62a9eaebe2f/test-file-4f8707aa-b63d-acc6-d8f8-2502cca8ba42.?sv=2023-01-03\u0026se=2022-12-08T04%3A02%3A45Z\u0026sr=f\u0026sp=rcwd\u0026sig=Sanitized",
         "x-ms-date": "Wed, 07 Dec 2022 04:02:45 GMT",
         "x-ms-range": "bytes=256-511",
         "x-ms-return-client-request-id": "true",
