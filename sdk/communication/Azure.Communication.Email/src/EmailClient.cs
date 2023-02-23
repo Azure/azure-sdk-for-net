@@ -141,15 +141,15 @@ namespace Azure.Communication.Email
             {
                 EmailMessage message = new EmailMessage(
                     from,
+                    new EmailRecipients(new List<EmailAddress>()
+                    {
+                        new EmailAddress(to)
+                    }),
                     new EmailContent(subject)
                     {
                         PlainText = plainTextContent,
                         Html = htmlContent
-                    },
-                    new EmailRecipients(new List<EmailAddress>()
-                    {
-                        new EmailAddress(to)
-                    }));
+                    });
                 return await SendEmailInternalAsync(wait, message, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -210,15 +210,15 @@ namespace Azure.Communication.Email
             {
                 EmailMessage message = new EmailMessage(
                     from,
-                    new EmailContent(subject)
-                    {
-                        PlainText = plainTextContent,
-                        Html = htmlContent
-                    },
                     new EmailRecipients(new List<EmailAddress>()
                     {
                         new EmailAddress(to)
-                    }));
+                    }),
+                                        new EmailContent(subject)
+                    {
+                        PlainText = plainTextContent,
+                        Html = htmlContent
+                    });
                 return SendEmailInternal(wait, message, cancellationToken);
             }
             catch (Exception e)

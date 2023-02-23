@@ -103,8 +103,8 @@ namespace Azure.Communication.Email.Tests
 
             var emailMessage = new EmailMessage(
                 TestEnvironment.SenderAddress,
-                emailContent,
-                emailRecipients);
+                emailRecipients,
+                emailContent);
 
             EmailSendOperation emailSendOperation = await emailClient.SendAsync(WaitUntil.Started, emailMessage);
 
@@ -133,8 +133,8 @@ namespace Azure.Communication.Email.Tests
 
             var emailMessage = new EmailMessage(
                 TestEnvironment.SenderAddress,
-                emailContent,
-                emailRecipients);
+                emailRecipients,
+                emailContent);
 
             EmailSendOperation emailSendOperation = emailClient.Send(WaitUntil.Completed, emailMessage);
             return emailSendOperation;
@@ -147,8 +147,8 @@ namespace Azure.Communication.Email.Tests
 
             var emailMessage = new EmailMessage(
                 TestEnvironment.SenderAddress,
-                emailContent,
-                emailRecipients);
+                emailRecipients,
+                emailContent);
 
             EmailSendOperation emailSendOperation = await emailClient.SendAsync(WaitUntil.Completed, emailMessage);
             return emailSendOperation;
@@ -161,8 +161,8 @@ namespace Azure.Communication.Email.Tests
 
             var emailMessage = new EmailMessage(
                 TestEnvironment.SenderAddress,
-                emailContent,
-                emailRecipients);
+                emailRecipients,
+                emailContent);
 
             EmailSendOperation emailSendOperation = await emailClient.SendAsync(WaitUntil.Started, emailMessage);
             string operationId = emailSendOperation.Id;
@@ -181,8 +181,8 @@ namespace Azure.Communication.Email.Tests
 
             var emailMessage = new EmailMessage(
                 TestEnvironment.SenderAddress,
-                emailContent,
-                emailRecipients);
+                emailRecipients,
+                emailContent);
 
             EmailSendOperation emailSendOperation = emailClient.Send(WaitUntil.Started, emailMessage);
             string operationId = emailSendOperation.Id;

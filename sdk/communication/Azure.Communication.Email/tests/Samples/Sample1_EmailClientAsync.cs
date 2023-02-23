@@ -134,12 +134,12 @@ namespace Azure.Communication.Email.Tests.Samples
             var toRecipients = new List<EmailAddress>
             {
                 new EmailAddress(
-                    //@@ email: "<recipient email address>"
+                    //@@ address: "<recipient email address>"
                     //@@ displayName: "<recipient displayname>"
                     /*@@*/ address: TestEnvironment.RecipientAddress,
                     /*@@*/ displayName: "Customer Name"),
                 new EmailAddress(
-                    //@@ email: "<recipient email address>"
+                    //@@ address: "<recipient email address>"
                     //@@ displayName: "<recipient displayname>"
                     /*@@*/ address: TestEnvironment.RecipientAddress,
                     /*@@*/ displayName: "Customer Name")
@@ -149,12 +149,12 @@ namespace Azure.Communication.Email.Tests.Samples
             var ccRecipients = new List<EmailAddress>
             {
                 new EmailAddress(
-                    //@@ email: "<recipient email address>"
+                    //@@ address: "<recipient email address>"
                     //@@ displayName: "<recipient displayname>"
                     /*@@*/ address: TestEnvironment.RecipientAddress,
                     /*@@*/ displayName: "Customer Name"),
                 new EmailAddress(
-                    //@@ email: "<recipient email address>"
+                    //@@ address: "<recipient email address>"
                     //@@ displayName: "<recipient displayname>"
                     /*@@*/ address: TestEnvironment.RecipientAddress,
                     /*@@*/ displayName: "Customer Name")
@@ -164,12 +164,12 @@ namespace Azure.Communication.Email.Tests.Samples
             var bccRecipients = new List<EmailAddress>
             {
                 new EmailAddress(
-                    //@@ email: "<recipient email address>"
+                    //@@ address: "<recipient email address>"
                     //@@ displayName: "<recipient displayname>"
                     /*@@*/ address: TestEnvironment.RecipientAddress,
                     /*@@*/ displayName: "Customer Name"),
                 new EmailAddress(
-                    //@@ email: "<recipient email address>"
+                    //@@ address: "<recipient email address>"
                     //@@ displayName: "<recipient displayname>"
                     /*@@*/ address: TestEnvironment.RecipientAddress,
                     /*@@*/ displayName: "Customer Name")
@@ -179,10 +179,10 @@ namespace Azure.Communication.Email.Tests.Samples
 
             // Create the EmailMessage
             var emailMessage = new EmailMessage(
-                //@@ senderEmail: "<Send email address>" // The email address of the domain registered with the Communication Services resource
+                //@@ senderAddress: "<Send email address>" // The email address of the domain registered with the Communication Services resource
                 /*@@*/ senderAddress: TestEnvironment.SenderAddress,
-                emailContent,
-                emailRecipients);
+                emailRecipients,
+                emailContent);
 
             EmailSendOperation emailSendOperation = await emailClient.SendAsync(WaitUntil.Completed, emailMessage);
             Console.WriteLine($"Email Sent. Status = {emailSendOperation.Value.Status}");

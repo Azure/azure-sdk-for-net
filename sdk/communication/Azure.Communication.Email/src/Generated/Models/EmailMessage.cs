@@ -14,24 +14,6 @@ namespace Azure.Communication.Email
     /// <summary> Message payload for sending an email. </summary>
     public partial class EmailMessage
     {
-        /// <summary> Initializes a new instance of EmailMessage. </summary>
-        /// <param name="senderAddress"> Sender email address from a verified domain. </param>
-        /// <param name="content"> Email content to be sent. </param>
-        /// <param name="recipients"> Recipients for the email. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="senderAddress"/>, <paramref name="content"/> or <paramref name="recipients"/> is null. </exception>
-        public EmailMessage(string senderAddress, EmailContent content, EmailRecipients recipients)
-        {
-            Argument.AssertNotNull(senderAddress, nameof(senderAddress));
-            Argument.AssertNotNull(content, nameof(content));
-            Argument.AssertNotNull(recipients, nameof(recipients));
-
-            Headers = new ChangeTrackingDictionary<string, string>();
-            SenderAddress = senderAddress;
-            Content = content;
-            Recipients = recipients;
-            Attachments = new ChangeTrackingList<EmailAttachment>();
-            ReplyTo = new ChangeTrackingList<EmailAddress>();
-        }
 
         /// <summary> Custom email headers to be passed. </summary>
         public IDictionary<string, string> Headers { get; }

@@ -49,7 +49,7 @@ namespace Azure.Communication.Email
     }
     public partial class EmailMessage
     {
-        public EmailMessage(string senderAddress, Azure.Communication.Email.EmailContent content, Azure.Communication.Email.EmailRecipients recipients) { }
+        public EmailMessage(string senderAddress, Azure.Communication.Email.EmailRecipients recipients, Azure.Communication.Email.EmailContent content) { }
         public EmailMessage(string fromAddress, string toAddress, Azure.Communication.Email.EmailContent content) { }
         public System.Collections.Generic.IList<Azure.Communication.Email.EmailAttachment> Attachments { get { throw null; } }
         public Azure.Communication.Email.EmailContent Content { get { throw null; } }

@@ -357,48 +357,48 @@ namespace Azure.Communication.Email.Tests
         {
             return new EmailMessage(
                 string.Empty,
-                GetDefaultContent(DefaultSubject()),
-                new EmailRecipients(DefaultRecipients()));
+                new EmailRecipients(DefaultRecipients()),
+                GetDefaultContent(DefaultSubject()));
         }
 
         private static EmailMessage EmailMessageInvalidSender()
         {
             return new EmailMessage(
                 "this is an invalid email address",
-                GetDefaultContent(DefaultSubject()),
-                new EmailRecipients(DefaultRecipients()));
+                new EmailRecipients(DefaultRecipients()),
+                GetDefaultContent(DefaultSubject()));
         }
 
         private static EmailMessage EmailMessageEmptyToRecipients()
         {
             return new EmailMessage(
                 DefaultSenderEmail(),
-                GetDefaultContent(DefaultSubject()),
-                new EmailRecipients(new List<EmailAddress>()));
+                new EmailRecipients(new List<EmailAddress>()),
+                GetDefaultContent(DefaultSubject()));
         }
 
         private static object EmailMessageInvalidToRecipients()
         {
             return new EmailMessage(
                 DefaultSenderEmail(),
-                GetDefaultContent(DefaultSubject()),
-                new EmailRecipients(new List<EmailAddress> { new EmailAddress("this is an invalid email address") }));
+                new EmailRecipients(new List<EmailAddress> { new EmailAddress("this is an invalid email address") }),
+                GetDefaultContent(DefaultSubject()));
         }
 
         private static EmailMessage EmailMessageEmptyContent()
         {
             return new EmailMessage(
                 DefaultSenderEmail(),
-                new EmailContent(DefaultSubject()),
-                new EmailRecipients(DefaultRecipients()));
+                new EmailRecipients(DefaultRecipients()),
+                new EmailContent(DefaultSubject()));
         }
 
         private static EmailMessage EmailMessageEmptySubject()
         {
             return new EmailMessage(
                 DefaultSenderEmail(),
-                GetDefaultContent(string.Empty),
-                new EmailRecipients(DefaultRecipients()));
+                new EmailRecipients(DefaultRecipients()),
+                GetDefaultContent(string.Empty));
         }
 
         private static EmailMessage EmailMessageEmptyCustomHeaderValue()
@@ -457,8 +457,8 @@ namespace Azure.Communication.Email.Tests
         {
             return new EmailMessage(
                 DefaultSenderEmail(),
-                GetDefaultContent(DefaultSubject()),
-                new EmailRecipients(DefaultRecipients()));
+                new EmailRecipients(DefaultRecipients()),
+                GetDefaultContent(DefaultSubject()));
         }
 
         private static string DefaultSenderEmail()

@@ -70,10 +70,10 @@ var emailContent = new EmailContent("This is the subject")
 var toRecipients = new List<EmailAddress>
 {
     new EmailAddress(
-        email: "<recipient email address>"
+        address: "<recipient email address>"
         displayName: "<recipient displayname>"
     new EmailAddress(
-        email: "<recipient email address>"
+        address: "<recipient email address>"
         displayName: "<recipient displayname>"
 };
 
@@ -81,10 +81,10 @@ var toRecipients = new List<EmailAddress>
 var ccRecipients = new List<EmailAddress>
 {
     new EmailAddress(
-        email: "<recipient email address>"
+        address: "<recipient email address>"
         displayName: "<recipient displayname>"
     new EmailAddress(
-        email: "<recipient email address>"
+        address: "<recipient email address>"
         displayName: "<recipient displayname>"
 };
 
@@ -92,10 +92,10 @@ var ccRecipients = new List<EmailAddress>
 var bccRecipients = new List<EmailAddress>
 {
     new EmailAddress(
-        email: "<recipient email address>"
+        address: "<recipient email address>"
         displayName: "<recipient displayname>"
     new EmailAddress(
-        email: "<recipient email address>"
+        address: "<recipient email address>"
         displayName: "<recipient displayname>"
 };
 
@@ -103,9 +103,9 @@ var emailRecipients = new EmailRecipients(toRecipients, ccRecipients, bccRecipie
 
 // Create the EmailMessage
 var emailMessage = new EmailMessage(
-    senderEmail: "<Send email address>" // The email address of the domain registered with the Communication Services resource
-    emailContent,
-    emailRecipients);
+    senderAddress: "<Send email address>" // The email address of the domain registered with the Communication Services resource
+    emailRecipients,
+    emailContent);
 
 EmailSendOperation emailSendOperation = emailClient.Send(WaitUntil.Completed, emailMessage);
 Console.WriteLine($"Email Sent. Status = {emailSendOperation.Value.Status}");
