@@ -1,33 +1,98 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://ads-perf-westeurope-pv.purview.azure.com/share/receivedShares/attached?referenceName=%2Fsubscriptions%2F0f3dcfc3-18f8-4099-b381-8353e19d43a7%2FresourceGroups%2Ffaisalaltell%2Fproviders%2FMicrosoft.Storage%2FstorageAccounts%2Fftreceiversan\u0026api-version=2023-02-15-preview",
+      "RequestUri": "https://myaccountname.purview.azure.com/share/receivedShares/attached?referenceName=%2Fsubscriptions%2F0f3dcfc3-18f8-4099-b381-8353e19d43a7%2FresourceGroups%2Ffaisalaltell%2Fproviders%2FMicrosoft.Storage%2FstorageAccounts%2Fftreceiversan\u0026api-version=2023-02-15-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "User-Agent": "azsdk-net-Analytics.Purview.Share/1.0.3-alpha.20230213.1 (.NET 6.0.13; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "c8d35f8f1a8439fc3afee6c68baaf13f",
+        "User-Agent": "azsdk-net-Analytics.Purview.Sharing/1.0.3-alpha.20230222.1 (.NET 7.0.3; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "c5c7c959ce7b55bbbe5e2e53e7d6c5b0",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "Content-Length": "12",
+        "Content-Length": "1717",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 15 Feb 2023 03:45:44 GMT",
+        "Date": "Thu, 23 Feb 2023 04:42:09 GMT",
         "Server": "Kestrel",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
-        "x-ms-correlation-request-id": "8afb277d-8363-4c40-be59-46093b4c0f9c"
+        "x-ms-correlation-request-id": "14309196-789d-44b3-9183-f2eb9189e9a5"
       },
       "ResponseBody": {
-        "value": []
+        "value": [
+          {
+            "properties": {
+              "createdAt": "2023-02-17T04:23:53.676793Z",
+              "sharedAt": "2023-02-17T04:23:53.676793Z",
+              "displayName": "testDisplayName1",
+              "state": "Succeeded",
+              "shareStatus": "Attached",
+              "sentShareDescription": "updatedDescription",
+              "receiverName": "SyMS",
+              "receiverTenantName": "Microsoft",
+              "senderName": "SyMS",
+              "senderTenantName": "Microsoft",
+              "assetLocation": "southafricanorth",
+              "assetStoreKind": "AdlsGen2Account",
+              "sink": {
+                "properties": {
+                  "containerName": "container2135092a",
+                  "folder": "folder2135092a",
+                  "mountPath": "",
+                  "location": "southafricanorth"
+                },
+                "storeKind": "AdlsGen2Account",
+                "storeReference": {
+                  "referenceName": "/subscriptions/0f3dcfc3-18f8-4099-b381-8353e19d43a7/resourceGroups/faisalaltell/providers/Microsoft.Storage/storageAccounts/ftreceiversan",
+                  "type": "ArmResourceReference"
+                }
+              }
+            },
+            "shareKind": "InPlace",
+            "id": "40a7ea14-f63b-464b-955c-a7f825ae7f08",
+            "type": "ReceivedShare"
+          },
+          {
+            "properties": {
+              "createdAt": "2023-02-22T19:23:00.2314762Z",
+              "sharedAt": "2023-02-22T19:23:00.2314762Z",
+              "displayName": "testDisplayName1",
+              "state": "Succeeded",
+              "shareStatus": "Attached",
+              "sentShareDescription": "updatedDescription",
+              "receiverName": "SyMS",
+              "receiverTenantName": "Microsoft",
+              "senderName": "SyMS",
+              "senderTenantName": "Microsoft",
+              "assetLocation": "southafricanorth",
+              "assetStoreKind": "AdlsGen2Account",
+              "sink": {
+                "properties": {
+                  "containerName": "container2221124",
+                  "folder": "folder2221124",
+                  "mountPath": "",
+                  "location": "southafricanorth"
+                },
+                "storeKind": "AdlsGen2Account",
+                "storeReference": {
+                  "referenceName": "/subscriptions/0f3dcfc3-18f8-4099-b381-8353e19d43a7/resourceGroups/faisalaltell/providers/Microsoft.Storage/storageAccounts/ftreceiversan",
+                  "type": "ArmResourceReference"
+                }
+              }
+            },
+            "shareKind": "InPlace",
+            "id": "7ea17493-4265-4126-971a-5ca50cc7ea55",
+            "type": "ReceivedShare"
+          }
+        ]
       }
     }
   ],
   "Variables": {
     "AZURE_AUTHORITY_HOST": null,
-    "PURVIEW_SHARE_URL": "https://ads-perf-westeurope-pv.purview.azure.com/share",
-    "RandomSeed": "1649630265"
+    "PURVIEW_SHARE_URL": "https://ads-dev-eastus-pv.purview.azure.com/share",
+    "RandomSeed": "2136196301"
   }
 }
