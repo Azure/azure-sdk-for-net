@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.RecoveryServices
         /// <returns> Returns a <see cref="RecoveryServicesVaultExtendedInfoResource" /> object. </returns>
         public virtual RecoveryServicesVaultExtendedInfoResource GetRecoveryServicesVaultExtendedInfo()
         {
-            return new RecoveryServicesVaultExtendedInfoResource(Client, new ResourceIdentifier(Id.ToString() + "/extendedInformation/vaultExtendedInfo"));
+            return new RecoveryServicesVaultExtendedInfoResource(Client, Id.AppendChildResource("extendedInformation", "vaultExtendedInfo"));
         }
 
         /// <summary>

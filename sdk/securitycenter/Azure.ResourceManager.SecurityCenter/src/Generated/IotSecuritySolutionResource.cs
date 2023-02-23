@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <returns> Returns a <see cref="IotSecuritySolutionAnalyticsModelResource" /> object. </returns>
         public virtual IotSecuritySolutionAnalyticsModelResource GetIotSecuritySolutionAnalyticsModel()
         {
-            return new IotSecuritySolutionAnalyticsModelResource(Client, new ResourceIdentifier(Id.ToString() + "/analyticsModels/default"));
+            return new IotSecuritySolutionAnalyticsModelResource(Client, Id.AppendChildResource("analyticsModels", "default"));
         }
 
         /// <summary>

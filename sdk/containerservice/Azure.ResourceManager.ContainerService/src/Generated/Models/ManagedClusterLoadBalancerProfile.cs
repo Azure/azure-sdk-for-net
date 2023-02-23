@@ -28,7 +28,8 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <param name="allocatedOutboundPorts"> The desired number of allocated SNAT ports per VM. Allowed values are in the range of 0 to 64000 (inclusive). The default value is 0 which results in Azure dynamically allocating ports. </param>
         /// <param name="idleTimeoutInMinutes"> Desired outbound flow idle timeout in minutes. Allowed values are in the range of 4 to 120 (inclusive). The default value is 30 minutes. </param>
         /// <param name="enableMultipleStandardLoadBalancers"> Enable multiple standard load balancers per AKS cluster or not. </param>
-        internal ManagedClusterLoadBalancerProfile(ManagedClusterLoadBalancerProfileManagedOutboundIPs managedOutboundIPs, ManagedClusterLoadBalancerProfileOutboundIPPrefixes outboundIPPrefixes, ManagedClusterLoadBalancerProfileOutboundIPs outboundIPs, IList<WritableSubResource> effectiveOutboundIPs, int? allocatedOutboundPorts, int? idleTimeoutInMinutes, bool? enableMultipleStandardLoadBalancers)
+        /// <param name="backendPoolType"> The type of the managed inbound Load Balancer BackendPool. </param>
+        internal ManagedClusterLoadBalancerProfile(ManagedClusterLoadBalancerProfileManagedOutboundIPs managedOutboundIPs, ManagedClusterLoadBalancerProfileOutboundIPPrefixes outboundIPPrefixes, ManagedClusterLoadBalancerProfileOutboundIPs outboundIPs, IList<WritableSubResource> effectiveOutboundIPs, int? allocatedOutboundPorts, int? idleTimeoutInMinutes, bool? enableMultipleStandardLoadBalancers, ManagedClusterLoadBalancerBackendPoolType? backendPoolType)
         {
             ManagedOutboundIPs = managedOutboundIPs;
             OutboundIPPrefixes = outboundIPPrefixes;
@@ -37,6 +38,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             AllocatedOutboundPorts = allocatedOutboundPorts;
             IdleTimeoutInMinutes = idleTimeoutInMinutes;
             EnableMultipleStandardLoadBalancers = enableMultipleStandardLoadBalancers;
+            BackendPoolType = backendPoolType;
         }
 
         /// <summary> Desired managed outbound IPs for the cluster load balancer. </summary>
@@ -75,5 +77,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         public int? IdleTimeoutInMinutes { get; set; }
         /// <summary> Enable multiple standard load balancers per AKS cluster or not. </summary>
         public bool? EnableMultipleStandardLoadBalancers { get; set; }
+        /// <summary> The type of the managed inbound Load Balancer BackendPool. </summary>
+        public ManagedClusterLoadBalancerBackendPoolType? BackendPoolType { get; set; }
     }
 }

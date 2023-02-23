@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Storage
         /// <returns> Returns a <see cref="ImmutabilityPolicyResource" /> object. </returns>
         public virtual ImmutabilityPolicyResource GetImmutabilityPolicy()
         {
-            return new ImmutabilityPolicyResource(Client, new ResourceIdentifier(Id.ToString() + "/immutabilityPolicies/default"));
+            return new ImmutabilityPolicyResource(Client, Id.AppendChildResource("immutabilityPolicies", "default"));
         }
 
         /// <summary>
