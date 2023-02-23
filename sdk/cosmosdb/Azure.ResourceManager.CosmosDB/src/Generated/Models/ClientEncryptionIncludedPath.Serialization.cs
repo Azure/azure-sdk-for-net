@@ -15,13 +15,13 @@ namespace Azure.ResourceManager.CosmosDB.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("path");
+            writer.WritePropertyName("path"u8);
             writer.WriteStringValue(Path);
-            writer.WritePropertyName("clientEncryptionKeyId");
+            writer.WritePropertyName("clientEncryptionKeyId"u8);
             writer.WriteStringValue(ClientEncryptionKeyId);
-            writer.WritePropertyName("encryptionType");
+            writer.WritePropertyName("encryptionType"u8);
             writer.WriteStringValue(EncryptionType);
-            writer.WritePropertyName("encryptionAlgorithm");
+            writer.WritePropertyName("encryptionAlgorithm"u8);
             writer.WriteStringValue(EncryptionAlgorithm);
             writer.WriteEndObject();
         }
@@ -34,22 +34,22 @@ namespace Azure.ResourceManager.CosmosDB.Models
             string encryptionAlgorithm = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("path"))
+                if (property.NameEquals("path"u8))
                 {
                     path = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("clientEncryptionKeyId"))
+                if (property.NameEquals("clientEncryptionKeyId"u8))
                 {
                     clientEncryptionKeyId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("encryptionType"))
+                if (property.NameEquals("encryptionType"u8))
                 {
                     encryptionType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("encryptionAlgorithm"))
+                if (property.NameEquals("encryptionAlgorithm"u8))
                 {
                     encryptionAlgorithm = property.Value.GetString();
                     continue;

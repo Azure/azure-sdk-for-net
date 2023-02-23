@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(DatabaseName))
             {
-                writer.WritePropertyName("databaseName");
+                writer.WritePropertyName("databaseName"u8);
                 writer.WriteStringValue(DatabaseName);
             }
             if (Optional.IsCollectionDefined(GraphNames))
             {
-                writer.WritePropertyName("graphNames");
+                writer.WritePropertyName("graphNames"u8);
                 writer.WriteStartArray();
                 foreach (var item in GraphNames)
                 {
@@ -40,12 +40,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
             Optional<IList<string>> graphNames = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("databaseName"))
+                if (property.NameEquals("databaseName"u8))
                 {
                     databaseName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("graphNames"))
+                if (property.NameEquals("graphNames"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

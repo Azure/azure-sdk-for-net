@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
             if (Optional.IsCollectionDefined(GremlinDatabasesToRestore))
             {
-                writer.WritePropertyName("gremlinDatabasesToRestore");
+                writer.WritePropertyName("gremlinDatabasesToRestore"u8);
                 writer.WriteStartArray();
                 foreach (var item in GremlinDatabasesToRestore)
                 {
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
             if (Optional.IsCollectionDefined(TablesToRestore))
             {
-                writer.WritePropertyName("tablesToRestore");
+                writer.WritePropertyName("tablesToRestore"u8);
                 writer.WriteStartArray();
                 foreach (var item in TablesToRestore)
                 {
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     databasesToRestore = array;
                     continue;
                 }
-                if (property.NameEquals("gremlinDatabasesToRestore"))
+                if (property.NameEquals("gremlinDatabasesToRestore"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     gremlinDatabasesToRestore = array;
                     continue;
                 }
-                if (property.NameEquals("tablesToRestore"))
+                if (property.NameEquals("tablesToRestore"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -19,22 +19,22 @@ namespace Azure.ResourceManager.CosmosDB.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Id))
             {
-                writer.WritePropertyName("id");
+                writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
             if (Optional.IsDefined(EncryptionAlgorithm))
             {
-                writer.WritePropertyName("encryptionAlgorithm");
+                writer.WritePropertyName("encryptionAlgorithm"u8);
                 writer.WriteStringValue(EncryptionAlgorithm);
             }
             if (Optional.IsDefined(WrappedDataEncryptionKey))
             {
-                writer.WritePropertyName("wrappedDataEncryptionKey");
+                writer.WritePropertyName("wrappedDataEncryptionKey"u8);
                 writer.WriteBase64StringValue(WrappedDataEncryptionKey, "D");
             }
             if (Optional.IsDefined(KeyWrapMetadata))
             {
-                writer.WritePropertyName("keyWrapMetadata");
+                writer.WritePropertyName("keyWrapMetadata"u8);
                 writer.WriteObjectValue(KeyWrapMetadata);
             }
             writer.WriteEndObject();
@@ -51,12 +51,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
             Optional<KeyWrapMetadata> keyWrapMetadata = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("_rid"))
+                if (property.NameEquals("_rid"u8))
                 {
                     rid = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("_ts"))
+                if (property.NameEquals("_ts"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     ts = property.Value.GetSingle();
                     continue;
                 }
-                if (property.NameEquals("_etag"))
+                if (property.NameEquals("_etag"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -76,17 +76,17 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     etag = new ETag(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("encryptionAlgorithm"))
+                if (property.NameEquals("encryptionAlgorithm"u8))
                 {
                     encryptionAlgorithm = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("wrappedDataEncryptionKey"))
+                if (property.NameEquals("wrappedDataEncryptionKey"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     wrappedDataEncryptionKey = property.Value.GetBytesFromBase64("D");
                     continue;
                 }
-                if (property.NameEquals("keyWrapMetadata"))
+                if (property.NameEquals("keyWrapMetadata"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

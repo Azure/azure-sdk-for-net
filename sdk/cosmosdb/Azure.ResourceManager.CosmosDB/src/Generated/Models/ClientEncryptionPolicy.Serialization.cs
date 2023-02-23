@@ -16,14 +16,14 @@ namespace Azure.ResourceManager.CosmosDB.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("includedPaths");
+            writer.WritePropertyName("includedPaths"u8);
             writer.WriteStartArray();
             foreach (var item in IncludedPaths)
             {
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            writer.WritePropertyName("policyFormatVersion");
+            writer.WritePropertyName("policyFormatVersion"u8);
             writer.WriteNumberValue(PolicyFormatVersion);
             writer.WriteEndObject();
         }
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             int policyFormatVersion = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("includedPaths"))
+                if (property.NameEquals("includedPaths"u8))
                 {
                     List<ClientEncryptionIncludedPath> array = new List<ClientEncryptionIncludedPath>();
                     foreach (var item in property.Value.EnumerateArray())
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     includedPaths = array;
                     continue;
                 }
-                if (property.NameEquals("policyFormatVersion"))
+                if (property.NameEquals("policyFormatVersion"u8))
                 {
                     policyFormatVersion = property.Value.GetInt32();
                     continue;

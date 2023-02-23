@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
             if (Optional.IsDefined(ClientEncryptionPolicy))
             {
-                writer.WritePropertyName("clientEncryptionPolicy");
+                writer.WritePropertyName("clientEncryptionPolicy"u8);
                 writer.WriteObjectValue(ClientEncryptionPolicy);
             }
             if (Optional.IsDefined(AnalyticalStorageTtl))
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     conflictResolutionPolicy = ConflictResolutionPolicy.DeserializeConflictResolutionPolicy(property.Value);
                     continue;
                 }
-                if (property.NameEquals("clientEncryptionPolicy"))
+                if (property.NameEquals("clientEncryptionPolicy"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     clientEncryptionPolicy = ClientEncryptionPolicy.DeserializeClientEncryptionPolicy(property.Value);
                     continue;
                 }
-                if (property.NameEquals("analyticalStorageTtl"))
+                if (property.NameEquals("analyticalStorageTtl"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

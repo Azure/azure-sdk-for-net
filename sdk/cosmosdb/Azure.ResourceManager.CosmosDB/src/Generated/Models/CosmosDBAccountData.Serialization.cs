@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.CosmosDB
             }
             if (Optional.IsDefined(MinimalTlsVersion))
             {
-                writer.WritePropertyName("minimalTlsVersion");
+                writer.WritePropertyName("minimalTlsVersion"u8);
                 writer.WriteStringValue(MinimalTlsVersion.Value.ToString());
             }
             writer.WriteEndObject();
@@ -744,7 +744,7 @@ namespace Azure.ResourceManager.CosmosDB
                             enablePartitionMerge = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("minimalTlsVersion"))
+                        if (property0.NameEquals("minimalTlsVersion"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

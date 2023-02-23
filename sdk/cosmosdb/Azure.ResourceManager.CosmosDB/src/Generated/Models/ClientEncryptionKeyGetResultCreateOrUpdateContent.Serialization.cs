@@ -15,9 +15,9 @@ namespace Azure.ResourceManager.CosmosDB.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            writer.WritePropertyName("resource");
+            writer.WritePropertyName("resource"u8);
             writer.WriteObjectValue(Resource);
             writer.WriteEndObject();
             writer.WriteEndObject();
