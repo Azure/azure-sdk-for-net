@@ -457,17 +457,17 @@ namespace Azure.Messaging.ServiceBus.Amqp
                     }
 
                     entries.Add(entry);
+                    cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
                 }
 
                 request.Map[ManagementConstants.Properties.Messages] = entries;
 
+                cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
                 AmqpResponseMessage amqpResponseMessage = await ManagementUtilities.ExecuteRequestResponseAsync(
                     _connectionScope,
                     _managementLink,
                     request,
                     timeout).ConfigureAwait(false);
-
-                cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
                 if (amqpResponseMessage.StatusCode == AmqpResponseStatusCode.OK)
                 {
@@ -547,13 +547,12 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
                 request.Map[ManagementConstants.Properties.SequenceNumbers] = sequenceNumbers;
 
+                cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
                 AmqpResponseMessage amqpResponseMessage = await ManagementUtilities.ExecuteRequestResponseAsync(
                         _connectionScope,
                         _managementLink,
                         request,
                         timeout).ConfigureAwait(false);
-
-                cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
                 if (amqpResponseMessage.StatusCode != AmqpResponseStatusCode.OK)
                 {

@@ -344,7 +344,7 @@ namespace Azure.Messaging.ServiceBus
                 Logger.CreateMessageBatchException(Identifier, ex.ToString());
                 throw;
             }
-            cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
+
             Logger.CreateMessageBatchComplete(Identifier);
             return batch;
         }
@@ -395,7 +395,6 @@ namespace Azure.Messaging.ServiceBus
                 messageBatch.Unlock();
             }
 
-            cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
             Logger.SendMessageComplete(Identifier);
         }
 
@@ -502,7 +501,6 @@ namespace Azure.Messaging.ServiceBus
                 throw;
             }
 
-            cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
             Logger.ScheduleMessagesComplete(Identifier);
             return sequenceNumbers;
         }
@@ -564,7 +562,6 @@ namespace Azure.Messaging.ServiceBus
                 throw;
             }
 
-            cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
             Logger.CancelScheduledMessagesComplete(Identifier);
         }
 

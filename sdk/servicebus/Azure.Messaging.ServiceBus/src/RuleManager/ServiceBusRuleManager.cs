@@ -175,7 +175,6 @@ namespace Azure.Messaging.ServiceBus
                 throw;
             }
 
-            cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
             ServiceBusEventSource.Log.CreateRuleComplete(Identifier, options.Name);
         }
 
