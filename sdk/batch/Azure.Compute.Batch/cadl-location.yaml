@@ -1,0 +1,5 @@
+directory: specification/batch/data-plane/Microsoft.Batch/stable/cadl
+spec-root-dir: C:/git/azure-rest-api-specs
+commit: 4765664c1be1f6643cc7d6ab234dffa2b66be822
+repo: Azure/azure-rest-api-specs
+cleanup: false
