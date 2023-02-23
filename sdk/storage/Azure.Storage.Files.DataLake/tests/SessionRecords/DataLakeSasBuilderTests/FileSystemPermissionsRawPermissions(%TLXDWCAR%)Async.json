@@ -34,7 +34,7 @@
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://seanmccdfsca2.dfs.core.windows.net/test-filesystem-447db243-5dca-5ae4-944c-b97c2506836c?sv=2021-12-02&st=2020-07-14T00%3A17%3A28Z&se=2020-07-14T02%3A17%3A28Z&sr=c&sp=racwdxlt&sig=Sanitized&resource=filesystem&recursive=false&upn=false",
+      "RequestUri": "https://seanmccdfsca2.dfs.core.windows.net/test-filesystem-447db243-5dca-5ae4-944c-b97c2506836c?sv=2022-11-02&st=2020-07-14T00%3A17%3A28Z&se=2020-07-14T02%3A17%3A28Z&sr=c&sp=racwdxlt&sig=Sanitized&resource=filesystem&recursive=false&upn=false",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "User-Agent": [

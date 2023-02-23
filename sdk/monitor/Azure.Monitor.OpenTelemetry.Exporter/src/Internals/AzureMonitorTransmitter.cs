@@ -41,6 +41,26 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             _applicationInsightsRestClient = InitializeRestClient(options, _connectionVars, credential);
 
             _fileBlobProvider = InitializeOfflineStorage(options);
+
+            // TODO: uncomment following line for enablement.
+            // InitializeStatsbeat(_connectionVars);
+        }
+
+        private static void InitializeStatsbeat(ConnectionVars connectionVars)
+        {
+            try
+            {
+                // Do not initialize statsbeat for statsbeat.
+                if (connectionVars != null && connectionVars.InstrumentationKey != ConnectionStringParser.GetValues(Statsbeat.Statsbeat_ConnectionString_EU).InstrumentationKey && connectionVars.InstrumentationKey != ConnectionStringParser.GetValues(Statsbeat.Statsbeat_ConnectionString_NonEU).InstrumentationKey)
+                {
+                    // TODO: Implement IDisposable for transmitter and dispose statsbeat.
+                    _ = new Statsbeat(connectionVars);
+                }
+            }
+            catch (Exception ex)
+            {
+                AzureMonitorExporterEventSource.Log.WriteWarning($"ErrorInitializingStatsBeatfor:{connectionVars.InstrumentationKey}", ex);
+            }
         }
 
         public string InstrumentationKey => _connectionVars.InstrumentationKey;

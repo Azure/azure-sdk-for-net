@@ -1,7 +1,7 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://seanmcccanary3.file.core.windows.net/test-share-2bcb781c-e8f8-d582-ea45-ceb420705bf8?sv=2021-12-02\u0026ss=bfqt\u0026srt=sco\u0026spr=https\u0026se=2021-09-01T21%3A38%3A30Z\u0026sp=rwdxylacuptfi\u0026sig=Sanitized\u0026restype=share",
+      "RequestUri": "https://seanmcccanary3.file.core.windows.net/test-share-2bcb781c-e8f8-d582-ea45-ceb420705bf8?sv=2022-11-02\u0026ss=bfqt\u0026srt=sco\u0026spr=https\u0026se=2021-09-01T21%3A38%3A30Z\u0026sp=rwdxylacuptfi\u0026sig=Sanitized\u0026restype=share",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/xml",
@@ -32,7 +32,7 @@
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://seanmcccanary3.file.core.windows.net/test-share-2bcb781c-e8f8-d582-ea45-ceb420705bf8/test-directory-c4d75df7-7eff-4a4a-5cc8-4154749e64f6?sv=2021-12-02\u0026ss=bfqt\u0026srt=sco\u0026spr=https\u0026se=2021-09-01T21%3A38%3A30Z\u0026sp=rwdxylacuptfi\u0026sig=Sanitized\u0026restype=directory",
+      "RequestUri": "https://seanmcccanary3.file.core.windows.net/test-share-2bcb781c-e8f8-d582-ea45-ceb420705bf8/test-directory-c4d75df7-7eff-4a4a-5cc8-4154749e64f6?sv=2022-11-02\u0026ss=bfqt\u0026srt=sco\u0026spr=https\u0026se=2021-09-01T21%3A38%3A30Z\u0026sp=rwdxylacuptfi\u0026sig=Sanitized\u0026restype=directory",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/xml",
@@ -75,7 +75,7 @@
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://seanmcccanary3.file.core.windows.net/test-share-8c445b5e-ce51-b2a9-09ed-43944fda4d71?sv=2021-12-02\u0026ss=bfqt\u0026srt=sco\u0026spr=https\u0026se=2021-09-01T21%3A38%3A30Z\u0026sp=rwdxylacuptfi\u0026sig=Sanitized\u0026restype=share",
+      "RequestUri": "https://seanmcccanary3.file.core.windows.net/test-share-8c445b5e-ce51-b2a9-09ed-43944fda4d71?sv=2022-11-02\u0026ss=bfqt\u0026srt=sco\u0026spr=https\u0026se=2021-09-01T21%3A38%3A30Z\u0026sp=rwdxylacuptfi\u0026sig=Sanitized\u0026restype=share",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/xml",
@@ -106,7 +106,7 @@
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://seanmcccanary3.file.core.windows.net/test-share-8c445b5e-ce51-b2a9-09ed-43944fda4d71/test-directory-618536d5-af92-3fa6-7024-d7e30277f473?sv=2021-12-02\u0026ss=bfqt\u0026srt=sco\u0026spr=https\u0026se=2021-09-01T21%3A38%3A30Z\u0026sp=rwdxylacuptfi\u0026sig=Sanitized\u0026restype=directory",
+      "RequestUri": "https://seanmcccanary3.file.core.windows.net/test-share-8c445b5e-ce51-b2a9-09ed-43944fda4d71/test-directory-618536d5-af92-3fa6-7024-d7e30277f473?sv=2022-11-02\u0026ss=bfqt\u0026srt=sco\u0026spr=https\u0026se=2021-09-01T21%3A38%3A30Z\u0026sp=rwdxylacuptfi\u0026sig=Sanitized\u0026restype=directory",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/xml",
@@ -149,7 +149,7 @@
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://seanmcccanary3.file.core.windows.net/test-share-2bcb781c-e8f8-d582-ea45-ceb420705bf8/test-directory-c4d75df7-7eff-4a4a-5cc8-4154749e64f6/test-file-9f5b2bb3-5838-a6ad-2c81-2ddc6fb55768?sv=2021-12-02\u0026ss=bfqt\u0026srt=sco\u0026spr=https\u0026se=2021-09-01T21%3A38%3A30Z\u0026sp=rwdxylacuptfi\u0026sig=Sanitized",
+      "RequestUri": "https://seanmcccanary3.file.core.windows.net/test-share-2bcb781c-e8f8-d582-ea45-ceb420705bf8/test-directory-c4d75df7-7eff-4a4a-5cc8-4154749e64f6/test-file-9f5b2bb3-5838-a6ad-2c81-2ddc6fb55768?sv=2022-11-02\u0026ss=bfqt\u0026srt=sco\u0026spr=https\u0026se=2021-09-01T21%3A38%3A30Z\u0026sp=rwdxylacuptfi\u0026sig=Sanitized",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/xml",
@@ -194,7 +194,7 @@
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://seanmcccanary3.file.core.windows.net/test-share-8c445b5e-ce51-b2a9-09ed-43944fda4d71/test-directory-618536d5-af92-3fa6-7024-d7e30277f473/test-file-46484f7a-5fcd-444d-66cb-a3d4218a8d6f?sv=2021-12-02\u0026ss=bfqt\u0026srt=sco\u0026spr=https\u0026se=2021-09-01T21%3A38%3A30Z\u0026sp=rwdxylacuptfi\u0026sig=Sanitized",
+      "RequestUri": "https://seanmcccanary3.file.core.windows.net/test-share-8c445b5e-ce51-b2a9-09ed-43944fda4d71/test-directory-618536d5-af92-3fa6-7024-d7e30277f473/test-file-46484f7a-5fcd-444d-66cb-a3d4218a8d6f?sv=2022-11-02\u0026ss=bfqt\u0026srt=sco\u0026spr=https\u0026se=2021-09-01T21%3A38%3A30Z\u0026sp=rwdxylacuptfi\u0026sig=Sanitized",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/xml",
@@ -239,7 +239,7 @@
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://seanmcccanary3.file.core.windows.net/test-share-2bcb781c-e8f8-d582-ea45-ceb420705bf8/test-directory-c4d75df7-7eff-4a4a-5cc8-4154749e64f6/test-file-9f5b2bb3-5838-a6ad-2c81-2ddc6fb55768?sv=2021-12-02\u0026ss=bfqt\u0026srt=sco\u0026spr=https\u0026se=2021-09-01T21%3A38%3A30Z\u0026sp=rwdxylacuptfi\u0026sig=Sanitized\u0026comp=range",
+      "RequestUri": "https://seanmcccanary3.file.core.windows.net/test-share-2bcb781c-e8f8-d582-ea45-ceb420705bf8/test-directory-c4d75df7-7eff-4a4a-5cc8-4154749e64f6/test-file-9f5b2bb3-5838-a6ad-2c81-2ddc6fb55768?sv=2022-11-02\u0026ss=bfqt\u0026srt=sco\u0026spr=https\u0026se=2021-09-01T21%3A38%3A30Z\u0026sp=rwdxylacuptfi\u0026sig=Sanitized\u0026comp=range",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/xml",
@@ -276,7 +276,7 @@
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://seanmcccanary3.file.core.windows.net/test-share-8c445b5e-ce51-b2a9-09ed-43944fda4d71/test-directory-618536d5-af92-3fa6-7024-d7e30277f473/test-file-46484f7a-5fcd-444d-66cb-a3d4218a8d6f?sv=2021-12-02\u0026ss=bfqt\u0026srt=sco\u0026spr=https\u0026se=2021-09-01T21%3A38%3A30Z\u0026sp=rwdxylacuptfi\u0026sig=Sanitized\u0026comp=range",
+      "RequestUri": "https://seanmcccanary3.file.core.windows.net/test-share-8c445b5e-ce51-b2a9-09ed-43944fda4d71/test-directory-618536d5-af92-3fa6-7024-d7e30277f473/test-file-46484f7a-5fcd-444d-66cb-a3d4218a8d6f?sv=2022-11-02\u0026ss=bfqt\u0026srt=sco\u0026spr=https\u0026se=2021-09-01T21%3A38%3A30Z\u0026sp=rwdxylacuptfi\u0026sig=Sanitized\u0026comp=range",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/xml",
@@ -313,7 +313,7 @@
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://seanmcccanary3.file.core.windows.net/test-share-2bcb781c-e8f8-d582-ea45-ceb420705bf8?sv=2021-12-02\u0026ss=bfqt\u0026srt=sco\u0026spr=https\u0026se=2021-09-01T21%3A38%3A30Z\u0026sp=rwdxylacuptfi\u0026sig=Sanitized\u0026restype=share",
+      "RequestUri": "https://seanmcccanary3.file.core.windows.net/test-share-2bcb781c-e8f8-d582-ea45-ceb420705bf8?sv=2022-11-02\u0026ss=bfqt\u0026srt=sco\u0026spr=https\u0026se=2021-09-01T21%3A38%3A30Z\u0026sp=rwdxylacuptfi\u0026sig=Sanitized\u0026restype=share",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Accept": "application/xml",
@@ -343,7 +343,7 @@
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://seanmcccanary3.file.core.windows.net/test-share-8c445b5e-ce51-b2a9-09ed-43944fda4d71?sv=2021-12-02\u0026ss=bfqt\u0026srt=sco\u0026spr=https\u0026se=2021-09-01T21%3A38%3A30Z\u0026sp=rwdxylacuptfi\u0026sig=Sanitized\u0026restype=share",
+      "RequestUri": "https://seanmcccanary3.file.core.windows.net/test-share-8c445b5e-ce51-b2a9-09ed-43944fda4d71?sv=2022-11-02\u0026ss=bfqt\u0026srt=sco\u0026spr=https\u0026se=2021-09-01T21%3A38%3A30Z\u0026sp=rwdxylacuptfi\u0026sig=Sanitized\u0026restype=share",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Accept": "application/xml",

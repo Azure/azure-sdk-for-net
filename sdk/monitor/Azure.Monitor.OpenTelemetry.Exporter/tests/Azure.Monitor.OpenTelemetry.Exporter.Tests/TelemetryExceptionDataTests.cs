@@ -1,8 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-#nullable disable // TODO: remove and fix errors
-
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -47,7 +45,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         [Fact]
         public void CallingConvertToExceptionDetailsWithNullExceptionThrowsArgumentNullException()
         {
+#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
             Assert.Throws<ArgumentNullException>(() => new TelemetryExceptionDetails(null, "Exception Message", null));
+#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
         }
 
         [Fact]
@@ -92,7 +92,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         public void TestNullMethodInfoInStack()
         {
             var frameMock = new Mock<System.Diagnostics.StackFrame>(null, 0, 0);
+#pragma warning disable CS8600 // Converting null literal or possible null value to non-nullable type.
+#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
             frameMock.Setup(x => x.GetMethod()).Returns((MethodBase)null);
+#pragma warning restore CS8600 // Converting null literal or possible null value to non-nullable type.
+#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
 
             Models.StackFrame stackFrame = new Models.StackFrame(frameMock.Object, 0);
 
@@ -109,8 +113,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 
             StackTrace st = new StackTrace(exception, true);
             var frame = st.GetFrame(0);
-            var line = frame.GetFileLineNumber();
-            var fileName = frame.GetFileName();
+            var line = frame?.GetFileLineNumber();
+            var fileName = frame?.GetFileName();
 
             var exceptionDetails = new TelemetryExceptionDetails(exception, exception.Message, null);
             var stack = exceptionDetails.ParsedStack;
@@ -362,7 +366,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         [MethodImpl(MethodImplOptions.NoInlining)]
         private Exception CreateException(int stackDepth)
         {
-            Exception exception = null;
+            Exception? exception = null;
 
             try
             {
@@ -373,7 +377,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
                 exception = exp;
             }
 
-            return exception;
+            return exception!;
         }
 
         [MethodImpl(MethodImplOptions.NoInlining)]
