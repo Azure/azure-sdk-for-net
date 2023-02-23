@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             Optional<IReadOnlyList<AppPlatformConfigurationServiceGitReposValidationMessages>> gitReposValidationResult = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("isValid"))
+                if (property.NameEquals("isValid"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     isValid = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("gitReposValidationResult"))
+                if (property.NameEquals("gitReposValidationResult"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

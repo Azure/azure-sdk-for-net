@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Sql.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("oldManagedServerDnsAliasResourceId");
+            writer.WritePropertyName("oldManagedServerDnsAliasResourceId"u8);
             writer.WriteStringValue(OldManagedServerDnsAliasResourceId);
             writer.WriteEndObject();
         }

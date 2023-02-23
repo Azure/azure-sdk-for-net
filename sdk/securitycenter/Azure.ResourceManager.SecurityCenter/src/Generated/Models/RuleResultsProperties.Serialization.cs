@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Results))
             {
-                writer.WritePropertyName("results");
+                writer.WritePropertyName("results"u8);
                 writer.WriteStartArray();
                 foreach (var item in Results)
                 {
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             Optional<IList<IList<string>>> results = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("results"))
+                if (property.NameEquals("results"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

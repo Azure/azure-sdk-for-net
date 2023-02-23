@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.FluidRelay.Models
             Optional<IReadOnlyList<string>> serviceEndpoints = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("ordererEndpoints"))
+                if (property.NameEquals("ordererEndpoints"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.FluidRelay.Models
                     ordererEndpoints = array;
                     continue;
                 }
-                if (property.NameEquals("storageEndpoints"))
+                if (property.NameEquals("storageEndpoints"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.FluidRelay.Models
                     storageEndpoints = array;
                     continue;
                 }
-                if (property.NameEquals("serviceEndpoints"))
+                if (property.NameEquals("serviceEndpoints"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

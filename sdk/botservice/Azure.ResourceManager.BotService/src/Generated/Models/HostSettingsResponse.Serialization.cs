@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.BotService.Models
             Optional<string> botOpenIdMetadata = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("OAuthUrl"))
+                if (property.NameEquals("OAuthUrl"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.BotService.Models
                     oAuthUrl = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("ToBotFromChannelOpenIdMetadataUrl"))
+                if (property.NameEquals("ToBotFromChannelOpenIdMetadataUrl"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -45,12 +45,12 @@ namespace Azure.ResourceManager.BotService.Models
                     toBotFromChannelOpenIdMetadataUrl = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("ToBotFromChannelTokenIssuer"))
+                if (property.NameEquals("ToBotFromChannelTokenIssuer"u8))
                 {
                     toBotFromChannelTokenIssuer = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("ToBotFromEmulatorOpenIdMetadataUrl"))
+                if (property.NameEquals("ToBotFromEmulatorOpenIdMetadataUrl"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.BotService.Models
                     toBotFromEmulatorOpenIdMetadataUrl = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("ToChannelFromBotLoginUrl"))
+                if (property.NameEquals("ToChannelFromBotLoginUrl"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -70,12 +70,12 @@ namespace Azure.ResourceManager.BotService.Models
                     toChannelFromBotLoginUrl = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("ToChannelFromBotOAuthScope"))
+                if (property.NameEquals("ToChannelFromBotOAuthScope"u8))
                 {
                     toChannelFromBotOAuthScope = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("ValidateAuthority"))
+                if (property.NameEquals("ValidateAuthority"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.BotService.Models
                     validateAuthority = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("BotOpenIdMetadata"))
+                if (property.NameEquals("BotOpenIdMetadata"u8))
                 {
                     botOpenIdMetadata = property.Value.GetString();
                     continue;

@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(FactoryResourceId))
             {
-                writer.WritePropertyName("factoryResourceId");
+                writer.WritePropertyName("factoryResourceId"u8);
                 writer.WriteStringValue(FactoryResourceId);
             }
             if (Optional.IsDefined(RepoConfiguration))
             {
-                writer.WritePropertyName("repoConfiguration");
+                writer.WritePropertyName("repoConfiguration"u8);
                 writer.WriteObjectValue(RepoConfiguration);
             }
             writer.WriteEndObject();

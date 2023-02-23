@@ -21,27 +21,27 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             string instanceType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("containerName"))
+                if (property.NameEquals("containerName"u8))
                 {
                     containerName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("fabricName"))
+                if (property.NameEquals("fabricName"u8))
                 {
                     fabricName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("remoteContainerName"))
+                if (property.NameEquals("remoteContainerName"u8))
                 {
                     remoteContainerName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("remoteFabricName"))
+                if (property.NameEquals("remoteFabricName"u8))
                 {
                     remoteFabricName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("instanceType"))
+                if (property.NameEquals("instanceType"u8))
                 {
                     instanceType = property.Value.GetString();
                     continue;

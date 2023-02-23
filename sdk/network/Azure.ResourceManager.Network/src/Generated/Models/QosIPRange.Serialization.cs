@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.Network.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(StartIP))
             {
-                writer.WritePropertyName("startIP");
+                writer.WritePropertyName("startIP"u8);
                 writer.WriteStringValue(StartIP);
             }
             if (Optional.IsDefined(EndIP))
             {
-                writer.WritePropertyName("endIP");
+                writer.WritePropertyName("endIP"u8);
                 writer.WriteStringValue(EndIP);
             }
             writer.WriteEndObject();
@@ -34,12 +34,12 @@ namespace Azure.ResourceManager.Network.Models
             Optional<string> endIP = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("startIP"))
+                if (property.NameEquals("startIP"u8))
                 {
                     startIP = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("endIP"))
+                if (property.NameEquals("endIP"u8))
                 {
                     endIP = property.Value.GetString();
                     continue;

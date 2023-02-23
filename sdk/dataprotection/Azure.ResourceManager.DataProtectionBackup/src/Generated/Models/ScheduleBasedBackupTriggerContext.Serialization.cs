@@ -16,16 +16,16 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("schedule");
+            writer.WritePropertyName("schedule"u8);
             writer.WriteObjectValue(Schedule);
-            writer.WritePropertyName("taggingCriteria");
+            writer.WritePropertyName("taggingCriteria"u8);
             writer.WriteStartArray();
             foreach (var item in TaggingCriteriaList)
             {
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            writer.WritePropertyName("objectType");
+            writer.WritePropertyName("objectType"u8);
             writer.WriteStringValue(ObjectType);
             writer.WriteEndObject();
         }
@@ -37,12 +37,12 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             string objectType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("schedule"))
+                if (property.NameEquals("schedule"u8))
                 {
                     schedule = DataProtectionBackupSchedule.DeserializeDataProtectionBackupSchedule(property.Value);
                     continue;
                 }
-                if (property.NameEquals("taggingCriteria"))
+                if (property.NameEquals("taggingCriteria"u8))
                 {
                     List<DataProtectionBackupTaggingCriteria> array = new List<DataProtectionBackupTaggingCriteria>();
                     foreach (var item in property.Value.EnumerateArray())
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     taggingCriteria = array;
                     continue;
                 }
-                if (property.NameEquals("objectType"))
+                if (property.NameEquals("objectType"u8))
                 {
                     objectType = property.Value.GetString();
                     continue;

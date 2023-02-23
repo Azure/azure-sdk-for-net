@@ -15,19 +15,19 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("type");
+            writer.WritePropertyName("type"u8);
             writer.WriteStringValue(ResourceCapabilitiesBaseType);
             writer.WriteEndObject();
         }
 
         internal static ResourceCapabilitiesBase DeserializeResourceCapabilitiesBase(JsonElement element)
         {
-            string type = default;
+            ResourceType type = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
-                    type = property.Value.GetString();
+                    type = new ResourceType(property.Value.GetString());
                     continue;
                 }
             }

@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("number");
+            writer.WritePropertyName("number"u8);
             writer.WriteNumberValue(Number);
             if (Optional.IsDefined(AllowedSourceAddressPrefix))
             {
-                writer.WritePropertyName("allowedSourceAddressPrefix");
+                writer.WritePropertyName("allowedSourceAddressPrefix"u8);
                 writer.WriteStringValue(AllowedSourceAddressPrefix);
             }
-            writer.WritePropertyName("endTimeUtc");
+            writer.WritePropertyName("endTimeUtc"u8);
             writer.WriteStringValue(EndOn, "O");
             writer.WriteEndObject();
         }

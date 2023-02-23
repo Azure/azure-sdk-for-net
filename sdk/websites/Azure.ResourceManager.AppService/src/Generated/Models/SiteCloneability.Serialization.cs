@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<IReadOnlyList<SiteCloneabilityCriterion>> blockingCharacteristics = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("result"))
+                if (property.NameEquals("result"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.AppService.Models
                     result = property.Value.GetString().ToCloneAbilityResult();
                     continue;
                 }
-                if (property.NameEquals("blockingFeatures"))
+                if (property.NameEquals("blockingFeatures"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.AppService.Models
                     blockingFeatures = array;
                     continue;
                 }
-                if (property.NameEquals("unsupportedFeatures"))
+                if (property.NameEquals("unsupportedFeatures"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.AppService.Models
                     unsupportedFeatures = array;
                     continue;
                 }
-                if (property.NameEquals("blockingCharacteristics"))
+                if (property.NameEquals("blockingCharacteristics"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

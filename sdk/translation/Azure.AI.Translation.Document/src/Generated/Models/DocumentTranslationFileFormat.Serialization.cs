@@ -22,12 +22,12 @@ namespace Azure.AI.Translation.Document
             Optional<IReadOnlyList<string>> versions = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("format"))
+                if (property.NameEquals("format"u8))
                 {
                     format = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("fileExtensions"))
+                if (property.NameEquals("fileExtensions"u8))
                 {
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
@@ -37,7 +37,7 @@ namespace Azure.AI.Translation.Document
                     fileExtensions = array;
                     continue;
                 }
-                if (property.NameEquals("contentTypes"))
+                if (property.NameEquals("contentTypes"u8))
                 {
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
@@ -47,12 +47,12 @@ namespace Azure.AI.Translation.Document
                     contentTypes = array;
                     continue;
                 }
-                if (property.NameEquals("defaultVersion"))
+                if (property.NameEquals("defaultVersion"u8))
                 {
                     defaultVersion = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("versions"))
+                if (property.NameEquals("versions"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

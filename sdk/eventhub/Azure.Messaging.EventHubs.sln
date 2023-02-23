@@ -31,6 +31,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Messaging.EventHubs.P
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Messaging.EventHubs.Stress", "Azure.Messaging.EventHubs\stress\src\Azure.Messaging.EventHubs.Stress.csproj", "{86B3D4A0-ACF0-45F1-9ACB-F6A786F49DA4}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Core.Amqp", "..\core\Azure.Core.Amqp\src\Azure.Core.Amqp.csproj", "{5CFD80DB-98F3-4E59-9792-1C421786D3D0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -85,6 +87,10 @@ Global
 		{86B3D4A0-ACF0-45F1-9ACB-F6A786F49DA4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{86B3D4A0-ACF0-45F1-9ACB-F6A786F49DA4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{86B3D4A0-ACF0-45F1-9ACB-F6A786F49DA4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5CFD80DB-98F3-4E59-9792-1C421786D3D0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5CFD80DB-98F3-4E59-9792-1C421786D3D0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5CFD80DB-98F3-4E59-9792-1C421786D3D0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5CFD80DB-98F3-4E59-9792-1C421786D3D0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

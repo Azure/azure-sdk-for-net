@@ -3,11 +3,8 @@
 
 using System;
 using System.Collections.Generic;
-using System.Reflection.Metadata;
 using Azure.Core;
 using Azure.Core.TestFramework;
-using Microsoft.Extensions.Azure;
-using Microsoft.Extensions.Options;
 using NUnit.Framework;
 
 namespace Azure.Identity.Tests
@@ -325,6 +322,7 @@ namespace Azure.Identity.Tests
 
         [Test]
         public void ValidateExcludeOptionsHonored([Values(true, false)] bool excludeEnvironmentCredential,
+                                                   [Values(true, false)] bool excludeWorkloadIdentityCredential,
                                                    [Values(true, false)] bool excludeManagedIdentityCredential,
                                                    [Values(true, false)] bool excludeDeveloperCliCredential,
                                                    [Values(true, false)] bool excludeSharedTokenCacheCredential,
@@ -344,6 +342,7 @@ namespace Azure.Identity.Tests
             {
                 var expCredentialTypes = new List<Type>();
                 expCredentialTypes.ConditionalAdd(!excludeEnvironmentCredential, typeof(EnvironmentCredential));
+                expCredentialTypes.ConditionalAdd(!excludeWorkloadIdentityCredential, typeof(WorkloadIdentityCredential));
                 expCredentialTypes.ConditionalAdd(!excludeManagedIdentityCredential, typeof(ManagedIdentityCredential));
                 expCredentialTypes.ConditionalAdd(!excludeDeveloperCliCredential, typeof(AzureDeveloperCliCredential));
                 expCredentialTypes.ConditionalAdd(!excludeSharedTokenCacheCredential, typeof(SharedTokenCacheCredential));
@@ -356,6 +355,7 @@ namespace Azure.Identity.Tests
                 var options = new DefaultAzureCredentialOptions
                 {
                     ExcludeEnvironmentCredential = excludeEnvironmentCredential,
+                    ExcludeWorkloadIdentityCredential= excludeWorkloadIdentityCredential,
                     ExcludeManagedIdentityCredential = excludeManagedIdentityCredential,
                     ExcludeAzureDeveloperCliCredential = excludeDeveloperCliCredential,
                     ExcludeSharedTokenCacheCredential = excludeSharedTokenCacheCredential,

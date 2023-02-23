@@ -2,7 +2,9 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http.Headers;
 using Azure.Core;
 
 namespace Azure.Identity
@@ -22,9 +24,7 @@ namespace Azure.Identity
 
             _useDefaultCredentialChain = options == null;
 
-            Options = options?.ShallowClone() ?? new DefaultAzureCredentialOptions();
-
-            Options.AdditionallyAllowedTenantsCore = Options.AdditionallyAllowedTenants.ToList();
+            Options = options?.Clone<DefaultAzureCredentialOptions>() ?? new DefaultAzureCredentialOptions();
         }
 
         public DefaultAzureCredentialOptions Options { get; }
@@ -37,65 +37,82 @@ namespace Azure.Identity
                 return s_defaultCredentialChain;
             }
 
-            int i = 0;
-            TokenCredential[] chain = new TokenCredential[9];
+            List<TokenCredential> chain = new(10);
 
             if (!Options.ExcludeEnvironmentCredential)
             {
-                chain[i++] = CreateEnvironmentCredential();
+                chain.Add(CreateEnvironmentCredential());
+            }
+
+            if (!Options.ExcludeWorkloadIdentityCredential)
+            {
+                chain.Add(CreateWorkloadIdentityCredential());
             }
 
             if (!Options.ExcludeManagedIdentityCredential)
             {
-                chain[i++] = CreateManagedIdentityCredential();
+                chain.Add(CreateManagedIdentityCredential());
             }
 
             if (!Options.ExcludeAzureDeveloperCliCredential)
             {
-                chain[i++] = CreateAzureDeveloperCliCredential();
+                chain.Add(CreateAzureDeveloperCliCredential());
             }
 
             if (!Options.ExcludeSharedTokenCacheCredential)
             {
-                chain[i++] = CreateSharedTokenCacheCredential();
+                chain.Add(CreateSharedTokenCacheCredential());
             }
 
             if (!Options.ExcludeVisualStudioCredential)
             {
-                chain[i++] = CreateVisualStudioCredential();
+                chain.Add(CreateVisualStudioCredential());
             }
 
             if (!Options.ExcludeVisualStudioCodeCredential)
             {
-                chain[i++] = CreateVisualStudioCodeCredential();
+                chain.Add(CreateVisualStudioCodeCredential());
             }
 
             if (!Options.ExcludeAzureCliCredential)
             {
-                chain[i++] = CreateAzureCliCredential();
+                chain.Add(CreateAzureCliCredential());
             }
 
             if (!Options.ExcludeAzurePowerShellCredential)
             {
-                chain[i++] = CreateAzurePowerShellCredential();
+                chain.Add(CreateAzurePowerShellCredential());
             }
 
             if (!Options.ExcludeInteractiveBrowserCredential)
             {
-                chain[i++] = CreateInteractiveBrowserCredential();
+                chain.Add(CreateInteractiveBrowserCredential());
             }
 
-            if (i == 0)
+            if (chain.Count == 0)
             {
                 throw new ArgumentException("At least one credential type must be included in the authentication flow.", "options");
             }
 
-            return chain;
+            return chain.ToArray();
         }
 
         public virtual TokenCredential CreateEnvironmentCredential()
         {
-            return new EnvironmentCredential(Pipeline, Options);
+            var options = Options.Clone<EnvironmentCredentialOptions>();
+
+            return new EnvironmentCredential(Pipeline, options);
+        }
+
+        public virtual TokenCredential CreateWorkloadIdentityCredential()
+        {
+            var options = Options.Clone<WorkloadIdentityCredentialOptions>();
+
+            options.ClientId = Options.WorkloadIdentityClientId;
+            options.TenantId = Options.TenantId;
+            options.Pipeline = Pipeline;
+
+            return new WorkloadIdentityCredential(options);
         }
 
         public virtual TokenCredential CreateManagedIdentityCredential()
@@ -114,22 +131,22 @@ namespace Azure.Identity
 
         public virtual TokenCredential CreateSharedTokenCacheCredential()
         {
-            return new SharedTokenCacheCredential(Options.SharedTokenCacheTenantId, Options.SharedTokenCacheUsername, Options, Pipeline);
+            var options = Options.Clone<SharedTokenCacheCredentialOptions>();
+
+            options.TenantId = Options.SharedTokenCacheTenantId;
+
+            options.Username = Options.SharedTokenCacheUsername;
+
+            return new SharedTokenCacheCredential(Options.SharedTokenCacheTenantId, Options.SharedTokenCacheUsername, options, Pipeline);
         }
 
         public virtual TokenCredential CreateInteractiveBrowserCredential()
         {
-            var options = new InteractiveBrowserCredentialOptions
-            {
-                TokenCachePersistenceOptions = new TokenCachePersistenceOptions(),
-                AuthorityHost = Options.AuthorityHost,
-                TenantId = Options.InteractiveBrowserTenantId
-            };
+            var options = Options.Clone<InteractiveBrowserCredentialOptions>();
 
-            foreach (var addlTenant in Options.AdditionallyAllowedTenants)
-            {
-                options.AdditionallyAllowedTenants.Add(addlTenant);
-            }
+            options.TokenCachePersistenceOptions = new TokenCachePersistenceOptions();
+
+            options.TenantId = Options.InteractiveBrowserTenantId;
 
             return new InteractiveBrowserCredential(
                 Options.InteractiveBrowserTenantId,
@@ -140,79 +157,53 @@ namespace Azure.Identity
 
         public virtual TokenCredential CreateAzureDeveloperCliCredential()
         {
-            var options = new AzureDeveloperCliCredentialOptions
-            {
-                TenantId = Options.TenantId,
-                AzdCliProcessTimeout = Options.DeveloperCredentialTimeout
-            };
+            var options = Options.Clone<AzureDeveloperCliCredentialOptions>();
 
-            foreach (var additionalTenant in Options.AdditionallyAllowedTenants)
-            {
-                options.AdditionallyAllowedTenants.Add(additionalTenant);
-            }
+            options.TenantId = Options.TenantId;
+
+            options.AzdCliProcessTimeout = Options.DeveloperCredentialTimeout;
 
             return new AzureDeveloperCliCredential(Pipeline, default, options);
         }
 
         public virtual TokenCredential CreateAzureCliCredential()
         {
-            var options = new AzureCliCredentialOptions
-            {
-                TenantId = Options.TenantId,
-                CliProcessTimeout = Options.DeveloperCredentialTimeout
-            };
+            var options = Options.Clone<AzureCliCredentialOptions>();
 
-            foreach (var addlTenant in Options.AdditionallyAllowedTenants)
-            {
-                options.AdditionallyAllowedTenants.Add(addlTenant);
-            }
+            options.TenantId = Options.TenantId;
+
+            options.CliProcessTimeout = Options.DeveloperCredentialTimeout;
 
             return new AzureCliCredential(Pipeline, default, options);
         }
 
         public virtual TokenCredential CreateVisualStudioCredential()
         {
-            var options = new VisualStudioCredentialOptions
-            {
-                TenantId = Options.VisualStudioTenantId,
-                VisualStudioProcessTimeout = Options.DeveloperCredentialTimeout
-            };
+            var options = Options.Clone<VisualStudioCredentialOptions>();
 
-            foreach (var addlTenant in Options.AdditionallyAllowedTenants)
-            {
-                options.AdditionallyAllowedTenants.Add(addlTenant);
-            }
+            options.TenantId = Options.VisualStudioTenantId;
+
+            options.VisualStudioProcessTimeout = Options.DeveloperCredentialTimeout;
 
             return new VisualStudioCredential(Options.VisualStudioTenantId, Pipeline, default, default, options);
         }
 
         public virtual TokenCredential CreateVisualStudioCodeCredential()
         {
-            var options = new VisualStudioCodeCredentialOptions
-            {
-                TenantId = Options.VisualStudioCodeTenantId,
-            };
+            var options = Options.Clone<VisualStudioCodeCredentialOptions>();
 
-            foreach (var addlTenant in Options.AdditionallyAllowedTenants)
-            {
-                options.AdditionallyAllowedTenants.Add(addlTenant);
-            }
+            options.TenantId = Options.VisualStudioCodeTenantId;
 
             return new VisualStudioCodeCredential(options, Pipeline, default, default, default);
         }
 
         public virtual TokenCredential CreateAzurePowerShellCredential()
         {
-            var options = new AzurePowerShellCredentialOptions
-            {
-                TenantId = Options.VisualStudioCodeTenantId,
-                PowerShellProcessTimeout = Options.DeveloperCredentialTimeout
-            };
+            var options = Options.Clone<AzurePowerShellCredentialOptions>();
 
-            foreach (var addlTenant in Options.AdditionallyAllowedTenants)
-            {
-                options.AdditionallyAllowedTenants.Add(addlTenant);
-            }
+            options.TenantId = Options.TenantId;
+
+            options.PowerShellProcessTimeout = Options.DeveloperCredentialTimeout;
 
             return new AzurePowerShellCredential(options, Pipeline, default);
         }

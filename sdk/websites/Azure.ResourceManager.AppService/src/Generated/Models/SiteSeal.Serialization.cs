@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.AppService.Models
             string html = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("html"))
+                if (property.NameEquals("html"u8))
                 {
                     html = property.Value.GetString();
                     continue;

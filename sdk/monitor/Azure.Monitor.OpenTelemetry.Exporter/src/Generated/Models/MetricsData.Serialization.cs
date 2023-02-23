@@ -15,7 +15,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("metrics");
+            writer.WritePropertyName("metrics"u8);
             writer.WriteStartArray();
             foreach (var item in Metrics)
             {
@@ -24,7 +24,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
             writer.WriteEndArray();
             if (Optional.IsCollectionDefined(Properties))
             {
-                writer.WritePropertyName("properties");
+                writer.WritePropertyName("properties"u8);
                 writer.WriteStartObject();
                 foreach (var item in Properties)
                 {
@@ -33,7 +33,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
                 }
                 writer.WriteEndObject();
             }
-            writer.WritePropertyName("ver");
+            writer.WritePropertyName("ver"u8);
             writer.WriteNumberValue(Version);
             foreach (var item in AdditionalProperties)
             {

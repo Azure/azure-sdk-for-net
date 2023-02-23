@@ -20,7 +20,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             Optional<string> resourceUri = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("resourceUri"))
+                if (property.NameEquals("resourceUri"u8))
                 {
                     resourceUri = property.Value.GetString();
                     continue;

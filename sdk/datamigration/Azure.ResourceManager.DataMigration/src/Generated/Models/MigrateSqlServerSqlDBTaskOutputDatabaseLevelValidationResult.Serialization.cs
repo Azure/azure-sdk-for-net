@@ -28,22 +28,22 @@ namespace Azure.ResourceManager.DataMigration.Models
             string resultType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("migrationId"))
+                if (property.NameEquals("migrationId"u8))
                 {
                     migrationId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("sourceDatabaseName"))
+                if (property.NameEquals("sourceDatabaseName"u8))
                 {
                     sourceDatabaseName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("targetDatabaseName"))
+                if (property.NameEquals("targetDatabaseName"u8))
                 {
                     targetDatabaseName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("startedOn"))
+                if (property.NameEquals("startedOn"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     startedOn = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("endedOn"))
+                if (property.NameEquals("endedOn"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     endedOn = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("dataIntegrityValidationResult"))
+                if (property.NameEquals("dataIntegrityValidationResult"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     dataIntegrityValidationResult = DataIntegrityValidationResult.DeserializeDataIntegrityValidationResult(property.Value);
                     continue;
                 }
-                if (property.NameEquals("schemaValidationResult"))
+                if (property.NameEquals("schemaValidationResult"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     schemaValidationResult = SchemaComparisonValidationResult.DeserializeSchemaComparisonValidationResult(property.Value);
                     continue;
                 }
-                if (property.NameEquals("queryAnalysisValidationResult"))
+                if (property.NameEquals("queryAnalysisValidationResult"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     queryAnalysisValidationResult = QueryAnalysisValidationResult.DeserializeQueryAnalysisValidationResult(property.Value);
                     continue;
                 }
-                if (property.NameEquals("status"))
+                if (property.NameEquals("status"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -103,12 +103,12 @@ namespace Azure.ResourceManager.DataMigration.Models
                     status = new ValidationStatus(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("resultType"))
+                if (property.NameEquals("resultType"u8))
                 {
                     resultType = property.Value.GetString();
                     continue;

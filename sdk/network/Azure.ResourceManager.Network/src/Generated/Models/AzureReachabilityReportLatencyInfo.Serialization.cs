@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Network.Models
             Optional<int> score = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("timeStamp"))
+                if (property.NameEquals("timeStamp"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Network.Models
                     timeStamp = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("score"))
+                if (property.NameEquals("score"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

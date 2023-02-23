@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> Returns a <see cref="GremlinGraphThroughputSettingResource" /> object. </returns>
         public virtual GremlinGraphThroughputSettingResource GetGremlinGraphThroughputSetting()
         {
-            return new GremlinGraphThroughputSettingResource(Client, new ResourceIdentifier(Id.ToString() + "/throughputSettings/default"));
+            return new GremlinGraphThroughputSettingResource(Client, Id.AppendChildResource("throughputSettings", "default"));
         }
 
         /// <summary>

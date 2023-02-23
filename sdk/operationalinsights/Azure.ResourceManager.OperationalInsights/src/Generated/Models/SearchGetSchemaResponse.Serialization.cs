@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             Optional<IReadOnlyList<OperationalInsightsSearchSchemaValue>> value = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("metadata"))
+                if (property.NameEquals("metadata"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                     metadata = SearchMetadata.DeserializeSearchMetadata(property.Value);
                     continue;
                 }
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

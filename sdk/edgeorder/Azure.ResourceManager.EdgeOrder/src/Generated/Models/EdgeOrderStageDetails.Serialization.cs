@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             Optional<DateTimeOffset> startTime = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("stageStatus"))
+                if (property.NameEquals("stageStatus"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                     stageStatus = new EdgeOrderStageStatus(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("stageName"))
+                if (property.NameEquals("stageName"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -41,12 +41,12 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                     stageName = new EdgeOrderStageName(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("displayName"))
+                if (property.NameEquals("displayName"u8))
                 {
                     displayName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("startTime"))
+                if (property.NameEquals("startTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

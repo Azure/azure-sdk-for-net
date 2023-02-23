@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.Compute.Models
             Optional<string> errordetail = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("exceptiontype"))
+                if (property.NameEquals("exceptiontype"u8))
                 {
                     exceptiontype = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("errordetail"))
+                if (property.NameEquals("errordetail"u8))
                 {
                     errordetail = property.Value.GetString();
                     continue;

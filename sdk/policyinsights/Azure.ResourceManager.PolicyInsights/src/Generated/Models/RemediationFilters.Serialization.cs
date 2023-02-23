@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Locations))
             {
-                writer.WritePropertyName("locations");
+                writer.WritePropertyName("locations"u8);
                 writer.WriteStartArray();
                 foreach (var item in Locations)
                 {
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             Optional<IList<AzureLocation>> locations = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("locations"))
+                if (property.NameEquals("locations"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             Optional<ResourceType> requestResourceType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("vaultCriticalOperation"))
+                if (property.NameEquals("vaultCriticalOperation"u8))
                 {
                     vaultCriticalOperation = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("requestResourceType"))
+                if (property.NameEquals("requestResourceType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

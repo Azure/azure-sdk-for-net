@@ -17,22 +17,22 @@ namespace Azure.ResourceManager.Storage.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(DaysAfterModificationGreaterThan))
             {
-                writer.WritePropertyName("daysAfterModificationGreaterThan");
+                writer.WritePropertyName("daysAfterModificationGreaterThan"u8);
                 writer.WriteNumberValue(DaysAfterModificationGreaterThan.Value);
             }
             if (Optional.IsDefined(DaysAfterLastAccessTimeGreaterThan))
             {
-                writer.WritePropertyName("daysAfterLastAccessTimeGreaterThan");
+                writer.WritePropertyName("daysAfterLastAccessTimeGreaterThan"u8);
                 writer.WriteNumberValue(DaysAfterLastAccessTimeGreaterThan.Value);
             }
             if (Optional.IsDefined(DaysAfterLastTierChangeGreaterThan))
             {
-                writer.WritePropertyName("daysAfterLastTierChangeGreaterThan");
+                writer.WritePropertyName("daysAfterLastTierChangeGreaterThan"u8);
                 writer.WriteNumberValue(DaysAfterLastTierChangeGreaterThan.Value);
             }
             if (Optional.IsDefined(DaysAfterCreationGreaterThan))
             {
-                writer.WritePropertyName("daysAfterCreationGreaterThan");
+                writer.WritePropertyName("daysAfterCreationGreaterThan"u8);
                 writer.WriteNumberValue(DaysAfterCreationGreaterThan.Value);
             }
             writer.WriteEndObject();
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Storage.Models
             Optional<float> daysAfterCreationGreaterThan = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("daysAfterModificationGreaterThan"))
+                if (property.NameEquals("daysAfterModificationGreaterThan"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Storage.Models
                     daysAfterModificationGreaterThan = property.Value.GetSingle();
                     continue;
                 }
-                if (property.NameEquals("daysAfterLastAccessTimeGreaterThan"))
+                if (property.NameEquals("daysAfterLastAccessTimeGreaterThan"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Storage.Models
                     daysAfterLastAccessTimeGreaterThan = property.Value.GetSingle();
                     continue;
                 }
-                if (property.NameEquals("daysAfterLastTierChangeGreaterThan"))
+                if (property.NameEquals("daysAfterLastTierChangeGreaterThan"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Storage.Models
                     daysAfterLastTierChangeGreaterThan = property.Value.GetSingle();
                     continue;
                 }
-                if (property.NameEquals("daysAfterCreationGreaterThan"))
+                if (property.NameEquals("daysAfterCreationGreaterThan"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

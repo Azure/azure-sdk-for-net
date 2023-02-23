@@ -24,32 +24,32 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Optional<string> scope = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("notebookResourceId"))
+                if (property.NameEquals("notebookResourceId"u8))
                 {
                     notebookResourceId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("hostName"))
+                if (property.NameEquals("hostName"u8))
                 {
                     hostName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("publicDns"))
+                if (property.NameEquals("publicDns"u8))
                 {
                     publicDns = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("accessToken"))
+                if (property.NameEquals("accessToken"u8))
                 {
                     accessToken = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("tokenType"))
+                if (property.NameEquals("tokenType"u8))
                 {
                     tokenType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("expiresIn"))
+                if (property.NameEquals("expiresIn"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -59,12 +59,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     expiresIn = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("refreshToken"))
+                if (property.NameEquals("refreshToken"u8))
                 {
                     refreshToken = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("scope"))
+                if (property.NameEquals("scope"u8))
                 {
                     scope = property.Value.GetString();
                     continue;

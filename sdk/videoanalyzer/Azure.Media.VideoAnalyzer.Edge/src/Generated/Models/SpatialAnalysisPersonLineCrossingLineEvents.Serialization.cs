@@ -16,11 +16,11 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("line");
+            writer.WritePropertyName("line"u8);
             writer.WriteObjectValue(Line);
             if (Optional.IsCollectionDefined(Events))
             {
-                writer.WritePropertyName("events");
+                writer.WritePropertyName("events"u8);
                 writer.WriteStartArray();
                 foreach (var item in Events)
                 {
@@ -37,12 +37,12 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             Optional<IList<SpatialAnalysisPersonLineCrossingEvent>> events = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("line"))
+                if (property.NameEquals("line"u8))
                 {
                     line = NamedLineBase.DeserializeNamedLineBase(property.Value);
                     continue;
                 }
-                if (property.NameEquals("events"))
+                if (property.NameEquals("events"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

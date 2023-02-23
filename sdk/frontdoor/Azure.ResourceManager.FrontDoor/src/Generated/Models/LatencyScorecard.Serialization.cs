@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Tags))
             {
-                writer.WritePropertyName("tags");
+                writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
                 foreach (var item in Tags)
                 {
@@ -29,13 +29,13 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 }
                 writer.WriteEndObject();
             }
-            writer.WritePropertyName("location");
+            writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(LatencyMetrics))
             {
-                writer.WritePropertyName("latencyMetrics");
+                writer.WritePropertyName("latencyMetrics"u8);
                 writer.WriteStartArray();
                 foreach (var item in LatencyMetrics)
                 {
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
             Optional<IList<LatencyMetric>> latencyMetrics = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("tags"))
+                if (property.NameEquals("tags"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -81,27 +81,27 @@ namespace Azure.ResourceManager.FrontDoor.Models
                     tags = dictionary;
                     continue;
                 }
-                if (property.NameEquals("location"))
+                if (property.NameEquals("location"u8))
                 {
                     location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -120,22 +120,22 @@ namespace Azure.ResourceManager.FrontDoor.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("id"))
+                        if (property0.NameEquals("id"u8))
                         {
                             id0 = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("name"))
+                        if (property0.NameEquals("name"u8))
                         {
                             name0 = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("description"))
+                        if (property0.NameEquals("description"u8))
                         {
                             description = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("endpointA"))
+                        if (property0.NameEquals("endpointA"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                             endpointA = new Uri(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("endpointB"))
+                        if (property0.NameEquals("endpointB"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                             endpointB = new Uri(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("startDateTimeUTC"))
+                        if (property0.NameEquals("startDateTimeUTC"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                             startDateTimeUtc = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("endDateTimeUTC"))
+                        if (property0.NameEquals("endDateTimeUTC"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -175,12 +175,12 @@ namespace Azure.ResourceManager.FrontDoor.Models
                             endDateTimeUtc = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("country"))
+                        if (property0.NameEquals("country"u8))
                         {
                             country = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("latencyMetrics"))
+                        if (property0.NameEquals("latencyMetrics"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

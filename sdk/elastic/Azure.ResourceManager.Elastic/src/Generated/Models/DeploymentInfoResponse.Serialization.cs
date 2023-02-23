@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Elastic.Models
             Optional<string> diskCapacity = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("status"))
+                if (property.NameEquals("status"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -30,17 +30,17 @@ namespace Azure.ResourceManager.Elastic.Models
                     status = new ElasticDeploymentStatus(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("version"))
+                if (property.NameEquals("version"u8))
                 {
                     version = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("memoryCapacity"))
+                if (property.NameEquals("memoryCapacity"u8))
                 {
                     memoryCapacity = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("diskCapacity"))
+                if (property.NameEquals("diskCapacity"u8))
                 {
                     diskCapacity = property.Value.GetString();
                     continue;

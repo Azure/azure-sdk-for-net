@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
             Optional<string> message = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("nameAvailability"))
+                if (property.NameEquals("nameAvailability"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.FrontDoor.Models
                     nameAvailability = new FrontDoorNameAvailabilityState(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("reason"))
+                if (property.NameEquals("reason"u8))
                 {
                     reason = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("message"))
+                if (property.NameEquals("message"u8))
                 {
                     message = property.Value.GetString();
                     continue;

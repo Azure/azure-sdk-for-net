@@ -21,12 +21,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(PipelineReference))
             {
-                writer.WritePropertyName("pipelineReference");
+                writer.WritePropertyName("pipelineReference"u8);
                 writer.WriteObjectValue(PipelineReference);
             }
             if (Optional.IsCollectionDefined(Parameters))
             {
-                writer.WritePropertyName("parameters");
+                writer.WritePropertyName("parameters"u8);
                 writer.WriteStartObject();
                 foreach (var item in Parameters)
                 {
@@ -44,7 +44,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Optional<IDictionary<string, object>> parameters = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("pipelineReference"))
+                if (property.NameEquals("pipelineReference"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -54,7 +54,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     pipelineReference = PipelineReference.DeserializePipelineReference(property.Value);
                     continue;
                 }
-                if (property.NameEquals("parameters"))
+                if (property.NameEquals("parameters"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

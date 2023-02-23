@@ -1,4 +1,4 @@
-parameters: 
+parameters:
 - name: ShouldPublish
   type: boolean
   default: false
@@ -11,7 +11,7 @@ jobs:
     timeoutInMinutes: 100
     pool:
       name: azsdk-pool-mms-win-2022-general
-      vmImage: MMS2022
+      vmImage: windows-2022
     steps:
       #- script: "echo $(system.pullrequest.pullrequestnumber), https://github.com/$(build.repository.id), https://github.com/$(build.repository.ID)"
       - template: /eng/pipelines/templates/steps/install-dotnet.yml
@@ -57,7 +57,7 @@ jobs:
           OSVmImage: "MMSUbuntu20.04"
         Windows:
           Pool: azsdk-pool-mms-win-2022-general
-          OSVmImage: MMS2022
+          OSVmImage: windows-2022
         MacOs:
           Pool: Azure Pipelines
           OSVmImage: "macos-11"
@@ -89,7 +89,7 @@ jobs:
       - Build
     pool:
       name: azsdk-pool-mms-win-2022-general
-      vmImage: MMS2022
+      vmImage: windows-2022
     steps:
       - task: UsePythonVersion@0
         displayName: "Use Python 3.6"
@@ -111,8 +111,8 @@ jobs:
   - job: Compliance
     pool:
       name: azsdk-pool-mms-win-2022-general
-      vmImage: MMS2022
-    steps:      
+      vmImage: windows-2022
+    steps:
       - template: /eng/common/pipelines/templates/steps/credscan.yml
         parameters:
           BaselineFilePath: $(Build.sourcesdirectory)/eng/dotnet.gdnbaselines

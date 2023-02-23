@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             ServiceAlertMetadataIdentifier metadataIdentifier = "Unknown";
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("metadataIdentifier"))
+                if (property.NameEquals("metadataIdentifier"u8))
                 {
                     metadataIdentifier = new ServiceAlertMetadataIdentifier(property.Value.GetString());
                     continue;

@@ -16,16 +16,16 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("type");
+            writer.WritePropertyName("type"u8);
             writer.WriteStringValue(ContainerRegistryTaskStepType.ToString());
             if (Optional.IsDefined(ContextPath))
             {
-                writer.WritePropertyName("contextPath");
+                writer.WritePropertyName("contextPath"u8);
                 writer.WriteStringValue(ContextPath);
             }
             if (Optional.IsDefined(ContextAccessToken))
             {
-                writer.WritePropertyName("contextAccessToken");
+                writer.WritePropertyName("contextAccessToken"u8);
                 writer.WriteStringValue(ContextAccessToken);
             }
             writer.WriteEndObject();
@@ -39,12 +39,12 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             Optional<string> contextAccessToken = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ContainerRegistryTaskStepType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("baseImageDependencies"))
+                if (property.NameEquals("baseImageDependencies"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -59,12 +59,12 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     baseImageDependencies = array;
                     continue;
                 }
-                if (property.NameEquals("contextPath"))
+                if (property.NameEquals("contextPath"u8))
                 {
                     contextPath = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("contextAccessToken"))
+                if (property.NameEquals("contextAccessToken"u8))
                 {
                     contextAccessToken = property.Value.GetString();
                     continue;

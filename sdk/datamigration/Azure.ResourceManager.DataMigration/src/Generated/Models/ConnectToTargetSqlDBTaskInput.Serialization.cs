@@ -15,11 +15,11 @@ namespace Azure.ResourceManager.DataMigration.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("targetConnectionInfo");
+            writer.WritePropertyName("targetConnectionInfo"u8);
             writer.WriteObjectValue(TargetConnectionInfo);
             if (Optional.IsDefined(QueryObjectCounts))
             {
-                writer.WritePropertyName("queryObjectCounts");
+                writer.WritePropertyName("queryObjectCounts"u8);
                 writer.WriteBooleanValue(QueryObjectCounts.Value);
             }
             writer.WriteEndObject();
@@ -31,12 +31,12 @@ namespace Azure.ResourceManager.DataMigration.Models
             Optional<bool> queryObjectCounts = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("targetConnectionInfo"))
+                if (property.NameEquals("targetConnectionInfo"u8))
                 {
                     targetConnectionInfo = SqlConnectionInfo.DeserializeSqlConnectionInfo(property.Value);
                     continue;
                 }
-                if (property.NameEquals("queryObjectCounts"))
+                if (property.NameEquals("queryObjectCounts"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -29,17 +29,17 @@ namespace Azure.ResourceManager.DataFactory.Models
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("dataFlowName"))
+                if (property.NameEquals("dataFlowName"u8))
                 {
                     dataFlowName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("computeType"))
+                if (property.NameEquals("computeType"u8))
                 {
                     computeType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("coreCount"))
+                if (property.NameEquals("coreCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     coreCount = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("nodeCount"))
+                if (property.NameEquals("nodeCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -59,12 +59,12 @@ namespace Azure.ResourceManager.DataFactory.Models
                     nodeCount = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("integrationRuntimeName"))
+                if (property.NameEquals("integrationRuntimeName"u8))
                 {
                     integrationRuntimeName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("sessionId"))
+                if (property.NameEquals("sessionId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -74,12 +74,12 @@ namespace Azure.ResourceManager.DataFactory.Models
                     sessionId = property.Value.GetGuid();
                     continue;
                 }
-                if (property.NameEquals("startTime"))
+                if (property.NameEquals("startTime"u8))
                 {
                     startTime = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("timeToLiveInMinutes"))
+                if (property.NameEquals("timeToLiveInMinutes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     timeToLiveInMinutes = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("lastActivityTime"))
+                if (property.NameEquals("lastActivityTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -18,22 +18,22 @@ namespace Azure.ResourceManager.Synapse.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(AccountUri))
             {
-                writer.WritePropertyName("accountUrl");
+                writer.WritePropertyName("accountUrl"u8);
                 writer.WriteStringValue(AccountUri.AbsoluteUri);
             }
             if (Optional.IsDefined(Filesystem))
             {
-                writer.WritePropertyName("filesystem");
+                writer.WritePropertyName("filesystem"u8);
                 writer.WriteStringValue(Filesystem);
             }
             if (Optional.IsDefined(ResourceId))
             {
-                writer.WritePropertyName("resourceId");
+                writer.WritePropertyName("resourceId"u8);
                 writer.WriteStringValue(ResourceId);
             }
             if (Optional.IsDefined(CreateManagedPrivateEndpoint))
             {
-                writer.WritePropertyName("createManagedPrivateEndpoint");
+                writer.WritePropertyName("createManagedPrivateEndpoint"u8);
                 writer.WriteBooleanValue(CreateManagedPrivateEndpoint.Value);
             }
             writer.WriteEndObject();
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Synapse.Models
             Optional<bool> createManagedPrivateEndpoint = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("accountUrl"))
+                if (property.NameEquals("accountUrl"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -57,12 +57,12 @@ namespace Azure.ResourceManager.Synapse.Models
                     accountUrl = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("filesystem"))
+                if (property.NameEquals("filesystem"u8))
                 {
                     filesystem = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("resourceId"))
+                if (property.NameEquals("resourceId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Synapse.Models
                     resourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("createManagedPrivateEndpoint"))
+                if (property.NameEquals("createManagedPrivateEndpoint"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -19,12 +19,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Day))
             {
-                writer.WritePropertyName("day");
+                writer.WritePropertyName("day"u8);
                 writer.WriteStringValue(Day.Value.ToSerialString());
             }
             if (Optional.IsDefined(Occurrence))
             {
-                writer.WritePropertyName("occurrence");
+                writer.WritePropertyName("occurrence"u8);
                 writer.WriteNumberValue(Occurrence.Value);
             }
             foreach (var item in AdditionalProperties)
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("day"))
+                if (property.NameEquals("day"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     day = property.Value.GetString().ToDayOfWeek();
                     continue;
                 }
-                if (property.NameEquals("occurrence"))
+                if (property.NameEquals("occurrence"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

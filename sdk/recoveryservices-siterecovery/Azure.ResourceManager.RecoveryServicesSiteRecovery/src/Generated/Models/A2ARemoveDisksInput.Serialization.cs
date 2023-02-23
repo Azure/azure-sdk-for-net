@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(VmDisksUris))
             {
-                writer.WritePropertyName("vmDisksUris");
+                writer.WritePropertyName("vmDisksUris"u8);
                 writer.WriteStartArray();
                 foreach (var item in VmDisksUris)
                 {
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
             if (Optional.IsCollectionDefined(VmManagedDisksIds))
             {
-                writer.WritePropertyName("vmManagedDisksIds");
+                writer.WritePropertyName("vmManagedDisksIds"u8);
                 writer.WriteStartArray();
                 foreach (var item in VmManagedDisksIds)
                 {
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 writer.WriteEndArray();
             }
-            writer.WritePropertyName("instanceType");
+            writer.WritePropertyName("instanceType"u8);
             writer.WriteStringValue(InstanceType);
             writer.WriteEndObject();
         }

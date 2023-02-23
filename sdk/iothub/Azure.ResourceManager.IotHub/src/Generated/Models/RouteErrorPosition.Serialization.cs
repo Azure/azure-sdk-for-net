@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.IotHub.Models
             Optional<int> column = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("line"))
+                if (property.NameEquals("line"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.IotHub.Models
                     line = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("column"))
+                if (property.NameEquals("column"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

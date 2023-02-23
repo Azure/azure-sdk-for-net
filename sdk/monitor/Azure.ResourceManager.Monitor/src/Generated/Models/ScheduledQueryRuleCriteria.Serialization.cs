@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Monitor.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(AllOf))
             {
-                writer.WritePropertyName("allOf");
+                writer.WritePropertyName("allOf"u8);
                 writer.WriteStartArray();
                 foreach (var item in AllOf)
                 {
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Monitor.Models
             Optional<IList<ScheduledQueryRuleCondition>> allOf = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("allOf"))
+                if (property.NameEquals("allOf"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

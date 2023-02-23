@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.PolicyInsights
     public partial class PolicyAttestationData : Azure.ResourceManager.Models.ResourceData
     {
         public PolicyAttestationData(Azure.Core.ResourceIdentifier policyAssignmentId) { }
-        public System.DateTimeOffset? AssessmentOn { get { throw null; } set { } }
+        public System.DateTimeOffset? AssessOn { get { throw null; } set { } }
         public string Comments { get { throw null; } set { } }
         public Azure.ResourceManager.PolicyInsights.Models.PolicyComplianceState? ComplianceState { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.PolicyInsights.Models.AttestationEvidence> Evidence { get { throw null; } }

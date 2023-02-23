@@ -4,16 +4,19 @@ Run `dotnet build /t:GenerateCode` to generate code.
 
 ```yaml
 azure-arm: true
+generate-model-factory: false
 arm-core: true
 clear-output-folder: true
 skip-csproj: true
 model-namespace: false
 public-clients: false
 head-as-boolean: false
+modelerfour:
+  lenient-model-deduplication: true
 
 batch:
   - tag: package-common-type-2022-04
-  - tag: package-resources-2022-04
+  - tag: package-resources-2022-09
   - tag: package-management-2022-04
 ```
 
@@ -156,24 +159,24 @@ directive:
       $["x-csharp-usage"] = "model,input,output";
 ```
 
-### Tag: package-resources-2022-04
+### Tag: package-resources-2022-09
 
-These settings apply only when `--tag=package-resources-2022-04` is specified on the command line.
+These settings apply only when `--tag=package-resources-2022-09` is specified on the command line.
 
-``` yaml $(tag) == 'package-resources-2022-04'
+``` yaml $(tag) == 'package-resources-2022-09'
 output-folder: $(this-folder)/Resources/Generated
 namespace: Azure.ResourceManager.Resources
 title: ResourceManagementClient
 input-file:
-    - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/91ac14531f0d05b3d6fcf4a817ea0defde59fe63/specification/resources/resource-manager/Microsoft.Authorization/stable/2020-09-01/policyAssignments.json
-    - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/91ac14531f0d05b3d6fcf4a817ea0defde59fe63/specification/resources/resource-manager/Microsoft.Resources/stable/2021-04-01/resources.json
-    - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/91ac14531f0d05b3d6fcf4a817ea0defde59fe63/specification/resources/resource-manager/Microsoft.Authorization/stable/2020-09-01/policyDefinitions.json
-    - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/91ac14531f0d05b3d6fcf4a817ea0defde59fe63/specification/resources/resource-manager/Microsoft.Authorization/stable/2020-09-01/policySetDefinitions.json
+    - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/639376b2bf9f0f36debfd7fce7debdf7b72578af/specification/resources/resource-manager/Microsoft.Authorization/stable/2020-09-01/policyAssignments.json
+    - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/639376b2bf9f0f36debfd7fce7debdf7b72578af/specification/resources/resource-manager/Microsoft.Resources/stable/2022-09-01/resources.json
+    - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/639376b2bf9f0f36debfd7fce7debdf7b72578af/specification/resources/resource-manager/Microsoft.Authorization/stable/2020-09-01/policyDefinitions.json
+    - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/639376b2bf9f0f36debfd7fce7debdf7b72578af/specification/resources/resource-manager/Microsoft.Authorization/stable/2020-09-01/policySetDefinitions.json
     # - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/91ac14531f0d05b3d6fcf4a817ea0defde59fe63/specification/resources/resource-manager/Microsoft.Authorization/preview/2020-07-01-preview/policyExemptions.json
-    - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/91ac14531f0d05b3d6fcf4a817ea0defde59fe63/specification/resources/resource-manager/Microsoft.Authorization/stable/2020-09-01/dataPolicyManifests.json
-    - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/91ac14531f0d05b3d6fcf4a817ea0defde59fe63/specification/resources/resource-manager/Microsoft.Authorization/stable/2016-09-01/locks.json
-    - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/91ac14531f0d05b3d6fcf4a817ea0defde59fe63/specification/resources/resource-manager/Microsoft.Resources/stable/2021-01-01/subscriptions.json
-    - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/91ac14531f0d05b3d6fcf4a817ea0defde59fe63/specification/resources/resource-manager/Microsoft.Features/stable/2021-07-01/features.json
+    - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/639376b2bf9f0f36debfd7fce7debdf7b72578af/specification/resources/resource-manager/Microsoft.Authorization/stable/2020-09-01/dataPolicyManifests.json
+    - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/639376b2bf9f0f36debfd7fce7debdf7b72578af/specification/resources/resource-manager/Microsoft.Authorization/stable/2016-09-01/locks.json
+    - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/639376b2bf9f0f36debfd7fce7debdf7b72578af/specification/resources/resource-manager/Microsoft.Resources/stable/2021-01-01/subscriptions.json
+    - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/639376b2bf9f0f36debfd7fce7debdf7b72578af/specification/resources/resource-manager/Microsoft.Features/stable/2021-07-01/features.json
 list-exception:
   - /{resourceId}
 request-path-to-resource-data:
@@ -287,6 +290,7 @@ directive:
   - remove-operation: Resources_Get
   - remove-operation: Resources_Delete
   - remove-operation: Providers_RegisterAtManagementGroupScope
+  - remove-operation: Subscriptions_CheckZonePeers
   - from: swagger-document
     where: $.definitions.ExtendedLocation
     transform: >
@@ -322,8 +326,8 @@ directive:
   - from: subscriptions.json
     where: $.definitions
     transform: >
-      $["OperationListResult"]["x-ms-client-name"] = "SubscriptionOperationListResult";
-      $["Operation"]["x-ms-client-name"] = "SubscriptionOperation";
+      $["OperationListResult"] = undefined;
+      $["Operation"] = undefined;
   - from: features.json
     where: $.definitions
     transform: >
@@ -529,12 +533,12 @@ directive:
 
   - from: resources.json
     where: $.definitions.Identity.properties.type["x-ms-enum"]
-    transform: > 
+    transform: >
       $["name"] = "GenericResourceIdentityType";
       $["modelAsString"] = true;
   - from: resources.json
     where: $.definitions.Identity
-    transform: > 
+    transform: >
       $["required"] = ["type"]
   - from: resources.json
     where: $.definitions.Identity

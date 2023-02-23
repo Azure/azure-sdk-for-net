@@ -18,22 +18,22 @@ namespace Azure.ResourceManager.AppPlatform.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(AppResourceId))
             {
-                writer.WritePropertyName("appResourceId");
+                writer.WritePropertyName("appResourceId"u8);
                 writer.WriteStringValue(AppResourceId);
             }
             if (Optional.IsDefined(OpenApi))
             {
-                writer.WritePropertyName("openApi");
+                writer.WritePropertyName("openApi"u8);
                 writer.WriteObjectValue(OpenApi);
             }
             if (Optional.IsDefined(Protocol))
             {
-                writer.WritePropertyName("protocol");
+                writer.WritePropertyName("protocol"u8);
                 writer.WriteStringValue(Protocol.Value.ToString());
             }
             if (Optional.IsCollectionDefined(Routes))
             {
-                writer.WritePropertyName("routes");
+                writer.WritePropertyName("routes"u8);
                 writer.WriteStartArray();
                 foreach (var item in Routes)
                 {
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             Optional<IList<AppPlatformGatewayApiRoute>> routes = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("provisioningState"))
+                if (property.NameEquals("provisioningState"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     provisioningState = new AppPlatformGatewayProvisioningState(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("appResourceId"))
+                if (property.NameEquals("appResourceId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     appResourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("openApi"))
+                if (property.NameEquals("openApi"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     openApi = GatewayRouteConfigOpenApiProperties.DeserializeGatewayRouteConfigOpenApiProperties(property.Value);
                     continue;
                 }
-                if (property.NameEquals("protocol"))
+                if (property.NameEquals("protocol"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     protocol = new AppPlatformGatewayRouteConfigProtocol(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("routes"))
+                if (property.NameEquals("routes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

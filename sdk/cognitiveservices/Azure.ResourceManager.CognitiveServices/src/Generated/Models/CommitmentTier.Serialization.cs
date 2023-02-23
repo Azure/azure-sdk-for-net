@@ -24,17 +24,17 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             Optional<CommitmentCost> cost = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("kind"))
+                if (property.NameEquals("kind"u8))
                 {
                     kind = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("skuName"))
+                if (property.NameEquals("skuName"u8))
                 {
                     skuName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("hostingModel"))
+                if (property.NameEquals("hostingModel"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -44,17 +44,17 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     hostingModel = new ServiceAccountHostingModel(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("planType"))
+                if (property.NameEquals("planType"u8))
                 {
                     planType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("tier"))
+                if (property.NameEquals("tier"u8))
                 {
                     tier = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("maxCount"))
+                if (property.NameEquals("maxCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     maxCount = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("quota"))
+                if (property.NameEquals("quota"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     quota = CommitmentQuota.DeserializeCommitmentQuota(property.Value);
                     continue;
                 }
-                if (property.NameEquals("cost"))
+                if (property.NameEquals("cost"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
