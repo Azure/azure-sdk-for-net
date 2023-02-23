@@ -164,7 +164,7 @@
         "location": "eastus",
         "properties": {
           "authenticationConfiguration": {
-            "authority": "https://login.microsoftonline.com/72f988bf-86f1-41af-91ab-2d7cd011db47",
+            "authority": "Sanitized",
             "audience": "https://workspace4149-fhir1090.fhir.azurehealthcareapis.com"
           },
           "resourceVersionPolicyConfiguration": {
@@ -209,7 +209,7 @@
             "loginServers": []
           },
           "authenticationConfiguration": {
-            "authority": "https://login.microsoftonline.com/72f988bf-86f1-41af-91ab-2d7cd011db47",
+            "authority": "Sanitized",
             "audience": "https://workspace4149-fhir1090.fhir.azurehealthcareapis.com",
             "smartProxyEnabled": false
           },
@@ -872,7 +872,7 @@
             "loginServers": []
           },
           "authenticationConfiguration": {
-            "authority": "https://login.microsoftonline.com/72f988bf-86f1-41af-91ab-2d7cd011db47",
+            "authority": "Sanitized",
             "audience": "https://workspace4149-fhir1090.fhir.azurehealthcareapis.com",
             "smartProxyEnabled": false
           },
@@ -1025,7 +1025,7 @@
             "loginServers": []
           },
           "authenticationConfiguration": {
-            "authority": "https://login.microsoftonline.com/72f988bf-86f1-41af-91ab-2d7cd011db47",
+            "authority": "Sanitized",
             "audience": "https://workspace4149-fhir1090.fhir.azurehealthcareapis.com",
             "smartProxyEnabled": false
           },
@@ -1096,7 +1096,7 @@
             "loginServers": []
           },
           "authenticationConfiguration": {
-            "authority": "https://login.microsoftonline.com/72f988bf-86f1-41af-91ab-2d7cd011db47",
+            "authority": "Sanitized",
             "audience": "https://workspace4149-fhir1090.fhir.azurehealthcareapis.com",
             "smartProxyEnabled": false
           },
@@ -1245,7 +1245,7 @@
             "loginServers": []
           },
           "authenticationConfiguration": {
-            "authority": "https://login.microsoftonline.com/72f988bf-86f1-41af-91ab-2d7cd011db47",
+            "authority": "Sanitized",
             "audience": "https://workspace4149-fhir1090.fhir.azurehealthcareapis.com",
             "smartProxyEnabled": false
           },
@@ -1314,7 +1314,7 @@
             "loginServers": []
           },
           "authenticationConfiguration": {
-            "authority": "https://login.microsoftonline.com/72f988bf-86f1-41af-91ab-2d7cd011db47",
+            "authority": "Sanitized",
             "audience": "https://workspace4149-fhir1090.fhir.azurehealthcareapis.com",
             "smartProxyEnabled": false
           },

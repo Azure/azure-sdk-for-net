@@ -22,11 +22,13 @@ namespace Azure.ResourceManager.HealthcareApis.Tests
         protected HealthcareApisManagementTestBase(bool isAsync, RecordedTestMode mode)
         : base(isAsync, mode)
         {
+            JsonPathSanitizers.Add("$..authority");
         }
 
         protected HealthcareApisManagementTestBase(bool isAsync)
             : base(isAsync)
         {
+            JsonPathSanitizers.Add("$..authority");
         }
 
         [SetUp]

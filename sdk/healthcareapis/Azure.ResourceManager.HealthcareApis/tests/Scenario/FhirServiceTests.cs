@@ -32,7 +32,6 @@ namespace Azure.ResourceManager.HealthcareApis.Tests
         }
 
         [RecordedTest]
-        [Ignore("Pipeline playback error")]
         public async Task CreateOrUpdateExistGetGetAllDelete()
         {
             // CreateOrUpdate
@@ -62,7 +61,6 @@ namespace Azure.ResourceManager.HealthcareApis.Tests
         [TestCase(null)]
         [TestCase(false)]
         [TestCase(true)]
-        [Ignore("Pipeline playback error")]
         public async Task AddRemoveTag(bool? useTagResource)
         {
             SetTagResourceUsage(Client, useTagResource);
