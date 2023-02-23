@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.BotService.Models
             if (Endpoint != null)
             {
                 writer.WritePropertyName("endpoint"u8);
-                writer.WriteStringValue(Endpoint);
+                writer.WriteStringValue(Endpoint.AbsoluteUri);
             }
             else
             {
@@ -138,10 +138,10 @@ namespace Azure.ResourceManager.BotService.Models
                 writer.WritePropertyName("isStreamingSupported"u8);
                 writer.WriteBooleanValue(IsStreamingSupported.Value);
             }
-            if (Optional.IsDefined(DisableLocalAuth))
+            if (Optional.IsDefined(IsLocalAuthDisabled))
             {
                 writer.WritePropertyName("disableLocalAuth"u8);
-                writer.WriteBooleanValue(DisableLocalAuth.Value);
+                writer.WriteBooleanValue(IsLocalAuthDisabled.Value);
             }
             if (Optional.IsDefined(SchemaTransformationVersion))
             {
@@ -176,15 +176,15 @@ namespace Azure.ResourceManager.BotService.Models
             string displayName = default;
             Optional<string> description = default;
             Optional<Uri> iconUrl = default;
-            string endpoint = default;
+            Uri endpoint = default;
             Optional<string> endpointVersion = default;
             Optional<IDictionary<string, string>> allSettings = default;
             Optional<IDictionary<string, string>> parameters = default;
             Optional<Uri> manifestUrl = default;
-            Optional<MsaAppType> msaAppType = default;
+            Optional<BotMsaAppType> msaAppType = default;
             string msaAppId = default;
             Optional<string> msaAppTenantId = default;
-            Optional<string> msaAppMSIResourceId = default;
+            Optional<ResourceIdentifier> msaAppMSIResourceId = default;
             Optional<IReadOnlyList<string>> configuredChannels = default;
             Optional<IReadOnlyList<string>> enabledChannels = default;
             Optional<string> developerAppInsightKey = default;
@@ -196,13 +196,13 @@ namespace Azure.ResourceManager.BotService.Models
             Optional<Uri> cmekKeyVaultUrl = default;
             Optional<string> cmekEncryptionStatus = default;
             Optional<Guid> tenantId = default;
-            Optional<PublicNetworkAccess> publicNetworkAccess = default;
+            Optional<BotServicePublicNetworkAccess> publicNetworkAccess = default;
             Optional<bool> isStreamingSupported = default;
             Optional<bool> isDeveloperAppInsightsApiKeySet = default;
             Optional<string> migrationToken = default;
             Optional<bool> disableLocalAuth = default;
             Optional<string> schemaTransformationVersion = default;
-            Optional<string> storageResourceId = default;
+            Optional<ResourceIdentifier> storageResourceId = default;
             Optional<IReadOnlyList<BotServicePrivateEndpointConnectionData>> privateEndpointConnections = default;
             Optional<string> openWithHint = default;
             Optional<string> appPasswordHint = default;
@@ -237,7 +237,7 @@ namespace Azure.ResourceManager.BotService.Models
                         endpoint = null;
                         continue;
                     }
-                    endpoint = property.Value.GetString();
+                    endpoint = new Uri(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("endpointVersion"u8))
@@ -292,7 +292,7 @@ namespace Azure.ResourceManager.BotService.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    msaAppType = new MsaAppType(property.Value.GetString());
+                    msaAppType = new BotMsaAppType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("msaAppId"u8))
@@ -307,7 +307,12 @@ namespace Azure.ResourceManager.BotService.Models
                 }
                 if (property.NameEquals("msaAppMSIResourceId"u8))
                 {
-                    msaAppMSIResourceId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    msaAppMSIResourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("configuredChannels"u8))
@@ -417,7 +422,7 @@ namespace Azure.ResourceManager.BotService.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    publicNetworkAccess = new PublicNetworkAccess(property.Value.GetString());
+                    publicNetworkAccess = new BotServicePublicNetworkAccess(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("isStreamingSupported"u8))
@@ -462,7 +467,12 @@ namespace Azure.ResourceManager.BotService.Models
                 }
                 if (property.NameEquals("storageResourceId"u8))
                 {
-                    storageResourceId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    storageResourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("privateEndpointConnections"u8))

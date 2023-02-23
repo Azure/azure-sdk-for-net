@@ -3,14 +3,14 @@ namespace Azure.ResourceManager.BotService
     public partial class BotChannelCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.BotService.BotChannelResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.BotService.BotChannelResource>, System.Collections.IEnumerable
     {
         protected BotChannelCollection() { }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.BotService.BotChannelResource> CreateOrUpdate(Azure.WaitUntil waitUntil, Azure.ResourceManager.BotService.Models.ChannelName channelName, Azure.ResourceManager.BotService.BotChannelData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.BotService.BotChannelResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.BotService.Models.ChannelName channelName, Azure.ResourceManager.BotService.BotChannelData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<bool> Exists(Azure.ResourceManager.BotService.Models.ChannelName channelName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(Azure.ResourceManager.BotService.Models.ChannelName channelName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.BotService.BotChannelResource> Get(Azure.ResourceManager.BotService.Models.ChannelName channelName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.BotService.BotChannelResource> CreateOrUpdate(Azure.WaitUntil waitUntil, Azure.ResourceManager.BotService.Models.BotChannelName channelName, Azure.ResourceManager.BotService.BotChannelData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.BotService.BotChannelResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.BotService.Models.BotChannelName channelName, Azure.ResourceManager.BotService.BotChannelData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<bool> Exists(Azure.ResourceManager.BotService.Models.BotChannelName channelName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(Azure.ResourceManager.BotService.Models.BotChannelName channelName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.BotService.BotChannelResource> Get(Azure.ResourceManager.BotService.Models.BotChannelName channelName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.BotService.BotChannelResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.BotService.BotChannelResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.BotService.BotChannelResource>> GetAsync(Azure.ResourceManager.BotService.Models.ChannelName channelName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.BotService.BotChannelResource>> GetAsync(Azure.ResourceManager.BotService.Models.BotChannelName channelName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.BotService.BotChannelResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.BotService.BotChannelResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.BotService.BotChannelResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.BotService.BotChannelResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.BotService
         public BotChannelData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
         public Azure.ETag? ETag { get { throw null; } set { } }
         public Azure.ResourceManager.BotService.Models.BotServiceKind? Kind { get { throw null; } set { } }
-        public Azure.ResourceManager.BotService.Models.Channel Properties { get { throw null; } set { } }
+        public Azure.ResourceManager.BotService.Models.BotChannelProperties Properties { get { throw null; } set { } }
         public Azure.ResourceManager.BotService.Models.BotServiceSku Sku { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyList<string> Zones { get { throw null; } }
     }
@@ -32,13 +32,13 @@ namespace Azure.ResourceManager.BotService
         public virtual bool HasData { get { throw null; } }
         public virtual Azure.Response<Azure.ResourceManager.BotService.BotChannelResource> AddTag(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.BotService.BotChannelResource>> AddTagAsync(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string resourceName, Azure.ResourceManager.BotService.Models.ChannelName channelName) { throw null; }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string resourceName, Azure.ResourceManager.BotService.Models.BotChannelName channelName) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.BotService.BotChannelResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.BotService.BotChannelResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.BotService.Models.ListChannelWithKeysResponse> GetWithKeys(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.BotService.Models.ListChannelWithKeysResponse>> GetWithKeysAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.BotService.Models.BotChannelGetWithKeysResult> GetChannelWithKeys(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.BotService.Models.BotChannelGetWithKeysResult>> GetChannelWithKeysAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.BotService.BotChannelResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.BotService.BotChannelResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.BotService.BotChannelResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -61,6 +61,52 @@ namespace Azure.ResourceManager.BotService
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.BotService.BotResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.BotService.BotResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
+    public partial class BotConnectionSettingCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.BotService.BotConnectionSettingResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.BotService.BotConnectionSettingResource>, System.Collections.IEnumerable
+    {
+        protected BotConnectionSettingCollection() { }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.BotService.BotConnectionSettingResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string connectionName, Azure.ResourceManager.BotService.BotConnectionSettingData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.BotService.BotConnectionSettingResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string connectionName, Azure.ResourceManager.BotService.BotConnectionSettingData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<bool> Exists(string connectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string connectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.BotService.BotConnectionSettingResource> Get(string connectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.BotService.BotConnectionSettingResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.BotService.BotConnectionSettingResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.BotService.BotConnectionSettingResource>> GetAsync(string connectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.BotService.BotConnectionSettingResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.BotService.BotConnectionSettingResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.BotService.BotConnectionSettingResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.BotService.BotConnectionSettingResource>.GetEnumerator() { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+    }
+    public partial class BotConnectionSettingData : Azure.ResourceManager.Models.TrackedResourceData
+    {
+        public BotConnectionSettingData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public Azure.ETag? ETag { get { throw null; } set { } }
+        public Azure.ResourceManager.BotService.Models.BotServiceKind? Kind { get { throw null; } set { } }
+        public Azure.ResourceManager.BotService.Models.BotConnectionSettingProperties Properties { get { throw null; } set { } }
+        public Azure.ResourceManager.BotService.Models.BotServiceSku Sku { get { throw null; } set { } }
+        public System.Collections.Generic.IReadOnlyList<string> Zones { get { throw null; } }
+    }
+    public partial class BotConnectionSettingResource : Azure.ResourceManager.ArmResource
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected BotConnectionSettingResource() { }
+        public virtual Azure.ResourceManager.BotService.BotConnectionSettingData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public virtual Azure.Response<Azure.ResourceManager.BotService.BotConnectionSettingResource> AddTag(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.BotService.BotConnectionSettingResource>> AddTagAsync(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string resourceName, string connectionName) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.BotService.BotConnectionSettingResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.BotService.BotConnectionSettingResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.BotService.BotConnectionSettingResource> GetWithSecrets(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.BotService.BotConnectionSettingResource>> GetWithSecretsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.BotService.BotConnectionSettingResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.BotService.BotConnectionSettingResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.BotService.BotConnectionSettingResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.BotService.BotConnectionSettingResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.BotService.BotConnectionSettingResource> Update(Azure.ResourceManager.BotService.BotConnectionSettingData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.BotService.BotConnectionSettingResource>> UpdateAsync(Azure.ResourceManager.BotService.BotConnectionSettingData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
     public partial class BotData : Azure.ResourceManager.Models.TrackedResourceData
     {
         public BotData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
@@ -78,26 +124,26 @@ namespace Azure.ResourceManager.BotService
         public virtual bool HasData { get { throw null; } }
         public virtual Azure.Response<Azure.ResourceManager.BotService.BotResource> AddTag(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.BotService.BotResource>> AddTagAsync(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.BotService.Models.BotCreateEmailSignInUriResult> CreateEmailSignInUri(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.BotService.Models.BotCreateEmailSignInUriResult>> CreateEmailSignInUriAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string resourceName) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.BotService.Models.CreateEmailSignInUrlResponse> CreateSignInUrlEmail(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.BotService.Models.CreateEmailSignInUrlResponse>> CreateSignInUrlEmailAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.BotService.BotResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.BotService.BotResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.BotService.BotChannelResource> GetBotChannel(Azure.ResourceManager.BotService.Models.ChannelName channelName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.BotService.BotChannelResource>> GetBotChannelAsync(Azure.ResourceManager.BotService.Models.ChannelName channelName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.BotService.BotChannelResource> GetBotChannel(Azure.ResourceManager.BotService.Models.BotChannelName channelName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.BotService.BotChannelResource>> GetBotChannelAsync(Azure.ResourceManager.BotService.Models.BotChannelName channelName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.BotService.BotChannelCollection GetBotChannels() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.BotService.BotChannelResource> GetBotChannelWithRegenerateKeys(Azure.ResourceManager.BotService.Models.RegenerateKeysBotChannelName channelName, Azure.ResourceManager.BotService.Models.BotChannelRegenerateKeysContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.BotService.BotChannelResource>> GetBotChannelWithRegenerateKeysAsync(Azure.ResourceManager.BotService.Models.RegenerateKeysBotChannelName channelName, Azure.ResourceManager.BotService.Models.BotChannelRegenerateKeysContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.BotService.BotConnectionSettingResource> GetBotConnectionSetting(string connectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.BotService.BotConnectionSettingResource>> GetBotConnectionSettingAsync(string connectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.BotService.BotConnectionSettingCollection GetBotConnectionSettings() { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.BotService.BotServicePrivateEndpointConnectionResource> GetBotServicePrivateEndpointConnection(string privateEndpointConnectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.BotService.BotServicePrivateEndpointConnectionResource>> GetBotServicePrivateEndpointConnectionAsync(string privateEndpointConnectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.BotService.BotServicePrivateEndpointConnectionCollection GetBotServicePrivateEndpointConnections() { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.BotService.ConnectionSettingResource> GetConnectionSetting(string connectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.BotService.ConnectionSettingResource>> GetConnectionSettingAsync(string connectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.BotService.ConnectionSettingCollection GetConnectionSettings() { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.BotService.Models.BotServicePrivateLinkResource> GetPrivateLinkResourcesByBotResource(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.BotService.Models.BotServicePrivateLinkResource> GetPrivateLinkResourcesByBotResourceAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.BotService.BotChannelResource> RegenerateKeysDirectLine(Azure.ResourceManager.BotService.Models.RegenerateKeysChannelName channelName, Azure.ResourceManager.BotService.Models.SiteContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.BotService.BotChannelResource>> RegenerateKeysDirectLineAsync(Azure.ResourceManager.BotService.Models.RegenerateKeysChannelName channelName, Azure.ResourceManager.BotService.Models.SiteContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.BotService.Models.BotServicePrivateLinkResourceData> GetPrivateLinkResourcesByBotResource(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.BotService.Models.BotServicePrivateLinkResourceData> GetPrivateLinkResourcesByBotResourceAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.BotService.BotResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.BotService.BotResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.BotService.BotResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -107,25 +153,23 @@ namespace Azure.ResourceManager.BotService
     }
     public static partial class BotServiceExtensions
     {
+        public static Azure.Response<Azure.ResourceManager.BotService.Models.BotServiceNameAvailabilityResult> CheckBotServiceNameAvailability(this Azure.ResourceManager.Resources.TenantResource tenantResource, Azure.ResourceManager.BotService.Models.BotServiceNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.BotService.Models.BotServiceNameAvailabilityResult>> CheckBotServiceNameAvailabilityAsync(this Azure.ResourceManager.Resources.TenantResource tenantResource, Azure.ResourceManager.BotService.Models.BotServiceNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Response<Azure.ResourceManager.BotService.BotResource> GetBot(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string resourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.BotService.BotResource>> GetBotAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string resourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.BotService.BotChannelResource GetBotChannelResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.Pageable<Azure.ResourceManager.BotService.Models.BotServiceProvider> GetBotConnectionServiceProviders(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.AsyncPageable<Azure.ResourceManager.BotService.Models.BotServiceProvider> GetBotConnectionServiceProvidersAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.ResourceManager.BotService.BotConnectionSettingResource GetBotConnectionSettingResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.BotService.BotResource GetBotResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.BotService.BotCollection GetBots(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource) { throw null; }
         public static Azure.Pageable<Azure.ResourceManager.BotService.BotResource> GetBots(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.AsyncPageable<Azure.ResourceManager.BotService.BotResource> GetBotsAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Response<Azure.ResourceManager.BotService.Models.BotServiceHostSettingsResult> GetBotServiceHostSettings(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.BotService.Models.BotServiceHostSettingsResult>> GetBotServiceHostSettingsAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.BotService.BotServicePrivateEndpointConnectionResource GetBotServicePrivateEndpointConnectionResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.Response<Azure.ResourceManager.BotService.Models.CheckNameAvailabilityResponseBody> GetCheckNameAvailabilityBot(this Azure.ResourceManager.Resources.TenantResource tenantResource, Azure.ResourceManager.BotService.Models.CheckNameAvailabilityRequestBody checkNameAvailabilityRequestBody, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.BotService.Models.CheckNameAvailabilityResponseBody>> GetCheckNameAvailabilityBotAsync(this Azure.ResourceManager.Resources.TenantResource tenantResource, Azure.ResourceManager.BotService.Models.CheckNameAvailabilityRequestBody checkNameAvailabilityRequestBody, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.ResourceManager.BotService.ConnectionSettingResource GetConnectionSettingResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.Response<Azure.ResourceManager.BotService.Models.HostSettingsResponse> GetHostSetting(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.BotService.Models.HostSettingsResponse>> GetHostSettingAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.ResourceManager.ArmOperation<Azure.ResourceManager.BotService.Models.OperationResultsDescription> GetOperationResult(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.WaitUntil waitUntil, string operationResultId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.BotService.Models.OperationResultsDescription>> GetOperationResultAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.WaitUntil waitUntil, string operationResultId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.Response<Azure.ResourceManager.BotService.Models.QnAMakerEndpointKeysResponse> GetQnAMakerEndpointKey(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.ResourceManager.BotService.Models.QnAMakerEndpointKeysRequestBody qnAMakerEndpointKeysRequestBody, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.BotService.Models.QnAMakerEndpointKeysResponse>> GetQnAMakerEndpointKeyAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.ResourceManager.BotService.Models.QnAMakerEndpointKeysRequestBody qnAMakerEndpointKeysRequestBody, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.Pageable<Azure.ResourceManager.BotService.Models.ServiceProvider> GetServiceProvidersBotConnections(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.AsyncPageable<Azure.ResourceManager.BotService.Models.ServiceProvider> GetServiceProvidersBotConnectionsAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Response<Azure.ResourceManager.BotService.Models.GetBotServiceQnAMakerEndpointKeyResult> GetBotServiceQnAMakerEndpointKey(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.ResourceManager.BotService.Models.GetBotServiceQnAMakerEndpointKeyContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.BotService.Models.GetBotServiceQnAMakerEndpointKeyResult>> GetBotServiceQnAMakerEndpointKeyAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.ResourceManager.BotService.Models.GetBotServiceQnAMakerEndpointKeyContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class BotServicePrivateEndpointConnectionCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.BotService.BotServicePrivateEndpointConnectionResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.BotService.BotServicePrivateEndpointConnectionResource>, System.Collections.IEnumerable
     {
@@ -163,56 +207,10 @@ namespace Azure.ResourceManager.BotService
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.BotService.BotServicePrivateEndpointConnectionResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.BotService.BotServicePrivateEndpointConnectionData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.BotService.BotServicePrivateEndpointConnectionResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.BotService.BotServicePrivateEndpointConnectionData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class ConnectionSettingCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.BotService.ConnectionSettingResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.BotService.ConnectionSettingResource>, System.Collections.IEnumerable
-    {
-        protected ConnectionSettingCollection() { }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.BotService.ConnectionSettingResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string connectionName, Azure.ResourceManager.BotService.ConnectionSettingData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.BotService.ConnectionSettingResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string connectionName, Azure.ResourceManager.BotService.ConnectionSettingData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<bool> Exists(string connectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string connectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.BotService.ConnectionSettingResource> Get(string connectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.BotService.ConnectionSettingResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.BotService.ConnectionSettingResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.BotService.ConnectionSettingResource>> GetAsync(string connectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.BotService.ConnectionSettingResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.BotService.ConnectionSettingResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
-        System.Collections.Generic.IEnumerator<Azure.ResourceManager.BotService.ConnectionSettingResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.BotService.ConnectionSettingResource>.GetEnumerator() { throw null; }
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
-    }
-    public partial class ConnectionSettingData : Azure.ResourceManager.Models.TrackedResourceData
-    {
-        public ConnectionSettingData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
-        public Azure.ETag? ETag { get { throw null; } set { } }
-        public Azure.ResourceManager.BotService.Models.BotServiceKind? Kind { get { throw null; } set { } }
-        public Azure.ResourceManager.BotService.Models.ConnectionSettingProperties Properties { get { throw null; } set { } }
-        public Azure.ResourceManager.BotService.Models.BotServiceSku Sku { get { throw null; } set { } }
-        public System.Collections.Generic.IReadOnlyList<string> Zones { get { throw null; } }
-    }
-    public partial class ConnectionSettingResource : Azure.ResourceManager.ArmResource
-    {
-        public static readonly Azure.Core.ResourceType ResourceType;
-        protected ConnectionSettingResource() { }
-        public virtual Azure.ResourceManager.BotService.ConnectionSettingData Data { get { throw null; } }
-        public virtual bool HasData { get { throw null; } }
-        public virtual Azure.Response<Azure.ResourceManager.BotService.ConnectionSettingResource> AddTag(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.BotService.ConnectionSettingResource>> AddTagAsync(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string resourceName, string connectionName) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.BotService.ConnectionSettingResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.BotService.ConnectionSettingResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.BotService.ConnectionSettingResource> GetWithSecrets(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.BotService.ConnectionSettingResource>> GetWithSecretsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.BotService.ConnectionSettingResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.BotService.ConnectionSettingResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.BotService.ConnectionSettingResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.BotService.ConnectionSettingResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.BotService.ConnectionSettingResource> Update(Azure.ResourceManager.BotService.ConnectionSettingData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.BotService.ConnectionSettingResource>> UpdateAsync(Azure.ResourceManager.BotService.ConnectionSettingData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
 }
 namespace Azure.ResourceManager.BotService.Models
 {
-    public partial class AlexaChannel : Azure.ResourceManager.BotService.Models.Channel
+    public partial class AlexaChannel : Azure.ResourceManager.BotService.Models.BotChannelProperties
     {
         public AlexaChannel() { }
         public Azure.ResourceManager.BotService.Models.AlexaChannelProperties Properties { get { throw null; } set { } }
@@ -223,11 +221,150 @@ namespace Azure.ResourceManager.BotService.Models
         public string AlexaSkillId { get { throw null; } set { } }
         public bool IsEnabled { get { throw null; } set { } }
         public System.Uri ServiceEndpointUri { get { throw null; } }
-        public string UrlFragment { get { throw null; } }
+        public string UriFragment { get { throw null; } }
+    }
+    public partial class BotChannelGetWithKeysResult : Azure.ResourceManager.Models.TrackedResourceData
+    {
+        public BotChannelGetWithKeysResult(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public string ChangedTime { get { throw null; } set { } }
+        public string EntityTag { get { throw null; } set { } }
+        public Azure.ETag? ETag { get { throw null; } set { } }
+        public Azure.ResourceManager.BotService.Models.BotServiceKind? Kind { get { throw null; } set { } }
+        public Azure.ResourceManager.BotService.Models.BotChannelProperties Properties { get { throw null; } set { } }
+        public string ProvisioningState { get { throw null; } set { } }
+        public Azure.ResourceManager.BotService.Models.BotChannelProperties Resource { get { throw null; } set { } }
+        public Azure.ResourceManager.BotService.Models.BotChannelSettings Setting { get { throw null; } set { } }
+        public Azure.ResourceManager.BotService.Models.BotServiceSku Sku { get { throw null; } set { } }
+        public System.Collections.Generic.IReadOnlyList<string> Zones { get { throw null; } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct BotChannelName : System.IEquatable<Azure.ResourceManager.BotService.Models.BotChannelName>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public BotChannelName(string value) { throw null; }
+        public static Azure.ResourceManager.BotService.Models.BotChannelName AlexaChannel { get { throw null; } }
+        public static Azure.ResourceManager.BotService.Models.BotChannelName DirectLineChannel { get { throw null; } }
+        public static Azure.ResourceManager.BotService.Models.BotChannelName DirectLineSpeechChannel { get { throw null; } }
+        public static Azure.ResourceManager.BotService.Models.BotChannelName EmailChannel { get { throw null; } }
+        public static Azure.ResourceManager.BotService.Models.BotChannelName FacebookChannel { get { throw null; } }
+        public static Azure.ResourceManager.BotService.Models.BotChannelName KikChannel { get { throw null; } }
+        public static Azure.ResourceManager.BotService.Models.BotChannelName LineChannel { get { throw null; } }
+        public static Azure.ResourceManager.BotService.Models.BotChannelName MsTeamsChannel { get { throw null; } }
+        public static Azure.ResourceManager.BotService.Models.BotChannelName Omnichannel { get { throw null; } }
+        public static Azure.ResourceManager.BotService.Models.BotChannelName OutlookChannel { get { throw null; } }
+        public static Azure.ResourceManager.BotService.Models.BotChannelName SkypeChannel { get { throw null; } }
+        public static Azure.ResourceManager.BotService.Models.BotChannelName SlackChannel { get { throw null; } }
+        public static Azure.ResourceManager.BotService.Models.BotChannelName SmsChannel { get { throw null; } }
+        public static Azure.ResourceManager.BotService.Models.BotChannelName TelegramChannel { get { throw null; } }
+        public static Azure.ResourceManager.BotService.Models.BotChannelName TelephonyChannel { get { throw null; } }
+        public static Azure.ResourceManager.BotService.Models.BotChannelName WebChatChannel { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.BotService.Models.BotChannelName other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.BotService.Models.BotChannelName left, Azure.ResourceManager.BotService.Models.BotChannelName right) { throw null; }
+        public static implicit operator Azure.ResourceManager.BotService.Models.BotChannelName (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.BotService.Models.BotChannelName left, Azure.ResourceManager.BotService.Models.BotChannelName right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public abstract partial class BotChannelProperties
+    {
+        protected BotChannelProperties() { }
+        public Azure.ETag? ETag { get { throw null; } set { } }
+        public Azure.Core.AzureLocation? Location { get { throw null; } set { } }
+        public string ProvisioningState { get { throw null; } }
+    }
+    public partial class BotChannelRegenerateKeysContent
+    {
+        public BotChannelRegenerateKeysContent(string siteName, Azure.ResourceManager.BotService.Models.BotServiceKey key) { }
+        public Azure.ResourceManager.BotService.Models.BotServiceKey Key { get { throw null; } }
+        public string SiteName { get { throw null; } }
+    }
+    public partial class BotChannelSettings
+    {
+        public BotChannelSettings() { }
+        public System.Uri BotIconUri { get { throw null; } set { } }
+        public string BotId { get { throw null; } set { } }
+        public string ChannelDisplayName { get { throw null; } set { } }
+        public string ChannelId { get { throw null; } set { } }
+        public bool? DisableLocalAuth { get { throw null; } set { } }
+        public string ExtensionKey1 { get { throw null; } }
+        public string ExtensionKey2 { get { throw null; } }
+        public bool? IsEnabled { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.BotService.Models.BotChannelSite> Sites { get { throw null; } }
+    }
+    public partial class BotChannelSite
+    {
+        public BotChannelSite(string siteName, bool isEnabled) { }
+        public string AppId { get { throw null; } set { } }
+        public Azure.ETag? ETag { get { throw null; } set { } }
+        public bool? IsBlockUserUploadEnabled { get { throw null; } set { } }
+        public bool? IsDetailedLoggingEnabled { get { throw null; } set { } }
+        public bool IsEnabled { get { throw null; } set { } }
+        public bool? IsEndpointParametersEnabled { get { throw null; } set { } }
+        public bool? IsNoStorageEnabled { get { throw null; } set { } }
+        public bool? IsSecureSiteEnabled { get { throw null; } set { } }
+        public bool? IsTokenEnabled { get { throw null; } }
+        public bool? IsV1Enabled { get { throw null; } set { } }
+        public bool? IsV3Enabled { get { throw null; } set { } }
+        public bool? IsWebchatPreviewEnabled { get { throw null; } set { } }
+        public string Key { get { throw null; } }
+        public string Key2 { get { throw null; } }
+        public string SiteId { get { throw null; } }
+        public string SiteName { get { throw null; } set { } }
+        public System.Collections.Generic.IList<string> TrustedOrigins { get { throw null; } }
+    }
+    public partial class BotConnectionSettingParameter
+    {
+        public BotConnectionSettingParameter() { }
+        public string Key { get { throw null; } set { } }
+        public string Value { get { throw null; } set { } }
+    }
+    public partial class BotConnectionSettingProperties
+    {
+        public BotConnectionSettingProperties() { }
+        public string ClientId { get { throw null; } set { } }
+        public string ClientSecret { get { throw null; } set { } }
+        public string Id { get { throw null; } set { } }
+        public string Name { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.BotService.Models.BotConnectionSettingParameter> Parameters { get { throw null; } }
+        public string ProvisioningState { get { throw null; } set { } }
+        public string Scopes { get { throw null; } set { } }
+        public string ServiceProviderDisplayName { get { throw null; } set { } }
+        public string ServiceProviderId { get { throw null; } set { } }
+        public string SettingId { get { throw null; } }
+    }
+    public partial class BotCreateEmailSignInUriResult
+    {
+        internal BotCreateEmailSignInUriResult() { }
+        public System.Uri CreateEmailSignInUrlResponseUri { get { throw null; } }
+        public string Id { get { throw null; } }
+        public Azure.Core.AzureLocation? Location { get { throw null; } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct BotMsaAppType : System.IEquatable<Azure.ResourceManager.BotService.Models.BotMsaAppType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public BotMsaAppType(string value) { throw null; }
+        public static Azure.ResourceManager.BotService.Models.BotMsaAppType MultiTenant { get { throw null; } }
+        public static Azure.ResourceManager.BotService.Models.BotMsaAppType SingleTenant { get { throw null; } }
+        public static Azure.ResourceManager.BotService.Models.BotMsaAppType UserAssignedMSI { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.BotService.Models.BotMsaAppType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.BotService.Models.BotMsaAppType left, Azure.ResourceManager.BotService.Models.BotMsaAppType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.BotService.Models.BotMsaAppType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.BotService.Models.BotMsaAppType left, Azure.ResourceManager.BotService.Models.BotMsaAppType right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class BotProperties
     {
-        public BotProperties(string displayName, string endpoint, string msaAppId) { }
+        public BotProperties(string displayName, System.Uri endpoint, string msaAppId) { }
         public System.Collections.Generic.IDictionary<string, string> AllSettings { get { throw null; } }
         public string AppPasswordHint { get { throw null; } set { } }
         public string CmekEncryptionStatus { get { throw null; } }
@@ -237,32 +374,49 @@ namespace Azure.ResourceManager.BotService.Models
         public string DeveloperAppInsightKey { get { throw null; } set { } }
         public string DeveloperAppInsightsApiKey { get { throw null; } set { } }
         public string DeveloperAppInsightsApplicationId { get { throw null; } set { } }
-        public bool? DisableLocalAuth { get { throw null; } set { } }
         public string DisplayName { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyList<string> EnabledChannels { get { throw null; } }
-        public string Endpoint { get { throw null; } set { } }
+        public System.Uri Endpoint { get { throw null; } set { } }
         public string EndpointVersion { get { throw null; } }
         public System.Uri IconUri { get { throw null; } set { } }
         public bool? IsCmekEnabled { get { throw null; } set { } }
         public bool? IsDeveloperAppInsightsApiKeySet { get { throw null; } }
+        public bool? IsLocalAuthDisabled { get { throw null; } set { } }
         public bool? IsStreamingSupported { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> LuisAppIds { get { throw null; } }
         public string LuisKey { get { throw null; } set { } }
         public System.Uri ManifestUri { get { throw null; } set { } }
         public string MigrationToken { get { throw null; } }
         public string MsaAppId { get { throw null; } set { } }
-        public string MsaAppMSIResourceId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier MsaAppMSIResourceId { get { throw null; } set { } }
         public string MsaAppTenantId { get { throw null; } set { } }
-        public Azure.ResourceManager.BotService.Models.MsaAppType? MsaAppType { get { throw null; } set { } }
+        public Azure.ResourceManager.BotService.Models.BotMsaAppType? MsaAppType { get { throw null; } set { } }
         public string OpenWithHint { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Parameters { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.BotService.BotServicePrivateEndpointConnectionData> PrivateEndpointConnections { get { throw null; } }
         public string ProvisioningState { get { throw null; } }
-        public Azure.ResourceManager.BotService.Models.PublicNetworkAccess? PublicNetworkAccess { get { throw null; } set { } }
+        public Azure.ResourceManager.BotService.Models.BotServicePublicNetworkAccess? PublicNetworkAccess { get { throw null; } set { } }
         public string PublishingCredentials { get { throw null; } set { } }
         public string SchemaTransformationVersion { get { throw null; } set { } }
-        public string StorageResourceId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier StorageResourceId { get { throw null; } set { } }
         public System.Guid? TenantId { get { throw null; } set { } }
+    }
+    public partial class BotServiceHostSettingsResult
+    {
+        internal BotServiceHostSettingsResult() { }
+        public string BotOpenIdMetadata { get { throw null; } }
+        public System.Uri OAuthUri { get { throw null; } }
+        public System.Uri ToBotFromChannelOpenIdMetadataUri { get { throw null; } }
+        public string ToBotFromChannelTokenIssuer { get { throw null; } }
+        public System.Uri ToBotFromEmulatorOpenIdMetadataUri { get { throw null; } }
+        public System.Uri ToChannelFromBotLoginUri { get { throw null; } }
+        public string ToChannelFromBotOAuthScope { get { throw null; } }
+        public bool? ValidateAuthority { get { throw null; } }
+    }
+    public enum BotServiceKey
+    {
+        Key1 = 0,
+        Key2 = 1,
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct BotServiceKind : System.IEquatable<Azure.ResourceManager.BotService.Models.BotServiceKind>
@@ -284,6 +438,18 @@ namespace Azure.ResourceManager.BotService.Models
         public static implicit operator Azure.ResourceManager.BotService.Models.BotServiceKind (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.BotService.Models.BotServiceKind left, Azure.ResourceManager.BotService.Models.BotServiceKind right) { throw null; }
         public override string ToString() { throw null; }
+    }
+    public partial class BotServiceNameAvailabilityContent
+    {
+        public BotServiceNameAvailabilityContent() { }
+        public string Name { get { throw null; } set { } }
+        public Azure.Core.ResourceType? ResourceType { get { throw null; } set { } }
+    }
+    public partial class BotServiceNameAvailabilityResult
+    {
+        internal BotServiceNameAvailabilityResult() { }
+        public bool? IsValid { get { throw null; } }
+        public string Message { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct BotServicePrivateEndpointConnectionProvisioningState : System.IEquatable<Azure.ResourceManager.BotService.Models.BotServicePrivateEndpointConnectionProvisioningState>
@@ -324,9 +490,9 @@ namespace Azure.ResourceManager.BotService.Models
         public static bool operator !=(Azure.ResourceManager.BotService.Models.BotServicePrivateEndpointServiceConnectionStatus left, Azure.ResourceManager.BotService.Models.BotServicePrivateEndpointServiceConnectionStatus right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class BotServicePrivateLinkResource : Azure.ResourceManager.Models.ResourceData
+    public partial class BotServicePrivateLinkResourceData : Azure.ResourceManager.Models.ResourceData
     {
-        public BotServicePrivateLinkResource() { }
+        public BotServicePrivateLinkResourceData() { }
         public string GroupId { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> RequiredMembers { get { throw null; } }
         public System.Collections.Generic.IList<string> RequiredZoneNames { get { throw null; } }
@@ -337,6 +503,50 @@ namespace Azure.ResourceManager.BotService.Models
         public string ActionsRequired { get { throw null; } set { } }
         public string Description { get { throw null; } set { } }
         public Azure.ResourceManager.BotService.Models.BotServicePrivateEndpointServiceConnectionStatus? Status { get { throw null; } set { } }
+    }
+    public partial class BotServiceProvider
+    {
+        internal BotServiceProvider() { }
+        public Azure.ResourceManager.BotService.Models.BotServiceProviderProperties Properties { get { throw null; } }
+    }
+    public partial class BotServiceProviderParameter
+    {
+        internal BotServiceProviderParameter() { }
+        public string Default { get { throw null; } }
+        public string Description { get { throw null; } }
+        public string DisplayName { get { throw null; } }
+        public System.Uri HelpUri { get { throw null; } }
+        public string Name { get { throw null; } }
+        public bool? Required { get { throw null; } }
+        public string ServiceProviderParameterType { get { throw null; } }
+    }
+    public partial class BotServiceProviderProperties
+    {
+        internal BotServiceProviderProperties() { }
+        public System.Uri DevPortalUri { get { throw null; } }
+        public string DisplayName { get { throw null; } }
+        public System.Uri IconUri { get { throw null; } }
+        public string Id { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.BotService.Models.BotServiceProviderParameter> Parameters { get { throw null; } }
+        public string ServiceProviderName { get { throw null; } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct BotServicePublicNetworkAccess : System.IEquatable<Azure.ResourceManager.BotService.Models.BotServicePublicNetworkAccess>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public BotServicePublicNetworkAccess(string value) { throw null; }
+        public static Azure.ResourceManager.BotService.Models.BotServicePublicNetworkAccess Disabled { get { throw null; } }
+        public static Azure.ResourceManager.BotService.Models.BotServicePublicNetworkAccess Enabled { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.BotService.Models.BotServicePublicNetworkAccess other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.BotService.Models.BotServicePublicNetworkAccess left, Azure.ResourceManager.BotService.Models.BotServicePublicNetworkAccess right) { throw null; }
+        public static implicit operator Azure.ResourceManager.BotService.Models.BotServicePublicNetworkAccess (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.BotService.Models.BotServicePublicNetworkAccess left, Azure.ResourceManager.BotService.Models.BotServicePublicNetworkAccess right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class BotServiceSku
     {
@@ -380,98 +590,7 @@ namespace Azure.ResourceManager.BotService.Models
         public static bool operator !=(Azure.ResourceManager.BotService.Models.BotServiceSkuTier left, Azure.ResourceManager.BotService.Models.BotServiceSkuTier right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public abstract partial class Channel
-    {
-        protected Channel() { }
-        public Azure.ETag? ETag { get { throw null; } set { } }
-        public Azure.Core.AzureLocation? Location { get { throw null; } set { } }
-        public string ProvisioningState { get { throw null; } }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct ChannelName : System.IEquatable<Azure.ResourceManager.BotService.Models.ChannelName>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public ChannelName(string value) { throw null; }
-        public static Azure.ResourceManager.BotService.Models.ChannelName AlexaChannel { get { throw null; } }
-        public static Azure.ResourceManager.BotService.Models.ChannelName DirectLineChannel { get { throw null; } }
-        public static Azure.ResourceManager.BotService.Models.ChannelName DirectLineSpeechChannel { get { throw null; } }
-        public static Azure.ResourceManager.BotService.Models.ChannelName EmailChannel { get { throw null; } }
-        public static Azure.ResourceManager.BotService.Models.ChannelName FacebookChannel { get { throw null; } }
-        public static Azure.ResourceManager.BotService.Models.ChannelName KikChannel { get { throw null; } }
-        public static Azure.ResourceManager.BotService.Models.ChannelName LineChannel { get { throw null; } }
-        public static Azure.ResourceManager.BotService.Models.ChannelName MsTeamsChannel { get { throw null; } }
-        public static Azure.ResourceManager.BotService.Models.ChannelName Omnichannel { get { throw null; } }
-        public static Azure.ResourceManager.BotService.Models.ChannelName OutlookChannel { get { throw null; } }
-        public static Azure.ResourceManager.BotService.Models.ChannelName SkypeChannel { get { throw null; } }
-        public static Azure.ResourceManager.BotService.Models.ChannelName SlackChannel { get { throw null; } }
-        public static Azure.ResourceManager.BotService.Models.ChannelName SmsChannel { get { throw null; } }
-        public static Azure.ResourceManager.BotService.Models.ChannelName TelegramChannel { get { throw null; } }
-        public static Azure.ResourceManager.BotService.Models.ChannelName TelephonyChannel { get { throw null; } }
-        public static Azure.ResourceManager.BotService.Models.ChannelName WebChatChannel { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.BotService.Models.ChannelName other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.BotService.Models.ChannelName left, Azure.ResourceManager.BotService.Models.ChannelName right) { throw null; }
-        public static implicit operator Azure.ResourceManager.BotService.Models.ChannelName (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.BotService.Models.ChannelName left, Azure.ResourceManager.BotService.Models.ChannelName right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    public partial class ChannelSettings
-    {
-        public ChannelSettings() { }
-        public System.Uri BotIconUri { get { throw null; } set { } }
-        public string BotId { get { throw null; } set { } }
-        public string ChannelDisplayName { get { throw null; } set { } }
-        public string ChannelId { get { throw null; } set { } }
-        public bool? DisableLocalAuth { get { throw null; } set { } }
-        public string ExtensionKey1 { get { throw null; } }
-        public string ExtensionKey2 { get { throw null; } }
-        public bool? IsEnabled { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.BotService.Models.Site> Sites { get { throw null; } }
-    }
-    public partial class CheckNameAvailabilityRequestBody
-    {
-        public CheckNameAvailabilityRequestBody() { }
-        public string Name { get { throw null; } set { } }
-        public string ResourceType { get { throw null; } set { } }
-    }
-    public partial class CheckNameAvailabilityResponseBody
-    {
-        internal CheckNameAvailabilityResponseBody() { }
-        public string Message { get { throw null; } }
-        public bool? Valid { get { throw null; } }
-    }
-    public partial class ConnectionSettingParameter
-    {
-        public ConnectionSettingParameter() { }
-        public string Key { get { throw null; } set { } }
-        public string Value { get { throw null; } set { } }
-    }
-    public partial class ConnectionSettingProperties
-    {
-        public ConnectionSettingProperties() { }
-        public string ClientId { get { throw null; } set { } }
-        public string ClientSecret { get { throw null; } set { } }
-        public string Id { get { throw null; } set { } }
-        public string Name { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.BotService.Models.ConnectionSettingParameter> Parameters { get { throw null; } }
-        public string ProvisioningState { get { throw null; } set { } }
-        public string Scopes { get { throw null; } set { } }
-        public string ServiceProviderDisplayName { get { throw null; } set { } }
-        public string ServiceProviderId { get { throw null; } set { } }
-        public string SettingId { get { throw null; } }
-    }
-    public partial class CreateEmailSignInUrlResponse
-    {
-        internal CreateEmailSignInUrlResponse() { }
-        public System.Uri CreateEmailSignInUrlResponseUri { get { throw null; } }
-        public string Id { get { throw null; } }
-        public Azure.Core.AzureLocation? Location { get { throw null; } }
-    }
-    public partial class DirectLineChannel : Azure.ResourceManager.BotService.Models.Channel
+    public partial class DirectLineChannel : Azure.ResourceManager.BotService.Models.BotChannelProperties
     {
         public DirectLineChannel() { }
         public Azure.ResourceManager.BotService.Models.DirectLineChannelProperties Properties { get { throw null; } set { } }
@@ -484,11 +603,11 @@ namespace Azure.ResourceManager.BotService.Models
         public string ExtensionKey2 { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.BotService.Models.DirectLineSite> Sites { get { throw null; } }
     }
-    public partial class DirectLineSite : Azure.ResourceManager.BotService.Models.Site
+    public partial class DirectLineSite : Azure.ResourceManager.BotService.Models.BotChannelSite
     {
         public DirectLineSite(string siteName, bool isEnabled) : base (default(string), default(bool)) { }
     }
-    public partial class DirectLineSpeechChannel : Azure.ResourceManager.BotService.Models.Channel
+    public partial class DirectLineSpeechChannel : Azure.ResourceManager.BotService.Models.BotChannelProperties
     {
         public DirectLineSpeechChannel() { }
         public Azure.ResourceManager.BotService.Models.DirectLineSpeechChannelProperties Properties { get { throw null; } set { } }
@@ -504,7 +623,7 @@ namespace Azure.ResourceManager.BotService.Models
         public bool? IsDefaultBotForCogSvcAccount { get { throw null; } set { } }
         public bool? IsEnabled { get { throw null; } set { } }
     }
-    public partial class EmailChannel : Azure.ResourceManager.BotService.Models.Channel
+    public partial class EmailChannel : Azure.ResourceManager.BotService.Models.BotChannelProperties
     {
         public EmailChannel() { }
         public Azure.ResourceManager.BotService.Models.EmailChannelProperties Properties { get { throw null; } set { } }
@@ -523,7 +642,7 @@ namespace Azure.ResourceManager.BotService.Models
         public string MagicCode { get { throw null; } set { } }
         public string Password { get { throw null; } set { } }
     }
-    public partial class FacebookChannel : Azure.ResourceManager.BotService.Models.Channel
+    public partial class FacebookChannel : Azure.ResourceManager.BotService.Models.BotChannelProperties
     {
         public FacebookChannel() { }
         public Azure.ResourceManager.BotService.Models.FacebookChannelProperties Properties { get { throw null; } set { } }
@@ -544,24 +663,21 @@ namespace Azure.ResourceManager.BotService.Models
         public string AccessToken { get { throw null; } set { } }
         public string Id { get { throw null; } set { } }
     }
-    public partial class HostSettingsResponse
+    public partial class GetBotServiceQnAMakerEndpointKeyContent
     {
-        internal HostSettingsResponse() { }
-        public string BotOpenIdMetadata { get { throw null; } }
-        public System.Uri OAuthUri { get { throw null; } }
-        public System.Uri ToBotFromChannelOpenIdMetadataUri { get { throw null; } }
-        public string ToBotFromChannelTokenIssuer { get { throw null; } }
-        public System.Uri ToBotFromEmulatorOpenIdMetadataUri { get { throw null; } }
-        public System.Uri ToChannelFromBotLoginUri { get { throw null; } }
-        public string ToChannelFromBotOAuthScope { get { throw null; } }
-        public bool? ValidateAuthority { get { throw null; } }
+        public GetBotServiceQnAMakerEndpointKeyContent() { }
+        public string Authkey { get { throw null; } set { } }
+        public string Hostname { get { throw null; } set { } }
     }
-    public enum Key
+    public partial class GetBotServiceQnAMakerEndpointKeyResult
     {
-        Key1 = 0,
-        Key2 = 1,
+        internal GetBotServiceQnAMakerEndpointKeyResult() { }
+        public string InstalledVersion { get { throw null; } }
+        public string LastStableVersion { get { throw null; } }
+        public string PrimaryEndpointKey { get { throw null; } }
+        public string SecondaryEndpointKey { get { throw null; } }
     }
-    public partial class KikChannel : Azure.ResourceManager.BotService.Models.Channel
+    public partial class KikChannel : Azure.ResourceManager.BotService.Models.BotChannelProperties
     {
         public KikChannel() { }
         public Azure.ResourceManager.BotService.Models.KikChannelProperties Properties { get { throw null; } set { } }
@@ -574,7 +690,7 @@ namespace Azure.ResourceManager.BotService.Models
         public bool? IsValidated { get { throw null; } set { } }
         public string UserName { get { throw null; } set { } }
     }
-    public partial class LineChannel : Azure.ResourceManager.BotService.Models.Channel
+    public partial class LineChannel : Azure.ResourceManager.BotService.Models.BotChannelProperties
     {
         public LineChannel() { }
         public Azure.ResourceManager.BotService.Models.LineChannelProperties Properties { get { throw null; } set { } }
@@ -593,40 +709,7 @@ namespace Azure.ResourceManager.BotService.Models
         public string ChannelSecret { get { throw null; } set { } }
         public string GeneratedId { get { throw null; } }
     }
-    public partial class ListChannelWithKeysResponse : Azure.ResourceManager.Models.TrackedResourceData
-    {
-        public ListChannelWithKeysResponse(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
-        public string ChangedTime { get { throw null; } set { } }
-        public string EntityTag { get { throw null; } set { } }
-        public Azure.ETag? ETag { get { throw null; } set { } }
-        public Azure.ResourceManager.BotService.Models.BotServiceKind? Kind { get { throw null; } set { } }
-        public Azure.ResourceManager.BotService.Models.Channel Properties { get { throw null; } set { } }
-        public string ProvisioningState { get { throw null; } set { } }
-        public Azure.ResourceManager.BotService.Models.Channel Resource { get { throw null; } set { } }
-        public Azure.ResourceManager.BotService.Models.ChannelSettings Setting { get { throw null; } set { } }
-        public Azure.ResourceManager.BotService.Models.BotServiceSku Sku { get { throw null; } set { } }
-        public System.Collections.Generic.IReadOnlyList<string> Zones { get { throw null; } }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct MsaAppType : System.IEquatable<Azure.ResourceManager.BotService.Models.MsaAppType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public MsaAppType(string value) { throw null; }
-        public static Azure.ResourceManager.BotService.Models.MsaAppType MultiTenant { get { throw null; } }
-        public static Azure.ResourceManager.BotService.Models.MsaAppType SingleTenant { get { throw null; } }
-        public static Azure.ResourceManager.BotService.Models.MsaAppType UserAssignedMSI { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.BotService.Models.MsaAppType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.BotService.Models.MsaAppType left, Azure.ResourceManager.BotService.Models.MsaAppType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.BotService.Models.MsaAppType (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.BotService.Models.MsaAppType left, Azure.ResourceManager.BotService.Models.MsaAppType right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    public partial class MsTeamsChannel : Azure.ResourceManager.BotService.Models.Channel
+    public partial class MsTeamsChannel : Azure.ResourceManager.BotService.Models.BotChannelProperties
     {
         public MsTeamsChannel() { }
         public Azure.ResourceManager.BotService.Models.MsTeamsChannelProperties Properties { get { throw null; } set { } }
@@ -637,134 +720,20 @@ namespace Azure.ResourceManager.BotService.Models
         public bool? AcceptedTerms { get { throw null; } set { } }
         public string CallingWebhook { get { throw null; } set { } }
         public string DeploymentEnvironment { get { throw null; } set { } }
-        public bool? EnableCalling { get { throw null; } set { } }
         public string IncomingCallRoute { get { throw null; } set { } }
+        public bool? IsCallingEnabled { get { throw null; } set { } }
         public bool IsEnabled { get { throw null; } set { } }
     }
-    public partial class OperationResultsDescription
-    {
-        internal OperationResultsDescription() { }
-        public string Id { get { throw null; } }
-        public string Name { get { throw null; } }
-        public System.DateTimeOffset? StartOn { get { throw null; } }
-        public Azure.ResourceManager.BotService.Models.OperationResultStatus? Status { get { throw null; } }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct OperationResultStatus : System.IEquatable<Azure.ResourceManager.BotService.Models.OperationResultStatus>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public OperationResultStatus(string value) { throw null; }
-        public static Azure.ResourceManager.BotService.Models.OperationResultStatus Canceled { get { throw null; } }
-        public static Azure.ResourceManager.BotService.Models.OperationResultStatus Failed { get { throw null; } }
-        public static Azure.ResourceManager.BotService.Models.OperationResultStatus Requested { get { throw null; } }
-        public static Azure.ResourceManager.BotService.Models.OperationResultStatus Running { get { throw null; } }
-        public static Azure.ResourceManager.BotService.Models.OperationResultStatus Succeeded { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.BotService.Models.OperationResultStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.BotService.Models.OperationResultStatus left, Azure.ResourceManager.BotService.Models.OperationResultStatus right) { throw null; }
-        public static implicit operator Azure.ResourceManager.BotService.Models.OperationResultStatus (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.BotService.Models.OperationResultStatus left, Azure.ResourceManager.BotService.Models.OperationResultStatus right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    public partial class OutlookChannel : Azure.ResourceManager.BotService.Models.Channel
+    public partial class OutlookChannel : Azure.ResourceManager.BotService.Models.BotChannelProperties
     {
         public OutlookChannel() { }
     }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct PublicNetworkAccess : System.IEquatable<Azure.ResourceManager.BotService.Models.PublicNetworkAccess>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public PublicNetworkAccess(string value) { throw null; }
-        public static Azure.ResourceManager.BotService.Models.PublicNetworkAccess Disabled { get { throw null; } }
-        public static Azure.ResourceManager.BotService.Models.PublicNetworkAccess Enabled { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.BotService.Models.PublicNetworkAccess other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.BotService.Models.PublicNetworkAccess left, Azure.ResourceManager.BotService.Models.PublicNetworkAccess right) { throw null; }
-        public static implicit operator Azure.ResourceManager.BotService.Models.PublicNetworkAccess (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.BotService.Models.PublicNetworkAccess left, Azure.ResourceManager.BotService.Models.PublicNetworkAccess right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    public partial class QnAMakerEndpointKeysRequestBody
-    {
-        public QnAMakerEndpointKeysRequestBody() { }
-        public string Authkey { get { throw null; } set { } }
-        public string Hostname { get { throw null; } set { } }
-    }
-    public partial class QnAMakerEndpointKeysResponse
-    {
-        internal QnAMakerEndpointKeysResponse() { }
-        public string InstalledVersion { get { throw null; } }
-        public string LastStableVersion { get { throw null; } }
-        public string PrimaryEndpointKey { get { throw null; } }
-        public string SecondaryEndpointKey { get { throw null; } }
-    }
-    public enum RegenerateKeysChannelName
+    public enum RegenerateKeysBotChannelName
     {
         WebChatChannel = 0,
         DirectLineChannel = 1,
     }
-    public partial class ServiceProvider
-    {
-        internal ServiceProvider() { }
-        public Azure.ResourceManager.BotService.Models.ServiceProviderProperties Properties { get { throw null; } }
-    }
-    public partial class ServiceProviderParameter
-    {
-        internal ServiceProviderParameter() { }
-        public string Default { get { throw null; } }
-        public string Description { get { throw null; } }
-        public string DisplayName { get { throw null; } }
-        public System.Uri HelpUri { get { throw null; } }
-        public string Name { get { throw null; } }
-        public bool? Required { get { throw null; } }
-        public string ServiceProviderParameterType { get { throw null; } }
-    }
-    public partial class ServiceProviderProperties
-    {
-        internal ServiceProviderProperties() { }
-        public System.Uri DevPortalUri { get { throw null; } }
-        public string DisplayName { get { throw null; } }
-        public System.Uri IconUri { get { throw null; } }
-        public string Id { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.BotService.Models.ServiceProviderParameter> Parameters { get { throw null; } }
-        public string ServiceProviderName { get { throw null; } }
-    }
-    public partial class Site
-    {
-        public Site(string siteName, bool isEnabled) { }
-        public string AppId { get { throw null; } set { } }
-        public Azure.ETag? ETag { get { throw null; } set { } }
-        public bool? IsBlockUserUploadEnabled { get { throw null; } set { } }
-        public bool? IsDetailedLoggingEnabled { get { throw null; } set { } }
-        public bool IsEnabled { get { throw null; } set { } }
-        public bool? IsEndpointParametersEnabled { get { throw null; } set { } }
-        public bool? IsNoStorageEnabled { get { throw null; } set { } }
-        public bool? IsSecureSiteEnabled { get { throw null; } set { } }
-        public bool? IsTokenEnabled { get { throw null; } }
-        public bool? IsV1Enabled { get { throw null; } set { } }
-        public bool? IsV3Enabled { get { throw null; } set { } }
-        public bool? IsWebchatPreviewEnabled { get { throw null; } set { } }
-        public string Key { get { throw null; } }
-        public string Key2 { get { throw null; } }
-        public string SiteId { get { throw null; } }
-        public string SiteName { get { throw null; } set { } }
-        public System.Collections.Generic.IList<string> TrustedOrigins { get { throw null; } }
-    }
-    public partial class SiteContent
-    {
-        public SiteContent(string siteName, Azure.ResourceManager.BotService.Models.Key key) { }
-        public Azure.ResourceManager.BotService.Models.Key Key { get { throw null; } }
-        public string SiteName { get { throw null; } }
-    }
-    public partial class SkypeChannel : Azure.ResourceManager.BotService.Models.Channel
+    public partial class SkypeChannel : Azure.ResourceManager.BotService.Models.BotChannelProperties
     {
         public SkypeChannel() { }
         public Azure.ResourceManager.BotService.Models.SkypeChannelProperties Properties { get { throw null; } set { } }
@@ -773,17 +742,17 @@ namespace Azure.ResourceManager.BotService.Models
     {
         public SkypeChannelProperties(bool isEnabled) { }
         public string CallingWebHook { get { throw null; } set { } }
-        public bool? EnableCalling { get { throw null; } set { } }
-        public bool? EnableGroups { get { throw null; } set { } }
-        public bool? EnableMediaCards { get { throw null; } set { } }
-        public bool? EnableMessaging { get { throw null; } set { } }
-        public bool? EnableScreenSharing { get { throw null; } set { } }
-        public bool? EnableVideo { get { throw null; } set { } }
         public string GroupsMode { get { throw null; } set { } }
         public string IncomingCallRoute { get { throw null; } set { } }
+        public bool? IsCallingEnabled { get { throw null; } set { } }
         public bool IsEnabled { get { throw null; } set { } }
+        public bool? IsGroupsEnabled { get { throw null; } set { } }
+        public bool? IsMediaCardsEnabled { get { throw null; } set { } }
+        public bool? IsMessagingEnabled { get { throw null; } set { } }
+        public bool? IsScreenSharingEnabled { get { throw null; } set { } }
+        public bool? IsVideoEnabled { get { throw null; } set { } }
     }
-    public partial class SlackChannel : Azure.ResourceManager.BotService.Models.Channel
+    public partial class SlackChannel : Azure.ResourceManager.BotService.Models.BotChannelProperties
     {
         public SlackChannel() { }
         public Azure.ResourceManager.BotService.Models.SlackChannelProperties Properties { get { throw null; } set { } }
@@ -803,7 +772,7 @@ namespace Azure.ResourceManager.BotService.Models
         public string SigningSecret { get { throw null; } set { } }
         public string VerificationToken { get { throw null; } set { } }
     }
-    public partial class SmsChannel : Azure.ResourceManager.BotService.Models.Channel
+    public partial class SmsChannel : Azure.ResourceManager.BotService.Models.BotChannelProperties
     {
         public SmsChannel() { }
         public Azure.ResourceManager.BotService.Models.SmsChannelProperties Properties { get { throw null; } set { } }
@@ -817,7 +786,7 @@ namespace Azure.ResourceManager.BotService.Models
         public bool? IsValidated { get { throw null; } set { } }
         public string Phone { get { throw null; } set { } }
     }
-    public partial class TelegramChannel : Azure.ResourceManager.BotService.Models.Channel
+    public partial class TelegramChannel : Azure.ResourceManager.BotService.Models.BotChannelProperties
     {
         public TelegramChannel() { }
         public Azure.ResourceManager.BotService.Models.TelegramChannelProperties Properties { get { throw null; } set { } }
@@ -829,7 +798,7 @@ namespace Azure.ResourceManager.BotService.Models
         public bool IsEnabled { get { throw null; } set { } }
         public bool? IsValidated { get { throw null; } set { } }
     }
-    public partial class WebChatChannel : Azure.ResourceManager.BotService.Models.Channel
+    public partial class WebChatChannel : Azure.ResourceManager.BotService.Models.BotChannelProperties
     {
         public WebChatChannel() { }
         public Azure.ResourceManager.BotService.Models.WebChatChannelProperties Properties { get { throw null; } set { } }
@@ -840,7 +809,7 @@ namespace Azure.ResourceManager.BotService.Models
         public System.Collections.Generic.IList<Azure.ResourceManager.BotService.Models.WebChatSite> Sites { get { throw null; } }
         public string WebChatEmbedCode { get { throw null; } }
     }
-    public partial class WebChatSite : Azure.ResourceManager.BotService.Models.Site
+    public partial class WebChatSite : Azure.ResourceManager.BotService.Models.BotChannelSite
     {
         public WebChatSite(string siteName, bool isEnabled) : base (default(string), default(bool)) { }
     }

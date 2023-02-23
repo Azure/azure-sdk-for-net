@@ -15,10 +15,10 @@ namespace Azure.ResourceManager.BotService.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(EnableCalling))
+            if (Optional.IsDefined(IsCallingEnabled))
             {
                 writer.WritePropertyName("enableCalling"u8);
-                writer.WriteBooleanValue(EnableCalling.Value);
+                writer.WriteBooleanValue(IsCallingEnabled.Value);
             }
             if (Optional.IsDefined(CallingWebhook))
             {

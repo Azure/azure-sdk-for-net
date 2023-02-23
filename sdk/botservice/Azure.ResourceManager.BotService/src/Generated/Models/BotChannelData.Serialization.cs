@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.BotService
 
         internal static BotChannelData DeserializeBotChannelData(JsonElement element)
         {
-            Optional<Channel> properties = default;
+            Optional<BotChannelProperties> properties = default;
             Optional<BotServiceSku> sku = default;
             Optional<BotServiceKind?> kind = default;
             Optional<ETag> etag = default;
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.BotService
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    properties = Channel.DeserializeChannel(property.Value);
+                    properties = BotChannelProperties.DeserializeBotChannelProperties(property.Value);
                     continue;
                 }
                 if (property.NameEquals("sku"u8))

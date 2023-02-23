@@ -47,7 +47,56 @@ rename-rules:
   URI: Uri
   Etag: ETag|etag
 
+override-operation-name:
+  Bots_GetCheckNameAvailability: CheckBotServiceNameAvailability
+  Email_CreateSignInUrl: CreateEmailSignInUri
+  HostSettings_Get: GetBotServiceHostSettings
+  Channels_ListWithKeys: GetChannelWithKeys
+  QnAMakerEndpointKeys_Get: GetBotServiceQnAMakerEndpointKey
+  BotConnection_ListServiceProviders: GetBotConnectionServiceProviders
+  DirectLine_RegenerateKeys: RegenerateKeys
+
+rename-mapping:
+  ConnectionSetting: BotConnectionSetting
+  AlexaChannelProperties.urlFragment: UriFragment
+  BotProperties.endpoint: -|uri
+  BotProperties.msaAppMSIResourceId: -|arm-id
+  BotProperties.disableLocalAuth: IsLocalAuthDisabled
+  BotProperties.storageResourceId: -|arm-id
+  PrivateLinkResource: BotServicePrivateLinkResourceData
+  Channel: BotChannelProperties
+  ChannelName: BotChannelName
+  ChannelSettings: BotChannelSettings
+  CheckNameAvailabilityRequestBody: BotServiceNameAvailabilityContent
+  CheckNameAvailabilityRequestBody.type: ResourceType|resource-type
+  CheckNameAvailabilityResponseBody: BotServiceNameAvailabilityResult
+  CheckNameAvailabilityResponseBody.valid: IsValid
+  ConnectionSettingParameter: BotConnectionSettingParameter
+  ConnectionSettingProperties: BotConnectionSettingProperties
+  CreateEmailSignInUrlResponse: BotCreateEmailSignInUriResult
+  Site: BotChannelSite
+  HostSettingsResponse: BotServiceHostSettingsResult
+  Key: BotServiceKey
+  ListChannelWithKeysResponse: BotChannelGetWithKeysResult
+  MsaAppType: BotMsaAppType
+  MsTeamsChannelProperties.enableCalling: IsCallingEnabled
+  PublicNetworkAccess: BotServicePublicNetworkAccess
+  QnAMakerEndpointKeysRequestBody: GetBotServiceQnAMakerEndpointKeyContent
+  QnAMakerEndpointKeysResponse: GetBotServiceQnAMakerEndpointKeyResult
+  RegenerateKeysChannelName: RegenerateKeysBotChannelName
+  ServiceProvider: BotServiceProvider
+  ServiceProviderParameter: BotServiceProviderParameter
+  ServiceProviderProperties: BotServiceProviderProperties
+  SiteInfo: BotChannelRegenerateKeysContent
+  SkypeChannelProperties.enableMessaging: IsMessagingEnabled
+  SkypeChannelProperties.enableMediaCards: IsMediaCardsEnabled
+  SkypeChannelProperties.enableVideo: IsVideoEnabled
+  SkypeChannelProperties.enableCalling: IsCallingEnabled
+  SkypeChannelProperties.enableScreenSharing: IsScreenSharingEnabled
+  SkypeChannelProperties.enableGroups: IsGroupsEnabled
+
 directive:
+  - remove-operation: OperationResults_Get # remove this because this is a LRO related operations, we should not expose it.
   - from: botservice.json
     where: $.paths..parameters[?(@.name=='channelName')]
     transform: >

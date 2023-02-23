@@ -13,7 +13,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.BotService.Models
 {
     /// <summary> A site for the Webchat channel. </summary>
-    public partial class WebChatSite : Site
+    public partial class WebChatSite : BotChannelSite
     {
         /// <summary> Initializes a new instance of WebChatSite. </summary>
         /// <param name="siteName"> Site name. </param>

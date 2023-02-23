@@ -13,7 +13,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.BotService.Models
 {
     /// <summary> A site for the Direct Line channel. </summary>
-    public partial class DirectLineSite : Site
+    public partial class DirectLineSite : BotChannelSite
     {
         /// <summary> Initializes a new instance of DirectLineSite. </summary>
         /// <param name="siteName"> Site name. </param>
