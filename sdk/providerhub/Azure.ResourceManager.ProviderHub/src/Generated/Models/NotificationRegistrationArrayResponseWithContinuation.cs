@@ -17,20 +17,20 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// <summary> Initializes a new instance of NotificationRegistrationArrayResponseWithContinuation. </summary>
         internal NotificationRegistrationArrayResponseWithContinuation()
         {
-            Value = new ChangeTrackingList<NotificationRegistrationData>();
+            Value = new ChangeTrackingList<ProviderNotificationRegistrationData>();
         }
 
         /// <summary> Initializes a new instance of NotificationRegistrationArrayResponseWithContinuation. </summary>
         /// <param name="value"></param>
         /// <param name="nextLink"> The URL to get to the next set of results, if there are any. </param>
-        internal NotificationRegistrationArrayResponseWithContinuation(IReadOnlyList<NotificationRegistrationData> value, string nextLink)
+        internal NotificationRegistrationArrayResponseWithContinuation(IReadOnlyList<ProviderNotificationRegistrationData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> Gets the value. </summary>
-        public IReadOnlyList<NotificationRegistrationData> Value { get; }
+        public IReadOnlyList<ProviderNotificationRegistrationData> Value { get; }
         /// <summary> The URL to get to the next set of results, if there are any. </summary>
         public string NextLink { get; }
     }

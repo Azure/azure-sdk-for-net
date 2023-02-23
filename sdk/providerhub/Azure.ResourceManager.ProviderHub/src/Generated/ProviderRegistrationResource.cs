@@ -96,11 +96,11 @@ namespace Azure.ResourceManager.ProviderHub
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of CustomRolloutResources in the ProviderRegistration. </summary>
-        /// <returns> An object representing collection of CustomRolloutResources and their operations over a CustomRolloutResource. </returns>
-        public virtual CustomRolloutCollection GetCustomRollouts()
+        /// <summary> Gets a collection of ProviderCustomRolloutResources in the ProviderRegistration. </summary>
+        /// <returns> An object representing collection of ProviderCustomRolloutResources and their operations over a ProviderCustomRolloutResource. </returns>
+        public virtual ProviderCustomRolloutCollection GetProviderCustomRollouts()
         {
-            return GetCachedClient(Client => new CustomRolloutCollection(Client, Id));
+            return GetCachedClient(Client => new ProviderCustomRolloutCollection(Client, Id));
         }
 
         /// <summary>
@@ -121,9 +121,9 @@ namespace Azure.ResourceManager.ProviderHub
         /// <exception cref="ArgumentException"> <paramref name="rolloutName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="rolloutName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<CustomRolloutResource>> GetCustomRolloutAsync(string rolloutName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ProviderCustomRolloutResource>> GetProviderCustomRolloutAsync(string rolloutName, CancellationToken cancellationToken = default)
         {
-            return await GetCustomRollouts().GetAsync(rolloutName, cancellationToken).ConfigureAwait(false);
+            return await GetProviderCustomRollouts().GetAsync(rolloutName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -144,39 +144,16 @@ namespace Azure.ResourceManager.ProviderHub
         /// <exception cref="ArgumentException"> <paramref name="rolloutName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="rolloutName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<CustomRolloutResource> GetCustomRollout(string rolloutName, CancellationToken cancellationToken = default)
+        public virtual Response<ProviderCustomRolloutResource> GetProviderCustomRollout(string rolloutName, CancellationToken cancellationToken = default)
         {
-            return GetCustomRollouts().Get(rolloutName, cancellationToken);
+            return GetProviderCustomRollouts().Get(rolloutName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of DefaultRolloutResources in the ProviderRegistration. </summary>
-        /// <returns> An object representing collection of DefaultRolloutResources and their operations over a DefaultRolloutResource. </returns>
-        public virtual DefaultRolloutCollection GetDefaultRollouts()
+        /// <summary> Gets a collection of ProviderDefaultRolloutResources in the ProviderRegistration. </summary>
+        /// <returns> An object representing collection of ProviderDefaultRolloutResources and their operations over a ProviderDefaultRolloutResource. </returns>
+        public virtual ProviderDefaultRolloutCollection GetProviderDefaultRollouts()
         {
-            return GetCachedClient(Client => new DefaultRolloutCollection(Client, Id));
-        }
-
-        /// <summary>
-        /// Gets the default rollout details.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/defaultRollouts/{rolloutName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DefaultRollouts_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="rolloutName"> The rollout name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="rolloutName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="rolloutName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<DefaultRolloutResource>> GetDefaultRolloutAsync(string rolloutName, CancellationToken cancellationToken = default)
-        {
-            return await GetDefaultRollouts().GetAsync(rolloutName, cancellationToken).ConfigureAwait(false);
+            return GetCachedClient(Client => new ProviderDefaultRolloutCollection(Client, Id));
         }
 
         /// <summary>
@@ -197,16 +174,39 @@ namespace Azure.ResourceManager.ProviderHub
         /// <exception cref="ArgumentException"> <paramref name="rolloutName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="rolloutName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<DefaultRolloutResource> GetDefaultRollout(string rolloutName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ProviderDefaultRolloutResource>> GetProviderDefaultRolloutAsync(string rolloutName, CancellationToken cancellationToken = default)
         {
-            return GetDefaultRollouts().Get(rolloutName, cancellationToken);
+            return await GetProviderDefaultRollouts().GetAsync(rolloutName, cancellationToken).ConfigureAwait(false);
         }
 
-        /// <summary> Gets a collection of NotificationRegistrationResources in the ProviderRegistration. </summary>
-        /// <returns> An object representing collection of NotificationRegistrationResources and their operations over a NotificationRegistrationResource. </returns>
-        public virtual NotificationRegistrationCollection GetNotificationRegistrations()
+        /// <summary>
+        /// Gets the default rollout details.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/defaultRollouts/{rolloutName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DefaultRollouts_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="rolloutName"> The rollout name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="rolloutName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="rolloutName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<ProviderDefaultRolloutResource> GetProviderDefaultRollout(string rolloutName, CancellationToken cancellationToken = default)
         {
-            return GetCachedClient(Client => new NotificationRegistrationCollection(Client, Id));
+            return GetProviderDefaultRollouts().Get(rolloutName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of ProviderNotificationRegistrationResources in the ProviderRegistration. </summary>
+        /// <returns> An object representing collection of ProviderNotificationRegistrationResources and their operations over a ProviderNotificationRegistrationResource. </returns>
+        public virtual ProviderNotificationRegistrationCollection GetProviderNotificationRegistrations()
+        {
+            return GetCachedClient(Client => new ProviderNotificationRegistrationCollection(Client, Id));
         }
 
         /// <summary>
@@ -227,9 +227,9 @@ namespace Azure.ResourceManager.ProviderHub
         /// <exception cref="ArgumentException"> <paramref name="notificationRegistrationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="notificationRegistrationName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<NotificationRegistrationResource>> GetNotificationRegistrationAsync(string notificationRegistrationName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ProviderNotificationRegistrationResource>> GetProviderNotificationRegistrationAsync(string notificationRegistrationName, CancellationToken cancellationToken = default)
         {
-            return await GetNotificationRegistrations().GetAsync(notificationRegistrationName, cancellationToken).ConfigureAwait(false);
+            return await GetProviderNotificationRegistrations().GetAsync(notificationRegistrationName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -250,9 +250,9 @@ namespace Azure.ResourceManager.ProviderHub
         /// <exception cref="ArgumentException"> <paramref name="notificationRegistrationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="notificationRegistrationName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<NotificationRegistrationResource> GetNotificationRegistration(string notificationRegistrationName, CancellationToken cancellationToken = default)
+        public virtual Response<ProviderNotificationRegistrationResource> GetProviderNotificationRegistration(string notificationRegistrationName, CancellationToken cancellationToken = default)
         {
-            return GetNotificationRegistrations().Get(notificationRegistrationName, cancellationToken);
+            return GetProviderNotificationRegistrations().Get(notificationRegistrationName, cancellationToken);
         }
 
         /// <summary> Gets a collection of ResourceTypeRegistrationResources in the ProviderRegistration. </summary>

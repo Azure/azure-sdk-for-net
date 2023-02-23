@@ -12,7 +12,7 @@ using Azure.ResourceManager.ProviderHub.Models;
 
 namespace Azure.ResourceManager.ProviderHub
 {
-    public partial class NotificationRegistrationData : IUtf8JsonSerializable
+    public partial class ProviderDefaultRolloutData : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -25,9 +25,9 @@ namespace Azure.ResourceManager.ProviderHub
             writer.WriteEndObject();
         }
 
-        internal static NotificationRegistrationData DeserializeNotificationRegistrationData(JsonElement element)
+        internal static ProviderDefaultRolloutData DeserializeProviderDefaultRolloutData(JsonElement element)
         {
-            Optional<NotificationRegistrationProperties> properties = default;
+            Optional<DefaultRolloutProperties> properties = default;
             ResourceIdentifier id = default;
             string name = default;
             Core.ResourceType type = default;
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.ProviderHub
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    properties = NotificationRegistrationProperties.DeserializeNotificationRegistrationProperties(property.Value);
+                    properties = DefaultRolloutProperties.DeserializeDefaultRolloutProperties(property.Value);
                     continue;
                 }
                 if (property.NameEquals("id"u8))
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.ProviderHub
                     continue;
                 }
             }
-            return new NotificationRegistrationData(id, name, type, systemData.Value, properties.Value);
+            return new ProviderDefaultRolloutData(id, name, type, systemData.Value, properties.Value);
         }
     }
 }

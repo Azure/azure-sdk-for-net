@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// <param name="extensions"></param>
         /// <param name="timeout"></param>
         /// <param name="endpointType"></param>
-        internal ResourceTypeEndpoint(bool? enabled, IList<string> apiVersions, IList<string> locations, IList<string> requiredFeatures, ResourceTypeEndpointFeaturesRule featuresRule, IList<ResourceTypeExtension> extensions, TimeSpan? timeout, EndpointType? endpointType)
+        internal ResourceTypeEndpoint(bool? enabled, IList<string> apiVersions, IList<string> locations, IList<string> requiredFeatures, ResourceTypeEndpointFeaturesRule featuresRule, IList<ResourceTypeExtension> extensions, TimeSpan? timeout, ResourceProviderEndpointType? endpointType)
         {
             Enabled = enabled;
             ApiVersions = apiVersions;
@@ -69,6 +69,6 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// <summary> Gets or sets the timeout. </summary>
         public TimeSpan? Timeout { get; set; }
         /// <summary> Gets or sets the endpoint type. </summary>
-        public EndpointType? EndpointType { get; set; }
+        public ResourceProviderEndpointType? EndpointType { get; set; }
     }
 }

@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.ProviderHub
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="providerNamespace"/> or <paramref name="rolloutName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="providerNamespace"/> or <paramref name="rolloutName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<DefaultRolloutData>> GetAsync(string subscriptionId, string providerNamespace, string rolloutName, CancellationToken cancellationToken = default)
+        public async Task<Response<ProviderDefaultRolloutData>> GetAsync(string subscriptionId, string providerNamespace, string rolloutName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(providerNamespace, nameof(providerNamespace));
@@ -76,13 +76,13 @@ namespace Azure.ResourceManager.ProviderHub
             {
                 case 200:
                     {
-                        DefaultRolloutData value = default;
+                        ProviderDefaultRolloutData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = DefaultRolloutData.DeserializeDefaultRolloutData(document.RootElement);
+                        value = ProviderDefaultRolloutData.DeserializeProviderDefaultRolloutData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((DefaultRolloutData)null, message.Response);
+                    return Response.FromValue((ProviderDefaultRolloutData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.ProviderHub
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="providerNamespace"/> or <paramref name="rolloutName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="providerNamespace"/> or <paramref name="rolloutName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<DefaultRolloutData> Get(string subscriptionId, string providerNamespace, string rolloutName, CancellationToken cancellationToken = default)
+        public Response<ProviderDefaultRolloutData> Get(string subscriptionId, string providerNamespace, string rolloutName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(providerNamespace, nameof(providerNamespace));
@@ -107,13 +107,13 @@ namespace Azure.ResourceManager.ProviderHub
             {
                 case 200:
                     {
-                        DefaultRolloutData value = default;
+                        ProviderDefaultRolloutData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = DefaultRolloutData.DeserializeDefaultRolloutData(document.RootElement);
+                        value = ProviderDefaultRolloutData.DeserializeProviderDefaultRolloutData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((DefaultRolloutData)null, message.Response);
+                    return Response.FromValue((ProviderDefaultRolloutData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.ProviderHub
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string providerNamespace, string rolloutName, DefaultRolloutData data)
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string providerNamespace, string rolloutName, ProviderDefaultRolloutData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.ProviderHub
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="providerNamespace"/>, <paramref name="rolloutName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="providerNamespace"/> or <paramref name="rolloutName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string providerNamespace, string rolloutName, DefaultRolloutData data, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string providerNamespace, string rolloutName, ProviderDefaultRolloutData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(providerNamespace, nameof(providerNamespace));
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.ProviderHub
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="providerNamespace"/>, <paramref name="rolloutName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="providerNamespace"/> or <paramref name="rolloutName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response CreateOrUpdate(string subscriptionId, string providerNamespace, string rolloutName, DefaultRolloutData data, CancellationToken cancellationToken = default)
+        public Response CreateOrUpdate(string subscriptionId, string providerNamespace, string rolloutName, ProviderDefaultRolloutData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(providerNamespace, nameof(providerNamespace));

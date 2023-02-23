@@ -17,20 +17,20 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// <summary> Initializes a new instance of DefaultRolloutArrayResponseWithContinuation. </summary>
         internal DefaultRolloutArrayResponseWithContinuation()
         {
-            Value = new ChangeTrackingList<DefaultRolloutData>();
+            Value = new ChangeTrackingList<ProviderDefaultRolloutData>();
         }
 
         /// <summary> Initializes a new instance of DefaultRolloutArrayResponseWithContinuation. </summary>
         /// <param name="value"></param>
         /// <param name="nextLink"> The URL to get to the next set of results, if there are any. </param>
-        internal DefaultRolloutArrayResponseWithContinuation(IReadOnlyList<DefaultRolloutData> value, string nextLink)
+        internal DefaultRolloutArrayResponseWithContinuation(IReadOnlyList<ProviderDefaultRolloutData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> Gets the value. </summary>
-        public IReadOnlyList<DefaultRolloutData> Value { get; }
+        public IReadOnlyList<ProviderDefaultRolloutData> Value { get; }
         /// <summary> The URL to get to the next set of results, if there are any. </summary>
         public string NextLink { get; }
     }

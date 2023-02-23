@@ -10,7 +10,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.ProviderHub.Models
 {
     /// <summary> The ResourceTypeExtensionOptionsResourceCreationBegin. </summary>
-    public partial class ResourceTypeExtensionOptionsResourceCreationBegin : ExtensionOptions
+    public partial class ResourceTypeExtensionOptionsResourceCreationBegin : ResourceTypeExtensionOption
     {
         /// <summary> Initializes a new instance of ResourceTypeExtensionOptionsResourceCreationBegin. </summary>
         public ResourceTypeExtensionOptionsResourceCreationBegin()
@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// <summary> Initializes a new instance of ResourceTypeExtensionOptionsResourceCreationBegin. </summary>
         /// <param name="request"></param>
         /// <param name="response"></param>
-        internal ResourceTypeExtensionOptionsResourceCreationBegin(IList<ExtensionOptionType> request, IList<ExtensionOptionType> response) : base(request, response)
+        internal ResourceTypeExtensionOptionsResourceCreationBegin(IList<ResourceTypeExtensionOptionType> request, IList<ResourceTypeExtensionOptionType> response) : base(request, response)
         {
         }
     }

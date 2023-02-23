@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         internal static RolloutStatusBase DeserializeRolloutStatusBase(JsonElement element)
         {
             Optional<IList<string>> completedRegions = default;
-            Optional<IDictionary<string, ExtendedErrorInfo>> failedOrSkippedRegions = default;
+            Optional<IDictionary<string, ProviderHubExtendedErrorInfo>> failedOrSkippedRegions = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("completedRegions"u8))
@@ -68,10 +68,10 @@ namespace Azure.ResourceManager.ProviderHub.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    Dictionary<string, ExtendedErrorInfo> dictionary = new Dictionary<string, ExtendedErrorInfo>();
+                    Dictionary<string, ProviderHubExtendedErrorInfo> dictionary = new Dictionary<string, ProviderHubExtendedErrorInfo>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, ExtendedErrorInfo.DeserializeExtendedErrorInfo(property0.Value));
+                        dictionary.Add(property0.Name, ProviderHubExtendedErrorInfo.DeserializeProviderHubExtendedErrorInfo(property0.Value));
                     }
                     failedOrSkippedRegions = dictionary;
                     continue;

@@ -278,7 +278,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             Optional<ResourceTypeRegistrationPropertiesRequestHeaderOptions> requestHeaderOptions = default;
             Optional<IList<SubscriptionStateRule>> subscriptionStateRules = default;
             Optional<ResourceTypeRegistrationPropertiesTemplateDeploymentOptions> templateDeploymentOptions = default;
-            Optional<IList<ExtendedLocationOptions>> extendedLocations = default;
+            Optional<IList<ProviderHubExtendedLocationOption>> extendedLocations = default;
             Optional<ResourceTypeRegistrationPropertiesResourceMovePolicy> resourceMovePolicy = default;
             Optional<ResourceDeletionPolicy> resourceDeletionPolicy = default;
             Optional<IDictionary<string, ResourceConcurrencyControlOption>> resourceConcurrencyControlOptions = default;
@@ -604,10 +604,10 @@ namespace Azure.ResourceManager.ProviderHub.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<ExtendedLocationOptions> array = new List<ExtendedLocationOptions>();
+                    List<ProviderHubExtendedLocationOption> array = new List<ProviderHubExtendedLocationOption>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ExtendedLocationOptions.DeserializeExtendedLocationOptions(item));
+                        array.Add(ProviderHubExtendedLocationOption.DeserializeProviderHubExtendedLocationOption(item));
                     }
                     extendedLocations = array;
                     continue;

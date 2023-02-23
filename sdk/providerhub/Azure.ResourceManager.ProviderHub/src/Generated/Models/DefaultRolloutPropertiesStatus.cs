@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// <param name="nextTrafficRegion"></param>
         /// <param name="nextTrafficRegionScheduledOn"></param>
         /// <param name="subscriptionReregistrationResult"></param>
-        internal DefaultRolloutPropertiesStatus(IList<string> completedRegions, IDictionary<string, ExtendedErrorInfo> failedOrSkippedRegions, TrafficRegionCategory? nextTrafficRegion, DateTimeOffset? nextTrafficRegionScheduledOn, SubscriptionReregistrationResult? subscriptionReregistrationResult) : base(completedRegions, failedOrSkippedRegions, nextTrafficRegion, nextTrafficRegionScheduledOn, subscriptionReregistrationResult)
+        internal DefaultRolloutPropertiesStatus(IList<string> completedRegions, IDictionary<string, ProviderHubExtendedErrorInfo> failedOrSkippedRegions, TrafficRegionCategory? nextTrafficRegion, DateTimeOffset? nextTrafficRegionScheduledOn, SubscriptionReregistrationResult? subscriptionReregistrationResult) : base(completedRegions, failedOrSkippedRegions, nextTrafficRegion, nextTrafficRegionScheduledOn, subscriptionReregistrationResult)
         {
         }
     }

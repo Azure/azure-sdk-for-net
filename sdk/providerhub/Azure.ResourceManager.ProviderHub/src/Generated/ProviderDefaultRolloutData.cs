@@ -11,21 +11,21 @@ using Azure.ResourceManager.ProviderHub.Models;
 
 namespace Azure.ResourceManager.ProviderHub
 {
-    /// <summary> A class representing the DefaultRollout data model. </summary>
-    public partial class DefaultRolloutData : ResourceData
+    /// <summary> A class representing the ProviderDefaultRollout data model. </summary>
+    public partial class ProviderDefaultRolloutData : ResourceData
     {
-        /// <summary> Initializes a new instance of DefaultRolloutData. </summary>
-        public DefaultRolloutData()
+        /// <summary> Initializes a new instance of ProviderDefaultRolloutData. </summary>
+        public ProviderDefaultRolloutData()
         {
         }
 
-        /// <summary> Initializes a new instance of DefaultRolloutData. </summary>
+        /// <summary> Initializes a new instance of ProviderDefaultRolloutData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> Properties of the rollout. </param>
-        internal DefaultRolloutData(ResourceIdentifier id, string name, Core.ResourceType resourceType, SystemData systemData, DefaultRolloutProperties properties) : base(id, name, resourceType, systemData)
+        internal ProviderDefaultRolloutData(ResourceIdentifier id, string name, Core.ResourceType resourceType, SystemData systemData, DefaultRolloutProperties properties) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
         }

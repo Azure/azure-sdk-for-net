@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         internal static ResourceTypeExtension DeserializeResourceTypeExtension(JsonElement element)
         {
             Optional<Uri> endpointUri = default;
-            Optional<IList<ExtensionCategory>> extensionCategories = default;
+            Optional<IList<ResourceTypeExtensionCategory>> extensionCategories = default;
             Optional<TimeSpan> timeout = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -64,10 +64,10 @@ namespace Azure.ResourceManager.ProviderHub.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<ExtensionCategory> array = new List<ExtensionCategory>();
+                    List<ResourceTypeExtensionCategory> array = new List<ResourceTypeExtensionCategory>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(new ExtensionCategory(item.GetString()));
+                        array.Add(new ResourceTypeExtensionCategory(item.GetString()));
                     }
                     extensionCategories = array;
                     continue;

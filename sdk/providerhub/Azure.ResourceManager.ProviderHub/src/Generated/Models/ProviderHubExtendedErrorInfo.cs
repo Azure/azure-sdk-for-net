@@ -10,23 +10,23 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    /// <summary> The ExtendedErrorInfo. </summary>
-    public partial class ExtendedErrorInfo
+    /// <summary> The ProviderHubExtendedErrorInfo. </summary>
+    public partial class ProviderHubExtendedErrorInfo
     {
-        /// <summary> Initializes a new instance of ExtendedErrorInfo. </summary>
-        public ExtendedErrorInfo()
+        /// <summary> Initializes a new instance of ProviderHubExtendedErrorInfo. </summary>
+        public ProviderHubExtendedErrorInfo()
         {
-            Details = new ChangeTrackingList<ExtendedErrorInfo>();
+            Details = new ChangeTrackingList<ProviderHubExtendedErrorInfo>();
             AdditionalInfo = new ChangeTrackingList<TypedErrorInfo>();
         }
 
-        /// <summary> Initializes a new instance of ExtendedErrorInfo. </summary>
+        /// <summary> Initializes a new instance of ProviderHubExtendedErrorInfo. </summary>
         /// <param name="code"></param>
         /// <param name="target"></param>
         /// <param name="message"></param>
         /// <param name="details"></param>
         /// <param name="additionalInfo"></param>
-        internal ExtendedErrorInfo(string code, string target, string message, IList<ExtendedErrorInfo> details, IList<TypedErrorInfo> additionalInfo)
+        internal ProviderHubExtendedErrorInfo(string code, string target, string message, IList<ProviderHubExtendedErrorInfo> details, IList<TypedErrorInfo> additionalInfo)
         {
             Code = code;
             Target = target;
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// <summary> Gets or sets the message. </summary>
         public string Message { get; set; }
         /// <summary> Gets the details. </summary>
-        public IList<ExtendedErrorInfo> Details { get; }
+        public IList<ProviderHubExtendedErrorInfo> Details { get; }
         /// <summary> Gets the additional info. </summary>
         public IList<TypedErrorInfo> AdditionalInfo { get; }
     }

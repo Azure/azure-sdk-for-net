@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             DisallowedActionVerbs = new ChangeTrackingList<string>();
             ServiceTreeInfos = new ChangeTrackingList<ServiceTreeInfo>();
             SubscriptionStateRules = new ChangeTrackingList<SubscriptionStateRule>();
-            ExtendedLocations = new ChangeTrackingList<ExtendedLocationOptions>();
+            ExtendedLocations = new ChangeTrackingList<ProviderHubExtendedLocationOption>();
             ResourceConcurrencyControlOptions = new ChangeTrackingDictionary<string, ResourceConcurrencyControlOption>();
         }
 
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// <param name="resourceGraphConfiguration"></param>
         /// <param name="management"></param>
         /// <param name="openApiConfiguration"></param>
-        internal ResourceTypeRegistrationProperties(RoutingType? routingType, Regionality? regionality, IList<ResourceTypeEndpoint> endpoints, ResourceTypeRegistrationPropertiesExtensionOptions extensionOptions, ResourceTypeRegistrationPropertiesMarketplaceType? marketplaceType, IList<SwaggerSpecification> swaggerSpecifications, IList<string> allowedUnauthorizedActions, IList<AuthorizationActionMapping> authorizationActionMappings, IList<LinkedAccessCheck> linkedAccessChecks, string defaultApiVersion, IList<LoggingRule> loggingRules, IList<ThrottlingRule> throttlingRules, IList<string> requiredFeatures, ResourceTypeRegistrationPropertiesFeaturesRule featuresRule, bool? enableAsyncOperation, ProvisioningState? provisioningState, bool? enableThirdPartyS2S, ResourceTypeRegistrationPropertiesSubscriptionLifecycleNotificationSpecifications subscriptionLifecycleNotificationSpecifications, bool? isPureProxy, ResourceTypeRegistrationPropertiesIdentityManagement identityManagement, ResourceTypeRegistrationPropertiesCheckNameAvailabilitySpecifications checkNameAvailabilitySpecifications, IList<string> disallowedActionVerbs, IList<ServiceTreeInfo> serviceTreeInfos, ResourceTypeRegistrationPropertiesRequestHeaderOptions requestHeaderOptions, IList<SubscriptionStateRule> subscriptionStateRules, ResourceTypeRegistrationPropertiesTemplateDeploymentOptions templateDeploymentOptions, IList<ExtendedLocationOptions> extendedLocations, ResourceTypeRegistrationPropertiesResourceMovePolicy resourceMovePolicy, ResourceDeletionPolicy? resourceDeletionPolicy, IDictionary<string, ResourceConcurrencyControlOption> resourceConcurrencyControlOptions, ResourceTypeRegistrationPropertiesResourceGraphConfiguration resourceGraphConfiguration, ResourceTypeRegistrationPropertiesManagement management, OpenApiConfiguration openApiConfiguration)
+        internal ResourceTypeRegistrationProperties(RoutingType? routingType, Regionality? regionality, IList<ResourceTypeEndpoint> endpoints, ResourceTypeRegistrationPropertiesExtensionOptions extensionOptions, ResourceTypeRegistrationPropertiesMarketplaceType? marketplaceType, IList<SwaggerSpecification> swaggerSpecifications, IList<string> allowedUnauthorizedActions, IList<AuthorizationActionMapping> authorizationActionMappings, IList<LinkedAccessCheck> linkedAccessChecks, string defaultApiVersion, IList<LoggingRule> loggingRules, IList<ThrottlingRule> throttlingRules, IList<string> requiredFeatures, ResourceTypeRegistrationPropertiesFeaturesRule featuresRule, bool? enableAsyncOperation, ProvisioningState? provisioningState, bool? enableThirdPartyS2S, ResourceTypeRegistrationPropertiesSubscriptionLifecycleNotificationSpecifications subscriptionLifecycleNotificationSpecifications, bool? isPureProxy, ResourceTypeRegistrationPropertiesIdentityManagement identityManagement, ResourceTypeRegistrationPropertiesCheckNameAvailabilitySpecifications checkNameAvailabilitySpecifications, IList<string> disallowedActionVerbs, IList<ServiceTreeInfo> serviceTreeInfos, ResourceTypeRegistrationPropertiesRequestHeaderOptions requestHeaderOptions, IList<SubscriptionStateRule> subscriptionStateRules, ResourceTypeRegistrationPropertiesTemplateDeploymentOptions templateDeploymentOptions, IList<ProviderHubExtendedLocationOption> extendedLocations, ResourceTypeRegistrationPropertiesResourceMovePolicy resourceMovePolicy, ResourceDeletionPolicy? resourceDeletionPolicy, IDictionary<string, ResourceConcurrencyControlOption> resourceConcurrencyControlOptions, ResourceTypeRegistrationPropertiesResourceGraphConfiguration resourceGraphConfiguration, ResourceTypeRegistrationPropertiesManagement management, OpenApiConfiguration openApiConfiguration)
         {
             RoutingType = routingType;
             Regionality = regionality;
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// <summary> Gets or sets the template deployment options. </summary>
         public ResourceTypeRegistrationPropertiesTemplateDeploymentOptions TemplateDeploymentOptions { get; set; }
         /// <summary> Gets the extended locations. </summary>
-        public IList<ExtendedLocationOptions> ExtendedLocations { get; }
+        public IList<ProviderHubExtendedLocationOption> ExtendedLocations { get; }
         /// <summary> Gets or sets the resource move policy. </summary>
         public ResourceTypeRegistrationPropertiesResourceMovePolicy ResourceMovePolicy { get; set; }
         /// <summary> Gets or sets the resource deletion policy. </summary>

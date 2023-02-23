@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    public partial class ExtendedErrorInfo : IUtf8JsonSerializable
+    public partial class ProviderHubExtendedErrorInfo : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -54,12 +54,12 @@ namespace Azure.ResourceManager.ProviderHub.Models
             writer.WriteEndObject();
         }
 
-        internal static ExtendedErrorInfo DeserializeExtendedErrorInfo(JsonElement element)
+        internal static ProviderHubExtendedErrorInfo DeserializeProviderHubExtendedErrorInfo(JsonElement element)
         {
             Optional<string> code = default;
             Optional<string> target = default;
             Optional<string> message = default;
-            Optional<IList<ExtendedErrorInfo>> details = default;
+            Optional<IList<ProviderHubExtendedErrorInfo>> details = default;
             Optional<IList<TypedErrorInfo>> additionalInfo = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -85,10 +85,10 @@ namespace Azure.ResourceManager.ProviderHub.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<ExtendedErrorInfo> array = new List<ExtendedErrorInfo>();
+                    List<ProviderHubExtendedErrorInfo> array = new List<ProviderHubExtendedErrorInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DeserializeExtendedErrorInfo(item));
+                        array.Add(DeserializeProviderHubExtendedErrorInfo(item));
                     }
                     details = array;
                     continue;
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     continue;
                 }
             }
-            return new ExtendedErrorInfo(code.Value, target.Value, message.Value, Optional.ToList(details), Optional.ToList(additionalInfo));
+            return new ProviderHubExtendedErrorInfo(code.Value, target.Value, message.Value, Optional.ToList(details), Optional.ToList(additionalInfo));
         }
     }
 }

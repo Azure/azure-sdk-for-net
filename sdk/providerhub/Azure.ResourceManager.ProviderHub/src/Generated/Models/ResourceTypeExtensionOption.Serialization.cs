@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    public partial class ExtensionOptions : IUtf8JsonSerializable
+    public partial class ResourceTypeExtensionOption : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -39,10 +39,10 @@ namespace Azure.ResourceManager.ProviderHub.Models
             writer.WriteEndObject();
         }
 
-        internal static ExtensionOptions DeserializeExtensionOptions(JsonElement element)
+        internal static ResourceTypeExtensionOption DeserializeResourceTypeExtensionOption(JsonElement element)
         {
-            Optional<IList<ExtensionOptionType>> request = default;
-            Optional<IList<ExtensionOptionType>> response = default;
+            Optional<IList<ResourceTypeExtensionOptionType>> request = default;
+            Optional<IList<ResourceTypeExtensionOptionType>> response = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("request"u8))
@@ -52,10 +52,10 @@ namespace Azure.ResourceManager.ProviderHub.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<ExtensionOptionType> array = new List<ExtensionOptionType>();
+                    List<ResourceTypeExtensionOptionType> array = new List<ResourceTypeExtensionOptionType>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(new ExtensionOptionType(item.GetString()));
+                        array.Add(new ResourceTypeExtensionOptionType(item.GetString()));
                     }
                     request = array;
                     continue;
@@ -67,16 +67,16 @@ namespace Azure.ResourceManager.ProviderHub.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<ExtensionOptionType> array = new List<ExtensionOptionType>();
+                    List<ResourceTypeExtensionOptionType> array = new List<ResourceTypeExtensionOptionType>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(new ExtensionOptionType(item.GetString()));
+                        array.Add(new ResourceTypeExtensionOptionType(item.GetString()));
                     }
                     response = array;
                     continue;
                 }
             }
-            return new ExtensionOptions(Optional.ToList(request), Optional.ToList(response));
+            return new ResourceTypeExtensionOption(Optional.ToList(request), Optional.ToList(response));
         }
     }
 }

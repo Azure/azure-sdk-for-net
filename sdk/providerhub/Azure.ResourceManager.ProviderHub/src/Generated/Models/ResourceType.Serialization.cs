@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             Optional<string> skuLink = default;
             Optional<IReadOnlyList<string>> disallowedActionVerbs = default;
             Optional<ResourceTypeTemplateDeploymentPolicy> templateDeploymentPolicy = default;
-            Optional<IReadOnlyList<ExtendedLocationOptions>> extendedLocations = default;
+            Optional<IReadOnlyList<ProviderHubExtendedLocationOption>> extendedLocations = default;
             Optional<IReadOnlyList<LinkedOperationRule>> linkedOperationRules = default;
             Optional<ManifestResourceDeletionPolicy> resourceDeletionPolicy = default;
             foreach (var property in element.EnumerateObject())
@@ -294,10 +294,10 @@ namespace Azure.ResourceManager.ProviderHub.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<ExtendedLocationOptions> array = new List<ExtendedLocationOptions>();
+                    List<ProviderHubExtendedLocationOption> array = new List<ProviderHubExtendedLocationOption>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ExtendedLocationOptions.DeserializeExtendedLocationOptions(item));
+                        array.Add(ProviderHubExtendedLocationOption.DeserializeProviderHubExtendedLocationOption(item));
                     }
                     extendedLocations = array;
                     continue;

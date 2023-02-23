@@ -12,7 +12,7 @@ using Azure.ResourceManager.ProviderHub.Models;
 
 namespace Azure.ResourceManager.ProviderHub
 {
-    public partial class CustomRolloutData : IUtf8JsonSerializable
+    public partial class ProviderCustomRolloutData : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ProviderHub
             writer.WriteEndObject();
         }
 
-        internal static CustomRolloutData DeserializeCustomRolloutData(JsonElement element)
+        internal static ProviderCustomRolloutData DeserializeProviderCustomRolloutData(JsonElement element)
         {
             CustomRolloutProperties properties = default;
             ResourceIdentifier id = default;
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.ProviderHub
                     continue;
                 }
             }
-            return new CustomRolloutData(id, name, type, systemData.Value, properties);
+            return new ProviderCustomRolloutData(id, name, type, systemData.Value, properties);
         }
     }
 }

@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.ProviderHub
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="providerNamespace"/> or <paramref name="rolloutName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="providerNamespace"/> or <paramref name="rolloutName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<CustomRolloutData>> GetAsync(string subscriptionId, string providerNamespace, string rolloutName, CancellationToken cancellationToken = default)
+        public async Task<Response<ProviderCustomRolloutData>> GetAsync(string subscriptionId, string providerNamespace, string rolloutName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(providerNamespace, nameof(providerNamespace));
@@ -76,13 +76,13 @@ namespace Azure.ResourceManager.ProviderHub
             {
                 case 200:
                     {
-                        CustomRolloutData value = default;
+                        ProviderCustomRolloutData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = CustomRolloutData.DeserializeCustomRolloutData(document.RootElement);
+                        value = ProviderCustomRolloutData.DeserializeProviderCustomRolloutData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((CustomRolloutData)null, message.Response);
+                    return Response.FromValue((ProviderCustomRolloutData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.ProviderHub
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="providerNamespace"/> or <paramref name="rolloutName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="providerNamespace"/> or <paramref name="rolloutName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<CustomRolloutData> Get(string subscriptionId, string providerNamespace, string rolloutName, CancellationToken cancellationToken = default)
+        public Response<ProviderCustomRolloutData> Get(string subscriptionId, string providerNamespace, string rolloutName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(providerNamespace, nameof(providerNamespace));
@@ -107,19 +107,19 @@ namespace Azure.ResourceManager.ProviderHub
             {
                 case 200:
                     {
-                        CustomRolloutData value = default;
+                        ProviderCustomRolloutData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = CustomRolloutData.DeserializeCustomRolloutData(document.RootElement);
+                        value = ProviderCustomRolloutData.DeserializeProviderCustomRolloutData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((CustomRolloutData)null, message.Response);
+                    return Response.FromValue((ProviderCustomRolloutData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string providerNamespace, string rolloutName, CustomRolloutData data)
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string providerNamespace, string rolloutName, ProviderCustomRolloutData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.ProviderHub
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="providerNamespace"/>, <paramref name="rolloutName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="providerNamespace"/> or <paramref name="rolloutName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<CustomRolloutData>> CreateOrUpdateAsync(string subscriptionId, string providerNamespace, string rolloutName, CustomRolloutData data, CancellationToken cancellationToken = default)
+        public async Task<Response<ProviderCustomRolloutData>> CreateOrUpdateAsync(string subscriptionId, string providerNamespace, string rolloutName, ProviderCustomRolloutData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(providerNamespace, nameof(providerNamespace));
@@ -164,9 +164,9 @@ namespace Azure.ResourceManager.ProviderHub
             {
                 case 200:
                     {
-                        CustomRolloutData value = default;
+                        ProviderCustomRolloutData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = CustomRolloutData.DeserializeCustomRolloutData(document.RootElement);
+                        value = ProviderCustomRolloutData.DeserializeProviderCustomRolloutData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.ProviderHub
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="providerNamespace"/>, <paramref name="rolloutName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="providerNamespace"/> or <paramref name="rolloutName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<CustomRolloutData> CreateOrUpdate(string subscriptionId, string providerNamespace, string rolloutName, CustomRolloutData data, CancellationToken cancellationToken = default)
+        public Response<ProviderCustomRolloutData> CreateOrUpdate(string subscriptionId, string providerNamespace, string rolloutName, ProviderCustomRolloutData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(providerNamespace, nameof(providerNamespace));
@@ -195,9 +195,9 @@ namespace Azure.ResourceManager.ProviderHub
             {
                 case 200:
                     {
-                        CustomRolloutData value = default;
+                        ProviderCustomRolloutData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = CustomRolloutData.DeserializeCustomRolloutData(document.RootElement);
+                        value = ProviderCustomRolloutData.DeserializeProviderCustomRolloutData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

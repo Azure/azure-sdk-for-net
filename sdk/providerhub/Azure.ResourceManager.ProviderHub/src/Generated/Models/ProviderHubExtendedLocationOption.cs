@@ -7,18 +7,18 @@
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    /// <summary> The ExtendedLocationOptions. </summary>
-    public partial class ExtendedLocationOptions
+    /// <summary> The ProviderHubExtendedLocationOption. </summary>
+    public partial class ProviderHubExtendedLocationOption
     {
-        /// <summary> Initializes a new instance of ExtendedLocationOptions. </summary>
-        public ExtendedLocationOptions()
+        /// <summary> Initializes a new instance of ProviderHubExtendedLocationOption. </summary>
+        public ProviderHubExtendedLocationOption()
         {
         }
 
-        /// <summary> Initializes a new instance of ExtendedLocationOptions. </summary>
+        /// <summary> Initializes a new instance of ProviderHubExtendedLocationOption. </summary>
         /// <param name="extendedLocationOptionsType"></param>
         /// <param name="supportedPolicy"></param>
-        internal ExtendedLocationOptions(string extendedLocationOptionsType, string supportedPolicy)
+        internal ProviderHubExtendedLocationOption(string extendedLocationOptionsType, string supportedPolicy)
         {
             ExtendedLocationOptionsType = extendedLocationOptionsType;
             SupportedPolicy = supportedPolicy;

@@ -83,58 +83,58 @@ namespace Azure.ResourceManager.ProviderHub
             return subscriptionResource.GetProviderRegistrations().Get(providerNamespace, cancellationToken);
         }
 
-        #region CustomRolloutResource
+        #region ProviderCustomRolloutResource
         /// <summary>
-        /// Gets an object representing a <see cref="CustomRolloutResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="CustomRolloutResource.CreateResourceIdentifier" /> to create a <see cref="CustomRolloutResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="ProviderCustomRolloutResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ProviderCustomRolloutResource.CreateResourceIdentifier" /> to create a <see cref="ProviderCustomRolloutResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="CustomRolloutResource" /> object. </returns>
-        public static CustomRolloutResource GetCustomRolloutResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ProviderCustomRolloutResource" /> object. </returns>
+        public static ProviderCustomRolloutResource GetProviderCustomRolloutResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                CustomRolloutResource.ValidateResourceId(id);
-                return new CustomRolloutResource(client, id);
+                ProviderCustomRolloutResource.ValidateResourceId(id);
+                return new ProviderCustomRolloutResource(client, id);
             }
             );
         }
         #endregion
 
-        #region DefaultRolloutResource
+        #region ProviderDefaultRolloutResource
         /// <summary>
-        /// Gets an object representing a <see cref="DefaultRolloutResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DefaultRolloutResource.CreateResourceIdentifier" /> to create a <see cref="DefaultRolloutResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="ProviderDefaultRolloutResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ProviderDefaultRolloutResource.CreateResourceIdentifier" /> to create a <see cref="ProviderDefaultRolloutResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DefaultRolloutResource" /> object. </returns>
-        public static DefaultRolloutResource GetDefaultRolloutResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ProviderDefaultRolloutResource" /> object. </returns>
+        public static ProviderDefaultRolloutResource GetProviderDefaultRolloutResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                DefaultRolloutResource.ValidateResourceId(id);
-                return new DefaultRolloutResource(client, id);
+                ProviderDefaultRolloutResource.ValidateResourceId(id);
+                return new ProviderDefaultRolloutResource(client, id);
             }
             );
         }
         #endregion
 
-        #region NotificationRegistrationResource
+        #region ProviderNotificationRegistrationResource
         /// <summary>
-        /// Gets an object representing a <see cref="NotificationRegistrationResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="NotificationRegistrationResource.CreateResourceIdentifier" /> to create a <see cref="NotificationRegistrationResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="ProviderNotificationRegistrationResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ProviderNotificationRegistrationResource.CreateResourceIdentifier" /> to create a <see cref="ProviderNotificationRegistrationResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="NotificationRegistrationResource" /> object. </returns>
-        public static NotificationRegistrationResource GetNotificationRegistrationResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ProviderNotificationRegistrationResource" /> object. </returns>
+        public static ProviderNotificationRegistrationResource GetProviderNotificationRegistrationResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                NotificationRegistrationResource.ValidateResourceId(id);
-                return new NotificationRegistrationResource(client, id);
+                ProviderNotificationRegistrationResource.ValidateResourceId(id);
+                return new ProviderNotificationRegistrationResource(client, id);
             }
             );
         }

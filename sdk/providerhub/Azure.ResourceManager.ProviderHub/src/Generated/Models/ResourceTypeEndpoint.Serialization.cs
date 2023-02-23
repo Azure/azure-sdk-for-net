@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             Optional<ResourceTypeEndpointFeaturesRule> featuresRule = default;
             Optional<IList<ResourceTypeExtension>> extensions = default;
             Optional<TimeSpan> timeout = default;
-            Optional<EndpointType> endpointType = default;
+            Optional<ResourceProviderEndpointType> endpointType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("enabled"u8))
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    endpointType = new EndpointType(property.Value.GetString());
+                    endpointType = new ResourceProviderEndpointType(property.Value.GetString());
                     continue;
                 }
             }

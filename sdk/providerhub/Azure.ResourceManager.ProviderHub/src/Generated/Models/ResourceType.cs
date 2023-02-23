@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             SubscriptionStateRules = new ChangeTrackingList<SubscriptionStateRule>();
             ServiceTreeInfos = new ChangeTrackingList<ServiceTreeInfo>();
             DisallowedActionVerbs = new ChangeTrackingList<string>();
-            ExtendedLocations = new ChangeTrackingList<ExtendedLocationOptions>();
+            ExtendedLocations = new ChangeTrackingList<ProviderHubExtendedLocationOption>();
             LinkedOperationRules = new ChangeTrackingList<LinkedOperationRule>();
         }
 
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// <param name="extendedLocations"></param>
         /// <param name="linkedOperationRules"></param>
         /// <param name="resourceDeletionPolicy"></param>
-        internal ResourceType(string name, RoutingType? routingType, ResourceValidation? resourceValidation, IReadOnlyList<string> allowedUnauthorizedActions, IReadOnlyList<AuthorizationActionMapping> authorizationActionMappings, IReadOnlyList<LinkedAccessCheck> linkedAccessChecks, string defaultApiVersion, IReadOnlyList<LoggingRule> loggingRules, IReadOnlyList<ThrottlingRule> throttlingRules, IReadOnlyList<ResourceProviderEndpoint> endpoints, ResourceTypeMarketplaceType? marketplaceType, ResourceTypeIdentityManagement identityManagement, BinaryData metadata, IReadOnlyList<string> requiredFeatures, ResourceTypeFeaturesRule featuresRule, IReadOnlyList<SubscriptionStateRule> subscriptionStateRules, IReadOnlyList<ServiceTreeInfo> serviceTreeInfos, ResourceTypeRequestHeaderOptions requestHeaderOptions, string skuLink, IReadOnlyList<string> disallowedActionVerbs, ResourceTypeTemplateDeploymentPolicy templateDeploymentPolicy, IReadOnlyList<ExtendedLocationOptions> extendedLocations, IReadOnlyList<LinkedOperationRule> linkedOperationRules, ManifestResourceDeletionPolicy? resourceDeletionPolicy)
+        internal ResourceType(string name, RoutingType? routingType, ResourceValidation? resourceValidation, IReadOnlyList<string> allowedUnauthorizedActions, IReadOnlyList<AuthorizationActionMapping> authorizationActionMappings, IReadOnlyList<LinkedAccessCheck> linkedAccessChecks, string defaultApiVersion, IReadOnlyList<LoggingRule> loggingRules, IReadOnlyList<ThrottlingRule> throttlingRules, IReadOnlyList<ResourceProviderEndpoint> endpoints, ResourceTypeMarketplaceType? marketplaceType, ResourceTypeIdentityManagement identityManagement, BinaryData metadata, IReadOnlyList<string> requiredFeatures, ResourceTypeFeaturesRule featuresRule, IReadOnlyList<SubscriptionStateRule> subscriptionStateRules, IReadOnlyList<ServiceTreeInfo> serviceTreeInfos, ResourceTypeRequestHeaderOptions requestHeaderOptions, string skuLink, IReadOnlyList<string> disallowedActionVerbs, ResourceTypeTemplateDeploymentPolicy templateDeploymentPolicy, IReadOnlyList<ProviderHubExtendedLocationOption> extendedLocations, IReadOnlyList<LinkedOperationRule> linkedOperationRules, ManifestResourceDeletionPolicy? resourceDeletionPolicy)
         {
             Name = name;
             RoutingType = routingType;
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// <summary> Gets the template deployment policy. </summary>
         public ResourceTypeTemplateDeploymentPolicy TemplateDeploymentPolicy { get; }
         /// <summary> Gets the extended locations. </summary>
-        public IReadOnlyList<ExtendedLocationOptions> ExtendedLocations { get; }
+        public IReadOnlyList<ProviderHubExtendedLocationOption> ExtendedLocations { get; }
         /// <summary> Gets the linked operation rules. </summary>
         public IReadOnlyList<LinkedOperationRule> LinkedOperationRules { get; }
         /// <summary> Gets the resource deletion policy. </summary>

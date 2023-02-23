@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.ProviderHub
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="providerNamespace"/> or <paramref name="notificationRegistrationName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="providerNamespace"/> or <paramref name="notificationRegistrationName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<NotificationRegistrationData>> GetAsync(string subscriptionId, string providerNamespace, string notificationRegistrationName, CancellationToken cancellationToken = default)
+        public async Task<Response<ProviderNotificationRegistrationData>> GetAsync(string subscriptionId, string providerNamespace, string notificationRegistrationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(providerNamespace, nameof(providerNamespace));
@@ -76,13 +76,13 @@ namespace Azure.ResourceManager.ProviderHub
             {
                 case 200:
                     {
-                        NotificationRegistrationData value = default;
+                        ProviderNotificationRegistrationData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = NotificationRegistrationData.DeserializeNotificationRegistrationData(document.RootElement);
+                        value = ProviderNotificationRegistrationData.DeserializeProviderNotificationRegistrationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((NotificationRegistrationData)null, message.Response);
+                    return Response.FromValue((ProviderNotificationRegistrationData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.ProviderHub
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="providerNamespace"/> or <paramref name="notificationRegistrationName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="providerNamespace"/> or <paramref name="notificationRegistrationName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<NotificationRegistrationData> Get(string subscriptionId, string providerNamespace, string notificationRegistrationName, CancellationToken cancellationToken = default)
+        public Response<ProviderNotificationRegistrationData> Get(string subscriptionId, string providerNamespace, string notificationRegistrationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(providerNamespace, nameof(providerNamespace));
@@ -107,19 +107,19 @@ namespace Azure.ResourceManager.ProviderHub
             {
                 case 200:
                     {
-                        NotificationRegistrationData value = default;
+                        ProviderNotificationRegistrationData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = NotificationRegistrationData.DeserializeNotificationRegistrationData(document.RootElement);
+                        value = ProviderNotificationRegistrationData.DeserializeProviderNotificationRegistrationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((NotificationRegistrationData)null, message.Response);
+                    return Response.FromValue((ProviderNotificationRegistrationData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string providerNamespace, string notificationRegistrationName, NotificationRegistrationData data)
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string providerNamespace, string notificationRegistrationName, ProviderNotificationRegistrationData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.ProviderHub
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="providerNamespace"/>, <paramref name="notificationRegistrationName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="providerNamespace"/> or <paramref name="notificationRegistrationName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<NotificationRegistrationData>> CreateOrUpdateAsync(string subscriptionId, string providerNamespace, string notificationRegistrationName, NotificationRegistrationData data, CancellationToken cancellationToken = default)
+        public async Task<Response<ProviderNotificationRegistrationData>> CreateOrUpdateAsync(string subscriptionId, string providerNamespace, string notificationRegistrationName, ProviderNotificationRegistrationData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(providerNamespace, nameof(providerNamespace));
@@ -164,9 +164,9 @@ namespace Azure.ResourceManager.ProviderHub
             {
                 case 200:
                     {
-                        NotificationRegistrationData value = default;
+                        ProviderNotificationRegistrationData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = NotificationRegistrationData.DeserializeNotificationRegistrationData(document.RootElement);
+                        value = ProviderNotificationRegistrationData.DeserializeProviderNotificationRegistrationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.ProviderHub
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="providerNamespace"/>, <paramref name="notificationRegistrationName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="providerNamespace"/> or <paramref name="notificationRegistrationName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<NotificationRegistrationData> CreateOrUpdate(string subscriptionId, string providerNamespace, string notificationRegistrationName, NotificationRegistrationData data, CancellationToken cancellationToken = default)
+        public Response<ProviderNotificationRegistrationData> CreateOrUpdate(string subscriptionId, string providerNamespace, string notificationRegistrationName, ProviderNotificationRegistrationData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(providerNamespace, nameof(providerNamespace));
@@ -195,9 +195,9 @@ namespace Azure.ResourceManager.ProviderHub
             {
                 case 200:
                     {
-                        NotificationRegistrationData value = default;
+                        ProviderNotificationRegistrationData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = NotificationRegistrationData.DeserializeNotificationRegistrationData(document.RootElement);
+                        value = ProviderNotificationRegistrationData.DeserializeProviderNotificationRegistrationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

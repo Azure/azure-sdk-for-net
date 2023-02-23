@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    public partial class ExtendedLocationOptions : IUtf8JsonSerializable
+    public partial class ProviderHubExtendedLocationOption : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             writer.WriteEndObject();
         }
 
-        internal static ExtendedLocationOptions DeserializeExtendedLocationOptions(JsonElement element)
+        internal static ProviderHubExtendedLocationOption DeserializeProviderHubExtendedLocationOption(JsonElement element)
         {
             Optional<string> type = default;
             Optional<string> supportedPolicy = default;
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     continue;
                 }
             }
-            return new ExtendedLocationOptions(type.Value, supportedPolicy.Value);
+            return new ProviderHubExtendedLocationOption(type.Value, supportedPolicy.Value);
         }
     }
 }

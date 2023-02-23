@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
     {
         internal static NotificationRegistrationArrayResponseWithContinuation DeserializeNotificationRegistrationArrayResponseWithContinuation(JsonElement element)
         {
-            Optional<IReadOnlyList<NotificationRegistrationData>> value = default;
+            Optional<IReadOnlyList<ProviderNotificationRegistrationData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.ProviderHub.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<NotificationRegistrationData> array = new List<NotificationRegistrationData>();
+                    List<ProviderNotificationRegistrationData> array = new List<ProviderNotificationRegistrationData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NotificationRegistrationData.DeserializeNotificationRegistrationData(item));
+                        array.Add(ProviderNotificationRegistrationData.DeserializeProviderNotificationRegistrationData(item));
                     }
                     value = array;
                     continue;

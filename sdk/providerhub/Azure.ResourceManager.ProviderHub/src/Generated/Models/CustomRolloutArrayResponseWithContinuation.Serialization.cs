@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
     {
         internal static CustomRolloutArrayResponseWithContinuation DeserializeCustomRolloutArrayResponseWithContinuation(JsonElement element)
         {
-            Optional<IReadOnlyList<CustomRolloutData>> value = default;
+            Optional<IReadOnlyList<ProviderCustomRolloutData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.ProviderHub.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<CustomRolloutData> array = new List<CustomRolloutData>();
+                    List<ProviderCustomRolloutData> array = new List<ProviderCustomRolloutData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CustomRolloutData.DeserializeCustomRolloutData(item));
+                        array.Add(ProviderCustomRolloutData.DeserializeProviderCustomRolloutData(item));
                     }
                     value = array;
                     continue;

@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// <summary> Initializes a new instance of CustomRolloutPropertiesStatus. </summary>
         /// <param name="completedRegions"></param>
         /// <param name="failedOrSkippedRegions"> Dictionary of &lt;ExtendedErrorInfo&gt;. </param>
-        internal CustomRolloutPropertiesStatus(IList<string> completedRegions, IDictionary<string, ExtendedErrorInfo> failedOrSkippedRegions) : base(completedRegions, failedOrSkippedRegions)
+        internal CustomRolloutPropertiesStatus(IList<string> completedRegions, IDictionary<string, ProviderHubExtendedErrorInfo> failedOrSkippedRegions) : base(completedRegions, failedOrSkippedRegions)
         {
         }
     }

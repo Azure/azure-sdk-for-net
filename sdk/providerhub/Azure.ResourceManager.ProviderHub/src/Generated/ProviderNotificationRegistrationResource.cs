@@ -17,46 +17,46 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.ProviderHub
 {
     /// <summary>
-    /// A Class representing a NotificationRegistration along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="NotificationRegistrationResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetNotificationRegistrationResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ProviderRegistrationResource" /> using the GetNotificationRegistration method.
+    /// A Class representing a ProviderNotificationRegistration along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="ProviderNotificationRegistrationResource" />
+    /// from an instance of <see cref="ArmClient" /> using the GetProviderNotificationRegistrationResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ProviderRegistrationResource" /> using the GetProviderNotificationRegistration method.
     /// </summary>
-    public partial class NotificationRegistrationResource : ArmResource
+    public partial class ProviderNotificationRegistrationResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="NotificationRegistrationResource"/> instance. </summary>
+        /// <summary> Generate the resource identifier of a <see cref="ProviderNotificationRegistrationResource"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string providerNamespace, string notificationRegistrationName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/notificationRegistrations/{notificationRegistrationName}";
             return new ResourceIdentifier(resourceId);
         }
 
-        private readonly ClientDiagnostics _notificationRegistrationClientDiagnostics;
-        private readonly NotificationRegistrationsRestOperations _notificationRegistrationRestClient;
-        private readonly NotificationRegistrationData _data;
+        private readonly ClientDiagnostics _providerNotificationRegistrationNotificationRegistrationsClientDiagnostics;
+        private readonly NotificationRegistrationsRestOperations _providerNotificationRegistrationNotificationRegistrationsRestClient;
+        private readonly ProviderNotificationRegistrationData _data;
 
-        /// <summary> Initializes a new instance of the <see cref="NotificationRegistrationResource"/> class for mocking. </summary>
-        protected NotificationRegistrationResource()
+        /// <summary> Initializes a new instance of the <see cref="ProviderNotificationRegistrationResource"/> class for mocking. </summary>
+        protected ProviderNotificationRegistrationResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "NotificationRegistrationResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref = "ProviderNotificationRegistrationResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal NotificationRegistrationResource(ArmClient client, NotificationRegistrationData data) : this(client, data.Id)
+        internal ProviderNotificationRegistrationResource(ArmClient client, ProviderNotificationRegistrationData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="NotificationRegistrationResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ProviderNotificationRegistrationResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal NotificationRegistrationResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal ProviderNotificationRegistrationResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _notificationRegistrationClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ProviderHub", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string notificationRegistrationApiVersion);
-            _notificationRegistrationRestClient = new NotificationRegistrationsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, notificationRegistrationApiVersion);
+            _providerNotificationRegistrationNotificationRegistrationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ProviderHub", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string providerNotificationRegistrationNotificationRegistrationsApiVersion);
+            _providerNotificationRegistrationNotificationRegistrationsRestClient = new NotificationRegistrationsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, providerNotificationRegistrationNotificationRegistrationsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.ProviderHub
 
         /// <summary> Gets the data representing this Feature. </summary>
         /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual NotificationRegistrationData Data
+        public virtual ProviderNotificationRegistrationData Data
         {
             get
             {
@@ -100,16 +100,16 @@ namespace Azure.ResourceManager.ProviderHub
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<NotificationRegistrationResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ProviderNotificationRegistrationResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _notificationRegistrationClientDiagnostics.CreateScope("NotificationRegistrationResource.Get");
+            using var scope = _providerNotificationRegistrationNotificationRegistrationsClientDiagnostics.CreateScope("ProviderNotificationRegistrationResource.Get");
             scope.Start();
             try
             {
-                var response = await _notificationRegistrationRestClient.GetAsync(Id.SubscriptionId, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _providerNotificationRegistrationNotificationRegistrationsRestClient.GetAsync(Id.SubscriptionId, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new NotificationRegistrationResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ProviderNotificationRegistrationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -132,16 +132,16 @@ namespace Azure.ResourceManager.ProviderHub
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<NotificationRegistrationResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<ProviderNotificationRegistrationResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _notificationRegistrationClientDiagnostics.CreateScope("NotificationRegistrationResource.Get");
+            using var scope = _providerNotificationRegistrationNotificationRegistrationsClientDiagnostics.CreateScope("ProviderNotificationRegistrationResource.Get");
             scope.Start();
             try
             {
-                var response = _notificationRegistrationRestClient.Get(Id.SubscriptionId, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _providerNotificationRegistrationNotificationRegistrationsRestClient.Get(Id.SubscriptionId, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new NotificationRegistrationResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ProviderNotificationRegistrationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -167,11 +167,11 @@ namespace Azure.ResourceManager.ProviderHub
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _notificationRegistrationClientDiagnostics.CreateScope("NotificationRegistrationResource.Delete");
+            using var scope = _providerNotificationRegistrationNotificationRegistrationsClientDiagnostics.CreateScope("ProviderNotificationRegistrationResource.Delete");
             scope.Start();
             try
             {
-                var response = await _notificationRegistrationRestClient.DeleteAsync(Id.SubscriptionId, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _providerNotificationRegistrationNotificationRegistrationsRestClient.DeleteAsync(Id.SubscriptionId, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 var operation = new ProviderHubArmOperation(response);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
@@ -201,11 +201,11 @@ namespace Azure.ResourceManager.ProviderHub
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _notificationRegistrationClientDiagnostics.CreateScope("NotificationRegistrationResource.Delete");
+            using var scope = _providerNotificationRegistrationNotificationRegistrationsClientDiagnostics.CreateScope("ProviderNotificationRegistrationResource.Delete");
             scope.Start();
             try
             {
-                var response = _notificationRegistrationRestClient.Delete(Id.SubscriptionId, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _providerNotificationRegistrationNotificationRegistrationsRestClient.Delete(Id.SubscriptionId, Id.Parent.Name, Id.Name, cancellationToken);
                 var operation = new ProviderHubArmOperation(response);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
@@ -235,16 +235,16 @@ namespace Azure.ResourceManager.ProviderHub
         /// <param name="data"> The required body parameters supplied to the notification registration operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<NotificationRegistrationResource>> UpdateAsync(WaitUntil waitUntil, NotificationRegistrationData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<ProviderNotificationRegistrationResource>> UpdateAsync(WaitUntil waitUntil, ProviderNotificationRegistrationData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _notificationRegistrationClientDiagnostics.CreateScope("NotificationRegistrationResource.Update");
+            using var scope = _providerNotificationRegistrationNotificationRegistrationsClientDiagnostics.CreateScope("ProviderNotificationRegistrationResource.Update");
             scope.Start();
             try
             {
-                var response = await _notificationRegistrationRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new ProviderHubArmOperation<NotificationRegistrationResource>(Response.FromValue(new NotificationRegistrationResource(Client, response), response.GetRawResponse()));
+                var response = await _providerNotificationRegistrationNotificationRegistrationsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
+                var operation = new ProviderHubArmOperation<ProviderNotificationRegistrationResource>(Response.FromValue(new ProviderNotificationRegistrationResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -273,16 +273,16 @@ namespace Azure.ResourceManager.ProviderHub
         /// <param name="data"> The required body parameters supplied to the notification registration operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<NotificationRegistrationResource> Update(WaitUntil waitUntil, NotificationRegistrationData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<ProviderNotificationRegistrationResource> Update(WaitUntil waitUntil, ProviderNotificationRegistrationData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _notificationRegistrationClientDiagnostics.CreateScope("NotificationRegistrationResource.Update");
+            using var scope = _providerNotificationRegistrationNotificationRegistrationsClientDiagnostics.CreateScope("ProviderNotificationRegistrationResource.Update");
             scope.Start();
             try
             {
-                var response = _notificationRegistrationRestClient.CreateOrUpdate(Id.SubscriptionId, Id.Parent.Name, Id.Name, data, cancellationToken);
-                var operation = new ProviderHubArmOperation<NotificationRegistrationResource>(Response.FromValue(new NotificationRegistrationResource(Client, response), response.GetRawResponse()));
+                var response = _providerNotificationRegistrationNotificationRegistrationsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.Parent.Name, Id.Name, data, cancellationToken);
+                var operation = new ProviderHubArmOperation<ProviderNotificationRegistrationResource>(Response.FromValue(new ProviderNotificationRegistrationResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

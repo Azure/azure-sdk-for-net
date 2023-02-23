@@ -17,46 +17,46 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.ProviderHub
 {
     /// <summary>
-    /// A Class representing a CustomRollout along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="CustomRolloutResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetCustomRolloutResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ProviderRegistrationResource" /> using the GetCustomRollout method.
+    /// A Class representing a ProviderCustomRollout along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="ProviderCustomRolloutResource" />
+    /// from an instance of <see cref="ArmClient" /> using the GetProviderCustomRolloutResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ProviderRegistrationResource" /> using the GetProviderCustomRollout method.
     /// </summary>
-    public partial class CustomRolloutResource : ArmResource
+    public partial class ProviderCustomRolloutResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="CustomRolloutResource"/> instance. </summary>
+        /// <summary> Generate the resource identifier of a <see cref="ProviderCustomRolloutResource"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string providerNamespace, string rolloutName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/customRollouts/{rolloutName}";
             return new ResourceIdentifier(resourceId);
         }
 
-        private readonly ClientDiagnostics _customRolloutClientDiagnostics;
-        private readonly CustomRolloutsRestOperations _customRolloutRestClient;
-        private readonly CustomRolloutData _data;
+        private readonly ClientDiagnostics _providerCustomRolloutCustomRolloutsClientDiagnostics;
+        private readonly CustomRolloutsRestOperations _providerCustomRolloutCustomRolloutsRestClient;
+        private readonly ProviderCustomRolloutData _data;
 
-        /// <summary> Initializes a new instance of the <see cref="CustomRolloutResource"/> class for mocking. </summary>
-        protected CustomRolloutResource()
+        /// <summary> Initializes a new instance of the <see cref="ProviderCustomRolloutResource"/> class for mocking. </summary>
+        protected ProviderCustomRolloutResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "CustomRolloutResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref = "ProviderCustomRolloutResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal CustomRolloutResource(ArmClient client, CustomRolloutData data) : this(client, data.Id)
+        internal ProviderCustomRolloutResource(ArmClient client, ProviderCustomRolloutData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="CustomRolloutResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ProviderCustomRolloutResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal CustomRolloutResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal ProviderCustomRolloutResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _customRolloutClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ProviderHub", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string customRolloutApiVersion);
-            _customRolloutRestClient = new CustomRolloutsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, customRolloutApiVersion);
+            _providerCustomRolloutCustomRolloutsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ProviderHub", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string providerCustomRolloutCustomRolloutsApiVersion);
+            _providerCustomRolloutCustomRolloutsRestClient = new CustomRolloutsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, providerCustomRolloutCustomRolloutsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.ProviderHub
 
         /// <summary> Gets the data representing this Feature. </summary>
         /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual CustomRolloutData Data
+        public virtual ProviderCustomRolloutData Data
         {
             get
             {
@@ -100,16 +100,16 @@ namespace Azure.ResourceManager.ProviderHub
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<CustomRolloutResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ProviderCustomRolloutResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _customRolloutClientDiagnostics.CreateScope("CustomRolloutResource.Get");
+            using var scope = _providerCustomRolloutCustomRolloutsClientDiagnostics.CreateScope("ProviderCustomRolloutResource.Get");
             scope.Start();
             try
             {
-                var response = await _customRolloutRestClient.GetAsync(Id.SubscriptionId, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _providerCustomRolloutCustomRolloutsRestClient.GetAsync(Id.SubscriptionId, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new CustomRolloutResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ProviderCustomRolloutResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -132,16 +132,16 @@ namespace Azure.ResourceManager.ProviderHub
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<CustomRolloutResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<ProviderCustomRolloutResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _customRolloutClientDiagnostics.CreateScope("CustomRolloutResource.Get");
+            using var scope = _providerCustomRolloutCustomRolloutsClientDiagnostics.CreateScope("ProviderCustomRolloutResource.Get");
             scope.Start();
             try
             {
-                var response = _customRolloutRestClient.Get(Id.SubscriptionId, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _providerCustomRolloutCustomRolloutsRestClient.Get(Id.SubscriptionId, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new CustomRolloutResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ProviderCustomRolloutResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -167,16 +167,16 @@ namespace Azure.ResourceManager.ProviderHub
         /// <param name="data"> The custom rollout properties supplied to the CreateOrUpdate operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<CustomRolloutResource>> UpdateAsync(WaitUntil waitUntil, CustomRolloutData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<ProviderCustomRolloutResource>> UpdateAsync(WaitUntil waitUntil, ProviderCustomRolloutData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _customRolloutClientDiagnostics.CreateScope("CustomRolloutResource.Update");
+            using var scope = _providerCustomRolloutCustomRolloutsClientDiagnostics.CreateScope("ProviderCustomRolloutResource.Update");
             scope.Start();
             try
             {
-                var response = await _customRolloutRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new ProviderHubArmOperation<CustomRolloutResource>(Response.FromValue(new CustomRolloutResource(Client, response), response.GetRawResponse()));
+                var response = await _providerCustomRolloutCustomRolloutsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
+                var operation = new ProviderHubArmOperation<ProviderCustomRolloutResource>(Response.FromValue(new ProviderCustomRolloutResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -205,16 +205,16 @@ namespace Azure.ResourceManager.ProviderHub
         /// <param name="data"> The custom rollout properties supplied to the CreateOrUpdate operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<CustomRolloutResource> Update(WaitUntil waitUntil, CustomRolloutData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<ProviderCustomRolloutResource> Update(WaitUntil waitUntil, ProviderCustomRolloutData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _customRolloutClientDiagnostics.CreateScope("CustomRolloutResource.Update");
+            using var scope = _providerCustomRolloutCustomRolloutsClientDiagnostics.CreateScope("ProviderCustomRolloutResource.Update");
             scope.Start();
             try
             {
-                var response = _customRolloutRestClient.CreateOrUpdate(Id.SubscriptionId, Id.Parent.Name, Id.Name, data, cancellationToken);
-                var operation = new ProviderHubArmOperation<CustomRolloutResource>(Response.FromValue(new CustomRolloutResource(Client, response), response.GetRawResponse()));
+                var response = _providerCustomRolloutCustomRolloutsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.Parent.Name, Id.Name, data, cancellationToken);
+                var operation = new ProviderHubArmOperation<ProviderCustomRolloutResource>(Response.FromValue(new ProviderCustomRolloutResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

@@ -12,26 +12,26 @@ using Azure.ResourceManager.ProviderHub.Models;
 
 namespace Azure.ResourceManager.ProviderHub
 {
-    /// <summary> A class representing the CustomRollout data model. </summary>
-    public partial class CustomRolloutData : ResourceData
+    /// <summary> A class representing the ProviderCustomRollout data model. </summary>
+    public partial class ProviderCustomRolloutData : ResourceData
     {
-        /// <summary> Initializes a new instance of CustomRolloutData. </summary>
+        /// <summary> Initializes a new instance of ProviderCustomRolloutData. </summary>
         /// <param name="properties"> Properties of the rollout. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
-        public CustomRolloutData(CustomRolloutProperties properties)
+        public ProviderCustomRolloutData(CustomRolloutProperties properties)
         {
             Argument.AssertNotNull(properties, nameof(properties));
 
             Properties = properties;
         }
 
-        /// <summary> Initializes a new instance of CustomRolloutData. </summary>
+        /// <summary> Initializes a new instance of ProviderCustomRolloutData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> Properties of the rollout. </param>
-        internal CustomRolloutData(ResourceIdentifier id, string name, Core.ResourceType resourceType, SystemData systemData, CustomRolloutProperties properties) : base(id, name, resourceType, systemData)
+        internal ProviderCustomRolloutData(ResourceIdentifier id, string name, Core.ResourceType resourceType, SystemData systemData, CustomRolloutProperties properties) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
         }

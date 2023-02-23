@@ -17,20 +17,20 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// <summary> Initializes a new instance of CustomRolloutArrayResponseWithContinuation. </summary>
         internal CustomRolloutArrayResponseWithContinuation()
         {
-            Value = new ChangeTrackingList<CustomRolloutData>();
+            Value = new ChangeTrackingList<ProviderCustomRolloutData>();
         }
 
         /// <summary> Initializes a new instance of CustomRolloutArrayResponseWithContinuation. </summary>
         /// <param name="value"></param>
         /// <param name="nextLink"> The URL to get to the next set of results, if there are any. </param>
-        internal CustomRolloutArrayResponseWithContinuation(IReadOnlyList<CustomRolloutData> value, string nextLink)
+        internal CustomRolloutArrayResponseWithContinuation(IReadOnlyList<ProviderCustomRolloutData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> Gets the value. </summary>
-        public IReadOnlyList<CustomRolloutData> Value { get; }
+        public IReadOnlyList<ProviderCustomRolloutData> Value { get; }
         /// <summary> The URL to get to the next set of results, if there are any. </summary>
         public string NextLink { get; }
     }

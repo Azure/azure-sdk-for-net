@@ -17,8 +17,18 @@ skip-csproj: true
 modelerfour:
   flatten-payloads: false
 
-rename-mappting:
-  Origin: OperationOriginType
+prepend-rp-prefix:
+  - ExtendedErrorInfo
+
+rename-mapping:
+  CustomRollout: ProviderCustomRollout
+  DefaultRollout: ProviderDefaultRollout
+  NotificationRegistration: ProviderNotificationRegistration
+  EndpointType: ResourceProviderEndpointType
+  ExtendedLocationOptions: ProviderHubExtendedLocationOption
+  ExtensionCategory: ResourceTypeExtensionCategory
+  ExtensionOptions: ResourceTypeExtensionOption
+  ExtensionOptionType: ResourceTypeExtensionOptionType
 
 format-by-name-rules:
   'tenantId': 'uuid'

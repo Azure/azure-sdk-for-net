@@ -41,8 +41,8 @@ namespace Azure.ResourceManager.ProviderHub.Models
 
         internal static ResourceTypeExtensionOptionsResourceCreationBegin DeserializeResourceTypeExtensionOptionsResourceCreationBegin(JsonElement element)
         {
-            Optional<IList<ExtensionOptionType>> request = default;
-            Optional<IList<ExtensionOptionType>> response = default;
+            Optional<IList<ResourceTypeExtensionOptionType>> request = default;
+            Optional<IList<ResourceTypeExtensionOptionType>> response = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("request"u8))
@@ -52,10 +52,10 @@ namespace Azure.ResourceManager.ProviderHub.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<ExtensionOptionType> array = new List<ExtensionOptionType>();
+                    List<ResourceTypeExtensionOptionType> array = new List<ResourceTypeExtensionOptionType>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(new ExtensionOptionType(item.GetString()));
+                        array.Add(new ResourceTypeExtensionOptionType(item.GetString()));
                     }
                     request = array;
                     continue;
@@ -67,10 +67,10 @@ namespace Azure.ResourceManager.ProviderHub.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<ExtensionOptionType> array = new List<ExtensionOptionType>();
+                    List<ResourceTypeExtensionOptionType> array = new List<ResourceTypeExtensionOptionType>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(new ExtensionOptionType(item.GetString()));
+                        array.Add(new ResourceTypeExtensionOptionType(item.GetString()));
                     }
                     response = array;
                     continue;
