@@ -41,7 +41,7 @@ namespace Azure.Communication.Email.Tests.Samples
             Assert.False(string.IsNullOrEmpty(operationId));
         }
 
-        [Test]
+        [RecordedTest]
         [AsyncOnly]
         public async Task SendSimpleEmailWithManualPollingForStatusAsync()
         {
@@ -67,7 +67,7 @@ namespace Azure.Communication.Email.Tests.Samples
                 {
                     break;
                 }
-                await Task.Delay(1000);
+                await Task.Delay(10);
             }
 
             if (emailSendOperation.HasValue)

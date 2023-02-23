@@ -13,8 +13,7 @@ namespace Azure.Communication.Email.Tests
         public EmailClientLiveTestBase(bool isAsync) : base(isAsync)
         {
             SanitizedHeaders.Add("x-ms-content-sha256");
-            SanitizedHeaders.Add("repeatability-first-sent");
-            SanitizedHeaders.Add("repeatability-request-id");
+            SanitizedHeaders.Add("Operation-Id");
         }
 
         protected EmailClient CreateEmailClient()

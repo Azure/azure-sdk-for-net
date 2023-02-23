@@ -179,7 +179,7 @@ Console.WriteLine($"Email operation id = {operationId}");
 ```
 
 ### Send email with attachments
-Azure Communication Services support sending emails with attachments. See [EmailAttachmentType][email_attachmentTypes] for a list of supported attachments
+Azure Communication Services support sending emails with attachments.
 ```C# Snippet:Azure_Communication_Email_Send_With_Attachments
 // Create the EmailMessage
 var emailMessage = new EmailMessage(
@@ -232,5 +232,4 @@ This project has adopted the [Microsoft Open Source Code of Conduct][coc]. For m
 [nextsteps]:https://aka.ms/acsemail/qs-sendmail?pivots=programming-language-csharp
 [nuget]: https://www.nuget.org/
 [source]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/communication/Azure.Communication.Email/src
-[email_attachmentTypes]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/communication/Azure.Communication.Email/src/Generated/Models/EmailAttachmentType.cs
 [domain_overview]: https://aka.ms/acsemail/domainsoverview

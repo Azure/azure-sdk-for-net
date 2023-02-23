@@ -6,6 +6,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Communication.Pipeline;
@@ -286,8 +287,13 @@ namespace Azure.Communication.Email
             ValidateEmailMessage(message);
 
             var operationId = Guid.NewGuid();
-            var originalResponse = await RestClient.SendAsync(message, operationId, cancellationToken).ConfigureAwait(false);
-            var operation = new EmailSendOperation(this, operationId.ToString(), originalResponse.GetRawResponse(), cancellationToken);
+            ResponseWithHeaders<EmailSendHeaders> originalResponse = await RestClient.SendAsync(message, operationId, cancellationToken).ConfigureAwait(false);
+
+            Response rawResponse = originalResponse.GetRawResponse();
+            using JsonDocument document = await JsonDocument.ParseAsync(rawResponse.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            var emailSendResult = EmailSendResult.DeserializeEmailSendResult(document.RootElement);
+
+            var operation = new EmailSendOperation(this, emailSendResult.Id, originalResponse.GetRawResponse(), cancellationToken);
             if (wait == WaitUntil.Completed)
             {
                 await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
@@ -305,7 +311,12 @@ namespace Azure.Communication.Email
 
             var operationId = Guid.NewGuid();
             var originalResponse = RestClient.Send(message, operationId, cancellationToken);
-            var operation = new EmailSendOperation(this, operationId.ToString(), originalResponse.GetRawResponse(), cancellationToken);
+
+            Response rawResponse = originalResponse.GetRawResponse();
+            using JsonDocument document = JsonDocument.Parse(rawResponse.ContentStream, default);
+            var emailSendResult = EmailSendResult.DeserializeEmailSendResult(document.RootElement);
+
+            var operation = new EmailSendOperation(this, emailSendResult.Id, originalResponse.GetRawResponse(), cancellationToken);
             if (wait == WaitUntil.Completed)
             {
                 operation.WaitForCompletion(cancellationToken);

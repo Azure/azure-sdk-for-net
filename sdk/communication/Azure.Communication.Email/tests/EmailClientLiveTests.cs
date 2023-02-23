@@ -47,7 +47,7 @@ namespace Azure.Communication.Email.Tests
             Console.WriteLine($"Email send status = {statusMonitor.Status}");
         }
 
-        [Test]
+        [RecordedTest]
         [AsyncOnly]
         public async Task SendEmailAndWaitForStatusWithManualPollingAsync()
         {
@@ -115,7 +115,7 @@ namespace Azure.Communication.Email.Tests
                 {
                     break;
                 }
-                await Task.Delay(1000);
+                await Task.Delay(100);
             }
 
             if (emailSendOperation.HasValue)
