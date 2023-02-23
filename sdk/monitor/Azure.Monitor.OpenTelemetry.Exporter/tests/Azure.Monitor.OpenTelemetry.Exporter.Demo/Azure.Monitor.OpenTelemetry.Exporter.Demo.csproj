@@ -6,10 +6,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="OTEL_DIAGNOSTICS.json" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Content Include="OTEL_DIAGNOSTICS.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
