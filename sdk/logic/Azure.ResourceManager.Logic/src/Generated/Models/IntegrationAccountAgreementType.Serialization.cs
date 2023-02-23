@@ -22,10 +22,10 @@ namespace Azure.ResourceManager.Logic.Models
 
         public static IntegrationAccountAgreementType ToIntegrationAccountAgreementType(this string value)
         {
-            if (string.Equals(value, "NotSpecified", StringComparison.InvariantCultureIgnoreCase)) return IntegrationAccountAgreementType.NotSpecified;
-            if (string.Equals(value, "AS2", StringComparison.InvariantCultureIgnoreCase)) return IntegrationAccountAgreementType.AS2;
-            if (string.Equals(value, "X12", StringComparison.InvariantCultureIgnoreCase)) return IntegrationAccountAgreementType.X12;
-            if (string.Equals(value, "Edifact", StringComparison.InvariantCultureIgnoreCase)) return IntegrationAccountAgreementType.Edifact;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "NotSpecified")) return IntegrationAccountAgreementType.NotSpecified;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "AS2")) return IntegrationAccountAgreementType.AS2;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "X12")) return IntegrationAccountAgreementType.X12;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Edifact")) return IntegrationAccountAgreementType.Edifact;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown IntegrationAccountAgreementType value.");
         }
     }
