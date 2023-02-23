@@ -1,8 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-#nullable disable // TODO: remove and fix errors
-
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -59,6 +57,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             transmitter.TrackAsync(telemetryItems, false, CancellationToken.None).EnsureCompleted();
 
             //Assert
+            Assert.NotNull(transmitter._fileBlobProvider);
             Assert.Empty(transmitter._fileBlobProvider.GetBlobs());
         }
 
@@ -76,6 +75,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             transmitter.TrackAsync(telemetryItems, false, CancellationToken.None).EnsureCompleted();
 
             //Assert
+            Assert.NotNull(transmitter._fileBlobProvider);
             Assert.Single(transmitter._fileBlobProvider.GetBlobs());
         }
 
@@ -95,6 +95,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             transmitter.TrackAsync(telemetryItems, false, CancellationToken.None).EnsureCompleted();
 
             //Assert
+            Assert.NotNull(transmitter._fileBlobProvider);
             Assert.Single(transmitter._fileBlobProvider.GetBlobs());
         }
 
@@ -120,8 +121,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             transmitter.TrackAsync(telemetryItems, false, CancellationToken.None).EnsureCompleted();
 
             //Assert
+            Assert.NotNull(transmitter._fileBlobProvider);
             Assert.Single(transmitter._fileBlobProvider.GetBlobs());
-            transmitter._fileBlobProvider.TryGetBlob(out var blob);
+            Assert.True(transmitter._fileBlobProvider.TryGetBlob(out var blob));
             blob.TryRead(out var content);
 
             Assert.NotNull(content);
@@ -190,13 +192,14 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
                 parentContext: default,
                 startTime: DateTime.UtcNow);
 
+            Assert.NotNull(activity);
             return activity;
         }
 
         private static TelemetryItem CreateTelemetryItem(Activity activity)
         {
             var monitorTags = TraceHelper.EnumerateActivityTags(activity);
-            return new TelemetryItem(activity, ref monitorTags, null, null);
+            return new TelemetryItem(activity, ref monitorTags, null, string.Empty);
         }
 
         private class MockFileProvider : PersistentBlobProvider
@@ -224,7 +227,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 
             protected override bool OnTryGetBlob(out PersistentBlob blob)
             {
-                blob = this.GetBlobs().FirstOrDefault();
+                blob = this.GetBlobs().First();
 
                 return true;
             }
@@ -232,7 +235,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 
         private class MockFileBlob : PersistentBlob
         {
-            private byte[] _buffer;
+            private byte[] _buffer = Array.Empty<byte>();
 
             private readonly List<PersistentBlob> _mockStorage;
 
