@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-beta.4 (2023-02-22)
+## 1.0.0-beta.4 (2023-02-23)
 
 ### Bugs fixed
 - Addressed issues that sometimes caused `beta.3`'s new `GetStreamingCompletions` method to execute indefinitely
