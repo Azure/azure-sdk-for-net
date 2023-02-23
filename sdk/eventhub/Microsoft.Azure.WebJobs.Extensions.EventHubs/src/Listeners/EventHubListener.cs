@@ -17,6 +17,8 @@ using Microsoft.Azure.WebJobs.Host.Listeners;
 using Microsoft.Azure.WebJobs.Host.Scale;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
+using Azure.Core.Diagnostics;
+using Microsoft.Extensions.Azure;
 
 namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
 {
@@ -116,7 +118,10 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
             private int _batchCounter;
             private bool _disposed;
             private readonly int _minBatchSize;
-            private List<EventData> _eventDatas;
+            private readonly int _maxBatchSize;
+            private Dictionary<string, List<EventData>> _eventDatas;
+            private Dictionary<string, EventProcessorHostPartition> _lastUsedPartitionContext;
+
 
             public EventProcessor(EventHubOptions options, ITriggeredFunctionExecutor executor, ILogger logger, bool singleDispatch)
             {
@@ -125,7 +130,9 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
                 _batchCheckpointFrequency = options.BatchCheckpointFrequency;
                 _logger = logger;
                 _minBatchSize = options.MinEventBatchSize;
-                _eventDatas = new List<EventData>();
+                _maxBatchSize = options.MaxEventBatchSize;
+                _eventDatas = new Dictionary<string, List<EventData>>();
+                _lastUsedPartitionContext = new Dictionary<string, EventProcessorHostPartition>();
             }
 
             public Task CloseAsync(EventProcessorHostPartition context, ProcessingStoppedReason reason)
@@ -160,18 +167,18 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
                     var events = messages.ToArray();
                     EventData eventToCheckpoint = null;
 
-                    var triggerInput = new EventHubTriggerInput
-                    {
-                        Events = events,
-                        ProcessorPartition = context
-                    };
-
                     UpdateCheckpointContext(events, context);
 
-                    int eventCount = triggerInput.Events.Length;
+                    int eventCount = events.Length;
 
                     if (_singleDispatch)
                     {
+                        var triggerInput = new EventHubTriggerInput
+                        {
+                            Events = events,
+                            ProcessorPartition = context
+                        };
+
                         // Single dispatch
                         for (int i = 0; i < eventCount; i++)
                         {
@@ -193,22 +200,41 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
                     }
                     else
                     {
-                        if (eventCount < _minBatchSize)
-                        {
-                            _eventDatas.AddRange(events);
-                        }
-                        else
-                        {
-                            // Batch dispatch
-                            TriggeredFunctionData input = new TriggeredFunctionData
-                            {
-                                TriggerValue = triggerInput,
-                                TriggerDetails = triggerInput.GetTriggerDetails(context)
-                            };
+                        var partitionID = context.PartitionId;
+                        var haveStoredEvents = _eventDatas.TryGetValue(partitionID, out var storedEventsForPartition);
+                        var numStoredEvents = haveStoredEvents ? storedEventsForPartition.Count : 0;
+                        var totalEvents = numStoredEvents + eventCount;
 
-                            await _executor.TryExecuteAsync(input, linkedCts.Token).ConfigureAwait(false);
-                            eventToCheckpoint = events.LastOrDefault();
+                        if (!haveStoredEvents)
+                        {
+                            storedEventsForPartition = new List<EventData>();
+                            _eventDatas.Add(partitionID, storedEventsForPartition);
                         }
+
+                        storedEventsForPartition.AddRange(events);
+                        _storedEvents += eventCount;
+
+                        if (totalEvents > _minBatchSize && totalEvents <= _maxBatchSize)
+                        {
+                            await TriggerExecute(storedEventsForPartition, context, linkedCts).ConfigureAwait(false);
+
+                            eventToCheckpoint = storedEventsForPartition.LastOrDefault();
+                            storedEventsForPartition.Clear();
+                            _storedEvents -= totalEvents;
+                        }
+                        else if (totalEvents > _minBatchSize && totalEvents > _maxBatchSize)
+                        {
+                            var newEvents = storedEventsForPartition.Take(_maxBatchSize);
+
+                            await TriggerExecute(newEvents, context, linkedCts).ConfigureAwait(false);
+
+                            eventToCheckpoint = newEvents.LastOrDefault();
+
+                            storedEventsForPartition.RemoveRange(0, _maxBatchSize - 1);
+                            _storedEvents -= newEvents.Count();
+                        }
+
+                        // If no events were executed, don't restart the background loop
                     }
 
                     // Checkpoint if we processed any events.
@@ -223,6 +249,24 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
                         await CheckpointAsync(eventToCheckpoint, context).ConfigureAwait(false);
                     }
                 }
+            }
+
+            private async Task TriggerExecute(IEnumerable<EventData> events, EventProcessorHostPartition context, CancellationTokenSource linkedCts)
+            {
+                var triggerInput = new EventHubTriggerInput
+                {
+                    Events = events.ToArray(),
+                    ProcessorPartition = context //TODO could this ever change (in a bad way)? If it's the same partition
+                };
+
+                // Batch dispatch
+                TriggeredFunctionData input = new()
+                {
+                    TriggerValue = triggerInput,
+                    TriggerDetails = triggerInput.GetTriggerDetails(context)
+                };
+
+                await _executor.TryExecuteAsync(input, linkedCts.Token).ConfigureAwait(false);
             }
 
             private void UpdateCheckpointContext(EventData[] events, EventProcessorHostPartition context)
@@ -248,6 +292,44 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
                 context.PartitionContext.IsCheckpointingAfterInvocation = isCheckpointingAfterInvocation;
             }
 
+            private void StartNewProcessorCycle()
+            {
+                var cycleWatch = ValueStopwatch.StartNew();
+                if (_backgroundPartitionProcessingTask != null)
+                {
+                    //TODO
+                }
+                _backgroundPartitionProcessingTask = BackgroundPartitionProcessorTask(cycleWatch, _partitionTaskCancellationTokenSource.Token);
+            }
+
+            private async Task BackgroundPartitionProcessorTask(ValueStopwatch cycleWatch, CancellationToken cancellationToken)
+            {
+                while (!cancellationToken.IsCancellationRequested)
+                {
+                    // Loop is started after last check
+                    var timeRemaining = CalculateRemaining(_maxWaitTime, cycleWatch.GetElapsedTime());
+                    await Task.Delay(timeRemaining, cancellationToken).ConfigureAwait(false);
+
+                    // after max wait time has passed with no check for stored events and send
+                }
+            }
+
+            private static TimeSpan CalculateRemaining(TimeSpan totalTime,
+                                                  TimeSpan elapsed)
+            {
+                if ((totalTime == Timeout.InfiniteTimeSpan) || (totalTime == TimeSpan.Zero) || (elapsed == TimeSpan.Zero))
+                {
+                    return totalTime;
+                }
+
+                if (elapsed >= totalTime)
+                {
+                    return TimeSpan.Zero;
+                }
+
+                return TimeSpan.FromMilliseconds(totalTime.TotalMilliseconds - elapsed.TotalMilliseconds);
+            }
+
             private async Task CheckpointAsync(EventData checkpointEvent, EventProcessorHostPartition context)
             {
                 _batchCounter++;
@@ -269,6 +351,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
                     if (disposing)
                     {
                         _cts.Dispose();
+                        _backgroundTasksCancellationSource.Dispose();
                     }
 
                     _disposed = true;
