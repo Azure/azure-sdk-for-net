@@ -11,7 +11,7 @@ using Azure.Core;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 
-namespace Azure.Analytics.Purview.Share.Tests
+namespace Azure.Analytics.Purview.Sharing.Tests
 {
     public class ReceivedSharesClientTest : ReceivedSharesClientTestBase
     {

@@ -8,7 +8,7 @@
 using System;
 using Azure.Core;
 
-namespace Azure.Analytics.Purview
+namespace Azure.Analytics.Purview.Sharing
 {
     /// <summary> Client options for PurviewShareClient library clients. </summary>
     public partial class PurviewShareClientOptions : ClientOptions

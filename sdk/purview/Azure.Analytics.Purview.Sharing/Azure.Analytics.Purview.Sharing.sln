@@ -5,9 +5,9 @@ VisualStudioVersion = 17.4.33213.308
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Core.TestFramework", "..\..\core\Azure.Core.TestFramework\src\Azure.Core.TestFramework.csproj", "{ECC730C1-4AEA-420C-916A-66B19B79E4DC}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Analytics.Purview", "src\Azure.Analytics.Purview.csproj", "{28FF4005-4467-4E36-92E7-DEA27DEB1519}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Analytics.Purview.Sharing", "src\Azure.Analytics.Purview.Sharing.csproj", "{28FF4005-4467-4E36-92E7-DEA27DEB1519}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Analytics.Purview.Tests", "tests\Azure.Analytics.Purview.Tests.csproj", "{1F1CD1D4-9932-4B73-99D8-C252A67D4B46}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Analytics.Purview.Sharing.Tests", "tests\Azure.Analytics.Purview.Sharing.Tests.csproj", "{1F1CD1D4-9932-4B73-99D8-C252A67D4B46}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -4,7 +4,7 @@
 using System;
 using Azure.Core.TestFramework;
 
-namespace Azure.Analytics.Purview.Share.Tests
+namespace Azure.Analytics.Purview.Sharing.Tests
 {
     public class PurviewShareTestEnvironment : TestEnvironment
     {
