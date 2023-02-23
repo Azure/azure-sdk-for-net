@@ -42,7 +42,7 @@ namespace Azure.AI.TextAnalytics
         /// <remarks>
         /// This property only applies for <see cref="TextAnalyticsClientOptions.ServiceVersion.V2022_10_01_Preview"/>, and newer.
         /// </remarks>
-        public WellKnownFhirVersion? FhirVersion { get; set; }
+        public FhirVersion? FhirVersion { get; set; }
 
         /// <summary>
         /// The document type, which can be provided as a hint to improve the production of the <see cref="AnalyzeHealthcareEntitiesResult.FhirBundle"/> when
