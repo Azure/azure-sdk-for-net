@@ -53,11 +53,11 @@ namespace Azure.Communication.Email
         public EmailMessage(string fromAddress, string toAddress, Azure.Communication.Email.EmailContent content) { }
         public System.Collections.Generic.IList<Azure.Communication.Email.EmailAttachment> Attachments { get { throw null; } }
         public Azure.Communication.Email.EmailContent Content { get { throw null; } }
-        public bool? DisableUserEngagementTracking { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Headers { get { throw null; } }
         public Azure.Communication.Email.EmailRecipients Recipients { get { throw null; } }
         public System.Collections.Generic.IList<Azure.Communication.Email.EmailAddress> ReplyTo { get { throw null; } }
         public string SenderAddress { get { throw null; } }
+        public bool? UserEngagementTrackingDisabled { get { throw null; } set { } }
     }
     public static partial class EmailModelFactory
     {
