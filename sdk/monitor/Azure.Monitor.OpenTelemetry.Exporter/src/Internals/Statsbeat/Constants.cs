@@ -1,15 +1,17 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections.Generic;
+using System.Text;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat
 {
     internal class Constants
     {
-        internal const string Statsbeat_Ikey_NonEU = "00000000-0000-0000-0000-000000000000";
+        internal const string Statsbeat_ConnectionString_NonEU = "InstrumentationKey=00000000-0000-0000-0000-000000000000;IngestionEndpoint=https://NonEU.in.applicationinsights.azure.com/";
 
-        internal const string Statsbeat_Ikey_EU = "00000000-0000-0000-0000-000000000000";
+        internal const string Statsbeat_ConnectionString_EU = "InstrumentationKey=00000000-0000-0000-0000-000000000000;IngestionEndpoint=https://EU.in.applicationinsights.azure.com/";
 
         internal static readonly HashSet<string> s_EU_Endpoints = new()
         {
@@ -72,9 +74,5 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat
         /// 24 hrs == 86400000 milliseconds.
         /// </summary>
         internal const int AttachStatsbeatInterval = 86400000;
-
-        internal static string Statsbeat_ConnectionString_EU => $"InstrumentationKey={Statsbeat_Ikey_EU};IngestionEndpoint=https://EU.in.applicationinsights.azure.com/";
-
-        internal static string Statsbeat_ConnectionString_NonEU => $"InstrumentationKey={Statsbeat_Ikey_NonEU};IngestionEndpoint=https://NonEU.in.applicationinsights.azure.com/";
     }
 }
