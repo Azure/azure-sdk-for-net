@@ -47,7 +47,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             // InitializeStatsbeat(_connectionVars);
         }
 
-        private static void InitializeStatsbeat(ConnectionVars connectionVars) // TODO: REWRITE
+        private static void InitializeStatsbeat(ConnectionVars connectionVars)
         {
             try
             {
