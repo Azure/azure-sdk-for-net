@@ -457,7 +457,6 @@ namespace Azure.Messaging.ServiceBus.Amqp
                     }
 
                     entries.Add(entry);
-                    cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
                 }
 
                 request.Map[ManagementConstants.Properties.Messages] = entries;
