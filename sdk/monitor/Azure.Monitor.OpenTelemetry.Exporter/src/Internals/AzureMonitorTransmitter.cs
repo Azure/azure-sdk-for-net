@@ -27,6 +27,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         private readonly ApplicationInsightsRestClient _applicationInsightsRestClient;
         internal PersistentBlobProvider? _fileBlobProvider;
         private readonly ConnectionVars _connectionVars;
+        private readonly AzureMonitorStatsbeat? _statsbeat;
+
+        private bool _disposedValue;
 
         public AzureMonitorTransmitter(AzureMonitorExporterOptions options, TokenCredential? credential = null)
         {
@@ -43,11 +46,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
             _fileBlobProvider = InitializeOfflineStorage(options);
 
-            // TODO: uncomment following line for enablement.
-            // InitializeStatsbeat(options, _connectionVars);
+            _statsbeat = InitializeStatsbeat(options, _connectionVars);
         }
 
-        private static void InitializeStatsbeat(AzureMonitorExporterOptions options, ConnectionVars connectionVars)
+        private static AzureMonitorStatsbeat? InitializeStatsbeat(AzureMonitorExporterOptions options, ConnectionVars connectionVars)
         {
             if (options.EnableStatsbeat && connectionVars != null)
             {
@@ -58,17 +60,20 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                     {
                         AzureMonitorExporterEventSource.Log.WriteInformational("StatsbeatInitialization: ", "Statsbeat was disabled via environment variable");
 
-                        return;
+                        return null;
                     }
 
-                    // TODO: Implement IDisposable for transmitter and dispose statsbeat.
-                    _ = new AzureMonitorStatsbeat(connectionVars);
+                    // TODO: uncomment following line for enablement.
+                    // return new AzureMonitorStatsbeat(connectionVars);
+                    return null;
                 }
                 catch (Exception ex)
                 {
                     AzureMonitorExporterEventSource.Log.WriteWarning($"ErrorInitializingStatsbeatFor:{connectionVars.InstrumentationKey}", ex);
                 }
             }
+
+            return null;
         }
 
         public string InstrumentationKey => _connectionVars.InstrumentationKey;
@@ -379,6 +384,27 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             {
                 AzureMonitorExporterEventSource.Log.WriteWarning("FailedToTransmitFromStorage", $"Error code is {statusCode}: Telemetry is dropped");
             }
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!_disposedValue)
+            {
+                if (disposing)
+                {
+                    AzureMonitorExporterEventSource.Log.WriteVerbose(name: nameof(AzureMonitorTransmitter), message: $"{nameof(AzureMonitorTransmitter)} has been disposed.");
+                    _statsbeat?.Dispose();
+                }
+
+                _disposedValue = true;
+            }
+        }
+
+        public void Dispose()
+        {
+            // Do not change this code. Put cleanup code in 'Dispose(bool disposing)' method
+            Dispose(disposing: true);
+            GC.SuppressFinalize(this);
         }
     }
 }

@@ -53,7 +53,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 
             // Transmit
             var mockResponse = new MockResponse(200).SetContent("Ok");
-            var transmitter = GetTransmitter(mockResponse);
+            using var transmitter = GetTransmitter(mockResponse);
             transmitter.TrackAsync(telemetryItems, false, CancellationToken.None).EnsureCompleted();
 
             //Assert
@@ -71,7 +71,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 
             // Transmit
             var mockResponse = new MockResponse(500).SetContent("Internal Server Error");
-            var transmitter = GetTransmitter(mockResponse);
+            using var transmitter = GetTransmitter(mockResponse);
             transmitter.TrackAsync(telemetryItems, false, CancellationToken.None).EnsureCompleted();
 
             //Assert
@@ -91,7 +91,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             var mockResponse = new MockResponse(429)
                                     .AddHeader("Retry-After", "6")
                                     .SetContent("Too Many Requests");
-            var transmitter = GetTransmitter(mockResponse);
+            using var transmitter = GetTransmitter(mockResponse);
             transmitter.TrackAsync(telemetryItems, false, CancellationToken.None).EnsureCompleted();
 
             //Assert
@@ -117,7 +117,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             var mockResponse = new MockResponse(206)
                                     .AddHeader("Retry-After", "6")
                                     .SetContent("{\"itemsReceived\": 3,\"itemsAccepted\": 1,\"errors\":[{\"index\": 0,\"statusCode\": 429,\"message\": \"Throttle\"},{\"index\": 1,\"statusCode\": 429,\"message\": \"Throttle\"}]}");
-            var transmitter = GetTransmitter(mockResponse);
+            using var transmitter = GetTransmitter(mockResponse);
             transmitter.TrackAsync(telemetryItems, false, CancellationToken.None).EnsureCompleted();
 
             //Assert
@@ -137,7 +137,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         }
 
         [Fact]
-        public void TransmitFromStorage()
+        public void TransmitFromStorage() // TODO: MAY NEED TO REWRITE THIS TEST FOR IDISPOSABLE
         {
             using var activity = CreateActivity("TestActivity");
             var telemetryItem = CreateTelemetryItem(activity);
