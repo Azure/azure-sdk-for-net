@@ -16,7 +16,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             get
             {
                 var data = new TheoryData<string>();
-                foreach (var e in Internals.Statsbeat.Constants.s_EU_Endpoints.AsEnumerable())
+                foreach (var e in StatsbeatConstants.s_EU_Endpoints.AsEnumerable())
                 {
                     data.Add(e);
                 }
@@ -29,7 +29,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             get
             {
                 var data = new TheoryData<string>();
-                foreach (var e in Internals.Statsbeat.Constants.s_non_EU_Endpoints.AsEnumerable())
+                foreach (var e in StatsbeatConstants.s_non_EU_Endpoints.AsEnumerable())
                 {
                     data.Add(e);
                 }
@@ -45,7 +45,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             var connectionStringVars = ConnectionStringParser.GetValues(customer_ConnectionString);
             var statsBeatInstance = new AzureMonitorStatsbeat(connectionStringVars);
 
-            Assert.Equal(Internals.Statsbeat.Constants.Statsbeat_ConnectionString_EU, statsBeatInstance._statsbeat_ConnectionString);
+            Assert.Equal(StatsbeatConstants.Statsbeat_ConnectionString_EU, statsBeatInstance._statsbeat_ConnectionString);
         }
 
         [Theory]
@@ -56,7 +56,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             var connectionStringVars = ConnectionStringParser.GetValues(customer_ConnectionString);
             var statsBeatInstance = new AzureMonitorStatsbeat(connectionStringVars);
 
-            Assert.Equal(Internals.Statsbeat.Constants.Statsbeat_ConnectionString_NonEU, statsBeatInstance._statsbeat_ConnectionString);
+            Assert.Equal(StatsbeatConstants.Statsbeat_ConnectionString_NonEU, statsBeatInstance._statsbeat_ConnectionString);
         }
 
         [Fact]

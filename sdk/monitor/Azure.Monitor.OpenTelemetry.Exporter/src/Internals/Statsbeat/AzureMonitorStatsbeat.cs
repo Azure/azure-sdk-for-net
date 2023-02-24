@@ -63,7 +63,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat
 
             _attachStatsbeatMeterProvider = Sdk.CreateMeterProviderBuilder()
                 .AddMeter("AttachStatsbeatMeter")
-                .AddReader(new PeriodicExportingMetricReader(new AzureMonitorMetricExporter(exporterOptions), Constants.AttachStatsbeatInterval)
+                .AddReader(new PeriodicExportingMetricReader(new AzureMonitorMetricExporter(exporterOptions), StatsbeatConstants.AttachStatsbeatInterval)
                 { TemporalityPreference = MetricReaderTemporalityPreference.Delta })
                 .Build();
         }
@@ -93,13 +93,13 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat
             if (patternMatch.Success)
             {
                 var endpoint = patternMatch.Groups[1].Value;
-                if (Constants.s_EU_Endpoints.Contains(endpoint))
+                if (StatsbeatConstants.s_EU_Endpoints.Contains(endpoint))
                 {
-                    statsbeatConnectionString = Constants.Statsbeat_ConnectionString_EU;
+                    statsbeatConnectionString = StatsbeatConstants.Statsbeat_ConnectionString_EU;
                 }
-                else if (Constants.s_non_EU_Endpoints.Contains(endpoint))
+                else if (StatsbeatConstants.s_non_EU_Endpoints.Contains(endpoint))
                 {
-                    statsbeatConnectionString = Constants.Statsbeat_ConnectionString_NonEU;
+                    statsbeatConnectionString = StatsbeatConstants.Statsbeat_ConnectionString_NonEU;
                 }
             }
 
@@ -140,7 +140,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat
                 using (var httpClient = new HttpClient())
                 {
                     httpClient.DefaultRequestHeaders.Add("Metadata", "True");
-                    var responseString = httpClient.GetStringAsync(Constants.AMS_Url);
+                    var responseString = httpClient.GetStringAsync(StatsbeatConstants.AMS_Url);
                     var vmMetadata = JsonSerializer.Deserialize<VmMetadataResponse>(responseString.Result);
 
                     return vmMetadata;
