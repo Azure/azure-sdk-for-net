@@ -42,7 +42,7 @@ namespace Azure.Analytics.Purview.Sharing.Tests.Samples
                         storeReference = new
                         {
 #if SNIPPET
-                            referenceName = "/subscriptions/subscriptionId"/resourceGroups/resourceGroup/providers/Microsoft.Storage/storageAccounts/sharerStorageAccount",
+                            referenceName = "/subscriptions/subscriptionId/resourceGroups/resourceGroup/providers/Microsoft.Storage/storageAccounts/sharerStorageAccount",
 #else
                             referenceName = "/subscriptions/0f3dcfc3-18f8-4099-b381-8353e19d43a7/resourceGroups/faisalaltell/providers/Microsoft.Storage/storageAccounts/ftsharersan",
 #endif

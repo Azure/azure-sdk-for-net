@@ -83,7 +83,7 @@ var data = new
             storeKind = "AdlsGen2Account",
             storeReference = new
             {
-                referenceName = "/subscriptions/subscriptionId"/resourceGroups/resourceGroup/providers/Microsoft.Storage/storageAccounts/sharerStorageAccount",
+                referenceName = "/subscriptions/subscriptionId/resourceGroups/resourceGroup/providers/Microsoft.Storage/storageAccounts/sharerStorageAccount",
                 type = "ArmResourceReference"
             },
             properties = new
