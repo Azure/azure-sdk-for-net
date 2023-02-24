@@ -1031,9 +1031,8 @@ namespace Azure.Data.AppConfiguration
 
         /// <summary> Updates the state of a configuration setting snapshot to archive. </summary>
         /// <param name="name"> The name of the configuration setting snapshot to delete. </param>
-        /// <param name="onlyIfUnchanged">TODO</param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ConfigurationSettingsSnapshot>> ArchiveSnapshotAsync(string name, bool onlyIfUnchanged = false, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ConfigurationSettingsSnapshot>> ArchiveSnapshotAsync(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
@@ -1050,6 +1049,41 @@ namespace Azure.Data.AppConfiguration
                 using RequestContent content = SnapshotUpdateParameters.ToRequestContent(snapshotUpdateParameters);
 
                 Response response = await UpdateSnapshotStatusAsync(name, content, new MatchConditions(), context).ConfigureAwait(false);
+                ConfigurationSettingsSnapshot value = ConfigurationSettingsSnapshot.FromResponse(response);
+                return Response.FromValue(value, response);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Updates the state of a configuration setting snapshot to archive. </summary>
+        /// <param name="snapshot"> The snapshot object of the configuration setting snapshot to archive. </param>
+        /// <param name="onlyIfUnchanged">TODO</param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<ConfigurationSettingsSnapshot>> ArchiveSnapshotAsync(ConfigurationSettingsSnapshot snapshot, bool onlyIfUnchanged = false, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(snapshot, nameof(snapshot));
+
+            using var scope = ClientDiagnostics.CreateScope("ConfigurationClient.UpdateSnapshot");
+            scope.Start();
+            try
+            {
+                RequestContext context = CreateRequestContext(ErrorOptions.Default, cancellationToken);
+
+                SnapshotUpdateParameters snapshotUpdateParameters = new()
+                {
+                    Status = SnapshotStatus.Archived
+                };
+                using RequestContent content = SnapshotUpdateParameters.ToRequestContent(snapshotUpdateParameters);
+
+                var matchConditions = new MatchConditions();
+
+                MatchConditions requestOptions = onlyIfUnchanged ? new MatchConditions { IfMatch = snapshot.Etag } : default;
+
+                Response response = await UpdateSnapshotStatusAsync(snapshot.Name, content, requestOptions, context).ConfigureAwait(false);
                 ConfigurationSettingsSnapshot value = ConfigurationSettingsSnapshot.FromResponse(response);
                 return Response.FromValue(value, response);
             }
@@ -1080,10 +1114,9 @@ namespace Azure.Data.AppConfiguration
         }
 
         /// <summary> Updates the state of a configuration setting snapshot to archive. </summary>
-        /// <param name="name"> The name of the configuration setting snapshot to delete. </param>
-        /// <param name="onlyIfUnchanged">TODO</param>
+        /// <param name="name"> The name of the configuration setting snapshot to archive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ConfigurationSettingsSnapshot> ArchiveSnapshot(string name, bool onlyIfUnchanged = false, CancellationToken cancellationToken = default)
+        public virtual Response<ConfigurationSettingsSnapshot> ArchiveSnapshot(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
@@ -1100,6 +1133,39 @@ namespace Azure.Data.AppConfiguration
                 using RequestContent content = SnapshotUpdateParameters.ToRequestContent(snapshotUpdateParameters);
 
                 Response response = UpdateSnapshotStatus(name, content, new MatchConditions(), context);
+                ConfigurationSettingsSnapshot value = ConfigurationSettingsSnapshot.FromResponse(response);
+                return Response.FromValue(value, response);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Updates the state of a configuration setting snapshot to archive. </summary>
+        /// <param name="snapshot"> The snapshot object of the configuration setting snapshot to archive. </param>
+        /// <param name="onlyIfUnchanged">TODO</param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<ConfigurationSettingsSnapshot> ArchiveSnapshot(ConfigurationSettingsSnapshot snapshot, bool onlyIfUnchanged = false, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(snapshot, nameof(snapshot));
+
+            using var scope = ClientDiagnostics.CreateScope("ConfigurationClient.UpdateSnapshot");
+            scope.Start();
+            try
+            {
+                RequestContext context = CreateRequestContext(ErrorOptions.Default, cancellationToken);
+
+                SnapshotUpdateParameters snapshotUpdateParameters = new()
+                {
+                    Status = SnapshotStatus.Archived
+                };
+                using RequestContent content = SnapshotUpdateParameters.ToRequestContent(snapshotUpdateParameters);
+
+                MatchConditions requestOptions = onlyIfUnchanged ? new MatchConditions { IfMatch = snapshot.Etag } : default;
+
+                Response response = UpdateSnapshotStatus(snapshot.Name, content, requestOptions, context);
                 ConfigurationSettingsSnapshot value = ConfigurationSettingsSnapshot.FromResponse(response);
                 return Response.FromValue(value, response);
             }
