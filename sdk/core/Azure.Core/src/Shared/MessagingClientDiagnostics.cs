@@ -66,7 +66,7 @@ namespace Azure.Core.Shared
                 }
 
                 scope.AddAttribute(NetPeerName, _fullyQualifiedNamespace);
-                scope.AddAttribute(operation == MessagingDiagnosticOperation.Publish ? DestinationName : SourceName, _entityPath);
+                scope.AddAttribute(operation == default || operation == MessagingDiagnosticOperation.Publish ? DestinationName : SourceName, _entityPath);
             }
             else
             {
@@ -91,16 +91,6 @@ namespace Azure.Core.Shared
             traceparent = null;
             tracestate = null;
 
-            if (properties.TryGetValue(DiagnosticIdAttribute, out var diagnosticId) && diagnosticId is string diagnosticIdString)
-            {
-                traceparent = diagnosticIdString;
-                if (properties.TryGetValue(TraceState, out object state) && state is string stateString)
-                {
-                    tracestate = stateString;
-                }
-                return true;
-            }
-
             if (properties.TryGetValue(TraceParent, out var traceParent) && traceParent is string traceParentString)
             {
                 traceparent = traceParentString;
@@ -108,6 +98,13 @@ namespace Azure.Core.Shared
                 {
                     tracestate = stateString;
                 }
+                return true;
+            }
+
+            // trace state is not valid without trace parent, so we don't need to check for it for the legacy attribute
+            if (properties.TryGetValue(DiagnosticIdAttribute, out var diagnosticId) && diagnosticId is string diagnosticIdString)
+            {
+                traceparent = diagnosticIdString;
                 return true;
             }
             return false;
@@ -126,16 +123,6 @@ namespace Azure.Core.Shared
             traceparent = null;
             tracestate = null;
 
-            if (properties.TryGetValue(DiagnosticIdAttribute, out var diagnosticId) && diagnosticId is string diagnosticIdString)
-            {
-                traceparent = diagnosticIdString;
-                if (properties.TryGetValue(TraceState, out object state) && state is string stateString)
-                {
-                    tracestate = stateString;
-                }
-                return true;
-            }
-
             if (properties.TryGetValue(TraceParent, out var traceParent) && traceParent is string traceParentString)
             {
                 traceparent = traceParentString;
@@ -143,6 +130,13 @@ namespace Azure.Core.Shared
                 {
                     tracestate = stateString;
                 }
+                return true;
+            }
+
+            // trace state is not valid without trace parent, so we don't need to check for it for the legacy attribute
+            if (properties.TryGetValue(DiagnosticIdAttribute, out var diagnosticId) && diagnosticId is string diagnosticIdString)
+            {
+                traceparent = diagnosticIdString;
                 return true;
             }
             return false;
@@ -160,8 +154,7 @@ namespace Azure.Core.Shared
             {
                 using DiagnosticScope messageScope = CreateScope(
                     activityName,
-                    DiagnosticScope.ActivityKind.Producer,
-                    MessagingDiagnosticOperation.Publish);
+                    DiagnosticScope.ActivityKind.Producer);
                 messageScope.Start();
 
                 Activity activity = Activity.Current;
@@ -169,7 +162,8 @@ namespace Azure.Core.Shared
                 {
                     properties[DiagnosticIdAttribute] = activity.Id;
                     properties[TraceParent] = activity.Id;
-                    properties[TraceState] = activity.TraceStateString;
+                    if (activity.TraceStateString != null)
+                        properties[TraceState] = activity.TraceStateString;
                 }
             }
         }

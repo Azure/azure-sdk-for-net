@@ -153,7 +153,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                     Assert.IsNotNull(msg.ApplicationProperties[MessagingClientDiagnostics.DiagnosticIdAttribute]);
 
                     var messageActivity = listener.AssertAndRemoveActivity(DiagnosticProperty.MessageActivityName);
-                    AssertCommonTags(messageActivity, sender.EntityPath, sender.FullyQualifiedNamespace, MessagingDiagnosticOperation.Publish, 1);
+                    AssertCommonTags(messageActivity, sender.EntityPath, sender.FullyQualifiedNamespace, default, 1);
 
                     var scheduleScope = listener.AssertAndRemoveActivity(DiagnosticProperty.ScheduleActivityName);
                     AssertCommonTags(scheduleScope, sender.EntityPath, sender.FullyQualifiedNamespace, MessagingDiagnosticOperation.Publish, 1);
@@ -348,7 +348,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                 var messageActivity = listener.AssertAndRemoveActivity(DiagnosticProperty.MessageActivityName);
                 messageActivities.Add(messageActivity);
                 CollectionAssert.Contains(messageActivity.Tags, new KeyValuePair<string, string>(MessagingClientDiagnostics.DestinationName, sender.EntityPath));
-                AssertCommonTags(messageActivity, sender.EntityPath, sender.FullyQualifiedNamespace, MessagingDiagnosticOperation.Publish, 1);
+                AssertCommonTags(messageActivity, sender.EntityPath, sender.FullyQualifiedNamespace, default, 1);
             }
 
             var sendActivity = listener.AssertAndRemoveActivity(DiagnosticProperty.SendActivityName);
@@ -367,11 +367,22 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
         {
             var tags = activity.TagObjects.ToList();
             CollectionAssert.Contains(tags, new KeyValuePair<string, string>(MessagingClientDiagnostics.NetPeerName, fullyQualifiedNamespace));
-            var entityKey = operation == MessagingDiagnosticOperation.Publish ? MessagingClientDiagnostics.DestinationName : MessagingClientDiagnostics.SourceName;
-            CollectionAssert.Contains(tags, new KeyValuePair<string ,string>(entityKey, entityName));
+
             CollectionAssert.Contains(tags, new KeyValuePair<string, string>(MessagingClientDiagnostics.MessagingSystem, DiagnosticProperty.ServiceBusServiceContext));
             if (operation != default)
-                CollectionAssert.Contains(tags, new KeyValuePair<string, string>(MessagingClientDiagnostics.MessagingOperation, operation.ToString()));
+            {
+                CollectionAssert.Contains(tags,
+                    new KeyValuePair<string, string>(MessagingClientDiagnostics.MessagingOperation, operation.ToString()));
+                var entityKey = operation == MessagingDiagnosticOperation.Publish
+                    ? MessagingClientDiagnostics.DestinationName
+                    : MessagingClientDiagnostics.SourceName;
+                CollectionAssert.Contains(tags, new KeyValuePair<string, string>(entityKey, entityName));
+            }
+            else
+            {
+                CollectionAssert.Contains(tags, new KeyValuePair<string, string>(MessagingClientDiagnostics.DestinationName, entityName));
+            }
+
             if (messageCount > 1)
                 CollectionAssert.Contains(tags, new KeyValuePair<string, int>(MessagingClientDiagnostics.BatchCount, messageCount));
             else
