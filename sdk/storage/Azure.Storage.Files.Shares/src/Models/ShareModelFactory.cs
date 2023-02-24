@@ -226,7 +226,7 @@ namespace Azure.Storage.Files.Shares.Models
             string parentId = default,
             DateTimeOffset? openedOn = default,
             DateTimeOffset? lastReconnectedOn = default,
-            ShareFileHandleAccessRight? accessRights = default)
+            ShareFileHandleAccessRights? accessRights = default)
             => new ShareFileHandle(
                 handleId,
                 path,
