@@ -26,6 +26,7 @@ namespace Azure.ResourceManager.Workloads.Models
             {
                 switch (discriminator.GetString())
                 {
+                    case "External": return ExternalInstallationSoftwareConfiguration.DeserializeExternalInstallationSoftwareConfiguration(element);
                     case "SAPInstallWithoutOSConfig": return SapInstallWithoutOSConfigSoftwareConfiguration.DeserializeSapInstallWithoutOSConfigSoftwareConfiguration(element);
                     case "ServiceInitiated": return ServiceInitiatedSoftwareConfiguration.DeserializeServiceInitiatedSoftwareConfiguration(element);
                 }
