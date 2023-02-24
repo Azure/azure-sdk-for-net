@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 if (DatastoreId != null)
                 {
-                    writer.WritePropertyName("datastoreId");
+                    writer.WritePropertyName("datastoreId"u8);
                     writer.WriteStringValue(DatastoreId);
                 }
                 else
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 if (Path != null)
                 {
-                    writer.WritePropertyName("path");
+                    writer.WritePropertyName("path"u8);
                     writer.WriteStringValue(Path);
                 }
                 else
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("path");
                 }
             }
-            writer.WritePropertyName("referenceType");
+            writer.WritePropertyName("referenceType"u8);
             writer.WriteStringValue(ReferenceType.ToString());
             writer.WriteEndObject();
         }
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             ReferenceType referenceType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("datastoreId"))
+                if (property.NameEquals("datastoreId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     datastoreId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("path"))
+                if (property.NameEquals("path"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     path = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("referenceType"))
+                if (property.NameEquals("referenceType"u8))
                 {
                     referenceType = new ReferenceType(property.Value.GetString());
                     continue;

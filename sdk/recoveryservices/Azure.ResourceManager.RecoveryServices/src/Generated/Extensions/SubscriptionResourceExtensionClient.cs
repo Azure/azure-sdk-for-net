@@ -7,18 +7,22 @@
 
 using System;
 using System.Threading;
+using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
+using Azure.ResourceManager.RecoveryServices.Models;
 
 namespace Azure.ResourceManager.RecoveryServices
 {
     /// <summary> A class to add extension methods to SubscriptionResource. </summary>
     internal partial class SubscriptionResourceExtensionClient : ArmResource
     {
-        private ClientDiagnostics _vaultClientDiagnostics;
-        private VaultsRestOperations _vaultRestClient;
+        private ClientDiagnostics _recoveryServicesClientDiagnostics;
+        private RecoveryServicesRestOperations _recoveryServicesRestClient;
+        private ClientDiagnostics _recoveryServicesVaultVaultsClientDiagnostics;
+        private VaultsRestOperations _recoveryServicesVaultVaultsRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="SubscriptionResourceExtensionClient"/> class for mocking. </summary>
         protected SubscriptionResourceExtensionClient()
@@ -32,8 +36,10 @@ namespace Azure.ResourceManager.RecoveryServices
         {
         }
 
-        private ClientDiagnostics VaultClientDiagnostics => _vaultClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.RecoveryServices", VaultResource.ResourceType.Namespace, Diagnostics);
-        private VaultsRestOperations VaultRestClient => _vaultRestClient ??= new VaultsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(VaultResource.ResourceType));
+        private ClientDiagnostics RecoveryServicesClientDiagnostics => _recoveryServicesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.RecoveryServices", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private RecoveryServicesRestOperations RecoveryServicesRestClient => _recoveryServicesRestClient ??= new RecoveryServicesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+        private ClientDiagnostics RecoveryServicesVaultVaultsClientDiagnostics => _recoveryServicesVaultVaultsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.RecoveryServices", RecoveryServicesVaultResource.ResourceType.Namespace, Diagnostics);
+        private VaultsRestOperations RecoveryServicesVaultVaultsRestClient => _recoveryServicesVaultVaultsRestClient ??= new VaultsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(RecoveryServicesVaultResource.ResourceType));
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
@@ -42,25 +48,67 @@ namespace Azure.ResourceManager.RecoveryServices
         }
 
         /// <summary>
-        /// Fetches all the resources of the specified type in the subscription.
+        /// API to get details about capabilities provided by Microsoft.RecoveryServices RP
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.RecoveryServices/vaults</description>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.RecoveryServices/locations/{location}/capabilities</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Vaults_ListBySubscriptionId</description>
+        /// <description>RecoveryServices_Capabilities</description>
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="location"> Location of the resource. </param>
+        /// <param name="input"> Contains information about Resource type and properties to get capabilities. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="VaultResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<VaultResource> GetVaultsAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CapabilitiesResult>> GetRecoveryServiceCapabilitiesAsync(AzureLocation location, ResourceCapabilities input, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => VaultRestClient.CreateListBySubscriptionIdRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => VaultRestClient.CreateListBySubscriptionIdNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new VaultResource(Client, VaultData.DeserializeVaultData(e)), VaultClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetVaults", "value", "nextLink", cancellationToken);
+            using var scope = RecoveryServicesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetRecoveryServiceCapabilities");
+            scope.Start();
+            try
+            {
+                var response = await RecoveryServicesRestClient.CapabilitiesAsync(Id.SubscriptionId, location, input, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// API to get details about capabilities provided by Microsoft.RecoveryServices RP
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.RecoveryServices/locations/{location}/capabilities</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RecoveryServices_Capabilities</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="location"> Location of the resource. </param>
+        /// <param name="input"> Contains information about Resource type and properties to get capabilities. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<CapabilitiesResult> GetRecoveryServiceCapabilities(AzureLocation location, ResourceCapabilities input, CancellationToken cancellationToken = default)
+        {
+            using var scope = RecoveryServicesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetRecoveryServiceCapabilities");
+            scope.Start();
+            try
+            {
+                var response = RecoveryServicesRestClient.Capabilities(Id.SubscriptionId, location, input, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -77,12 +125,34 @@ namespace Azure.ResourceManager.RecoveryServices
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="VaultResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<VaultResource> GetVaults(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="RecoveryServicesVaultResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<RecoveryServicesVaultResource> GetRecoveryServicesVaultsAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => VaultRestClient.CreateListBySubscriptionIdRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => VaultRestClient.CreateListBySubscriptionIdNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new VaultResource(Client, VaultData.DeserializeVaultData(e)), VaultClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetVaults", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => RecoveryServicesVaultVaultsRestClient.CreateListBySubscriptionIdRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => RecoveryServicesVaultVaultsRestClient.CreateListBySubscriptionIdNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new RecoveryServicesVaultResource(Client, RecoveryServicesVaultData.DeserializeRecoveryServicesVaultData(e)), RecoveryServicesVaultVaultsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetRecoveryServicesVaults", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// Fetches all the resources of the specified type in the subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.RecoveryServices/vaults</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Vaults_ListBySubscriptionId</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="RecoveryServicesVaultResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<RecoveryServicesVaultResource> GetRecoveryServicesVaults(CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => RecoveryServicesVaultVaultsRestClient.CreateListBySubscriptionIdRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => RecoveryServicesVaultVaultsRestClient.CreateListBySubscriptionIdNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new RecoveryServicesVaultResource(Client, RecoveryServicesVaultData.DeserializeRecoveryServicesVaultData(e)), RecoveryServicesVaultVaultsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetRecoveryServicesVaults", "value", "nextLink", cancellationToken);
         }
     }
 }

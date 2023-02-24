@@ -16,14 +16,14 @@ namespace Azure.Communication.JobRouter
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("allocations");
+            writer.WritePropertyName("allocations"u8);
             writer.WriteStartArray();
             foreach (var item in Allocations)
             {
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            writer.WritePropertyName("kind");
+            writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind);
             writer.WriteEndObject();
         }
@@ -34,7 +34,7 @@ namespace Azure.Communication.JobRouter
             string kind = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("allocations"))
+                if (property.NameEquals("allocations"u8))
                 {
                     List<QueueWeightedAllocation> array = new List<QueueWeightedAllocation>();
                     foreach (var item in property.Value.EnumerateArray())
@@ -44,7 +44,7 @@ namespace Azure.Communication.JobRouter
                     allocations = array;
                     continue;
                 }
-                if (property.NameEquals("kind"))
+                if (property.NameEquals("kind"u8))
                 {
                     kind = property.Value.GetString();
                     continue;

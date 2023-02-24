@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Peering.Models
             Optional<IReadOnlyList<string>> connectedAgents = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("workspaceID"))
+                if (property.NameEquals("workspaceID"u8))
                 {
                     workspaceId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("key"))
+                if (property.NameEquals("key"u8))
                 {
                     key = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("connectedAgents"))
+                if (property.NameEquals("connectedAgents"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

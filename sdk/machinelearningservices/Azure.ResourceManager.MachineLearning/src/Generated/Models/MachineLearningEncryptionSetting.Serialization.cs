@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("status");
+            writer.WritePropertyName("status"u8);
             writer.WriteStringValue(Status.ToString());
             if (Optional.IsDefined(Identity))
             {
-                writer.WritePropertyName("identity");
+                writer.WritePropertyName("identity"u8);
                 writer.WriteObjectValue(Identity);
             }
-            writer.WritePropertyName("keyVaultProperties");
+            writer.WritePropertyName("keyVaultProperties"u8);
             writer.WriteObjectValue(KeyVaultProperties);
             writer.WriteEndObject();
         }
@@ -34,12 +34,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
             MachineLearningEncryptionKeyVaultProperties keyVaultProperties = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("status"))
+                if (property.NameEquals("status"u8))
                 {
                     status = new MachineLearningEncryptionStatus(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("identity"))
+                if (property.NameEquals("identity"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     identity = MachineLearningCmkIdentity.DeserializeMachineLearningCmkIdentity(property.Value);
                     continue;
                 }
-                if (property.NameEquals("keyVaultProperties"))
+                if (property.NameEquals("keyVaultProperties"u8))
                 {
                     keyVaultProperties = MachineLearningEncryptionKeyVaultProperties.DeserializeMachineLearningEncryptionKeyVaultProperties(property.Value);
                     continue;

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Workloads.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("configurationType");
+            writer.WritePropertyName("configurationType"u8);
             writer.WriteStringValue(ConfigurationType.ToString());
             writer.WriteEndObject();
         }
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Workloads.Models
             SapConfigurationType configurationType = "Unknown";
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("configurationType"))
+                if (property.NameEquals("configurationType"u8))
                 {
                     configurationType = new SapConfigurationType(property.Value.GetString());
                     continue;

@@ -15,16 +15,16 @@ namespace Azure.ResourceManager.Compute.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("lun");
+            writer.WritePropertyName("lun"u8);
             writer.WriteNumberValue(Lun);
             if (Optional.IsDefined(HostCaching))
             {
-                writer.WritePropertyName("hostCaching");
+                writer.WritePropertyName("hostCaching"u8);
                 writer.WriteStringValue(HostCaching.Value.ToSerialString());
             }
             if (Optional.IsDefined(GallerySource))
             {
-                writer.WritePropertyName("source");
+                writer.WritePropertyName("source"u8);
                 writer.WriteObjectValue(GallerySource);
             }
             writer.WriteEndObject();
@@ -38,12 +38,12 @@ namespace Azure.ResourceManager.Compute.Models
             Optional<GalleryDiskImageSource> source = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("lun"))
+                if (property.NameEquals("lun"u8))
                 {
                     lun = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("sizeInGB"))
+                if (property.NameEquals("sizeInGB"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Compute.Models
                     sizeInGB = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("hostCaching"))
+                if (property.NameEquals("hostCaching"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Compute.Models
                     hostCaching = property.Value.GetString().ToHostCaching();
                     continue;
                 }
-                if (property.NameEquals("source"))
+                if (property.NameEquals("source"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

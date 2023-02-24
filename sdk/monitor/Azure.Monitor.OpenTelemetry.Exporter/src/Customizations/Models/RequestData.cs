@@ -35,22 +35,27 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
                 ?.ToString().Truncate(SchemaConstants.RequestData_ResponseCode_MaxLength)
                 ?? "0";
 
-            if (monitorTags.activityType ==  OperationType.Http && int.TryParse(ResponseCode, out int statusCode))
-            {
-                bool isSuccessStatusCode = statusCode != 0 && statusCode < 400;
-                Success = activity.Status != ActivityStatusCode.Error && isSuccessStatusCode;
-            }
-            else
-            {
-                Success = activity.Status != ActivityStatusCode.Error;
-            }
+            Success = isSuccess(activity, ResponseCode, monitorTags.activityType);
 
             Url = url.Truncate(SchemaConstants.RequestData_Url_MaxLength);
             Properties = new ChangeTrackingDictionary<string, string>();
             Measurements = new ChangeTrackingDictionary<string, double>();
 
-            TraceHelper.AddActivityLinksToProperties(activity.Links, ref monitorTags.UnMappedTags);
+            TraceHelper.AddActivityLinksToProperties(activity, ref monitorTags.UnMappedTags);
             TraceHelper.AddPropertiesToTelemetry(Properties, ref monitorTags.UnMappedTags);
+        }
+
+        internal static bool isSuccess(Activity activity, string responseCode, OperationType operationType)
+        {
+            if (operationType == OperationType.Http && int.TryParse(responseCode, out int statusCode))
+            {
+                bool isSuccessStatusCode = statusCode != 0 && statusCode < 400;
+                return activity.Status != ActivityStatusCode.Error && isSuccessStatusCode;
+            }
+            else
+            {
+                return activity.Status != ActivityStatusCode.Error;
+            }
         }
     }
 }

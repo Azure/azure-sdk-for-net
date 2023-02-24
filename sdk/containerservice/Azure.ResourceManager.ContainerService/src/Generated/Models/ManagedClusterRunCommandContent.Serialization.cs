@@ -15,16 +15,16 @@ namespace Azure.ResourceManager.ContainerService.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("command");
+            writer.WritePropertyName("command"u8);
             writer.WriteStringValue(Command);
             if (Optional.IsDefined(Context))
             {
-                writer.WritePropertyName("context");
+                writer.WritePropertyName("context"u8);
                 writer.WriteStringValue(Context);
             }
             if (Optional.IsDefined(ClusterToken))
             {
-                writer.WritePropertyName("clusterToken");
+                writer.WritePropertyName("clusterToken"u8);
                 writer.WriteStringValue(ClusterToken);
             }
             writer.WriteEndObject();

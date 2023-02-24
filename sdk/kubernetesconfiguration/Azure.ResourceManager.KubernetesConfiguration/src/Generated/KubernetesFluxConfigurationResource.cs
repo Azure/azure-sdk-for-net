@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
             scope.Start();
             try
             {
-                var response = await _kubernetesFluxConfigurationFluxConfigurationsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.ResourceType.Namespace, Id.Parent.ResourceType.GetLastType(), Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _kubernetesFluxConfigurationFluxConfigurationsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.ResourceType.GetLastType(), Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new KubernetesFluxConfigurationResource(Client, response.Value), response.GetRawResponse());
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
             scope.Start();
             try
             {
-                var response = _kubernetesFluxConfigurationFluxConfigurationsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.ResourceType.Namespace, Id.Parent.ResourceType.GetLastType(), Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _kubernetesFluxConfigurationFluxConfigurationsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.ResourceType.GetLastType(), Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new KubernetesFluxConfigurationResource(Client, response.Value), response.GetRawResponse());
@@ -175,8 +175,8 @@ namespace Azure.ResourceManager.KubernetesConfiguration
             scope.Start();
             try
             {
-                var response = await _kubernetesFluxConfigurationFluxConfigurationsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.ResourceType.Namespace, Id.Parent.ResourceType.GetLastType(), Id.Parent.Name, Id.Name, forceDelete, cancellationToken).ConfigureAwait(false);
-                var operation = new KubernetesConfigurationArmOperation(_kubernetesFluxConfigurationFluxConfigurationsClientDiagnostics, Pipeline, _kubernetesFluxConfigurationFluxConfigurationsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.ResourceType.Namespace, Id.Parent.ResourceType.GetLastType(), Id.Parent.Name, Id.Name, forceDelete).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = await _kubernetesFluxConfigurationFluxConfigurationsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.ResourceType.GetLastType(), Id.Parent.Name, Id.Name, forceDelete, cancellationToken).ConfigureAwait(false);
+                var operation = new KubernetesConfigurationArmOperation(_kubernetesFluxConfigurationFluxConfigurationsClientDiagnostics, Pipeline, _kubernetesFluxConfigurationFluxConfigurationsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.ResourceType.GetLastType(), Id.Parent.Name, Id.Name, forceDelete).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -210,8 +210,8 @@ namespace Azure.ResourceManager.KubernetesConfiguration
             scope.Start();
             try
             {
-                var response = _kubernetesFluxConfigurationFluxConfigurationsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.ResourceType.Namespace, Id.Parent.ResourceType.GetLastType(), Id.Parent.Name, Id.Name, forceDelete, cancellationToken);
-                var operation = new KubernetesConfigurationArmOperation(_kubernetesFluxConfigurationFluxConfigurationsClientDiagnostics, Pipeline, _kubernetesFluxConfigurationFluxConfigurationsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.ResourceType.Namespace, Id.Parent.ResourceType.GetLastType(), Id.Parent.Name, Id.Name, forceDelete).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = _kubernetesFluxConfigurationFluxConfigurationsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.ResourceType.GetLastType(), Id.Parent.Name, Id.Name, forceDelete, cancellationToken);
+                var operation = new KubernetesConfigurationArmOperation(_kubernetesFluxConfigurationFluxConfigurationsClientDiagnostics, Pipeline, _kubernetesFluxConfigurationFluxConfigurationsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.ResourceType.GetLastType(), Id.Parent.Name, Id.Name, forceDelete).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -248,8 +248,8 @@ namespace Azure.ResourceManager.KubernetesConfiguration
             scope.Start();
             try
             {
-                var response = await _kubernetesFluxConfigurationFluxConfigurationsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.ResourceType.Namespace, Id.Parent.ResourceType.GetLastType(), Id.Parent.Name, Id.Name, patch, cancellationToken).ConfigureAwait(false);
-                var operation = new KubernetesConfigurationArmOperation<KubernetesFluxConfigurationResource>(new KubernetesFluxConfigurationOperationSource(Client), _kubernetesFluxConfigurationFluxConfigurationsClientDiagnostics, Pipeline, _kubernetesFluxConfigurationFluxConfigurationsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.ResourceType.Namespace, Id.Parent.ResourceType.GetLastType(), Id.Parent.Name, Id.Name, patch).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = await _kubernetesFluxConfigurationFluxConfigurationsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.ResourceType.GetLastType(), Id.Parent.Name, Id.Name, patch, cancellationToken).ConfigureAwait(false);
+                var operation = new KubernetesConfigurationArmOperation<KubernetesFluxConfigurationResource>(new KubernetesFluxConfigurationOperationSource(Client), _kubernetesFluxConfigurationFluxConfigurationsClientDiagnostics, Pipeline, _kubernetesFluxConfigurationFluxConfigurationsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.ResourceType.GetLastType(), Id.Parent.Name, Id.Name, patch).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -286,8 +286,8 @@ namespace Azure.ResourceManager.KubernetesConfiguration
             scope.Start();
             try
             {
-                var response = _kubernetesFluxConfigurationFluxConfigurationsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.ResourceType.Namespace, Id.Parent.ResourceType.GetLastType(), Id.Parent.Name, Id.Name, patch, cancellationToken);
-                var operation = new KubernetesConfigurationArmOperation<KubernetesFluxConfigurationResource>(new KubernetesFluxConfigurationOperationSource(Client), _kubernetesFluxConfigurationFluxConfigurationsClientDiagnostics, Pipeline, _kubernetesFluxConfigurationFluxConfigurationsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.ResourceType.Namespace, Id.Parent.ResourceType.GetLastType(), Id.Parent.Name, Id.Name, patch).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = _kubernetesFluxConfigurationFluxConfigurationsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.ResourceType.GetLastType(), Id.Parent.Name, Id.Name, patch, cancellationToken);
+                var operation = new KubernetesConfigurationArmOperation<KubernetesFluxConfigurationResource>(new KubernetesFluxConfigurationOperationSource(Client), _kubernetesFluxConfigurationFluxConfigurationsClientDiagnostics, Pipeline, _kubernetesFluxConfigurationFluxConfigurationsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.ResourceType.GetLastType(), Id.Parent.Name, Id.Name, patch).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

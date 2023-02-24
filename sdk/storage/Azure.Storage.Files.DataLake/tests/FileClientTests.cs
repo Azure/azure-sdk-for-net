@@ -675,6 +675,38 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [RecordedTest]
+        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2021_04_10)]
+        public async Task Create_EncryptionContext()
+        {
+            // Arrange
+            await using DisposingFileSystem test = await GetNewFileSystem();
+            DataLakeDirectoryClient directory = await test.FileSystem.CreateDirectoryAsync(GetNewDirectoryName());
+            DataLakeFileClient file = InstrumentClient(directory.GetFileClient(GetNewFileName()));
+
+            string encryptionContext = "encryptionContext";
+            DataLakePathCreateOptions options = new DataLakePathCreateOptions
+            {
+                EncryptionContext = encryptionContext
+            };
+
+            // Act
+            await file.CreateAsync(options);
+
+            // Assert.  We are also going to test GetProperties(), Read(), and GetPaths() with this test.
+            Response<PathProperties> pathPropertiesResponse = await file.GetPropertiesAsync();
+            Assert.AreEqual(encryptionContext, pathPropertiesResponse.Value.EncryptionContext);
+
+            Response<FileDownloadInfo> readResponse = await file.ReadAsync();
+            Assert.AreEqual(encryptionContext, readResponse.Value.Properties.EncryptionContext);
+
+            AsyncPageable<PathItem> getPathsResponse = test.FileSystem.GetPathsAsync(recursive: true);
+            IList<PathItem> paths = await getPathsResponse.ToListAsync();
+
+            Assert.AreEqual(2, paths.Count);
+            Assert.AreEqual(encryptionContext, paths[1].EncryptionContext);
+        }
+
+        [RecordedTest]
         public async Task CreateIfNotExistsAsync_NotExists()
         {
             // Arrange
@@ -737,6 +769,29 @@ namespace Azure.Storage.Files.DataLake.Tests
             Response<PathProperties> response = await file.GetPropertiesAsync();
             Assert.IsTrue(response.Value.IsServerEncrypted);
             Assert.AreEqual(customerProvidedKey.EncryptionKeyHash, response.Value.EncryptionKeySha256);
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2021_04_10)]
+        public async Task CreateIfNotExists_EncryptionContext()
+        {
+            // Arrange
+            await using DisposingFileSystem test = await GetNewFileSystem();
+            DataLakeDirectoryClient directory = await test.FileSystem.CreateDirectoryAsync(GetNewDirectoryName());
+            DataLakeFileClient file = InstrumentClient(directory.GetFileClient(GetNewFileName()));
+
+            string encryptionContext = "encryptionContext";
+            DataLakePathCreateOptions options = new DataLakePathCreateOptions
+            {
+                EncryptionContext = encryptionContext
+            };
+
+            // Act
+            await file.CreateIfNotExistsAsync(options);
+
+            // Assert
+            Response<PathProperties> pathProperties = await file.GetPropertiesAsync();
+            Assert.AreEqual(encryptionContext, pathProperties.Value.EncryptionContext);
         }
 
         [RecordedTest]
@@ -2565,7 +2620,7 @@ namespace Azure.Storage.Files.DataLake.Tests
 
             DataLakeFileAppendOptions options = new DataLakeFileAppendOptions
             {
-                LeaseAction = LeaseAction.Acquire,
+                LeaseAction = DataLakeLeaseAction.Acquire,
                 ProposedLeaseId = proposedLeaseId,
                 LeaseDuration = duration
             };
@@ -2600,7 +2655,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             DataLakeFileAppendOptions options = new DataLakeFileAppendOptions
             {
                 LeaseId = leaseId,
-                LeaseAction = LeaseAction.AutoRenew
+                LeaseAction = DataLakeLeaseAction.AutoRenew
             };
 
             // Act
@@ -2633,7 +2688,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             DataLakeFileAppendOptions options = new DataLakeFileAppendOptions
             {
                 LeaseId = leaseId,
-                LeaseAction = LeaseAction.Release,
+                LeaseAction = DataLakeLeaseAction.Release,
                 Flush = true
             };
 
@@ -2663,7 +2718,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             DataLakeFileAppendOptions options = new DataLakeFileAppendOptions
             {
                 Flush = true,
-                LeaseAction = LeaseAction.AcquireRelease,
+                LeaseAction = DataLakeLeaseAction.AcquireRelease,
                 ProposedLeaseId = proposedLeaseId,
                 LeaseDuration = duration
             };
@@ -3022,7 +3077,7 @@ namespace Azure.Storage.Files.DataLake.Tests
 
             DataLakeFileFlushOptions options = new DataLakeFileFlushOptions
             {
-                LeaseAction = LeaseAction.Acquire,
+                LeaseAction = DataLakeLeaseAction.Acquire,
                 ProposedLeaseId = leaseId,
                 LeaseDuration = duration
             };
@@ -3055,7 +3110,7 @@ namespace Azure.Storage.Files.DataLake.Tests
 
             DataLakeFileAppendOptions appendOptions = new DataLakeFileAppendOptions
             {
-                LeaseAction = LeaseAction.Acquire,
+                LeaseAction = DataLakeLeaseAction.Acquire,
                 ProposedLeaseId = leaseId,
                 LeaseDuration = duration
             };
@@ -3064,7 +3119,7 @@ namespace Azure.Storage.Files.DataLake.Tests
 
             DataLakeFileFlushOptions options = new DataLakeFileFlushOptions
             {
-                LeaseAction = LeaseAction.AutoRenew,
+                LeaseAction = DataLakeLeaseAction.AutoRenew,
                 Conditions = new DataLakeRequestConditions
                 {
                     LeaseId = leaseId
@@ -3099,7 +3154,7 @@ namespace Azure.Storage.Files.DataLake.Tests
 
             DataLakeFileAppendOptions appendOptions = new DataLakeFileAppendOptions
             {
-                LeaseAction = LeaseAction.Acquire,
+                LeaseAction = DataLakeLeaseAction.Acquire,
                 ProposedLeaseId = leaseId,
                 LeaseDuration = duration
             };
@@ -3108,7 +3163,7 @@ namespace Azure.Storage.Files.DataLake.Tests
 
             DataLakeFileFlushOptions options = new DataLakeFileFlushOptions
             {
-                LeaseAction = LeaseAction.Release,
+                LeaseAction = DataLakeLeaseAction.Release,
                 Conditions = new DataLakeRequestConditions
                 {
                     LeaseId = leaseId
@@ -3144,7 +3199,7 @@ namespace Azure.Storage.Files.DataLake.Tests
 
             DataLakeFileFlushOptions options = new DataLakeFileFlushOptions
             {
-                LeaseAction = LeaseAction.AcquireRelease,
+                LeaseAction = DataLakeLeaseAction.AcquireRelease,
                 ProposedLeaseId = leaseId,
                 LeaseDuration = duration
             };
@@ -3184,6 +3239,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             Assert.IsNotNull(response.Value.Properties.LeaseStatus);
             Assert.IsNotNull(response.Value.Properties.LeaseState);
             Assert.IsNotNull(response.Value.Properties.IsServerEncrypted);
+            Assert.IsNotNull(response.Value.Properties.CreatedOn);
 
             var actual = new MemoryStream();
             await response.Value.Content.CopyToAsync(actual);

@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.Network.Models
             Optional<SecurityRuleAssociations> securityRuleAssociations = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("securityRuleAssociations"))
+                if (property.NameEquals("securityRuleAssociations"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

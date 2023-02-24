@@ -26,14 +26,14 @@ namespace Azure.ResourceManager.CustomerInsights.Models
 
         public static KpiFunction ToKpiFunction(this string value)
         {
-            if (string.Equals(value, "None", StringComparison.InvariantCultureIgnoreCase)) return KpiFunction.None;
-            if (string.Equals(value, "Sum", StringComparison.InvariantCultureIgnoreCase)) return KpiFunction.Sum;
-            if (string.Equals(value, "Avg", StringComparison.InvariantCultureIgnoreCase)) return KpiFunction.Avg;
-            if (string.Equals(value, "Min", StringComparison.InvariantCultureIgnoreCase)) return KpiFunction.Min;
-            if (string.Equals(value, "Max", StringComparison.InvariantCultureIgnoreCase)) return KpiFunction.Max;
-            if (string.Equals(value, "Last", StringComparison.InvariantCultureIgnoreCase)) return KpiFunction.Last;
-            if (string.Equals(value, "Count", StringComparison.InvariantCultureIgnoreCase)) return KpiFunction.Count;
-            if (string.Equals(value, "CountDistinct", StringComparison.InvariantCultureIgnoreCase)) return KpiFunction.CountDistinct;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "None")) return KpiFunction.None;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Sum")) return KpiFunction.Sum;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Avg")) return KpiFunction.Avg;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Min")) return KpiFunction.Min;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Max")) return KpiFunction.Max;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Last")) return KpiFunction.Last;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Count")) return KpiFunction.Count;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "CountDistinct")) return KpiFunction.CountDistinct;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown KpiFunction value.");
         }
     }

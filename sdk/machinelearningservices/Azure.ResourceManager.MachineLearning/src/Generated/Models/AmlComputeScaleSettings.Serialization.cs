@@ -16,18 +16,18 @@ namespace Azure.ResourceManager.MachineLearning.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("maxNodeCount");
+            writer.WritePropertyName("maxNodeCount"u8);
             writer.WriteNumberValue(MaxNodeCount);
             if (Optional.IsDefined(MinNodeCount))
             {
-                writer.WritePropertyName("minNodeCount");
+                writer.WritePropertyName("minNodeCount"u8);
                 writer.WriteNumberValue(MinNodeCount.Value);
             }
             if (Optional.IsDefined(NodeIdleTimeBeforeScaleDown))
             {
                 if (NodeIdleTimeBeforeScaleDown != null)
                 {
-                    writer.WritePropertyName("nodeIdleTimeBeforeScaleDown");
+                    writer.WritePropertyName("nodeIdleTimeBeforeScaleDown"u8);
                     writer.WriteStringValue(NodeIdleTimeBeforeScaleDown.Value, "P");
                 }
                 else
@@ -45,12 +45,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Optional<TimeSpan?> nodeIdleTimeBeforeScaleDown = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("maxNodeCount"))
+                if (property.NameEquals("maxNodeCount"u8))
                 {
                     maxNodeCount = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("minNodeCount"))
+                if (property.NameEquals("minNodeCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     minNodeCount = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("nodeIdleTimeBeforeScaleDown"))
+                if (property.NameEquals("nodeIdleTimeBeforeScaleDown"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

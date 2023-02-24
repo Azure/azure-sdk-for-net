@@ -21,27 +21,27 @@ namespace Azure.Communication.JobRouter.Models
             double estimatedWaitTimeMinutes = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("jobId"))
+                if (property.NameEquals("jobId"u8))
                 {
                     jobId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("position"))
+                if (property.NameEquals("position"u8))
                 {
                     position = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("queueId"))
+                if (property.NameEquals("queueId"u8))
                 {
                     queueId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("queueLength"))
+                if (property.NameEquals("queueLength"u8))
                 {
                     queueLength = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("estimatedWaitTimeMinutes"))
+                if (property.NameEquals("estimatedWaitTimeMinutes"u8))
                 {
                     estimatedWaitTimeMinutes = property.Value.GetDouble();
                     continue;

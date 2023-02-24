@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetUserAssignedIdentities_IdentityListBySubscription()
         {
-            // Generated from example definition: specification/msi/resource-manager/Microsoft.ManagedIdentity/preview/2022-01-31-preview/examples/IdentityListBySubscription.json
+            // Generated from example definition: specification/msi/resource-manager/Microsoft.ManagedIdentity/stable/2023-01-31/examples/IdentityListBySubscription.json
             // this example is just showing the usage of "UserAssignedIdentities_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -51,46 +51,12 @@ namespace Azure.ResourceManager.ManagedServiceIdentities.Samples
             Console.WriteLine($"Succeeded");
         }
 
-        // IdentityListAssociatedResources
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetAssociatedResources_IdentityListAssociatedResources()
-        {
-            // Generated from example definition: specification/msi/resource-manager/Microsoft.ManagedIdentity/preview/2022-01-31-preview/examples/IdentityListAssociatedResources.json
-            // this example is just showing the usage of "UserAssignedIdentities_ListAssociatedResources" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this UserAssignedIdentityResource created on azure
-            // for more information of creating UserAssignedIdentityResource, please refer to the document of UserAssignedIdentityResource
-            string subscriptionId = "1cscb752-d7c9-463f-9731-fd31edada74a";
-            string resourceGroupName = "testrg";
-            string resourceName = "testid";
-            ResourceIdentifier userAssignedIdentityResourceId = UserAssignedIdentityResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, resourceName);
-            UserAssignedIdentityResource userAssignedIdentity = client.GetUserAssignedIdentityResource(userAssignedIdentityResourceId);
-
-            // invoke the operation and iterate over the result
-            string filter = "contains(name, 'test')";
-            string orderby = "name asc";
-            int? top = 10;
-            int? skip = 1;
-            await foreach (IdentityAssociatedResourceData item in userAssignedIdentity.GetAssociatedResourcesAsync(filter: filter, orderby: orderby, top: top, skip: skip))
-            {
-                Console.WriteLine($"Succeeded: {item}");
-            }
-
-            Console.WriteLine($"Succeeded");
-        }
-
         // IdentityUpdate
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Update_IdentityUpdate()
         {
-            // Generated from example definition: specification/msi/resource-manager/Microsoft.ManagedIdentity/preview/2022-01-31-preview/examples/IdentityUpdate.json
+            // Generated from example definition: specification/msi/resource-manager/Microsoft.ManagedIdentity/stable/2023-01-31/examples/IdentityUpdate.json
             // this example is just showing the usage of "UserAssignedIdentities_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -129,7 +95,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_IdentityGet()
         {
-            // Generated from example definition: specification/msi/resource-manager/Microsoft.ManagedIdentity/preview/2022-01-31-preview/examples/IdentityGet.json
+            // Generated from example definition: specification/msi/resource-manager/Microsoft.ManagedIdentity/stable/2023-01-31/examples/IdentityGet.json
             // this example is just showing the usage of "UserAssignedIdentities_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -160,7 +126,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Delete_IdentityDelete()
         {
-            // Generated from example definition: specification/msi/resource-manager/Microsoft.ManagedIdentity/preview/2022-01-31-preview/examples/IdentityDelete.json
+            // Generated from example definition: specification/msi/resource-manager/Microsoft.ManagedIdentity/stable/2023-01-31/examples/IdentityDelete.json
             // this example is just showing the usage of "UserAssignedIdentities_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

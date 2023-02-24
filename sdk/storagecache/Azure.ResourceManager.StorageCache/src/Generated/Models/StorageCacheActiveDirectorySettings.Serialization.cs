@@ -16,22 +16,22 @@ namespace Azure.ResourceManager.StorageCache.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("primaryDnsIpAddress");
+            writer.WritePropertyName("primaryDnsIpAddress"u8);
             writer.WriteStringValue(PrimaryDnsIPAddress.ToString());
             if (Optional.IsDefined(SecondaryDnsIPAddress))
             {
-                writer.WritePropertyName("secondaryDnsIpAddress");
+                writer.WritePropertyName("secondaryDnsIpAddress"u8);
                 writer.WriteStringValue(SecondaryDnsIPAddress.ToString());
             }
-            writer.WritePropertyName("domainName");
+            writer.WritePropertyName("domainName"u8);
             writer.WriteStringValue(DomainName);
-            writer.WritePropertyName("domainNetBiosName");
+            writer.WritePropertyName("domainNetBiosName"u8);
             writer.WriteStringValue(DomainNetBiosName);
-            writer.WritePropertyName("cacheNetBiosName");
+            writer.WritePropertyName("cacheNetBiosName"u8);
             writer.WriteStringValue(CacheNetBiosName);
             if (Optional.IsDefined(Credentials))
             {
-                writer.WritePropertyName("credentials");
+                writer.WritePropertyName("credentials"u8);
                 writer.WriteObjectValue(Credentials);
             }
             writer.WriteEndObject();
@@ -48,12 +48,12 @@ namespace Azure.ResourceManager.StorageCache.Models
             Optional<StorageCacheActiveDirectorySettingsCredentials> credentials = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("primaryDnsIpAddress"))
+                if (property.NameEquals("primaryDnsIpAddress"u8))
                 {
                     primaryDnsIPAddress = IPAddress.Parse(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("secondaryDnsIpAddress"))
+                if (property.NameEquals("secondaryDnsIpAddress"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -63,22 +63,22 @@ namespace Azure.ResourceManager.StorageCache.Models
                     secondaryDnsIPAddress = IPAddress.Parse(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("domainName"))
+                if (property.NameEquals("domainName"u8))
                 {
                     domainName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("domainNetBiosName"))
+                if (property.NameEquals("domainNetBiosName"u8))
                 {
                     domainNetBiosName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("cacheNetBiosName"))
+                if (property.NameEquals("cacheNetBiosName"u8))
                 {
                     cacheNetBiosName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("domainJoined"))
+                if (property.NameEquals("domainJoined"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                     domainJoined = new DomainJoinedType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("credentials"))
+                if (property.NameEquals("credentials"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

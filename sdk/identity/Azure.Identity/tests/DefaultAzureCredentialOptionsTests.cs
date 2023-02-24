@@ -130,7 +130,7 @@ namespace Azure.Identity.Tests
                 }
             }
 
-            var clone = orig.ShallowClone();
+            var clone = orig.Clone<DefaultAzureCredentialOptions>();
 
             foreach (var propInfo in EnumerateDefaultAzureCredentialOptionsProperties(useTenantId, !useTenantId))
             {

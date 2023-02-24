@@ -6,6 +6,12 @@
 
 ### Breaking Changes
 
+- Removed `CreateOkpKeyOptions`.
+- Removed `KeyClient.CreateOkpKey` and `CreateOkpKeyAsync`.
+- Removed `KeyType.Okp` and `KeyType.OkpHsm` from `JsonWebKey`.
+- Removed `KeyCurveName.Ed25519`.
+- Removed `SignatureAlgorithm.EdDsa`.
+
 ### Bugs Fixed
 
 ### Other Changes

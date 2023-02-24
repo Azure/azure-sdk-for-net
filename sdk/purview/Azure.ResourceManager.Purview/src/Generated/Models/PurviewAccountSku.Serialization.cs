@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Purview.Models
             Optional<PurviewAccountSkuName> name = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("capacity"))
+                if (property.NameEquals("capacity"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Purview.Models
                     capacity = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

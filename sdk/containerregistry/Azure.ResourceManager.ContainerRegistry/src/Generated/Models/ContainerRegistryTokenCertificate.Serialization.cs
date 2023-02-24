@@ -18,22 +18,22 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Name))
             {
-                writer.WritePropertyName("name");
+                writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name.Value.ToString());
             }
             if (Optional.IsDefined(ExpireOn))
             {
-                writer.WritePropertyName("expiry");
+                writer.WritePropertyName("expiry"u8);
                 writer.WriteStringValue(ExpireOn.Value, "O");
             }
             if (Optional.IsDefined(Thumbprint))
             {
-                writer.WritePropertyName("thumbprint");
+                writer.WritePropertyName("thumbprint"u8);
                 writer.WriteStringValue(Thumbprint);
             }
             if (Optional.IsDefined(EncodedPemCertificate))
             {
-                writer.WritePropertyName("encodedPemCertificate");
+                writer.WritePropertyName("encodedPemCertificate"u8);
                 writer.WriteStringValue(EncodedPemCertificate);
             }
             writer.WriteEndObject();
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             Optional<string> encodedPemCertificate = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     name = new ContainerRegistryTokenCertificateName(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("expiry"))
+                if (property.NameEquals("expiry"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -67,12 +67,12 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     expiry = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("thumbprint"))
+                if (property.NameEquals("thumbprint"u8))
                 {
                     thumbprint = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("encodedPemCertificate"))
+                if (property.NameEquals("encodedPemCertificate"u8))
                 {
                     encodedPemCertificate = property.Value.GetString();
                     continue;

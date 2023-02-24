@@ -16,14 +16,14 @@ namespace Azure.ResourceManager.Network.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("localAddressRanges");
+            writer.WritePropertyName("localAddressRanges"u8);
             writer.WriteStartArray();
             foreach (var item in LocalAddressRanges)
             {
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
-            writer.WritePropertyName("remoteAddressRanges");
+            writer.WritePropertyName("remoteAddressRanges"u8);
             writer.WriteStartArray();
             foreach (var item in RemoteAddressRanges)
             {
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Network.Models
             IList<string> remoteAddressRanges = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("localAddressRanges"))
+                if (property.NameEquals("localAddressRanges"u8))
                 {
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Network.Models
                     localAddressRanges = array;
                     continue;
                 }
-                if (property.NameEquals("remoteAddressRanges"))
+                if (property.NameEquals("remoteAddressRanges"u8))
                 {
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())

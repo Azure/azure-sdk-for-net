@@ -24,27 +24,27 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             Optional<string> @operator = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("result"))
+                if (property.NameEquals("result"u8))
                 {
                     result = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("expression"))
+                if (property.NameEquals("expression"u8))
                 {
                     expression = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("expressionKind"))
+                if (property.NameEquals("expressionKind"u8))
                 {
                     expressionKind = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("path"))
+                if (property.NameEquals("path"u8))
                 {
                     path = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("expressionValue"))
+                if (property.NameEquals("expressionValue"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                     expressionValue = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("targetValue"))
+                if (property.NameEquals("targetValue"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                     targetValue = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("operator"))
+                if (property.NameEquals("operator"u8))
                 {
                     @operator = property.Value.GetString();
                     continue;

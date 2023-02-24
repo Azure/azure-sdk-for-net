@@ -20,17 +20,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
             ComputeType computeType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("userKubeConfig"))
+                if (property.NameEquals("userKubeConfig"u8))
                 {
                     userKubeConfig = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("adminKubeConfig"))
+                if (property.NameEquals("adminKubeConfig"u8))
                 {
                     adminKubeConfig = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("imagePullSecretName"))
+                if (property.NameEquals("imagePullSecretName"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     imagePullSecretName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("computeType"))
+                if (property.NameEquals("computeType"u8))
                 {
                     computeType = new ComputeType(property.Value.GetString());
                     continue;

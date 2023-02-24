@@ -15,38 +15,38 @@ namespace Azure.ResourceManager.EventGrid.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("inputSchemaMappingType");
+            writer.WritePropertyName("inputSchemaMappingType"u8);
             writer.WriteStringValue(InputSchemaMappingType.ToString());
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(Id))
             {
-                writer.WritePropertyName("id");
+                writer.WritePropertyName("id"u8);
                 writer.WriteObjectValue(Id);
             }
             if (Optional.IsDefined(Topic))
             {
-                writer.WritePropertyName("topic");
+                writer.WritePropertyName("topic"u8);
                 writer.WriteObjectValue(Topic);
             }
             if (Optional.IsDefined(EventTime))
             {
-                writer.WritePropertyName("eventTime");
+                writer.WritePropertyName("eventTime"u8);
                 writer.WriteObjectValue(EventTime);
             }
             if (Optional.IsDefined(EventType))
             {
-                writer.WritePropertyName("eventType");
+                writer.WritePropertyName("eventType"u8);
                 writer.WriteObjectValue(EventType);
             }
             if (Optional.IsDefined(Subject))
             {
-                writer.WritePropertyName("subject");
+                writer.WritePropertyName("subject"u8);
                 writer.WriteObjectValue(Subject);
             }
             if (Optional.IsDefined(DataVersion))
             {
-                writer.WritePropertyName("dataVersion");
+                writer.WritePropertyName("dataVersion"u8);
                 writer.WriteObjectValue(DataVersion);
             }
             writer.WriteEndObject();
@@ -64,12 +64,12 @@ namespace Azure.ResourceManager.EventGrid.Models
             Optional<JsonFieldWithDefault> dataVersion = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("inputSchemaMappingType"))
+                if (property.NameEquals("inputSchemaMappingType"u8))
                 {
                     inputSchemaMappingType = new InputSchemaMappingType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("id"))
+                        if (property0.NameEquals("id"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                             id = JsonField.DeserializeJsonField(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("topic"))
+                        if (property0.NameEquals("topic"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                             topic = JsonField.DeserializeJsonField(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("eventTime"))
+                        if (property0.NameEquals("eventTime"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                             eventTime = JsonField.DeserializeJsonField(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("eventType"))
+                        if (property0.NameEquals("eventType"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                             eventType = JsonFieldWithDefault.DeserializeJsonFieldWithDefault(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("subject"))
+                        if (property0.NameEquals("subject"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                             subject = JsonFieldWithDefault.DeserializeJsonFieldWithDefault(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("dataVersion"))
+                        if (property0.NameEquals("dataVersion"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

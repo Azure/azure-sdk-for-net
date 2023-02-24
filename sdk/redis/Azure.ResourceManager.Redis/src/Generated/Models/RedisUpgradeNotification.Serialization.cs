@@ -21,12 +21,12 @@ namespace Azure.ResourceManager.Redis.Models
             Optional<IReadOnlyDictionary<string, string>> upsellNotification = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("timestamp"))
+                if (property.NameEquals("timestamp"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Redis.Models
                     timestamp = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("upsellNotification"))
+                if (property.NameEquals("upsellNotification"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

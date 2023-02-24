@@ -16,9 +16,9 @@ namespace Azure.ResourceManager.BotService.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("alexaSkillId");
+            writer.WritePropertyName("alexaSkillId"u8);
             writer.WriteStringValue(AlexaSkillId);
-            writer.WritePropertyName("isEnabled");
+            writer.WritePropertyName("isEnabled"u8);
             writer.WriteBooleanValue(IsEnabled);
             writer.WriteEndObject();
         }
@@ -31,17 +31,17 @@ namespace Azure.ResourceManager.BotService.Models
             bool isEnabled = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("alexaSkillId"))
+                if (property.NameEquals("alexaSkillId"u8))
                 {
                     alexaSkillId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("urlFragment"))
+                if (property.NameEquals("urlFragment"u8))
                 {
                     urlFragment = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("serviceEndpointUri"))
+                if (property.NameEquals("serviceEndpointUri"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.BotService.Models
                     serviceEndpointUri = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("isEnabled"))
+                if (property.NameEquals("isEnabled"u8))
                 {
                     isEnabled = property.Value.GetBoolean();
                     continue;

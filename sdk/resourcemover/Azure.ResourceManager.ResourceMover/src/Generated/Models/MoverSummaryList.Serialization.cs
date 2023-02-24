@@ -19,12 +19,12 @@ namespace Azure.ResourceManager.ResourceMover.Models
             Optional<IReadOnlyList<MoverSummaryItemInfo>> summary = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("fieldName"))
+                if (property.NameEquals("fieldName"u8))
                 {
                     fieldName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("summary"))
+                if (property.NameEquals("summary"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

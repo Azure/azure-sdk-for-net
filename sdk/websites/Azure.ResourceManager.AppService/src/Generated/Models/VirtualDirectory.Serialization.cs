@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.AppService.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(VirtualPath))
             {
-                writer.WritePropertyName("virtualPath");
+                writer.WritePropertyName("virtualPath"u8);
                 writer.WriteStringValue(VirtualPath);
             }
             if (Optional.IsDefined(PhysicalPath))
             {
-                writer.WritePropertyName("physicalPath");
+                writer.WritePropertyName("physicalPath"u8);
                 writer.WriteStringValue(PhysicalPath);
             }
             writer.WriteEndObject();
@@ -34,12 +34,12 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<string> physicalPath = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("virtualPath"))
+                if (property.NameEquals("virtualPath"u8))
                 {
                     virtualPath = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("physicalPath"))
+                if (property.NameEquals("physicalPath"u8))
                 {
                     physicalPath = property.Value.GetString();
                     continue;

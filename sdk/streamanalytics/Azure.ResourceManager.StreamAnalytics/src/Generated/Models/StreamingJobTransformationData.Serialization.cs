@@ -19,19 +19,19 @@ namespace Azure.ResourceManager.StreamAnalytics
             writer.WriteStartObject();
             if (Optional.IsDefined(Name))
             {
-                writer.WritePropertyName("name");
+                writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(StreamingUnits))
             {
-                writer.WritePropertyName("streamingUnits");
+                writer.WritePropertyName("streamingUnits"u8);
                 writer.WriteNumberValue(StreamingUnits.Value);
             }
             if (Optional.IsCollectionDefined(ValidStreamingUnits))
             {
-                writer.WritePropertyName("validStreamingUnits");
+                writer.WritePropertyName("validStreamingUnits"u8);
                 writer.WriteStartArray();
                 foreach (var item in ValidStreamingUnits)
                 {
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.StreamAnalytics
             }
             if (Optional.IsDefined(Query))
             {
-                writer.WritePropertyName("query");
+                writer.WritePropertyName("query"u8);
                 writer.WriteStringValue(Query);
             }
             writer.WriteEndObject();
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.StreamAnalytics
             Optional<ETag> etag = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -69,12 +69,12 @@ namespace Azure.ResourceManager.StreamAnalytics
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.StreamAnalytics
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.StreamAnalytics
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("streamingUnits"))
+                        if (property0.NameEquals("streamingUnits"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.StreamAnalytics
                             streamingUnits = property0.Value.GetInt32();
                             continue;
                         }
-                        if (property0.NameEquals("validStreamingUnits"))
+                        if (property0.NameEquals("validStreamingUnits"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -118,12 +118,12 @@ namespace Azure.ResourceManager.StreamAnalytics
                             validStreamingUnits = array;
                             continue;
                         }
-                        if (property0.NameEquals("query"))
+                        if (property0.NameEquals("query"u8))
                         {
                             query = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("etag"))
+                        if (property0.NameEquals("etag"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

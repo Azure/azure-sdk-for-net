@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.Authorization.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(TicketNumber))
             {
-                writer.WritePropertyName("ticketNumber");
+                writer.WritePropertyName("ticketNumber"u8);
                 writer.WriteStringValue(TicketNumber);
             }
             if (Optional.IsDefined(TicketSystem))
             {
-                writer.WritePropertyName("ticketSystem");
+                writer.WritePropertyName("ticketSystem"u8);
                 writer.WriteStringValue(TicketSystem);
             }
             writer.WriteEndObject();
@@ -34,12 +34,12 @@ namespace Azure.ResourceManager.Authorization.Models
             Optional<string> ticketSystem = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("ticketNumber"))
+                if (property.NameEquals("ticketNumber"u8))
                 {
                     ticketNumber = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("ticketSystem"))
+                if (property.NameEquals("ticketSystem"u8))
                 {
                     ticketSystem = property.Value.GetString();
                     continue;

@@ -17,50 +17,50 @@ namespace Azure.ResourceManager.BotService.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(EnableMessaging))
             {
-                writer.WritePropertyName("enableMessaging");
+                writer.WritePropertyName("enableMessaging"u8);
                 writer.WriteBooleanValue(EnableMessaging.Value);
             }
             if (Optional.IsDefined(EnableMediaCards))
             {
-                writer.WritePropertyName("enableMediaCards");
+                writer.WritePropertyName("enableMediaCards"u8);
                 writer.WriteBooleanValue(EnableMediaCards.Value);
             }
             if (Optional.IsDefined(EnableVideo))
             {
-                writer.WritePropertyName("enableVideo");
+                writer.WritePropertyName("enableVideo"u8);
                 writer.WriteBooleanValue(EnableVideo.Value);
             }
             if (Optional.IsDefined(EnableCalling))
             {
-                writer.WritePropertyName("enableCalling");
+                writer.WritePropertyName("enableCalling"u8);
                 writer.WriteBooleanValue(EnableCalling.Value);
             }
             if (Optional.IsDefined(EnableScreenSharing))
             {
-                writer.WritePropertyName("enableScreenSharing");
+                writer.WritePropertyName("enableScreenSharing"u8);
                 writer.WriteBooleanValue(EnableScreenSharing.Value);
             }
             if (Optional.IsDefined(EnableGroups))
             {
-                writer.WritePropertyName("enableGroups");
+                writer.WritePropertyName("enableGroups"u8);
                 writer.WriteBooleanValue(EnableGroups.Value);
             }
             if (Optional.IsDefined(GroupsMode))
             {
-                writer.WritePropertyName("groupsMode");
+                writer.WritePropertyName("groupsMode"u8);
                 writer.WriteStringValue(GroupsMode);
             }
             if (Optional.IsDefined(CallingWebHook))
             {
-                writer.WritePropertyName("callingWebHook");
+                writer.WritePropertyName("callingWebHook"u8);
                 writer.WriteStringValue(CallingWebHook);
             }
             if (Optional.IsDefined(IncomingCallRoute))
             {
-                writer.WritePropertyName("incomingCallRoute");
+                writer.WritePropertyName("incomingCallRoute"u8);
                 writer.WriteStringValue(IncomingCallRoute);
             }
-            writer.WritePropertyName("isEnabled");
+            writer.WritePropertyName("isEnabled"u8);
             writer.WriteBooleanValue(IsEnabled);
             writer.WriteEndObject();
         }
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.BotService.Models
             bool isEnabled = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("enableMessaging"))
+                if (property.NameEquals("enableMessaging"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.BotService.Models
                     enableMessaging = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("enableMediaCards"))
+                if (property.NameEquals("enableMediaCards"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.BotService.Models
                     enableMediaCards = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("enableVideo"))
+                if (property.NameEquals("enableVideo"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.BotService.Models
                     enableVideo = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("enableCalling"))
+                if (property.NameEquals("enableCalling"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.BotService.Models
                     enableCalling = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("enableScreenSharing"))
+                if (property.NameEquals("enableScreenSharing"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.BotService.Models
                     enableScreenSharing = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("enableGroups"))
+                if (property.NameEquals("enableGroups"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -139,22 +139,22 @@ namespace Azure.ResourceManager.BotService.Models
                     enableGroups = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("groupsMode"))
+                if (property.NameEquals("groupsMode"u8))
                 {
                     groupsMode = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("callingWebHook"))
+                if (property.NameEquals("callingWebHook"u8))
                 {
                     callingWebHook = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("incomingCallRoute"))
+                if (property.NameEquals("incomingCallRoute"u8))
                 {
                     incomingCallRoute = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("isEnabled"))
+                if (property.NameEquals("isEnabled"u8))
                 {
                     isEnabled = property.Value.GetBoolean();
                     continue;

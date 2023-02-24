@@ -18,7 +18,7 @@ namespace Azure.Search.Documents.Models
             IReadOnlyList<IndexingResult> value = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     List<IndexingResult> array = new List<IndexingResult>();
                     foreach (var item in property.Value.EnumerateArray())

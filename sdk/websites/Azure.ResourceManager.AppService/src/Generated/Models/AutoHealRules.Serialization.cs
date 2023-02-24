@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.AppService.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Triggers))
             {
-                writer.WritePropertyName("triggers");
+                writer.WritePropertyName("triggers"u8);
                 writer.WriteObjectValue(Triggers);
             }
             if (Optional.IsDefined(Actions))
             {
-                writer.WritePropertyName("actions");
+                writer.WritePropertyName("actions"u8);
                 writer.WriteObjectValue(Actions);
             }
             writer.WriteEndObject();
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<AutoHealActions> actions = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("triggers"))
+                if (property.NameEquals("triggers"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.AppService.Models
                     triggers = AutoHealTriggers.DeserializeAutoHealTriggers(property.Value);
                     continue;
                 }
-                if (property.NameEquals("actions"))
+                if (property.NameEquals("actions"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

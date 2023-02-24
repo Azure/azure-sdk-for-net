@@ -108,10 +108,10 @@ namespace Azure.Core.Tests.Public
             yield return new object[] { 1.0, "1" };
 #if NETCOREAPP
                     yield return new object[] {1.1D, "1.1"};
-                    yield return new object[] {1.1F, "1.100000023841858"};
+                    yield return new object[] {1.1F, "1.1"};
 #else
             yield return new object[] { 1.1D, "1.1000000000000001" };
-            yield return new object[] { 1.1F, "1.1000000238418579" };
+            yield return new object[] { 1.1F, "1.10000002" };
 #endif
             yield return new object[] { true, "true" };
             yield return new object[] { false, "false" };

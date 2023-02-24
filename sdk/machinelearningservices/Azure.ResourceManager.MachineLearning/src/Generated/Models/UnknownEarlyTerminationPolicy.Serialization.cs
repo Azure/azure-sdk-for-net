@@ -17,15 +17,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(DelayEvaluation))
             {
-                writer.WritePropertyName("delayEvaluation");
+                writer.WritePropertyName("delayEvaluation"u8);
                 writer.WriteNumberValue(DelayEvaluation.Value);
             }
             if (Optional.IsDefined(EvaluationInterval))
             {
-                writer.WritePropertyName("evaluationInterval");
+                writer.WritePropertyName("evaluationInterval"u8);
                 writer.WriteNumberValue(EvaluationInterval.Value);
             }
-            writer.WritePropertyName("policyType");
+            writer.WritePropertyName("policyType"u8);
             writer.WriteStringValue(PolicyType.ToString());
             writer.WriteEndObject();
         }
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             EarlyTerminationPolicyType policyType = "Unknown";
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("delayEvaluation"))
+                if (property.NameEquals("delayEvaluation"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     delayEvaluation = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("evaluationInterval"))
+                if (property.NameEquals("evaluationInterval"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     evaluationInterval = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("policyType"))
+                if (property.NameEquals("policyType"u8))
                 {
                     policyType = new EarlyTerminationPolicyType(property.Value.GetString());
                     continue;

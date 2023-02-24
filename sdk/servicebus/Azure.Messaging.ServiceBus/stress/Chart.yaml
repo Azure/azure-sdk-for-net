@@ -1,0 +1,13 @@
+apiVersion: v2
+name: servicebus-net-stress
+version: 0.1.0
+description: Stress tests for Service Bus for .NET
+
+dependencies:
+- name: stress-test-addons
+  version: 0.2.0
+  repository: https://stresstestcharts.blob.core.windows.net/helm/
+
+annotations:
+  stressTest: 'true'
+  namespace: 'net'

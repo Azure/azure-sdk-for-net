@@ -18,12 +18,12 @@ namespace Azure.Communication.ShortCodes.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(ContentCategory))
             {
-                writer.WritePropertyName("contentCategory");
+                writer.WritePropertyName("contentCategory"u8);
                 writer.WriteStringValue(ContentCategory.Value.ToString());
             }
             if (Optional.IsCollectionDefined(Examples))
             {
-                writer.WritePropertyName("examples");
+                writer.WritePropertyName("examples"u8);
                 writer.WriteStartArray();
                 foreach (var item in Examples)
                 {
@@ -40,7 +40,7 @@ namespace Azure.Communication.ShortCodes.Models
             Optional<IList<MessageExampleSequence>> examples = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("contentCategory"))
+                if (property.NameEquals("contentCategory"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -50,7 +50,7 @@ namespace Azure.Communication.ShortCodes.Models
                     contentCategory = new MessageContentCategory(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("examples"))
+                if (property.NameEquals("examples"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

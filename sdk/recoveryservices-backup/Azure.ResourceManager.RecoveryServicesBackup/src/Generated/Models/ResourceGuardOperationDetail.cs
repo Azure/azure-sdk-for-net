@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using Azure.Core;
+
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary> The ResourceGuardOperationDetail. </summary>
@@ -17,16 +19,16 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         /// <summary> Initializes a new instance of ResourceGuardOperationDetail. </summary>
         /// <param name="vaultCriticalOperation"></param>
-        /// <param name="defaultResourceRequest"></param>
-        internal ResourceGuardOperationDetail(string vaultCriticalOperation, string defaultResourceRequest)
+        /// <param name="defaultResourceId"></param>
+        internal ResourceGuardOperationDetail(string vaultCriticalOperation, ResourceIdentifier defaultResourceId)
         {
             VaultCriticalOperation = vaultCriticalOperation;
-            DefaultResourceRequest = defaultResourceRequest;
+            DefaultResourceId = defaultResourceId;
         }
 
         /// <summary> Gets or sets the vault critical operation. </summary>
         public string VaultCriticalOperation { get; set; }
-        /// <summary> Gets or sets the default resource request. </summary>
-        public string DefaultResourceRequest { get; set; }
+        /// <summary> Gets or sets the default resource id. </summary>
+        public ResourceIdentifier DefaultResourceId { get; set; }
     }
 }

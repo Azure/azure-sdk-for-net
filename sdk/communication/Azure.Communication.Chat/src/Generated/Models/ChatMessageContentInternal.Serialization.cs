@@ -22,17 +22,17 @@ namespace Azure.Communication.Chat
             Optional<CommunicationIdentifierModel> initiatorCommunicationIdentifier = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("message"))
+                if (property.NameEquals("message"u8))
                 {
                     message = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("topic"))
+                if (property.NameEquals("topic"u8))
                 {
                     topic = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("participants"))
+                if (property.NameEquals("participants"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -47,7 +47,7 @@ namespace Azure.Communication.Chat
                     participants = array;
                     continue;
                 }
-                if (property.NameEquals("initiatorCommunicationIdentifier"))
+                if (property.NameEquals("initiatorCommunicationIdentifier"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

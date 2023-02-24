@@ -13,56 +13,40 @@ namespace Azure.AI.TextAnalytics.Samples
         [Test]
         public void MultiLabelClassifyConvenience()
         {
-            // Create a text analytics client.
-            string endpoint = TestEnvironment.StaticEndpoint;
-            string apiKey = TestEnvironment.StaticApiKey;
+            Uri endpoint = new(TestEnvironment.StaticEndpoint);
+            AzureKeyCredential credential = new(TestEnvironment.StaticApiKey);
+            TextAnalyticsClient client = new(endpoint, credential, CreateSampleOptions());
 
-            var client = new TextAnalyticsClient(new Uri(endpoint), new AzureKeyCredential(apiKey), CreateSampleOptions());
+            string document =
+                "I need a reservation for an indoor restaurant in China. Please don't stop the music. Play music and"
+                + " add it to my playlist.";
 
-            // Get input document.
-            string document = @"I need a reservation for an indoor restaurant in China. Please don't stop the music. Play music and add it to my playlist.";
-
-            // Prepare analyze operation input. You can add multiple documents to this list and perform the same
-            // operation to all of them.
-            var batchInput = new List<string>
+            // Prepare the input of the text analysis operation. You can add multiple documents to this list and
+            // perform the same operation on all of them simultaneously.
+            List<string> batchedDocuments = new()
             {
                 document
             };
 
-            // Set project and deployment names of the target model
-            // To train a model to classify your documents, see https://aka.ms/azsdk/textanalytics/customfunctionalities
+            // Specify the project and deployment names of the desired custom model. To train your own custom model to
+            // classify your documents, see https://aka.ms/azsdk/textanalytics/customfunctionalities.
             string projectName = TestEnvironment.MultiClassificationProjectName;
             string deploymentName = TestEnvironment.MultiClassificationDeploymentName;
+            MultiLabelClassifyAction multiLabelClassifyAction = new(projectName, deploymentName);
 
-            var multiLabelClassifyAction = new MultiLabelClassifyAction(projectName, deploymentName);
-
-            TextAnalyticsActions actions = new TextAnalyticsActions()
+            TextAnalyticsActions actions = new()
             {
                 MultiLabelClassifyActions = new List<MultiLabelClassifyAction>() { multiLabelClassifyAction }
             };
 
-            // Start analysis process.
-            AnalyzeActionsOperation operation = client.StartAnalyzeActions(batchInput, actions);
+            // Perform the text analysis operation.
+            AnalyzeActionsOperation operation = client.StartAnalyzeActions(batchedDocuments, actions);
+            operation.WaitForCompletion();
 
-            // Wait for completion with manual polling.
-            TimeSpan pollingInterval = new TimeSpan(1000);
-
-            while (true)
-            {
-                Console.WriteLine($"Status: {operation.Status}");
-                operation.UpdateStatus();
-                if (operation.HasCompleted)
-                {
-                    break;
-                }
-
-                Thread.Sleep(pollingInterval);
-            }
-
-            // View operation status.
-            Console.WriteLine($"AnalyzeActions operation has completed");
+            Console.WriteLine($"The operation has completed.");
             Console.WriteLine();
 
+            // View the operation status.
             Console.WriteLine($"Created On   : {operation.CreatedOn}");
             Console.WriteLine($"Expires On   : {operation.ExpiresOn}");
             Console.WriteLine($"Id           : {operation.Id}");
@@ -70,7 +54,7 @@ namespace Azure.AI.TextAnalytics.Samples
             Console.WriteLine($"Last Modified: {operation.LastModified}");
             Console.WriteLine();
 
-            // View operation results.
+            // View the operation results.
             foreach (AnalyzeActionsResult documentsInPage in operation.GetValues())
             {
                 IReadOnlyCollection<MultiLabelClassifyActionResult> multiClassificationActionResults = documentsInPage.MultiLabelClassifyResults;
@@ -78,13 +62,13 @@ namespace Azure.AI.TextAnalytics.Samples
                 foreach (MultiLabelClassifyActionResult classificationActionResults in multiClassificationActionResults)
                 {
                     Console.WriteLine($" Action name: {classificationActionResults.ActionName}");
-                    foreach (ClassifyDocumentResult documentResults in classificationActionResults.DocumentsResults)
+                    foreach (ClassifyDocumentResult documentResult in classificationActionResults.DocumentsResults)
                     {
-                        if (documentResults.ClassificationCategories.Count > 0)
+                        if (documentResult.ClassificationCategories.Count > 0)
                         {
                             Console.WriteLine($"  The following classes were predicted for this document:");
 
-                            foreach (ClassificationCategory classification in documentResults.ClassificationCategories)
+                            foreach (ClassificationCategory classification in documentResult.ClassificationCategories)
                             {
                                 Console.WriteLine($"  Class label \"{classification.Category}\" predicted with a confidence score of {classification.ConfidenceScore}.");
                             }

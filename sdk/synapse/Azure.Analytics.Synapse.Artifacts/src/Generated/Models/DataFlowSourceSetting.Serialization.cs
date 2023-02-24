@@ -21,12 +21,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(SourceName))
             {
-                writer.WritePropertyName("sourceName");
+                writer.WritePropertyName("sourceName"u8);
                 writer.WriteStringValue(SourceName);
             }
             if (Optional.IsDefined(RowLimit))
             {
-                writer.WritePropertyName("rowLimit");
+                writer.WritePropertyName("rowLimit"u8);
                 writer.WriteNumberValue(RowLimit.Value);
             }
             foreach (var item in AdditionalProperties)
@@ -45,12 +45,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("sourceName"))
+                if (property.NameEquals("sourceName"u8))
                 {
                     sourceName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("rowLimit"))
+                if (property.NameEquals("rowLimit"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

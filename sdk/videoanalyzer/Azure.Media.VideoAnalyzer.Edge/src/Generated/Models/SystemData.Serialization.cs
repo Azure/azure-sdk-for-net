@@ -18,12 +18,12 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(CreatedAt))
             {
-                writer.WritePropertyName("createdAt");
+                writer.WritePropertyName("createdAt"u8);
                 writer.WriteStringValue(CreatedAt.Value, "O");
             }
             if (Optional.IsDefined(LastModifiedAt))
             {
-                writer.WritePropertyName("lastModifiedAt");
+                writer.WritePropertyName("lastModifiedAt"u8);
                 writer.WriteStringValue(LastModifiedAt.Value, "O");
             }
             writer.WriteEndObject();
@@ -35,7 +35,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             Optional<DateTimeOffset> lastModifiedAt = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("createdAt"))
+                if (property.NameEquals("createdAt"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -45,7 +45,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     createdAt = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("lastModifiedAt"))
+                if (property.NameEquals("lastModifiedAt"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

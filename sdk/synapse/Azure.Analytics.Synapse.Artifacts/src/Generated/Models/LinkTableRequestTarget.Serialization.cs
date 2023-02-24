@@ -20,22 +20,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(TableName))
             {
-                writer.WritePropertyName("tableName");
+                writer.WritePropertyName("tableName"u8);
                 writer.WriteStringValue(TableName);
             }
             if (Optional.IsDefined(SchemaName))
             {
-                writer.WritePropertyName("schemaName");
+                writer.WritePropertyName("schemaName"u8);
                 writer.WriteStringValue(SchemaName);
             }
             if (Optional.IsDefined(DistributionOptions))
             {
-                writer.WritePropertyName("distributionOptions");
+                writer.WritePropertyName("distributionOptions"u8);
                 writer.WriteObjectValue(DistributionOptions);
             }
             if (Optional.IsDefined(StructureOptions))
             {
-                writer.WritePropertyName("structureOptions");
+                writer.WritePropertyName("structureOptions"u8);
                 writer.WriteObjectValue(StructureOptions);
             }
             writer.WriteEndObject();
@@ -49,17 +49,17 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Optional<LinkTableRequestTargetStructureOptions> structureOptions = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("tableName"))
+                if (property.NameEquals("tableName"u8))
                 {
                     tableName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("schemaName"))
+                if (property.NameEquals("schemaName"u8))
                 {
                     schemaName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("distributionOptions"))
+                if (property.NameEquals("distributionOptions"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -69,7 +69,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     distributionOptions = LinkTableRequestTargetDistributionOptions.DeserializeLinkTableRequestTargetDistributionOptions(property.Value);
                     continue;
                 }
-                if (property.NameEquals("structureOptions"))
+                if (property.NameEquals("structureOptions"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

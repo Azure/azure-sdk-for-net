@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             ResourceIdentifierType type = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("azureResourceId"))
+                if (property.NameEquals("azureResourceId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     azureResourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceIdentifierType(property.Value.GetString());
                     continue;

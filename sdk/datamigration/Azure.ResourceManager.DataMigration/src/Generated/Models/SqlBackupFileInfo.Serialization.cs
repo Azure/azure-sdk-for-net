@@ -24,17 +24,17 @@ namespace Azure.ResourceManager.DataMigration.Models
             Optional<int> familySequenceNumber = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("fileName"))
+                if (property.NameEquals("fileName"u8))
                 {
                     fileName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("status"))
+                if (property.NameEquals("status"u8))
                 {
                     status = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("totalSize"))
+                if (property.NameEquals("totalSize"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     totalSize = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("dataRead"))
+                if (property.NameEquals("dataRead"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     dataRead = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("dataWritten"))
+                if (property.NameEquals("dataWritten"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     dataWritten = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("copyThroughput"))
+                if (property.NameEquals("copyThroughput"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     copyThroughput = property.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("copyDuration"))
+                if (property.NameEquals("copyDuration"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     copyDuration = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("familySequenceNumber"))
+                if (property.NameEquals("familySequenceNumber"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

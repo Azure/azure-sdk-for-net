@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DataLakeStore.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(EncryptionKeyVersion))
             {
-                writer.WritePropertyName("encryptionKeyVersion");
+                writer.WritePropertyName("encryptionKeyVersion"u8);
                 writer.WriteStringValue(EncryptionKeyVersion);
             }
             writer.WriteEndObject();

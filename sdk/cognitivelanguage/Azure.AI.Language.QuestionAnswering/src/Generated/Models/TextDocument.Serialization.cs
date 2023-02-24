@@ -15,9 +15,9 @@ namespace Azure.AI.Language.QuestionAnswering
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("id");
+            writer.WritePropertyName("id"u8);
             writer.WriteStringValue(Id);
-            writer.WritePropertyName("text");
+            writer.WritePropertyName("text"u8);
             writer.WriteStringValue(Text);
             writer.WriteEndObject();
         }

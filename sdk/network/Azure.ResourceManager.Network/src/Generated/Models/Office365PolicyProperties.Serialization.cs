@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Network.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(BreakOutCategories))
             {
-                writer.WritePropertyName("breakOutCategories");
+                writer.WritePropertyName("breakOutCategories"u8);
                 writer.WriteObjectValue(BreakOutCategories);
             }
             writer.WriteEndObject();
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Network.Models
             Optional<BreakOutCategoryPolicies> breakOutCategories = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("breakOutCategories"))
+                if (property.NameEquals("breakOutCategories"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -16,21 +16,21 @@ namespace Azure.ResourceManager.NotificationHubs.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(ClientId))
             {
-                writer.WritePropertyName("clientId");
+                writer.WritePropertyName("clientId"u8);
                 writer.WriteStringValue(ClientId);
             }
             if (Optional.IsDefined(ClientSecret))
             {
-                writer.WritePropertyName("clientSecret");
+                writer.WritePropertyName("clientSecret"u8);
                 writer.WriteStringValue(ClientSecret);
             }
             if (Optional.IsDefined(AuthTokenUri))
             {
-                writer.WritePropertyName("authTokenUrl");
+                writer.WritePropertyName("authTokenUrl"u8);
                 writer.WriteStringValue(AuthTokenUri.AbsoluteUri);
             }
             writer.WriteEndObject();
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
             Optional<Uri> authTokenUrl = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -53,17 +53,17 @@ namespace Azure.ResourceManager.NotificationHubs.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("clientId"))
+                        if (property0.NameEquals("clientId"u8))
                         {
                             clientId = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("clientSecret"))
+                        if (property0.NameEquals("clientSecret"u8))
                         {
                             clientSecret = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("authTokenUrl"))
+                        if (property0.NameEquals("authTokenUrl"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

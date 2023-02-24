@@ -15,9 +15,9 @@ namespace Azure.ResourceManager.BotService.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("siteName");
+            writer.WritePropertyName("siteName"u8);
             writer.WriteStringValue(SiteName);
-            writer.WritePropertyName("key");
+            writer.WritePropertyName("key"u8);
             writer.WriteStringValue(Key.ToSerialString());
             writer.WriteEndObject();
         }

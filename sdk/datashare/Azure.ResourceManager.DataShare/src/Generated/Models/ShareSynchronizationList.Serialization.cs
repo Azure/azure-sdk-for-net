@@ -19,12 +19,12 @@ namespace Azure.ResourceManager.DataShare.Models
             IReadOnlyList<ShareSynchronization> value = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("nextLink"))
+                if (property.NameEquals("nextLink"u8))
                 {
                     nextLink = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     List<ShareSynchronization> array = new List<ShareSynchronization>();
                     foreach (var item in property.Value.EnumerateArray())

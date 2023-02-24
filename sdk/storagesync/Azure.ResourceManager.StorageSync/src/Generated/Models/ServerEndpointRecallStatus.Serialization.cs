@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.StorageSync.Models
             Optional<IReadOnlyList<ServerEndpointRecallError>> recallErrors = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("lastUpdatedTimestamp"))
+                if (property.NameEquals("lastUpdatedTimestamp"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                     lastUpdatedTimestamp = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("totalRecallErrorsCount"))
+                if (property.NameEquals("totalRecallErrorsCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                     totalRecallErrorsCount = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("recallErrors"))
+                if (property.NameEquals("recallErrors"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -18,18 +18,18 @@ namespace Azure.ResourceManager.Automation
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(StartOn))
             {
-                writer.WritePropertyName("startTime");
+                writer.WritePropertyName("startTime"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
             if (Optional.IsDefined(ExpireOn))
             {
                 if (ExpireOn != null)
                 {
-                    writer.WritePropertyName("expiryTime");
+                    writer.WritePropertyName("expiryTime"u8);
                     writer.WriteStringValue(ExpireOn.Value, "O");
                 }
                 else
@@ -39,19 +39,19 @@ namespace Azure.ResourceManager.Automation
             }
             if (Optional.IsDefined(ExpireInMinutes))
             {
-                writer.WritePropertyName("expiryTimeOffsetMinutes");
+                writer.WritePropertyName("expiryTimeOffsetMinutes"u8);
                 writer.WriteNumberValue(ExpireInMinutes.Value);
             }
             if (Optional.IsDefined(IsEnabled))
             {
-                writer.WritePropertyName("isEnabled");
+                writer.WritePropertyName("isEnabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
             if (Optional.IsDefined(NextRunOn))
             {
                 if (NextRunOn != null)
                 {
-                    writer.WritePropertyName("nextRun");
+                    writer.WritePropertyName("nextRun"u8);
                     writer.WriteStringValue(NextRunOn.Value, "O");
                 }
                 else
@@ -61,12 +61,12 @@ namespace Azure.ResourceManager.Automation
             }
             if (Optional.IsDefined(NextRunInMinutes))
             {
-                writer.WritePropertyName("nextRunOffsetMinutes");
+                writer.WritePropertyName("nextRunOffsetMinutes"u8);
                 writer.WriteNumberValue(NextRunInMinutes.Value);
             }
             if (Optional.IsDefined(Interval))
             {
-                writer.WritePropertyName("interval");
+                writer.WritePropertyName("interval"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(Interval);
 #else
@@ -75,32 +75,32 @@ namespace Azure.ResourceManager.Automation
             }
             if (Optional.IsDefined(Frequency))
             {
-                writer.WritePropertyName("frequency");
+                writer.WritePropertyName("frequency"u8);
                 writer.WriteStringValue(Frequency.Value.ToString());
             }
             if (Optional.IsDefined(TimeZone))
             {
-                writer.WritePropertyName("timeZone");
+                writer.WritePropertyName("timeZone"u8);
                 writer.WriteStringValue(TimeZone);
             }
             if (Optional.IsDefined(AdvancedSchedule))
             {
-                writer.WritePropertyName("advancedSchedule");
+                writer.WritePropertyName("advancedSchedule"u8);
                 writer.WriteObjectValue(AdvancedSchedule);
             }
             if (Optional.IsDefined(CreatedOn))
             {
-                writer.WritePropertyName("creationTime");
+                writer.WritePropertyName("creationTime"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
             if (Optional.IsDefined(LastModifiedOn))
             {
-                writer.WritePropertyName("lastModifiedTime");
+                writer.WritePropertyName("lastModifiedTime"u8);
                 writer.WriteStringValue(LastModifiedOn.Value, "O");
             }
             if (Optional.IsDefined(Description))
             {
-                writer.WritePropertyName("description");
+                writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
             writer.WriteEndObject();
@@ -129,22 +129,22 @@ namespace Azure.ResourceManager.Automation
             Optional<string> description = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.Automation
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.Automation
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("startTime"))
+                        if (property0.NameEquals("startTime"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.Automation
                             startTime = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("startTimeOffsetMinutes"))
+                        if (property0.NameEquals("startTimeOffsetMinutes"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.Automation
                             startTimeOffsetMinutes = property0.Value.GetDouble();
                             continue;
                         }
-                        if (property0.NameEquals("expiryTime"))
+                        if (property0.NameEquals("expiryTime"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.Automation
                             expiryTime = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("expiryTimeOffsetMinutes"))
+                        if (property0.NameEquals("expiryTimeOffsetMinutes"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.Automation
                             expiryTimeOffsetMinutes = property0.Value.GetDouble();
                             continue;
                         }
-                        if (property0.NameEquals("isEnabled"))
+                        if (property0.NameEquals("isEnabled"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.Automation
                             isEnabled = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("nextRun"))
+                        if (property0.NameEquals("nextRun"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.Automation
                             nextRun = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("nextRunOffsetMinutes"))
+                        if (property0.NameEquals("nextRunOffsetMinutes"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.Automation
                             nextRunOffsetMinutes = property0.Value.GetDouble();
                             continue;
                         }
-                        if (property0.NameEquals("interval"))
+                        if (property0.NameEquals("interval"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -243,7 +243,7 @@ namespace Azure.ResourceManager.Automation
                             interval = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
-                        if (property0.NameEquals("frequency"))
+                        if (property0.NameEquals("frequency"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -253,12 +253,12 @@ namespace Azure.ResourceManager.Automation
                             frequency = new AutomationScheduleFrequency(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("timeZone"))
+                        if (property0.NameEquals("timeZone"u8))
                         {
                             timeZone = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("advancedSchedule"))
+                        if (property0.NameEquals("advancedSchedule"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -268,7 +268,7 @@ namespace Azure.ResourceManager.Automation
                             advancedSchedule = AutomationAdvancedSchedule.DeserializeAutomationAdvancedSchedule(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("creationTime"))
+                        if (property0.NameEquals("creationTime"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -278,7 +278,7 @@ namespace Azure.ResourceManager.Automation
                             creationTime = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("lastModifiedTime"))
+                        if (property0.NameEquals("lastModifiedTime"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.Automation
                             lastModifiedTime = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("description"))
+                        if (property0.NameEquals("description"u8))
                         {
                             description = property0.Value.GetString();
                             continue;

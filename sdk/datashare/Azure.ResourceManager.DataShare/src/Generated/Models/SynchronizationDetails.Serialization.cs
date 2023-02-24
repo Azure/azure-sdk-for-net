@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.DataShare.Models
             Optional<long> vCore = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("dataSetId"))
+                if (property.NameEquals("dataSetId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.DataShare.Models
                     dataSetId = property.Value.GetGuid();
                     continue;
                 }
-                if (property.NameEquals("dataSetType"))
+                if (property.NameEquals("dataSetType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.DataShare.Models
                     dataSetType = new ShareDataSetType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("durationMs"))
+                if (property.NameEquals("durationMs"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.DataShare.Models
                     durationMs = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("endTime"))
+                if (property.NameEquals("endTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.DataShare.Models
                     endTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("filesRead"))
+                if (property.NameEquals("filesRead"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.DataShare.Models
                     filesRead = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("filesWritten"))
+                if (property.NameEquals("filesWritten"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -92,17 +92,17 @@ namespace Azure.ResourceManager.DataShare.Models
                     filesWritten = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("message"))
+                if (property.NameEquals("message"u8))
                 {
                     message = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("rowsCopied"))
+                if (property.NameEquals("rowsCopied"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.DataShare.Models
                     rowsCopied = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("rowsRead"))
+                if (property.NameEquals("rowsRead"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.DataShare.Models
                     rowsRead = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("sizeRead"))
+                if (property.NameEquals("sizeRead"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.DataShare.Models
                     sizeRead = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("sizeWritten"))
+                if (property.NameEquals("sizeWritten"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.DataShare.Models
                     sizeWritten = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("startTime"))
+                if (property.NameEquals("startTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -152,12 +152,12 @@ namespace Azure.ResourceManager.DataShare.Models
                     startTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("status"))
+                if (property.NameEquals("status"u8))
                 {
                     status = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("vCore"))
+                if (property.NameEquals("vCore"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

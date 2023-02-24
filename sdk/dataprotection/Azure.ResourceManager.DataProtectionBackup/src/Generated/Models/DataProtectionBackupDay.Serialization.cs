@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Date))
             {
-                writer.WritePropertyName("date");
+                writer.WritePropertyName("date"u8);
                 writer.WriteNumberValue(Date.Value);
             }
             if (Optional.IsDefined(IsLast))
             {
-                writer.WritePropertyName("isLast");
+                writer.WritePropertyName("isLast"u8);
                 writer.WriteBooleanValue(IsLast.Value);
             }
             writer.WriteEndObject();
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             Optional<bool> isLast = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("date"))
+                if (property.NameEquals("date"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     date = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("isLast"))
+                if (property.NameEquals("isLast"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

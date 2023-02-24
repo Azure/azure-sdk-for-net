@@ -24,12 +24,12 @@ namespace Azure.Communication.JobRouter
 
         public static LabelOperator ToLabelOperator(this string value)
         {
-            if (string.Equals(value, "equal", StringComparison.InvariantCultureIgnoreCase)) return LabelOperator.Equal;
-            if (string.Equals(value, "notEqual", StringComparison.InvariantCultureIgnoreCase)) return LabelOperator.NotEqual;
-            if (string.Equals(value, "lessThan", StringComparison.InvariantCultureIgnoreCase)) return LabelOperator.LessThan;
-            if (string.Equals(value, "lessThanEqual", StringComparison.InvariantCultureIgnoreCase)) return LabelOperator.LessThanEqual;
-            if (string.Equals(value, "greaterThan", StringComparison.InvariantCultureIgnoreCase)) return LabelOperator.GreaterThan;
-            if (string.Equals(value, "greaterThanEqual", StringComparison.InvariantCultureIgnoreCase)) return LabelOperator.GreaterThanEqual;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "equal")) return LabelOperator.Equal;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "notEqual")) return LabelOperator.NotEqual;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "lessThan")) return LabelOperator.LessThan;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "lessThanEqual")) return LabelOperator.LessThanEqual;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "greaterThan")) return LabelOperator.GreaterThan;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "greaterThanEqual")) return LabelOperator.GreaterThanEqual;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown LabelOperator value.");
         }
     }

@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.ManagementGroups.Models
             Optional<IReadOnlyList<ManagementGroupPathElement>> managementGroupAncestorsChain = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("version"))
+                if (property.NameEquals("version"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.ManagementGroups.Models
                     version = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("updatedTime"))
+                if (property.NameEquals("updatedTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -45,12 +45,12 @@ namespace Azure.ResourceManager.ManagementGroups.Models
                     updatedTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("updatedBy"))
+                if (property.NameEquals("updatedBy"u8))
                 {
                     updatedBy = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("parent"))
+                if (property.NameEquals("parent"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.ManagementGroups.Models
                     parent = ParentManagementGroupInfo.DeserializeParentManagementGroupInfo(property.Value);
                     continue;
                 }
-                if (property.NameEquals("path"))
+                if (property.NameEquals("path"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.ManagementGroups.Models
                     path = array;
                     continue;
                 }
-                if (property.NameEquals("managementGroupAncestors"))
+                if (property.NameEquals("managementGroupAncestors"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.ManagementGroups.Models
                     managementGroupAncestors = array;
                     continue;
                 }
-                if (property.NameEquals("managementGroupAncestorsChain"))
+                if (property.NameEquals("managementGroupAncestorsChain"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

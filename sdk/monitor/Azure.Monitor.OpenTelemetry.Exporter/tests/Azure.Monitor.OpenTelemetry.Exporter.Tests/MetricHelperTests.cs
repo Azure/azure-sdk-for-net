@@ -32,12 +32,17 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             doubleCounter.Add(123.45);
             provider.ForceFlush();
 
-            var telemetryItems = MetricHelper.OtelToAzureMonitorMetrics(new Batch<Metric>(metrics.ToArray(), 1), "testRoleName", "testRoleInstance", "00000000-0000-0000-0000-000000000000");
+            var metricResource = new AzureMonitorResource()
+            {
+                RoleName = "testRoleName",
+                RoleInstance = "testRoleInstance"
+            };
+            var telemetryItems = MetricHelper.OtelToAzureMonitorMetrics(new Batch<Metric>(metrics.ToArray(), 1), metricResource, "00000000-0000-0000-0000-000000000000");
             Assert.Single(telemetryItems);
             Assert.Equal("MetricData", telemetryItems[0].Data.BaseType);
             Assert.Equal("00000000-0000-0000-0000-000000000000", telemetryItems[0].InstrumentationKey);
-            Assert.Equal("testRoleName", telemetryItems[0].Tags[ContextTagKeys.AiCloudRole.ToString()]);
-            Assert.Equal("testRoleInstance", telemetryItems[0].Tags[ContextTagKeys.AiCloudRoleInstance.ToString()]);
+            Assert.Equal(metricResource.RoleName, telemetryItems[0].Tags[ContextTagKeys.AiCloudRole.ToString()]);
+            Assert.Equal(metricResource.RoleInstance, telemetryItems[0].Tags[ContextTagKeys.AiCloudRoleInstance.ToString()]);
 
             var metricsData = (MetricsData)telemetryItems[0].Data.BaseData;
             Assert.Equal(2, metricsData.Version);

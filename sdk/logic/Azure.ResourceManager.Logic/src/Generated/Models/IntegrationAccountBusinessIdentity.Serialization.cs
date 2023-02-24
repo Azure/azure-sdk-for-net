@@ -15,9 +15,9 @@ namespace Azure.ResourceManager.Logic.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("qualifier");
+            writer.WritePropertyName("qualifier"u8);
             writer.WriteStringValue(Qualifier);
-            writer.WritePropertyName("value");
+            writer.WritePropertyName("value"u8);
             writer.WriteStringValue(Value);
             writer.WriteEndObject();
         }
@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.Logic.Models
             string value = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("qualifier"))
+                if (property.NameEquals("qualifier"u8))
                 {
                     qualifier = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     value = property.Value.GetString();
                     continue;

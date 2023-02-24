@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Command))
             {
-                writer.WritePropertyName("command");
+                writer.WritePropertyName("command"u8);
                 writer.WriteStartArray();
                 foreach (var item in Command)
                 {
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             Optional<IList<string>> command = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("command"))
+                if (property.NameEquals("command"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

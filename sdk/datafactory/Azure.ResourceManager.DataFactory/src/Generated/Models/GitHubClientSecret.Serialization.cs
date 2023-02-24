@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(ByoaSecretAkvUri))
             {
-                writer.WritePropertyName("byoaSecretAkvUrl");
+                writer.WritePropertyName("byoaSecretAkvUrl"u8);
                 writer.WriteStringValue(ByoaSecretAkvUri.AbsoluteUri);
             }
             if (Optional.IsDefined(ByoaSecretName))
             {
-                writer.WritePropertyName("byoaSecretName");
+                writer.WritePropertyName("byoaSecretName"u8);
                 writer.WriteStringValue(ByoaSecretName);
             }
             writer.WriteEndObject();
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<string> byoaSecretName = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("byoaSecretAkvUrl"))
+                if (property.NameEquals("byoaSecretAkvUrl"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     byoaSecretAkvUrl = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("byoaSecretName"))
+                if (property.NameEquals("byoaSecretName"u8))
                 {
                     byoaSecretName = property.Value.GetString();
                     continue;

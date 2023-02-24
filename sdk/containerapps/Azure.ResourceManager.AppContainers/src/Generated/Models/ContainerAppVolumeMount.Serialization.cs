@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.AppContainers.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(VolumeName))
             {
-                writer.WritePropertyName("volumeName");
+                writer.WritePropertyName("volumeName"u8);
                 writer.WriteStringValue(VolumeName);
             }
             if (Optional.IsDefined(MountPath))
             {
-                writer.WritePropertyName("mountPath");
+                writer.WritePropertyName("mountPath"u8);
                 writer.WriteStringValue(MountPath);
             }
             writer.WriteEndObject();
@@ -34,12 +34,12 @@ namespace Azure.ResourceManager.AppContainers.Models
             Optional<string> mountPath = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("volumeName"))
+                if (property.NameEquals("volumeName"u8))
                 {
                     volumeName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("mountPath"))
+                if (property.NameEquals("mountPath"u8))
                 {
                     mountPath = property.Value.GetString();
                     continue;

@@ -17,22 +17,22 @@ namespace Azure.ResourceManager.AppContainers.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(RevisionName))
             {
-                writer.WritePropertyName("revisionName");
+                writer.WritePropertyName("revisionName"u8);
                 writer.WriteStringValue(RevisionName);
             }
             if (Optional.IsDefined(Weight))
             {
-                writer.WritePropertyName("weight");
+                writer.WritePropertyName("weight"u8);
                 writer.WriteNumberValue(Weight.Value);
             }
             if (Optional.IsDefined(IsLatestRevision))
             {
-                writer.WritePropertyName("latestRevision");
+                writer.WritePropertyName("latestRevision"u8);
                 writer.WriteBooleanValue(IsLatestRevision.Value);
             }
             if (Optional.IsDefined(Label))
             {
-                writer.WritePropertyName("label");
+                writer.WritePropertyName("label"u8);
                 writer.WriteStringValue(Label);
             }
             writer.WriteEndObject();
@@ -46,12 +46,12 @@ namespace Azure.ResourceManager.AppContainers.Models
             Optional<string> label = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("revisionName"))
+                if (property.NameEquals("revisionName"u8))
                 {
                     revisionName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("weight"))
+                if (property.NameEquals("weight"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     weight = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("latestRevision"))
+                if (property.NameEquals("latestRevision"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     latestRevision = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("label"))
+                if (property.NameEquals("label"u8))
                 {
                     label = property.Value.GetString();
                     continue;

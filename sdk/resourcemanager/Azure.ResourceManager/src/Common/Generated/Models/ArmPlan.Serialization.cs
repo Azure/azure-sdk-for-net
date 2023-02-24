@@ -18,20 +18,20 @@ namespace Azure.ResourceManager.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("name");
+            writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            writer.WritePropertyName("publisher");
+            writer.WritePropertyName("publisher"u8);
             writer.WriteStringValue(Publisher);
-            writer.WritePropertyName("product");
+            writer.WritePropertyName("product"u8);
             writer.WriteStringValue(Product);
             if (Optional.IsDefined(PromotionCode))
             {
-                writer.WritePropertyName("promotionCode");
+                writer.WritePropertyName("promotionCode"u8);
                 writer.WriteStringValue(PromotionCode);
             }
             if (Optional.IsDefined(Version))
             {
-                writer.WritePropertyName("version");
+                writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version);
             }
             writer.WriteEndObject();
@@ -46,27 +46,27 @@ namespace Azure.ResourceManager.Models
             Optional<string> version = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("publisher"))
+                if (property.NameEquals("publisher"u8))
                 {
                     publisher = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("product"))
+                if (property.NameEquals("product"u8))
                 {
                     product = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("promotionCode"))
+                if (property.NameEquals("promotionCode"u8))
                 {
                     promotionCode = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("version"))
+                if (property.NameEquals("version"u8))
                 {
                     version = property.Value.GetString();
                     continue;

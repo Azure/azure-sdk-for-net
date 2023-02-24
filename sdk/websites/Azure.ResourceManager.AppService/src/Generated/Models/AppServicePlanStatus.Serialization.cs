@@ -21,9 +21,9 @@ namespace Azure.ResourceManager.AppService.Models
 
         public static AppServicePlanStatus ToAppServicePlanStatus(this string value)
         {
-            if (string.Equals(value, "Ready", StringComparison.InvariantCultureIgnoreCase)) return AppServicePlanStatus.Ready;
-            if (string.Equals(value, "Pending", StringComparison.InvariantCultureIgnoreCase)) return AppServicePlanStatus.Pending;
-            if (string.Equals(value, "Creating", StringComparison.InvariantCultureIgnoreCase)) return AppServicePlanStatus.Creating;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Ready")) return AppServicePlanStatus.Ready;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Pending")) return AppServicePlanStatus.Pending;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Creating")) return AppServicePlanStatus.Creating;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown AppServicePlanStatus value.");
         }
     }

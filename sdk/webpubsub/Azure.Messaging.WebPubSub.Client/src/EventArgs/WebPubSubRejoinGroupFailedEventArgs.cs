@@ -7,7 +7,7 @@ using System.Threading;
 namespace Azure.Messaging.WebPubSub.Clients
 {
     /// <summary>
-    /// The EventArgs of RestoreGroupFailed event. The event is triggered when the `AutoRejoinGroups` is enabled and rejoining a group fails after reconnection.
+    /// The EventArgs of RejoinGroupFailed event. The event is triggered when the `AutoRejoinGroups` is enabled and rejoining a group fails after reconnection.
     /// </summary>
     /// <remarks>
     /// Groups that have joined by client will be restore after reconnection. Groups that joined or leaved from server won't be taken into consideration.

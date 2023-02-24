@@ -10,31 +10,15 @@ using Azure.Core;
 
 namespace Azure.Containers.ContainerRegistry
 {
-    internal partial class JWK : IUtf8JsonSerializable
+    internal partial class JWK
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            if (Optional.IsDefined(Jwk))
-            {
-                writer.WritePropertyName("jwk");
-                writer.WriteObjectValue(Jwk);
-            }
-            if (Optional.IsDefined(Alg))
-            {
-                writer.WritePropertyName("alg");
-                writer.WriteStringValue(Alg);
-            }
-            writer.WriteEndObject();
-        }
-
         internal static JWK DeserializeJWK(JsonElement element)
         {
             Optional<JWKHeader> jwk = default;
             Optional<string> alg = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("jwk"))
+                if (property.NameEquals("jwk"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -44,7 +28,7 @@ namespace Azure.Containers.ContainerRegistry
                     jwk = JWKHeader.DeserializeJWKHeader(property.Value);
                     continue;
                 }
-                if (property.NameEquals("alg"))
+                if (property.NameEquals("alg"u8))
                 {
                     alg = property.Value.GetString();
                     continue;

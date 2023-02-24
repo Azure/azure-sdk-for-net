@@ -17,22 +17,22 @@ namespace Azure.ResourceManager.StorageCache.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(NamespacePath))
             {
-                writer.WritePropertyName("namespacePath");
+                writer.WritePropertyName("namespacePath"u8);
                 writer.WriteStringValue(NamespacePath);
             }
             if (Optional.IsDefined(TargetPath))
             {
-                writer.WritePropertyName("targetPath");
+                writer.WritePropertyName("targetPath"u8);
                 writer.WriteStringValue(TargetPath);
             }
             if (Optional.IsDefined(NfsExport))
             {
-                writer.WritePropertyName("nfsExport");
+                writer.WritePropertyName("nfsExport"u8);
                 writer.WriteStringValue(NfsExport);
             }
             if (Optional.IsDefined(NfsAccessPolicy))
             {
-                writer.WritePropertyName("nfsAccessPolicy");
+                writer.WritePropertyName("nfsAccessPolicy"u8);
                 writer.WriteStringValue(NfsAccessPolicy);
             }
             writer.WriteEndObject();
@@ -46,22 +46,22 @@ namespace Azure.ResourceManager.StorageCache.Models
             Optional<string> nfsAccessPolicy = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("namespacePath"))
+                if (property.NameEquals("namespacePath"u8))
                 {
                     namespacePath = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("targetPath"))
+                if (property.NameEquals("targetPath"u8))
                 {
                     targetPath = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("nfsExport"))
+                if (property.NameEquals("nfsExport"u8))
                 {
                     nfsExport = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("nfsAccessPolicy"))
+                if (property.NameEquals("nfsAccessPolicy"u8))
                 {
                     nfsAccessPolicy = property.Value.GetString();
                     continue;

@@ -3,11 +3,8 @@
 
 using System;
 using System.Collections.Generic;
-using System.Reflection.Metadata;
 using Azure.Core;
 using Azure.Core.TestFramework;
-using Microsoft.Extensions.Azure;
-using Microsoft.Extensions.Options;
 using NUnit.Framework;
 
 namespace Azure.Identity.Tests
@@ -224,6 +221,12 @@ namespace Azure.Identity.Tests
                 Assert.AreEqual(expTimeout ?? TimeSpan.FromSeconds(13), cred.CliProcessTimeout);
                 Assert.AreEqual(expTenantId, cred.TenantId);
                 CollectionAssert.AreEquivalent(expAdditionallyAllowedTenants, cred.AdditionallyAllowedTenantIds);
+
+                AzureDeveloperCliCredential credAzd = (AzureDeveloperCliCredential)factory.CreateAzureDeveloperCliCredential();
+
+                Assert.AreEqual(expTimeout ?? TimeSpan.FromSeconds(13), credAzd.AzdCliProcessTimeout);
+                Assert.AreEqual(expTenantId, credAzd.TenantId);
+                CollectionAssert.AreEquivalent(expAdditionallyAllowedTenants, credAzd.AdditionallyAllowedTenantIds);
             }
         }
 
@@ -319,7 +322,9 @@ namespace Azure.Identity.Tests
 
         [Test]
         public void ValidateExcludeOptionsHonored([Values(true, false)] bool excludeEnvironmentCredential,
+                                                   [Values(true, false)] bool excludeWorkloadIdentityCredential,
                                                    [Values(true, false)] bool excludeManagedIdentityCredential,
+                                                   [Values(true, false)] bool excludeDeveloperCliCredential,
                                                    [Values(true, false)] bool excludeSharedTokenCacheCredential,
                                                    [Values(true, false)] bool excludeVisualStudioCredential,
                                                    [Values(true, false)] bool excludeVisualStudioCodeCredential,
@@ -337,7 +342,9 @@ namespace Azure.Identity.Tests
             {
                 var expCredentialTypes = new List<Type>();
                 expCredentialTypes.ConditionalAdd(!excludeEnvironmentCredential, typeof(EnvironmentCredential));
+                expCredentialTypes.ConditionalAdd(!excludeWorkloadIdentityCredential, typeof(WorkloadIdentityCredential));
                 expCredentialTypes.ConditionalAdd(!excludeManagedIdentityCredential, typeof(ManagedIdentityCredential));
+                expCredentialTypes.ConditionalAdd(!excludeDeveloperCliCredential, typeof(AzureDeveloperCliCredential));
                 expCredentialTypes.ConditionalAdd(!excludeSharedTokenCacheCredential, typeof(SharedTokenCacheCredential));
                 expCredentialTypes.ConditionalAdd(!excludeVisualStudioCredential, typeof(VisualStudioCredential));
                 expCredentialTypes.ConditionalAdd(!excludeVisualStudioCodeCredential, typeof(VisualStudioCodeCredential));
@@ -348,7 +355,9 @@ namespace Azure.Identity.Tests
                 var options = new DefaultAzureCredentialOptions
                 {
                     ExcludeEnvironmentCredential = excludeEnvironmentCredential,
+                    ExcludeWorkloadIdentityCredential= excludeWorkloadIdentityCredential,
                     ExcludeManagedIdentityCredential = excludeManagedIdentityCredential,
+                    ExcludeAzureDeveloperCliCredential = excludeDeveloperCliCredential,
                     ExcludeSharedTokenCacheCredential = excludeSharedTokenCacheCredential,
                     ExcludeAzureCliCredential = excludeCliCredential,
                     ExcludeInteractiveBrowserCredential = excludeInteractiveBrowserCredential,
