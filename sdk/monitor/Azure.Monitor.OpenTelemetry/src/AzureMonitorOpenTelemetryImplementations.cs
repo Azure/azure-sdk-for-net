@@ -28,10 +28,13 @@ namespace Azure.Monitor.OpenTelemetry
 
             builder.WithTracing(b => b
                             .AddAspNetCoreInstrumentation()
+                            .AddHttpClientInstrumentation()
+                            .AddSqlClientInstrumentation()
                             .AddAzureMonitorTraceExporter());
 
             builder.WithMetrics(b => b
                             .AddAspNetCoreInstrumentation()
+                            .AddHttpClientInstrumentation()
                             .AddAzureMonitorMetricExporter());
 
             ServiceDescriptor? sdkTracerProviderServiceRegistration = null;
