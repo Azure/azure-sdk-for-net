@@ -57,8 +57,8 @@ namespace Azure.Analytics.Purview.Sharing.Tests.Samples
                             folder = "folder",
                             mountPath = "mountPath",
 #else
-                            containerName = "container222843",
-                            folder = "folder222843",
+                            containerName = "container2241218",
+                            folder = "folder2241218",
                             mountPath = "",
 #endif
                         }
@@ -74,7 +74,7 @@ namespace Azure.Analytics.Purview.Sharing.Tests.Samples
 #if SNIPPET
             Operation<BinaryData> createResponse = await receivedSharesClient.CreateOrReplaceReceivedShareAsync(WaitUntil.Completed, "receivedShareId", RequestContent.Create(data));
 #else
-            Operation<BinaryData> createResponse = await receivedSharesClient.CreateOrReplaceReceivedShareAsync(WaitUntil.Completed, "4298d43f-7bc0-46b6-84a1-354c621d79a4", RequestContent.Create(data));
+            Operation<BinaryData> createResponse = await receivedSharesClient.CreateOrReplaceReceivedShareAsync(WaitUntil.Completed, "bb00baac-b768-4004-a712-c5b942dc9e83", RequestContent.Create(data));
 #endif
 
 #endregion

@@ -6,26 +6,26 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "User-Agent": "azsdk-net-Analytics.Purview.Sharing/1.0.3-alpha.20230222.1 (.NET 7.0.3; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "26976699957b65136677ac441487d07f",
+        "User-Agent": "azsdk-net-Analytics.Purview.Sharing/1.0.3-alpha.20230223.1 (.NET 6.0.14; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "e309d6b082129d7ab51cbb182cb2fae6",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "Content-Length": "888",
+        "Content-Length": "890",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Thu, 23 Feb 2023 04:41:55 GMT",
+        "Date": "Fri, 24 Feb 2023 08:17:30 GMT",
         "Server": "Kestrel",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
-        "x-ms-correlation-request-id": "e8a18dc4-067b-4d7a-bf7f-91dba0973e56"
+        "x-ms-correlation-request-id": "41bfcad9-d15c-4e07-998c-c9879fd4a3d3"
       },
       "ResponseBody": {
         "value": [
           {
             "properties": {
-              "createdAt": "2023-02-23T04:41:40.749647Z",
-              "sharedAt": "2023-02-23T04:41:40.749647Z",
+              "createdAt": "2023-02-24T08:13:53.4805496Z",
+              "sharedAt": "2023-02-24T08:13:53.4805496Z",
               "displayName": "testDisplayName1",
               "state": "Succeeded",
               "shareStatus": "Detached",
@@ -36,7 +36,7 @@
               "assetStoreKind": "AdlsGen2Account"
             },
             "shareKind": "InPlace",
-            "id": "4298d43f-7bc0-46b6-84a1-354c621d79a4",
+            "id": "bb00baac-b768-4004-a712-c5b942dc9e83",
             "type": "ReceivedShare"
           },
           {
@@ -62,7 +62,7 @@
   ],
   "Variables": {
     "AZURE_AUTHORITY_HOST": null,
-    "PURVIEW_SHARE_URL": "https://ads-dev-eastus-pv.purview.azure.com/share",
-    "RandomSeed": "1806875361"
+    "PURVIEW_SHARE_URL": "https://myaccountname.purview.azure.com/share",
+    "RandomSeed": "1922189047"
   }
 }

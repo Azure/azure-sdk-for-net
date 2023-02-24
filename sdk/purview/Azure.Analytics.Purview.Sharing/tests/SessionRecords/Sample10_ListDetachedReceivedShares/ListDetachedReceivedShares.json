@@ -6,27 +6,27 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-70f524ef14dde9e6436cb52db5ab6f8b-4e4a8d06a1fda8f8-00",
-        "User-Agent": "azsdk-net-Analytics.Purview.Sharing/1.0.3-alpha.20230222.1 (.NET 7.0.3; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "00d5df175b49f12d3c3c9c1478646eb5",
+        "traceparent": "00-125e9d63aab540c06b43a8a0e031d4ee-0bd950921b2c1b8c-00",
+        "User-Agent": "azsdk-net-Analytics.Purview.Sharing/1.0.3-alpha.20230223.1 (.NET 6.0.14; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "e1ac687b44fc06e9195e21445815348d",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "Content-Length": "888",
+        "Content-Length": "890",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Thu, 23 Feb 2023 04:43:07 GMT",
+        "Date": "Fri, 24 Feb 2023 08:17:15 GMT",
         "Server": "Kestrel",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
-        "x-ms-correlation-request-id": "68a28142-7b3b-4a94-8990-70f9347d6887"
+        "x-ms-correlation-request-id": "c4fdadcf-38d3-493b-90b8-dce7f45ca076"
       },
       "ResponseBody": {
         "value": [
           {
             "properties": {
-              "createdAt": "2023-02-23T04:41:40.749647Z",
-              "sharedAt": "2023-02-23T04:41:40.749647Z",
+              "createdAt": "2023-02-24T08:13:53.4805496Z",
+              "sharedAt": "2023-02-24T08:13:53.4805496Z",
               "displayName": "testDisplayName1",
               "state": "Succeeded",
               "shareStatus": "Detached",
@@ -37,7 +37,7 @@
               "assetStoreKind": "AdlsGen2Account"
             },
             "shareKind": "InPlace",
-            "id": "4298d43f-7bc0-46b6-84a1-354c621d79a4",
+            "id": "bb00baac-b768-4004-a712-c5b942dc9e83",
             "type": "ReceivedShare"
           },
           {
@@ -63,7 +63,7 @@
   ],
   "Variables": {
     "AZURE_AUTHORITY_HOST": null,
-    "PURVIEW_SHARE_URL": "https://ads-dev-eastus-pv.purview.azure.com/share",
-    "RandomSeed": "1693484883"
+    "PURVIEW_SHARE_URL": "https://myaccountname.purview.azure.com/share",
+    "RandomSeed": "23648102"
   }
 }
