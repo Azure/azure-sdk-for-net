@@ -9,10 +9,11 @@ namespace Azure.Monitor.OpenTelemetry
     public partial class AzureMonitorOpenTelemetryOptions
     {
         public AzureMonitorOpenTelemetryOptions() { }
-        public Azure.Monitor.OpenTelemetry.Exporter.AzureMonitorExporterOptions AzureMonitorExporterOptions { get { throw null; } set { } }
         public string ConnectionString { get { throw null; } set { } }
+        public bool DisableOfflineStorage { get { throw null; } set { } }
         public bool EnableLogs { get { throw null; } set { } }
         public bool EnableMetrics { get { throw null; } set { } }
         public bool EnableTraces { get { throw null; } set { } }
+        public string StorageDirectory { get { throw null; } set { } }
     }
 }

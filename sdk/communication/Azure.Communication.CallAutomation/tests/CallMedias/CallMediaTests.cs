@@ -61,7 +61,8 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
                 SourceLocale = "en-US",
                 VoiceGender = GenderType.Female,
                 VoiceName = "LULU"
-            }
+            },
+            SpeechLanguage = "en-US",
         };
 
         private static readonly CallMediaRecognizeOptions _emptyRecognizeOptions = new CallMediaRecognizeDtmfOptions(new CommunicationUserIdentifier("targetUserId"), maxTonesToCollect: 1);

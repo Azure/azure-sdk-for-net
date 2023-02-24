@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
 using System.Diagnostics.Metrics;
 using System.Globalization;
 using System.Net.Http;
@@ -13,18 +12,10 @@ using Azure.Monitor.OpenTelemetry.Exporter.Internals.ConnectionString;
 using OpenTelemetry;
 using OpenTelemetry.Metrics;
 
-namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
+namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat
 {
-    internal sealed class Statsbeat : IDisposable
+    internal sealed class AzureMonitorStatsbeat : IDisposable
     {
-        internal const string Statsbeat_ConnectionString_NonEU = "InstrumentationKey=00000000-0000-0000-0000-000000000000;IngestionEndpoint=https://NonEU.in.applicationinsights.azure.com/";
-
-        internal const string Statsbeat_ConnectionString_EU = "InstrumentationKey=00000000-0000-0000-0000-000000000000;IngestionEndpoint=https://EU.in.applicationinsights.azure.com/";
-
-        private const string AMS_Url = "http://169.254.169.254/metadata/instance/compute?api-version=2017-08-01&format=json";
-
-        internal const int AttachStatsbeatInterval = 86400000;
-
         private static readonly Meter s_myMeter = new("AttachStatsbeatMeter", "1.0");
 
         internal string? _statsbeat_ConnectionString;
@@ -45,59 +36,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
         internal static Regex s_endpoint_pattern => new("^https?://(?:www\\.)?([^/.-]+)");
 
-        internal static readonly HashSet<string> s_EU_Endpoints = new()
-        {
-            "francecentral",
-            "francesouth",
-            "northeurope",
-            "norwayeast",
-            "norwaywest",
-            "swedencentral",
-            "switzerlandnorth",
-            "switzerlandwest",
-            "uksouth",
-            "ukwest",
-            "westeurope",
-        };
-
-        internal static readonly HashSet<string> s_non_EU_Endpoints = new()
-        {
-            "australiacentral",
-            "australiacentral2",
-            "australiaeast",
-            "australiasoutheast",
-            "brazilsouth",
-            "brazilsoutheast",
-            "canadacentral",
-            "canadaeast",
-            "centralindia",
-            "centralus",
-            "chinaeast2",
-            "chinaeast3",
-            "chinanorth3",
-            "eastasia",
-            "eastus",
-            "eastus2",
-            "japaneast",
-            "japanwest",
-            "jioindiacentral",
-            "jioindiawest",
-            "koreacentral",
-            "koreasouth",
-            "northcentralus",
-            "qatarcentral",
-            "southafricanorth",
-            "southcentralus",
-            "southeastasia",
-            "southindia",
-            "uaecentral",
-            "uaenorth",
-            "westus",
-            "westus2",
-            "westus3",
-        };
-
-        internal Statsbeat(ConnectionVars connectionStringVars)
+        internal AzureMonitorStatsbeat(ConnectionVars connectionStringVars)
         {
             _statsbeat_ConnectionString = GetStatsbeatConnectionString(connectionStringVars?.IngestionEndpoint);
 
@@ -115,15 +54,18 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             // schedule of 24 hrs == 86400000 milliseconds.
             // TODO: Follow up in spec to confirm the behavior
             // in case if the app exits before 24hrs duration.
-            var exporterOptions = new AzureMonitorExporterOptions();
-            exporterOptions.DisableOfflineStorage = true;
-            exporterOptions.ConnectionString = _statsbeat_ConnectionString;
+            var exporterOptions = new AzureMonitorExporterOptions
+            {
+                DisableOfflineStorage = true,
+                ConnectionString = _statsbeat_ConnectionString,
+                EnableStatsbeat = false, // to avoid recursive Statsbeat.
+            };
 
             _attachStatsbeatMeterProvider = Sdk.CreateMeterProviderBuilder()
-            .AddMeter("AttachStatsbeatMeter")
-            .AddReader(new PeriodicExportingMetricReader(new AzureMonitorMetricExporter(exporterOptions), AttachStatsbeatInterval)
-            { TemporalityPreference = MetricReaderTemporalityPreference.Delta })
-            .Build();
+                .AddMeter("AttachStatsbeatMeter")
+                .AddReader(new PeriodicExportingMetricReader(new AzureMonitorMetricExporter(exporterOptions), StatsbeatConstants.AttachStatsbeatInterval)
+                { TemporalityPreference = MetricReaderTemporalityPreference.Delta })
+                .Build();
         }
 
         private static string GetOS()
@@ -151,13 +93,13 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             if (patternMatch.Success)
             {
                 var endpoint = patternMatch.Groups[1].Value;
-                if (s_EU_Endpoints.Contains(endpoint))
+                if (StatsbeatConstants.s_EU_Endpoints.Contains(endpoint))
                 {
-                    statsbeatConnectionString = Statsbeat_ConnectionString_EU;
+                    statsbeatConnectionString = StatsbeatConstants.Statsbeat_ConnectionString_EU;
                 }
-                else if (s_non_EU_Endpoints.Contains(endpoint))
+                else if (StatsbeatConstants.s_non_EU_Endpoints.Contains(endpoint))
                 {
-                    statsbeatConnectionString = Statsbeat_ConnectionString_NonEU;
+                    statsbeatConnectionString = StatsbeatConstants.Statsbeat_ConnectionString_NonEU;
                 }
             }
 
@@ -198,7 +140,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                 using (var httpClient = new HttpClient())
                 {
                     httpClient.DefaultRequestHeaders.Add("Metadata", "True");
-                    var responseString = httpClient.GetStringAsync(AMS_Url);
+                    var responseString = httpClient.GetStringAsync(StatsbeatConstants.AMS_Url);
                     var vmMetadata = JsonSerializer.Deserialize<VmMetadataResponse>(responseString.Result);
 
                     return vmMetadata;

@@ -29,10 +29,13 @@ namespace Azure.Monitor.OpenTelemetry
 
             builder.WithTracing(b => b
                             .AddAspNetCoreInstrumentation()
+                            .AddHttpClientInstrumentation()
+                            .AddSqlClientInstrumentation()
                             .AddAzureMonitorTraceExporter());
 
             builder.WithMetrics(b => b
                             .AddAspNetCoreInstrumentation()
+                            .AddHttpClientInstrumentation()
                             .AddAzureMonitorMetricExporter());
 
             services.AddLogging(logging =>
@@ -99,7 +102,7 @@ namespace Azure.Monitor.OpenTelemetry
                 }
                 else
                 {
-                    SetValueToExporterOptions(sp, options);
+                    options.SetValueToExporterOptions(sp);
                     var sdkProviderWrapper = sp.GetRequiredService<SdkProviderWrapper>();
                     sdkProviderWrapper.SdkTracerProvider = (TracerProvider)sdkTracerProviderServiceRegistration.ImplementationFactory(sp);
                     return sdkProviderWrapper.SdkTracerProvider;
@@ -115,7 +118,7 @@ namespace Azure.Monitor.OpenTelemetry
                 }
                 else
                 {
-                    SetValueToExporterOptions(sp, options);
+                    options.SetValueToExporterOptions(sp);
                     var sdkProviderWrapper = sp.GetRequiredService<SdkProviderWrapper>();
                     sdkProviderWrapper.SdkMeterProvider = (MeterProvider)sdkMeterProviderServiceRegistration.ImplementationFactory(sp);
                     return sdkProviderWrapper.SdkMeterProvider;
@@ -127,23 +130,6 @@ namespace Azure.Monitor.OpenTelemetry
             services.AddSingleton<SdkProviderWrapper>();
 
             return services;
-        }
-
-        private static void SetValueToExporterOptions(IServiceProvider sp, AzureMonitorOpenTelemetryOptions options)
-        {
-            var exporterOptions = sp.GetRequiredService<IOptionsMonitor<AzureMonitorExporterOptions>>().Get("");
-            var defaultOptions = new AzureMonitorExporterOptions();
-
-            if (ReferenceEquals(exporterOptions, defaultOptions))
-            {
-                exporterOptions.ConnectionString = options.AzureMonitorExporterOptions.ConnectionString;
-                exporterOptions.DisableOfflineStorage = options.AzureMonitorExporterOptions.DisableOfflineStorage;
-                exporterOptions.StorageDirectory = options.AzureMonitorExporterOptions.StorageDirectory;
-            }
-            else if (exporterOptions.ConnectionString == null)
-            {
-                exporterOptions.ConnectionString = options.AzureMonitorExporterOptions.ConnectionString;
-            }
         }
 
         private sealed class NoopTracerProvider : TracerProvider
