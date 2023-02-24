@@ -20,7 +20,7 @@ namespace Azure.Analytics.Purview.Sharing.Tests.Samples
 
 #if SNIPPET
             var credential = new DefaultAzureCredential();
-            var endPoint = "https://<my-account-name>.purview.azure.com/share";
+            var endPoint = "https://my-account-name.purview.azure.com/share";
             var sentShareClient = new SentSharesClient(endPoint, credential);
 #else
             var sentShareClient = GetSentSharesClient();
@@ -32,8 +32,8 @@ namespace Azure.Analytics.Purview.Sharing.Tests.Samples
                 properties = new
                 {
 #if SNIPPET
-                    TargetActiveDirectoryId = <targetActiveDirectoryId>,
-                    TargetObjectId = <targetObjectId>,
+                    TargetActiveDirectoryId = "targetActiveDirectoryId",
+                    TargetObjectId = "targetObjectId",
 #else
                     TargetActiveDirectoryId = "72f988bf-86f1-41af-91ab-2d7cd011db47",
                     TargetObjectId = "fc010728-94f6-4e9c-be3c-c08687414bd4",
@@ -42,7 +42,7 @@ namespace Azure.Analytics.Purview.Sharing.Tests.Samples
             };
 
 #if SNIPPET
-            Response response = await sentShareClient.CreateSentShareInvitationAsync(<sentShareId>, <sentShareInvitationId>, RequestContent.Create(data));
+            Response response = await sentShareClient.CreateSentShareInvitationAsync("sentShareId", "sentShareInvitationId", RequestContent.Create(data));
 #else
             Response response = await sentShareClient.CreateSentShareInvitationAsync("7911b09b-9cb3-416a-a3f0-e242c0bfd574", "91c4b19f-8bad-4bcc-b623-f19673fb0f83", RequestContent.Create(data));
 #endif

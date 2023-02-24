@@ -12,7 +12,7 @@ using Azure.Core;
 
 ```C# Snippet:ReceivedSharesClientSample_ListDetachedReceivedShares
 var credential = new DefaultAzureCredential();
-var endPoint = "https://<my-account-name>.purview.azure.com/share";
+var endPoint = "https://my-account-name.purview.azure.com/share";
 var receivedSharesClient = new ReceivedSharesClient(endPoint, credential);
 
 List<BinaryData> createResponse = await receivedSharesClient.GetAllDetachedReceivedSharesAsync().ToEnumerableAsync();

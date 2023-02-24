@@ -12,8 +12,8 @@ using Azure.Core;
 
 ```C# Snippet:SentSharesClientSample_DeleteSentShare
 var credential = new DefaultAzureCredential();
-var endPoint = "https://<my-account-name>.purview.azure.com/share";
+var endPoint = "https://my-account-name.purview.azure.com/share";
 var sentShareClient = new SentSharesClient(endPoint, credential);
 
-Operation operation = await sentShareClient.DeleteSentShareAsync(WaitUntil.Completed, <sentShareId>);
+Operation operation = await sentShareClient.DeleteSentShareAsync(WaitUntil.Completed, "sentShareId");
 ```

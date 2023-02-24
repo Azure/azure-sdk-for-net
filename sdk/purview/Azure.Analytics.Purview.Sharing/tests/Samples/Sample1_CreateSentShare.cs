@@ -24,7 +24,7 @@ namespace Azure.Analytics.Purview.Sharing.Tests.Samples
             #region Snippet:SentSharesClientSample_CreateSentSharesClient
 #if SNIPPET
             var credential = new DefaultAzureCredential();
-            var endPoint = "https://<my-account-name>.purview.azure.com/share";
+            var endPoint = "https://my-account-name.purview.azure.com/share";
             var sentShareClient = new SentSharesClient(endPoint, credential);
 #else
             var sentShareClient = GetSentSharesClient();
@@ -42,7 +42,7 @@ namespace Azure.Analytics.Purview.Sharing.Tests.Samples
                         storeReference = new
                         {
 #if SNIPPET
-                            referenceName = "/subscriptions/<subscriptionId>/resourceGroups/<resourceGroup>/providers/Microsoft.Storage/storageAccounts/<storageAccount>",
+                            referenceName = "/subscriptions/subscriptionId"/resourceGroups/resourceGroup/providers/Microsoft.Storage/storageAccounts/sharerStorageAccount",
 #else
                             referenceName = "/subscriptions/0f3dcfc3-18f8-4099-b381-8353e19d43a7/resourceGroups/faisalaltell/providers/Microsoft.Storage/storageAccounts/ftsharersan",
 #endif
@@ -55,9 +55,9 @@ namespace Azure.Analytics.Purview.Sharing.Tests.Samples
                                 new
                                 {
 #if SNIPPET
-                                    containerName = <containerName>,
-                                    senderPath = <senderPath>,
-                                    receiverPath = <receiverPath>
+                                    containerName = "containerName",
+                                    senderPath = "senderPath",
+                                    receiverPath = "receiverPath"
 #else
                                     containerName = "container1",
                                     senderPath = "testfolder1",
@@ -68,8 +68,8 @@ namespace Azure.Analytics.Purview.Sharing.Tests.Samples
                         }
                     },
 #if SNIPPET
-                    displayName = "<displayName>",
-                    description = "<description>",
+                    displayName = "displayName",
+                    description = "description",
 #else
                     displayName = "testDisplayName1",
                     description = "updatedDescription",
@@ -78,7 +78,7 @@ namespace Azure.Analytics.Purview.Sharing.Tests.Samples
             };
 
 #if SNIPPET
-            Operation<BinaryData> createResponse = await sentShareClient.CreateOrReplaceSentShareAsync(WaitUntil.Completed, <sentShareId>, RequestContent.Create(data));
+            Operation<BinaryData> createResponse = await sentShareClient.CreateOrReplaceSentShareAsync(WaitUntil.Completed, "sentShareId", RequestContent.Create(data));
 #else
             Operation<BinaryData> createResponse = await sentShareClient.CreateOrReplaceSentShareAsync(WaitUntil.Completed, "7911b09b-9cb3-416a-a3f0-e242c0bfd574", RequestContent.Create(data));
 #endif

@@ -22,7 +22,7 @@ namespace Azure.Analytics.Purview.Sharing.Tests.Samples
 
 #if SNIPPET
             var credential = new DefaultAzureCredential();
-            var endPoint = "https://<my-account-name>.purview.azure.com/share";
+            var endPoint = "https://my-account-name.purview.azure.com/share";
             var receivedSharesClient = new ReceivedSharesClient(endPoint, credential);
 #else
             var receivedSharesClient = GetReceivedSharesClient();

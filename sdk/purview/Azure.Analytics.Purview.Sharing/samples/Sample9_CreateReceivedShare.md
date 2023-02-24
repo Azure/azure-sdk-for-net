@@ -12,7 +12,7 @@ using Azure.Core;
 
 ```C# Snippet:ReceivedSharesClientSample_CreateReceivedShare
 var credential = new DefaultAzureCredential();
-var endPoint = "https://<my-account-name>.purview.azure.com/share";
+var endPoint = "https://my-account-name.purview.azure.com/share";
 var receivedSharesClient = new ReceivedSharesClient(endPoint, credential);
 
 var data = new
@@ -25,20 +25,20 @@ var data = new
             storeKind = "AdlsGen2Account",
             storeReference = new
             {
-                referenceName = "/subscriptions/<suscriptionId>/resourceGroups/<resourceGroup>/providers/Microsoft.Storage/storageAccounts/<storageAccount>",
+                referenceName = "/subscriptions/suscriptionId/resourceGroups/resourceGroup/providers/Microsoft.Storage/storageAccounts/receiverStorageAccount",
 
                 type = "ArmResourceReference"
             },
             properties = new
             {
-                containerName = <>,
-                folder = <>,
-                mountPath = <>,
+                containerName = "containerName",
+                folder = "folder",
+                mountPath = "mountPath",
             }
         },
-        displayName = <displayName>,
+        displayName = "displayName",
     }
 };
 
-Operation<BinaryData> createResponse = await receivedSharesClient.CreateOrReplaceReceivedShareAsync(WaitUntil.Completed, <receivedShareId>, RequestContent.Create(data));
+Operation<BinaryData> createResponse = await receivedSharesClient.CreateOrReplaceReceivedShareAsync(WaitUntil.Completed, "receivedShareId", RequestContent.Create(data));
 ```

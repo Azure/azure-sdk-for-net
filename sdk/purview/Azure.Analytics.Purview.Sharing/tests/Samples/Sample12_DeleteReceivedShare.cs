@@ -19,14 +19,14 @@ namespace Azure.Analytics.Purview.Sharing.Tests.Samples
 
 #if SNIPPET
             var credential = new DefaultAzureCredential();
-            var endPoint = "https://<my-account-name>.purview.azure.com/share";
+            var endPoint = "https://my-account-name.purview.azure.com/share";
             var receivedSharesClient = new ReceivedSharesClient(endPoint, credential);
 #else
             var receivedSharesClient = GetReceivedSharesClient();
 #endif
 
 #if SNIPPET
-            Operation operation = await receivedSharesClient.DeleteReceivedShareAsync(WaitUntil.Completed, "<receivedShareId>");
+            Operation operation = await receivedSharesClient.DeleteReceivedShareAsync(WaitUntil.Completed, "receivedShareId");
 #else
             Operation operation = await receivedSharesClient.DeleteReceivedShareAsync(WaitUntil.Completed, "4298d43f-7bc0-46b6-84a1-354c621d79a4");
 #endif

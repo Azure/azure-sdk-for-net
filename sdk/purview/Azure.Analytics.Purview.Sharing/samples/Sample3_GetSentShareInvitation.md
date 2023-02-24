@@ -12,9 +12,9 @@ using Azure.Core;
 
 ```C# Snippet:SentSharesClientSample_GetSentShareInvitation
 var credential = new DefaultAzureCredential();
-var endPoint = "https://<my-account-name>.purview.azure.com/share";
+var endPoint = "https://my-account-name.purview.azure.com/share";
 var sentShareClient = new SentSharesClient(endPoint, credential);
 
-Response response = await sentShareClient.GetSentShareInvitationAsync(<sentShareId>, <sentShareInvitationId>);
+Response response = await sentShareClient.GetSentShareInvitationAsync("sentShareId", "sentShareInvitationId");
 ```
 

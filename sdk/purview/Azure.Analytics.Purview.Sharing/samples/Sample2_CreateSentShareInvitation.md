@@ -12,7 +12,7 @@ using Azure.Core;
 
 ```C# Snippet:SentSharesClientSample_CreateSentShareInvitation
 var credential = new DefaultAzureCredential();
-var endPoint = "https://<my-account-name>.purview.azure.com/share";
+var endPoint = "https://my-account-name.purview.azure.com/share";
 var sentShareClient = new SentSharesClient(endPoint, credential);
 
 var data = new
@@ -20,10 +20,10 @@ var data = new
     invitationKind = "Service",
     properties = new
     {
-        TargetActiveDirectoryId = <targetActiveDirectoryId>,
-        TargetObjectId = <targetObjectId>,
+        TargetActiveDirectoryId = "targetActiveDirectoryId",
+        TargetObjectId = "targetObjectId",
     }
 };
 
-Response response = await sentShareClient.CreateSentShareInvitationAsync(<sentShareId>, <sentShareInvitationId>, RequestContent.Create(data));
+Response response = await sentShareClient.CreateSentShareInvitationAsync("sentShareId", "sentShareInvitationId", RequestContent.Create(data));
 ```
