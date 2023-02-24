@@ -52,7 +52,7 @@ namespace Azure.Monitor.OpenTelemetry
                     {
                         builderOptions.IncludeFormattedMessage = true;
                         builderOptions.ParseStateValues = true;
-                        builderOptions.IncludeScopes = true;
+                        builderOptions.IncludeScopes = false;
                         builderOptions.AddAzureMonitorLogExporter(o => logExporterOptions.SetValueToExporterOptions(o));
                     });
                 }
