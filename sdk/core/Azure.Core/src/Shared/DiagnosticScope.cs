@@ -8,7 +8,6 @@ using System.Collections;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Linq.Expressions;
 using System.Reflection;
@@ -375,8 +374,6 @@ namespace Azure.Core.Pipeline
 
             public void SetTraceContext(string traceparent, string? tracestate)
             {
-                Argument.AssertNotNull(traceparent, nameof(traceparent));
-
                 if (_currentActivity != null)
                 {
                     throw new InvalidOperationException("Traceparent can not be set after the activity is started.");
