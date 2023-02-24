@@ -15,6 +15,8 @@ namespace Azure.Analytics.Purview.Sharing.Tests
 {
     public class ReceivedSharesClientTest : ReceivedSharesClientTestBase
     {
+        private string receivedShareId => "5122c139-945e-4089-a2a0-4f50208ddda2";
+
         public ReceivedSharesClientTest(bool isAsync) : base(isAsync)
         {
         }
@@ -48,14 +50,14 @@ namespace Azure.Analytics.Purview.Sharing.Tests
 
             ReceivedSharesClient client = GetReceivedSharesClient();
 
-            Operation<BinaryData> createResponse = await client.CreateOrReplaceReceivedShareAsync(WaitUntil.Completed, "d18fc2a2-9cba-41bd-a869-462fa56f4b34", RequestContent.Create(data));
+            Operation<BinaryData> createResponse = await client.CreateOrReplaceReceivedShareAsync(WaitUntil.Completed, receivedShareId, RequestContent.Create(data));
 
             Assert.IsTrue(createResponse.HasCompleted);
 
             var jsonDocument = JsonDocument.Parse(createResponse.Value);
             var actualId = jsonDocument.RootElement.GetProperty("id").ToString();
 
-            Assert.AreEqual("d18fc2a2-9cba-41bd-a869-462fa56f4b34", actualId);
+            Assert.AreEqual(receivedShareId, actualId);
 
             JsonElement properties = jsonDocument.RootElement.GetProperty("properties");
 
@@ -69,12 +71,12 @@ namespace Azure.Analytics.Purview.Sharing.Tests
         {
             ReceivedSharesClient client = GetReceivedSharesClient();
 
-            Response response = await client.GetReceivedShareAsync("d18fc2a2-9cba-41bd-a869-462fa56f4b34");
+            Response response = await client.GetReceivedShareAsync(receivedShareId);
 
             var jsonDocument = JsonDocument.Parse(GetContentFromResponse(response));
             JsonElement getBodyJson = jsonDocument.RootElement;
 
-            Assert.AreEqual("d18fc2a2-9cba-41bd-a869-462fa56f4b34", getBodyJson.GetProperty("id").GetString());
+            Assert.AreEqual(receivedShareId, getBodyJson.GetProperty("id").GetString());
         }
 
         [RecordedTest]
@@ -82,7 +84,7 @@ namespace Azure.Analytics.Purview.Sharing.Tests
         {
             ReceivedSharesClient client = GetReceivedSharesClient();
 
-            Operation response = await client.DeleteReceivedShareAsync(WaitUntil.Completed, "d18fc2a2-9cba-41bd-a869-462fa56f4b34");
+            Operation response = await client.DeleteReceivedShareAsync(WaitUntil.Completed, receivedShareId);
 
             Assert.IsTrue(response.HasCompleted);
         }
