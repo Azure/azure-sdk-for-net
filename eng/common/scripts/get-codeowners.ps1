@@ -62,7 +62,7 @@ param (
   # but not this one:
   #    Remove the obsolete, prefix-based CODEOWNERS matcher & related tests
   #    https://github.com/Azure/azure-sdk-tools/pull/5431
-  [string]$ToolVersion = "1.0.0-dev.20230214.3", # // kja TODO update
+  [string]$ToolVersion = "1.0.0-dev.20230223.4",
   [string]$ToolPath = (Join-Path ([System.IO.Path]::GetTempPath()) "codeowners-tool-path"),
   [string]$DevOpsFeed = "https://pkgs.dev.azure.com/azure-sdk/public/_packaging/azure-sdk-for-net/nuget/v3/index.json",
   [string]$VsoVariable = "",
