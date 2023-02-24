@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.KeyVault.Models
 
         public static ManagedHsmSkuName ToManagedHsmSkuName(this string value)
         {
-            if (string.Equals(value, "Standard_B1", StringComparison.InvariantCultureIgnoreCase)) return ManagedHsmSkuName.StandardB1;
-            if (string.Equals(value, "Custom_B32", StringComparison.InvariantCultureIgnoreCase)) return ManagedHsmSkuName.CustomB32;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Standard_B1")) return ManagedHsmSkuName.StandardB1;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Custom_B32")) return ManagedHsmSkuName.CustomB32;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ManagedHsmSkuName value.");
         }
     }

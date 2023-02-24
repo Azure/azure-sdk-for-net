@@ -21,9 +21,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         public static ApiManagementGroupType ToApiManagementGroupType(this string value)
         {
-            if (string.Equals(value, "custom", StringComparison.InvariantCultureIgnoreCase)) return ApiManagementGroupType.Custom;
-            if (string.Equals(value, "system", StringComparison.InvariantCultureIgnoreCase)) return ApiManagementGroupType.System;
-            if (string.Equals(value, "external", StringComparison.InvariantCultureIgnoreCase)) return ApiManagementGroupType.External;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "custom")) return ApiManagementGroupType.Custom;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "system")) return ApiManagementGroupType.System;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "external")) return ApiManagementGroupType.External;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ApiManagementGroupType value.");
         }
     }

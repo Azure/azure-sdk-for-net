@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.Batch.Models
 
         public static BatchNetworkSecurityGroupRuleAccess ToBatchNetworkSecurityGroupRuleAccess(this string value)
         {
-            if (string.Equals(value, "Allow", StringComparison.InvariantCultureIgnoreCase)) return BatchNetworkSecurityGroupRuleAccess.Allow;
-            if (string.Equals(value, "Deny", StringComparison.InvariantCultureIgnoreCase)) return BatchNetworkSecurityGroupRuleAccess.Deny;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Allow")) return BatchNetworkSecurityGroupRuleAccess.Allow;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Deny")) return BatchNetworkSecurityGroupRuleAccess.Deny;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown BatchNetworkSecurityGroupRuleAccess value.");
         }
     }
