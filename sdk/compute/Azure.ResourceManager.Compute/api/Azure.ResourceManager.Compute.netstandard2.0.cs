@@ -5776,7 +5776,7 @@ namespace Azure.ResourceManager.Compute.Models
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Compute.Models.InstanceViewStatus> Statuses { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Compute.Models.VirtualMachineStatusCodeCount> VirtualMachineStatusesSummary { get { throw null; } }
     }
-    public partial class VirtualMachineScaleSetIPConfiguration : Azure.ResourceManager.Compute.Models.ComputeWriteableSubResourceData
+    public partial class VirtualMachineScaleSetIPConfiguration
     {
         public VirtualMachineScaleSetIPConfiguration(string name) { }
         public System.Collections.Generic.IList<Azure.ResourceManager.Resources.Models.WritableSubResource> ApplicationGatewayBackendAddressPools { get { throw null; } }
@@ -5802,7 +5802,7 @@ namespace Azure.ResourceManager.Compute.Models
         public Azure.ResourceManager.Compute.Models.VirtualMachineDiskSecurityProfile SecurityProfile { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.StorageAccountType? StorageAccountType { get { throw null; } set { } }
     }
-    public partial class VirtualMachineScaleSetNetworkConfiguration : Azure.ResourceManager.Compute.Models.ComputeWriteableSubResourceData
+    public partial class VirtualMachineScaleSetNetworkConfiguration
     {
         public VirtualMachineScaleSetNetworkConfiguration(string name) { }
         public Azure.ResourceManager.Compute.Models.ComputeDeleteOption? DeleteOption { get { throw null; } set { } }

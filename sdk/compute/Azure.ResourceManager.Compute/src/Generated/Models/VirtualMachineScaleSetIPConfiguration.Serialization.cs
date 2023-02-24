@@ -19,11 +19,6 @@ namespace Azure.ResourceManager.Compute.Models
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            if (Optional.IsDefined(Id))
-            {
-                writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
-            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(Subnet))
@@ -93,7 +88,6 @@ namespace Azure.ResourceManager.Compute.Models
         internal static VirtualMachineScaleSetIPConfiguration DeserializeVirtualMachineScaleSetIPConfiguration(JsonElement element)
         {
             string name = default;
-            Optional<ResourceIdentifier> id = default;
             Optional<WritableSubResource> subnet = default;
             Optional<bool> primary = default;
             Optional<VirtualMachineScaleSetPublicIPAddressConfiguration> publicIPAddressConfiguration = default;
@@ -107,16 +101,6 @@ namespace Azure.ResourceManager.Compute.Models
                 if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("id"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -232,7 +216,7 @@ namespace Azure.ResourceManager.Compute.Models
                     continue;
                 }
             }
-            return new VirtualMachineScaleSetIPConfiguration(id.Value, name, subnet, Optional.ToNullable(primary), publicIPAddressConfiguration.Value, Optional.ToNullable(privateIPAddressVersion), Optional.ToList(applicationGatewayBackendAddressPools), Optional.ToList(applicationSecurityGroups), Optional.ToList(loadBalancerBackendAddressPools), Optional.ToList(loadBalancerInboundNatPools));
+            return new VirtualMachineScaleSetIPConfiguration(name, subnet, Optional.ToNullable(primary), publicIPAddressConfiguration.Value, Optional.ToNullable(privateIPAddressVersion), Optional.ToList(applicationGatewayBackendAddressPools), Optional.ToList(applicationSecurityGroups), Optional.ToList(loadBalancerBackendAddressPools), Optional.ToList(loadBalancerInboundNatPools));
         }
     }
 }
