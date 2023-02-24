@@ -386,7 +386,7 @@ namespace Azure.Core.Amqp.Shared
                 {
                     if (TryCreateNetPropertyFromAmqpProperty(pair.Value, out var propertyValue))
                     {
-                        message.ApplicationProperties[pair.Key.ToString()] = propertyValue!;
+                        message.ApplicationProperties[pair.Key.ToString()] = propertyValue;
                     }
                 }
             }
@@ -399,7 +399,7 @@ namespace Azure.Core.Amqp.Shared
                 {
                     if (TryCreateNetPropertyFromAmqpProperty(pair.Value, out var propertyValue))
                     {
-                        message.MessageAnnotations[pair.Key.ToString()] = propertyValue!;
+                        message.MessageAnnotations[pair.Key.ToString()] = propertyValue;
                     }
                 }
             }
@@ -412,7 +412,7 @@ namespace Azure.Core.Amqp.Shared
                 {
                     if (TryCreateNetPropertyFromAmqpProperty(pair.Value, out var eventValue))
                     {
-                        message.DeliveryAnnotations[pair.Key.ToString()] = eventValue!;
+                        message.DeliveryAnnotations[pair.Key.ToString()] = eventValue;
                     }
                 }
             }
@@ -425,7 +425,7 @@ namespace Azure.Core.Amqp.Shared
                 {
                     if (TryCreateNetPropertyFromAmqpProperty(pair.Value, out var eventValue))
                     {
-                        message.Footer[pair.Key.ToString()] = eventValue!;
+                        message.Footer[pair.Key.ToString()] = eventValue;
                     }
                 }
             }
@@ -730,17 +730,17 @@ namespace Azure.Core.Amqp.Shared
                     break;
 
                 case AmqpMap map when allowBodyTypes:
-                {
-                    var dict = new Dictionary<string, object>(map.Count);
-
-                    foreach (var pair in map)
                     {
-                        dict.Add(pair.Key.ToString(), pair.Value);
-                    }
+                        var dict = new Dictionary<string, object>(map.Count);
 
-                    convertedPropertyValue = dict;
-                    break;
-                }
+                        foreach (var pair in map)
+                        {
+                            dict.Add(pair.Key.ToString(), pair.Value);
+                        }
+
+                        convertedPropertyValue = dict;
+                        break;
+                    }
 
                 default:
                     var exception = new SerializationException(string.Format(CultureInfo.CurrentCulture, "Serialization operation failed due to unsupported type {0}.", amqpPropertyValue.GetType().FullName));
@@ -750,7 +750,7 @@ namespace Azure.Core.Amqp.Shared
             return (convertedPropertyValue != null);
         }
 
-        private static void ThrowSerializationFailed(string propertyName, KeyValuePair<string, object> pair)
+        private static void ThrowSerializationFailed(string propertyName, KeyValuePair<string, object?> pair)
         {
             throw new NotSupportedException(
                 string.Format(
@@ -822,26 +822,26 @@ namespace Azure.Core.Amqp.Shared
                     return bufferListStream.ReadBytes((int)stream.Length);
 
                 case MemoryStream memStreamSource:
-                {
-                    using var memStreamCopy = new MemoryStream((int)(memStreamSource.Length - memStreamSource.Position));
-                    memStreamSource.CopyTo(memStreamCopy, StreamBufferSizeInBytes);
-                    if (!memStreamCopy.TryGetBuffer(out ArraySegment<byte> segment))
                     {
-                        segment = new ArraySegment<byte>(memStreamCopy.ToArray());
+                        using var memStreamCopy = new MemoryStream((int)(memStreamSource.Length - memStreamSource.Position));
+                        memStreamSource.CopyTo(memStreamCopy, StreamBufferSizeInBytes);
+                        if (!memStreamCopy.TryGetBuffer(out ArraySegment<byte> segment))
+                        {
+                            segment = new ArraySegment<byte>(memStreamCopy.ToArray());
+                        }
+                        return segment;
                     }
-                    return segment;
-                }
 
                 default:
-                {
-                    using var memStreamCopy = new MemoryStream(StreamBufferSizeInBytes);
-                    stream.CopyTo(memStreamCopy, StreamBufferSizeInBytes);
-                    if (!memStreamCopy.TryGetBuffer(out ArraySegment<byte> segment))
                     {
-                        segment = new ArraySegment<byte>(memStreamCopy.ToArray());
+                        using var memStreamCopy = new MemoryStream(StreamBufferSizeInBytes);
+                        stream.CopyTo(memStreamCopy, StreamBufferSizeInBytes);
+                        if (!memStreamCopy.TryGetBuffer(out ArraySegment<byte> segment))
+                        {
+                            segment = new ArraySegment<byte>(memStreamCopy.ToArray());
+                        }
+                        return segment;
                     }
-                    return segment;
-                }
             }
         }
 
