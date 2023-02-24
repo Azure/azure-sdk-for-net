@@ -22,10 +22,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         public static AsyncOperationStatus ToAsyncOperationStatus(this string value)
         {
-            if (string.Equals(value, "Started", StringComparison.InvariantCultureIgnoreCase)) return AsyncOperationStatus.Started;
-            if (string.Equals(value, "InProgress", StringComparison.InvariantCultureIgnoreCase)) return AsyncOperationStatus.InProgress;
-            if (string.Equals(value, "Succeeded", StringComparison.InvariantCultureIgnoreCase)) return AsyncOperationStatus.Succeeded;
-            if (string.Equals(value, "Failed", StringComparison.InvariantCultureIgnoreCase)) return AsyncOperationStatus.Failed;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Started")) return AsyncOperationStatus.Started;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "InProgress")) return AsyncOperationStatus.InProgress;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Succeeded")) return AsyncOperationStatus.Succeeded;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Failed")) return AsyncOperationStatus.Failed;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown AsyncOperationStatus value.");
         }
     }

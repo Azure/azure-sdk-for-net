@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         public static GatewayRegenerateKeyType ToGatewayRegenerateKeyType(this string value)
         {
-            if (string.Equals(value, "primary", StringComparison.InvariantCultureIgnoreCase)) return GatewayRegenerateKeyType.Primary;
-            if (string.Equals(value, "secondary", StringComparison.InvariantCultureIgnoreCase)) return GatewayRegenerateKeyType.Secondary;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "primary")) return GatewayRegenerateKeyType.Primary;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "secondary")) return GatewayRegenerateKeyType.Secondary;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown GatewayRegenerateKeyType value.");
         }
     }
