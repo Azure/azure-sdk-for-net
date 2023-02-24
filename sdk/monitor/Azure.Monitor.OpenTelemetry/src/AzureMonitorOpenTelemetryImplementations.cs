@@ -103,7 +103,7 @@ namespace Azure.Monitor.OpenTelemetry
             // shutdown when the service provider is disposed.
             services.AddSingleton<SdkProviderWrapper>();
 
-           return services;
+            return services;
         }
 
         private static void SetValueToExporterOptions(IServiceProvider sp, AzureMonitorOpenTelemetryOptions options)
