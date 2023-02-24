@@ -4,16 +4,23 @@
 using System;
 using Azure.Core;
 using Azure.Core.TestFramework;
+using Azure.Core.TestFramework.Models;
 using Azure.Identity;
 
 namespace Azure.Communication.Email.Tests
 {
     internal class EmailClientLiveTestBase : RecordedTestBase<EmailClientTestEnvironment>
     {
+        private const string URIDomainNameReplacerRegEx = @"https://([^/?]+)";
+        private const string URIRoomsIdReplacerRegEx = @"emails/operations/.*?api";
+
         public EmailClientLiveTestBase(bool isAsync) : base(isAsync)
         {
             SanitizedHeaders.Add("x-ms-content-sha256");
             SanitizedHeaders.Add("Operation-Id");
+            UriRegexSanitizers.Add(new UriRegexSanitizer(URIDomainNameReplacerRegEx, "https://sanitized.communication.azure.com"));
+            UriRegexSanitizers.Add(new UriRegexSanitizer(URIRoomsIdReplacerRegEx, "emails/operations/sanitizedId?api"));
+            HeaderRegexSanitizers.Add(new HeaderRegexSanitizer("Operation-Location", "https://sanitized.communication.azure.com/emails/operations/sanitizedId?api-version=2023-01-15-preview"));
         }
 
         protected EmailClient CreateEmailClient()
