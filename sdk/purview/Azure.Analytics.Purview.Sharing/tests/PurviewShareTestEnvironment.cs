@@ -11,6 +11,6 @@ namespace Azure.Analytics.Purview.Sharing.Tests
         public PurviewShareTestEnvironment()
         { }
 
-        public Uri Endpoint => new(GetRecordedVariable("PURVIEW_SHARE_URL"));
+        public Uri Endpoint => new(GetVariable("PURVIEW_SHARE_URL"));
     }
 }

@@ -15,8 +15,8 @@ namespace Azure.Analytics.Purview.Sharing.Tests
             this.AddPurviewSanitizers();
             this.BodyKeySanitizers.Add(new Core.TestFramework.Models.BodyKeySanitizer("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/testResourceGroup/providers/Microsoft.Storage/storageAccounts/consumerTestStorageAccount") { JsonPath = "properties.sink.storeReference.referenceName" });
             this.UriRegexSanitizers.Add(new Core.TestFramework.Models.UriRegexSanitizer(@"[A-Za-z0-9-\-]*.purview.azure.com", "myaccountname.purview.azure.com"));
-            this.SanitizedHeaders.Add("Operation-Location");
-            this.SanitizedHeaders.Add("Operation-Id");
+            this.HeaderRegexSanitizers.Add(new Core.TestFramework.Models.HeaderRegexSanitizer("Operation-Location", "myaccountname.purview.azure.com") { Regex = @"[A-Za-z0-9-\-]*.purview.azure.com" });
+            this.HeaderRegexSanitizers.Add(new Core.TestFramework.Models.HeaderRegexSanitizer("Operation-Id", "myaccountname.purview.azure.com") { Regex = @"[A-Za-z0-9-\-]*.purview.azure.com" });
         }
 
         public ReceivedSharesClient GetReceivedSharesClient()
