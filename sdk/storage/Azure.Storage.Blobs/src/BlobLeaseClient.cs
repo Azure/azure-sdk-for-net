@@ -263,7 +263,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// Optional <see cref="BlobLeaseRequestConditions"/> to add
         /// conditions on acquiring a lease.
         /// </param>
-        /// <param name="requestContext">
+        /// <param name="context">
         /// Optional <see cref="RequestContext"/> for the operation.
         /// </param>
         /// <returns>
@@ -278,12 +278,12 @@ namespace Azure.Storage.Blobs.Specialized
 #pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
             TimeSpan duration,
             RequestConditions conditions,
-            RequestContext requestContext) =>
+            RequestContext context) =>
             AcquireInternal(
                 duration,
                 conditions,
                 async: false,
-                requestContext)
+                context)
                 .EnsureCompleted().GetRawResponse();
 
         /// <summary>
@@ -313,7 +313,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// Optional <see cref="BlobLeaseRequestConditions"/> to add
         /// conditions on acquiring a lease.
         /// </param>
-        /// <param name="requestContext">
+        /// <param name="context">
         /// Optional <see cref="RequestContext"/> for the operation.
         /// </param>
         /// <returns>
@@ -328,12 +328,12 @@ namespace Azure.Storage.Blobs.Specialized
 #pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
             TimeSpan duration,
             RequestConditions conditions,
-            RequestContext requestContext) =>
+            RequestContext context) =>
             (await AcquireInternal(
                 duration,
                 conditions,
                 async: true,
-                requestContext)
+                context)
                 .ConfigureAwait(false)).GetRawResponse();
 
         /// <summary>
