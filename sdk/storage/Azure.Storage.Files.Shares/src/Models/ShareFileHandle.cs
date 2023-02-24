@@ -55,7 +55,7 @@ namespace Azure.Storage.Files.Shares.Models
         /// <summary>
         /// Access rights of the handle.
         /// </summary>
-        public ShareFileHandleAccessRight? AccessRights { get; }
+        public ShareFileHandleAccessRights? AccessRights { get; }
 
         internal ShareFileHandle(
             string handleId,
@@ -66,7 +66,7 @@ namespace Azure.Storage.Files.Shares.Models
             string clientIp,
             DateTimeOffset? openedOn,
             DateTimeOffset? lastReconnectedOn,
-            ShareFileHandleAccessRight? accessRights)
+            ShareFileHandleAccessRights? accessRights)
         {
             HandleId = handleId;
             Path = path;

@@ -228,28 +228,28 @@ namespace Azure.Storage.Files.Shares
                 accessRights: handleItem.AccessRightList.ToShareFileHandleAccessRight());
         }
 
-        internal static ShareFileHandleAccessRight? ToShareFileHandleAccessRight(this IReadOnlyList<AccessRight> accessRightList)
+        internal static ShareFileHandleAccessRights? ToShareFileHandleAccessRight(this IReadOnlyList<AccessRight> accessRightList)
         {
             if (accessRightList == null)
             {
                 return null;
             }
 
-            ShareFileHandleAccessRight accessRights = 0;
+            ShareFileHandleAccessRights accessRights = 0;
 
             foreach (AccessRight accessRight in accessRightList)
             {
                 if (accessRight == AccessRight.Read)
                 {
-                    accessRights |= ShareFileHandleAccessRight.Read;
+                    accessRights |= ShareFileHandleAccessRights.Read;
                 }
                 else if (accessRight == AccessRight.Write)
                 {
-                    accessRights |= ShareFileHandleAccessRight.Write;
+                    accessRights |= ShareFileHandleAccessRights.Write;
                 }
                 else if (accessRight == AccessRight.Delete)
                 {
-                    accessRights |= ShareFileHandleAccessRight.Delete;
+                    accessRights |= ShareFileHandleAccessRights.Delete;
                 }
             }
 

@@ -9,7 +9,7 @@ namespace Azure.Storage.Files.Shares.Models
     /// Access right for a file handle.
     /// </summary>
     [Flags]
-    public enum ShareFileHandleAccessRight
+    public enum ShareFileHandleAccessRights
     {
         /// <summary>
         /// Indicates that Read is permitted.
