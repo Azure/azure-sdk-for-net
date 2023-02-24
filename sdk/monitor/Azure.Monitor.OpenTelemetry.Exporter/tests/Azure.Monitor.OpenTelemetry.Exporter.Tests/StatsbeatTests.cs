@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Linq;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.ConnectionString;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat;
 using Xunit;
@@ -10,68 +11,52 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 {
     public class StatsbeatTests
     {
+        public static TheoryData<string> EuEndpoints
+        {
+            get
+            {
+                var data = new TheoryData<string>();
+                foreach (var e in Internals.Statsbeat.Constants.s_EU_Endpoints.AsEnumerable())
+                {
+                    data.Add(e);
+                }
+                return data;
+            }
+        }
+
+        public static TheoryData<string> NonEuEndpoints
+        {
+            get
+            {
+                var data = new TheoryData<string>();
+                foreach (var e in Internals.Statsbeat.Constants.s_non_EU_Endpoints.AsEnumerable())
+                {
+                    data.Add(e);
+                }
+                return data;
+            }
+        }
+
         [Theory]
-        [InlineData("francecentral")]
-        [InlineData("francesouth")]
-        [InlineData("northeurope")]
-        [InlineData("norwayeast")]
-        [InlineData("norwaywest")]
-        [InlineData("swedencentral")]
-        [InlineData("switzerlandnorth")]
-        [InlineData("switzerlandwest")]
-        [InlineData("uksouth")]
-        [InlineData("ukwest")]
-        [InlineData("westeurope")]
+        [MemberData(nameof(EuEndpoints))]
         public void StatsbeatConnectionStringIsSetBasedOnCustomersConnectionStringEndpointInEU(string euEndpoint)
         {
             var customer_ConnectionString = $"InstrumentationKey=00000000-0000-0000-0000-000000000000;IngestionEndpoint=https://{euEndpoint}.in.applicationinsights.azure.com/";
             var connectionStringVars = ConnectionStringParser.GetValues(customer_ConnectionString);
             var statsBeatInstance = new AzureMonitorStatsbeat(connectionStringVars);
 
-            Assert.Equal(AzureMonitorStatsbeat.Statsbeat_ConnectionString_EU, statsBeatInstance._statsbeat_ConnectionString);
+            Assert.Equal(Internals.Statsbeat.Constants.Statsbeat_ConnectionString_EU, statsBeatInstance._statsbeat_ConnectionString);
         }
 
         [Theory]
-        [InlineData("australiacentral")]
-        [InlineData("australiacentral2")]
-        [InlineData("australiaeast")]
-        [InlineData("australiasoutheast")]
-        [InlineData("brazilsouth")]
-        [InlineData("brazilsoutheast")]
-        [InlineData("canadacentral")]
-        [InlineData("canadaeast")]
-        [InlineData("centralindia")]
-        [InlineData("centralus")]
-        [InlineData("chinaeast2")]
-        [InlineData("chinaeast3")]
-        [InlineData("chinanorth3")]
-        [InlineData("eastasia")]
-        [InlineData("eastus")]
-        [InlineData("eastus2")]
-        [InlineData("japaneast")]
-        [InlineData("japanwest")]
-        [InlineData("jioindiacentral")]
-        [InlineData("jioindiawest")]
-        [InlineData("koreacentral")]
-        [InlineData("koreasouth")]
-        [InlineData("northcentralus")]
-        [InlineData("qatarcentral")]
-        [InlineData("southafricanorth")]
-        [InlineData("southcentralus")]
-        [InlineData("southeastasia")]
-        [InlineData("southindia")]
-        [InlineData("uaecentral")]
-        [InlineData("uaenorth")]
-        [InlineData("westus")]
-        [InlineData("westus2")]
-        [InlineData("westus3")]
+        [MemberData(nameof(NonEuEndpoints))]
         public void StatsbeatConnectionStringIsSetBasedOnCustomersConnectionStringEndpointInNonEU(string nonEUEndpoint)
         {
             var customer_ConnectionString = $"InstrumentationKey=00000000-0000-0000-0000-000000000000;IngestionEndpoint=https://{nonEUEndpoint}.in.applicationinsights.azure.com/";
             var connectionStringVars = ConnectionStringParser.GetValues(customer_ConnectionString);
             var statsBeatInstance = new AzureMonitorStatsbeat(connectionStringVars);
 
-            Assert.Equal(AzureMonitorStatsbeat.Statsbeat_ConnectionString_NonEU, statsBeatInstance._statsbeat_ConnectionString);
+            Assert.Equal(Internals.Statsbeat.Constants.Statsbeat_ConnectionString_NonEU, statsBeatInstance._statsbeat_ConnectionString);
         }
 
         [Fact]
