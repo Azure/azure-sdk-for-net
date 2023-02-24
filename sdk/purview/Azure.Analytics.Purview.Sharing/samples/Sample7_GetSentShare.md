@@ -6,6 +6,7 @@
 using System;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Identity;
 ```
 
 ## Get Sent Share
