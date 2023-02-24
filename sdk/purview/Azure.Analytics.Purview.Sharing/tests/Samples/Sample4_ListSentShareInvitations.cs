@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
+using Azure.Identity;
 
 namespace Azure.Analytics.Purview.Sharing.Tests.Samples
 {
@@ -28,7 +29,7 @@ namespace Azure.Analytics.Purview.Sharing.Tests.Samples
 #else
             var sentShareClient = GetSentSharesClient();
 
-            List<BinaryData> sentShareInvitations = await sentShareClient.GetAllSentShareInvitationsAsync("7911b09b-9cb3-416a-a3f0-e242c0bfd574").ToEnumerableAsync();
+            List<BinaryData> sentShareInvitations = await sentShareClient.GetAllSentShareInvitationsAsync("9393cfc1-7300-4159-aeff-277b2026846a").ToEnumerableAsync();
 #endif
 
             #endregion

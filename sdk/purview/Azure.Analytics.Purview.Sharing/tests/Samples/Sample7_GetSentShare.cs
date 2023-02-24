@@ -3,6 +3,7 @@
 
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
+using Azure.Identity;
 
 namespace Azure.Analytics.Purview.Sharing.Tests.Samples
 {
@@ -26,7 +27,7 @@ namespace Azure.Analytics.Purview.Sharing.Tests.Samples
 #else
             var sentShareClient = GetSentSharesClient();
 
-            Response response = await sentShareClient.GetSentShareAsync("7911b09b-9cb3-416a-a3f0-e242c0bfd574");
+            Response response = await sentShareClient.GetSentShareAsync("9393cfc1-7300-4159-aeff-277b2026846a");
 #endif
 
             #endregion

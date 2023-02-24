@@ -1,48 +1,33 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://myaccountname.purview.azure.com/share/sentShares/7911b09b-9cb3-416a-a3f0-e242c0bfd574/sentShareInvitations?api-version=2023-02-15-preview",
+      "RequestUri": "https://myaccountname.purview.azure.com/share/sentShares/9393cfc1-7300-4159-aeff-277b2026846a/sentShareInvitations?api-version=2023-02-15-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "User-Agent": "azsdk-net-Analytics.Purview.Sharing/1.0.3-alpha.20230222.1 (.NET 7.0.3; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "1bdd965de97250f45e21e8f0170411cd",
+        "User-Agent": "azsdk-net-Analytics.Purview.Sharing/1.0.3-alpha.20230223.1 (.NET 6.0.14; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "a574272cab2c72d398e471411e490939",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "Content-Length": "397",
+        "Content-Length": "12",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Thu, 23 Feb 2023 04:35:22 GMT",
+        "Date": "Fri, 24 Feb 2023 07:31:31 GMT",
         "Server": "Kestrel",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
-        "x-ms-correlation-request-id": "9d659779-24cd-4a7e-989d-8add2aaac421"
+        "x-ms-correlation-request-id": "1b30fdb6-017c-4829-9d78-c9d494fb8b18"
       },
       "ResponseBody": {
-        "value": [
-          {
-            "properties": {
-              "targetActiveDirectoryId": "72f988bf-86f1-41af-91ab-2d7cd011db47",
-              "targetObjectId": "fc010728-94f6-4e9c-be3c-c08687414bd4",
-              "shareStatus": "Detached",
-              "sentAt": "2023-02-23T04:34:13.9348403Z",
-              "senderName": "SyMS",
-              "senderTenantName": "Microsoft",
-              "state": "Succeeded"
-            },
-            "invitationKind": "Service",
-            "id": "91c4b19f-8bad-4bcc-b623-f19673fb0f83",
-            "type": "sentShares/sentShareInvitations"
-          }
-        ]
+        "value": []
       }
     }
   ],
   "Variables": {
     "AZURE_AUTHORITY_HOST": null,
-    "PURVIEW_SHARE_URL": "https://ads-dev-eastus-pv.purview.azure.com/share",
-    "RandomSeed": "388390010"
+    "PURVIEW_SHARE_URL": "https://myaccountname.purview.azure.com/share",
+    "RandomSeed": "1114359128"
   }
 }

@@ -4,6 +4,7 @@
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
+using Azure.Identity;
 
 namespace Azure.Analytics.Purview.Sharing.Tests.Samples
 {
@@ -27,7 +28,7 @@ namespace Azure.Analytics.Purview.Sharing.Tests.Samples
 #else
             var sentShareClient = GetSentSharesClient();
 
-            Response response = await sentShareClient.GetSentShareInvitationAsync("7911b09b-9cb3-416a-a3f0-e242c0bfd574", "91c4b19f-8bad-4bcc-b623-f19673fb0f83");
+            Response response = await sentShareClient.GetSentShareInvitationAsync("9393cfc1-7300-4159-aeff-277b2026846a", "0423c905-402c-423c-af12-9a5faad51349");
 #endif
 
             #endregion
