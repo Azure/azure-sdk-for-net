@@ -45,7 +45,7 @@ namespace BatchService.Models
         /// <param name="settings"> JSON formatted public settings for the extension. </param>
         /// <param name="protectedSettings">
         /// The extension can contain either protectedSettings or
-        /// protectedSettingsFromKeyVault or no protected settings at all. 
+        /// protectedSettingsFromKeyVault or no protected settings at all.
         /// </param>
         /// <param name="provisionAfterExtensions">
         /// Collection of extension names after which this extension needs to be
@@ -81,7 +81,7 @@ namespace BatchService.Models
         public Models.object Settings { get; set; }
         /// <summary>
         /// The extension can contain either protectedSettings or
-        /// protectedSettingsFromKeyVault or no protected settings at all. 
+        /// protectedSettingsFromKeyVault or no protected settings at all.
         /// </summary>
         public Models.object ProtectedSettings { get; set; }
         /// <summary>
