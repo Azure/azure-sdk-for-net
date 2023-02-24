@@ -6,7 +6,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Identity;
 using Azure.Test.Perf;
-using CommandLine;
 
 namespace Azure.Compute.Perf
 {

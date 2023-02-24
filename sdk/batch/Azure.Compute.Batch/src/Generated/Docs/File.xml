@@ -1,0 +1,493 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doc>
+  <members>
+    <member name="DeleteFromTaskAsync(String,String,String,Int32,String,Boolean,String,Boolean,RequestContext)">
+<example>
+This sample shows how to call DeleteFromTaskAsync with required parameters.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new BatchServiceClient(credential).GetFileClient(<2022-10-01.16.0>);
+
+Response response = await client.DeleteFromTaskAsync("<jobId>", "<taskId>", "<filePath>");
+Console.WriteLine(response.Status);
+]]></code>
+This sample shows how to call DeleteFromTaskAsync with all parameters.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new BatchServiceClient(credential).GetFileClient(<2022-10-01.16.0>);
+
+Response response = await client.DeleteFromTaskAsync("<jobId>", "<taskId>", "<filePath>", 1234, "<clientRequestId>", true, "<ocpDate>", true);
+Console.WriteLine(response.Status);
+]]></code>
+</example>
+    </member>
+    <member name="DeleteFromTask(String,String,String,Int32,String,Boolean,String,Boolean,RequestContext)">
+<example>
+This sample shows how to call DeleteFromTask with required parameters.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new BatchServiceClient(credential).GetFileClient(<2022-10-01.16.0>);
+
+Response response = client.DeleteFromTask("<jobId>", "<taskId>", "<filePath>");
+Console.WriteLine(response.Status);
+]]></code>
+This sample shows how to call DeleteFromTask with all parameters.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new BatchServiceClient(credential).GetFileClient(<2022-10-01.16.0>);
+
+Response response = client.DeleteFromTask("<jobId>", "<taskId>", "<filePath>", 1234, "<clientRequestId>", true, "<ocpDate>", true);
+Console.WriteLine(response.Status);
+]]></code>
+</example>
+    </member>
+    <member name="GetFromTaskAsync(String,String,String,Int32,String,Boolean,String,String,RequestConditions,RequestContext)">
+<example>
+This sample shows how to call GetFromTaskAsync with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new BatchServiceClient(credential).GetFileClient(<2022-10-01.16.0>);
+
+Response response = await client.GetFromTaskAsync("<jobId>", "<taskId>", "<filePath>");
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code>
+This sample shows how to call GetFromTaskAsync with all parameters, and how to parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new BatchServiceClient(credential).GetFileClient(<2022-10-01.16.0>);
+
+Response response = await client.GetFromTaskAsync("<jobId>", "<taskId>", "<filePath>", 1234, "<clientRequestId>", true, "<ocpDate>", "<ocpRange>", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code>
+</example>
+    </member>
+    <member name="GetFromTask(String,String,String,Int32,String,Boolean,String,String,RequestConditions,RequestContext)">
+<example>
+This sample shows how to call GetFromTask with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new BatchServiceClient(credential).GetFileClient(<2022-10-01.16.0>);
+
+Response response = client.GetFromTask("<jobId>", "<taskId>", "<filePath>");
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code>
+This sample shows how to call GetFromTask with all parameters, and how to parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new BatchServiceClient(credential).GetFileClient(<2022-10-01.16.0>);
+
+Response response = client.GetFromTask("<jobId>", "<taskId>", "<filePath>", 1234, "<clientRequestId>", true, "<ocpDate>", "<ocpRange>", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code>
+</example>
+    </member>
+    <member name="GetPropertiesFromTaskAsync(String,String,String,Int32,String,Boolean,String,RequestConditions,RequestContext)">
+<example>
+This sample shows how to call GetPropertiesFromTaskAsync with required parameters.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new BatchServiceClient(credential).GetFileClient(<2022-10-01.16.0>);
+
+Response response = await client.GetPropertiesFromTaskAsync("<jobId>", "<taskId>", "<filePath>");
+Console.WriteLine(response.Status);
+]]></code>
+This sample shows how to call GetPropertiesFromTaskAsync with all parameters.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new BatchServiceClient(credential).GetFileClient(<2022-10-01.16.0>);
+
+Response response = await client.GetPropertiesFromTaskAsync("<jobId>", "<taskId>", "<filePath>", 1234, "<clientRequestId>", true, "<ocpDate>", null);
+Console.WriteLine(response.Status);
+]]></code>
+</example>
+    </member>
+    <member name="GetPropertiesFromTask(String,String,String,Int32,String,Boolean,String,RequestConditions,RequestContext)">
+<example>
+This sample shows how to call GetPropertiesFromTask with required parameters.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new BatchServiceClient(credential).GetFileClient(<2022-10-01.16.0>);
+
+Response response = client.GetPropertiesFromTask("<jobId>", "<taskId>", "<filePath>");
+Console.WriteLine(response.Status);
+]]></code>
+This sample shows how to call GetPropertiesFromTask with all parameters.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new BatchServiceClient(credential).GetFileClient(<2022-10-01.16.0>);
+
+Response response = client.GetPropertiesFromTask("<jobId>", "<taskId>", "<filePath>", 1234, "<clientRequestId>", true, "<ocpDate>", null);
+Console.WriteLine(response.Status);
+]]></code>
+</example>
+    </member>
+    <member name="DeleteFromComputeNodeAsync(String,String,String,Int32,String,Boolean,String,Boolean,RequestContext)">
+<example>
+This sample shows how to call DeleteFromComputeNodeAsync with required parameters.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new BatchServiceClient(credential).GetFileClient(<2022-10-01.16.0>);
+
+Response response = await client.DeleteFromComputeNodeAsync("<poolId>", "<nodeId>", "<filePath>");
+Console.WriteLine(response.Status);
+]]></code>
+This sample shows how to call DeleteFromComputeNodeAsync with all parameters.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new BatchServiceClient(credential).GetFileClient(<2022-10-01.16.0>);
+
+Response response = await client.DeleteFromComputeNodeAsync("<poolId>", "<nodeId>", "<filePath>", 1234, "<clientRequestId>", true, "<ocpDate>", true);
+Console.WriteLine(response.Status);
+]]></code>
+</example>
+    </member>
+    <member name="DeleteFromComputeNode(String,String,String,Int32,String,Boolean,String,Boolean,RequestContext)">
+<example>
+This sample shows how to call DeleteFromComputeNode with required parameters.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new BatchServiceClient(credential).GetFileClient(<2022-10-01.16.0>);
+
+Response response = client.DeleteFromComputeNode("<poolId>", "<nodeId>", "<filePath>");
+Console.WriteLine(response.Status);
+]]></code>
+This sample shows how to call DeleteFromComputeNode with all parameters.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new BatchServiceClient(credential).GetFileClient(<2022-10-01.16.0>);
+
+Response response = client.DeleteFromComputeNode("<poolId>", "<nodeId>", "<filePath>", 1234, "<clientRequestId>", true, "<ocpDate>", true);
+Console.WriteLine(response.Status);
+]]></code>
+</example>
+    </member>
+    <member name="GetFromComputeNodeAsync(String,String,String,Int32,String,Boolean,String,String,RequestConditions,RequestContext)">
+<example>
+This sample shows how to call GetFromComputeNodeAsync with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new BatchServiceClient(credential).GetFileClient(<2022-10-01.16.0>);
+
+Response response = await client.GetFromComputeNodeAsync("<poolId>", "<nodeId>", "<filePath>");
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code>
+This sample shows how to call GetFromComputeNodeAsync with all parameters, and how to parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new BatchServiceClient(credential).GetFileClient(<2022-10-01.16.0>);
+
+Response response = await client.GetFromComputeNodeAsync("<poolId>", "<nodeId>", "<filePath>", 1234, "<clientRequestId>", true, "<ocpDate>", "<ocpRange>", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code>
+</example>
+    </member>
+    <member name="GetFromComputeNode(String,String,String,Int32,String,Boolean,String,String,RequestConditions,RequestContext)">
+<example>
+This sample shows how to call GetFromComputeNode with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new BatchServiceClient(credential).GetFileClient(<2022-10-01.16.0>);
+
+Response response = client.GetFromComputeNode("<poolId>", "<nodeId>", "<filePath>");
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code>
+This sample shows how to call GetFromComputeNode with all parameters, and how to parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new BatchServiceClient(credential).GetFileClient(<2022-10-01.16.0>);
+
+Response response = client.GetFromComputeNode("<poolId>", "<nodeId>", "<filePath>", 1234, "<clientRequestId>", true, "<ocpDate>", "<ocpRange>", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code>
+</example>
+    </member>
+    <member name="GetPropertiesFromComputeNodeAsync(String,String,String,Int32,String,Boolean,String,RequestConditions,RequestContext)">
+<example>
+This sample shows how to call GetPropertiesFromComputeNodeAsync with required parameters.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new BatchServiceClient(credential).GetFileClient(<2022-10-01.16.0>);
+
+Response response = await client.GetPropertiesFromComputeNodeAsync("<poolId>", "<nodeId>", "<filePath>");
+Console.WriteLine(response.Status);
+]]></code>
+This sample shows how to call GetPropertiesFromComputeNodeAsync with all parameters.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new BatchServiceClient(credential).GetFileClient(<2022-10-01.16.0>);
+
+Response response = await client.GetPropertiesFromComputeNodeAsync("<poolId>", "<nodeId>", "<filePath>", 1234, "<clientRequestId>", true, "<ocpDate>", null);
+Console.WriteLine(response.Status);
+]]></code>
+</example>
+    </member>
+    <member name="GetPropertiesFromComputeNode(String,String,String,Int32,String,Boolean,String,RequestConditions,RequestContext)">
+<example>
+This sample shows how to call GetPropertiesFromComputeNode with required parameters.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new BatchServiceClient(credential).GetFileClient(<2022-10-01.16.0>);
+
+Response response = client.GetPropertiesFromComputeNode("<poolId>", "<nodeId>", "<filePath>");
+Console.WriteLine(response.Status);
+]]></code>
+This sample shows how to call GetPropertiesFromComputeNode with all parameters.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new BatchServiceClient(credential).GetFileClient(<2022-10-01.16.0>);
+
+Response response = client.GetPropertiesFromComputeNode("<poolId>", "<nodeId>", "<filePath>", 1234, "<clientRequestId>", true, "<ocpDate>", null);
+Console.WriteLine(response.Status);
+]]></code>
+</example>
+    </member>
+    <member name="GetFromTasksAsync(String,String,Int32,String,Int32,String,Boolean,String,Boolean,RequestContext)">
+<example>
+This sample shows how to call GetFromTasksAsync with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new BatchServiceClient(credential).GetFileClient(<2022-10-01.16.0>);
+
+Response response = await client.GetFromTasksAsync("<jobId>", "<taskId>");
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code>
+This sample shows how to call GetFromTasksAsync with all parameters, and how to parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new BatchServiceClient(credential).GetFileClient(<2022-10-01.16.0>);
+
+Response response = await client.GetFromTasksAsync("<jobId>", "<taskId>", 1234, "<ocpDate>", 1234, "<clientRequestId>", true, "<filter>", true);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("url").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("isDirectory").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("properties").GetProperty("creationTime").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("properties").GetProperty("lastModified").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("properties").GetProperty("contentLength").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("properties").GetProperty("contentType").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("properties").GetProperty("fileMode").ToString());
+Console.WriteLine(result.GetProperty("odata.nextLink").ToString());
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for the response payload.
+
+Response Body:
+
+Schema for <c>NodeFileListResult</c>:
+<code>{
+  value: [
+    {
+      name: string, # Optional. The file path.
+      url: string, # Optional. The URL of the file.
+      isDirectory: boolean, # Optional. Whether the object represents a directory.
+      properties: {
+        creationTime: string (date &amp; time), # Optional. The creation time is not returned for files on Linux Compute Nodes.
+        lastModified: string (date &amp; time), # Required. The time at which the file was last modified.
+        contentLength: number, # Required. The length of the file.
+        contentType: string, # Optional. The content type of the file.
+        fileMode: string, # Optional. The file mode is returned only for files on Linux Compute Nodes.
+      }, # Optional. The properties of a file on a Compute Node.
+    }
+  ], # Optional. The list of files.
+  odata.nextLink: string, # Optional. The URL to get the next set of results.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="GetFromTasks(String,String,Int32,String,Int32,String,Boolean,String,Boolean,RequestContext)">
+<example>
+This sample shows how to call GetFromTasks with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new BatchServiceClient(credential).GetFileClient(<2022-10-01.16.0>);
+
+Response response = client.GetFromTasks("<jobId>", "<taskId>");
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code>
+This sample shows how to call GetFromTasks with all parameters, and how to parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new BatchServiceClient(credential).GetFileClient(<2022-10-01.16.0>);
+
+Response response = client.GetFromTasks("<jobId>", "<taskId>", 1234, "<ocpDate>", 1234, "<clientRequestId>", true, "<filter>", true);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("url").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("isDirectory").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("properties").GetProperty("creationTime").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("properties").GetProperty("lastModified").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("properties").GetProperty("contentLength").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("properties").GetProperty("contentType").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("properties").GetProperty("fileMode").ToString());
+Console.WriteLine(result.GetProperty("odata.nextLink").ToString());
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for the response payload.
+
+Response Body:
+
+Schema for <c>NodeFileListResult</c>:
+<code>{
+  value: [
+    {
+      name: string, # Optional. The file path.
+      url: string, # Optional. The URL of the file.
+      isDirectory: boolean, # Optional. Whether the object represents a directory.
+      properties: {
+        creationTime: string (date &amp; time), # Optional. The creation time is not returned for files on Linux Compute Nodes.
+        lastModified: string (date &amp; time), # Required. The time at which the file was last modified.
+        contentLength: number, # Required. The length of the file.
+        contentType: string, # Optional. The content type of the file.
+        fileMode: string, # Optional. The file mode is returned only for files on Linux Compute Nodes.
+      }, # Optional. The properties of a file on a Compute Node.
+    }
+  ], # Optional. The list of files.
+  odata.nextLink: string, # Optional. The URL to get the next set of results.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="GetFromComputeNodesAsync(String,String,Int32,String,Int32,String,Boolean,String,Boolean,RequestContext)">
+<example>
+This sample shows how to call GetFromComputeNodesAsync with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new BatchServiceClient(credential).GetFileClient(<2022-10-01.16.0>);
+
+Response response = await client.GetFromComputeNodesAsync("<poolId>", "<nodeId>");
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code>
+This sample shows how to call GetFromComputeNodesAsync with all parameters, and how to parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new BatchServiceClient(credential).GetFileClient(<2022-10-01.16.0>);
+
+Response response = await client.GetFromComputeNodesAsync("<poolId>", "<nodeId>", 1234, "<ocpDate>", 1234, "<clientRequestId>", true, "<filter>", true);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("url").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("isDirectory").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("properties").GetProperty("creationTime").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("properties").GetProperty("lastModified").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("properties").GetProperty("contentLength").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("properties").GetProperty("contentType").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("properties").GetProperty("fileMode").ToString());
+Console.WriteLine(result.GetProperty("odata.nextLink").ToString());
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for the response payload.
+
+Response Body:
+
+Schema for <c>NodeFileListResult</c>:
+<code>{
+  value: [
+    {
+      name: string, # Optional. The file path.
+      url: string, # Optional. The URL of the file.
+      isDirectory: boolean, # Optional. Whether the object represents a directory.
+      properties: {
+        creationTime: string (date &amp; time), # Optional. The creation time is not returned for files on Linux Compute Nodes.
+        lastModified: string (date &amp; time), # Required. The time at which the file was last modified.
+        contentLength: number, # Required. The length of the file.
+        contentType: string, # Optional. The content type of the file.
+        fileMode: string, # Optional. The file mode is returned only for files on Linux Compute Nodes.
+      }, # Optional. The properties of a file on a Compute Node.
+    }
+  ], # Optional. The list of files.
+  odata.nextLink: string, # Optional. The URL to get the next set of results.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="GetFromComputeNodes(String,String,Int32,String,Int32,String,Boolean,String,Boolean,RequestContext)">
+<example>
+This sample shows how to call GetFromComputeNodes with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new BatchServiceClient(credential).GetFileClient(<2022-10-01.16.0>);
+
+Response response = client.GetFromComputeNodes("<poolId>", "<nodeId>");
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code>
+This sample shows how to call GetFromComputeNodes with all parameters, and how to parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new BatchServiceClient(credential).GetFileClient(<2022-10-01.16.0>);
+
+Response response = client.GetFromComputeNodes("<poolId>", "<nodeId>", 1234, "<ocpDate>", 1234, "<clientRequestId>", true, "<filter>", true);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("url").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("isDirectory").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("properties").GetProperty("creationTime").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("properties").GetProperty("lastModified").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("properties").GetProperty("contentLength").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("properties").GetProperty("contentType").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("properties").GetProperty("fileMode").ToString());
+Console.WriteLine(result.GetProperty("odata.nextLink").ToString());
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for the response payload.
+
+Response Body:
+
+Schema for <c>NodeFileListResult</c>:
+<code>{
+  value: [
+    {
+      name: string, # Optional. The file path.
+      url: string, # Optional. The URL of the file.
+      isDirectory: boolean, # Optional. Whether the object represents a directory.
+      properties: {
+        creationTime: string (date &amp; time), # Optional. The creation time is not returned for files on Linux Compute Nodes.
+        lastModified: string (date &amp; time), # Required. The time at which the file was last modified.
+        contentLength: number, # Required. The length of the file.
+        contentType: string, # Optional. The content type of the file.
+        fileMode: string, # Optional. The file mode is returned only for files on Linux Compute Nodes.
+      }, # Optional. The properties of a file on a Compute Node.
+    }
+  ], # Optional. The list of files.
+  odata.nextLink: string, # Optional. The URL to get the next set of results.
+}
+</code>
+
+</remarks>
+    </member>
+  </members>
+</doc>

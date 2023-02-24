@@ -1,0 +1,561 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doc>
+  <members>
+    <member name="AddAsync(RequestContent,Int32,String,Boolean,String,RequestContext)">
+<example>
+This sample shows how to call AddAsync with required parameters.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new BatchServiceClient(credential).GetCertificatesClient(<2022-10-01.16.0>);
+
+var data = new {};
+
+Response response = await client.AddAsync(RequestContent.Create(data));
+Console.WriteLine(response.Status);
+]]></code>
+This sample shows how to call AddAsync with all parameters and request content.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new BatchServiceClient(credential).GetCertificatesClient(<2022-10-01.16.0>);
+
+var data = new {
+    thumbprint = "<thumbprint>",
+    thumbprintAlgorithm = "<thumbprintAlgorithm>",
+    data = "<data>",
+    certificateFormat = "pfx",
+    password = "<password>",
+};
+
+Response response = await client.AddAsync(RequestContent.Create(data), 1234, "<clientRequestId>", true, "<ocpDate>");
+Console.WriteLine(response.Status);
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for the request payload.
+
+Request Body:
+
+Schema for <c>Certificate</c>:
+<code>{
+  thumbprint: string, # Optional. The X.509 thumbprint of the Certificate. This is a sequence of up to 40 hex
+digits.
+  thumbprintAlgorithm: string, # Optional. The algorithm used to derive the thumbprint.
+  url: string, # Optional. The URL of the Certificate.
+  state: &quot;active&quot; | &quot;deleting&quot; | &quot;deletefailed&quot;, # Optional. The state of the Certificate.
+  stateTransitionTime: string (date &amp; time), # Optional. The time at which the Certificate entered its current state.
+  previousState: &quot;active&quot; | &quot;deleting&quot; | &quot;deletefailed&quot;, # Optional. This property is not set if the Certificate is in its initial active state.
+  previousStateTransitionTime: string (date &amp; time), # Optional. This property is not set if the Certificate is in its initial Active state.
+  publicData: string, # Optional. The public part of the Certificate as a base-64 encoded .cer file.
+  deleteCertificateError: {
+    code: string, # Optional. An identifier for the Certificate deletion error. Codes are invariant and are
+intended to be consumed programmatically.
+    message: string, # Optional. A message describing the Certificate deletion error, intended to be suitable
+for display in a user interface.
+    values: [
+      {
+        name: string, # Optional. The name in the name-value pair.
+        value: string, # Optional. The value in the name-value pair.
+      }
+    ], # Optional. This list includes details such as the active Pools and Compute Nodes
+referencing this Certificate. However, if a large number of resources reference
+the Certificate, the list contains only about the first hundred.
+  }, # Optional. This property is set only if the Certificate is in the DeleteFailed state.
+  data: string, # Optional. The base64-encoded contents of the Certificate. The maximum size is 10KB.
+  certificateFormat: &quot;pfx&quot; | &quot;cer&quot;, # Optional. The format of the Certificate data.
+  password: string, # Optional. This must be omitted if the Certificate format is cer.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="Add(RequestContent,Int32,String,Boolean,String,RequestContext)">
+<example>
+This sample shows how to call Add with required parameters.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new BatchServiceClient(credential).GetCertificatesClient(<2022-10-01.16.0>);
+
+var data = new {};
+
+Response response = client.Add(RequestContent.Create(data));
+Console.WriteLine(response.Status);
+]]></code>
+This sample shows how to call Add with all parameters and request content.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new BatchServiceClient(credential).GetCertificatesClient(<2022-10-01.16.0>);
+
+var data = new {
+    thumbprint = "<thumbprint>",
+    thumbprintAlgorithm = "<thumbprintAlgorithm>",
+    data = "<data>",
+    certificateFormat = "pfx",
+    password = "<password>",
+};
+
+Response response = client.Add(RequestContent.Create(data), 1234, "<clientRequestId>", true, "<ocpDate>");
+Console.WriteLine(response.Status);
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for the request payload.
+
+Request Body:
+
+Schema for <c>Certificate</c>:
+<code>{
+  thumbprint: string, # Optional. The X.509 thumbprint of the Certificate. This is a sequence of up to 40 hex
+digits.
+  thumbprintAlgorithm: string, # Optional. The algorithm used to derive the thumbprint.
+  url: string, # Optional. The URL of the Certificate.
+  state: &quot;active&quot; | &quot;deleting&quot; | &quot;deletefailed&quot;, # Optional. The state of the Certificate.
+  stateTransitionTime: string (date &amp; time), # Optional. The time at which the Certificate entered its current state.
+  previousState: &quot;active&quot; | &quot;deleting&quot; | &quot;deletefailed&quot;, # Optional. This property is not set if the Certificate is in its initial active state.
+  previousStateTransitionTime: string (date &amp; time), # Optional. This property is not set if the Certificate is in its initial Active state.
+  publicData: string, # Optional. The public part of the Certificate as a base-64 encoded .cer file.
+  deleteCertificateError: {
+    code: string, # Optional. An identifier for the Certificate deletion error. Codes are invariant and are
+intended to be consumed programmatically.
+    message: string, # Optional. A message describing the Certificate deletion error, intended to be suitable
+for display in a user interface.
+    values: [
+      {
+        name: string, # Optional. The name in the name-value pair.
+        value: string, # Optional. The value in the name-value pair.
+      }
+    ], # Optional. This list includes details such as the active Pools and Compute Nodes
+referencing this Certificate. However, if a large number of resources reference
+the Certificate, the list contains only about the first hundred.
+  }, # Optional. This property is set only if the Certificate is in the DeleteFailed state.
+  data: string, # Optional. The base64-encoded contents of the Certificate. The maximum size is 10KB.
+  certificateFormat: &quot;pfx&quot; | &quot;cer&quot;, # Optional. The format of the Certificate data.
+  password: string, # Optional. This must be omitted if the Certificate format is cer.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="GetCertificatesAsync(Int32,String,Int32,String,Boolean,String,String,RequestContext)">
+<example>
+This sample shows how to call GetCertificatesAsync and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new BatchServiceClient(credential).GetCertificatesClient(<2022-10-01.16.0>);
+
+Response response = await client.GetCertificatesAsync();
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code>
+This sample shows how to call GetCertificatesAsync with all parameters, and how to parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new BatchServiceClient(credential).GetCertificatesClient(<2022-10-01.16.0>);
+
+Response response = await client.GetCertificatesAsync(1234, "<ocpDate>", 1234, "<clientRequestId>", true, "<filter>", "<select>");
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("thumbprint").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("thumbprintAlgorithm").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("url").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("state").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("stateTransitionTime").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("previousState").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("previousStateTransitionTime").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("publicData").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("deleteCertificateError").GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("deleteCertificateError").GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("deleteCertificateError").GetProperty("values")[0].GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("deleteCertificateError").GetProperty("values")[0].GetProperty("value").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("data").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("certificateFormat").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("password").ToString());
+Console.WriteLine(result.GetProperty("odata.nextLink").ToString());
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for the response payload.
+
+Response Body:
+
+Schema for <c>CertificateListResult</c>:
+<code>{
+  value: [
+    {
+      thumbprint: string, # Optional. The X.509 thumbprint of the Certificate. This is a sequence of up to 40 hex
+digits.
+      thumbprintAlgorithm: string, # Optional. The algorithm used to derive the thumbprint.
+      url: string, # Optional. The URL of the Certificate.
+      state: &quot;active&quot; | &quot;deleting&quot; | &quot;deletefailed&quot;, # Optional. The state of the Certificate.
+      stateTransitionTime: string (date &amp; time), # Optional. The time at which the Certificate entered its current state.
+      previousState: &quot;active&quot; | &quot;deleting&quot; | &quot;deletefailed&quot;, # Optional. This property is not set if the Certificate is in its initial active state.
+      previousStateTransitionTime: string (date &amp; time), # Optional. This property is not set if the Certificate is in its initial Active state.
+      publicData: string, # Optional. The public part of the Certificate as a base-64 encoded .cer file.
+      deleteCertificateError: {
+        code: string, # Optional. An identifier for the Certificate deletion error. Codes are invariant and are
+intended to be consumed programmatically.
+        message: string, # Optional. A message describing the Certificate deletion error, intended to be suitable
+for display in a user interface.
+        values: [NameValuePair], # Optional. This list includes details such as the active Pools and Compute Nodes
+referencing this Certificate. However, if a large number of resources reference
+the Certificate, the list contains only about the first hundred.
+      }, # Optional. This property is set only if the Certificate is in the DeleteFailed state.
+      data: string, # Optional. The base64-encoded contents of the Certificate. The maximum size is 10KB.
+      certificateFormat: &quot;pfx&quot; | &quot;cer&quot;, # Optional. The format of the Certificate data.
+      password: string, # Optional. This must be omitted if the Certificate format is cer.
+    }
+  ], # Optional. The list of Certificates.
+  odata.nextLink: string, # Optional. The URL to get the next set of results.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="GetCertificates(Int32,String,Int32,String,Boolean,String,String,RequestContext)">
+<example>
+This sample shows how to call GetCertificates and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new BatchServiceClient(credential).GetCertificatesClient(<2022-10-01.16.0>);
+
+Response response = client.GetCertificates();
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code>
+This sample shows how to call GetCertificates with all parameters, and how to parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new BatchServiceClient(credential).GetCertificatesClient(<2022-10-01.16.0>);
+
+Response response = client.GetCertificates(1234, "<ocpDate>", 1234, "<clientRequestId>", true, "<filter>", "<select>");
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("thumbprint").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("thumbprintAlgorithm").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("url").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("state").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("stateTransitionTime").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("previousState").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("previousStateTransitionTime").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("publicData").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("deleteCertificateError").GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("deleteCertificateError").GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("deleteCertificateError").GetProperty("values")[0].GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("deleteCertificateError").GetProperty("values")[0].GetProperty("value").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("data").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("certificateFormat").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("password").ToString());
+Console.WriteLine(result.GetProperty("odata.nextLink").ToString());
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for the response payload.
+
+Response Body:
+
+Schema for <c>CertificateListResult</c>:
+<code>{
+  value: [
+    {
+      thumbprint: string, # Optional. The X.509 thumbprint of the Certificate. This is a sequence of up to 40 hex
+digits.
+      thumbprintAlgorithm: string, # Optional. The algorithm used to derive the thumbprint.
+      url: string, # Optional. The URL of the Certificate.
+      state: &quot;active&quot; | &quot;deleting&quot; | &quot;deletefailed&quot;, # Optional. The state of the Certificate.
+      stateTransitionTime: string (date &amp; time), # Optional. The time at which the Certificate entered its current state.
+      previousState: &quot;active&quot; | &quot;deleting&quot; | &quot;deletefailed&quot;, # Optional. This property is not set if the Certificate is in its initial active state.
+      previousStateTransitionTime: string (date &amp; time), # Optional. This property is not set if the Certificate is in its initial Active state.
+      publicData: string, # Optional. The public part of the Certificate as a base-64 encoded .cer file.
+      deleteCertificateError: {
+        code: string, # Optional. An identifier for the Certificate deletion error. Codes are invariant and are
+intended to be consumed programmatically.
+        message: string, # Optional. A message describing the Certificate deletion error, intended to be suitable
+for display in a user interface.
+        values: [NameValuePair], # Optional. This list includes details such as the active Pools and Compute Nodes
+referencing this Certificate. However, if a large number of resources reference
+the Certificate, the list contains only about the first hundred.
+      }, # Optional. This property is set only if the Certificate is in the DeleteFailed state.
+      data: string, # Optional. The base64-encoded contents of the Certificate. The maximum size is 10KB.
+      certificateFormat: &quot;pfx&quot; | &quot;cer&quot;, # Optional. The format of the Certificate data.
+      password: string, # Optional. This must be omitted if the Certificate format is cer.
+    }
+  ], # Optional. The list of Certificates.
+  odata.nextLink: string, # Optional. The URL to get the next set of results.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="CancelDeletionAsync(String,String,Int32,String,Boolean,String,RequestContext)">
+<example>
+This sample shows how to call CancelDeletionAsync with required parameters.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new BatchServiceClient(credential).GetCertificatesClient(<2022-10-01.16.0>);
+
+Response response = await client.CancelDeletionAsync("<thumbprintAlgorithm>", "<thumbprint>");
+Console.WriteLine(response.Status);
+]]></code>
+This sample shows how to call CancelDeletionAsync with all parameters.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new BatchServiceClient(credential).GetCertificatesClient(<2022-10-01.16.0>);
+
+Response response = await client.CancelDeletionAsync("<thumbprintAlgorithm>", "<thumbprint>", 1234, "<clientRequestId>", true, "<ocpDate>");
+Console.WriteLine(response.Status);
+]]></code>
+</example>
+<remarks>
+If you try to delete a Certificate that is being used by a Pool or Compute
+Node, the status of the Certificate changes to deleteFailed. If you decide that
+you want to continue using the Certificate, you can use this operation to set
+the status of the Certificate back to active. If you intend to delete the
+Certificate, you do not need to run this operation after the deletion failed.
+You must make sure that the Certificate is not being used by any resources, and
+then you can try again to delete the Certificate.
+</remarks>
+    </member>
+    <member name="CancelDeletion(String,String,Int32,String,Boolean,String,RequestContext)">
+<example>
+This sample shows how to call CancelDeletion with required parameters.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new BatchServiceClient(credential).GetCertificatesClient(<2022-10-01.16.0>);
+
+Response response = client.CancelDeletion("<thumbprintAlgorithm>", "<thumbprint>");
+Console.WriteLine(response.Status);
+]]></code>
+This sample shows how to call CancelDeletion with all parameters.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new BatchServiceClient(credential).GetCertificatesClient(<2022-10-01.16.0>);
+
+Response response = client.CancelDeletion("<thumbprintAlgorithm>", "<thumbprint>", 1234, "<clientRequestId>", true, "<ocpDate>");
+Console.WriteLine(response.Status);
+]]></code>
+</example>
+<remarks>
+If you try to delete a Certificate that is being used by a Pool or Compute
+Node, the status of the Certificate changes to deleteFailed. If you decide that
+you want to continue using the Certificate, you can use this operation to set
+the status of the Certificate back to active. If you intend to delete the
+Certificate, you do not need to run this operation after the deletion failed.
+You must make sure that the Certificate is not being used by any resources, and
+then you can try again to delete the Certificate.
+</remarks>
+    </member>
+    <member name="DeleteAsync(String,String,Int32,String,Boolean,String,RequestContext)">
+<example>
+This sample shows how to call DeleteAsync with required parameters.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new BatchServiceClient(credential).GetCertificatesClient(<2022-10-01.16.0>);
+
+Response response = await client.DeleteAsync("<thumbprintAlgorithm>", "<thumbprint>");
+Console.WriteLine(response.Status);
+]]></code>
+This sample shows how to call DeleteAsync with all parameters.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new BatchServiceClient(credential).GetCertificatesClient(<2022-10-01.16.0>);
+
+Response response = await client.DeleteAsync("<thumbprintAlgorithm>", "<thumbprint>", 1234, "<clientRequestId>", true, "<ocpDate>");
+Console.WriteLine(response.Status);
+]]></code>
+</example>
+<remarks>
+You cannot delete a Certificate if a resource (Pool or Compute Node) is using
+it. Before you can delete a Certificate, you must therefore make sure that the
+Certificate is not associated with any existing Pools, the Certificate is not
+installed on any Nodes (even if you remove a Certificate from a Pool, it is not
+removed from existing Compute Nodes in that Pool until they restart), and no
+running Tasks depend on the Certificate. If you try to delete a Certificate
+that is in use, the deletion fails. The Certificate status changes to
+deleteFailed. You can use Cancel Delete Certificate to set the status back to
+active if you decide that you want to continue using the Certificate.
+</remarks>
+    </member>
+    <member name="Delete(String,String,Int32,String,Boolean,String,RequestContext)">
+<example>
+This sample shows how to call Delete with required parameters.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new BatchServiceClient(credential).GetCertificatesClient(<2022-10-01.16.0>);
+
+Response response = client.Delete("<thumbprintAlgorithm>", "<thumbprint>");
+Console.WriteLine(response.Status);
+]]></code>
+This sample shows how to call Delete with all parameters.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new BatchServiceClient(credential).GetCertificatesClient(<2022-10-01.16.0>);
+
+Response response = client.Delete("<thumbprintAlgorithm>", "<thumbprint>", 1234, "<clientRequestId>", true, "<ocpDate>");
+Console.WriteLine(response.Status);
+]]></code>
+</example>
+<remarks>
+You cannot delete a Certificate if a resource (Pool or Compute Node) is using
+it. Before you can delete a Certificate, you must therefore make sure that the
+Certificate is not associated with any existing Pools, the Certificate is not
+installed on any Nodes (even if you remove a Certificate from a Pool, it is not
+removed from existing Compute Nodes in that Pool until they restart), and no
+running Tasks depend on the Certificate. If you try to delete a Certificate
+that is in use, the deletion fails. The Certificate status changes to
+deleteFailed. You can use Cancel Delete Certificate to set the status back to
+active if you decide that you want to continue using the Certificate.
+</remarks>
+    </member>
+    <member name="GetCertificateAsync(String,String,Int32,String,Boolean,String,String,RequestContext)">
+<example>
+This sample shows how to call GetCertificateAsync with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new BatchServiceClient(credential).GetCertificatesClient(<2022-10-01.16.0>);
+
+Response response = await client.GetCertificateAsync("<thumbprintAlgorithm>", "<thumbprint>");
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code>
+This sample shows how to call GetCertificateAsync with all parameters, and how to parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new BatchServiceClient(credential).GetCertificatesClient(<2022-10-01.16.0>);
+
+Response response = await client.GetCertificateAsync("<thumbprintAlgorithm>", "<thumbprint>", 1234, "<clientRequestId>", true, "<ocpDate>", "<select>");
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("thumbprint").ToString());
+Console.WriteLine(result.GetProperty("thumbprintAlgorithm").ToString());
+Console.WriteLine(result.GetProperty("url").ToString());
+Console.WriteLine(result.GetProperty("state").ToString());
+Console.WriteLine(result.GetProperty("stateTransitionTime").ToString());
+Console.WriteLine(result.GetProperty("previousState").ToString());
+Console.WriteLine(result.GetProperty("previousStateTransitionTime").ToString());
+Console.WriteLine(result.GetProperty("publicData").ToString());
+Console.WriteLine(result.GetProperty("deleteCertificateError").GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("deleteCertificateError").GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("deleteCertificateError").GetProperty("values")[0].GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("deleteCertificateError").GetProperty("values")[0].GetProperty("value").ToString());
+Console.WriteLine(result.GetProperty("data").ToString());
+Console.WriteLine(result.GetProperty("certificateFormat").ToString());
+Console.WriteLine(result.GetProperty("password").ToString());
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for the response payload.
+
+Response Body:
+
+Schema for <c>Certificate</c>:
+<code>{
+  thumbprint: string, # Optional. The X.509 thumbprint of the Certificate. This is a sequence of up to 40 hex
+digits.
+  thumbprintAlgorithm: string, # Optional. The algorithm used to derive the thumbprint.
+  url: string, # Optional. The URL of the Certificate.
+  state: &quot;active&quot; | &quot;deleting&quot; | &quot;deletefailed&quot;, # Optional. The state of the Certificate.
+  stateTransitionTime: string (date &amp; time), # Optional. The time at which the Certificate entered its current state.
+  previousState: &quot;active&quot; | &quot;deleting&quot; | &quot;deletefailed&quot;, # Optional. This property is not set if the Certificate is in its initial active state.
+  previousStateTransitionTime: string (date &amp; time), # Optional. This property is not set if the Certificate is in its initial Active state.
+  publicData: string, # Optional. The public part of the Certificate as a base-64 encoded .cer file.
+  deleteCertificateError: {
+    code: string, # Optional. An identifier for the Certificate deletion error. Codes are invariant and are
+intended to be consumed programmatically.
+    message: string, # Optional. A message describing the Certificate deletion error, intended to be suitable
+for display in a user interface.
+    values: [
+      {
+        name: string, # Optional. The name in the name-value pair.
+        value: string, # Optional. The value in the name-value pair.
+      }
+    ], # Optional. This list includes details such as the active Pools and Compute Nodes
+referencing this Certificate. However, if a large number of resources reference
+the Certificate, the list contains only about the first hundred.
+  }, # Optional. This property is set only if the Certificate is in the DeleteFailed state.
+  data: string, # Optional. The base64-encoded contents of the Certificate. The maximum size is 10KB.
+  certificateFormat: &quot;pfx&quot; | &quot;cer&quot;, # Optional. The format of the Certificate data.
+  password: string, # Optional. This must be omitted if the Certificate format is cer.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="GetCertificate(String,String,Int32,String,Boolean,String,String,RequestContext)">
+<example>
+This sample shows how to call GetCertificate with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new BatchServiceClient(credential).GetCertificatesClient(<2022-10-01.16.0>);
+
+Response response = client.GetCertificate("<thumbprintAlgorithm>", "<thumbprint>");
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code>
+This sample shows how to call GetCertificate with all parameters, and how to parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new BatchServiceClient(credential).GetCertificatesClient(<2022-10-01.16.0>);
+
+Response response = client.GetCertificate("<thumbprintAlgorithm>", "<thumbprint>", 1234, "<clientRequestId>", true, "<ocpDate>", "<select>");
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("thumbprint").ToString());
+Console.WriteLine(result.GetProperty("thumbprintAlgorithm").ToString());
+Console.WriteLine(result.GetProperty("url").ToString());
+Console.WriteLine(result.GetProperty("state").ToString());
+Console.WriteLine(result.GetProperty("stateTransitionTime").ToString());
+Console.WriteLine(result.GetProperty("previousState").ToString());
+Console.WriteLine(result.GetProperty("previousStateTransitionTime").ToString());
+Console.WriteLine(result.GetProperty("publicData").ToString());
+Console.WriteLine(result.GetProperty("deleteCertificateError").GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("deleteCertificateError").GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("deleteCertificateError").GetProperty("values")[0].GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("deleteCertificateError").GetProperty("values")[0].GetProperty("value").ToString());
+Console.WriteLine(result.GetProperty("data").ToString());
+Console.WriteLine(result.GetProperty("certificateFormat").ToString());
+Console.WriteLine(result.GetProperty("password").ToString());
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for the response payload.
+
+Response Body:
+
+Schema for <c>Certificate</c>:
+<code>{
+  thumbprint: string, # Optional. The X.509 thumbprint of the Certificate. This is a sequence of up to 40 hex
+digits.
+  thumbprintAlgorithm: string, # Optional. The algorithm used to derive the thumbprint.
+  url: string, # Optional. The URL of the Certificate.
+  state: &quot;active&quot; | &quot;deleting&quot; | &quot;deletefailed&quot;, # Optional. The state of the Certificate.
+  stateTransitionTime: string (date &amp; time), # Optional. The time at which the Certificate entered its current state.
+  previousState: &quot;active&quot; | &quot;deleting&quot; | &quot;deletefailed&quot;, # Optional. This property is not set if the Certificate is in its initial active state.
+  previousStateTransitionTime: string (date &amp; time), # Optional. This property is not set if the Certificate is in its initial Active state.
+  publicData: string, # Optional. The public part of the Certificate as a base-64 encoded .cer file.
+  deleteCertificateError: {
+    code: string, # Optional. An identifier for the Certificate deletion error. Codes are invariant and are
+intended to be consumed programmatically.
+    message: string, # Optional. A message describing the Certificate deletion error, intended to be suitable
+for display in a user interface.
+    values: [
+      {
+        name: string, # Optional. The name in the name-value pair.
+        value: string, # Optional. The value in the name-value pair.
+      }
+    ], # Optional. This list includes details such as the active Pools and Compute Nodes
+referencing this Certificate. However, if a large number of resources reference
+the Certificate, the list contains only about the first hundred.
+  }, # Optional. This property is set only if the Certificate is in the DeleteFailed state.
+  data: string, # Optional. The base64-encoded contents of the Certificate. The maximum size is 10KB.
+  certificateFormat: &quot;pfx&quot; | &quot;cer&quot;, # Optional. The format of the Certificate data.
+  password: string, # Optional. This must be omitted if the Certificate format is cer.
+}
+</code>
+
+</remarks>
+    </member>
+  </members>
+</doc>
