@@ -60,12 +60,12 @@ You will not be able to clean them up however. There exists [planned work](https
 - `language` repo - An individual language repository eg. azure-sdk-for-python or azure-sdk-for-net etc.
 - `assets` repo - The repository where assets are being moved to. <https://github.com/Azure/azure-sdk-assets>
 
-The `test-proxy` tool is integrated with the ability to automatically restore these assets. This process is kick-started by the presence of an `assets.json` alongside a dev's actual code. This means that while assets will be cloned down externally, the _map_ to those assets will be stored alongside the tests. Normally, it is recommended to create an `assets.json` under the path `sdk/<ServiceDirectory>`. However, more granular storage is also possible.
+The `test-proxy` tool is integrated with the ability to automatically restore these assets. This process is kick-started by the presence of an `assets.json` alongside a dev's actual code. This means that while assets will be cloned down externally, the _map_ to those assets will be stored alongside the tests. Normally, it is recommended to create an `assets.json` under the path `sdk/<ServiceDirectory>/<package>`. More granular storage than on an individual package level is possible, but each language's test framework would need to support that on a case-by-case basis.
 
-Service/Package-Level examples:
+Examples of current assets.json locations:
 
-- `sdk/storage/assets.json`
-- `sdk/storage/azure-storage-file-datalake/assets.json`
+- [`sdk/data/aztables/assets.json`](https://github.com/Azure/azure-sdk-for-go/blob/main/sdk/data/aztables/assets.json)
+- [`sdk/keyvault/azure-keyvault-keys/assets.json`](https://github.com/Azure/azure-sdk-for-python/blob/main/sdk/keyvault/azure-keyvault-keys/assets.json)
 
 The location of the actual test code is referred to as the `language repo`.
 
