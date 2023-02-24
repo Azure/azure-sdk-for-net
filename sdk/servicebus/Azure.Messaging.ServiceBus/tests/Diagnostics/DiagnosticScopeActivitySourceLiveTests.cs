@@ -373,7 +373,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
             {
                 CollectionAssert.Contains(tags,
                     new KeyValuePair<string, string>(MessagingClientDiagnostics.MessagingOperation, operation.ToString()));
-                var entityKey = operation == MessagingDiagnosticOperation.Receive
+                var entityKey = operation == MessagingDiagnosticOperation.Receive || operation == MessagingDiagnosticOperation.Process
                     ? MessagingClientDiagnostics.SourceName
                     : MessagingClientDiagnostics.DestinationName;
                 CollectionAssert.Contains(tags, new KeyValuePair<string, string>(entityKey, entityName));
