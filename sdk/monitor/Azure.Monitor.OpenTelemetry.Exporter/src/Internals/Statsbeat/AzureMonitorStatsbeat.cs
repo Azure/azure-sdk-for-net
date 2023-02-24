@@ -115,15 +115,18 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat
             // schedule of 24 hrs == 86400000 milliseconds.
             // TODO: Follow up in spec to confirm the behavior
             // in case if the app exits before 24hrs duration.
-            var exporterOptions = new AzureMonitorExporterOptions();
-            exporterOptions.DisableOfflineStorage = true;
-            exporterOptions.ConnectionString = _statsbeat_ConnectionString;
+            var exporterOptions = new AzureMonitorExporterOptions
+            {
+                DisableOfflineStorage = true,
+                ConnectionString = _statsbeat_ConnectionString,
+                EnableStatsbeat = false, // to avoid recursive Statsbeat.
+            };
 
             _attachStatsbeatMeterProvider = Sdk.CreateMeterProviderBuilder()
-            .AddMeter("AttachStatsbeatMeter")
-            .AddReader(new PeriodicExportingMetricReader(new AzureMonitorMetricExporter(exporterOptions), AttachStatsbeatInterval)
-            { TemporalityPreference = MetricReaderTemporalityPreference.Delta })
-            .Build();
+                .AddMeter("AttachStatsbeatMeter")
+                .AddReader(new PeriodicExportingMetricReader(new AzureMonitorMetricExporter(exporterOptions), AttachStatsbeatInterval)
+                { TemporalityPreference = MetricReaderTemporalityPreference.Delta })
+                .Build();
         }
 
         private static string GetOS()
