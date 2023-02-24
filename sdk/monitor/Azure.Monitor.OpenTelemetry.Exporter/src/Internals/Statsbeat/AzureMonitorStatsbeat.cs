@@ -83,7 +83,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat
             return "unknown";
         }
 
-        internal static string? GetStatsbeatConnectionString(string? ingestionEndpoint) // TODO: Rewrite
+        internal static string? GetStatsbeatConnectionString(string? ingestionEndpoint)
         {
             var patternMatch = s_endpoint_pattern.Match(ingestionEndpoint);
             string? statsbeatConnectionString = null;
