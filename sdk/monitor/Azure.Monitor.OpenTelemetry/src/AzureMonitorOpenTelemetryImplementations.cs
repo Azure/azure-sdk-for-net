@@ -5,6 +5,7 @@ using System;
 using Azure.Monitor.OpenTelemetry.Exporter;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
+using OpenTelemetry.Extensions.AzureMonitor;
 using OpenTelemetry.Metrics;
 using OpenTelemetry.Trace;
 
@@ -28,6 +29,7 @@ namespace Azure.Monitor.OpenTelemetry
 
             builder.WithTracing(b => b
                             .AddAspNetCoreInstrumentation()
+                            .SetSampler(new ApplicationInsightsSampler(1.0F))
                             .AddAzureMonitorTraceExporter());
 
             builder.WithMetrics(b => b
