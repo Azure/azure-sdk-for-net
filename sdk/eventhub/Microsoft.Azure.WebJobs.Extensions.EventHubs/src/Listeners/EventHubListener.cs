@@ -2,6 +2,7 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
@@ -115,6 +116,10 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
             private readonly int _batchCheckpointFrequency;
             private int _batchCounter;
             private bool _disposed;
+            private readonly int _minBatchSize;
+            private readonly int _maxBatchSize;
+            private ConcurrentDictionary<string, List<EventData>> _storedEvents;
+            private int _numStoredEvents;
 
             public EventProcessor(EventHubOptions options, ITriggeredFunctionExecutor executor, ILogger logger, bool singleDispatch)
             {
