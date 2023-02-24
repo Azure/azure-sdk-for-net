@@ -49,20 +49,16 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
         private static void InitializeStatsbeat(AzureMonitorExporterOptions options, ConnectionVars connectionVars)
         {
-            if (options.EnableStatsbeat)
+            if (options.EnableStatsbeat && connectionVars != null)
             {
                 try
                 {
-                    // Do not initialize statsbeat for statsbeat.
-                    if (connectionVars != null && connectionVars.InstrumentationKey != ConnectionStringParser.GetValues(AzureMonitorStatsbeat.Statsbeat_ConnectionString_EU).InstrumentationKey && connectionVars.InstrumentationKey != ConnectionStringParser.GetValues(AzureMonitorStatsbeat.Statsbeat_ConnectionString_NonEU).InstrumentationKey)
-                    {
-                        // TODO: Implement IDisposable for transmitter and dispose statsbeat.
-                        _ = new AzureMonitorStatsbeat(connectionVars);
-                    }
+                    // TODO: Implement IDisposable for transmitter and dispose statsbeat.
+                    _ = new AzureMonitorStatsbeat(connectionVars);
                 }
                 catch (Exception ex)
                 {
-                    AzureMonitorExporterEventSource.Log.WriteWarning($"ErrorInitializingStatsBeatfor:{connectionVars.InstrumentationKey}", ex);
+                    AzureMonitorExporterEventSource.Log.WriteWarning($"ErrorInitializingStatsbeatFor:{connectionVars.InstrumentationKey}", ex);
                 }
             }
         }
