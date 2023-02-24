@@ -1,6 +1,6 @@
 {
     "main": "dist/src/index.js",
     "dependencies": {
-      "@azure-tools/cadl-csharp": "0.1.11-beta.20230222.4"
+      "@azure-tools/cadl-csharp": "0.1.11-beta.20230223.2"
     }
 }
