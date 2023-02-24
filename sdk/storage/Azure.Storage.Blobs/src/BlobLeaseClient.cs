@@ -181,12 +181,12 @@ namespace Azure.Storage.Blobs.Specialized
             TimeSpan duration,
             RequestConditions conditions = default,
             CancellationToken cancellationToken = default) =>
-            AcquireInternal(
+            ParseAcquireResponse(AcquireInternal(
                 duration,
                 conditions,
                 async: false,
                 new RequestContext() { CancellationToken = cancellationToken })
-                .EnsureCompleted();
+                .EnsureCompleted());
 
         /// <summary>
         /// The <see cref="AcquireAsync(TimeSpan, RequestConditions, CancellationToken)"/>
@@ -230,12 +230,28 @@ namespace Azure.Storage.Blobs.Specialized
             TimeSpan duration,
             RequestConditions conditions = default,
             CancellationToken cancellationToken = default) =>
-            await AcquireInternal(
+            ParseAcquireResponse(await AcquireInternal(
                 duration,
                 conditions,
                 async: true,
                 new RequestContext() { CancellationToken = cancellationToken })
-                .ConfigureAwait(false);
+                .ConfigureAwait(false));
+
+        private Response<BlobLease> ParseAcquireResponse(Response response)
+        {
+            if (BlobClient != null)
+            {
+                return Response.FromValue(
+                    ResponseWithHeaders.FromValue(new BlobAcquireLeaseHeaders(response), response).ToBlobLease(),
+                    response);
+            }
+            else
+            {
+                return Response.FromValue(
+                    ResponseWithHeaders.FromValue(new ContainerAcquireLeaseHeaders(response), response).ToBlobLease(),
+                    response);
+            }
+        }
 
         /// <summary>
         /// The <see cref="Acquire(TimeSpan, RequestConditions, RequestContext)"/>
@@ -284,7 +300,7 @@ namespace Azure.Storage.Blobs.Specialized
                 conditions,
                 async: false,
                 context)
-                .EnsureCompleted().GetRawResponse();
+                .EnsureCompleted();
 
         /// <summary>
         /// The <see cref="AcquireAsync(TimeSpan, RequestConditions, RequestContext)"/>
@@ -334,7 +350,7 @@ namespace Azure.Storage.Blobs.Specialized
                 conditions,
                 async: true,
                 context)
-                .ConfigureAwait(false)).GetRawResponse();
+                .ConfigureAwait(false));
 
         /// <summary>
         /// The <see cref="AcquireInternal"/> operation acquires a lease on
@@ -375,7 +391,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        private async Task<Response<BlobLease>> AcquireInternal(
+        private async Task<Response> AcquireInternal(
             TimeSpan duration,
             RequestConditions conditions,
             bool async,
@@ -407,14 +423,12 @@ namespace Azure.Storage.Blobs.Specialized
                         tagCondition = leaseConditions?.TagConditions;
                     }
 
-                    Response<BlobLease> response;
+                    Response response;
                     if (BlobClient != null)
                     {
-                        Response rawResponse;
-
                         if (async)
                         {
-                            rawResponse = await BlobClient.BlobRestClient.AcquireLeaseAsync(
+                            response = await BlobClient.BlobRestClient.AcquireLeaseAsync(
                                 duration: serviceDuration,
                                 proposedLeaseId: LeaseId,
                                 requestConditions: conditions,
@@ -424,17 +438,13 @@ namespace Azure.Storage.Blobs.Specialized
                         }
                         else
                         {
-                            rawResponse = BlobClient.BlobRestClient.AcquireLease(
+                            response = BlobClient.BlobRestClient.AcquireLease(
                                 duration: serviceDuration,
                                 proposedLeaseId: LeaseId,
                                 requestConditions: conditions,
                                 ifTags: tagCondition,
                                 context: context);
                         }
-
-                        response = Response.FromValue(
-                            ResponseWithHeaders.FromValue(new BlobAcquireLeaseHeaders(rawResponse), rawResponse).ToBlobLease(),
-                            rawResponse);
                     }
                     else
                     {
@@ -445,11 +455,9 @@ namespace Azure.Storage.Blobs.Specialized
                             operationName: nameof(BlobLeaseClient.Acquire),
                             parameterName: nameof(conditions));
 
-                        Response rawResponse;
-
                         if (async)
                         {
-                            rawResponse = await BlobContainerClient.ContainerRestClient.AcquireLeaseAsync(
+                            response = await BlobContainerClient.ContainerRestClient.AcquireLeaseAsync(
                                 duration: serviceDuration,
                                 proposedLeaseId: LeaseId,
                                 requestConditions: conditions,
@@ -458,17 +466,18 @@ namespace Azure.Storage.Blobs.Specialized
                         }
                         else
                         {
-                            rawResponse = BlobContainerClient.ContainerRestClient.AcquireLease(
+                            response = BlobContainerClient.ContainerRestClient.AcquireLease(
                                 duration: serviceDuration,
                                 proposedLeaseId: LeaseId,
                                 requestConditions: conditions,
                                 context: context);
                         }
-                        response = Response.FromValue(
-                            ResponseWithHeaders.FromValue(new ContainerAcquireLeaseHeaders(rawResponse), rawResponse).ToBlobLease(),
-                            rawResponse);
                     }
-                    LeaseId = response.Value.LeaseId;
+
+                    if (response.Headers.TryGetValue(Constants.HeaderNames.LeaseId, out string value))
+                    {
+                        LeaseId = value;
+                    }
                     return response;
                 }
                 catch (Exception ex)
