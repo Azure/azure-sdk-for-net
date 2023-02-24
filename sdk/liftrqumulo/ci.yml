@@ -8,9 +8,7 @@ trigger:
     - release/*
   paths:
     include:
-    - sdk/Qumulo/
-    exclude:
-    - sdk/Qumulo/Azure.ResourceManager.Qumulo/
+    - sdk/liftrqumulo/
 
 pr:
   branches:
@@ -21,16 +19,14 @@ pr:
     - release/*
   paths:
     include:
-    - sdk/Qumulo/
+    - sdk/liftrqumulo/
     - sdk/resourcemanager/
-    exclude:
-    - sdk/Qumulo/Azure.ResourceManager.Qumulo/
 
 extends:
   template: ../../eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:
-    ServiceDirectory: Qumulo
+    ServiceDirectory: liftrqumulo
     ArtifactName: packages
     Artifacts:
-    - name: Azure.ResourceManager.Qumulo
-      safeName: AzureResourceManagerQumulo
+    - name: Azure.ResourceManager.LiftrQumulo
+      safeName: AzureResourceManagerLiftrQumulo
