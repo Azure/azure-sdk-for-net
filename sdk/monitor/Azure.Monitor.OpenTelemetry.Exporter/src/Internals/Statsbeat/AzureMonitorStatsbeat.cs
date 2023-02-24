@@ -13,9 +13,9 @@ using Azure.Monitor.OpenTelemetry.Exporter.Internals.ConnectionString;
 using OpenTelemetry;
 using OpenTelemetry.Metrics;
 
-namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
+namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat
 {
-    internal sealed class Statsbeat : IDisposable
+    internal sealed class AzureMonitorStatsbeat : IDisposable
     {
         internal const string Statsbeat_ConnectionString_NonEU = "InstrumentationKey=00000000-0000-0000-0000-000000000000;IngestionEndpoint=https://NonEU.in.applicationinsights.azure.com/";
 
@@ -97,7 +97,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             "westus3",
         };
 
-        internal Statsbeat(ConnectionVars connectionStringVars)
+        internal AzureMonitorStatsbeat(ConnectionVars connectionStringVars)
         {
             _statsbeat_ConnectionString = GetStatsbeatConnectionString(connectionStringVars?.IngestionEndpoint);
 
