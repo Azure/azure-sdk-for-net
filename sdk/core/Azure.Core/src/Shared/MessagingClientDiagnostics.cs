@@ -66,7 +66,7 @@ namespace Azure.Core.Shared
                 }
 
                 scope.AddAttribute(NetPeerName, _fullyQualifiedNamespace);
-                scope.AddAttribute(operation == default || operation == MessagingDiagnosticOperation.Publish ? DestinationName : SourceName, _entityPath);
+                scope.AddAttribute(operation == MessagingDiagnosticOperation.Receive ? SourceName : DestinationName, _entityPath);
             }
             else
             {
