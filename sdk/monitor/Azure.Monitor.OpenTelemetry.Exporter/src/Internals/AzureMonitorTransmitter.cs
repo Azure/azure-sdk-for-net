@@ -10,6 +10,7 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.ConnectionString;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.PersistentStorage;
+using Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat;
 using Azure.Monitor.OpenTelemetry.Exporter.Models;
 
 using OpenTelemetry;
@@ -51,10 +52,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             try
             {
                 // Do not initialize statsbeat for statsbeat.
-                if (connectionVars != null && connectionVars.InstrumentationKey != ConnectionStringParser.GetValues(Statsbeat.Statsbeat_ConnectionString_EU).InstrumentationKey && connectionVars.InstrumentationKey != ConnectionStringParser.GetValues(Statsbeat.Statsbeat_ConnectionString_NonEU).InstrumentationKey)
+                if (connectionVars != null && connectionVars.InstrumentationKey != ConnectionStringParser.GetValues(AzureMonitorStatsbeat.Statsbeat_ConnectionString_EU).InstrumentationKey && connectionVars.InstrumentationKey != ConnectionStringParser.GetValues(AzureMonitorStatsbeat.Statsbeat_ConnectionString_NonEU).InstrumentationKey)
                 {
                     // TODO: Implement IDisposable for transmitter and dispose statsbeat.
-                    _ = new Statsbeat(connectionVars);
+                    _ = new AzureMonitorStatsbeat(connectionVars);
                 }
             }
             catch (Exception ex)
