@@ -18,7 +18,7 @@ builder.Services.AddAzureMonitorOpenTelemetry(o =>
 var app = builder.Build();
 app.MapGet("/", () =>
 {
-    app.Logger.LogError("Hello World!");
+    app.Logger.LogInformation("Hello World!");
     return $"Hello World! OpenTelemetry Trace: {Activity.Current?.Id}";
 });
 
