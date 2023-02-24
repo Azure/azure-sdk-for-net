@@ -123,25 +123,25 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                     var sessionReceiver = (ServiceBusSessionReceiver)receiver;
                     await sessionReceiver.RenewSessionLockAsync();
                     var renewSessionActivity = listener.AssertAndRemoveActivity(DiagnosticProperty.RenewSessionLockActivityName);
-                    AssertCommonTags(renewSessionActivity, receiver.EntityPath, receiver.FullyQualifiedNamespace, MessagingDiagnosticOperation.RenewSessionLock, 1);
+                    AssertCommonTags(renewSessionActivity, receiver.EntityPath, receiver.FullyQualifiedNamespace, default, 1);
 
                     // set state
                     var state = new BinaryData("state");
                     await sessionReceiver.SetSessionStateAsync(state);
                     var setStateActivity = listener.AssertAndRemoveActivity(DiagnosticProperty.SetSessionStateActivityName);
-                    AssertCommonTags(setStateActivity, sessionReceiver.EntityPath, sessionReceiver.FullyQualifiedNamespace, MessagingDiagnosticOperation.SetSessionState, 1);
+                    AssertCommonTags(setStateActivity, sessionReceiver.EntityPath, sessionReceiver.FullyQualifiedNamespace, default, 1);
 
                     // get state
                     var getState = await sessionReceiver.GetSessionStateAsync();
                     Assert.AreEqual(state.ToArray(), getState.ToArray());
                     var getStateActivity = listener.AssertAndRemoveActivity(DiagnosticProperty.GetSessionStateActivityName);
-                    AssertCommonTags(getStateActivity, sessionReceiver.EntityPath, sessionReceiver.FullyQualifiedNamespace, MessagingDiagnosticOperation.GetSessionState, 1);
+                    AssertCommonTags(getStateActivity, sessionReceiver.EntityPath, sessionReceiver.FullyQualifiedNamespace, default, 1);
                 }
                 else
                 {
                     await receiver.RenewMessageLockAsync(receivedMsgs[4]);
                     var renewMessageActivity = listener.AssertAndRemoveActivity(DiagnosticProperty.RenewMessageLockActivityName);
-                    AssertCommonTags(renewMessageActivity, receiver.EntityPath, receiver.FullyQualifiedNamespace, MessagingDiagnosticOperation.RenewMessageLock, 1);
+                    AssertCommonTags(renewMessageActivity, receiver.EntityPath, receiver.FullyQualifiedNamespace, default, 1);
                 }
 
                 // schedule
@@ -165,7 +165,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
 
                     await sender.CancelScheduledMessageAsync(seq);
                     var cancelScope = listener.AssertAndRemoveActivity(DiagnosticProperty.CancelActivityName);
-                    AssertCommonTags(cancelScope, sender.EntityPath, sender.FullyQualifiedNamespace, MessagingDiagnosticOperation.CancelScheduled, 1);
+                    AssertCommonTags(cancelScope, sender.EntityPath, sender.FullyQualifiedNamespace, default, 1);
                 }
 
                 // send a batch
@@ -198,10 +198,9 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                 {
                     if (activity.OperationName == DiagnosticProperty.ProcessMessageActivityName)
                     {
-                        Assert.IsTrue(MessagingClientDiagnostics.TryExtractDiagnosticId(messages[messageProcessedCt].ApplicationProperties, out var diagnosticId));
-                        Assert.AreEqual(
-                            diagnosticId,
-                            activity.ParentId);
+                        Assert.IsTrue(MessagingClientDiagnostics.TryExtractTraceContext(messages[messageProcessedCt].ApplicationProperties, out var traceparent, out var tracestate));
+                        Assert.AreEqual(traceparent, activity.ParentId);
+                        Assert.AreEqual(tracestate, activity.TraceStateString);
                         callbackExecuted = true;
                     }
                 });
@@ -257,10 +256,9 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                 {
                     if (activity.OperationName == DiagnosticProperty.ProcessSessionMessageActivityName)
                     {
-                        Assert.IsTrue(MessagingClientDiagnostics.TryExtractDiagnosticId(messages[messageProcessedCt].ApplicationProperties, out var diagnosticId));
-                        Assert.AreEqual(
-                            diagnosticId,
-                            activity.ParentId);
+                        Assert.IsTrue(MessagingClientDiagnostics.TryExtractTraceContext(messages[messageProcessedCt].ApplicationProperties, out var traceparent, out var tracestate));
+                        Assert.AreEqual(traceparent, activity.ParentId);
+                        Assert.AreEqual(tracestate, activity.TraceStateString);
                         callbackExecuted = true;
                     }
                 });
@@ -320,7 +318,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                         Name = ruleName
                     });
                     var createRuleActivity = listener.AssertAndRemoveActivity(DiagnosticProperty.CreateRuleActivityName);
-                    AssertCommonTags(createRuleActivity, ruleManager.SubscriptionPath, ruleManager.FullyQualifiedNamespace, MessagingDiagnosticOperation.CreateRule, 0);
+                    AssertCommonTags(createRuleActivity, ruleManager.SubscriptionPath, ruleManager.FullyQualifiedNamespace, default, 0);
                 }
 
                 int ruleCount = 0;
@@ -334,10 +332,10 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
 
                 // two get rule scopes (1st scope for the initial 100 rules, 2nd scope for the final rule)
                 var getRuleActivity = listener.AssertAndRemoveActivity(DiagnosticProperty.GetRulesActivityName);
-                AssertCommonTags(getRuleActivity, ruleManager.SubscriptionPath, ruleManager.FullyQualifiedNamespace, MessagingDiagnosticOperation.GetRules, 0);
+                AssertCommonTags(getRuleActivity, ruleManager.SubscriptionPath, ruleManager.FullyQualifiedNamespace, default, 0);
 
                 getRuleActivity = listener.AssertAndRemoveActivity(DiagnosticProperty.GetRulesActivityName);
-                AssertCommonTags(getRuleActivity, ruleManager.SubscriptionPath, ruleManager.FullyQualifiedNamespace, MessagingDiagnosticOperation.GetRules, 0);
+                AssertCommonTags(getRuleActivity, ruleManager.SubscriptionPath, ruleManager.FullyQualifiedNamespace, default, 0);
             }
         }
 
@@ -372,7 +370,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
             var entityKey = operation == MessagingDiagnosticOperation.Publish ? MessagingClientDiagnostics.DestinationName : MessagingClientDiagnostics.SourceName;
             CollectionAssert.Contains(tags, new KeyValuePair<string ,string>(entityKey, entityName));
             CollectionAssert.Contains(tags, new KeyValuePair<string, string>(MessagingClientDiagnostics.MessagingSystem, DiagnosticProperty.ServiceBusServiceContext));
-            CollectionAssert.Contains(tags, new KeyValuePair<string, string>(MessagingClientDiagnostics.MessagingOperation, operation.ToString()));
+            if (operation != default)
+                CollectionAssert.Contains(tags, new KeyValuePair<string, string>(MessagingClientDiagnostics.MessagingOperation, operation.ToString()));
             if (messageCount > 1)
                 CollectionAssert.Contains(tags, new KeyValuePair<string, int>(MessagingClientDiagnostics.BatchCount, messageCount));
             else

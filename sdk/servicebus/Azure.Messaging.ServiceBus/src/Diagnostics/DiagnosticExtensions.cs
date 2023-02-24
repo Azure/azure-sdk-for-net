@@ -25,11 +25,12 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
 
         public static void SetMessageAsParent(this DiagnosticScope scope, ServiceBusReceivedMessage message)
         {
-            if (MessagingClientDiagnostics.TryExtractDiagnosticId(
+            if (MessagingClientDiagnostics.TryExtractTraceContext(
                     message.ApplicationProperties,
-                    out string diagnosticId))
+                    out string traceparent,
+                    out string tracestate))
             {
-                scope.SetTraceparent(diagnosticId);
+                scope.SetTraceContext(traceparent, tracestate);
             }
         }
 
@@ -119,11 +120,12 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
 
         private static void AddLinkedDiagnostics(this DiagnosticScope scope, IReadOnlyDictionary<string, object> properties)
         {
-            if (MessagingClientDiagnostics.TryExtractDiagnosticId(
+            if (MessagingClientDiagnostics.TryExtractTraceContext(
                     properties,
-                    out string diagnosticId))
+                    out string traceparent,
+                    out string tracestate))
             {
-                scope.AddLink(diagnosticId, null);
+                scope.AddLink(traceparent, tracestate);
             }
         }
 
@@ -139,11 +141,12 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
 
         private static void AddLinkedDiagnostics(this DiagnosticScope scope, IDictionary<string, object> properties)
         {
-            if (MessagingClientDiagnostics.TryExtractDiagnosticId(
+            if (MessagingClientDiagnostics.TryExtractTraceContext(
                 properties,
-                out string diagnosticId))
+                out string traceparent,
+                out string tracestate))
             {
-                scope.AddLink(diagnosticId, null);
+                scope.AddLink(traceparent, tracestate);
             }
         }
 

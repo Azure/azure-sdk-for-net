@@ -1147,8 +1147,7 @@ namespace Azure.Messaging.ServiceBus
 
             using DiagnosticScope scope = ClientDiagnostics.CreateScope(
                 DiagnosticProperty.RenewMessageLockActivityName,
-                DiagnosticScope.ActivityKind.Client,
-                MessagingDiagnosticOperation.RenewMessageLock);
+                DiagnosticScope.ActivityKind.Client);
             scope.Start();
 
             DateTimeOffset lockedUntil;

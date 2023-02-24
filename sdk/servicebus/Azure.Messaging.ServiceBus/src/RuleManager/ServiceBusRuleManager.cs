@@ -165,8 +165,7 @@ namespace Azure.Messaging.ServiceBus
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope(
                 DiagnosticProperty.CreateRuleActivityName,
-                DiagnosticScope.ActivityKind.Client,
-                MessagingDiagnosticOperation.CreateRule);
+                DiagnosticScope.ActivityKind.Client);
             scope.Start();
 
             try
@@ -205,8 +204,7 @@ namespace Azure.Messaging.ServiceBus
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope(
                 DiagnosticProperty.DeleteRuleActivityName,
-                DiagnosticScope.ActivityKind.Client,
-                MessagingDiagnosticOperation.DeleteRule);
+                DiagnosticScope.ActivityKind.Client);
             scope.Start();
 
             try
@@ -243,8 +241,7 @@ namespace Azure.Messaging.ServiceBus
                 List<RuleProperties> ruleProperties;
                 using (DiagnosticScope scope = _clientDiagnostics.CreateScope(
                     DiagnosticProperty.GetRulesActivityName,
-                    DiagnosticScope.ActivityKind.Client,
-                    MessagingDiagnosticOperation.GetRules))
+                    DiagnosticScope.ActivityKind.Client))
                 {
                     scope.Start();
                     try

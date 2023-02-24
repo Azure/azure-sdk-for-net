@@ -107,7 +107,7 @@ namespace Azure.Core.Pipeline
         /// <param name="traceparent">The traceparent for the link.</param>
         /// <param name="tracestate">The tracestate for the link.</param>
         /// <param name="attributes">Optional attributes to associate with the link.</param>
-        public void AddLink(string traceparent, string tracestate, IDictionary<string, string>? attributes = null)
+        public void AddLink(string traceparent, string? tracestate, IDictionary<string, string>? attributes = null)
         {
             _activityAdapter?.AddLink(traceparent, tracestate, attributes);
         }
@@ -260,7 +260,7 @@ namespace Azure.Core.Pipeline
                 return linkCollection;
             }
 
-            public void AddLink(string traceparent, string tracestate, IDictionary<string, string>? attributes)
+            public void AddLink(string traceparent, string? tracestate, IDictionary<string, string>? attributes)
             {
                 var linkedActivity = new Activity("LinkedActivity");
                 linkedActivity.SetW3CFormat();

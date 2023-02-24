@@ -27,6 +27,8 @@ namespace Azure.Core.Shared
         public const string MessagingOperation = "messaging.operation";
         public const string NetPeerName = "net.peer.name";
         public const string BatchCount = "messaging.batch.message_count";
+        public const string TraceParent = "traceparent";
+        public const string TraceState = "tracestate";
         #endregion
 
         #region legacy compat attributes
@@ -52,15 +54,19 @@ namespace Azure.Core.Shared
         public DiagnosticScope CreateScope(
             string activityName,
             DiagnosticScope.ActivityKind kind,
-            MessagingDiagnosticOperation diagnosticOperation)
+            MessagingDiagnosticOperation operation = default)
         {
             DiagnosticScope scope = _scopeFactory.CreateScope(activityName, kind);
             if (ActivityExtensions.SupportsActivitySource())
             {
                 scope.AddAttribute(MessagingSystem, _messagingSystem);
-                scope.AddAttribute(MessagingOperation, diagnosticOperation.ToString());
+                if (operation != default)
+                {
+                    scope.AddAttribute(MessagingOperation, operation.ToString());
+                }
+
                 scope.AddAttribute(NetPeerName, _fullyQualifiedNamespace);
-                scope.AddAttribute(diagnosticOperation == MessagingDiagnosticOperation.Publish ? DestinationName : SourceName, _entityPath);
+                scope.AddAttribute(operation == MessagingDiagnosticOperation.Publish ? DestinationName : SourceName, _entityPath);
             }
             else
             {
@@ -73,44 +79,72 @@ namespace Azure.Core.Shared
         }
 
         /// <summary>
-        ///   Attempts to extract a diagnostic id from a message's properties.
+        ///   Attempts to extract the trace context from a message's properties.
         /// </summary>
         ///
-        /// <param name="properties">The properties holding the diagnostic id.</param>
-        /// <param name="id">The value of the diagnostics identifier assigned to the event. </param>
-        ///
+        /// <param name="properties">The properties holding the trace context.</param>
+        /// <param name="traceparent">The trace parent of the message.</param>
+        /// <param name="tracestate">The trace state of the message.</param>
         /// <returns><c>true</c> if the message properties contained the diagnostic id; otherwise, <c>false</c>.</returns>
-        public static bool TryExtractDiagnosticId(IReadOnlyDictionary<string, object> properties, out string? id)
+        public static bool TryExtractTraceContext(IReadOnlyDictionary<string, object> properties, out string? traceparent, out string? tracestate)
         {
-            id = null;
+            traceparent = null;
+            tracestate = null;
 
-            if (properties.TryGetValue(DiagnosticIdAttribute, out var objectId) && objectId is string stringId)
+            if (properties.TryGetValue(DiagnosticIdAttribute, out var diagnosticId) && diagnosticId is string diagnosticIdString)
             {
-                id = stringId;
+                traceparent = diagnosticIdString;
+                if (properties.TryGetValue(TraceState, out object state) && state is string stateString)
+                {
+                    tracestate = stateString;
+                }
                 return true;
             }
 
+            if (properties.TryGetValue(TraceParent, out var traceParent) && traceParent is string traceParentString)
+            {
+                traceparent = traceParentString;
+                if (properties.TryGetValue(TraceState, out object state) && state is string stateString)
+                {
+                    tracestate = stateString;
+                }
+                return true;
+            }
             return false;
         }
 
         /// <summary>
-        ///   Attempts to extract a diagnostic id from a message's properties.
+        ///   Attempts to extract the trace context from a message's properties.
         /// </summary>
         ///
-        /// <param name="properties">The properties holding the diagnostic id.</param>
-        /// <param name="id">The value of the diagnostics identifier assigned to the event. </param>
-        ///
+        /// <param name="properties">The properties holding the trace context.</param>
+        /// <param name="traceparent">The trace parent of the message.</param>
+        /// <param name="tracestate">The trace state of the message.</param>
         /// <returns><c>true</c> if the message properties contained the diagnostic id; otherwise, <c>false</c>.</returns>
-        public static bool TryExtractDiagnosticId(IDictionary<string, object> properties, out string? id)
+        public static bool TryExtractTraceContext(IDictionary<string, object> properties, out string? traceparent, out string? tracestate)
         {
-            id = null;
+            traceparent = null;
+            tracestate = null;
 
-            if (properties.TryGetValue(DiagnosticIdAttribute, out var objectId) && objectId is string stringId)
+            if (properties.TryGetValue(DiagnosticIdAttribute, out var diagnosticId) && diagnosticId is string diagnosticIdString)
             {
-                id = stringId;
+                traceparent = diagnosticIdString;
+                if (properties.TryGetValue(TraceState, out object state) && state is string stateString)
+                {
+                    tracestate = stateString;
+                }
                 return true;
             }
 
+            if (properties.TryGetValue(TraceParent, out var traceParent) && traceParent is string traceParentString)
+            {
+                traceparent = traceParentString;
+                if (properties.TryGetValue(TraceState, out object state) && state is string stateString)
+                {
+                    tracestate = stateString;
+                }
+                return true;
+            }
             return false;
         }
 
@@ -122,7 +156,7 @@ namespace Azure.Core.Shared
         /// <param name="activityName">The activity name to use for the diagnostic scope.</param>
         public void InstrumentMessage(IDictionary<string, object> properties, string activityName)
         {
-            if (!properties.ContainsKey(DiagnosticIdAttribute))
+            if (!properties.ContainsKey(DiagnosticIdAttribute) && !properties.ContainsKey(TraceParent))
             {
                 using DiagnosticScope messageScope = CreateScope(
                     activityName,
@@ -134,6 +168,8 @@ namespace Azure.Core.Shared
                 if (activity != null)
                 {
                     properties[DiagnosticIdAttribute] = activity.Id;
+                    properties[TraceParent] = activity.Id;
+                    properties[TraceState] = activity.TraceStateString;
                 }
             }
         }

@@ -560,8 +560,7 @@ namespace Azure.Messaging.ServiceBus
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope(
                 DiagnosticProperty.CancelActivityName,
-                DiagnosticScope.ActivityKind.Client,
-                MessagingDiagnosticOperation.CancelScheduled);
+                DiagnosticScope.ActivityKind.Client);
             scope.Start();
 
             try
