@@ -124,12 +124,13 @@ namespace Azure.Core.Pipeline
         }
 
         /// <summary>
-        /// Sets the trace parent for the current scope.
+        /// Sets the trace context for the current scope.
         /// </summary>
         /// <param name="traceparent">The trace parent to set for the current scope.</param>
-        public void SetTraceparent(string traceparent)
+        /// <param name="tracestate">The trace state to set for the current scope.</param>
+        public void SetTraceContext(string traceparent, string? tracestate = default)
         {
-            _activityAdapter?.SetTraceparent(traceparent);
+            _activityAdapter?.SetTraceContext(traceparent, tracestate);
         }
 
         public void Dispose()
@@ -199,6 +200,7 @@ namespace Azure.Core.Pipeline
             private DateTimeOffset _startTime;
             private List<Activity>? _links;
             private string? _traceparent;
+            private string? _tracestate;
 
             public ActivityAdapter(object? activitySource, DiagnosticSource diagnosticSource, string activityName, ActivityKind kind, object? diagnosticSourceArgs)
             {
@@ -334,6 +336,11 @@ namespace Azure.Core.Pipeline
                         _currentActivity.SetParentId(_traceparent);
                     }
 
+                    if (_tracestate != null)
+                    {
+                        _currentActivity.SetTraceState(_tracestate);
+                    }
+
                     _currentActivity.Start();
                 }
 
@@ -351,7 +358,8 @@ namespace Azure.Core.Pipeline
                     startTime: _startTime,
                     tags: _tagCollection,
                     links: GetActivitySourceLinkCollection(),
-                    parentId: _traceparent);
+                    traceparent: _traceparent,
+                    tracestate: _tracestate);
             }
 
             public void SetStartTime(DateTime startTime)
@@ -365,13 +373,16 @@ namespace Azure.Core.Pipeline
                 _diagnosticSource?.Write(_activityName + ".Exception", exception);
             }
 
-            public void SetTraceparent(string traceparent)
+            public void SetTraceContext(string traceparent, string? tracestate)
             {
+                Argument.AssertNotNull(traceparent, nameof(traceparent));
+
                 if (_currentActivity != null)
                 {
                     throw new InvalidOperationException("Traceparent can not be set after the activity is started.");
                 }
                 _traceparent = traceparent;
+                _tracestate = tracestate;
             }
 
             public void Dispose()
@@ -418,13 +429,14 @@ namespace Azure.Core.Pipeline
         private static Action<Activity, string?>? SetTraceStateStringMethod;
         private static Func<Activity, int>? GetIdFormatMethod;
         private static Action<Activity, string, object?>? ActivityAddTagMethod;
-        private static Func<object, string, int, string?, ICollection<KeyValuePair<string, object>>?, IList?, DateTimeOffset, Activity?>? ActivitySourceStartActivityMethod;
+        private static Func<object, string, int, object?, ICollection<KeyValuePair<string, object>>?, IList?, DateTimeOffset, Activity?>? ActivitySourceStartActivityMethod;
         private static Func<object, bool>? ActivitySourceHasListenersMethod;
         private static Func<string, string?, ICollection<KeyValuePair<string, object>>?, object?>? CreateActivityLinkMethod;
         private static Func<ICollection<KeyValuePair<string,object>>?>? CreateTagsCollectionMethod;
         private static Func<Activity, string, object?>? GetCustomPropertyMethod;
         private static Action<Activity, string, object>? SetCustomPropertyMethod;
         private static readonly ParameterExpression ActivityParameter = Expression.Parameter(typeof(Activity));
+        private static MethodInfo? ParseActivityContextMethod;
 
         public static object? GetCustomProperty(this Activity activity, string propertyName)
         {
@@ -687,12 +699,22 @@ namespace Azure.Core.Pipeline
             return ActivitySourceHasListenersMethod.Invoke(activitySource);
         }
 
-        public static Activity? ActivitySourceStartActivity(object? activitySource, string activityName, int kind, DateTimeOffset startTime, ICollection<KeyValuePair<string, object>>? tags, IList? links, string? parentId)
+        public static Activity? ActivitySourceStartActivity(
+            object? activitySource,
+            string activityName,
+            int kind,
+            DateTimeOffset startTime,
+            ICollection<KeyValuePair<string, object>>? tags,
+            IList? links,
+            string? traceparent,
+            string? tracestate)
         {
             if (activitySource == null)
             {
                 return null;
             }
+
+            object? activityContext = default;
 
             if (ActivitySourceStartActivityMethod == null)
             {
@@ -709,7 +731,7 @@ namespace Azure.Core.Pipeline
                     {
                         typeof(string),
                         ActivityKindType,
-                        typeof(string),
+                        ActivityContextType,
                         typeof(IEnumerable<KeyValuePair<string, object>>),
                         typeof(IEnumerable<>).MakeGenericType(ActivityLinkType),
                         typeof(DateTimeOffset)
@@ -724,27 +746,38 @@ namespace Azure.Core.Pipeline
                         var sourceParameter = Expression.Parameter(typeof(object));
                         var nameParameter = Expression.Parameter(typeof(string));
                         var kindParameter = Expression.Parameter(typeof(int));
-                        var parentIdParameter = Expression.Parameter(typeof(string));
+                        var contextParameter = Expression.Parameter(typeof(object));
                         var startTimeParameter = Expression.Parameter(typeof(DateTimeOffset));
                         var tagsParameter = Expression.Parameter(typeof(ICollection<KeyValuePair<string, object>>));
                         var linksParameter = Expression.Parameter(typeof(IList));
                         var methodParameter = method.GetParameters();
-                        ActivitySourceStartActivityMethod = Expression.Lambda<Func<object, string, int, string?, ICollection<KeyValuePair<string, object>>?, IList?, DateTimeOffset, Activity?>>(
+                        ParseActivityContextMethod = ActivityContextType.GetMethod("Parse", BindingFlags.Static | BindingFlags.Public);
+
+                        ActivitySourceStartActivityMethod = Expression.Lambda<Func<object, string, int, object?, ICollection<KeyValuePair<string, object>>?, IList?, DateTimeOffset, Activity?>>(
                             Expression.Call(
                                 Expression.Convert(sourceParameter, method.DeclaringType!),
                                 method,
                                 nameParameter,
                                 Expression.Convert(kindParameter,  methodParameter[1].ParameterType),
-                                Expression.Convert(parentIdParameter, methodParameter[2].ParameterType),
+                                Expression.Convert(contextParameter, methodParameter[2].ParameterType),
                                 Expression.Convert(tagsParameter,  methodParameter[3].ParameterType),
                                 Expression.Convert(linksParameter,  methodParameter[4].ParameterType),
                                 Expression.Convert(startTimeParameter,  methodParameter[5].ParameterType)),
-                            sourceParameter, nameParameter, kindParameter, parentIdParameter, tagsParameter, linksParameter, startTimeParameter).Compile();
+                            sourceParameter, nameParameter, kindParameter, contextParameter, tagsParameter, linksParameter, startTimeParameter).Compile();
                     }
                 }
             }
 
-            return ActivitySourceStartActivityMethod.Invoke(activitySource, activityName, kind, parentId, tags, links, startTime);
+            if (ActivityContextType != null && ParseActivityContextMethod != null)
+            {
+                if (traceparent != null)
+                    activityContext = ParseActivityContextMethod.Invoke(null, new[] {traceparent, tracestate})!;
+                else
+                    // because ActivityContext is a struct, we need to create a default instance rather than allowing the argument to be null
+                    activityContext = Activator.CreateInstance(ActivityContextType);
+            }
+
+            return ActivitySourceStartActivityMethod.Invoke(activitySource, activityName, kind, activityContext, tags, links, startTime);
         }
 
         public static object? CreateActivitySource(string name)
