@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat
 {
-    internal class Constants
+    internal static class Constants
     {
         internal const string Statsbeat_ConnectionString_NonEU = "InstrumentationKey=00000000-0000-0000-0000-000000000000;IngestionEndpoint=https://NonEU.in.applicationinsights.azure.com/";
 
