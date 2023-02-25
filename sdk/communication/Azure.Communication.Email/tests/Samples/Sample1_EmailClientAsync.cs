@@ -67,7 +67,7 @@ namespace Azure.Communication.Email.Tests.Samples
                 {
                     break;
                 }
-                await Task.Delay(10);
+                await Task.Delay(100);
             }
 
             if (emailSendOperation.HasValue)
