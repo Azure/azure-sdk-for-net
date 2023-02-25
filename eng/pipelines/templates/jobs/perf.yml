@@ -13,7 +13,7 @@ parameters:
   default: '.*'
 - name: Arguments
   type: string
-  default: '.*' 
+  default: '.*'
 - name: Iterations
   type: number
   default: '5'
@@ -35,6 +35,13 @@ extends:
     - template: /eng/pipelines/templates/steps/install-dotnet.yml
       parameters:
         EnableNuGetCache: false
+    - ${{ if parameters.Profile }}:
+      - task: DotNetCoreCLI@2
+        displayName: 'Install dotnet-trace'
+        inputs:
+          command: custom
+          custom: tool
+          arguments: 'install -g dotnet-trace'
     ServiceDirectory: ${{ parameters.ServiceDirectory }}
     PackageVersions: ${{ parameters.PackageVersions }}
     Tests: ${{ parameters.Tests }}
