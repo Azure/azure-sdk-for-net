@@ -110,6 +110,16 @@ namespace Azure.Core
         public static AzureLocation WestIndia { get; } = CreateStaticReference("westindia", "West India");
 
         /// <summary>
+        /// Public cloud location for Jio India West.
+        /// </summary>
+        public static AzureLocation JioIndiaWest { get; } = CreateStaticReference("jioindiawest", "Jio India West");
+
+        /// <summary>
+        /// Public cloud location for Jio India Central.
+        /// </summary>
+        public static AzureLocation JioIndiaCentral { get; } = CreateStaticReference("jioindiacentral", "Jio India Central");
+
+        /// <summary>
         /// Public cloud location for Canada Central.
         /// </summary>
         public static AzureLocation CanadaCentral { get; } = CreateStaticReference("canadacentral", "Canada Central");
@@ -233,6 +243,21 @@ namespace Azure.Core
         /// Public cloud location for Brazil Southeast.
         /// </summary>
         public static AzureLocation BrazilSoutheast { get; } = CreateStaticReference("brazilsoutheast", "Brazil Southeast");
+
+        /// <summary>
+        /// Public cloud location for West US 3.
+        /// </summary>
+        public static AzureLocation WestUS3 { get; } = CreateStaticReference("westus3", "West US 3");
+
+        /// <summary>
+        /// Public cloud location for Sweden Central.
+        /// </summary>
+        public static AzureLocation SwedenCentral { get; } = CreateStaticReference("swedencentral", "Sweden Central");
+
+        /// <summary>
+        /// Public cloud location for Qatar Central.
+        /// </summary>
+        public static AzureLocation QatarCentral { get; } = CreateStaticReference("qatarcentral", "Qatar Central");
 
         /// <summary>
         /// Public cloud location for China North.
