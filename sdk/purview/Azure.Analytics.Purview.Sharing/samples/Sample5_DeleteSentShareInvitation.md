@@ -1,4 +1,4 @@
-# Azure Share Client Samples - Delete Sent Share Invitation
+# Azure purview share client samples - Delete sent share invitation
 
 ## Import the namespaces
 
@@ -9,7 +9,7 @@ using Azure.Core;
 using Azure.Identity;
 ```
 
-## Delete Sent Share Invitation
+## Delete sent share invitation
 
 ```C# Snippet:SentSharesClientSample_DeleteSentShareInvitation
 var credential = new DefaultAzureCredential();

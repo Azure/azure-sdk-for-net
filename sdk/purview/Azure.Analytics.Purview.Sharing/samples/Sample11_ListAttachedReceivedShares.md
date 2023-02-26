@@ -1,4 +1,4 @@
-# Azure Share Client Samples - List Attached Received Shares
+# Azure purview share client samples - List attached received shares
 
 ## Import the namespaces
 
@@ -9,7 +9,7 @@ using Azure.Core;
 using Azure.Identity;
 ```
 
-## List Attached Received Shares
+## List attached received shares
 
 ```C# Snippet:ReceivedSharesClientSample_ListAttachedReceivedShares
 var credential = new DefaultAzureCredential();

@@ -1,4 +1,4 @@
-# Azure Share Client Samples - Create Sent Share Invitation
+# Azure purview share client samples - Create sent share invitation
 
 ## Import the namespaces
 
@@ -9,7 +9,7 @@ using Azure.Core;
 using Azure.Identity;
 ```
 
-## Create Sent Share Invitation
+## Create sent share invitation
 
 ```C# Snippet:SentSharesClientSample_CreateSentShareInvitation
 var credential = new DefaultAzureCredential();

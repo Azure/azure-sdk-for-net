@@ -1,4 +1,4 @@
-# Azure Share Client Samples - Create Sent Share
+# Azure purview share client samples - Create sent share
 
 ## Import the namespaces
 
@@ -9,7 +9,7 @@ using Azure.Core;
 using Azure.Identity;
 ```
 
-## Create a Sent Share
+## Create a sent share
 
 ```C# Snippet:SentSharesClientSample_CreateSentSharesClient
 var credential = new DefaultAzureCredential();

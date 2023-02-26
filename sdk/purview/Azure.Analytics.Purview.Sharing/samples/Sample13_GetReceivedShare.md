@@ -1,4 +1,4 @@
-# Azure Share Client Samples - Get Received Share
+# Azure purview share client samples - Get received share
 
 ## Import the namespaces
 
@@ -9,7 +9,7 @@ using Azure.Core;
 using Azure.Identity;
 ```
 
-## Get Received Share
+## Get received share
 
 ```C# Snippet:ReceivedSharesClientSample_GetReceivedShare
 var credential = new DefaultAzureCredential();

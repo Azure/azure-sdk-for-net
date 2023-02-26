@@ -1,4 +1,4 @@
-# Azure Share Client Samples - List Detached Received Shares
+# Azure purview share client samples - List detached received shares
 
 ## Import the namespaces
 
@@ -9,7 +9,7 @@ using Azure.Core;
 using Azure.Identity;
 ```
 
-## List Detached Received Shares
+## List detached received shares
 
 ```C# Snippet:ReceivedSharesClientSample_ListDetachedReceivedShares
 var credential = new DefaultAzureCredential();

@@ -1,4 +1,4 @@
-# Azure Share Client Samples - Delete Sent Share
+# Azure share client samples - Delete sent share
 
 ## Import the namespaces
 
@@ -9,7 +9,7 @@ using Azure.Core;
 using Azure.Identity;
 ```
 
-## Delete Sent Share
+## Delete sent share
 
 ```C# Snippet:SentSharesClientSample_DeleteSentShare
 var credential = new DefaultAzureCredential();

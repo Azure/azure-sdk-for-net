@@ -1,4 +1,4 @@
-# Azure Share Client Samples - Delete Received Share
+# Azure purview share client samples - Delete received share
 
 ## Import the namespaces
 
@@ -9,7 +9,7 @@ using Azure.Core;
 using Azure.Identity;
 ```
 
-## Delete Received Share
+## Delete received share
 
 ```C# Snippet:ReceivedSharesClientSample_DeleteReceivedShare
 var credential = new DefaultAzureCredential();
