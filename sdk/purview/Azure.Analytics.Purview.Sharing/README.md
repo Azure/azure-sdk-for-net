@@ -44,7 +44,7 @@ var receivedSharesClient = new ReceivedSharesClient(endPoint, credential);
 
 ### Protocol Methods
 
-Operations exposed by the Purview Share SDK for .NET use *protocol methods* to expose the underlying REST operations. You can learn more about how to use SDK Clients which use protocol methods in our [documentation][protocol_client_quickstart].
+Operations exposed by the Purview Share client library for .NET use *protocol methods* to expose the underlying REST operations. You can learn more about how to use Azure SDK clients which use protocol methods in our [documentation][protocol_client_quickstart].
 
 ### Thread safety
 
@@ -66,7 +66,7 @@ We guarantee that all client instance methods are thread-safe and independent of
 
 The following section shows you how to initialize and authenticate your client and share data.
 
-### Create sent share
+### Create a sent share
 
 ```C# Snippet:SentSharesClientSample_CreateSentShare
 var credential = new DefaultAzureCredential();
@@ -107,7 +107,7 @@ var data = new
 Operation<BinaryData> createResponse = await sentShareClient.CreateOrReplaceSentShareAsync(WaitUntil.Completed, "sentShareId", RequestContent.Create(data));
 ```
 
-### Get sent share
+### Get a sent share
 
 ```C# Snippet:SentSharesClientSample_GetSentShare
 var credential = new DefaultAzureCredential();
@@ -127,7 +127,7 @@ var sentShareClient = new SentSharesClient(endPoint, credential);
 List<BinaryData> response = await sentShareClient.GetAllSentSharesAsync("referenceName").ToEnumerableAsync();
 ```
 
-### Create sent share invitation
+### Create a sent share invitation
 
 ```C# Snippet:SentSharesClientSample_CreateSentShareInvitation
 var credential = new DefaultAzureCredential();
@@ -147,7 +147,7 @@ var data = new
 Response response = await sentShareClient.CreateSentShareInvitationAsync("sentShareId", "sentShareInvitationId", RequestContent.Create(data));
 ```
 
-### Get sent share invitation
+### Get a sent share invitation
 
 ```C# Snippet:SentSharesClientSample_GetSentShareInvitation
 var credential = new DefaultAzureCredential();
@@ -212,7 +212,7 @@ var data = new
 Operation<BinaryData> createResponse = await receivedSharesClient.CreateOrReplaceReceivedShareAsync(WaitUntil.Completed, "receivedShareId", RequestContent.Create(data));
 ```
 
-### Get received share
+### Get a received share
 
 ```C# Snippet:ReceivedSharesClientSample_GetReceivedShare
 var credential = new DefaultAzureCredential();
@@ -232,7 +232,7 @@ var receivedSharesClient = new ReceivedSharesClient(endPoint, credential);
 List<BinaryData> createResponse = await receivedSharesClient.GetAllAttachedReceivedSharesAsync("referenceName").ToEnumerableAsync();
 ```
 
-### Delete received share
+### Delete a received share
 
 ```C# Snippet:ReceivedSharesClientSample_DeleteReceivedShare
 var credential = new DefaultAzureCredential();
@@ -242,7 +242,7 @@ var receivedSharesClient = new ReceivedSharesClient(endPoint, credential);
 Operation operation = await receivedSharesClient.DeleteReceivedShareAsync(WaitUntil.Completed, "receivedShareId");
 ```
 
-### Delete sent share invitation
+### Delete a sent share invitation
 
 ```C# Snippet:SentSharesClientSample_DeleteSentShareInvitation
 var credential = new DefaultAzureCredential();
@@ -252,7 +252,7 @@ var sentShareClient = new SentSharesClient(endPoint, credential);
 Operation operation = await sentShareClient.DeleteSentShareInvitationAsync(WaitUntil.Completed, "sentShareId", "sentShareInvitationId");
 ```
 
-### Delete sent share
+### Delete a sent share
 
 ```C# Snippet:SentSharesClientSample_DeleteSentShare
 var credential = new DefaultAzureCredential();
