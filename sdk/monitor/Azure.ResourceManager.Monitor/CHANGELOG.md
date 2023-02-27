@@ -10,6 +10,11 @@
 
 ### Other Changes
 
+- Bump api-version of `ActionGroups` to `2023-01-01`.
+- Bump api-version of `ScheduledQueryRules` to `2022-08-01-preview`.
+- Method `MonitorExtensions.CreateNotifications` and `MonitorExtensions.CreateNotificationsAsync` on `SubscriptionResource` and `ResourceGroupResource` were no longer available for api-version >= `2023-01-01`.
+- Method `MonitorExtensions.GetNotificationStatus` and `MonitorExtensions.GetNotificationStatusAsync` on `SubscriptionResource` and `ResourceGroupResource` were no longer available for api-version >= `2023-01-01`.
+
 ## 1.0.1 (2023-02-21)
 
 ### Other Changes
