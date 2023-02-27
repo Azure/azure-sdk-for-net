@@ -13,6 +13,7 @@ using Azure.Storage.Files.Shares.Specialized;
 using Azure.Storage.Sas;
 using Azure.Storage.Test;
 using Azure.Storage.Tests.Shared;
+using Microsoft.Diagnostics.Symbols;
 using Microsoft.Extensions.Options;
 using Moq;
 using NUnit.Framework;
@@ -169,6 +170,34 @@ namespace Azure.Storage.Files.Shares.Tests
         }
 
         [RecordedTest]
+        [PlaybackOnly("https://github.com/Azure/azure-sdk-for-net/issues/34474")]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2021_04_10)]
+        public async Task CreateAsync_OAuth()
+        {
+            // Arrange
+            string shareName = GetNewShareName();
+            ShareServiceClient sharedKeyServiceClient = SharesClientBuilder.GetServiceClient_OAuthAccount_SharedKey();
+            await using DisposingShare sharedKeyShare = await GetTestShareAsync(sharedKeyServiceClient, shareName);
+            ShareServiceClient oauthServiceClient = SharesClientBuilder.GetServiceClient_OAuth();
+
+            string directoryName = GetNewDirectoryName();
+            ShareDirectoryClient directory = InstrumentClient(oauthServiceClient.GetShareClient(shareName).GetDirectoryClient(directoryName));
+
+            // Act
+            Response<ShareDirectoryInfo> response = await directory.CreateAsync();
+
+            // Assert
+            Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
+            var accountName = new ShareUriBuilder(directory.Uri).AccountName;
+            TestHelper.AssertCacheableProperty(accountName, () => directory.AccountName);
+            TestHelper.AssertCacheableProperty(shareName, () => directory.ShareName);
+            TestHelper.AssertCacheableProperty(directoryName, () => directory.Name);
+
+            // Ensure that we grab the whole ETag value from the service without removing the quotes
+            Assert.AreEqual(response.Value.ETag.ToString(), $"\"{response.GetRawResponse().Headers.ETag}\"");
+        }
+
+        [RecordedTest]
         public async Task CreateAsync_FilePermission()
         {
             await using DisposingShare test = await GetTestShareAsync();
@@ -309,6 +338,45 @@ namespace Azure.Storage.Files.Shares.Tests
             // Assert
             Response<ShareDirectoryProperties> response = await directory.GetPropertiesAsync();
             AssertDictionaryEquality(metadata, response.Value.Metadata);
+        }
+
+        [RecordedTest]
+        [TestCase(null)]
+        [TestCase(false)]
+        [TestCase(true)]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2022_11_02)]
+        public async Task CreateAsync_TrailingDot(bool? allowTrailingDot)
+        {
+            ShareClientOptions options = GetOptions();
+            options.AllowTrailingDot = allowTrailingDot;
+            await using DisposingShare test = await GetTestShareAsync(options: options);
+            ShareClient share = test.Share;
+
+            // Arrange
+            ShareDirectoryClient rootDirectory = InstrumentClient(share.GetRootDirectoryClient());
+            string directoryName = GetNewDirectoryName();
+            string directoryNameWithDot = directoryName + ".";
+            ShareDirectoryClient directory = InstrumentClient(share.GetDirectoryClient(directoryNameWithDot));
+
+            // Act
+            await directory.CreateAsync();
+
+            // Assert
+            List<ShareFileItem> shareFileItems = new List<ShareFileItem>();
+            await foreach (ShareFileItem item in rootDirectory.GetFilesAndDirectoriesAsync())
+            {
+                shareFileItems.Add(item);
+            }
+            Assert.AreEqual(1, shareFileItems.Count);
+
+            if (allowTrailingDot == true)
+            {
+                Assert.AreEqual(directoryNameWithDot, shareFileItems[0].Name);
+            }
+            else
+            {
+                Assert.AreEqual(directoryName, shareFileItems[0].Name);
+            }
         }
 
         [RecordedTest]
@@ -545,6 +613,28 @@ namespace Azure.Storage.Files.Shares.Tests
         }
 
         [RecordedTest]
+        [PlaybackOnly("https://github.com/Azure/azure-sdk-for-net/issues/34474")]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2021_04_10)]
+        public async Task DeleteAsync_OAuth()
+        {
+            // Arrange
+            string shareName = GetNewShareName();
+            ShareServiceClient sharedKeyServiceClient = SharesClientBuilder.GetServiceClient_OAuthAccount_SharedKey();
+            await using DisposingShare sharedKeyShare = await GetTestShareAsync(sharedKeyServiceClient, shareName);
+            ShareServiceClient oauthServiceClient = SharesClientBuilder.GetServiceClient_OAuth();
+
+            string directoryName = GetNewDirectoryName();
+            ShareDirectoryClient directory = InstrumentClient(oauthServiceClient.GetShareClient(shareName).GetDirectoryClient(directoryName));
+            await directory.CreateAsync();
+
+            // Act
+            Response response = await directory.DeleteAsync();
+
+            // Assert
+            Assert.IsNotNull(response.Headers.RequestId);
+        }
+
+        [RecordedTest]
         public async Task DeleteAsync_Error()
         {
             await using DisposingShare test = await GetTestShareAsync();
@@ -560,6 +650,19 @@ namespace Azure.Storage.Files.Shares.Tests
         }
 
         [RecordedTest]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2022_11_02)]
+        public async Task DeleteAsync_TrailingDot()
+        {
+            ShareClientOptions options = GetOptions();
+            options.AllowTrailingDot = true;
+            await using DisposingDirectory test = await SharesClientBuilder.GetTestDirectoryAsync(options: options);
+            ShareDirectoryClient directory = test.Directory;
+
+            // Act
+            await directory.DeleteAsync();
+        }
+
+        [RecordedTest]
         public async Task GetPropertiesAsync()
         {
             await using DisposingShare test = await GetTestShareAsync();
@@ -567,6 +670,30 @@ namespace Azure.Storage.Files.Shares.Tests
 
             // Arrange
             ShareDirectoryClient directory = InstrumentClient(share.GetDirectoryClient(GetNewDirectoryName()));
+
+            // Act
+            Response<ShareDirectoryInfo> createResponse = await directory.CreateIfNotExistsAsync();
+            Response<ShareDirectoryProperties> getPropertiesResponse = await directory.GetPropertiesAsync();
+
+            // Assert
+            Assert.AreEqual(createResponse.Value.ETag, getPropertiesResponse.Value.ETag);
+            Assert.AreEqual(createResponse.Value.LastModified, getPropertiesResponse.Value.LastModified);
+            AssertPropertiesEqual(createResponse.Value.SmbProperties, getPropertiesResponse.Value.SmbProperties);
+        }
+
+        [RecordedTest]
+        [PlaybackOnly("https://github.com/Azure/azure-sdk-for-net/issues/34474")]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2021_04_10)]
+        public async Task GetPropertiesAsync_OAuth()
+        {
+            // Arrange
+            string shareName = GetNewShareName();
+            ShareServiceClient sharedKeyServiceClient = SharesClientBuilder.GetServiceClient_OAuthAccount_SharedKey();
+            await using DisposingShare sharedKeyShare = await GetTestShareAsync(sharedKeyServiceClient, shareName);
+            ShareServiceClient oauthServiceClient = SharesClientBuilder.GetServiceClient_OAuth();
+
+            string directoryName = GetNewDirectoryName();
+            ShareDirectoryClient directory = InstrumentClient(oauthServiceClient.GetShareClient(shareName).GetDirectoryClient(directoryName));
 
             // Act
             Response<ShareDirectoryInfo> createResponse = await directory.CreateIfNotExistsAsync();
@@ -630,6 +757,28 @@ namespace Azure.Storage.Files.Shares.Tests
         }
 
         [RecordedTest]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2022_11_02)]
+        public async Task GetPropertiesAsync_TrailingDot()
+        {
+            ShareClientOptions options = GetOptions();
+            options.AllowTrailingDot = true;
+            await using DisposingShare test = await GetTestShareAsync(options: options);
+            ShareClient share = test.Share;
+
+            // Arrange
+            ShareDirectoryClient directory = InstrumentClient(share.GetDirectoryClient(GetNewDirectoryName()));
+
+            // Act
+            Response<ShareDirectoryInfo> createResponse = await directory.CreateIfNotExistsAsync();
+            Response<ShareDirectoryProperties> getPropertiesResponse = await directory.GetPropertiesAsync();
+
+            // Assert
+            Assert.AreEqual(createResponse.Value.ETag, getPropertiesResponse.Value.ETag);
+            Assert.AreEqual(createResponse.Value.LastModified, getPropertiesResponse.Value.LastModified);
+            AssertPropertiesEqual(createResponse.Value.SmbProperties, getPropertiesResponse.Value.SmbProperties);
+        }
+
+        [RecordedTest]
         public async Task SetHttpHeadersAsync()
         {
             await using DisposingShare test = await GetTestShareAsync();
@@ -638,6 +787,30 @@ namespace Azure.Storage.Files.Shares.Tests
             // Arrange
             ShareDirectoryClient directory = InstrumentClient(share.GetDirectoryClient(GetNewDirectoryName()));
             await directory.CreateIfNotExistsAsync();
+
+            // Act
+            Response<ShareDirectoryInfo> response = await directory.SetHttpHeadersAsync();
+
+            // Assert
+            AssertValidStorageDirectoryInfo(response);
+            // Ensure that we grab the whole ETag value from the service without removing the quotes
+            Assert.AreEqual(response.Value.ETag.ToString(), $"\"{response.GetRawResponse().Headers.ETag}\"");
+        }
+
+        [RecordedTest]
+        [PlaybackOnly("https://github.com/Azure/azure-sdk-for-net/issues/34474")]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2021_04_10)]
+        public async Task SetHttpHeadersAsync_OAuth()
+        {
+            // Arrange
+            string shareName = GetNewShareName();
+            ShareServiceClient sharedKeyServiceClient = SharesClientBuilder.GetServiceClient_OAuthAccount_SharedKey();
+            await using DisposingShare sharedKeyShare = await GetTestShareAsync(sharedKeyServiceClient, shareName);
+            ShareServiceClient oauthServiceClient = SharesClientBuilder.GetServiceClient_OAuth();
+
+            string directoryName = GetNewDirectoryName();
+            ShareDirectoryClient directory = InstrumentClient(oauthServiceClient.GetShareClient(shareName).GetDirectoryClient(directoryName));
+            await directory.CreateAsync();
 
             // Act
             Response<ShareDirectoryInfo> response = await directory.SetHttpHeadersAsync();
@@ -762,12 +935,55 @@ namespace Azure.Storage.Files.Shares.Tests
         }
 
         [RecordedTest]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2022_11_02)]
+        public async Task SetHttpHeadersAsync_TrailingDot()
+        {
+            ShareClientOptions options = GetOptions();
+            options.AllowTrailingDot = true;
+            await using DisposingShare test = await GetTestShareAsync(options: options);
+            ShareClient share = test.Share;
+
+            // Arrange
+            ShareDirectoryClient directory = InstrumentClient(share.GetDirectoryClient(GetNewDirectoryName()));
+            await directory.CreateIfNotExistsAsync();
+
+            // Act
+            await directory.SetHttpHeadersAsync();
+        }
+
+        [RecordedTest]
         public async Task SetMetadataAsync()
         {
             await using DisposingDirectory test = await SharesClientBuilder.GetTestDirectoryAsync();
             ShareDirectoryClient directory = test.Directory;
 
             // Arrange
+            IDictionary<string, string> metadata = BuildMetadata();
+
+            // Act
+            Response<ShareDirectoryInfo> setMetadataResponse = await directory.SetMetadataAsync(metadata);
+            Assert.AreNotEqual(DateTimeOffset.MinValue, setMetadataResponse.Value.LastModified);
+
+            // Assert
+            Response<ShareDirectoryProperties> response = await directory.GetPropertiesAsync();
+            AssertDictionaryEquality(metadata, response.Value.Metadata);
+        }
+
+        [RecordedTest]
+        [PlaybackOnly("https://github.com/Azure/azure-sdk-for-net/issues/34474")]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2021_04_10)]
+        public async Task SetMetadataAsync_OAuth()
+        {
+            // Arrange
+            string shareName = GetNewShareName();
+            ShareServiceClient sharedKeyServiceClient = SharesClientBuilder.GetServiceClient_OAuthAccount_SharedKey();
+            await using DisposingShare sharedKeyShare = await GetTestShareAsync(sharedKeyServiceClient, shareName);
+            ShareServiceClient oauthServiceClient = SharesClientBuilder.GetServiceClient_OAuth();
+
+            string directoryName = GetNewDirectoryName();
+            ShareDirectoryClient directory = InstrumentClient(oauthServiceClient.GetShareClient(shareName).GetDirectoryClient(directoryName));
+            await directory.CreateAsync();
+
             IDictionary<string, string> metadata = BuildMetadata();
 
             // Act
@@ -796,6 +1012,27 @@ namespace Azure.Storage.Files.Shares.Tests
         }
 
         [RecordedTest]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2022_11_02)]
+        public async Task SetMetadataAsync_TrailingDot()
+        {
+            ShareClientOptions options = GetOptions();
+            options.AllowTrailingDot = true;
+            await using DisposingDirectory test = await SharesClientBuilder.GetTestDirectoryAsync(options: options);
+            ShareDirectoryClient directory = test.Directory;
+
+            // Arrange
+            IDictionary<string, string> metadata = BuildMetadata();
+
+            // Act
+            Response<ShareDirectoryInfo> setMetadataResponse = await directory.SetMetadataAsync(metadata);
+            Assert.AreNotEqual(DateTimeOffset.MinValue, setMetadataResponse.Value.LastModified);
+
+            // Assert
+            Response<ShareDirectoryProperties> response = await directory.GetPropertiesAsync();
+            AssertDictionaryEquality(metadata, response.Value.Metadata);
+        }
+
+        [RecordedTest]
         public async Task ListFilesAndDirectoriesSegmentAsync()
         {
             // Arrange
@@ -810,6 +1047,62 @@ namespace Azure.Storage.Files.Shares.Tests
 
             ShareDirectoryClient directory = InstrumentClient(share.GetDirectoryClient(GetNewDirectoryName()));
             await directory.CreateIfNotExistsAsync();
+
+            foreach (var fileName in fileNames)
+            {
+                ShareFileClient file = InstrumentClient(directory.GetFileClient(fileName));
+
+                await file.CreateAsync(maxSize: Constants.MB);
+            }
+
+            foreach (var subDirName in directoryNames)
+            {
+                ShareDirectoryClient subDir = InstrumentClient(directory.GetSubdirectoryClient(subDirName));
+
+                await subDir.CreateIfNotExistsAsync();
+            }
+
+            var directories = new List<ShareFileItem>();
+            var files = new List<ShareFileItem>();
+
+            // Act
+            await foreach (Page<ShareFileItem> page in directory.GetFilesAndDirectoriesAsync().AsPages())
+            {
+                directories.AddRange(page.Values.Where(item => item.IsDirectory));
+                files.AddRange(page.Values.Where(item => !item.IsDirectory));
+            }
+
+            // Assert
+            Assert.AreEqual(directoryNames.Length, directories.Count);
+            Assert.AreEqual(fileNames.Length, files.Count);
+
+            var foundDirectoryNames = directories.Select(entry => entry.Name).ToArray();
+            var foundFileNames = files.Select(entry => entry.Name).ToArray();
+
+            Assert.IsTrue(directoryNames.All(fileName => foundDirectoryNames.Contains(fileName)));
+            Assert.IsTrue(fileNames.All(fileName => foundFileNames.Contains(fileName)));
+        }
+
+        [RecordedTest]
+        [PlaybackOnly("https://github.com/Azure/azure-sdk-for-net/issues/34474")]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2021_04_10)]
+        public async Task ListFilesAndDirectoriesSegmentAsync_OAuth()
+        {
+            // Arrange
+            var numFiles = 10;
+            var fileNames = Enumerable.Range(0, numFiles).Select(_ => GetNewFileName()).ToArray();
+
+            var numDirectories = 5;
+            var directoryNames = Enumerable.Range(0, numDirectories).Select(_ => GetNewFileName()).ToArray();
+
+            string shareName = GetNewShareName();
+            ShareServiceClient sharedKeyServiceClient = SharesClientBuilder.GetServiceClient_OAuthAccount_SharedKey();
+            await using DisposingShare sharedKeyShare = await GetTestShareAsync(sharedKeyServiceClient, shareName);
+            ShareServiceClient oauthServiceClient = SharesClientBuilder.GetServiceClient_OAuth();
+
+            string directoryName = GetNewDirectoryName();
+            ShareDirectoryClient directory = InstrumentClient(oauthServiceClient.GetShareClient(shareName).GetDirectoryClient(directoryName));
+            await directory.CreateAsync();
 
             foreach (var fileName in fileNames)
             {
@@ -998,6 +1291,25 @@ namespace Azure.Storage.Files.Shares.Tests
         }
 
         [RecordedTest]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2022_11_02)]
+        public async Task ListFilesAndDirectories_TrailingDot()
+        {
+            // Arrange
+            ShareClientOptions options = GetOptions();
+            options.AllowTrailingDot = true;
+            await using DisposingShare test = await GetTestShareAsync(options: options);
+            ShareDirectoryClient directoryClient = await test.Share.CreateDirectoryAsync(GetNewDirectoryName() + ".");
+
+            // Act
+            List<ShareFileItem> shareFileItems = new List<ShareFileItem>();
+
+            await foreach (ShareFileItem item in directoryClient.GetFilesAndDirectoriesAsync())
+            {
+                shareFileItems.Add(item);
+            }
+        }
+
+        [RecordedTest]
         [AsyncOnly]
         public async Task ListHandles()
         {
@@ -1031,6 +1343,28 @@ namespace Azure.Storage.Files.Shares.Tests
         }
 
         [RecordedTest]
+        [PlaybackOnly("https://github.com/Azure/azure-sdk-for-net/issues/34474")]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2021_04_10)]
+        public async Task ListHandles_OAuth()
+        {
+            // Arrange
+            string shareName = GetNewShareName();
+            ShareServiceClient sharedKeyServiceClient = SharesClientBuilder.GetServiceClient_OAuthAccount_SharedKey();
+            await using DisposingShare sharedKeyShare = await GetTestShareAsync(sharedKeyServiceClient, shareName);
+            ShareServiceClient oauthServiceClient = SharesClientBuilder.GetServiceClient_OAuth();
+
+            string directoryName = GetNewDirectoryName();
+            ShareDirectoryClient directory = InstrumentClient(oauthServiceClient.GetShareClient(shareName).GetDirectoryClient(directoryName));
+            await directory.CreateAsync();
+
+            // Act
+            IList<ShareFileHandle> handles = await directory.GetHandlesAsync().ToListAsync();
+
+            // Assert
+            Assert.AreEqual(0, handles.Count);
+        }
+
+        [RecordedTest]
         public async Task ListHandles_Error()
         {
             // Arrange
@@ -1046,11 +1380,51 @@ namespace Azure.Storage.Files.Shares.Tests
         }
 
         [RecordedTest]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2022_11_02)]
+        public async Task ListHandles_TrailingDot()
+        {
+            // Arrange
+            ShareClientOptions options = GetOptions();
+            options.AllowTrailingDot = true;
+            await using DisposingDirectory test = await SharesClientBuilder.GetTestDirectoryAsync(options: options);
+            ShareDirectoryClient directory = test.Directory;
+
+            // Act
+            IList<ShareFileHandle> handles = await directory.GetHandlesAsync().ToListAsync();
+
+            // Assert
+            Assert.AreEqual(0, handles.Count);
+        }
+
+        [RecordedTest]
         public async Task ForceCloseHandles_Min()
         {
             // Arrange
             await using DisposingDirectory test = await SharesClientBuilder.GetTestDirectoryAsync();
             ShareDirectoryClient directory = test.Directory;
+
+            // Act
+            CloseHandlesResult response = await directory.ForceCloseAllHandlesAsync();
+
+            // Assert
+            Assert.AreEqual(0, response.ClosedHandlesCount);
+            Assert.AreEqual(0, response.FailedHandlesCount);
+        }
+
+        [RecordedTest]
+        [PlaybackOnly("https://github.com/Azure/azure-sdk-for-net/issues/34474")]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2021_04_10)]
+        public async Task ForceCloseHandles_OAuth()
+        {
+            // Arrange
+            string shareName = GetNewShareName();
+            ShareServiceClient sharedKeyServiceClient = SharesClientBuilder.GetServiceClient_OAuthAccount_SharedKey();
+            await using DisposingShare sharedKeyShare = await GetTestShareAsync(sharedKeyServiceClient, shareName);
+            ShareServiceClient oauthServiceClient = SharesClientBuilder.GetServiceClient_OAuth();
+
+            string directoryName = GetNewDirectoryName();
+            ShareDirectoryClient directory = InstrumentClient(oauthServiceClient.GetShareClient(shareName).GetDirectoryClient(directoryName));
+            await directory.CreateAsync();
 
             // Act
             CloseHandlesResult response = await directory.ForceCloseAllHandlesAsync();
@@ -1103,6 +1477,24 @@ namespace Azure.Storage.Files.Shares.Tests
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 directory.ForceCloseHandleAsync("nonExistantHandleId"),
                 actualException => Assert.AreEqual("InvalidHeaderValue", actualException.ErrorCode));
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2022_11_02)]
+        public async Task ForceCloseHandles_TrailingDot()
+        {
+            // Arrange
+            ShareClientOptions options = GetOptions();
+            options.AllowTrailingDot = true;
+            await using DisposingDirectory test = await SharesClientBuilder.GetTestDirectoryAsync(options: options);
+            ShareDirectoryClient directory = test.Directory;
+
+            // Act
+            CloseHandlesResult response = await directory.ForceCloseAllHandlesAsync();
+
+            // Assert
+            Assert.AreEqual(0, response.ClosedHandlesCount);
+            Assert.AreEqual(0, response.FailedHandlesCount);
         }
 
         [RecordedTest]
@@ -1851,6 +2243,59 @@ namespace Azure.Storage.Files.Shares.Tests
 
             // Assert
             Response<ShareDirectoryProperties> response = await destDirectory.GetPropertiesAsync();
+        }
+
+        [RecordedTest]
+        [TestCase(null)]
+        [TestCase(false)]
+        [TestCase(true)]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2022_11_02)]
+        public async Task RenameAsync_TrailingDot(bool? sourceAllowTrailingDot)
+        {
+            // Arrange
+            ShareClientOptions options = GetOptions();
+            options.AllowTrailingDot = true;
+            options.AllowSourceTrailingDot = sourceAllowTrailingDot;
+            await using DisposingShare test = await SharesClientBuilder.GetTestShareAsync(options: options);
+            string destDirectoryName = GetNewDirectoryName() + ".";
+            ShareDirectoryClient sourceDirectory = InstrumentClient(test.Share.GetDirectoryClient(GetNewDirectoryName() + "."));
+            await sourceDirectory.CreateAsync();
+
+            // Act
+            if (sourceAllowTrailingDot == true)
+            {
+                ShareDirectoryClient destDirectory = await sourceDirectory.RenameAsync(destDirectoryName);
+            }
+            else
+            {
+                // Act
+                await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                    sourceDirectory.RenameAsync(destDirectoryName),
+                    e => Assert.AreEqual(e.ErrorCode, "ResourceNotFound"));
+            }
+        }
+
+        [RecordedTest]
+        [PlaybackOnly("https://github.com/Azure/azure-sdk-for-net/issues/34474")]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2021_04_10)]
+        public async Task RenameAsync_OAuth()
+        {
+            // Arrange
+            string shareName = GetNewShareName();
+            ShareServiceClient sharedKeyServiceClient = SharesClientBuilder.GetServiceClient_OAuthAccount_SharedKey();
+            await using DisposingShare sharedKeyShare = await GetTestShareAsync(sharedKeyServiceClient, shareName);
+            ShareServiceClient oauthServiceClient = SharesClientBuilder.GetServiceClient_OAuth();
+
+            string directoryName = GetNewDirectoryName();
+            string destDirectoryName = GetNewDirectoryName();
+            ShareDirectoryClient sourceDirectory = InstrumentClient(oauthServiceClient.GetShareClient(shareName).GetDirectoryClient(directoryName));
+            await sourceDirectory.CreateAsync();
+
+            // Act
+            ShareDirectoryClient destDirectory = await sourceDirectory.RenameAsync(destDirectoryName);
+
+            // Assert
+            await destDirectory.GetPropertiesAsync();
         }
 
         #region GenerateSasTests

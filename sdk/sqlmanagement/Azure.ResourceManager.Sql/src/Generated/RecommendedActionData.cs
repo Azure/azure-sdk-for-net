@@ -13,7 +13,10 @@ using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
-    /// <summary> A class representing the RecommendedAction data model. </summary>
+    /// <summary>
+    /// A class representing the RecommendedAction data model.
+    /// Database, Server or Elastic Pool Recommended Action.
+    /// </summary>
     public partial class RecommendedActionData : ResourceData
     {
         /// <summary> Initializes a new instance of RecommendedActionData. </summary>

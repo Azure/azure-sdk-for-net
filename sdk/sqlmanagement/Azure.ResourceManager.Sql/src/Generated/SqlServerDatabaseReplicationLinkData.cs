@@ -12,7 +12,10 @@ using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
-    /// <summary> A class representing the SqlServerDatabaseReplicationLink data model. </summary>
+    /// <summary>
+    /// A class representing the SqlServerDatabaseReplicationLink data model.
+    /// A replication link.
+    /// </summary>
     public partial class SqlServerDatabaseReplicationLinkData : ResourceData
     {
         /// <summary> Initializes a new instance of SqlServerDatabaseReplicationLinkData. </summary>

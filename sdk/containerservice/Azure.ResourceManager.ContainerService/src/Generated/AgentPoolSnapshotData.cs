@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ContainerService
 {
-    /// <summary> A class representing the AgentPoolSnapshot data model. </summary>
+    /// <summary>
+    /// A class representing the AgentPoolSnapshot data model.
+    /// A node pool snapshot resource.
+    /// </summary>
     public partial class AgentPoolSnapshotData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of AgentPoolSnapshotData. </summary>

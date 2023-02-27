@@ -11,7 +11,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataMigration
 {
-    /// <summary> A class representing the SqlMigrationService data model. </summary>
+    /// <summary>
+    /// A class representing the SqlMigrationService data model.
+    /// A SQL Migration Service.
+    /// </summary>
     public partial class SqlMigrationServiceData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of SqlMigrationServiceData. </summary>

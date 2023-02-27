@@ -13,7 +13,10 @@ using Azure.ResourceManager.RecoveryServices.Models;
 
 namespace Azure.ResourceManager.RecoveryServices
 {
-    /// <summary> A class representing the RecoveryServicesVault data model. </summary>
+    /// <summary>
+    /// A class representing the RecoveryServicesVault data model.
+    /// Resource information, as returned by the resource provider.
+    /// </summary>
     public partial class RecoveryServicesVaultData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of RecoveryServicesVaultData. </summary>

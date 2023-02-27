@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.BotService.Models
 
         public static RegenerateKeysChannelName ToRegenerateKeysChannelName(this string value)
         {
-            if (string.Equals(value, "WebChatChannel", StringComparison.InvariantCultureIgnoreCase)) return RegenerateKeysChannelName.WebChatChannel;
-            if (string.Equals(value, "DirectLineChannel", StringComparison.InvariantCultureIgnoreCase)) return RegenerateKeysChannelName.DirectLineChannel;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "WebChatChannel")) return RegenerateKeysChannelName.WebChatChannel;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "DirectLineChannel")) return RegenerateKeysChannelName.DirectLineChannel;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown RegenerateKeysChannelName value.");
         }
     }

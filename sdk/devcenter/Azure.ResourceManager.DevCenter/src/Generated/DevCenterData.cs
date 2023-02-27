@@ -11,7 +11,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DevCenter
 {
-    /// <summary> A class representing the DevCenter data model. </summary>
+    /// <summary>
+    /// A class representing the DevCenter data model.
+    /// Represents a devcenter resource.
+    /// </summary>
     public partial class DevCenterData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of DevCenterData. </summary>

@@ -34,22 +34,22 @@ namespace Azure.ResourceManager.Automation.Models
 
         public static ModuleProvisioningState ToModuleProvisioningState(this string value)
         {
-            if (string.Equals(value, "Created", StringComparison.InvariantCultureIgnoreCase)) return ModuleProvisioningState.Created;
-            if (string.Equals(value, "Creating", StringComparison.InvariantCultureIgnoreCase)) return ModuleProvisioningState.Creating;
-            if (string.Equals(value, "StartingImportModuleRunbook", StringComparison.InvariantCultureIgnoreCase)) return ModuleProvisioningState.StartingImportModuleRunbook;
-            if (string.Equals(value, "RunningImportModuleRunbook", StringComparison.InvariantCultureIgnoreCase)) return ModuleProvisioningState.RunningImportModuleRunbook;
-            if (string.Equals(value, "ContentRetrieved", StringComparison.InvariantCultureIgnoreCase)) return ModuleProvisioningState.ContentRetrieved;
-            if (string.Equals(value, "ContentDownloaded", StringComparison.InvariantCultureIgnoreCase)) return ModuleProvisioningState.ContentDownloaded;
-            if (string.Equals(value, "ContentValidated", StringComparison.InvariantCultureIgnoreCase)) return ModuleProvisioningState.ContentValidated;
-            if (string.Equals(value, "ConnectionTypeImported", StringComparison.InvariantCultureIgnoreCase)) return ModuleProvisioningState.ConnectionTypeImported;
-            if (string.Equals(value, "ContentStored", StringComparison.InvariantCultureIgnoreCase)) return ModuleProvisioningState.ContentStored;
-            if (string.Equals(value, "ModuleDataStored", StringComparison.InvariantCultureIgnoreCase)) return ModuleProvisioningState.ModuleDataStored;
-            if (string.Equals(value, "ActivitiesStored", StringComparison.InvariantCultureIgnoreCase)) return ModuleProvisioningState.ActivitiesStored;
-            if (string.Equals(value, "ModuleImportRunbookComplete", StringComparison.InvariantCultureIgnoreCase)) return ModuleProvisioningState.ModuleImportRunbookComplete;
-            if (string.Equals(value, "Succeeded", StringComparison.InvariantCultureIgnoreCase)) return ModuleProvisioningState.Succeeded;
-            if (string.Equals(value, "Failed", StringComparison.InvariantCultureIgnoreCase)) return ModuleProvisioningState.Failed;
-            if (string.Equals(value, "Cancelled", StringComparison.InvariantCultureIgnoreCase)) return ModuleProvisioningState.Cancelled;
-            if (string.Equals(value, "Updating", StringComparison.InvariantCultureIgnoreCase)) return ModuleProvisioningState.Updating;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Created")) return ModuleProvisioningState.Created;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Creating")) return ModuleProvisioningState.Creating;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "StartingImportModuleRunbook")) return ModuleProvisioningState.StartingImportModuleRunbook;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "RunningImportModuleRunbook")) return ModuleProvisioningState.RunningImportModuleRunbook;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "ContentRetrieved")) return ModuleProvisioningState.ContentRetrieved;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "ContentDownloaded")) return ModuleProvisioningState.ContentDownloaded;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "ContentValidated")) return ModuleProvisioningState.ContentValidated;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "ConnectionTypeImported")) return ModuleProvisioningState.ConnectionTypeImported;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "ContentStored")) return ModuleProvisioningState.ContentStored;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "ModuleDataStored")) return ModuleProvisioningState.ModuleDataStored;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "ActivitiesStored")) return ModuleProvisioningState.ActivitiesStored;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "ModuleImportRunbookComplete")) return ModuleProvisioningState.ModuleImportRunbookComplete;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Succeeded")) return ModuleProvisioningState.Succeeded;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Failed")) return ModuleProvisioningState.Failed;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Cancelled")) return ModuleProvisioningState.Cancelled;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Updating")) return ModuleProvisioningState.Updating;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ModuleProvisioningState value.");
         }
     }

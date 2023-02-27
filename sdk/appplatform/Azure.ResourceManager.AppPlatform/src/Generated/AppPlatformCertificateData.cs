@@ -11,7 +11,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppPlatform
 {
-    /// <summary> A class representing the AppPlatformCertificate data model. </summary>
+    /// <summary>
+    /// A class representing the AppPlatformCertificate data model.
+    /// Certificate resource payload.
+    /// </summary>
     public partial class AppPlatformCertificateData : ResourceData
     {
         /// <summary> Initializes a new instance of AppPlatformCertificateData. </summary>

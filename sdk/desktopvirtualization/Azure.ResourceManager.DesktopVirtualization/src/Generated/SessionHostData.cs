@@ -13,7 +13,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DesktopVirtualization
 {
-    /// <summary> A class representing the SessionHost data model. </summary>
+    /// <summary>
+    /// A class representing the SessionHost data model.
+    /// Represents a SessionHost definition.
+    /// </summary>
     public partial class SessionHostData : ResourceData
     {
         /// <summary> Initializes a new instance of SessionHostData. </summary>

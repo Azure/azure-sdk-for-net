@@ -11,7 +11,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.EventGrid
 {
-    /// <summary> A class representing the DomainTopic data model. </summary>
+    /// <summary>
+    /// A class representing the DomainTopic data model.
+    /// Domain Topic.
+    /// </summary>
     public partial class DomainTopicData : ResourceData
     {
         /// <summary> Initializes a new instance of DomainTopicData. </summary>
