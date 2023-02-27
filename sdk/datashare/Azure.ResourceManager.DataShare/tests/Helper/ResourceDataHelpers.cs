@@ -135,6 +135,7 @@ namespace Azure.ResourceManager.DataShare.Tests.Helper
         public static void AssertSynchronizationData(DataShareSynchronizationSettingData data1, DataShareSynchronizationSettingData data2)
         {
             AssertResource(data1, data2);
+            Assert.AreEqual(data1.Kind, data2.Kind);
         }
         public static DataShareSynchronizationSettingData GetSynchronizationData()
         {
