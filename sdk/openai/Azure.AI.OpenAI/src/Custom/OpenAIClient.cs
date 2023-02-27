@@ -18,26 +18,22 @@ namespace Azure.AI.OpenAI
         private const string publicOpenAIVersion = "1";
         private const string publicOpenAIEndpoint = $"https://api.openai.com/v{publicOpenAIVersion}";
 
-        private TokenCredential _tokenCredential;
-        private HttpPipeline _pipeline;
-        private Uri _endpoint;
+        private string PublicOpenAIToken { get; } = "";
 
-        private string _publicOpenAIToken = string.Empty;
-
-        public string PublicOpenAIToken
+        /// <summary> Initializes a instance of OpenAIClient using the public OpenAI endpoint. </summary>
+        /// <param name="token"> A credential used to authenticate to an Azure Service. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="token"/> is null. </exception>
+        public OpenAIClient(string token) : this(token, new OpenAIClientOptions())
         {
-            get => _publicOpenAIToken;
-            set
-            {
-                if (!string.IsNullOrEmpty(value))
-                {
-                    _publicOpenAIToken = value;
-                    _endpoint = new Uri(publicOpenAIEndpoint);
-                    AccessToken accessToken = new AccessToken(_publicOpenAIToken, DateTimeOffset.Now.AddDays(180));
-                    _tokenCredential = DelegatedTokenCredential.Create((_, _) => accessToken);
-                    _pipeline = HttpPipelineBuilder.Build(new OpenAIClientOptions(), Array.Empty<HttpPipelinePolicy>(), new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes) }, new ResponseClassifier());
-                }
-            }
+        }
+
+        /// <summary> Initializes a instance of OpenAIClient using the public OpenAI endpoint. </summary>
+        /// <param name="token"> String token to generate a token credential </param>
+        /// <param name="options"> The options for configuring the client. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="token"/> is null. </exception>
+        public OpenAIClient(string token, OpenAIClientOptions options) : this(new Uri(publicOpenAIEndpoint), CreateDelegatedToken(token), options)
+        {
+            PublicOpenAIToken = token;
         }
 
         /// <summary> Return the completion for a given prompt. </summary>
@@ -72,7 +68,7 @@ namespace Azure.AI.OpenAI
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            if (string.IsNullOrEmpty(_publicOpenAIToken))
+            if (string.IsNullOrEmpty(PublicOpenAIToken))
             {
                 Argument.AssertNotNullOrEmpty(deploymentId, nameof(deploymentId));
                 uri.AppendRaw("/openai", false);
@@ -90,6 +86,12 @@ namespace Azure.AI.OpenAI
             request.Headers.Add("Content-Type", "application/json");
             request.Content = content;
             return message;
+        }
+
+        private static TokenCredential CreateDelegatedToken(string token)
+        {
+            AccessToken accessToken = new AccessToken(token, DateTimeOffset.Now.AddDays(180));
+            return DelegatedTokenCredential.Create((_, _) => accessToken);
         }
     }
 }
