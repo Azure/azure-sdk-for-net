@@ -13,7 +13,10 @@ using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
-    /// <summary> A class representing the RestorableDroppedDatabase data model. </summary>
+    /// <summary>
+    /// A class representing the RestorableDroppedDatabase data model.
+    /// A restorable dropped database resource.
+    /// </summary>
     public partial class RestorableDroppedDatabaseData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of RestorableDroppedDatabaseData. </summary>

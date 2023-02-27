@@ -12,7 +12,10 @@ using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
-    /// <summary> A class representing the SyncMember data model. </summary>
+    /// <summary>
+    /// A class representing the SyncMember data model.
+    /// An Azure SQL Database sync member.
+    /// </summary>
     public partial class SyncMemberData : ResourceData
     {
         /// <summary> Initializes a new instance of SyncMemberData. </summary>

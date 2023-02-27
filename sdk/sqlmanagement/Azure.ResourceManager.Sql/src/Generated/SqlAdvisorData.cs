@@ -13,7 +13,10 @@ using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
-    /// <summary> A class representing the SqlAdvisor data model. </summary>
+    /// <summary>
+    /// A class representing the SqlAdvisor data model.
+    /// Database, Server or Elastic Pool Advisor.
+    /// </summary>
     public partial class SqlAdvisorData : ResourceData
     {
         /// <summary> Initializes a new instance of SqlAdvisorData. </summary>
