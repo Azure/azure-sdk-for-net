@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Logic
 {
-    /// <summary> A class representing the IntegrationServiceEnvironment data model. </summary>
+    /// <summary>
+    /// A class representing the IntegrationServiceEnvironment data model.
+    /// The integration service environment.
+    /// </summary>
     public partial class IntegrationServiceEnvironmentData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of IntegrationServiceEnvironmentData. </summary>
