@@ -49,8 +49,12 @@ namespace Azure.AI.OpenAI.Tests
         protected OpenAIClient GetClientWithCredential() => InstrumentClient(
             new OpenAIClient(_endpoint, TestEnvironment.Credential, GetInstrumentedClientOptions()));
 
-        protected PublicOpenAIClient GetPublicOpenAIClient() => InstrumentClient(
-            new PublicOpenAIClient("YOUR_TOKEN_STRING_HERE", InstrumentClientOptions(new OpenAIClientOptions(OpenAIClientOptions.ServiceVersion.V2022_12_01))));
+        protected OpenAIClient GetPublicOpenAIClient() => InstrumentClient(
+            new OpenAIClient(default(Uri), default(TokenCredential), InstrumentClientOptions(new OpenAIClientOptions(OpenAIClientOptions.ServiceVersion.V2022_12_01)))
+            {
+                PublicOpenAIToken = "<YOUR_OPENAI_TOKEN_HERE>"
+            }
+            );
 
         [SetUp]
         public void CreateDeployment()

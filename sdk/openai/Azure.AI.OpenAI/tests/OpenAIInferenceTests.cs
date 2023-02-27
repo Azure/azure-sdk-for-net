@@ -10,7 +10,7 @@ namespace Azure.AI.OpenAI.Tests
     public class OpenAIInferenceTests : OpenAITestBase
     {
         public OpenAIInferenceTests(bool isAsync)
-            : base(isAsync)//, RecordedTestMode.Live)
+            : base(isAsync, RecordedTestMode.Live)
         {
         }
 
@@ -30,7 +30,7 @@ namespace Azure.AI.OpenAI.Tests
         public void PublicOpenAICompletionsTest()
         {
             var client = GetPublicOpenAIClient();
-            Assert.That(client, Is.InstanceOf<PublicOpenAIClient>());
+            Assert.That(client, Is.InstanceOf<OpenAIClient>());
             CompletionsOptions requestOptions = new CompletionsOptions()
             {
                 Prompt =
