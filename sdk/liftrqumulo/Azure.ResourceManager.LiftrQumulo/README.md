@@ -17,7 +17,7 @@ This library follows the [new Azure SDK guidelines](https://azure.github.io/azur
 Install the Microsoft Azure LiftrQumulo management library for .NET with [NuGet](https://www.nuget.org/):
 
 ```dotnetcli
-dotnet add package Azure.ResourceManager.LiftrQumulo --prerelease
+dotnet add package Azure.ResourceManager.Qumulo --prerelease
 ```
 
 ### Prerequisites
