@@ -27,13 +27,13 @@ namespace Azure.Communication.Email.Tests
         {
             #region Snippet:Azure_Communication_Email_CreateEmailClient
             //@@var connectionString = "<connection_string>"; // Find your Communication Services resource in the Azure portal
-            //@@EmailClient client = new EmailClient(connectionString);
+            //@@EmailClient emailClient = new EmailClient(connectionString);
             #endregion Snippet:Azure_Communication_Email_CreateEmailClient
 
             var connectionString = TestEnvironment.CommunicationConnectionStringEmail;
-            var client = new EmailClient(connectionString, CreateEmailClientOptionsWithCorrelationVectorLogs());
+            var emailClient = new EmailClient(connectionString, CreateEmailClientOptionsWithCorrelationVectorLogs());
 
-            return InstrumentClient(client);
+            return InstrumentClient(emailClient);
         }
 
         public EmailClient CreateSmsClientWithToken()
@@ -51,12 +51,12 @@ namespace Azure.Communication.Email.Tests
                 //@@ TokenCredential tokenCredential = new DefaultAzureCredential();
                 /*@@*/
                 tokenCredential = new DefaultAzureCredential();
-                //@@ EmailClient client = new EmailClient(new Uri(endpoint), tokenCredential);
+                //@@ EmailClient emailClient = new EmailClient(new Uri(endpoint), tokenCredential);
                 #endregion Snippet:Azure_Communication_Email_CreateEmailClientWithToken
             }
 
-            EmailClient client = new EmailClient(endpoint, tokenCredential, CreateEmailClientOptionsWithCorrelationVectorLogs());
-            return InstrumentClient(client);
+            EmailClient emailClient = new EmailClient(endpoint, tokenCredential, CreateEmailClientOptionsWithCorrelationVectorLogs());
+            return InstrumentClient(emailClient);
         }
 
         protected EmailClientOptions CreateEmailClientOptionsWithCorrelationVectorLogs()

@@ -61,6 +61,7 @@ namespace Azure.Communication.Email
     }
     public static partial class EmailModelFactory
     {
+        public static Azure.Communication.Email.EmailSendResult EmailSendResult(string id = null, Azure.Communication.Email.EmailSendStatus status = default(Azure.Communication.Email.EmailSendStatus), Azure.Communication.Email.ErrorDetail error = null) { throw null; }
         public static Azure.Communication.Email.ErrorAdditionalInfo ErrorAdditionalInfo(string type = null, object info = null) { throw null; }
         public static Azure.Communication.Email.ErrorDetail ErrorDetail(string code = null, string message = null, string target = null, System.Collections.Generic.IEnumerable<Azure.Communication.Email.ErrorDetail> details = null, System.Collections.Generic.IEnumerable<Azure.Communication.Email.ErrorAdditionalInfo> additionalInfo = null) { throw null; }
     }

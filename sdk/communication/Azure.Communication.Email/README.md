@@ -30,7 +30,7 @@ Email clients can be authenticated using the connection string acquired from an 
 
 ```C# Snippet:Azure_Communication_Email_CreateEmailClient
 var connectionString = "<connection_string>"; // Find your Communication Services resource in the Azure portal
-EmailClient client = new EmailClient(connectionString);
+EmailClient emailClient = new EmailClient(connectionString);
 ```
 
 Alternatively, Email clients can also be authenticated using a valid token credential. With this option,
@@ -40,7 +40,7 @@ Alternatively, Email clients can also be authenticated using a valid token crede
 string endpoint = "<endpoint_url>";
 TokenCredential tokenCredential = new DefaultAzureCredential();
 tokenCredential = new DefaultAzureCredential();
-EmailClient client = new EmailClient(new Uri(endpoint), tokenCredential);
+EmailClient emailClient = new EmailClient(new Uri(endpoint), tokenCredential);
 ```
 ## Examples
 ### Send a simple email message with automatic polling for status

@@ -85,7 +85,7 @@ namespace Azure.Communication.Email.Tests.Samples
         [AsyncOnly]
         public async Task SendEmailWithMoreOptionsAsync()
         {
-            EmailClient client = CreateEmailClient();
+            EmailClient emailClient = CreateEmailClient();
 
             #region Snippet:Azure_Communication_Email_Send_With_MoreOptions_Async
             // Create the email content
@@ -103,7 +103,7 @@ namespace Azure.Communication.Email.Tests.Samples
                 /*@@*/ toAddress: TestEnvironment.RecipientAddress,
                 content: emailContent);
 
-            var emailSendOperation = await client.SendAsync(
+            var emailSendOperation = await emailClient.SendAsync(
                 wait: WaitUntil.Completed,
                 message: emailMessage);
             Console.WriteLine($"Email Sent. Status = {emailSendOperation.Value.Status}");
