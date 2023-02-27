@@ -13,7 +13,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Media
 {
-    /// <summary> A class representing the MediaServicesAccount data model. </summary>
+    /// <summary>
+    /// A class representing the MediaServicesAccount data model.
+    /// A Media Services account.
+    /// </summary>
     public partial class MediaServicesAccountData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of MediaServicesAccountData. </summary>

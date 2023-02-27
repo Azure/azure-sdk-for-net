@@ -26,13 +26,14 @@
     <Compile Include="..\..\Azure.Messaging.ServiceBus\src\Constants.cs" LinkBase="Shared" />
     <Compile Include="..\..\Azure.Messaging.ServiceBus\src\Core\Argument.cs" LinkBase="Shared" />
     <Compile Include="..\..\Azure.Messaging.ServiceBus\src\EntityNameFormatter.cs" LinkBase="Shared" />
-    <Compile Include="..\..\Azure.Messaging.ServiceBus\src\Diagnostics\EntityScopeFactory.cs" LinkBase="Shared" />
     <Compile Include="..\..\Azure.Messaging.ServiceBus\src\Diagnostics\DiagnosticExtensions.cs" LinkBase="Shared" />
     <Compile Include="..\..\Azure.Messaging.ServiceBus\src\Diagnostics\DiagnosticProperty.cs" LinkBase="Shared" />
     <Compile Include="..\..\..\extensions\Microsoft.Azure.WebJobs.Extensions.Clients\src\Shared\WebJobsConfigurationExtensions.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)DiagnosticScope.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)DiagnosticScopeFactory.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)AppContextSwitchHelper.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureCoreSharedSources)MessagingClientDiagnostics.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureCoreSharedSources)MessagingDiagnosticOperation.cs" LinkBase="Shared" />
   </ItemGroup>
 
   <ItemGroup>

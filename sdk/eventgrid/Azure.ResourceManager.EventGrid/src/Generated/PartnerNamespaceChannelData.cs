@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.EventGrid
 {
-    /// <summary> A class representing the PartnerNamespaceChannel data model. </summary>
+    /// <summary>
+    /// A class representing the PartnerNamespaceChannel data model.
+    /// Channel info.
+    /// </summary>
     public partial class PartnerNamespaceChannelData : ResourceData
     {
         /// <summary> Initializes a new instance of PartnerNamespaceChannelData. </summary>

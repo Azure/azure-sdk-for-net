@@ -14,7 +14,10 @@ using Azure.ResourceManager.Monitor.Models;
 
 namespace Azure.ResourceManager.Monitor
 {
-    /// <summary> A class representing the AutoscaleSetting data model. </summary>
+    /// <summary>
+    /// A class representing the AutoscaleSetting data model.
+    /// The autoscale setting resource.
+    /// </summary>
     public partial class AutoscaleSettingData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of AutoscaleSettingData. </summary>

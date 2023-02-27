@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Compute
 {
-    /// <summary> A class representing the VirtualMachineScaleSetVmExtension data model. </summary>
+    /// <summary>
+    /// A class representing the VirtualMachineScaleSetVmExtension data model.
+    /// Describes a VMSS VM Extension.
+    /// </summary>
     public partial class VirtualMachineScaleSetVmExtensionData : ResourceData
     {
         /// <summary> Initializes a new instance of VirtualMachineScaleSetVmExtensionData. </summary>

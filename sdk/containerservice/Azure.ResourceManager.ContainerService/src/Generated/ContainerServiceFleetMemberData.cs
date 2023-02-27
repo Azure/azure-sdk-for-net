@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ContainerService
 {
-    /// <summary> A class representing the ContainerServiceFleetMember data model. </summary>
+    /// <summary>
+    /// A class representing the ContainerServiceFleetMember data model.
+    /// A member of the Fleet. It contains a reference to an existing Kubernetes cluster on Azure.
+    /// </summary>
     public partial class ContainerServiceFleetMemberData : ResourceData
     {
         /// <summary> Initializes a new instance of ContainerServiceFleetMemberData. </summary>

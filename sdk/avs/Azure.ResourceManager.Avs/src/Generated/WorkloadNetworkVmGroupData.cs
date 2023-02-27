@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Avs
 {
-    /// <summary> A class representing the WorkloadNetworkVmGroup data model. </summary>
+    /// <summary>
+    /// A class representing the WorkloadNetworkVmGroup data model.
+    /// NSX VM Group
+    /// </summary>
     public partial class WorkloadNetworkVmGroupData : ResourceData
     {
         /// <summary> Initializes a new instance of WorkloadNetworkVmGroupData. </summary>

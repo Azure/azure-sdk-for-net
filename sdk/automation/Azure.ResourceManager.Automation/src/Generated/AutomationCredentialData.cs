@@ -11,7 +11,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Automation
 {
-    /// <summary> A class representing the AutomationCredential data model. </summary>
+    /// <summary>
+    /// A class representing the AutomationCredential data model.
+    /// Definition of the credential.
+    /// </summary>
     public partial class AutomationCredentialData : ResourceData
     {
         /// <summary> Initializes a new instance of AutomationCredentialData. </summary>

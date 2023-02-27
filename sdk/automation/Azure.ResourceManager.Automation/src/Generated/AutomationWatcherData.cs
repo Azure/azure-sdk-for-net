@@ -13,7 +13,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Automation
 {
-    /// <summary> A class representing the AutomationWatcher data model. </summary>
+    /// <summary>
+    /// A class representing the AutomationWatcher data model.
+    /// Definition of the watcher type.
+    /// </summary>
     public partial class AutomationWatcherData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of AutomationWatcherData. </summary>

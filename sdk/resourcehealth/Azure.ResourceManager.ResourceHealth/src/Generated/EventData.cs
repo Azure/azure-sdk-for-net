@@ -13,7 +13,10 @@ using Azure.ResourceManager.ResourceHealth.Models;
 
 namespace Azure.ResourceManager.ResourceHealth
 {
-    /// <summary> A class representing the Event data model. </summary>
+    /// <summary>
+    /// A class representing the Event data model.
+    /// Service health event
+    /// </summary>
     public partial class EventData : ResourceData
     {
         /// <summary> Initializes a new instance of EventData. </summary>

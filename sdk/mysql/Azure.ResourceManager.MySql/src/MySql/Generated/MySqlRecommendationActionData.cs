@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.MySql
 {
-    /// <summary> A class representing the MySqlRecommendationAction data model. </summary>
+    /// <summary>
+    /// A class representing the MySqlRecommendationAction data model.
+    /// Represents a Recommendation Action.
+    /// </summary>
     public partial class MySqlRecommendationActionData : ResourceData
     {
         /// <summary> Initializes a new instance of MySqlRecommendationActionData. </summary>

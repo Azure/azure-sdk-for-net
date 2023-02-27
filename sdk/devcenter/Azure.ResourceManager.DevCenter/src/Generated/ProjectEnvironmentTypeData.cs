@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DevCenter
 {
-    /// <summary> A class representing the ProjectEnvironmentType data model. </summary>
+    /// <summary>
+    /// A class representing the ProjectEnvironmentType data model.
+    /// Represents an environment type.
+    /// </summary>
     public partial class ProjectEnvironmentTypeData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of ProjectEnvironmentTypeData. </summary>
