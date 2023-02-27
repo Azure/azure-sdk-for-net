@@ -69,12 +69,11 @@ namespace Azure.Monitor.OpenTelemetry
             SetValueToExporterOptions(exporterOptions);
         }
 
-        internal AzureMonitorExporterOptions SetValueToExporterOptions(AzureMonitorExporterOptions exporterOptions)
+        internal void SetValueToExporterOptions(AzureMonitorExporterOptions exporterOptions)
         {
             exporterOptions.ConnectionString = ConnectionString;
             exporterOptions.DisableOfflineStorage = DisableOfflineStorage;
             exporterOptions.StorageDirectory = StorageDirectory;
-            return exporterOptions;
         }
     }
 }
