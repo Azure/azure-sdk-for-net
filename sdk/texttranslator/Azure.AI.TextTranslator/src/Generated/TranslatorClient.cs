@@ -700,102 +700,6 @@ namespace Azure.AI.TextTranslator
             }
         }
 
-        /// <summary> Detect Languages. </summary>
-        /// <param name="content"> Array of the text for which values the language detection will be applied. </param>
-        /// <param name="clientTraceId"> A client-generated GUID to uniquely identify the request. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<IReadOnlyList<DetectedLanguageWithAlternatives>>> DetectAsync(object content, string clientTraceId = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(content, nameof(content));
-
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await DetectAsync(RequestContent.Create(content), clientTraceId, context).ConfigureAwait(false);
-            IReadOnlyList<DetectedLanguageWithAlternatives> value = default;
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            List<DetectedLanguageWithAlternatives> array = new List<DetectedLanguageWithAlternatives>();
-            foreach (var item in document.RootElement.EnumerateArray())
-            {
-                array.Add(DetectedLanguageWithAlternatives.DeserializeDetectedLanguageWithAlternatives(item));
-            }
-            value = array;
-            return Response.FromValue(value, response);
-        }
-
-        /// <summary> Detect Languages. </summary>
-        /// <param name="content"> Array of the text for which values the language detection will be applied. </param>
-        /// <param name="clientTraceId"> A client-generated GUID to uniquely identify the request. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<IReadOnlyList<DetectedLanguageWithAlternatives>> Detect(object content, string clientTraceId = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(content, nameof(content));
-
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = Detect(RequestContent.Create(content), clientTraceId, context);
-            IReadOnlyList<DetectedLanguageWithAlternatives> value = default;
-            using var document = JsonDocument.Parse(response.ContentStream);
-            List<DetectedLanguageWithAlternatives> array = new List<DetectedLanguageWithAlternatives>();
-            foreach (var item in document.RootElement.EnumerateArray())
-            {
-                array.Add(DetectedLanguageWithAlternatives.DeserializeDetectedLanguageWithAlternatives(item));
-            }
-            value = array;
-            return Response.FromValue(value, response);
-        }
-
-        /// <summary> Detect Languages. </summary>
-        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
-        /// <param name="clientTraceId"> A client-generated GUID to uniquely identify the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/TranslatorClient.xml" path="doc/members/member[@name='DetectAsync(RequestContent,String,RequestContext)']/*" />
-        public virtual async Task<Response> DetectAsync(RequestContent content, string clientTraceId = null, RequestContext context = null)
-        {
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = ClientDiagnostics.CreateScope("TranslatorClient.Detect");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateDetectRequest(content, clientTraceId, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Detect Languages. </summary>
-        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
-        /// <param name="clientTraceId"> A client-generated GUID to uniquely identify the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/TranslatorClient.xml" path="doc/members/member[@name='Detect(RequestContent,String,RequestContext)']/*" />
-        public virtual Response Detect(RequestContent content, string clientTraceId = null, RequestContext context = null)
-        {
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = ClientDiagnostics.CreateScope("TranslatorClient.Detect");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateDetectRequest(content, clientTraceId, context);
-                return _pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
         /// <summary> Break Sentence. </summary>
         /// <param name="content"> Array of the text for which values the sentence boundaries will be calculated. </param>
         /// <param name="clientTraceId"> A client-generated GUID to uniquely identify the request. </param>
@@ -1302,26 +1206,6 @@ namespace Azure.AI.TextTranslator
             uri.AppendQuery("language", language, true);
             uri.AppendQuery("fromScript", fromScript, true);
             uri.AppendQuery("toScript", toScript, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            if (clientTraceId != null)
-            {
-                request.Headers.Add("X-ClientTraceId", clientTraceId);
-            }
-            request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/json");
-            request.Content = content;
-            return message;
-        }
-
-        internal HttpMessage CreateDetectRequest(RequestContent content, string clientTraceId, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/detect", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             if (clientTraceId != null)

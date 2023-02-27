@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
@@ -16,7 +17,7 @@ namespace Azure.AI.TextTranslator.Models
         internal static BreakSentenceElement DeserializeBreakSentenceElement(JsonElement element)
         {
             Optional<DetectedLanguage> detectedLanguage = default;
-            SentenceLength sentLen = default;
+            IReadOnlyList<int> sentLen = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("detectedLanguage"u8))
@@ -31,7 +32,12 @@ namespace Azure.AI.TextTranslator.Models
                 }
                 if (property.NameEquals("sentLen"u8))
                 {
-                    sentLen = SentenceLength.DeserializeSentenceLength(property.Value);
+                    List<int> array = new List<int>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetInt32());
+                    }
+                    sentLen = array;
                     continue;
                 }
             }
