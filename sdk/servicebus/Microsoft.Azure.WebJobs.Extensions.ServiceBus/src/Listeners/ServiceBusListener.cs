@@ -8,9 +8,12 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Pipeline;
+using Azure.Core.Shared;
 using Azure.Messaging.ServiceBus;
+using Azure.Messaging.ServiceBus.Administration;
 using Azure.Messaging.ServiceBus.Diagnostics;
 using Microsoft.Azure.WebJobs.Extensions.ServiceBus.Config;
+using Microsoft.Azure.WebJobs.Extensions.ServiceBus.Listeners;
 using Microsoft.Azure.WebJobs.Host.Executors;
 using Microsoft.Azure.WebJobs.Host.Listeners;
 using Microsoft.Azure.WebJobs.Host.Scale;
@@ -18,7 +21,7 @@ using Microsoft.Extensions.Logging;
 
 namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
 {
-    internal sealed class ServiceBusListener : IListener, IScaleMonitorProvider
+    internal sealed class ServiceBusListener : IListener, IScaleMonitorProvider, ITargetScalerProvider
     {
         private readonly ITriggeredFunctionExecutor _triggerExecutor;
         private readonly string _entityPath;
@@ -34,6 +37,8 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
         private readonly Lazy<ServiceBusClient> _client;
         private readonly Lazy<SessionMessageProcessor> _sessionMessageProcessor;
         private readonly Lazy<ServiceBusScaleMonitor> _scaleMonitor;
+        private readonly Lazy<ServiceBusTargetScaler> _targetScaler;
+        private readonly Lazy<ServiceBusAdministrationClient> _administrationClient;
         private readonly ConcurrencyUpdateManager _concurrencyUpdateManager;
 
         // internal for testing
@@ -46,7 +51,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
         private CancellationTokenRegistration _batchReceiveRegistration;
         private Task _batchLoop;
         private Lazy<string> _details;
-        private Lazy<EntityScopeFactory> _scopeFactory;
+        private Lazy<MessagingClientDiagnostics> _clientDiagnostics;
 
         public ServiceBusListener(
             string functionId,
@@ -72,8 +77,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
             _functionId = functionId;
 
             _client = new Lazy<ServiceBusClient>(
-                () =>
-                    clientFactory.CreateClientFromSetting(connection));
+                () => clientFactory.CreateClientFromSetting(connection));
 
             _batchReceiver = new Lazy<ServiceBusReceiver>(
                 () => messagingProvider.CreateBatchMessageReceiver(
@@ -95,18 +99,39 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
                     return messagingProvider.CreateSessionMessageProcessor(_client.Value,_entityPath, sessionProcessorOptions);
                 });
 
+            _administrationClient = new Lazy<ServiceBusAdministrationClient>(
+                () => clientFactory.CreateAdministrationClient(connection));
+
             _scaleMonitor = new Lazy<ServiceBusScaleMonitor>(
                 () => new ServiceBusScaleMonitor(
                     functionId,
-                    entityType,
                     _entityPath,
-                    connection,
+                    entityType,
                     _batchReceiver,
-                    loggerFactory,
-                    clientFactory));
+                    _administrationClient,
+                    loggerFactory
+                    ));
 
-            _scopeFactory = new Lazy<EntityScopeFactory>(
-                () => new EntityScopeFactory(_batchReceiver.Value.EntityPath, _batchReceiver.Value.FullyQualifiedNamespace));
+            _targetScaler = new Lazy<ServiceBusTargetScaler>(
+                () => new ServiceBusTargetScaler(
+                    functionId,
+                    _entityPath,
+                    entityType,
+                    _batchReceiver,
+                    _administrationClient,
+                    options,
+                    _isSessionsEnabled,
+                    _singleDispatch,
+                    loggerFactory
+                    ));
+
+            _clientDiagnostics = new Lazy<MessagingClientDiagnostics>(
+                () => new MessagingClientDiagnostics(
+                    DiagnosticProperty.DiagnosticNamespace,
+                    DiagnosticProperty.ResourceProviderNamespace,
+                    DiagnosticProperty.ServiceBusServiceContext,
+                    _batchReceiver.Value.EntityPath,
+                    _batchReceiver.Value.FullyQualifiedNamespace));
 
             if (concurrencyManager.Enabled)
             {
@@ -417,9 +442,11 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
                             receiveActions,
                             _client.Value);
 
-                        using DiagnosticScope scope = _scopeFactory.Value.CreateScope(
+                        using DiagnosticScope scope = _clientDiagnostics.Value.CreateScope(
                             _isSessionsEnabled ? Constants.ProcessSessionMessagesActivityName : Constants.ProcessMessagesActivityName,
-                            DiagnosticScope.ActivityKind.Consumer);
+                            DiagnosticScope.ActivityKind.Consumer,
+                            MessagingDiagnosticOperation.Process);
+
                         scope.SetMessageData(messagesArray);
 
                         scope.Start();
@@ -534,6 +561,11 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
         public IScaleMonitor GetMonitor()
         {
             return _scaleMonitor.Value;
+        }
+
+        public ITargetScaler GetTargetScaler()
+        {
+            return _targetScaler.Value;
         }
 
         /// <summary>

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Logic.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(AddressRange))
             {
-                writer.WritePropertyName("addressRange");
+                writer.WritePropertyName("addressRange"u8);
                 writer.WriteStringValue(AddressRange);
             }
             writer.WriteEndObject();
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Logic.Models
             Optional<string> addressRange = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("addressRange"))
+                if (property.NameEquals("addressRange"u8))
                 {
                     addressRange = property.Value.GetString();
                     continue;

@@ -10,7 +10,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Sql
 {
-    /// <summary> A class representing the SqlServerJobCredential data model. </summary>
+    /// <summary>
+    /// A class representing the SqlServerJobCredential data model.
+    /// A stored credential that can be used by a job to connect to target databases.
+    /// </summary>
     public partial class SqlServerJobCredentialData : ResourceData
     {
         /// <summary> Initializes a new instance of SqlServerJobCredentialData. </summary>

@@ -21,9 +21,9 @@ namespace Azure.ResourceManager.LabServices.Models
 
         public static LabVirtualMachineConnectionType ToLabVirtualMachineConnectionType(this string value)
         {
-            if (string.Equals(value, "None", StringComparison.InvariantCultureIgnoreCase)) return LabVirtualMachineConnectionType.None;
-            if (string.Equals(value, "Public", StringComparison.InvariantCultureIgnoreCase)) return LabVirtualMachineConnectionType.Public;
-            if (string.Equals(value, "Private", StringComparison.InvariantCultureIgnoreCase)) return LabVirtualMachineConnectionType.Private;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "None")) return LabVirtualMachineConnectionType.None;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Public")) return LabVirtualMachineConnectionType.Public;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Private")) return LabVirtualMachineConnectionType.Private;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown LabVirtualMachineConnectionType value.");
         }
     }

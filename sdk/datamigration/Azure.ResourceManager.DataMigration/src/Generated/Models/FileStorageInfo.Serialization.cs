@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             Optional<IReadOnlyDictionary<string, string>> headers = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("uri"))
+                if (property.NameEquals("uri"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     uri = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("headers"))
+                if (property.NameEquals("headers"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

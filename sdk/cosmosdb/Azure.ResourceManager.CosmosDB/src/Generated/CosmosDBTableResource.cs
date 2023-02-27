@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> Returns a <see cref="CosmosTableThroughputSettingResource" /> object. </returns>
         public virtual CosmosTableThroughputSettingResource GetCosmosTableThroughputSetting()
         {
-            return new CosmosTableThroughputSettingResource(Client, new ResourceIdentifier(Id.ToString() + "/throughputSettings/default"));
+            return new CosmosTableThroughputSettingResource(Client, Id.AppendChildResource("throughputSettings", "default"));
         }
 
         /// <summary>

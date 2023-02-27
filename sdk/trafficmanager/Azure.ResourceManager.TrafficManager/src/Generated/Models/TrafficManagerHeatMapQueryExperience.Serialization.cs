@@ -15,13 +15,13 @@ namespace Azure.ResourceManager.TrafficManager.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("endpointId");
+            writer.WritePropertyName("endpointId"u8);
             writer.WriteNumberValue(EndpointId);
-            writer.WritePropertyName("queryCount");
+            writer.WritePropertyName("queryCount"u8);
             writer.WriteNumberValue(QueryCount);
             if (Optional.IsDefined(Latency))
             {
-                writer.WritePropertyName("latency");
+                writer.WritePropertyName("latency"u8);
                 writer.WriteNumberValue(Latency.Value);
             }
             writer.WriteEndObject();
@@ -34,17 +34,17 @@ namespace Azure.ResourceManager.TrafficManager.Models
             Optional<double> latency = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("endpointId"))
+                if (property.NameEquals("endpointId"u8))
                 {
                     endpointId = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("queryCount"))
+                if (property.NameEquals("queryCount"u8))
                 {
                     queryCount = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("latency"))
+                if (property.NameEquals("latency"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

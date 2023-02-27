@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Batch.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("nodeFillType");
+            writer.WritePropertyName("nodeFillType"u8);
             writer.WriteStringValue(NodeFillType.ToSerialString());
             writer.WriteEndObject();
         }
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Batch.Models
             BatchNodeFillType nodeFillType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("nodeFillType"))
+                if (property.NameEquals("nodeFillType"u8))
                 {
                     nodeFillType = property.Value.GetString().ToBatchNodeFillType();
                     continue;

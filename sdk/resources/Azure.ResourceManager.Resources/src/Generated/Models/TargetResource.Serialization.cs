@@ -19,17 +19,17 @@ namespace Azure.ResourceManager.Resources.Models
             Optional<ResourceType> resourceType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("resourceName"))
+                if (property.NameEquals("resourceName"u8))
                 {
                     resourceName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("resourceType"))
+                if (property.NameEquals("resourceType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

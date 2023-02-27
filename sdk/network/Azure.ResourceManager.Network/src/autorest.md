@@ -4,6 +4,7 @@ Run `dotnet build /t:GenerateCode` to generate code.
 
 ```yaml
 azure-arm: true
+generate-model-factory: false
 library-name: Network
 namespace: Azure.ResourceManager.Network
 require: https://github.com/Azure/azure-rest-api-specs/blob/7384176da46425e7899708f263e0598b851358c2/specification/network/resource-manager/readme.md
@@ -99,6 +100,7 @@ rename-mapping:
   EndpointType: ConnectionMonitorEndpointType
   ConnectionState: NetworkConnectionState
   ApplicationGatewayAvailableSslOptions: ApplicationGatewayAvailableSslOptionsInfo
+  EffectiveNetworkSecurityGroup.tagMap: tagToIPAddresses
 
 format-by-name-rules:
   'tenantId': 'uuid'
@@ -381,6 +383,9 @@ directive:
     transform: >
       $.ResourceNavigationLinkFormat.properties.link['x-ms-format'] = 'arm-id';
       $.ServiceAssociationLinkPropertiesFormat.properties.link['x-ms-format'] = 'arm-id';
+  - from: networkInterface.json # a temporary fix for issue https://github.com/Azure/azure-sdk-for-net/issues/34094
+    where: $.definitions.EffectiveNetworkSecurityGroup.properties.tagMap.type
+    transform: return "object";
 ```
 
 ### Tag: package-track2-preview

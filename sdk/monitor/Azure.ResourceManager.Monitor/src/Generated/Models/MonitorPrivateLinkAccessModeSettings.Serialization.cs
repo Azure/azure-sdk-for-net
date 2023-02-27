@@ -16,13 +16,13 @@ namespace Azure.ResourceManager.Monitor.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("queryAccessMode");
+            writer.WritePropertyName("queryAccessMode"u8);
             writer.WriteStringValue(QueryAccessMode.ToString());
-            writer.WritePropertyName("ingestionAccessMode");
+            writer.WritePropertyName("ingestionAccessMode"u8);
             writer.WriteStringValue(IngestionAccessMode.ToString());
             if (Optional.IsCollectionDefined(Exclusions))
             {
-                writer.WritePropertyName("exclusions");
+                writer.WritePropertyName("exclusions"u8);
                 writer.WriteStartArray();
                 foreach (var item in Exclusions)
                 {
@@ -40,17 +40,17 @@ namespace Azure.ResourceManager.Monitor.Models
             Optional<IList<MonitorPrivateLinkAccessModeSettingsExclusion>> exclusions = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("queryAccessMode"))
+                if (property.NameEquals("queryAccessMode"u8))
                 {
                     queryAccessMode = new MonitorPrivateLinkAccessMode(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("ingestionAccessMode"))
+                if (property.NameEquals("ingestionAccessMode"u8))
                 {
                     ingestionAccessMode = new MonitorPrivateLinkAccessMode(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("exclusions"))
+                if (property.NameEquals("exclusions"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

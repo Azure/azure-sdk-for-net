@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Cert))
             {
-                writer.WritePropertyName("cert");
+                writer.WritePropertyName("cert"u8);
                 writer.WriteStringValue(Cert);
             }
             if (Optional.IsDefined(LedgerRoleName))
             {
-                writer.WritePropertyName("ledgerRoleName");
+                writer.WritePropertyName("ledgerRoleName"u8);
                 writer.WriteStringValue(LedgerRoleName.Value.ToString());
             }
             writer.WriteEndObject();
@@ -34,12 +34,12 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
             Optional<ConfidentialLedgerRoleName> ledgerRoleName = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("cert"))
+                if (property.NameEquals("cert"u8))
                 {
                     cert = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("ledgerRoleName"))
+                if (property.NameEquals("ledgerRoleName"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

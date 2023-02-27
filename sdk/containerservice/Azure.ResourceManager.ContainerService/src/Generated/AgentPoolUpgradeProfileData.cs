@@ -13,7 +13,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ContainerService
 {
-    /// <summary> A class representing the AgentPoolUpgradeProfile data model. </summary>
+    /// <summary>
+    /// A class representing the AgentPoolUpgradeProfile data model.
+    /// The list of available upgrades for an agent pool.
+    /// </summary>
     public partial class AgentPoolUpgradeProfileData : ResourceData
     {
         /// <summary> Initializes a new instance of AgentPoolUpgradeProfileData. </summary>

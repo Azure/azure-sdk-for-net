@@ -15,16 +15,16 @@ namespace Azure.AI.AnomalyDetector
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("variable");
+            writer.WritePropertyName("variable"u8);
             writer.WriteStringValue(Variable);
-            writer.WritePropertyName("timestamps");
+            writer.WritePropertyName("timestamps"u8);
             writer.WriteStartArray();
             foreach (var item in Timestamps)
             {
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
-            writer.WritePropertyName("values");
+            writer.WritePropertyName("values"u8);
             writer.WriteStartArray();
             foreach (var item in Values)
             {

@@ -16,11 +16,11 @@ namespace Azure.ResourceManager.Compute.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("enabled");
+            writer.WritePropertyName("enabled"u8);
             writer.WriteBooleanValue(Enabled);
             if (Optional.IsCollectionDefined(EncryptionSettings))
             {
-                writer.WritePropertyName("encryptionSettings");
+                writer.WritePropertyName("encryptionSettings"u8);
                 writer.WriteStartArray();
                 foreach (var item in EncryptionSettings)
                 {
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Compute.Models
             }
             if (Optional.IsDefined(EncryptionSettingsVersion))
             {
-                writer.WritePropertyName("encryptionSettingsVersion");
+                writer.WritePropertyName("encryptionSettingsVersion"u8);
                 writer.WriteStringValue(EncryptionSettingsVersion);
             }
             writer.WriteEndObject();
@@ -43,12 +43,12 @@ namespace Azure.ResourceManager.Compute.Models
             Optional<string> encryptionSettingsVersion = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("enabled"))
+                if (property.NameEquals("enabled"u8))
                 {
                     enabled = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("encryptionSettings"))
+                if (property.NameEquals("encryptionSettings"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Compute.Models
                     encryptionSettings = array;
                     continue;
                 }
-                if (property.NameEquals("encryptionSettingsVersion"))
+                if (property.NameEquals("encryptionSettingsVersion"u8))
                 {
                     encryptionSettingsVersion = property.Value.GetString();
                     continue;

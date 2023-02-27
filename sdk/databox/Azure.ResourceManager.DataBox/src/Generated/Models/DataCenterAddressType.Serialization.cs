@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.DataBox.Models
 
         public static DataCenterAddressType ToDataCenterAddressType(this string value)
         {
-            if (string.Equals(value, "DatacenterAddressLocation", StringComparison.InvariantCultureIgnoreCase)) return DataCenterAddressType.DataCenterAddressLocation;
-            if (string.Equals(value, "DatacenterAddressInstruction", StringComparison.InvariantCultureIgnoreCase)) return DataCenterAddressType.DataCenterAddressInstruction;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "DatacenterAddressLocation")) return DataCenterAddressType.DataCenterAddressLocation;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "DatacenterAddressInstruction")) return DataCenterAddressType.DataCenterAddressInstruction;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown DataCenterAddressType value.");
         }
     }

@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             Optional<IReadOnlyList<MySqlFlexibleServerDelegatedSubnetUsage>> delegatedSubnetsUsage = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("delegatedSubnetsUsage"))
+                if (property.NameEquals("delegatedSubnetsUsage"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

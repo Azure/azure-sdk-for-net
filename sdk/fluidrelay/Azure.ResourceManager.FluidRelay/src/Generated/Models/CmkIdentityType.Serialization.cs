@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.FluidRelay.Models
 
         public static CmkIdentityType ToCmkIdentityType(this string value)
         {
-            if (string.Equals(value, "SystemAssigned", StringComparison.InvariantCultureIgnoreCase)) return CmkIdentityType.SystemAssigned;
-            if (string.Equals(value, "UserAssigned", StringComparison.InvariantCultureIgnoreCase)) return CmkIdentityType.UserAssigned;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "SystemAssigned")) return CmkIdentityType.SystemAssigned;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "UserAssigned")) return CmkIdentityType.UserAssigned;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown CmkIdentityType value.");
         }
     }

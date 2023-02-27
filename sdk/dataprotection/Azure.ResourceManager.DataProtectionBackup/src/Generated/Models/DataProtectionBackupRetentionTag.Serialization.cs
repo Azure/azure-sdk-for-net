@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("tagName");
+            writer.WritePropertyName("tagName"u8);
             writer.WriteStringValue(TagName);
             writer.WriteEndObject();
         }
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             string tagName = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("eTag"))
+                if (property.NameEquals("eTag"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -38,12 +38,12 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     eTag = new ETag(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("tagName"))
+                if (property.NameEquals("tagName"u8))
                 {
                     tagName = property.Value.GetString();
                     continue;

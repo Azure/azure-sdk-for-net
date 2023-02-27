@@ -16,18 +16,18 @@ namespace Azure.ResourceManager.Media.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("assetName");
+            writer.WritePropertyName("assetName"u8);
             writer.WriteStringValue(AssetName);
-            writer.WritePropertyName("@odata.type");
+            writer.WritePropertyName("@odata.type"u8);
             writer.WriteStringValue(OdataType);
             if (Optional.IsDefined(PresetOverride))
             {
-                writer.WritePropertyName("presetOverride");
+                writer.WritePropertyName("presetOverride"u8);
                 writer.WriteObjectValue(PresetOverride);
             }
             if (Optional.IsDefined(Label))
             {
-                writer.WritePropertyName("label");
+                writer.WritePropertyName("label"u8);
                 writer.WriteStringValue(Label);
             }
             writer.WriteEndObject();
@@ -46,17 +46,17 @@ namespace Azure.ResourceManager.Media.Models
             Optional<DateTimeOffset?> endTime = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("assetName"))
+                if (property.NameEquals("assetName"u8))
                 {
                     assetName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("@odata.type"))
+                if (property.NameEquals("@odata.type"u8))
                 {
                     odataType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("error"))
+                if (property.NameEquals("error"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Media.Models
                     error = MediaJobError.DeserializeMediaJobError(property.Value);
                     continue;
                 }
-                if (property.NameEquals("presetOverride"))
+                if (property.NameEquals("presetOverride"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Media.Models
                     presetOverride = MediaTransformPreset.DeserializeMediaTransformPreset(property.Value);
                     continue;
                 }
-                if (property.NameEquals("state"))
+                if (property.NameEquals("state"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Media.Models
                     state = new MediaJobState(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("progress"))
+                if (property.NameEquals("progress"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -96,12 +96,12 @@ namespace Azure.ResourceManager.Media.Models
                     progress = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("label"))
+                if (property.NameEquals("label"u8))
                 {
                     label = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("startTime"))
+                if (property.NameEquals("startTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Media.Models
                     startTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("endTime"))
+                if (property.NameEquals("endTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

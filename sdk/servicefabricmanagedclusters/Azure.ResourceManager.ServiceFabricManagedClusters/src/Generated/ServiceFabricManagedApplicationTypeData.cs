@@ -11,7 +11,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters
 {
-    /// <summary> A class representing the ServiceFabricManagedApplicationType data model. </summary>
+    /// <summary>
+    /// A class representing the ServiceFabricManagedApplicationType data model.
+    /// The application type name resource
+    /// </summary>
     public partial class ServiceFabricManagedApplicationTypeData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of ServiceFabricManagedApplicationTypeData. </summary>

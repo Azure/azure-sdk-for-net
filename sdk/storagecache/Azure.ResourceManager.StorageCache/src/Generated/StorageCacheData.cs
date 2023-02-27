@@ -13,7 +13,10 @@ using Azure.ResourceManager.StorageCache.Models;
 
 namespace Azure.ResourceManager.StorageCache
 {
-    /// <summary> A class representing the StorageCache data model. </summary>
+    /// <summary>
+    /// A class representing the StorageCache data model.
+    /// A Cache instance. Follows Azure Resource Manager standards: https://github.com/Azure/azure-resource-manager-rpc/blob/master/v1.0/resource-api-reference.md
+    /// </summary>
     public partial class StorageCacheData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of StorageCacheData. </summary>

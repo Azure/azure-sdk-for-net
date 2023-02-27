@@ -22,17 +22,17 @@ namespace Azure.ResourceManager.DataMigration.Models
             Optional<IReadOnlyList<ReportableException>> validationErrors = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("targetServerVersion"))
+                if (property.NameEquals("targetServerVersion"u8))
                 {
                     targetServerVersion = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("databases"))
+                if (property.NameEquals("databases"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -47,12 +47,12 @@ namespace Azure.ResourceManager.DataMigration.Models
                     databases = array;
                     continue;
                 }
-                if (property.NameEquals("targetServerBrandVersion"))
+                if (property.NameEquals("targetServerBrandVersion"u8))
                 {
                     targetServerBrandVersion = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("validationErrors"))
+                if (property.NameEquals("validationErrors"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

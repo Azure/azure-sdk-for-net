@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             Optional<Uri> sasUri = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("sasUri"))
+                if (property.NameEquals("sasUri"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

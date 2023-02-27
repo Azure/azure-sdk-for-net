@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Synapse.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(TablesToInclude))
             {
-                writer.WritePropertyName("tablesToInclude");
+                writer.WritePropertyName("tablesToInclude"u8);
                 writer.WriteStartArray();
                 foreach (var item in TablesToInclude)
                 {
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Synapse.Models
             }
             if (Optional.IsCollectionDefined(TablesToExclude))
             {
-                writer.WritePropertyName("tablesToExclude");
+                writer.WritePropertyName("tablesToExclude"u8);
                 writer.WriteStartArray();
                 foreach (var item in TablesToExclude)
                 {
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Synapse.Models
             }
             if (Optional.IsCollectionDefined(ExternalTablesToInclude))
             {
-                writer.WritePropertyName("externalTablesToInclude");
+                writer.WritePropertyName("externalTablesToInclude"u8);
                 writer.WriteStartArray();
                 foreach (var item in ExternalTablesToInclude)
                 {
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Synapse.Models
             }
             if (Optional.IsCollectionDefined(ExternalTablesToExclude))
             {
-                writer.WritePropertyName("externalTablesToExclude");
+                writer.WritePropertyName("externalTablesToExclude"u8);
                 writer.WriteStartArray();
                 foreach (var item in ExternalTablesToExclude)
                 {
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Synapse.Models
             }
             if (Optional.IsCollectionDefined(MaterializedViewsToInclude))
             {
-                writer.WritePropertyName("materializedViewsToInclude");
+                writer.WritePropertyName("materializedViewsToInclude"u8);
                 writer.WriteStartArray();
                 foreach (var item in MaterializedViewsToInclude)
                 {
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Synapse.Models
             }
             if (Optional.IsCollectionDefined(MaterializedViewsToExclude))
             {
-                writer.WritePropertyName("materializedViewsToExclude");
+                writer.WritePropertyName("materializedViewsToExclude"u8);
                 writer.WriteStartArray();
                 foreach (var item in MaterializedViewsToExclude)
                 {
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Synapse.Models
             Optional<IList<string>> materializedViewsToExclude = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("tablesToInclude"))
+                if (property.NameEquals("tablesToInclude"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Synapse.Models
                     tablesToInclude = array;
                     continue;
                 }
-                if (property.NameEquals("tablesToExclude"))
+                if (property.NameEquals("tablesToExclude"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Synapse.Models
                     tablesToExclude = array;
                     continue;
                 }
-                if (property.NameEquals("externalTablesToInclude"))
+                if (property.NameEquals("externalTablesToInclude"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.Synapse.Models
                     externalTablesToInclude = array;
                     continue;
                 }
-                if (property.NameEquals("externalTablesToExclude"))
+                if (property.NameEquals("externalTablesToExclude"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.Synapse.Models
                     externalTablesToExclude = array;
                     continue;
                 }
-                if (property.NameEquals("materializedViewsToInclude"))
+                if (property.NameEquals("materializedViewsToInclude"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.Synapse.Models
                     materializedViewsToInclude = array;
                     continue;
                 }
-                if (property.NameEquals("materializedViewsToExclude"))
+                if (property.NameEquals("materializedViewsToExclude"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

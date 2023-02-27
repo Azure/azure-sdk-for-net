@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ConfidentialLedger
 {
-    /// <summary> A class representing the ConfidentialLedger data model. </summary>
+    /// <summary>
+    /// A class representing the ConfidentialLedger data model.
+    /// Confidential Ledger. Contains the properties of Confidential Ledger Resource.
+    /// </summary>
     public partial class ConfidentialLedgerData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of ConfidentialLedgerData. </summary>

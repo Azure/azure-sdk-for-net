@@ -22,12 +22,12 @@ namespace Azure.ResourceManager.Marketplace.Models
             Optional<long> messageCode = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("uniqueOfferId"))
+                if (property.NameEquals("uniqueOfferId"u8))
                 {
                     uniqueOfferId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("plansDetails"))
+                if (property.NameEquals("plansDetails"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                     plansDetails = dictionary;
                     continue;
                 }
-                if (property.NameEquals("etag"))
+                if (property.NameEquals("etag"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                     etag = new ETag(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("messageCode"))
+                if (property.NameEquals("messageCode"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

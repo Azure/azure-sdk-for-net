@@ -28,7 +28,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             Optional<string> threadId = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("editedByCommunicationIdentifier"))
+                if (property.NameEquals("editedByCommunicationIdentifier"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -38,7 +38,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     editedByCommunicationIdentifier = CommunicationIdentifierModel.DeserializeCommunicationIdentifierModel(property.Value);
                     continue;
                 }
-                if (property.NameEquals("editTime"))
+                if (property.NameEquals("editTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -48,7 +48,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     editTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -63,7 +63,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     properties = dictionary;
                     continue;
                 }
-                if (property.NameEquals("createTime"))
+                if (property.NameEquals("createTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -73,7 +73,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     createTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("version"))
+                if (property.NameEquals("version"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -83,7 +83,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     version = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("recipientCommunicationIdentifier"))
+                if (property.NameEquals("recipientCommunicationIdentifier"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -93,12 +93,12 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     recipientCommunicationIdentifier = CommunicationIdentifierModel.DeserializeCommunicationIdentifierModel(property.Value);
                     continue;
                 }
-                if (property.NameEquals("transactionId"))
+                if (property.NameEquals("transactionId"u8))
                 {
                     transactionId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("threadId"))
+                if (property.NameEquals("threadId"u8))
                 {
                     threadId = property.Value.GetString();
                     continue;

@@ -21,11 +21,11 @@ namespace Azure.AI.OpenAI.Tests
             public const string EmbeddingsDeploymentIdVariable = "OPENAI_EMBEDDINGS_DEPLOYMENT_ID";
             public const string EndpointVariable = "OPENAI_ENDPOINT";
             public const string ResourceGroupName = "openai-test-rg";
-            public const string CognitiveServicesAccountName = "openai-test-account";
+            public const string CognitiveServicesAccountName = "openai-sdk-test-automation-account";
             public const string CompletionsModelName = "text-davinci-002";
             public const string EmbeddingsModelName = "text-similarity-davinci-001";
             public const string SubDomainPrefix = "sdk";
-            public static AzureLocation Location = AzureLocation.EastUS;
+            public static AzureLocation Location = AzureLocation.WestEurope;
         }
 
         private static readonly object _deploymentIdLock = new object();
@@ -113,7 +113,7 @@ namespace Azure.AI.OpenAI.Tests
                         CognitiveServicesAccountDeploymentResource embeddingsModelResource = GetEnsureDeployedModelResource(
                             openAIResource,
                             Constants.EmbeddingsModelName,
-                            CognitiveServicesAccountDeploymentScaleType.Manual);
+                            CognitiveServicesAccountDeploymentScaleType.Standard);
 
                         _endpoint = new Uri(openAIResource.Data.Properties.Endpoint);
                         _completionsDeploymentId = completionsModelResource.Id.Name;

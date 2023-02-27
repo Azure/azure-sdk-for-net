@@ -23,11 +23,11 @@ namespace Azure.ResourceManager.Sql.Models
 
         public static SqlServerDatabaseReplicationRole ToSqlServerDatabaseReplicationRole(this string value)
         {
-            if (string.Equals(value, "Primary", StringComparison.InvariantCultureIgnoreCase)) return SqlServerDatabaseReplicationRole.Primary;
-            if (string.Equals(value, "Secondary", StringComparison.InvariantCultureIgnoreCase)) return SqlServerDatabaseReplicationRole.Secondary;
-            if (string.Equals(value, "NonReadableSecondary", StringComparison.InvariantCultureIgnoreCase)) return SqlServerDatabaseReplicationRole.NonReadableSecondary;
-            if (string.Equals(value, "Source", StringComparison.InvariantCultureIgnoreCase)) return SqlServerDatabaseReplicationRole.Source;
-            if (string.Equals(value, "Copy", StringComparison.InvariantCultureIgnoreCase)) return SqlServerDatabaseReplicationRole.Copy;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Primary")) return SqlServerDatabaseReplicationRole.Primary;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Secondary")) return SqlServerDatabaseReplicationRole.Secondary;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "NonReadableSecondary")) return SqlServerDatabaseReplicationRole.NonReadableSecondary;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Source")) return SqlServerDatabaseReplicationRole.Source;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Copy")) return SqlServerDatabaseReplicationRole.Copy;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown SqlServerDatabaseReplicationRole value.");
         }
     }

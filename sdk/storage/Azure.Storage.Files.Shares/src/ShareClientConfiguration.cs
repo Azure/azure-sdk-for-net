@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using Azure.Core.Pipeline;
+using Azure.Storage.Files.Shares.Models;
 using Azure.Storage.Shared;
 
 namespace Azure.Storage.Files.Shares

@@ -18,27 +18,27 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(PrivateIPAddress))
             {
-                writer.WritePropertyName("privateIpAddress");
+                writer.WritePropertyName("privateIpAddress"u8);
                 writer.WriteObjectValue(PrivateIPAddress);
             }
             if (Optional.IsDefined(PublicIPAddressResourceId))
             {
-                writer.WritePropertyName("publicIpAddressResourceId");
+                writer.WritePropertyName("publicIpAddressResourceId"u8);
                 writer.WriteStringValue(PublicIPAddressResourceId);
             }
             if (Optional.IsDefined(LoadBalancerResourceId))
             {
-                writer.WritePropertyName("loadBalancerResourceId");
+                writer.WritePropertyName("loadBalancerResourceId"u8);
                 writer.WriteStringValue(LoadBalancerResourceId);
             }
             if (Optional.IsDefined(ProbePort))
             {
-                writer.WritePropertyName("probePort");
+                writer.WritePropertyName("probePort"u8);
                 writer.WriteNumberValue(ProbePort.Value);
             }
             if (Optional.IsCollectionDefined(SqlVmInstances))
             {
-                writer.WritePropertyName("sqlVirtualMachineInstances");
+                writer.WritePropertyName("sqlVirtualMachineInstances"u8);
                 writer.WriteStartArray();
                 foreach (var item in SqlVmInstances)
                 {
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             Optional<IList<ResourceIdentifier>> sqlVmInstances = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("privateIpAddress"))
+                if (property.NameEquals("privateIpAddress"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                     privateIPAddress = AvailabilityGroupListenerPrivateIPAddress.DeserializeAvailabilityGroupListenerPrivateIPAddress(property.Value);
                     continue;
                 }
-                if (property.NameEquals("publicIpAddressResourceId"))
+                if (property.NameEquals("publicIpAddressResourceId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                     publicIPAddressResourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("loadBalancerResourceId"))
+                if (property.NameEquals("loadBalancerResourceId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                     loadBalancerResourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("probePort"))
+                if (property.NameEquals("probePort"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                     probePort = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("sqlVirtualMachineInstances"))
+                if (property.NameEquals("sqlVirtualMachineInstances"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

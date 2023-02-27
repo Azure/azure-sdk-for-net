@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Subscription.Models
             Optional<bool> allowTransfers = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("serviceTenants"))
+                if (property.NameEquals("serviceTenants"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Subscription.Models
                     serviceTenants = array;
                     continue;
                 }
-                if (property.NameEquals("allowTransfers"))
+                if (property.NameEquals("allowTransfers"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

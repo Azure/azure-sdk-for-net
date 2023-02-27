@@ -19,22 +19,22 @@ namespace Azure.ResourceManager.Synapse.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(ComputeType))
             {
-                writer.WritePropertyName("computeType");
+                writer.WritePropertyName("computeType"u8);
                 writer.WriteStringValue(ComputeType.Value.ToString());
             }
             if (Optional.IsDefined(CoreCount))
             {
-                writer.WritePropertyName("coreCount");
+                writer.WritePropertyName("coreCount"u8);
                 writer.WriteNumberValue(CoreCount.Value);
             }
             if (Optional.IsDefined(TimeToLive))
             {
-                writer.WritePropertyName("timeToLive");
+                writer.WritePropertyName("timeToLive"u8);
                 writer.WriteNumberValue(TimeToLive.Value);
             }
             if (Optional.IsDefined(Cleanup))
             {
-                writer.WritePropertyName("cleanup");
+                writer.WritePropertyName("cleanup"u8);
                 writer.WriteBooleanValue(Cleanup.Value);
             }
             foreach (var item in AdditionalProperties)
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Synapse.Models
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("computeType"))
+                if (property.NameEquals("computeType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Synapse.Models
                     computeType = new SynapseDataFlowComputeType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("coreCount"))
+                if (property.NameEquals("coreCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Synapse.Models
                     coreCount = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("timeToLive"))
+                if (property.NameEquals("timeToLive"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Synapse.Models
                     timeToLive = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("cleanup"))
+                if (property.NameEquals("cleanup"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

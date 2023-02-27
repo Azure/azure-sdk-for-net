@@ -18,7 +18,7 @@ namespace Azure.Search.Documents.Indexes.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Tables))
             {
-                writer.WritePropertyName("tables");
+                writer.WritePropertyName("tables"u8);
                 writer.WriteStartArray();
                 foreach (var item in Tables)
                 {
@@ -28,7 +28,7 @@ namespace Azure.Search.Documents.Indexes.Models
             }
             if (Optional.IsCollectionDefined(Objects))
             {
-                writer.WritePropertyName("objects");
+                writer.WritePropertyName("objects"u8);
                 writer.WriteStartArray();
                 foreach (var item in Objects)
                 {
@@ -38,7 +38,7 @@ namespace Azure.Search.Documents.Indexes.Models
             }
             if (Optional.IsCollectionDefined(Files))
             {
-                writer.WritePropertyName("files");
+                writer.WritePropertyName("files"u8);
                 writer.WriteStartArray();
                 foreach (var item in Files)
                 {
@@ -56,7 +56,7 @@ namespace Azure.Search.Documents.Indexes.Models
             Optional<IList<KnowledgeStoreFileProjectionSelector>> files = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("tables"))
+                if (property.NameEquals("tables"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -71,7 +71,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     tables = array;
                     continue;
                 }
-                if (property.NameEquals("objects"))
+                if (property.NameEquals("objects"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -86,7 +86,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     objects = array;
                     continue;
                 }
-                if (property.NameEquals("files"))
+                if (property.NameEquals("files"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

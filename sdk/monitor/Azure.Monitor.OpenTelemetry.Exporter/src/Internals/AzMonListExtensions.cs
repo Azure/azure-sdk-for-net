@@ -5,6 +5,7 @@
 
 using System;
 using System.Runtime.CompilerServices;
+using Azure.Monitor.OpenTelemetry.Exporter.Models;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 {
@@ -350,6 +351,32 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             }
 
             return null;
+        }
+
+        internal static string GetDependencyType(this AzMonList tagObjects, OperationType operationType)
+        {
+            switch (operationType)
+            {
+                case OperationType.Http:
+                    {
+                        return "Http";
+                    }
+                case OperationType.Db:
+                    {
+                        var dbSystem = AzMonList.GetTagValue(ref tagObjects, SemanticConventions.AttributeDbSystem)?.ToString();
+                        return RemoteDependencyData.s_sqlDbs.Contains(dbSystem) ? "SQL" : dbSystem?.Truncate(SchemaConstants.RemoteDependencyData_Type_MaxLength);
+                    }
+                case OperationType.Rpc:
+                    {
+                        return AzMonList.GetTagValue(ref tagObjects, SemanticConventions.AttributeRpcSystem)?.ToString();
+                    }
+                case OperationType.Messaging:
+                    {
+                        return AzMonList.GetTagValue(ref tagObjects, SemanticConventions.AttributeMessagingSystem)?.ToString();
+                    }
+            }
+
+            return "Unknown";
         }
     }
 }

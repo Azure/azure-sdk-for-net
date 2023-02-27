@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using System.Threading;
 using Azure;
 using Azure.Core;
@@ -83,7 +82,7 @@ namespace Azure.ResourceManager.BillingBenefits
         /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="BillingBenefitsSavingsPlanResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<BillingBenefitsSavingsPlanResource> GetBillingBenefitsSavingsPlansAsync(TenantGetBillingBenefitsSavingsPlansOptions options, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<BillingBenefitsSavingsPlanResource> GetBillingBenefitsSavingsPlansAsync(TenantResourceGetBillingBenefitsSavingsPlansOptions options, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => BillingBenefitsSavingsPlanSavingsPlanRestClient.CreateListAllRequest(options.Filter, options.OrderBy, options.RefreshSummary, options.SkipToken, options.SelectedState, options.Take);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => BillingBenefitsSavingsPlanSavingsPlanRestClient.CreateListAllNextPageRequest(nextLink, options.Filter, options.OrderBy, options.RefreshSummary, options.SkipToken, options.SelectedState, options.Take);
@@ -106,7 +105,7 @@ namespace Azure.ResourceManager.BillingBenefits
         /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="BillingBenefitsSavingsPlanResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<BillingBenefitsSavingsPlanResource> GetBillingBenefitsSavingsPlans(TenantGetBillingBenefitsSavingsPlansOptions options, CancellationToken cancellationToken = default)
+        public virtual Pageable<BillingBenefitsSavingsPlanResource> GetBillingBenefitsSavingsPlans(TenantResourceGetBillingBenefitsSavingsPlansOptions options, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => BillingBenefitsSavingsPlanSavingsPlanRestClient.CreateListAllRequest(options.Filter, options.OrderBy, options.RefreshSummary, options.SkipToken, options.SelectedState, options.Take);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => BillingBenefitsSavingsPlanSavingsPlanRestClient.CreateListAllNextPageRequest(nextLink, options.Filter, options.OrderBy, options.RefreshSummary, options.SkipToken, options.SelectedState, options.Take);

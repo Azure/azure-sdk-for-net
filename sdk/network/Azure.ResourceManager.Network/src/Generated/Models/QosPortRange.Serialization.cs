@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.Network.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Start))
             {
-                writer.WritePropertyName("start");
+                writer.WritePropertyName("start"u8);
                 writer.WriteNumberValue(Start.Value);
             }
             if (Optional.IsDefined(End))
             {
-                writer.WritePropertyName("end");
+                writer.WritePropertyName("end"u8);
                 writer.WriteNumberValue(End.Value);
             }
             writer.WriteEndObject();
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Network.Models
             Optional<int> end = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("start"))
+                if (property.NameEquals("start"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Network.Models
                     start = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("end"))
+                if (property.NameEquals("end"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -24,22 +24,22 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             Optional<object> serviceProperties = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("serviceName"))
+                if (property.NameEquals("serviceName"u8))
                 {
                     serviceName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("serviceComputeType"))
+                if (property.NameEquals("serviceComputeType"u8))
                 {
                     serviceComputeType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("modelIds"))
+                if (property.NameEquals("modelIds"u8))
                 {
                     modelIds = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("serviceTags"))
+                if (property.NameEquals("serviceTags"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -49,7 +49,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     serviceTags = property.Value.GetObject();
                     continue;
                 }
-                if (property.NameEquals("serviceProperties"))
+                if (property.NameEquals("serviceProperties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

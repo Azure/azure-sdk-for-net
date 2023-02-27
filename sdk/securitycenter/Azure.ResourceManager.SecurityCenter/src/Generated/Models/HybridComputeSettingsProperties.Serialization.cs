@@ -15,26 +15,26 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("autoProvision");
+            writer.WritePropertyName("autoProvision"u8);
             writer.WriteStringValue(AutoProvision.ToString());
             if (Optional.IsDefined(ResourceGroupName))
             {
-                writer.WritePropertyName("resourceGroupName");
+                writer.WritePropertyName("resourceGroupName"u8);
                 writer.WriteStringValue(ResourceGroupName);
             }
             if (Optional.IsDefined(Region))
             {
-                writer.WritePropertyName("region");
+                writer.WritePropertyName("region"u8);
                 writer.WriteStringValue(Region);
             }
             if (Optional.IsDefined(ProxyServer))
             {
-                writer.WritePropertyName("proxyServer");
+                writer.WritePropertyName("proxyServer"u8);
                 writer.WriteObjectValue(ProxyServer);
             }
             if (Optional.IsDefined(ServicePrincipal))
             {
-                writer.WritePropertyName("servicePrincipal");
+                writer.WritePropertyName("servicePrincipal"u8);
                 writer.WriteObjectValue(ServicePrincipal);
             }
             writer.WriteEndObject();
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             Optional<ServicePrincipalProperties> servicePrincipal = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("hybridComputeProvisioningState"))
+                if (property.NameEquals("hybridComputeProvisioningState"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -60,22 +60,22 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     hybridComputeProvisioningState = new HybridComputeProvisioningState(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("autoProvision"))
+                if (property.NameEquals("autoProvision"u8))
                 {
                     autoProvision = new AutoProvisionState(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("resourceGroupName"))
+                if (property.NameEquals("resourceGroupName"u8))
                 {
                     resourceGroupName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("region"))
+                if (property.NameEquals("region"u8))
                 {
                     region = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("proxyServer"))
+                if (property.NameEquals("proxyServer"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     proxyServer = ProxyServerProperties.DeserializeProxyServerProperties(property.Value);
                     continue;
                 }
-                if (property.NameEquals("servicePrincipal"))
+                if (property.NameEquals("servicePrincipal"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

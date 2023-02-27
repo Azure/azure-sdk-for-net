@@ -19,17 +19,17 @@ namespace Azure.ResourceManager.Advisor.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(ResourceId))
             {
-                writer.WritePropertyName("resourceId");
+                writer.WritePropertyName("resourceId"u8);
                 writer.WriteStringValue(ResourceId);
             }
             if (Optional.IsDefined(Source))
             {
-                writer.WritePropertyName("source");
+                writer.WritePropertyName("source"u8);
                 writer.WriteStringValue(Source);
             }
             if (Optional.IsCollectionDefined(Action))
             {
-                writer.WritePropertyName("action");
+                writer.WritePropertyName("action"u8);
                 writer.WriteStartObject();
                 foreach (var item in Action)
                 {
@@ -44,12 +44,12 @@ namespace Azure.ResourceManager.Advisor.Models
             }
             if (Optional.IsDefined(Singular))
             {
-                writer.WritePropertyName("singular");
+                writer.WritePropertyName("singular"u8);
                 writer.WriteStringValue(Singular);
             }
             if (Optional.IsDefined(Plural))
             {
-                writer.WritePropertyName("plural");
+                writer.WritePropertyName("plural"u8);
                 writer.WriteStringValue(Plural);
             }
             writer.WriteEndObject();
@@ -64,17 +64,17 @@ namespace Azure.ResourceManager.Advisor.Models
             Optional<string> plural = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("resourceId"))
+                if (property.NameEquals("resourceId"u8))
                 {
                     resourceId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("source"))
+                if (property.NameEquals("source"u8))
                 {
                     source = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("action"))
+                if (property.NameEquals("action"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -89,12 +89,12 @@ namespace Azure.ResourceManager.Advisor.Models
                     action = dictionary;
                     continue;
                 }
-                if (property.NameEquals("singular"))
+                if (property.NameEquals("singular"u8))
                 {
                     singular = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("plural"))
+                if (property.NameEquals("plural"u8))
                 {
                     plural = property.Value.GetString();
                     continue;

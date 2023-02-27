@@ -4,6 +4,8 @@
 #nullable disable
 
 using System;
+using System.IO;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -61,64 +63,98 @@ namespace Azure.AI.OpenAI
             return GetCompletions(deploymentId, completionsOptions, cancellationToken);
         }
 
-        internal HttpMessage CreateGetCompletionsRequest(string deploymentId, RequestContent content, RequestContext context)
+        public virtual Response<StreamingCompletions> GetCompletionsStreaming(
+            string deploymentId,
+            CompletionsOptions completionsOptions,
+            CancellationToken cancellationToken = default)
         {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            if (string.IsNullOrEmpty(PublicOpenAIToken))
+            Argument.AssertNotNullOrEmpty(deploymentId, nameof(deploymentId));
+            Argument.AssertNotNull(completionsOptions, nameof(completionsOptions));
+
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope(
+                "OpenAIClient.GetCompletionsStreaming");
+            scope.Start();
+
+            RequestContext context = FromCancellationToken(cancellationToken);
+
+            RequestContent nonStreamingContent = completionsOptions.ToRequestContent();
+            RequestContent streamingContent = GetStreamingEnabledRequestContent(nonStreamingContent);
+
+            try
             {
-                Argument.AssertNotNullOrEmpty(deploymentId, nameof(deploymentId));
-                uri.AppendRaw("/openai", false);
-                uri.AppendPath("/deployments/", false);
-                uri.AppendPath(deploymentId, true);
-                uri.AppendPath("/completions", false);
-                uri.AppendQuery("api-version", _apiVersion, true);
+                HttpMessage message = CreateGetCompletionsRequest(deploymentId, streamingContent, context);
+                message.BufferResponse = false;
+                Response baseResponse = _pipeline.ProcessMessage(message, context, cancellationToken);
+                return Response.FromValue(new StreamingCompletions(baseResponse), baseResponse);
             }
-            else
+            catch (Exception e)
             {
-                uri.AppendPath("/completions", false);
+                scope.Failed(e);
+                throw;
             }
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/json");
-            request.Content = content;
-            return message;
         }
 
-        internal HttpMessage CreateGetEmbeddingsRequest(string deploymentId, RequestContent content, RequestContext context)
+        public virtual async Task<Response<StreamingCompletions>> GetCompletionsStreamingAsync(
+            string deploymentId,
+            CompletionsOptions completionsOptions,
+            CancellationToken cancellationToken = default)
         {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            if (string.IsNullOrEmpty(PublicOpenAIToken))
+            Argument.AssertNotNullOrEmpty(deploymentId, nameof(deploymentId));
+            Argument.AssertNotNull(completionsOptions, nameof(completionsOptions));
+
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope(
+                "OpenAIClient.GetCompletionsStreaming");
+            scope.Start();
+
+            RequestContext context = FromCancellationToken(cancellationToken);
+
+            RequestContent nonStreamingContent = completionsOptions.ToRequestContent();
+            RequestContent streamingContent = GetStreamingEnabledRequestContent(nonStreamingContent);
+
+            try
             {
-                Argument.AssertNotNullOrEmpty(deploymentId, nameof(deploymentId));
-                uri.AppendRaw("/openai", false);
-                uri.AppendPath("/deployments/", false);
-                uri.AppendPath(deploymentId, true);
-                uri.AppendPath("/embeddings", false);
-                uri.AppendQuery("api-version", _apiVersion, true);
+                HttpMessage message = CreateGetCompletionsRequest(deploymentId, streamingContent, context);
+                message.BufferResponse = false;
+                Response baseResponse = await _pipeline.ProcessMessageAsync(
+                    message,
+                    context,
+                    cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new StreamingCompletions(baseResponse), baseResponse);
             }
-            else
+            catch (Exception e)
             {
-                uri.AppendPath("/embeddings", false);
+                scope.Failed(e);
+                throw;
             }
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/json");
-            request.Content = content;
-            return message;
         }
 
-        private static TokenCredential CreateDelegatedToken(string token)
+        private static RequestContent GetStreamingEnabledRequestContent(RequestContent originalRequestContent)
         {
-            AccessToken accessToken = new AccessToken(token, DateTimeOffset.Now.AddDays(180));
-            return DelegatedTokenCredential.Create((_, _) => accessToken);
+            // Dump the original request content to a temporary stream and seek to start
+            using Stream originalRequestContentStream = new MemoryStream();
+            originalRequestContent.WriteTo(originalRequestContentStream, new CancellationToken());
+            originalRequestContentStream.Position = 0;
+
+            JsonDocument originalJson = JsonDocument.Parse(originalRequestContentStream);
+            JsonElement originalJsonRoot = originalJson.RootElement;
+
+            Utf8JsonRequestContent augmentedContent = new Utf8JsonRequestContent();
+            augmentedContent.JsonWriter.WriteStartObject();
+
+            // Copy the original JSON content back into the new copy
+            foreach (JsonProperty jsonThing in originalJsonRoot.EnumerateObject())
+            {
+                augmentedContent.JsonWriter.WritePropertyName(jsonThing.Name);
+                jsonThing.Value.WriteTo(augmentedContent.JsonWriter);
+            }
+
+            // ...Add the *one thing* we wanted to add
+            augmentedContent.JsonWriter.WritePropertyName("stream");
+            augmentedContent.JsonWriter.WriteBooleanValue(true);
+
+            augmentedContent.JsonWriter.WriteEndObject();
+
+            return augmentedContent;
         }
     }
 }

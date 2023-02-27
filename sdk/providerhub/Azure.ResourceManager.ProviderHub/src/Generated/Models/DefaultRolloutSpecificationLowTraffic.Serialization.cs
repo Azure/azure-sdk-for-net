@@ -19,12 +19,12 @@ namespace Azure.ResourceManager.ProviderHub.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(WaitDuration))
             {
-                writer.WritePropertyName("waitDuration");
+                writer.WritePropertyName("waitDuration"u8);
                 writer.WriteStringValue(WaitDuration.Value, "P");
             }
             if (Optional.IsCollectionDefined(Regions))
             {
-                writer.WritePropertyName("regions");
+                writer.WritePropertyName("regions"u8);
                 writer.WriteStartArray();
                 foreach (var item in Regions)
                 {
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             Optional<IList<string>> regions = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("waitDuration"))
+                if (property.NameEquals("waitDuration"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     waitDuration = property.Value.GetTimeSpan("P");
                     continue;
                 }
-                if (property.NameEquals("regions"))
+                if (property.NameEquals("regions"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

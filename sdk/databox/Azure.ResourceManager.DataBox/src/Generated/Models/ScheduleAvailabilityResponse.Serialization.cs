@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.DataBox.Models
             Optional<IReadOnlyList<DateTimeOffset>> availableDates = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("availableDates"))
+                if (property.NameEquals("availableDates"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -17,24 +17,18 @@ namespace Azure.AI.OpenAI
         internal static Completions DeserializeCompletions(JsonElement element)
         {
             Optional<string> id = default;
-            string @object = default;
             Optional<int?> created = default;
             Optional<string> model = default;
             Optional<IReadOnlyList<Choice>> choices = default;
             CompletionsUsage usage = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("object"))
-                {
-                    @object = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("created"))
+                if (property.NameEquals("created"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -44,12 +38,12 @@ namespace Azure.AI.OpenAI
                     created = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("model"))
+                if (property.NameEquals("model"u8))
                 {
                     model = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("choices"))
+                if (property.NameEquals("choices"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -64,13 +58,13 @@ namespace Azure.AI.OpenAI
                     choices = array;
                     continue;
                 }
-                if (property.NameEquals("usage"))
+                if (property.NameEquals("usage"u8))
                 {
                     usage = CompletionsUsage.DeserializeCompletionsUsage(property.Value);
                     continue;
                 }
             }
-            return new Completions(id, @object, Optional.ToNullable(created), model, Optional.ToList(choices), usage);
+            return new Completions(id, Optional.ToNullable(created), model, Optional.ToList(choices), usage);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>

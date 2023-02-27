@@ -17,33 +17,33 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Properties))
             {
-                writer.WritePropertyName("properties");
+                writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties);
             }
-            writer.WritePropertyName("type");
+            writer.WritePropertyName("type"u8);
             writer.WriteStringValue(ResourceCapabilitiesBaseType);
             writer.WriteEndObject();
         }
 
         internal static CapabilitiesResult DeserializeCapabilitiesResult(JsonElement element)
         {
-            Optional<CapabilitiesResponseProperties> properties = default;
-            string type = default;
+            Optional<CapabilitiesResultProperties> properties = default;
+            ResourceType type = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    properties = CapabilitiesResponseProperties.DeserializeCapabilitiesResponseProperties(property.Value);
+                    properties = CapabilitiesResultProperties.DeserializeCapabilitiesResultProperties(property.Value);
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
-                    type = property.Value.GetString();
+                    type = new ResourceType(property.Value.GetString());
                     continue;
                 }
             }

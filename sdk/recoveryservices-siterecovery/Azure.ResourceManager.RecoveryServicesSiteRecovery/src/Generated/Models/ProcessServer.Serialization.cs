@@ -54,32 +54,32 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<string> marsRegistrationStatus = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("friendlyName"))
+                if (property.NameEquals("friendlyName"u8))
                 {
                     friendlyName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("ipAddress"))
+                if (property.NameEquals("ipAddress"u8))
                 {
                     ipAddress = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("osType"))
+                if (property.NameEquals("osType"u8))
                 {
                     osType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("agentVersion"))
+                if (property.NameEquals("agentVersion"u8))
                 {
                     agentVersion = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("lastHeartbeat"))
+                if (property.NameEquals("lastHeartbeat"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -89,12 +89,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     lastHeartbeat = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("versionStatus"))
+                if (property.NameEquals("versionStatus"u8))
                 {
                     versionStatus = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("mobilityServiceUpdates"))
+                if (property.NameEquals("mobilityServiceUpdates"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -109,42 +109,42 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     mobilityServiceUpdates = array;
                     continue;
                 }
-                if (property.NameEquals("hostId"))
+                if (property.NameEquals("hostId"u8))
                 {
                     hostId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("machineCount"))
+                if (property.NameEquals("machineCount"u8))
                 {
                     machineCount = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("replicationPairCount"))
+                if (property.NameEquals("replicationPairCount"u8))
                 {
                     replicationPairCount = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("systemLoad"))
+                if (property.NameEquals("systemLoad"u8))
                 {
                     systemLoad = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("systemLoadStatus"))
+                if (property.NameEquals("systemLoadStatus"u8))
                 {
                     systemLoadStatus = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("cpuLoad"))
+                if (property.NameEquals("cpuLoad"u8))
                 {
                     cpuLoad = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("cpuLoadStatus"))
+                if (property.NameEquals("cpuLoadStatus"u8))
                 {
                     cpuLoadStatus = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("totalMemoryInBytes"))
+                if (property.NameEquals("totalMemoryInBytes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     totalMemoryInBytes = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("availableMemoryInBytes"))
+                if (property.NameEquals("availableMemoryInBytes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -164,12 +164,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     availableMemoryInBytes = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("memoryUsageStatus"))
+                if (property.NameEquals("memoryUsageStatus"u8))
                 {
                     memoryUsageStatus = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("totalSpaceInBytes"))
+                if (property.NameEquals("totalSpaceInBytes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     totalSpaceInBytes = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("availableSpaceInBytes"))
+                if (property.NameEquals("availableSpaceInBytes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -189,17 +189,17 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     availableSpaceInBytes = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("spaceUsageStatus"))
+                if (property.NameEquals("spaceUsageStatus"u8))
                 {
                     spaceUsageStatus = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("psServiceStatus"))
+                if (property.NameEquals("psServiceStatus"u8))
                 {
                     psServiceStatus = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("sslCertExpiryDate"))
+                if (property.NameEquals("sslCertExpiryDate"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     sslCertExpiryDate = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("sslCertExpiryRemainingDays"))
+                if (property.NameEquals("sslCertExpiryRemainingDays"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -219,12 +219,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     sslCertExpiryRemainingDays = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("osVersion"))
+                if (property.NameEquals("osVersion"u8))
                 {
                     osVersion = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("healthErrors"))
+                if (property.NameEquals("healthErrors"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     healthErrors = array;
                     continue;
                 }
-                if (property.NameEquals("agentExpiryDate"))
+                if (property.NameEquals("agentExpiryDate"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     agentExpiryDate = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("agentVersionDetails"))
+                if (property.NameEquals("agentVersionDetails"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -259,7 +259,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     agentVersionDetails = VersionDetails.DeserializeVersionDetails(property.Value);
                     continue;
                 }
-                if (property.NameEquals("health"))
+                if (property.NameEquals("health"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -269,7 +269,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     health = new ProtectionHealth(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("psStatsRefreshTime"))
+                if (property.NameEquals("psStatsRefreshTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -279,7 +279,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     psStatsRefreshTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("throughputUploadPendingDataInBytes"))
+                if (property.NameEquals("throughputUploadPendingDataInBytes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -289,7 +289,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     throughputUploadPendingDataInBytes = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("throughputInMBps"))
+                if (property.NameEquals("throughputInMBps"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -299,7 +299,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     throughputInMBps = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("throughputInBytes"))
+                if (property.NameEquals("throughputInBytes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -309,17 +309,17 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     throughputInBytes = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("throughputStatus"))
+                if (property.NameEquals("throughputStatus"u8))
                 {
                     throughputStatus = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("marsCommunicationStatus"))
+                if (property.NameEquals("marsCommunicationStatus"u8))
                 {
                     marsCommunicationStatus = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("marsRegistrationStatus"))
+                if (property.NameEquals("marsRegistrationStatus"u8))
                 {
                     marsRegistrationStatus = property.Value.GetString();
                     continue;

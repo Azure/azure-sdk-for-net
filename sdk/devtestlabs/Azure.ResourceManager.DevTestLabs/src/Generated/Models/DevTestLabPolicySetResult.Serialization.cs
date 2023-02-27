@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             Optional<IReadOnlyList<DevTestLabPolicyViolation>> policyViolations = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("hasError"))
+                if (property.NameEquals("hasError"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                     hasError = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("policyViolations"))
+                if (property.NameEquals("policyViolations"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

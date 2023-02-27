@@ -17,7 +17,7 @@ namespace Azure.Communication.Email.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(CustomHeaders))
             {
-                writer.WritePropertyName("headers");
+                writer.WritePropertyName("headers"u8);
                 writer.WriteStartArray();
                 foreach (var item in CustomHeaders)
                 {
@@ -25,20 +25,20 @@ namespace Azure.Communication.Email.Models
                 }
                 writer.WriteEndArray();
             }
-            writer.WritePropertyName("sender");
+            writer.WritePropertyName("sender"u8);
             writer.WriteStringValue(Sender);
-            writer.WritePropertyName("content");
+            writer.WritePropertyName("content"u8);
             writer.WriteObjectValue(Content);
             if (Optional.IsDefined(Importance))
             {
-                writer.WritePropertyName("importance");
+                writer.WritePropertyName("importance"u8);
                 writer.WriteStringValue(Importance.Value.ToString());
             }
-            writer.WritePropertyName("recipients");
+            writer.WritePropertyName("recipients"u8);
             writer.WriteObjectValue(Recipients);
             if (Optional.IsCollectionDefined(Attachments))
             {
-                writer.WritePropertyName("attachments");
+                writer.WritePropertyName("attachments"u8);
                 writer.WriteStartArray();
                 foreach (var item in Attachments)
                 {
@@ -48,7 +48,7 @@ namespace Azure.Communication.Email.Models
             }
             if (Optional.IsCollectionDefined(ReplyTo))
             {
-                writer.WritePropertyName("replyTo");
+                writer.WritePropertyName("replyTo"u8);
                 writer.WriteStartArray();
                 foreach (var item in ReplyTo)
                 {
@@ -58,7 +58,7 @@ namespace Azure.Communication.Email.Models
             }
             if (Optional.IsDefined(DisableUserEngagementTracking))
             {
-                writer.WritePropertyName("disableUserEngagementTracking");
+                writer.WritePropertyName("disableUserEngagementTracking"u8);
                 writer.WriteBooleanValue(DisableUserEngagementTracking.Value);
             }
             writer.WriteEndObject();

@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(ColumnName))
             {
-                writer.WritePropertyName("columnName");
+                writer.WritePropertyName("columnName"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(ColumnName);
 #else
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             if (Optional.IsDefined(DefaultValue))
             {
-                writer.WritePropertyName("defaultValue");
+                writer.WritePropertyName("defaultValue"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(DefaultValue);
 #else
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<BinaryData> defaultValue = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("columnName"))
+                if (property.NameEquals("columnName"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     columnName = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("defaultValue"))
+                if (property.NameEquals("defaultValue"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

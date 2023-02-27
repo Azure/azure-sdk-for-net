@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 if (Flavors != null)
                 {
-                    writer.WritePropertyName("flavors");
+                    writer.WritePropertyName("flavors"u8);
                     writer.WriteStartObject();
                     foreach (var item in Flavors)
                     {
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 if (JobName != null)
                 {
-                    writer.WritePropertyName("jobName");
+                    writer.WritePropertyName("jobName"u8);
                     writer.WriteStringValue(JobName);
                 }
                 else
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 if (ModelType != null)
                 {
-                    writer.WritePropertyName("modelType");
+                    writer.WritePropertyName("modelType"u8);
                     writer.WriteStringValue(ModelType);
                 }
                 else
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 if (ModelUri != null)
                 {
-                    writer.WritePropertyName("modelUri");
+                    writer.WritePropertyName("modelUri"u8);
                     writer.WriteStringValue(ModelUri.AbsoluteUri);
                 }
                 else
@@ -73,19 +73,19 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             if (Optional.IsDefined(IsAnonymous))
             {
-                writer.WritePropertyName("isAnonymous");
+                writer.WritePropertyName("isAnonymous"u8);
                 writer.WriteBooleanValue(IsAnonymous.Value);
             }
             if (Optional.IsDefined(IsArchived))
             {
-                writer.WritePropertyName("isArchived");
+                writer.WritePropertyName("isArchived"u8);
                 writer.WriteBooleanValue(IsArchived.Value);
             }
             if (Optional.IsDefined(Description))
             {
                 if (Description != null)
                 {
-                    writer.WritePropertyName("description");
+                    writer.WritePropertyName("description"u8);
                     writer.WriteStringValue(Description);
                 }
                 else
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 if (Properties != null)
                 {
-                    writer.WritePropertyName("properties");
+                    writer.WritePropertyName("properties"u8);
                     writer.WriteStartObject();
                     foreach (var item in Properties)
                     {
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 if (Tags != null)
                 {
-                    writer.WritePropertyName("tags");
+                    writer.WritePropertyName("tags"u8);
                     writer.WriteStartObject();
                     foreach (var item in Tags)
                     {
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Optional<IDictionary<string, string>> tags = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("flavors"))
+                if (property.NameEquals("flavors"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     flavors = dictionary;
                     continue;
                 }
-                if (property.NameEquals("jobName"))
+                if (property.NameEquals("jobName"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     jobName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("modelType"))
+                if (property.NameEquals("modelType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     modelType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("modelUri"))
+                if (property.NameEquals("modelUri"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     modelUri = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("isAnonymous"))
+                if (property.NameEquals("isAnonymous"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     isAnonymous = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("isArchived"))
+                if (property.NameEquals("isArchived"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     isArchived = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("description"))
+                if (property.NameEquals("description"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     description = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     properties = dictionary;
                     continue;
                 }
-                if (property.NameEquals("tags"))
+                if (property.NameEquals("tags"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

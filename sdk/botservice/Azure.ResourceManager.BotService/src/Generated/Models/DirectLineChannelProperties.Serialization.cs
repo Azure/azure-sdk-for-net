@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.BotService.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Sites))
             {
-                writer.WritePropertyName("sites");
+                writer.WritePropertyName("sites"u8);
                 writer.WriteStartArray();
                 foreach (var item in Sites)
                 {
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.BotService.Models
             }
             if (Optional.IsDefined(DirectLineEmbedCode))
             {
-                writer.WritePropertyName("DirectLineEmbedCode");
+                writer.WritePropertyName("DirectLineEmbedCode"u8);
                 writer.WriteStringValue(DirectLineEmbedCode);
             }
             writer.WriteEndObject();
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.BotService.Models
             Optional<string> directLineEmbedCode = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("sites"))
+                if (property.NameEquals("sites"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -57,17 +57,17 @@ namespace Azure.ResourceManager.BotService.Models
                     sites = array;
                     continue;
                 }
-                if (property.NameEquals("extensionKey1"))
+                if (property.NameEquals("extensionKey1"u8))
                 {
                     extensionKey1 = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("extensionKey2"))
+                if (property.NameEquals("extensionKey2"u8))
                 {
                     extensionKey2 = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("DirectLineEmbedCode"))
+                if (property.NameEquals("DirectLineEmbedCode"u8))
                 {
                     directLineEmbedCode = property.Value.GetString();
                     continue;

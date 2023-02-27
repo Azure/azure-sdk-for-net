@@ -18,32 +18,32 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(CanReRegister))
             {
-                writer.WritePropertyName("canReRegister");
+                writer.WritePropertyName("canReRegister"u8);
                 writer.WriteBooleanValue(CanReRegister.Value);
             }
             if (Optional.IsDefined(ContainerId))
             {
-                writer.WritePropertyName("containerId");
+                writer.WritePropertyName("containerId"u8);
                 writer.WriteNumberValue(ContainerId.Value);
             }
             if (Optional.IsDefined(ProtectedItemCount))
             {
-                writer.WritePropertyName("protectedItemCount");
+                writer.WritePropertyName("protectedItemCount"u8);
                 writer.WriteNumberValue(ProtectedItemCount.Value);
             }
             if (Optional.IsDefined(AgentVersion))
             {
-                writer.WritePropertyName("agentVersion");
+                writer.WritePropertyName("agentVersion"u8);
                 writer.WriteStringValue(AgentVersion);
             }
             if (Optional.IsDefined(ExtendedInfo))
             {
-                writer.WritePropertyName("extendedInfo");
+                writer.WritePropertyName("extendedInfo"u8);
                 writer.WriteObjectValue(ExtendedInfo);
             }
             if (Optional.IsCollectionDefined(MabContainerHealthDetails))
             {
-                writer.WritePropertyName("mabContainerHealthDetails");
+                writer.WritePropertyName("mabContainerHealthDetails"u8);
                 writer.WriteStartArray();
                 foreach (var item in MabContainerHealthDetails)
                 {
@@ -53,34 +53,34 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
             if (Optional.IsDefined(ContainerHealthState))
             {
-                writer.WritePropertyName("containerHealthState");
+                writer.WritePropertyName("containerHealthState"u8);
                 writer.WriteStringValue(ContainerHealthState);
             }
             if (Optional.IsDefined(FriendlyName))
             {
-                writer.WritePropertyName("friendlyName");
+                writer.WritePropertyName("friendlyName"u8);
                 writer.WriteStringValue(FriendlyName);
             }
             if (Optional.IsDefined(BackupManagementType))
             {
-                writer.WritePropertyName("backupManagementType");
+                writer.WritePropertyName("backupManagementType"u8);
                 writer.WriteStringValue(BackupManagementType.Value.ToString());
             }
             if (Optional.IsDefined(RegistrationStatus))
             {
-                writer.WritePropertyName("registrationStatus");
+                writer.WritePropertyName("registrationStatus"u8);
                 writer.WriteStringValue(RegistrationStatus);
             }
             if (Optional.IsDefined(HealthStatus))
             {
-                writer.WritePropertyName("healthStatus");
+                writer.WritePropertyName("healthStatus"u8);
                 writer.WriteStringValue(HealthStatus);
             }
-            writer.WritePropertyName("containerType");
+            writer.WritePropertyName("containerType"u8);
             writer.WriteStringValue(ContainerType.ToSerialString());
             if (Optional.IsDefined(ProtectableObjectType))
             {
-                writer.WritePropertyName("protectableObjectType");
+                writer.WritePropertyName("protectableObjectType"u8);
                 writer.WriteStringValue(ProtectableObjectType);
             }
             writer.WriteEndObject();
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             Optional<string> protectableObjectType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("canReRegister"))
+                if (property.NameEquals("canReRegister"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     canReRegister = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("containerId"))
+                if (property.NameEquals("containerId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     containerId = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("protectedItemCount"))
+                if (property.NameEquals("protectedItemCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -133,12 +133,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     protectedItemCount = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("agentVersion"))
+                if (property.NameEquals("agentVersion"u8))
                 {
                     agentVersion = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("extendedInfo"))
+                if (property.NameEquals("extendedInfo"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     extendedInfo = MabContainerExtendedInfo.DeserializeMabContainerExtendedInfo(property.Value);
                     continue;
                 }
-                if (property.NameEquals("mabContainerHealthDetails"))
+                if (property.NameEquals("mabContainerHealthDetails"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -163,17 +163,17 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     mabContainerHealthDetails = array;
                     continue;
                 }
-                if (property.NameEquals("containerHealthState"))
+                if (property.NameEquals("containerHealthState"u8))
                 {
                     containerHealthState = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("friendlyName"))
+                if (property.NameEquals("friendlyName"u8))
                 {
                     friendlyName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("backupManagementType"))
+                if (property.NameEquals("backupManagementType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -183,22 +183,22 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     backupManagementType = new BackupManagementType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("registrationStatus"))
+                if (property.NameEquals("registrationStatus"u8))
                 {
                     registrationStatus = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("healthStatus"))
+                if (property.NameEquals("healthStatus"u8))
                 {
                     healthStatus = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("containerType"))
+                if (property.NameEquals("containerType"u8))
                 {
                     containerType = property.Value.GetString().ToProtectableContainerType();
                     continue;
                 }
-                if (property.NameEquals("protectableObjectType"))
+                if (property.NameEquals("protectableObjectType"u8))
                 {
                     protectableObjectType = property.Value.GetString();
                     continue;

@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.Sql.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(WorkspaceId))
             {
-                writer.WritePropertyName("workspaceId");
+                writer.WritePropertyName("workspaceId"u8);
                 writer.WriteStringValue(WorkspaceId);
             }
             if (Optional.IsDefined(LinkConnectionName))
             {
-                writer.WritePropertyName("linkConnectionName");
+                writer.WritePropertyName("linkConnectionName"u8);
                 writer.WriteStringValue(LinkConnectionName);
             }
             writer.WriteEndObject();
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Sql.Models
             Optional<string> linkConnectionName = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("workspaceId"))
+                if (property.NameEquals("workspaceId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Sql.Models
                     workspaceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("linkConnectionName"))
+                if (property.NameEquals("linkConnectionName"u8))
                 {
                     linkConnectionName = property.Value.GetString();
                     continue;

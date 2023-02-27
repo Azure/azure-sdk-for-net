@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.Serialization;
+using Azure.Core.Amqp;
 using Azure.Messaging.ServiceBus.Primitives;
 using Microsoft.Azure.WebJobs.ServiceBus.Config;
 
@@ -64,8 +65,9 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.MessageInterop
             var lockTokenBytes = bytes.Slice(0, 16).ToArray();
             Assert.AreEqual(lockToken.ToByteArray(), lockTokenBytes);
 
-            var deserialized = ServiceBusAmqpExtensions.FromAmqpBytes(
-                BinaryData.FromBytes(bytes.Slice(16, bytes.Length - 16)),
+            var deserialized = ServiceBusReceivedMessage.FromAmqpMessage(
+                AmqpAnnotatedMessage.FromBytes(
+                    BinaryData.FromBytes(bytes.Slice(16, bytes.Length - 16))),
                 BinaryData.FromBytes(lockTokenBytes));
 
             Assert.AreEqual(message.Body.ToArray(), deserialized.Body.ToArray());

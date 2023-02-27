@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Cdn
 {
-    /// <summary> A class representing the CdnEndpoint data model. </summary>
+    /// <summary>
+    /// A class representing the CdnEndpoint data model.
+    /// CDN endpoint is the entity within a CDN profile containing configuration information such as origin, protocol, content caching and delivery behavior. The CDN endpoint uses the URL format &lt;endpointname&gt;.azureedge.net.
+    /// </summary>
     public partial class CdnEndpointData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of CdnEndpointData. </summary>

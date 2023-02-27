@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(State))
             {
-                writer.WritePropertyName("state");
+                writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
             if (Optional.IsDefined(RetentionDurationInDays))
             {
-                writer.WritePropertyName("retentionDurationInDays");
+                writer.WritePropertyName("retentionDurationInDays"u8);
                 writer.WriteNumberValue(RetentionDurationInDays.Value);
             }
             writer.WriteEndObject();
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             Optional<double> retentionDurationInDays = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("state"))
+                if (property.NameEquals("state"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     state = new BackupVaultSoftDeleteState(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("retentionDurationInDays"))
+                if (property.NameEquals("retentionDurationInDays"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

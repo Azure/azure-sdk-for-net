@@ -17,37 +17,37 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(ApplicationHealthPolicy))
             {
-                writer.WritePropertyName("applicationHealthPolicy");
+                writer.WritePropertyName("applicationHealthPolicy"u8);
                 writer.WriteObjectValue(ApplicationHealthPolicy);
             }
             if (Optional.IsDefined(ForceRestart))
             {
-                writer.WritePropertyName("forceRestart");
+                writer.WritePropertyName("forceRestart"u8);
                 writer.WriteBooleanValue(ForceRestart.Value);
             }
             if (Optional.IsDefined(RollingUpgradeMonitoringPolicy))
             {
-                writer.WritePropertyName("rollingUpgradeMonitoringPolicy");
+                writer.WritePropertyName("rollingUpgradeMonitoringPolicy"u8);
                 writer.WriteObjectValue(RollingUpgradeMonitoringPolicy);
             }
             if (Optional.IsDefined(InstanceCloseDelayDurationInSeconds))
             {
-                writer.WritePropertyName("instanceCloseDelayDuration");
+                writer.WritePropertyName("instanceCloseDelayDuration"u8);
                 writer.WriteNumberValue(InstanceCloseDelayDurationInSeconds.Value);
             }
             if (Optional.IsDefined(UpgradeMode))
             {
-                writer.WritePropertyName("upgradeMode");
+                writer.WritePropertyName("upgradeMode"u8);
                 writer.WriteStringValue(UpgradeMode.Value.ToString());
             }
             if (Optional.IsDefined(UpgradeReplicaSetCheckTimeout))
             {
-                writer.WritePropertyName("upgradeReplicaSetCheckTimeout");
+                writer.WritePropertyName("upgradeReplicaSetCheckTimeout"u8);
                 writer.WriteNumberValue(UpgradeReplicaSetCheckTimeout.Value);
             }
             if (Optional.IsDefined(RecreateApplication))
             {
-                writer.WritePropertyName("recreateApplication");
+                writer.WritePropertyName("recreateApplication"u8);
                 writer.WriteBooleanValue(RecreateApplication.Value);
             }
             writer.WriteEndObject();
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             Optional<bool> recreateApplication = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("applicationHealthPolicy"))
+                if (property.NameEquals("applicationHealthPolicy"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                     applicationHealthPolicy = ApplicationHealthPolicy.DeserializeApplicationHealthPolicy(property.Value);
                     continue;
                 }
-                if (property.NameEquals("forceRestart"))
+                if (property.NameEquals("forceRestart"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                     forceRestart = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("rollingUpgradeMonitoringPolicy"))
+                if (property.NameEquals("rollingUpgradeMonitoringPolicy"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                     rollingUpgradeMonitoringPolicy = RollingUpgradeMonitoringPolicy.DeserializeRollingUpgradeMonitoringPolicy(property.Value);
                     continue;
                 }
-                if (property.NameEquals("instanceCloseDelayDuration"))
+                if (property.NameEquals("instanceCloseDelayDuration"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                     instanceCloseDelayDuration = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("upgradeMode"))
+                if (property.NameEquals("upgradeMode"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                     upgradeMode = new RollingUpgradeMode(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("upgradeReplicaSetCheckTimeout"))
+                if (property.NameEquals("upgradeReplicaSetCheckTimeout"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                     upgradeReplicaSetCheckTimeout = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("recreateApplication"))
+                if (property.NameEquals("recreateApplication"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

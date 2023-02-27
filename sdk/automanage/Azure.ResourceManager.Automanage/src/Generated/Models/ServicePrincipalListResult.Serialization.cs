@@ -8,7 +8,6 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Automanage;
 
 namespace Azure.ResourceManager.Automanage.Models
 {
@@ -16,20 +15,20 @@ namespace Azure.ResourceManager.Automanage.Models
     {
         internal static ServicePrincipalListResult DeserializeServicePrincipalListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<ServicePrincipalData>> value = default;
+            Optional<IReadOnlyList<AutomanageServicePrincipalData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<ServicePrincipalData> array = new List<ServicePrincipalData>();
+                    List<AutomanageServicePrincipalData> array = new List<AutomanageServicePrincipalData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ServicePrincipalData.DeserializeServicePrincipalData(item));
+                        array.Add(AutomanageServicePrincipalData.DeserializeAutomanageServicePrincipalData(item));
                     }
                     value = array;
                     continue;

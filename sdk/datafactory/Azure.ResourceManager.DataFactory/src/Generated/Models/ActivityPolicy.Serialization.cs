@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Timeout))
             {
-                writer.WritePropertyName("timeout");
+                writer.WritePropertyName("timeout"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(Timeout);
 #else
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             if (Optional.IsDefined(Retry))
             {
-                writer.WritePropertyName("retry");
+                writer.WritePropertyName("retry"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(Retry);
 #else
@@ -37,17 +37,17 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             if (Optional.IsDefined(RetryIntervalInSeconds))
             {
-                writer.WritePropertyName("retryIntervalInSeconds");
+                writer.WritePropertyName("retryIntervalInSeconds"u8);
                 writer.WriteNumberValue(RetryIntervalInSeconds.Value);
             }
             if (Optional.IsDefined(EnableSecureInput))
             {
-                writer.WritePropertyName("secureInput");
+                writer.WritePropertyName("secureInput"u8);
                 writer.WriteBooleanValue(EnableSecureInput.Value);
             }
             if (Optional.IsDefined(EnableSecureOutput))
             {
-                writer.WritePropertyName("secureOutput");
+                writer.WritePropertyName("secureOutput"u8);
                 writer.WriteBooleanValue(EnableSecureOutput.Value);
             }
             foreach (var item in AdditionalProperties)
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("timeout"))
+                if (property.NameEquals("timeout"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     timeout = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("retry"))
+                if (property.NameEquals("retry"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     retry = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("retryIntervalInSeconds"))
+                if (property.NameEquals("retryIntervalInSeconds"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     retryIntervalInSeconds = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("secureInput"))
+                if (property.NameEquals("secureInput"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     secureInput = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("secureOutput"))
+                if (property.NameEquals("secureOutput"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

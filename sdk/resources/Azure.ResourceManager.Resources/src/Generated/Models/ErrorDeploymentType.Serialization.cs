@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.Resources.Models
 
         public static ErrorDeploymentType ToErrorDeploymentType(this string value)
         {
-            if (string.Equals(value, "LastSuccessful", StringComparison.InvariantCultureIgnoreCase)) return ErrorDeploymentType.LastSuccessful;
-            if (string.Equals(value, "SpecificDeployment", StringComparison.InvariantCultureIgnoreCase)) return ErrorDeploymentType.SpecificDeployment;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "LastSuccessful")) return ErrorDeploymentType.LastSuccessful;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "SpecificDeployment")) return ErrorDeploymentType.SpecificDeployment;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ErrorDeploymentType value.");
         }
     }

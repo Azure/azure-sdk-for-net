@@ -71,8 +71,16 @@ namespace Azure.ResourceManager.Consumption
 
         /// <summary>
         /// Gets the balances for a scope by billingAccountId. Balances are available via this API only for May 1, 2014 or later.
-        /// Request Path: /providers/Microsoft.Billing/billingAccounts/{billingAccountId}/providers/Microsoft.Consumption/balances
-        /// Operation Id: Balances_GetByBillingAccount
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/providers/Microsoft.Consumption/balances</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Balances_GetByBillingAccount</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<ConsumptionBalanceResult>> GetBalanceAsync(CancellationToken cancellationToken = default)
@@ -93,8 +101,16 @@ namespace Azure.ResourceManager.Consumption
 
         /// <summary>
         /// Gets the balances for a scope by billingAccountId. Balances are available via this API only for May 1, 2014 or later.
-        /// Request Path: /providers/Microsoft.Billing/billingAccounts/{billingAccountId}/providers/Microsoft.Consumption/balances
-        /// Operation Id: Balances_GetByBillingAccount
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/providers/Microsoft.Consumption/balances</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Balances_GetByBillingAccount</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<ConsumptionBalanceResult> GetBalance(CancellationToken cancellationToken = default)
@@ -115,8 +131,16 @@ namespace Azure.ResourceManager.Consumption
 
         /// <summary>
         /// List of transactions for reserved instances on billing account scope. Note: The refund transactions are posted along with its purchase transaction (i.e. in the purchase billing month). For example, The refund is requested in May 2021. This refund transaction will have event date as May 2021 but the billing month as April 2020 when the reservation purchase was made.
-        /// Request Path: /providers/Microsoft.Billing/billingAccounts/{billingAccountId}/providers/Microsoft.Consumption/reservationTransactions
-        /// Operation Id: ReservationTransactions_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/providers/Microsoft.Consumption/reservationTransactions</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ReservationTransactions_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="filter"> Filter reservation transactions by date range. The properties/EventDate for start date and end date. The filter supports &apos;le&apos; and  &apos;ge&apos;. Note: API returns data for the entire start date&apos;s and end date&apos;s billing month. For example, filter properties/eventDate+ge+2020-01-01+AND+properties/eventDate+le+2020-12-29 will include data for the entire December 2020 month (i.e. will contain records for dates December 30 and 31). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -158,8 +182,16 @@ namespace Azure.ResourceManager.Consumption
 
         /// <summary>
         /// List of transactions for reserved instances on billing account scope. Note: The refund transactions are posted along with its purchase transaction (i.e. in the purchase billing month). For example, The refund is requested in May 2021. This refund transaction will have event date as May 2021 but the billing month as April 2020 when the reservation purchase was made.
-        /// Request Path: /providers/Microsoft.Billing/billingAccounts/{billingAccountId}/providers/Microsoft.Consumption/reservationTransactions
-        /// Operation Id: ReservationTransactions_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/providers/Microsoft.Consumption/reservationTransactions</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ReservationTransactions_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="filter"> Filter reservation transactions by date range. The properties/EventDate for start date and end date. The filter supports &apos;le&apos; and  &apos;ge&apos;. Note: API returns data for the entire start date&apos;s and end date&apos;s billing month. For example, filter properties/eventDate+ge+2020-01-01+AND+properties/eventDate+le+2020-12-29 will include data for the entire December 2020 month (i.e. will contain records for dates December 30 and 31). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -201,8 +233,16 @@ namespace Azure.ResourceManager.Consumption
 
         /// <summary>
         /// Lists the events that decrements Azure credits or Microsoft Azure consumption commitment for a billing account or a billing profile for a given start and end date.
-        /// Request Path: /providers/Microsoft.Billing/billingAccounts/{billingAccountId}/providers/Microsoft.Consumption/events
-        /// Operation Id: Events_ListByBillingAccount
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/providers/Microsoft.Consumption/events</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Events_ListByBillingAccount</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="filter"> May be used to filter the events by lotId, lotSource etc. The filter supports &apos;eq&apos;, &apos;lt&apos;, &apos;gt&apos;, &apos;le&apos;, &apos;ge&apos;, and &apos;and&apos;. It does not currently support &apos;ne&apos;, &apos;or&apos;, or &apos;not&apos;. Tag filter is a key value pair string where key and value is separated by a colon (:). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -244,8 +284,16 @@ namespace Azure.ResourceManager.Consumption
 
         /// <summary>
         /// Lists the events that decrements Azure credits or Microsoft Azure consumption commitment for a billing account or a billing profile for a given start and end date.
-        /// Request Path: /providers/Microsoft.Billing/billingAccounts/{billingAccountId}/providers/Microsoft.Consumption/events
-        /// Operation Id: Events_ListByBillingAccount
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/providers/Microsoft.Consumption/events</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Events_ListByBillingAccount</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="filter"> May be used to filter the events by lotId, lotSource etc. The filter supports &apos;eq&apos;, &apos;lt&apos;, &apos;gt&apos;, &apos;le&apos;, &apos;ge&apos;, and &apos;and&apos;. It does not currently support &apos;ne&apos;, &apos;or&apos;, or &apos;not&apos;. Tag filter is a key value pair string where key and value is separated by a colon (:). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -287,8 +335,16 @@ namespace Azure.ResourceManager.Consumption
 
         /// <summary>
         /// Lists all Microsoft Azure consumption commitments for a billing account. The API is only supported for Microsoft Customer Agreements (MCA) and Direct Enterprise Agreement (EA)  billing accounts.
-        /// Request Path: /providers/Microsoft.Billing/billingAccounts/{billingAccountId}/providers/Microsoft.Consumption/lots
-        /// Operation Id: Lots_ListByBillingAccount
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/providers/Microsoft.Consumption/lots</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Lots_ListByBillingAccount</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="filter"> May be used to filter the lots by Status, Source etc. The filter supports &apos;eq&apos;, &apos;lt&apos;, &apos;gt&apos;, &apos;le&apos;, &apos;ge&apos;, and &apos;and&apos;. It does not currently support &apos;ne&apos;, &apos;or&apos;, or &apos;not&apos;. Tag filter is a key value pair string where key and value is separated by a colon (:). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -330,8 +386,16 @@ namespace Azure.ResourceManager.Consumption
 
         /// <summary>
         /// Lists all Microsoft Azure consumption commitments for a billing account. The API is only supported for Microsoft Customer Agreements (MCA) and Direct Enterprise Agreement (EA)  billing accounts.
-        /// Request Path: /providers/Microsoft.Billing/billingAccounts/{billingAccountId}/providers/Microsoft.Consumption/lots
-        /// Operation Id: Lots_ListByBillingAccount
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/providers/Microsoft.Consumption/lots</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Lots_ListByBillingAccount</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="filter"> May be used to filter the lots by Status, Source etc. The filter supports &apos;eq&apos;, &apos;lt&apos;, &apos;gt&apos;, &apos;le&apos;, &apos;ge&apos;, and &apos;and&apos;. It does not currently support &apos;ne&apos;, &apos;or&apos;, or &apos;not&apos;. Tag filter is a key value pair string where key and value is separated by a colon (:). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

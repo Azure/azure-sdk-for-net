@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             Optional<string> domainOwnershipIdentifier = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("domainOwnershipIdentifier"))
+                if (property.NameEquals("domainOwnershipIdentifier"u8))
                 {
                     domainOwnershipIdentifier = property.Value.GetString();
                     continue;

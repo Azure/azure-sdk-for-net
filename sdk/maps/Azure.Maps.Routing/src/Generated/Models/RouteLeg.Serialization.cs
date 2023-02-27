@@ -19,7 +19,7 @@ namespace Azure.Maps.Routing.Models
             Optional<IReadOnlyList<LatLongPair>> points = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("summary"))
+                if (property.NameEquals("summary"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -29,7 +29,7 @@ namespace Azure.Maps.Routing.Models
                     summary = RouteLegSummary.DeserializeRouteLegSummary(property.Value);
                     continue;
                 }
-                if (property.NameEquals("points"))
+                if (property.NameEquals("points"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

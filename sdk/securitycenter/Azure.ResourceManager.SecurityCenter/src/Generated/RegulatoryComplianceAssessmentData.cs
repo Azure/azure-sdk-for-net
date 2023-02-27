@@ -11,7 +11,10 @@ using Azure.ResourceManager.SecurityCenter.Models;
 
 namespace Azure.ResourceManager.SecurityCenter
 {
-    /// <summary> A class representing the RegulatoryComplianceAssessment data model. </summary>
+    /// <summary>
+    /// A class representing the RegulatoryComplianceAssessment data model.
+    /// Regulatory compliance assessment details and state
+    /// </summary>
     public partial class RegulatoryComplianceAssessmentData : ResourceData
     {
         /// <summary> Initializes a new instance of RegulatoryComplianceAssessmentData. </summary>

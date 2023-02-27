@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 if (Endpoint != null)
                 {
-                    writer.WritePropertyName("endpoint");
+                    writer.WritePropertyName("endpoint"u8);
                     writer.WriteStringValue(Endpoint);
                 }
                 else
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 if (JobServiceType != null)
                 {
-                    writer.WritePropertyName("jobServiceType");
+                    writer.WritePropertyName("jobServiceType"u8);
                     writer.WriteStringValue(JobServiceType);
                 }
                 else
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 if (Port != null)
                 {
-                    writer.WritePropertyName("port");
+                    writer.WritePropertyName("port"u8);
                     writer.WriteNumberValue(Port.Value);
                 }
                 else
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 if (Properties != null)
                 {
-                    writer.WritePropertyName("properties");
+                    writer.WritePropertyName("properties"u8);
                     writer.WriteStartObject();
                     foreach (var item in Properties)
                     {
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Optional<string> status = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("endpoint"))
+                if (property.NameEquals("endpoint"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     endpoint = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("errorMessage"))
+                if (property.NameEquals("errorMessage"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     errorMessage = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("jobServiceType"))
+                if (property.NameEquals("jobServiceType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     jobServiceType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("port"))
+                if (property.NameEquals("port"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     port = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     properties = dictionary;
                     continue;
                 }
-                if (property.NameEquals("status"))
+                if (property.NameEquals("status"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

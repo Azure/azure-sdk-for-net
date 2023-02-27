@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary> A class representing the AseV3NetworkingConfiguration data model. </summary>
+    /// <summary>
+    /// A class representing the AseV3NetworkingConfiguration data model.
+    /// Full view of networking configuration for an ASE.
+    /// </summary>
     public partial class AseV3NetworkingConfigurationData : ResourceData
     {
         /// <summary> Initializes a new instance of AseV3NetworkingConfigurationData. </summary>

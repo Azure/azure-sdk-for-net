@@ -2,7 +2,7 @@
   <PropertyGroup>
     <Description>This is the Microsoft Azure Cognitive Services OpenAI client library</Description>
     <AssemblyTitle>Microsoft Azure.AI.OpenAI client library</AssemblyTitle>
-    <Version>1.0.0-beta.2</Version>
+    <Version>1.0.0-beta.5</Version>
     <PackageTags>Microsoft Azure OpenAI</PackageTags>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <GenerateAPIListing>true</GenerateAPIListing>

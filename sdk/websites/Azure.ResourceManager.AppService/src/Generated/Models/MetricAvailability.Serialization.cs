@@ -19,12 +19,12 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<TimeSpan> blobDuration = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("timeGrain"))
+                if (property.NameEquals("timeGrain"u8))
                 {
                     timeGrain = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("blobDuration"))
+                if (property.NameEquals("blobDuration"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

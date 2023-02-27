@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             Optional<IReadOnlyList<CosmosDBBackupStorageRedundancy>> backupStorageRedundancies = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("supportsAvailabilityZone"))
+                if (property.NameEquals("supportsAvailabilityZone"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     supportsAvailabilityZone = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("isResidencyRestricted"))
+                if (property.NameEquals("isResidencyRestricted"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     isResidencyRestricted = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("backupStorageRedundancies"))
+                if (property.NameEquals("backupStorageRedundancies"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

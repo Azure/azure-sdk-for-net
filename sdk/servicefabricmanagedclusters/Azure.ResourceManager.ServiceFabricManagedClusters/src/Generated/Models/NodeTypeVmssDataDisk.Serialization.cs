@@ -15,13 +15,13 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("lun");
+            writer.WritePropertyName("lun"u8);
             writer.WriteNumberValue(Lun);
-            writer.WritePropertyName("diskSizeGB");
+            writer.WritePropertyName("diskSizeGB"u8);
             writer.WriteNumberValue(DiskSizeInGB);
-            writer.WritePropertyName("diskType");
+            writer.WritePropertyName("diskType"u8);
             writer.WriteStringValue(DiskType.ToString());
-            writer.WritePropertyName("diskLetter");
+            writer.WritePropertyName("diskLetter"u8);
             writer.WriteStringValue(DiskLetter);
             writer.WriteEndObject();
         }
@@ -34,22 +34,22 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             string diskLetter = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("lun"))
+                if (property.NameEquals("lun"u8))
                 {
                     lun = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("diskSizeGB"))
+                if (property.NameEquals("diskSizeGB"u8))
                 {
                     diskSizeGB = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("diskType"))
+                if (property.NameEquals("diskType"u8))
                 {
                     diskType = new ServiceFabricManagedDataDiskType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("diskLetter"))
+                if (property.NameEquals("diskLetter"u8))
                 {
                     diskLetter = property.Value.GetString();
                     continue;

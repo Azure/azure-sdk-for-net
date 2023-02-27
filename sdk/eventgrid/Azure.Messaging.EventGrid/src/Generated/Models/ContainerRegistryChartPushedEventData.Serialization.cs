@@ -25,12 +25,12 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             Optional<ContainerRegistryEventConnectedRegistry> connectedRegistry = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("timestamp"))
+                if (property.NameEquals("timestamp"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -40,17 +40,17 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     timestamp = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("action"))
+                if (property.NameEquals("action"u8))
                 {
                     action = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("location"))
+                if (property.NameEquals("location"u8))
                 {
                     location = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("target"))
+                if (property.NameEquals("target"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -60,7 +60,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     target = ContainerRegistryArtifactEventTarget.DeserializeContainerRegistryArtifactEventTarget(property.Value);
                     continue;
                 }
-                if (property.NameEquals("connectedRegistry"))
+                if (property.NameEquals("connectedRegistry"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -15,9 +15,9 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("scheme");
+            writer.WritePropertyName("scheme"u8);
             writer.WriteStringValue(Scheme.ToString());
-            writer.WritePropertyName("serviceName");
+            writer.WritePropertyName("serviceName"u8);
             writer.WriteStringValue(ServiceName);
             writer.WriteEndObject();
         }
@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             string serviceName = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("scheme"))
+                if (property.NameEquals("scheme"u8))
                 {
                     scheme = new ServiceCorrelationScheme(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("serviceName"))
+                if (property.NameEquals("serviceName"u8))
                 {
                     serviceName = property.Value.GetString();
                     continue;

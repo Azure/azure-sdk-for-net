@@ -18,19 +18,19 @@ namespace Azure.ResourceManager.Monitor.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(TimeGrain))
             {
-                writer.WritePropertyName("timeGrain");
+                writer.WritePropertyName("timeGrain"u8);
                 writer.WriteStringValue(TimeGrain.Value, "P");
             }
             if (Optional.IsDefined(Category))
             {
-                writer.WritePropertyName("category");
+                writer.WritePropertyName("category"u8);
                 writer.WriteStringValue(Category);
             }
-            writer.WritePropertyName("enabled");
+            writer.WritePropertyName("enabled"u8);
             writer.WriteBooleanValue(IsEnabled);
             if (Optional.IsDefined(RetentionPolicy))
             {
-                writer.WritePropertyName("retentionPolicy");
+                writer.WritePropertyName("retentionPolicy"u8);
                 writer.WriteObjectValue(RetentionPolicy);
             }
             writer.WriteEndObject();
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Monitor.Models
             Optional<RetentionPolicy> retentionPolicy = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("timeGrain"))
+                if (property.NameEquals("timeGrain"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -54,17 +54,17 @@ namespace Azure.ResourceManager.Monitor.Models
                     timeGrain = property.Value.GetTimeSpan("P");
                     continue;
                 }
-                if (property.NameEquals("category"))
+                if (property.NameEquals("category"u8))
                 {
                     category = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("enabled"))
+                if (property.NameEquals("enabled"u8))
                 {
                     enabled = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("retentionPolicy"))
+                if (property.NameEquals("retentionPolicy"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

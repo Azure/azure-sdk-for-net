@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Cdn.Models
             Optional<IReadOnlyList<MetricsResponseSeriesItem>> series = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("dateTimeBegin"))
+                if (property.NameEquals("dateTimeBegin"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     dateTimeBegin = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("dateTimeEnd"))
+                if (property.NameEquals("dateTimeEnd"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     dateTimeEnd = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("granularity"))
+                if (property.NameEquals("granularity"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     granularity = new MetricsResponseGranularity(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("series"))
+                if (property.NameEquals("series"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

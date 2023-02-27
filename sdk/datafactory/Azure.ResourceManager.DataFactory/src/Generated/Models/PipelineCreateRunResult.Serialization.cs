@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             Guid runId = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("runId"))
+                if (property.NameEquals("runId"u8))
                 {
                     runId = property.Value.GetGuid();
                     continue;

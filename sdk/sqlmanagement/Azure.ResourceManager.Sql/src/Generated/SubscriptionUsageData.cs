@@ -10,7 +10,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Sql
 {
-    /// <summary> A class representing the SubscriptionUsage data model. </summary>
+    /// <summary>
+    /// A class representing the SubscriptionUsage data model.
+    /// Usage Metric of a Subscription in a Location.
+    /// </summary>
     public partial class SubscriptionUsageData : ResourceData
     {
         /// <summary> Initializes a new instance of SubscriptionUsageData. </summary>
