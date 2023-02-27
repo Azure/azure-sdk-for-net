@@ -50,6 +50,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
             OperationContext = "operationContext",
             Prompt = new FileSource(new Uri("https://localhost"))
         };
+
         private static CallMediaRecognizeOptions _choiceRecognizeOptions = new CallMediaRecognizeChoiceOptions(new CommunicationUserIdentifier("targetUserId"), s_recognizeChoices)
         {
             InterruptCallMediaOperation = true,
@@ -142,6 +143,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
                 Assert.AreEqual((int)HttpStatusCode.Accepted, result.GetRawResponse().Status);
             }
         }
+
         [TestCaseSource(nameof(TestData_PlayOperationsAsync))]
         public void PlayOperationsAsync_Return404NotFound(Func<CallMedia, Task<Response<PlayResult>>> operation)
         {
@@ -152,6 +154,13 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
                 async () => await operation(_callMedia));
             Assert.NotNull(ex);
             Assert.AreEqual(ex?.Status, 404);
+        }
+
+        [Test]
+        public void PlayOperationsAsync_ReturnArgumentException()
+        {
+            ArgumentException? ex = Assert.Throws<ArgumentException>(TestWrongTestSource_PlayOperations);
+            Assert.NotNull(ex);
         }
 
         [TestCaseSource(nameof(TestData_CancelOperationsAsync))]
@@ -318,6 +327,10 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
                    callMedia => callMedia.StartRecognizing(_emptyRecognizeOptions)
                 }
             };
+        }
+        private static void TestWrongTestSource_PlayOperations()
+        {
+            TextSource _wrongTextSource = new TextSource("PlayTTS test text.", "en-US-ElizabethNeural", GenderType.Female);
         }
     }
 }
