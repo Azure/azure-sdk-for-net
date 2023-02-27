@@ -22,10 +22,10 @@ namespace Azure.ResourceManager.Chaos.Models
 
         public static SelectorType ToSelectorType(this string value)
         {
-            if (string.Equals(value, "Percent", StringComparison.InvariantCultureIgnoreCase)) return SelectorType.Percent;
-            if (string.Equals(value, "Random", StringComparison.InvariantCultureIgnoreCase)) return SelectorType.Random;
-            if (string.Equals(value, "Tag", StringComparison.InvariantCultureIgnoreCase)) return SelectorType.Tag;
-            if (string.Equals(value, "List", StringComparison.InvariantCultureIgnoreCase)) return SelectorType.List;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Percent")) return SelectorType.Percent;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Random")) return SelectorType.Random;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Tag")) return SelectorType.Tag;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "List")) return SelectorType.List;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown SelectorType value.");
         }
     }

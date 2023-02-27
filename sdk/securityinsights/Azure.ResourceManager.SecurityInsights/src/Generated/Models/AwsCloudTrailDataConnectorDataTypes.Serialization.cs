@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Logs))
             {
-                writer.WritePropertyName("logs");
+                writer.WritePropertyName("logs"u8);
                 writer.WriteObjectValue(Logs);
             }
             writer.WriteEndObject();
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             Optional<AwsCloudTrailDataConnectorDataTypesLogs> logs = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("logs"))
+                if (property.NameEquals("logs"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ApiManagement
 {
-    /// <summary> A class representing the ApiManagementBackend data model. </summary>
+    /// <summary>
+    /// A class representing the ApiManagementBackend data model.
+    /// Backend details.
+    /// </summary>
     public partial class ApiManagementBackendData : ResourceData
     {
         /// <summary> Initializes a new instance of ApiManagementBackendData. </summary>

@@ -17,22 +17,22 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(AlertDisplayNameFormat))
             {
-                writer.WritePropertyName("alertDisplayNameFormat");
+                writer.WritePropertyName("alertDisplayNameFormat"u8);
                 writer.WriteStringValue(AlertDisplayNameFormat);
             }
             if (Optional.IsDefined(AlertDescriptionFormat))
             {
-                writer.WritePropertyName("alertDescriptionFormat");
+                writer.WritePropertyName("alertDescriptionFormat"u8);
                 writer.WriteStringValue(AlertDescriptionFormat);
             }
             if (Optional.IsDefined(AlertTacticsColumnName))
             {
-                writer.WritePropertyName("alertTacticsColumnName");
+                writer.WritePropertyName("alertTacticsColumnName"u8);
                 writer.WriteStringValue(AlertTacticsColumnName);
             }
             if (Optional.IsDefined(AlertSeverityColumnName))
             {
-                writer.WritePropertyName("alertSeverityColumnName");
+                writer.WritePropertyName("alertSeverityColumnName"u8);
                 writer.WriteStringValue(AlertSeverityColumnName);
             }
             writer.WriteEndObject();
@@ -46,22 +46,22 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             Optional<string> alertSeverityColumnName = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("alertDisplayNameFormat"))
+                if (property.NameEquals("alertDisplayNameFormat"u8))
                 {
                     alertDisplayNameFormat = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("alertDescriptionFormat"))
+                if (property.NameEquals("alertDescriptionFormat"u8))
                 {
                     alertDescriptionFormat = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("alertTacticsColumnName"))
+                if (property.NameEquals("alertTacticsColumnName"u8))
                 {
                     alertTacticsColumnName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("alertSeverityColumnName"))
+                if (property.NameEquals("alertSeverityColumnName"u8))
                 {
                     alertSeverityColumnName = property.Value.GetString();
                     continue;

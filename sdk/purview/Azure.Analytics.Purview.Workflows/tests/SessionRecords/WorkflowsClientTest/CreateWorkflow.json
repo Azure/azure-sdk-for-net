@@ -1,0 +1,218 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://account-name.purview.azure.com/workflow/workflows/c504f8ad-c0d6-4e76-ada8-33a0d3cccba7?api-version=2022-05-01-preview",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "1363",
+        "Content-Type": "application/json",
+        "traceparent": "00-2a7257dcf774d6449519015f4affd1a4-73c99b1ecad31c4f-00",
+        "User-Agent": "azsdk-net-Analytics.Purview.Workflows/1.0.0-alpha.20230121.1 (.NET Core 3.1.32; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "bcca20388dd7042afd2bfdf82dbfa787",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "name": "Create glossary term workflow",
+        "description": "",
+        "triggers": [
+          {
+            "type": "when_term_creation_is_requested",
+            "underGlossaryHierarchy": "/glossaries/20031e20-b4df-4a66-a61d-1b0716f3fa48"
+          }
+        ],
+        "isEnabled": true,
+        "actionDag": {
+          "actions": {
+            "Startandwaitforanapproval": {
+              "type": "Approval",
+              "inputs": {
+                "parameters": {
+                  "approvalType": "PendingOnAll",
+                  "title": "ApprovalRequestforCreateGlossaryTerm",
+                  "assignedTo": [
+                    "eece94d9-0619-4669-bb8a-d6ecec5220bc"
+                  ]
+                }
+              },
+              "runAfter": {}
+            },
+            "Condition": {
+              "type": "If",
+              "expression": {
+                "and": [
+                  {
+                    "equals": [
+                      "@outputs(\u0027Startandwaitforanapproval\u0027)[\u0027body/outcome\u0027]",
+                      "Approved"
+                    ]
+                  }
+                ]
+              },
+              "actions": {
+                "Createglossaryterm": {
+                  "type": "CreateTerm",
+                  "runAfter": {}
+                },
+                "Sendemailnotification": {
+                  "type": "EmailNotification",
+                  "inputs": {
+                    "parameters": {
+                      "emailSubject": "GlossaryTermCreate-APPROVED",
+                      "emailMessage": "YourrequestforGlossaryTerm@{triggerBody()[\u0027request\u0027][\u0027term\u0027][\u0027name\u0027]}isapproved.",
+                      "emailRecipients": [
+                        "@{triggerBody()[\u0027request\u0027][\u0027requestor\u0027]}"
+                      ]
+                    }
+                  },
+                  "runAfter": {
+                    "Createglossaryterm": [
+                      "Succeeded"
+                    ]
+                  }
+                }
+              },
+              "else": {
+                "actions": {
+                  "Sendrejectemailnotification": {
+                    "type": "EmailNotification",
+                    "inputs": {
+                      "parameters": {
+                        "emailSubject": "GlossaryTermCreate-REJECTED",
+                        "emailMessage": "YourrequestforGlossaryTerm@{triggerBody()[\u0027request\u0027][\u0027term\u0027][\u0027name\u0027]}isrejected.",
+                        "emailRecipients": [
+                          "@{triggerBody()[\u0027request\u0027][\u0027requestor\u0027]}"
+                        ]
+                      }
+                    },
+                    "runAfter": {}
+                  }
+                }
+              },
+              "runAfter": {
+                "Startandwaitforanapproval": [
+                  "Succeeded"
+                ]
+              }
+            }
+          }
+        }
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Content-Length": "1738",
+        "Content-Type": "application/json",
+        "Date": "Sun, 22 Jan 2023 06:15:57 GMT",
+        "Server": "MicrosoftPurview",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "x-ms-client-request-id": "bcca20388dd7042afd2bfdf82dbfa787",
+        "x-ms-correlation-request-id": "3b6e2c0b-6faa-4574-a7e7-1ef97be302d9",
+        "x-ms-request-id": "a52a91c8-7a08-4e13-a3c6-92cfa5097dd5"
+      },
+      "ResponseBody": {
+        "id": "c504f8ad-c0d6-4e76-ada8-33a0d3cccba7",
+        "triggers": [
+          {
+            "type": "when_term_creation_is_requested",
+            "underGlossaryHierarchy": "/glossaries/20031e20-b4df-4a66-a61d-1b0716f3fa48"
+          }
+        ],
+        "createdTime": "2023-01-22T06:15:56.474975296Z",
+        "createdBy": "eece94d9-0619-4669-bb8a-d6ecec5220bc",
+        "lastUpdateTime": "2023-01-22T06:15:56.474975296Z",
+        "updatedBy": "eece94d9-0619-4669-bb8a-d6ecec5220bc",
+        "name": "Create glossary term workflow",
+        "isEnabled": true,
+        "description": "",
+        "actionDag": {
+          "actions": {
+            "Startandwaitforanapproval": {
+              "type": "Approval",
+              "inputs": {
+                "parameters": {
+                  "approvalType": "PendingOnAll",
+                  "title": "ApprovalRequestforCreateGlossaryTerm",
+                  "assignedTo": [
+                    "eece94d9-0619-4669-bb8a-d6ecec5220bc"
+                  ]
+                }
+              },
+              "runAfter": {}
+            },
+            "Condition": {
+              "type": "If",
+              "expression": {
+                "and": [
+                  {
+                    "equals": [
+                      "@outputs(\u0027Startandwaitforanapproval\u0027)[\u0027body/outcome\u0027]",
+                      "Approved"
+                    ]
+                  }
+                ]
+              },
+              "actions": {
+                "Createglossaryterm": {
+                  "type": "CreateTerm",
+                  "runAfter": {}
+                },
+                "Sendemailnotification": {
+                  "type": "EmailNotification",
+                  "inputs": {
+                    "parameters": {
+                      "emailSubject": "GlossaryTermCreate-APPROVED",
+                      "emailMessage": "YourrequestforGlossaryTerm@{triggerBody()[\u0027request\u0027][\u0027term\u0027][\u0027name\u0027]}isapproved.",
+                      "emailRecipients": [
+                        "@{triggerBody()[\u0027request\u0027][\u0027requestor\u0027]}"
+                      ]
+                    }
+                  },
+                  "runAfter": {
+                    "Createglossaryterm": [
+                      "Succeeded"
+                    ]
+                  },
+                  "runtimeConfiguration": {
+                    "secureInput": false,
+                    "secureOutput": false
+                  }
+                }
+              },
+              "else": {
+                "actions": {
+                  "Sendrejectemailnotification": {
+                    "type": "EmailNotification",
+                    "inputs": {
+                      "parameters": {
+                        "emailSubject": "GlossaryTermCreate-REJECTED",
+                        "emailMessage": "YourrequestforGlossaryTerm@{triggerBody()[\u0027request\u0027][\u0027term\u0027][\u0027name\u0027]}isrejected.",
+                        "emailRecipients": [
+                          "@{triggerBody()[\u0027request\u0027][\u0027requestor\u0027]}"
+                        ]
+                      }
+                    },
+                    "runAfter": {},
+                    "runtimeConfiguration": {
+                      "secureInput": false,
+                      "secureOutput": false
+                    }
+                  }
+                }
+              },
+              "runAfter": {
+                "Startandwaitforanapproval": [
+                  "Succeeded"
+                ]
+              }
+            }
+          }
+        }
+      }
+    }
+  ],
+  "Variables": {
+    "RandomSeed": "1999413123",
+    "WORKFLOW_ENDPOINT": "https://account-name.purview.azure.com"
+  }
+}

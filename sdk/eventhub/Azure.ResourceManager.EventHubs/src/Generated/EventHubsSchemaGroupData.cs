@@ -14,7 +14,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.EventHubs
 {
-    /// <summary> A class representing the EventHubsSchemaGroup data model. </summary>
+    /// <summary>
+    /// A class representing the EventHubsSchemaGroup data model.
+    /// Single item in List or Get Schema Group operation
+    /// </summary>
     public partial class EventHubsSchemaGroupData : ResourceData
     {
         /// <summary> Initializes a new instance of EventHubsSchemaGroupData. </summary>

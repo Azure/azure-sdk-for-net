@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> Returns a <see cref="CosmosDBSqlDatabaseThroughputSettingResource" /> object. </returns>
         public virtual CosmosDBSqlDatabaseThroughputSettingResource GetCosmosDBSqlDatabaseThroughputSetting()
         {
-            return new CosmosDBSqlDatabaseThroughputSettingResource(Client, new ResourceIdentifier(Id.ToString() + "/throughputSettings/default"));
+            return new CosmosDBSqlDatabaseThroughputSettingResource(Client, Id.AppendChildResource("throughputSettings", "default"));
         }
 
         /// <summary> Gets a collection of CosmosDBSqlContainerResources in the CosmosDBSqlDatabase. </summary>

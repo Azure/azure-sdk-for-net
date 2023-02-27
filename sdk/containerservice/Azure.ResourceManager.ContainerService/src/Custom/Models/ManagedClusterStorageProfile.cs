@@ -2,6 +2,8 @@
 // Licensed under the MIT License.
 
 using Azure.Core;
+using System;
+using System.ComponentModel;
 
 #nullable disable
 
@@ -12,6 +14,8 @@ namespace Azure.ResourceManager.ContainerService.Models
     public partial class ManagedClusterStorageProfile
     {
         /// <summary> Whether to enable AzureDisk CSI Driver. The default value is true. </summary>
+        [Obsolete("This property is obsolete and will be removed in a future release", false)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public bool? IsDiskCsiDriverEnabled
         {
             get => DiskCsiDriver is null ? default : DiskCsiDriver.IsEnabled;

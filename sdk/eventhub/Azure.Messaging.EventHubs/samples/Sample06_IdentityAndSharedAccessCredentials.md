@@ -17,7 +17,7 @@ This sample demonstrates using credentials to authorize clients with the Event H
 
 ## Prerequisites
 
-To begin, please ensure that you're familiar with the items discussed in the [Getting started](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/eventhub/Azure.Messaging.EventHubs/samples#getting-started) section of the README.  You will also need to the fully qualified namespace for the Event Hubs resource that you would like to use.  This can be found in the Azure Portal view of the Event Hubs namespace in the "Overview" tab.  In the center pane, the "essentials" area will list a "hostname."  This is the fully qualified namespace and is likely be similar to: `{your-namespace}.servicebus.windows.net`.
+To begin, please ensure that you're familiar with the items discussed in the [Getting started](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/eventhub/Azure.Messaging.EventHubs/samples#getting-started) section of the README.  You will also need the fully qualified namespace for the Event Hubs resource that you would like to use.  This can be found in the Azure Portal view of the Event Hubs namespace in the "Overview" tab.  In the center pane, the "essentials" area will list a "hostname."  This is the fully qualified namespace and is likely be similar to: `{your-namespace}.servicebus.windows.net`.
 
 Depending on the type of authorization that you wish to use, additional setup may be necessary before using these examples.  Details for each authorization type can be found below.
 
@@ -41,7 +41,7 @@ The available role choices for Event Hubs are:
 
 Shared access signatures (SAS) are recommended over shared access keys when RBAC cannot be used.  A shared access signature allows for granular and time-limited access to Event Hubs resources.  In order to use SAS-based authorization, a token needs to be generated and the associated Event Hubs resource needs to be configured to authorize its use.
 
-The steps to to generate a SAS token can be found in the [example below](#generating-sas-tokens) and are detailed in the article "[Authenticate access to Event Hubs resources using shared access signatures (SAS)](https://docs.microsoft.com/azure/event-hubs/authenticate-shared-access-signature)".  Details for for some additional languages are discussed in the article "[Generate SAS token](https://docs.microsoft.com/rest/api/eventhub/generate-sas-token)".  Information about configuring SAS authorization can be found in the article "[Authorizing access to Event Hubs resources using Shared Access Signatures](https://docs.microsoft.com/azure/event-hubs/authorize-access-shared-access-signature)".
+The steps to generate a SAS token can be found in the [example below](#generating-sas-tokens) and are detailed in the article "[Authenticate access to Event Hubs resources using shared access signatures (SAS)](https://docs.microsoft.com/azure/event-hubs/authenticate-shared-access-signature)".  Details for for some additional languages are discussed in the article "[Generate SAS token](https://docs.microsoft.com/rest/api/eventhub/generate-sas-token)".  Information about configuring SAS authorization can be found in the article "[Authorizing access to Event Hubs resources using Shared Access Signatures](https://docs.microsoft.com/azure/event-hubs/authorize-access-shared-access-signature)".
 
 ### Event Hubs Shared Access Key authorization
 

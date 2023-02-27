@@ -11,7 +11,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> A class representing the AzureWebCategory data model. </summary>
+    /// <summary>
+    /// A class representing the AzureWebCategory data model.
+    /// Azure Web Category Resource.
+    /// </summary>
     public partial class AzureWebCategoryData : ResourceData
     {
         /// <summary> Initializes a new instance of AzureWebCategoryData. </summary>

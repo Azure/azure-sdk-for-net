@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.FrontDoor.Models
 
         public static FrontDoorResourceType ToFrontDoorResourceType(this string value)
         {
-            if (string.Equals(value, "Microsoft.Network/frontDoors", StringComparison.InvariantCultureIgnoreCase)) return FrontDoorResourceType.MicrosoftNetworkFrontDoors;
-            if (string.Equals(value, "Microsoft.Network/frontDoors/frontendEndpoints", StringComparison.InvariantCultureIgnoreCase)) return FrontDoorResourceType.MicrosoftNetworkFrontDoorsFrontendEndpoints;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Microsoft.Network/frontDoors")) return FrontDoorResourceType.MicrosoftNetworkFrontDoors;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Microsoft.Network/frontDoors/frontendEndpoints")) return FrontDoorResourceType.MicrosoftNetworkFrontDoorsFrontendEndpoints;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown FrontDoorResourceType value.");
         }
     }

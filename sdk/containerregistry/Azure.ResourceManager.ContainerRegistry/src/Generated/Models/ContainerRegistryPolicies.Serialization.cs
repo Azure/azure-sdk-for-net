@@ -35,16 +35,6 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 writer.WritePropertyName("exportPolicy"u8);
                 writer.WriteObjectValue(ExportPolicy);
             }
-            if (Optional.IsDefined(AzureADAuthenticationAsArmPolicy))
-            {
-                writer.WritePropertyName("azureADAuthenticationAsArmPolicy"u8);
-                writer.WriteObjectValue(AzureADAuthenticationAsArmPolicy);
-            }
-            if (Optional.IsDefined(SoftDeletePolicy))
-            {
-                writer.WritePropertyName("softDeletePolicy"u8);
-                writer.WriteObjectValue(SoftDeletePolicy);
-            }
             writer.WriteEndObject();
         }
 
@@ -54,8 +44,6 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             Optional<ContainerRegistryTrustPolicy> trustPolicy = default;
             Optional<ContainerRegistryRetentionPolicy> retentionPolicy = default;
             Optional<ContainerRegistryExportPolicy> exportPolicy = default;
-            Optional<AzureADAuthenticationAsArmPolicy> azureADAuthenticationAsArmPolicy = default;
-            Optional<ContainerRegistrySoftDeletePolicy> softDeletePolicy = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("quarantinePolicy"u8))
@@ -98,28 +86,8 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     exportPolicy = ContainerRegistryExportPolicy.DeserializeContainerRegistryExportPolicy(property.Value);
                     continue;
                 }
-                if (property.NameEquals("azureADAuthenticationAsArmPolicy"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    azureADAuthenticationAsArmPolicy = AzureADAuthenticationAsArmPolicy.DeserializeAzureADAuthenticationAsArmPolicy(property.Value);
-                    continue;
-                }
-                if (property.NameEquals("softDeletePolicy"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    softDeletePolicy = ContainerRegistrySoftDeletePolicy.DeserializeContainerRegistrySoftDeletePolicy(property.Value);
-                    continue;
-                }
             }
-            return new ContainerRegistryPolicies(quarantinePolicy.Value, trustPolicy.Value, retentionPolicy.Value, exportPolicy.Value, azureADAuthenticationAsArmPolicy.Value, softDeletePolicy.Value);
+            return new ContainerRegistryPolicies(quarantinePolicy.Value, trustPolicy.Value, retentionPolicy.Value, exportPolicy.Value);
         }
     }
 }

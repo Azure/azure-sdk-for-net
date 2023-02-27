@@ -72,5 +72,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
         /// Disable offline storage.
         /// </summary>
         public bool DisableOfflineStorage { get; set; }
+
+        /// <summary>
+        /// Internal flag to control if Statsbeat is enabled.
+        /// </summary>
+        internal bool EnableStatsbeat { get; set; } = true;
     }
 }

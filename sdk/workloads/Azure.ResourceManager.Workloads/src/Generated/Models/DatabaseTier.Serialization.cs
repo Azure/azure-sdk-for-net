@@ -21,9 +21,9 @@ namespace Azure.ResourceManager.Workloads.Models
 
         public static DatabaseTier ToDatabaseTier(this string value)
         {
-            if (string.Equals(value, "Burstable", StringComparison.InvariantCultureIgnoreCase)) return DatabaseTier.Burstable;
-            if (string.Equals(value, "GeneralPurpose", StringComparison.InvariantCultureIgnoreCase)) return DatabaseTier.GeneralPurpose;
-            if (string.Equals(value, "MemoryOptimized", StringComparison.InvariantCultureIgnoreCase)) return DatabaseTier.MemoryOptimized;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Burstable")) return DatabaseTier.Burstable;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "GeneralPurpose")) return DatabaseTier.GeneralPurpose;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "MemoryOptimized")) return DatabaseTier.MemoryOptimized;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown DatabaseTier value.");
         }
     }

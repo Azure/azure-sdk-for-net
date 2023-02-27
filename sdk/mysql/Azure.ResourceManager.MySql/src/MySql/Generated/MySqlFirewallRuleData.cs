@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.MySql
 {
-    /// <summary> A class representing the MySqlFirewallRule data model. </summary>
+    /// <summary>
+    /// A class representing the MySqlFirewallRule data model.
+    /// Represents a server firewall rule.
+    /// </summary>
     public partial class MySqlFirewallRuleData : ResourceData
     {
         /// <summary> Initializes a new instance of MySqlFirewallRuleData. </summary>

@@ -11,7 +11,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DevCenter
 {
-    /// <summary> A class representing the AttachedNetworkConnection data model. </summary>
+    /// <summary>
+    /// A class representing the AttachedNetworkConnection data model.
+    /// Represents an attached NetworkConnection.
+    /// </summary>
     public partial class AttachedNetworkConnectionData : ResourceData
     {
         /// <summary> Initializes a new instance of AttachedNetworkConnectionData. </summary>

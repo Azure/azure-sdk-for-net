@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.AppConfiguration.Models
 
         public static AppConfigurationCreateMode ToAppConfigurationCreateMode(this string value)
         {
-            if (string.Equals(value, "Recover", StringComparison.InvariantCultureIgnoreCase)) return AppConfigurationCreateMode.Recover;
-            if (string.Equals(value, "Default", StringComparison.InvariantCultureIgnoreCase)) return AppConfigurationCreateMode.Default;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Recover")) return AppConfigurationCreateMode.Recover;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Default")) return AppConfigurationCreateMode.Default;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown AppConfigurationCreateMode value.");
         }
     }

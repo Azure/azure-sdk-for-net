@@ -23,11 +23,11 @@ namespace Azure.AI.FormRecognizer
 
         public static FormContentType ToFormContentType(this string value)
         {
-            if (string.Equals(value, "application/pdf", StringComparison.InvariantCultureIgnoreCase)) return FormContentType.Pdf;
-            if (string.Equals(value, "image/bmp", StringComparison.InvariantCultureIgnoreCase)) return FormContentType.Bmp;
-            if (string.Equals(value, "image/jpeg", StringComparison.InvariantCultureIgnoreCase)) return FormContentType.Jpeg;
-            if (string.Equals(value, "image/png", StringComparison.InvariantCultureIgnoreCase)) return FormContentType.Png;
-            if (string.Equals(value, "image/tiff", StringComparison.InvariantCultureIgnoreCase)) return FormContentType.Tiff;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "application/pdf")) return FormContentType.Pdf;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "image/bmp")) return FormContentType.Bmp;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "image/jpeg")) return FormContentType.Jpeg;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "image/png")) return FormContentType.Png;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "image/tiff")) return FormContentType.Tiff;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown FormContentType value.");
         }
     }

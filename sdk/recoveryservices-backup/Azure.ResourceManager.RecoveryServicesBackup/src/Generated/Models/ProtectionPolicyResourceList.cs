@@ -17,20 +17,20 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <summary> Initializes a new instance of ProtectionPolicyResourceList. </summary>
         internal ProtectionPolicyResourceList()
         {
-            Value = new ChangeTrackingList<ProtectionPolicyResourceData>();
+            Value = new ChangeTrackingList<BackupProtectionPolicyData>();
         }
 
         /// <summary> Initializes a new instance of ProtectionPolicyResourceList. </summary>
         /// <param name="value"> List of resources. </param>
         /// <param name="nextLink"> The uri to fetch the next page of resources. </param>
-        internal ProtectionPolicyResourceList(IReadOnlyList<ProtectionPolicyResourceData> value, string nextLink)
+        internal ProtectionPolicyResourceList(IReadOnlyList<BackupProtectionPolicyData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> List of resources. </summary>
-        public IReadOnlyList<ProtectionPolicyResourceData> Value { get; }
+        public IReadOnlyList<BackupProtectionPolicyData> Value { get; }
         /// <summary> The uri to fetch the next page of resources. </summary>
         public string NextLink { get; }
     }

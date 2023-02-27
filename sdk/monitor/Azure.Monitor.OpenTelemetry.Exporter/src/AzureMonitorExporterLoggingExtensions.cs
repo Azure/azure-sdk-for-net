@@ -27,6 +27,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                 throw new ArgumentNullException(nameof(loggerOptions));
             }
 
+            // Ideally user should set this to true
+            // but if they miss we may have an issue of missing state values which gets converted to custom dimensions.
+            loggerOptions.ParseStateValues = true;
+
             var options = new AzureMonitorExporterOptions();
             configure?.Invoke(options);
 

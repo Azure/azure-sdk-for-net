@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.Cdn.Models
 
         public static FrontDoorMinimumTlsVersion ToFrontDoorMinimumTlsVersion(this string value)
         {
-            if (string.Equals(value, "TLS10", StringComparison.InvariantCultureIgnoreCase)) return FrontDoorMinimumTlsVersion.Tls1_0;
-            if (string.Equals(value, "TLS12", StringComparison.InvariantCultureIgnoreCase)) return FrontDoorMinimumTlsVersion.Tls1_2;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "TLS10")) return FrontDoorMinimumTlsVersion.Tls1_0;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "TLS12")) return FrontDoorMinimumTlsVersion.Tls1_2;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown FrontDoorMinimumTlsVersion value.");
         }
     }
