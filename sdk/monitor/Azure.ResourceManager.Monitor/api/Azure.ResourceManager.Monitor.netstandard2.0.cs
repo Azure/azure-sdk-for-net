@@ -800,8 +800,8 @@ namespace Azure.ResourceManager.Monitor
         public Azure.ResourceManager.Monitor.Models.ScheduledQueryRuleKind? Kind { get { throw null; } set { } }
         public System.TimeSpan? MuteActionsDuration { get { throw null; } set { } }
         public System.TimeSpan? OverrideQueryTimeRange { get { throw null; } set { } }
-        public Azure.ResourceManager.Monitor.Models.PublicNetworkAccess? PublicNetworkAccess { get { throw null; } set { } }
-        public Azure.ResourceManager.Monitor.Models.RuleResolveConfiguration RuleResolveConfiguration { get { throw null; } set { } }
+        public Azure.ResourceManager.Monitor.Models.ScheduledQueryRulePublicNetworkAccess? PublicNetworkAccess { get { throw null; } set { } }
+        public Azure.ResourceManager.Monitor.Models.ScheduledQueryRuleResolveConfiguration RuleResolveConfiguration { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> Scopes { get { throw null; } }
         public Azure.ResourceManager.Monitor.Models.AlertSeverity? Severity { get { throw null; } set { } }
         public bool? SkipQueryValidation { get { throw null; } set { } }
@@ -2061,25 +2061,6 @@ namespace Azure.ResourceManager.Monitor.Models
         public System.DateTimeOffset TimeStamp { get { throw null; } }
         public double Value { get { throw null; } }
     }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct PublicNetworkAccess : System.IEquatable<Azure.ResourceManager.Monitor.Models.PublicNetworkAccess>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public PublicNetworkAccess(string value) { throw null; }
-        public static Azure.ResourceManager.Monitor.Models.PublicNetworkAccess Disabled { get { throw null; } }
-        public static Azure.ResourceManager.Monitor.Models.PublicNetworkAccess Enabled { get { throw null; } }
-        public static Azure.ResourceManager.Monitor.Models.PublicNetworkAccess SecuredByPerimeter { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Monitor.Models.PublicNetworkAccess other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Monitor.Models.PublicNetworkAccess left, Azure.ResourceManager.Monitor.Models.PublicNetworkAccess right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Monitor.Models.PublicNetworkAccess (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Monitor.Models.PublicNetworkAccess left, Azure.ResourceManager.Monitor.Models.PublicNetworkAccess right) { throw null; }
-        public override string ToString() { throw null; }
-    }
     public enum RecurrenceFrequency
     {
         None = 0,
@@ -2141,12 +2122,6 @@ namespace Azure.ResourceManager.Monitor.Models
     {
         public RuleMetricDataSource() { }
         public string MetricName { get { throw null; } set { } }
-    }
-    public partial class RuleResolveConfiguration
-    {
-        public RuleResolveConfiguration() { }
-        public bool? AutoResolved { get { throw null; } set { } }
-        public System.TimeSpan? TimeToResolve { get { throw null; } set { } }
     }
     public partial class RuleWebhookAction : Azure.ResourceManager.Monitor.Models.AlertRuleAction
     {
@@ -2226,14 +2201,39 @@ namespace Azure.ResourceManager.Monitor.Models
         public bool? IsWorkspaceAlertsStorageConfigured { get { throw null; } }
         public System.TimeSpan? MuteActionsDuration { get { throw null; } set { } }
         public System.TimeSpan? OverrideQueryTimeRange { get { throw null; } set { } }
-        public Azure.ResourceManager.Monitor.Models.PublicNetworkAccess? PublicNetworkAccess { get { throw null; } set { } }
-        public Azure.ResourceManager.Monitor.Models.RuleResolveConfiguration RuleResolveConfiguration { get { throw null; } set { } }
+        public Azure.ResourceManager.Monitor.Models.ScheduledQueryRulePublicNetworkAccess? PublicNetworkAccess { get { throw null; } set { } }
+        public Azure.ResourceManager.Monitor.Models.ScheduledQueryRuleResolveConfiguration RuleResolveConfiguration { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> Scopes { get { throw null; } }
         public Azure.ResourceManager.Monitor.Models.AlertSeverity? Severity { get { throw null; } set { } }
         public bool? SkipQueryValidation { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
         public System.Collections.Generic.IList<string> TargetResourceTypes { get { throw null; } }
         public System.TimeSpan? WindowSize { get { throw null; } set { } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ScheduledQueryRulePublicNetworkAccess : System.IEquatable<Azure.ResourceManager.Monitor.Models.ScheduledQueryRulePublicNetworkAccess>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public ScheduledQueryRulePublicNetworkAccess(string value) { throw null; }
+        public static Azure.ResourceManager.Monitor.Models.ScheduledQueryRulePublicNetworkAccess Disabled { get { throw null; } }
+        public static Azure.ResourceManager.Monitor.Models.ScheduledQueryRulePublicNetworkAccess Enabled { get { throw null; } }
+        public static Azure.ResourceManager.Monitor.Models.ScheduledQueryRulePublicNetworkAccess SecuredByPerimeter { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Monitor.Models.ScheduledQueryRulePublicNetworkAccess other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Monitor.Models.ScheduledQueryRulePublicNetworkAccess left, Azure.ResourceManager.Monitor.Models.ScheduledQueryRulePublicNetworkAccess right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Monitor.Models.ScheduledQueryRulePublicNetworkAccess (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Monitor.Models.ScheduledQueryRulePublicNetworkAccess left, Azure.ResourceManager.Monitor.Models.ScheduledQueryRulePublicNetworkAccess right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class ScheduledQueryRuleResolveConfiguration
+    {
+        public ScheduledQueryRuleResolveConfiguration() { }
+        public bool? IsAutoResolved { get { throw null; } set { } }
+        public System.TimeSpan? TimeToResolve { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ScheduledQueryRuleTimeAggregationType : System.IEquatable<Azure.ResourceManager.Monitor.Models.ScheduledQueryRuleTimeAggregationType>

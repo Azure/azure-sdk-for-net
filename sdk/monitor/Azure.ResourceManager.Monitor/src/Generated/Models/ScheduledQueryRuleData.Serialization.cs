@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.Monitor
             Optional<string> displayName = default;
             Optional<AlertSeverity> severity = default;
             Optional<bool> enabled = default;
-            Optional<PublicNetworkAccess> publicNetworkAccess = default;
+            Optional<ScheduledQueryRulePublicNetworkAccess> publicNetworkAccess = default;
             Optional<IList<string>> scopes = default;
             Optional<TimeSpan> evaluationFrequency = default;
             Optional<TimeSpan> windowSize = default;
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.Monitor
             Optional<bool> checkWorkspaceAlertsStorageConfigured = default;
             Optional<bool> skipQueryValidation = default;
             Optional<bool> autoMitigate = default;
-            Optional<RuleResolveConfiguration> ruleResolveConfiguration = default;
+            Optional<ScheduledQueryRuleResolveConfiguration> ruleResolveConfiguration = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("identity"u8))
@@ -313,7 +313,7 @@ namespace Azure.ResourceManager.Monitor
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            publicNetworkAccess = new PublicNetworkAccess(property0.Value.GetString());
+                            publicNetworkAccess = new ScheduledQueryRulePublicNetworkAccess(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("scopes"u8))
@@ -453,7 +453,7 @@ namespace Azure.ResourceManager.Monitor
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            ruleResolveConfiguration = RuleResolveConfiguration.DeserializeRuleResolveConfiguration(property0.Value);
+                            ruleResolveConfiguration = ScheduledQueryRuleResolveConfiguration.DeserializeScheduledQueryRuleResolveConfiguration(property0.Value);
                             continue;
                         }
                     }

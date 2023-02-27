@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="skipQueryValidation"> The flag which indicates whether the provided query should be validated or not. The default is false. Relevant only for rules of the kind LogAlert. </param>
         /// <param name="autoMitigate"> The flag that indicates whether the alert should be automatically resolved or not. The default is true. Relevant only for rules of the kind LogAlert. </param>
         /// <param name="ruleResolveConfiguration"> Defines the configuration for resolving fired alerts. Relevant only for rules of the kind LogAlert. </param>
-        internal ScheduledQueryRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, ScheduledQueryRuleKind? kind, ETag? etag, string createdWithApiVersion, bool? isLegacyLogAnalyticsRule, string description, string displayName, AlertSeverity? severity, bool? isEnabled, PublicNetworkAccess? publicNetworkAccess, IList<string> scopes, TimeSpan? evaluationFrequency, TimeSpan? windowSize, TimeSpan? overrideQueryTimeRange, IList<string> targetResourceTypes, ScheduledQueryRuleCriteria criteria, TimeSpan? muteActionsDuration, ScheduledQueryRuleActions actions, bool? isWorkspaceAlertsStorageConfigured, bool? checkWorkspaceAlertsStorageConfigured, bool? skipQueryValidation, bool? autoMitigate, RuleResolveConfiguration ruleResolveConfiguration) : base(id, name, resourceType, systemData, tags, location)
+        internal ScheduledQueryRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, ScheduledQueryRuleKind? kind, ETag? etag, string createdWithApiVersion, bool? isLegacyLogAnalyticsRule, string description, string displayName, AlertSeverity? severity, bool? isEnabled, ScheduledQueryRulePublicNetworkAccess? publicNetworkAccess, IList<string> scopes, TimeSpan? evaluationFrequency, TimeSpan? windowSize, TimeSpan? overrideQueryTimeRange, IList<string> targetResourceTypes, ScheduledQueryRuleCriteria criteria, TimeSpan? muteActionsDuration, ScheduledQueryRuleActions actions, bool? isWorkspaceAlertsStorageConfigured, bool? checkWorkspaceAlertsStorageConfigured, bool? skipQueryValidation, bool? autoMitigate, ScheduledQueryRuleResolveConfiguration ruleResolveConfiguration) : base(id, name, resourceType, systemData, tags, location)
         {
             Identity = identity;
             Kind = kind;
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Monitor
         /// <summary> The flag which indicates whether this scheduled query rule is enabled. Value should be true or false. </summary>
         public bool? IsEnabled { get; set; }
         /// <summary> This determines if traffic is allowed over public network. By default it is enabled. </summary>
-        public PublicNetworkAccess? PublicNetworkAccess { get; set; }
+        public ScheduledQueryRulePublicNetworkAccess? PublicNetworkAccess { get; set; }
         /// <summary> The list of resource id&apos;s that this scheduled query rule is scoped to. </summary>
         public IList<string> Scopes { get; }
         /// <summary> How often the scheduled query rule is evaluated represented in ISO 8601 duration format. Relevant and required only for rules of the kind LogAlert. </summary>
@@ -138,6 +138,6 @@ namespace Azure.ResourceManager.Monitor
         /// <summary> The flag that indicates whether the alert should be automatically resolved or not. The default is true. Relevant only for rules of the kind LogAlert. </summary>
         public bool? AutoMitigate { get; set; }
         /// <summary> Defines the configuration for resolving fired alerts. Relevant only for rules of the kind LogAlert. </summary>
-        public RuleResolveConfiguration RuleResolveConfiguration { get; set; }
+        public ScheduledQueryRuleResolveConfiguration RuleResolveConfiguration { get; set; }
     }
 }

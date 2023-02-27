@@ -244,6 +244,9 @@ rename-mapping:
   Operator: MetricCriteriaOperator
   ComparisonOperationType: MetricTriggerComparisonOperation
   ConditionOperator: MonitorConditionOperator
+  RuleResolveConfiguration: ScheduledQueryRuleResolveConfiguration
+  RuleResolveConfiguration.autoResolved: IsAutoResolved
+  PublicNetworkAccess: ScheduledQueryRulePublicNetworkAccess
 
 directive:
   # remove operations because they are covered in resourcemanager we no longer need to generate them here, and they are causing duplicate schemas

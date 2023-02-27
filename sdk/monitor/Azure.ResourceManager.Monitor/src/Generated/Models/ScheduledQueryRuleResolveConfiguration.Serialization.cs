@@ -11,15 +11,15 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    public partial class RuleResolveConfiguration : IUtf8JsonSerializable
+    public partial class ScheduledQueryRuleResolveConfiguration : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(AutoResolved))
+            if (Optional.IsDefined(IsAutoResolved))
             {
                 writer.WritePropertyName("autoResolved"u8);
-                writer.WriteBooleanValue(AutoResolved.Value);
+                writer.WriteBooleanValue(IsAutoResolved.Value);
             }
             if (Optional.IsDefined(TimeToResolve))
             {
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Monitor.Models
             writer.WriteEndObject();
         }
 
-        internal static RuleResolveConfiguration DeserializeRuleResolveConfiguration(JsonElement element)
+        internal static ScheduledQueryRuleResolveConfiguration DeserializeScheduledQueryRuleResolveConfiguration(JsonElement element)
         {
             Optional<bool> autoResolved = default;
             Optional<TimeSpan> timeToResolve = default;
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     continue;
                 }
             }
-            return new RuleResolveConfiguration(Optional.ToNullable(autoResolved), Optional.ToNullable(timeToResolve));
+            return new ScheduledQueryRuleResolveConfiguration(Optional.ToNullable(autoResolved), Optional.ToNullable(timeToResolve));
         }
     }
 }

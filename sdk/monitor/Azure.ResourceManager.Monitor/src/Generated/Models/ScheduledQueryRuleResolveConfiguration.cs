@@ -10,24 +10,24 @@ using System;
 namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary> TBD. Relevant only for rules of the kind LogAlert. </summary>
-    public partial class RuleResolveConfiguration
+    public partial class ScheduledQueryRuleResolveConfiguration
     {
-        /// <summary> Initializes a new instance of RuleResolveConfiguration. </summary>
-        public RuleResolveConfiguration()
+        /// <summary> Initializes a new instance of ScheduledQueryRuleResolveConfiguration. </summary>
+        public ScheduledQueryRuleResolveConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of RuleResolveConfiguration. </summary>
-        /// <param name="autoResolved"> The flag that indicates whether or not to auto resolve a fired alert. </param>
+        /// <summary> Initializes a new instance of ScheduledQueryRuleResolveConfiguration. </summary>
+        /// <param name="isAutoResolved"> The flag that indicates whether or not to auto resolve a fired alert. </param>
         /// <param name="timeToResolve"> The duration a rule must evaluate as healthy before the fired alert is automatically resolved represented in ISO 8601 duration format. </param>
-        internal RuleResolveConfiguration(bool? autoResolved, TimeSpan? timeToResolve)
+        internal ScheduledQueryRuleResolveConfiguration(bool? isAutoResolved, TimeSpan? timeToResolve)
         {
-            AutoResolved = autoResolved;
+            IsAutoResolved = isAutoResolved;
             TimeToResolve = timeToResolve;
         }
 
         /// <summary> The flag that indicates whether or not to auto resolve a fired alert. </summary>
-        public bool? AutoResolved { get; set; }
+        public bool? IsAutoResolved { get; set; }
         /// <summary> The duration a rule must evaluate as healthy before the fired alert is automatically resolved represented in ISO 8601 duration format. </summary>
         public TimeSpan? TimeToResolve { get; set; }
     }
