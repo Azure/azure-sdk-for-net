@@ -22,10 +22,10 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         public static ContainerAppUnauthenticatedClientActionV2 ToContainerAppUnauthenticatedClientActionV2(this string value)
         {
-            if (string.Equals(value, "RedirectToLoginPage", StringComparison.InvariantCultureIgnoreCase)) return ContainerAppUnauthenticatedClientActionV2.RedirectToLoginPage;
-            if (string.Equals(value, "AllowAnonymous", StringComparison.InvariantCultureIgnoreCase)) return ContainerAppUnauthenticatedClientActionV2.AllowAnonymous;
-            if (string.Equals(value, "Return401", StringComparison.InvariantCultureIgnoreCase)) return ContainerAppUnauthenticatedClientActionV2.Return401;
-            if (string.Equals(value, "Return403", StringComparison.InvariantCultureIgnoreCase)) return ContainerAppUnauthenticatedClientActionV2.Return403;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "RedirectToLoginPage")) return ContainerAppUnauthenticatedClientActionV2.RedirectToLoginPage;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "AllowAnonymous")) return ContainerAppUnauthenticatedClientActionV2.AllowAnonymous;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Return401")) return ContainerAppUnauthenticatedClientActionV2.Return401;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Return403")) return ContainerAppUnauthenticatedClientActionV2.Return403;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ContainerAppUnauthenticatedClientActionV2 value.");
         }
     }

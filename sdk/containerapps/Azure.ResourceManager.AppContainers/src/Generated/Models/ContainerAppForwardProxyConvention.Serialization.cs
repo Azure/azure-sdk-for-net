@@ -21,9 +21,9 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         public static ContainerAppForwardProxyConvention ToContainerAppForwardProxyConvention(this string value)
         {
-            if (string.Equals(value, "NoProxy", StringComparison.InvariantCultureIgnoreCase)) return ContainerAppForwardProxyConvention.NoProxy;
-            if (string.Equals(value, "Standard", StringComparison.InvariantCultureIgnoreCase)) return ContainerAppForwardProxyConvention.Standard;
-            if (string.Equals(value, "Custom", StringComparison.InvariantCultureIgnoreCase)) return ContainerAppForwardProxyConvention.Custom;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "NoProxy")) return ContainerAppForwardProxyConvention.NoProxy;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Standard")) return ContainerAppForwardProxyConvention.Standard;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Custom")) return ContainerAppForwardProxyConvention.Custom;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ContainerAppForwardProxyConvention value.");
         }
     }

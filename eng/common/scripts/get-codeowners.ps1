@@ -62,7 +62,7 @@ param (
   # but not this one:
   #    Remove the obsolete, prefix-based CODEOWNERS matcher & related tests
   #    https://github.com/Azure/azure-sdk-tools/pull/5431
-  [string]$ToolVersion = "1.0.0-dev.20230214.3",
+  [string]$ToolVersion = "1.0.0-dev.20230223.4",
   [string]$ToolPath = (Join-Path ([System.IO.Path]::GetTempPath()) "codeowners-tool-path"),
   [string]$DevOpsFeed = "https://pkgs.dev.azure.com/azure-sdk/public/_packaging/azure-sdk-for-net/nuget/v3/index.json",
   [string]$VsoVariable = "",
@@ -168,7 +168,7 @@ if ($Test) {
   $azSdkToolsCodeowners = (Resolve-Path "$PSScriptRoot/../../../.github/CODEOWNERS")
   TestGetCodeowners -targetPath "eng/common/scripts/get-codeowners.ps1" -codeownersFileLocation $azSdkToolsCodeowners -includeNonUserAliases $true -expectReturn @("konrad-jamrozik", "weshaggard", "benbp")
   
-  $testCodeowners = (Resolve-Path "$PSScriptRoot/../../../tools/code-owners-parser/Azure.Sdk.Tools.RetrieveCodeOwners.Tests/TestData/glob_path_CODEOWNERS")
+  $testCodeowners = (Resolve-Path "$PSScriptRoot/../../../tools/code-owners-parser/Azure.Sdk.Tools.RetrieveCodeOwners.Tests/TestData/test_CODEOWNERS")
   TestGetCodeowners -targetPath "tools/code-owners-parser/Azure.Sdk.Tools.RetrieveCodeOwners.Tests/TestData/InputDir/a.txt" -codeownersFileLocation $testCodeowners -includeNonUserAliases $true -expectReturn @("2star")
   exit 0
 }

@@ -23,11 +23,11 @@ namespace Azure.ResourceManager.Synapse.Models
 
         public static SynapseSensitivityLabelRank ToSynapseSensitivityLabelRank(this string value)
         {
-            if (string.Equals(value, "None", StringComparison.InvariantCultureIgnoreCase)) return SynapseSensitivityLabelRank.None;
-            if (string.Equals(value, "Low", StringComparison.InvariantCultureIgnoreCase)) return SynapseSensitivityLabelRank.Low;
-            if (string.Equals(value, "Medium", StringComparison.InvariantCultureIgnoreCase)) return SynapseSensitivityLabelRank.Medium;
-            if (string.Equals(value, "High", StringComparison.InvariantCultureIgnoreCase)) return SynapseSensitivityLabelRank.High;
-            if (string.Equals(value, "Critical", StringComparison.InvariantCultureIgnoreCase)) return SynapseSensitivityLabelRank.Critical;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "None")) return SynapseSensitivityLabelRank.None;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Low")) return SynapseSensitivityLabelRank.Low;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Medium")) return SynapseSensitivityLabelRank.Medium;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "High")) return SynapseSensitivityLabelRank.High;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Critical")) return SynapseSensitivityLabelRank.Critical;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown SynapseSensitivityLabelRank value.");
         }
     }

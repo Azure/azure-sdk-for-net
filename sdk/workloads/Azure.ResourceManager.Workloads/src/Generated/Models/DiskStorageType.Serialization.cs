@@ -21,9 +21,9 @@ namespace Azure.ResourceManager.Workloads.Models
 
         public static DiskStorageType ToDiskStorageType(this string value)
         {
-            if (string.Equals(value, "Premium_LRS", StringComparison.InvariantCultureIgnoreCase)) return DiskStorageType.PremiumLrs;
-            if (string.Equals(value, "Standard_LRS", StringComparison.InvariantCultureIgnoreCase)) return DiskStorageType.StandardLrs;
-            if (string.Equals(value, "StandardSSD_LRS", StringComparison.InvariantCultureIgnoreCase)) return DiskStorageType.StandardSsdLrs;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Premium_LRS")) return DiskStorageType.PremiumLrs;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Standard_LRS")) return DiskStorageType.StandardLrs;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "StandardSSD_LRS")) return DiskStorageType.StandardSsdLrs;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown DiskStorageType value.");
         }
     }
