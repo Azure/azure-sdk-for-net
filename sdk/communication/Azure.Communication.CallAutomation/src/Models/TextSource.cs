@@ -37,19 +37,9 @@ namespace Azure.Communication.CallAutomation
         /// <param name="sourceLocale"> The culture info string of the voice. </param>
         /// <param name="gender"> The gender of the voice. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="text"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="sourceLocale"/> is wrong format. </exception>
         public TextSource(string text, string sourceLocale, GenderType gender)
         {
             Argument.AssertNotNull(text, nameof(text));
-
-            try
-            {
-                CultureInfo cultureName = new CultureInfo(sourceLocale);
-            }
-            catch (CultureNotFoundException)
-            {
-                throw new ArgumentException("The source locale is not in right format, please use culture info style like en-US, fr-FR etc.");
-            }
 
             Text = text;
             SourceLocale = sourceLocale;

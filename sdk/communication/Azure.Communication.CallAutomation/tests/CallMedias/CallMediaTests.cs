@@ -156,13 +156,6 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
             Assert.AreEqual(ex?.Status, 404);
         }
 
-        [Test]
-        public void PlayOperationsAsync_ReturnArgumentException()
-        {
-            ArgumentException? ex = Assert.Throws<ArgumentException>(TestWrongTestSource_PlayOperations);
-            Assert.NotNull(ex);
-        }
-
         [TestCaseSource(nameof(TestData_CancelOperationsAsync))]
         public void CancelOperationsAsync_Return404NotFound(Func<CallMedia, Task<Response<CancelAllMediaOperationsResult>>> operation)
         {
@@ -327,10 +320,6 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
                    callMedia => callMedia.StartRecognizing(_emptyRecognizeOptions)
                 }
             };
-        }
-        private static void TestWrongTestSource_PlayOperations()
-        {
-            TextSource _wrongTextSource = new TextSource("PlayTTS test text.", "en-US-ElizabethNeural", GenderType.Female);
         }
     }
 }
