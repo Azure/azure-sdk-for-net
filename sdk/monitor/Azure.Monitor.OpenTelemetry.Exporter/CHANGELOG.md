@@ -4,7 +4,7 @@
 
 ### Features Added
 
-* AAD can now be configure via `AzureMonitorExporterOptions`
+* AAD can now be configured via `AzureMonitorExporterOptions`
   ([#34555](https://github.com/Azure/azure-sdk-for-net/pull/34555))
 
 * `dependencies\duration` and `requests\duration` standard metrics will now be
