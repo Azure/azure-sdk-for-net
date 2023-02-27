@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ApiManagement
 {
-    /// <summary> A class representing the ApiManagementAuthorizationServer data model. </summary>
+    /// <summary>
+    /// A class representing the ApiManagementAuthorizationServer data model.
+    /// External OAuth authorization server settings.
+    /// </summary>
     public partial class ApiManagementAuthorizationServerData : ResourceData
     {
         /// <summary> Initializes a new instance of ApiManagementAuthorizationServerData. </summary>

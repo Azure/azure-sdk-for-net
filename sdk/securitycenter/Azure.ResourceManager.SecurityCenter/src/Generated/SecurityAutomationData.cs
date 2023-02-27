@@ -13,7 +13,10 @@ using Azure.ResourceManager.SecurityCenter.Models;
 
 namespace Azure.ResourceManager.SecurityCenter
 {
-    /// <summary> A class representing the SecurityAutomation data model. </summary>
+    /// <summary>
+    /// A class representing the SecurityAutomation data model.
+    /// The security automation resource.
+    /// </summary>
     public partial class SecurityAutomationData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of SecurityAutomationData. </summary>

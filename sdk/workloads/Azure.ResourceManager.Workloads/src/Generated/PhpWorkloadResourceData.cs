@@ -12,7 +12,10 @@ using Azure.ResourceManager.Workloads.Models;
 
 namespace Azure.ResourceManager.Workloads
 {
-    /// <summary> A class representing the PhpWorkloadResource data model. </summary>
+    /// <summary>
+    /// A class representing the PhpWorkloadResource data model.
+    /// Php workload resource
+    /// </summary>
     public partial class PhpWorkloadResourceData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of PhpWorkloadResourceData. </summary>

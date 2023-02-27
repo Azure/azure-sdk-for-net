@@ -15,7 +15,10 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> A class representing the ApplicationGateway data model. </summary>
+    /// <summary>
+    /// A class representing the ApplicationGateway data model.
+    /// Application gateway resource.
+    /// </summary>
     public partial class ApplicationGatewayData : NetworkTrackedResourceData
     {
         /// <summary> Initializes a new instance of ApplicationGatewayData. </summary>

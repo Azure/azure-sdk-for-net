@@ -11,7 +11,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.RecoveryServices
 {
-    /// <summary> A class representing the RecoveryServicesVaultExtendedInfo data model. </summary>
+    /// <summary>
+    /// A class representing the RecoveryServicesVaultExtendedInfo data model.
+    /// Vault extended information.
+    /// </summary>
     public partial class RecoveryServicesVaultExtendedInfoData : ResourceData
     {
         /// <summary> Initializes a new instance of RecoveryServicesVaultExtendedInfoData. </summary>

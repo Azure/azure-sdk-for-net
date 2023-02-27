@@ -13,7 +13,10 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> A class representing the VpnGateway data model. </summary>
+    /// <summary>
+    /// A class representing the VpnGateway data model.
+    /// VpnGateway Resource.
+    /// </summary>
     public partial class VpnGatewayData : NetworkTrackedResourceData
     {
         /// <summary> Initializes a new instance of VpnGatewayData. </summary>

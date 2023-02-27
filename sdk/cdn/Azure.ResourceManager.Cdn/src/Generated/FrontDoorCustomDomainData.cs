@@ -12,7 +12,10 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Cdn
 {
-    /// <summary> A class representing the FrontDoorCustomDomain data model. </summary>
+    /// <summary>
+    /// A class representing the FrontDoorCustomDomain data model.
+    /// Friendly domain name mapping to the endpoint hostname that the customer provides for branding purposes, e.g. www.contoso.com.
+    /// </summary>
     public partial class FrontDoorCustomDomainData : ResourceData
     {
         /// <summary> Initializes a new instance of FrontDoorCustomDomainData. </summary>

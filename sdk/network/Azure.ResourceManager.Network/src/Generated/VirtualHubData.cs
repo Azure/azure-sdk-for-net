@@ -13,7 +13,10 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> A class representing the VirtualHub data model. </summary>
+    /// <summary>
+    /// A class representing the VirtualHub data model.
+    /// VirtualHub Resource.
+    /// </summary>
     public partial class VirtualHubData : NetworkTrackedResourceData
     {
         /// <summary> Initializes a new instance of VirtualHubData. </summary>

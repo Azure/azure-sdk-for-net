@@ -14,7 +14,10 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> A class representing the VirtualNetworkGateway data model. </summary>
+    /// <summary>
+    /// A class representing the VirtualNetworkGateway data model.
+    /// A common class for general resource information.
+    /// </summary>
     public partial class VirtualNetworkGatewayData : NetworkTrackedResourceData
     {
         /// <summary> Initializes a new instance of VirtualNetworkGatewayData. </summary>
