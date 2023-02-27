@@ -26,7 +26,12 @@ namespace Azure.Monitor.OpenTelemetry
 
         /// <summary>
         /// Get or sets the value of <see cref="TokenCredential" />.
+        /// If <see cref="TokenCredential" /> is not set, AAD authenication is disabled
+        /// and Instrumentation Key from the Connection String will be used.
         /// </summary>
+        /// <remarks>
+        /// https://learn.microsoft.com/en-us/azure/azure-monitor/app/sdk-connection-string?tabs=net#is-the-connection-string-a-secret
+        /// </remarks>
         public TokenCredential Credential { get; set; }
 
         /// <summary>

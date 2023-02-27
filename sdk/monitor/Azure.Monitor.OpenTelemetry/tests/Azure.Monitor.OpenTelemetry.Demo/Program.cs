@@ -15,8 +15,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddAzureMonitorOpenTelemetry(o =>
 {
     o.ConnectionString = "InstrumentationKey=00000000-0000-0000-0000-000000000000";
-    // To send telemetry data using AAD, set Credential property in AzureMonitorOpenTelemetryOptions.
-    // For example:
+    // Set the Credential property to enable AAD based authentication:
     // o.Credential = new DefaultAzureCredential();
 });
 
