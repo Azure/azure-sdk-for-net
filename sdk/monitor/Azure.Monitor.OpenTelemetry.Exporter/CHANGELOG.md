@@ -10,6 +10,7 @@
 * `dependencies\duration` and `requests\duration` standard metrics will now be
   exported by default when trace exporter is used alongside metric exporter
   ([#34010](https://github.com/Azure/azure-sdk-for-net/pull/34010))
+  ([#33999](https://github.com/Azure/azure-sdk-for-net/pull/33999))
 
 ### Breaking Changes
 
