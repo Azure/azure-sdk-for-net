@@ -12,6 +12,8 @@
   ([#34010](https://github.com/Azure/azure-sdk-for-net/pull/34010))
   ([#33999](https://github.com/Azure/azure-sdk-for-net/pull/33999))
 
+* Added support for named options ([#33803](https://github.com/Azure/azure-sdk-for-net/pull/33803))
+
 ### Breaking Changes
 
 ### Bugs Fixed
