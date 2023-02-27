@@ -44,7 +44,7 @@ namespace Azure.Data.AppConfiguration
             CompositionType = compositionType;
             Created = created;
             Expires = expires;
-            RetentionPeriod = retentionPeriod;
+            RetentionPeriodLong = retentionPeriod;
             Size = size;
             ItemCount = itemCount;
             Tags = tags;
@@ -65,8 +65,29 @@ namespace Azure.Data.AppConfiguration
         public DateTimeOffset? Created { get; }
         /// <summary> The time that the snapshot will expire. </summary>
         public DateTimeOffset? Expires { get; }
+        private long? _retentionPeriod;
         /// <summary> The amount of time, in seconds, that a snapshot will remain in the archived state before expiring. This property is only writable during the creation of a snapshot. If not specified, the default lifetime of key-value revisions will be used. </summary>
-        public long? RetentionPeriod { get; set; }
+        [CodeGenMember("RetentionPeriod")]
+        internal long? RetentionPeriodLong { get { return _retentionPeriod; } set { _retentionPeriod = value; } }
+        /// <summary> The amount of time that a snapshot will remain in the archived state before expiring. This property is only writable during the creation of a snapshot. If not specified, the default lifetime of key-value revisions will be used. </summary>
+        public TimeSpan? RetentionPeriod {
+            get {return TimeSpan.FromSeconds((double)_retentionPeriod); }
+            set
+            {
+                var seconds = value.Value.TotalSeconds;
+                long secondsLong;
+                try
+                {
+                    secondsLong = Convert.ToInt64(seconds);
+                }
+                catch (OverflowException)
+                {
+                    // We won't have negative seconds.
+                    secondsLong = long.MaxValue;
+                }
+                _retentionPeriod = secondsLong;
+            }
+        }
         /// <summary> The size in bytes of the snapshot. </summary>
         public long? Size { get; }
         /// <summary> The amount of key-values in the snapshot. </summary>

@@ -28,7 +28,7 @@ namespace Azure.Data.AppConfiguration
             if (Optional.IsDefined(RetentionPeriod))
             {
                 writer.WritePropertyName("retention_period");
-                writer.WriteNumberValue(RetentionPeriod.Value);
+                writer.WriteNumberValue(RetentionPeriod.Value.TotalSeconds);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
