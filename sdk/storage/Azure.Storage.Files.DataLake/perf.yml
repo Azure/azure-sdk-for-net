@@ -19,6 +19,10 @@ parameters:
   displayName: Iterations (times to run each test)
   type: number
   default: '5'
+- name: Profile
+  displayName: Enable profiling
+  type: boolean
+  default: false
 - name: additionalArguments
   displayName: AdditionalArguments (passed to PerfAutomation)
   type: string
@@ -33,4 +37,5 @@ extends:
     Tests: ${{ parameters.Tests }}
     Arguments: ${{ parameters.Arguments }}
     Iterations: ${{ parameters.Iterations }}
+    Profile: ${{ parameters.Profile }}
     AdditionalArguments: ${{ parameters.AdditionalArguments }}
