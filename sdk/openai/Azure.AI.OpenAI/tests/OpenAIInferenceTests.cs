@@ -30,8 +30,18 @@ namespace Azure.AI.OpenAI.Tests
         public void PublicOpenAICompletionsTest()
         {
             var client = GetPublicOpenAIClient();
-            Assert.That(client, Is.InstanceOf<OpenAIClient>());
-            Response<Completions> response = client.GetCompletions("", "Hello world");
+            Assert.That(client, Is.InstanceOf<PublicOpenAIClient>());
+            CompletionsOptions requestOptions = new CompletionsOptions()
+            {
+                Prompt =
+                {
+                    "Hello world",
+                    "running over the same old ground",
+                },
+                Model = "text-ada-003",
+            };
+            Assert.That(requestOptions, Is.InstanceOf<CompletionsOptions>());
+            Response<Completions> response = client.GetCompletions("", requestOptions);
             Assert.That(response, Is.Not.Null);
             Assert.That(response, Is.InstanceOf<Response<Completions>>());
             Assert.That(response.Value, Is.Not.Null);
