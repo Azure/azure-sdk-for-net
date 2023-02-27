@@ -13,7 +13,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataFactory
 {
-    /// <summary> A class representing the FactoryTrigger data model. </summary>
+    /// <summary>
+    /// A class representing the FactoryTrigger data model.
+    /// Trigger resource type.
+    /// </summary>
     public partial class FactoryTriggerData : ResourceData
     {
         /// <summary> Initializes a new instance of FactoryTriggerData. </summary>

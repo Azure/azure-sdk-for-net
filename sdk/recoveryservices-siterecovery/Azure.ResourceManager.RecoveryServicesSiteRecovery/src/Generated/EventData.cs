@@ -11,7 +11,10 @@ using Azure.ResourceManager.RecoveryServicesSiteRecovery.Models;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
 {
-    /// <summary> A class representing the Event data model. </summary>
+    /// <summary>
+    /// A class representing the Event data model.
+    /// Implements the Event class.
+    /// </summary>
     public partial class EventData : ResourceData
     {
         /// <summary> Initializes a new instance of EventData. </summary>

@@ -13,7 +13,10 @@ using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> A class representing the DscpConfiguration data model. </summary>
+    /// <summary>
+    /// A class representing the DscpConfiguration data model.
+    /// DSCP Configuration in a resource group.
+    /// </summary>
     public partial class DscpConfigurationData : NetworkTrackedResourceData
     {
         /// <summary> Initializes a new instance of DscpConfigurationData. </summary>

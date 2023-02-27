@@ -13,7 +13,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.IotCentral
 {
-    /// <summary> A class representing the IotCentralApp data model. </summary>
+    /// <summary>
+    /// A class representing the IotCentralApp data model.
+    /// The IoT Central application.
+    /// </summary>
     public partial class IotCentralAppData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of IotCentralAppData. </summary>

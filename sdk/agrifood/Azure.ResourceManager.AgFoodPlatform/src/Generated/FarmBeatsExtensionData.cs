@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AgFoodPlatform
 {
-    /// <summary> A class representing the FarmBeatsExtension data model. </summary>
+    /// <summary>
+    /// A class representing the FarmBeatsExtension data model.
+    /// FarmBeats extension resource.
+    /// </summary>
     public partial class FarmBeatsExtensionData : ResourceData
     {
         /// <summary> Initializes a new instance of FarmBeatsExtensionData. </summary>

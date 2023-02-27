@@ -11,7 +11,10 @@ using Azure.ResourceManager.Subscription.Models;
 
 namespace Azure.ResourceManager.Subscription
 {
-    /// <summary> A class representing the TenantPolicy data model. </summary>
+    /// <summary>
+    /// A class representing the TenantPolicy data model.
+    /// Tenant policy Information.
+    /// </summary>
     public partial class TenantPolicyData : ResourceData
     {
         /// <summary> Initializes a new instance of TenantPolicyData. </summary>
