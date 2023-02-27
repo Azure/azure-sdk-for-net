@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Net.Http.Headers;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -87,12 +88,12 @@ namespace Azure.Core
                 version = version.Substring(0, hashSeparator);
             }
             runtimeInformation ??= new RuntimeInformationWrapper();
-            var runtimeInfoString = EnsureProperParenthesisMatching($"{runtimeInformation.FrameworkDescription}; {runtimeInformation.OSDescription}");
-            var platformInformation = $"({runtimeInfoString})";
+            var platformInformation = EscapeProductInformation($"({runtimeInformation.FrameworkDescription}; {runtimeInformation.OSDescription})");
 
-            return applicationId != null
+            var ua = applicationId != null
                 ? $"{applicationId} azsdk-net-{assemblyName}/{version} {platformInformation}"
                 : $"azsdk-net-{assemblyName}/{version} {platformInformation}";
+            return ua;
         }
 
         /// <summary>
@@ -100,65 +101,56 @@ namespace Azure.Core
         /// </summary>
         public override string ToString() => _userAgent;
 
-        private static string EnsureProperParenthesisMatching(string userAgent)
+        /// <summary>
+        /// If the ProductInformation is not in the proper format, this escapes any ')' , '(' or '\' characters per https://www.rfc-editor.org/rfc/rfc7230#section-3.2.6
+        /// </summary>
+        /// <param name="productInfo">The ProductInfo portion of the UserAgent</param>
+        /// <returns></returns>
+        private static string EscapeProductInformation(string productInfo)
         {
-            int openParenthesisCount = 0;
-            bool needsFix = false;
-            StringBuilder? fixedUserAgent = null;
-            for (int i = 0; i < userAgent.Length; i++)
+            // If the string is already valid, we don't need to escape anything
+            if (ProductInfoHeaderValue.TryParse(productInfo, out var _))
             {
-                switch (userAgent[i])
-                {
-                    case '(':
-                        openParenthesisCount++;
-                        if (needsFix)
-                        {
-                            // Since we're fixing the string, we need to copy the current char
-                            fixedUserAgent!.Append('(');
-                        }
-                        break;
-                    case ')':
-                        if (openParenthesisCount-- <= 0)
-                        {
-                            if (!needsFix)
-                            {
-                                needsFix = true;
-                                // We need to fix the string, so we need to copy it into a StringBuilder, excluding the invalid closing parenthesis
-                                fixedUserAgent = new(userAgent.Length);
-                                fixedUserAgent.Append(userAgent, 0, i);
-                            }
-                        }
-                        else if (needsFix)
-                        {
-                            // Since we're fixing the string, we need to copy the current char
-                            fixedUserAgent!.Append(')');
-                        }
-                        break;
-                    default:
-                        if (needsFix)
-                        {
-                            // Since we're fixing the string, we need to copy the current char
-                            fixedUserAgent!.Append(userAgent[i]);
-                        }
-                        break;
-                }
+                return productInfo;
             }
-            if (openParenthesisCount > 0)
-            {
-                if (!needsFix)
-                {
-                    needsFix = true;
-                    // We need to fix the string, so we need to copy it into a StringBuilder, excluding the invalid closing parenthesis
-                    fixedUserAgent = new(userAgent.Length + openParenthesisCount);
-                    fixedUserAgent.Append(userAgent);
-                }
 
-                while (openParenthesisCount-- > 0)
+            var sb = new StringBuilder(productInfo.Length + 2);
+            sb.Append('(');
+            // exclude the first and last characters, which are the enclosing parentheses
+            for (int i = 1; i < productInfo.Length - 1; i++)
+            {
+                char c = productInfo[i];
+                if (c == ')' || c == '(')
                 {
-                    fixedUserAgent!.Append(')');
+                    sb.Append('\\');
                 }
+                // If we see a \, we don't need to escape it if it's followed by a '\', '(', or ')'
+                else if (c == '\\')
+                {
+                    if (i + 1 < (productInfo.Length - 1))
+                    {
+                        char next = productInfo[i + 1];
+                        if (next == '\\' || next == '(' || next == ')')
+                        {
+                            sb.Append(c);
+                            sb.Append(next);
+                            i++;
+                            continue;
+                        }
+                        else
+                        {
+                            sb.Append('\\');
+                        }
+                    }
+                    else
+                    {
+                        sb.Append('\\');
+                    }
+                }
+                sb.Append(c);
             }
-            return needsFix ? fixedUserAgent!.ToString() : userAgent;
+            sb.Append(')');
+            return sb.ToString();
         }
     }
 }

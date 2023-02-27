@@ -66,14 +66,16 @@ namespace Azure.Core.Tests
         }
 
         [Test]
-        [TestCase("MyOSDescription (2023-", "MyOSDescription (2023-)")]
-        [TestCase("MyOSDescription (2023-)", "MyOSDescription (2023-)")]
-        [TestCase("MyOSDescription (()", "MyOSDescription (())")]
-        [TestCase("MyOSDescription (", "MyOSDescription ()")]
-        [TestCase("MyOSDescription ())", "MyOSDescription ()")]
-        [TestCase("MyOSDescription )", "MyOSDescription ")]
-        [TestCase("MyO)SDescription ", "MyOSDescription ")]
-        [TestCase("MyO(SDescription ", "MyO(SDescription )")]
+        [TestCase("ValidParens (2023-)", "ValidParens (2023-)")]
+        [TestCase("ProperlyEscapedParens \\(2023-\\)", "ProperlyEscapedParens \\(2023-\\)")]
+        [TestCase("UnescapedOnlyParens (2023-)", "UnescapedOnlyParens (2023-)")]
+        [TestCase("MyOSDescription (2023-", "MyOSDescription \\(2023-")]
+        [TestCase("UnEscapedParenWithValidParens (()", "UnEscapedParenWithValidParens \\(\\(\\)")]
+        [TestCase("UnEscapedInvalidParen (", "UnEscapedInvalidParen \\(")]
+        [TestCase("UnEscapedParenWithValidParens2 ())", "UnEscapedParenWithValidParens2 \\(\\)\\)")]
+        [TestCase("InvalidParen )", "InvalidParen \\)")]
+        [TestCase("UnescapedParenInText MyO)SDescription ", "UnescapedParenInText MyO\\)SDescription ")]
+        [TestCase("UnescapedParenInText MyO(SDescription ", "UnescapedParenInText MyO\\(SDescription ")]
         public void ValidatesProperParenthesisMatching(string input, string output)
         {
             var mockRuntimeInformation = new MockRuntimeInformation { OSDescriptionMock = input, FrameworkDescriptionMock = RuntimeInformation.FrameworkDescription };
