@@ -13,7 +13,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary> A class representing the ContinuousWebJob data model. </summary>
+    /// <summary>
+    /// A class representing the ContinuousWebJob data model.
+    /// Continuous Web Job Information.
+    /// </summary>
     public partial class ContinuousWebJobData : ResourceData
     {
         /// <summary> Initializes a new instance of ContinuousWebJobData. </summary>
