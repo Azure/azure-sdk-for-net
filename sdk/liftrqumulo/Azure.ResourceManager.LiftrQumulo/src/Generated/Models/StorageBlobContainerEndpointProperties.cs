@@ -10,14 +10,14 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.LiftrQumulo.Models
 {
-    /// <summary> The AzureStorageBlobContainerQumuloEndpointProperties. </summary>
-    public partial class AzureStorageBlobContainerQumuloEndpointProperties : QumuloEndpointBaseProperties
+    /// <summary> The StorageBlobContainerEndpointProperties. </summary>
+    public partial class StorageBlobContainerEndpointProperties : QumuloEndpointBaseProperties
     {
-        /// <summary> Initializes a new instance of AzureStorageBlobContainerQumuloEndpointProperties. </summary>
+        /// <summary> Initializes a new instance of StorageBlobContainerEndpointProperties. </summary>
         /// <param name="storageAccountResourceId"> The Azure Resource ID of the storage account that is the target destination. </param>
         /// <param name="blobContainerName"> The name of the Storage blob container that is the target destination. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="storageAccountResourceId"/> or <paramref name="blobContainerName"/> is null. </exception>
-        public AzureStorageBlobContainerQumuloEndpointProperties(string storageAccountResourceId, string blobContainerName)
+        public StorageBlobContainerEndpointProperties(string storageAccountResourceId, string blobContainerName)
         {
             Argument.AssertNotNull(storageAccountResourceId, nameof(storageAccountResourceId));
             Argument.AssertNotNull(blobContainerName, nameof(blobContainerName));
@@ -27,13 +27,13 @@ namespace Azure.ResourceManager.LiftrQumulo.Models
             QumuloEndpointType = QumuloEndpointType.AzureStorageBlobContainer;
         }
 
-        /// <summary> Initializes a new instance of AzureStorageBlobContainerQumuloEndpointProperties. </summary>
+        /// <summary> Initializes a new instance of StorageBlobContainerEndpointProperties. </summary>
         /// <param name="qumuloEndpointType"> The Endpoint resource type. </param>
         /// <param name="description"> A description for the Endpoint. </param>
         /// <param name="provisioningState"> The provisioning state of this resource. </param>
         /// <param name="storageAccountResourceId"> The Azure Resource ID of the storage account that is the target destination. </param>
         /// <param name="blobContainerName"> The name of the Storage blob container that is the target destination. </param>
-        internal AzureStorageBlobContainerQumuloEndpointProperties(QumuloEndpointType qumuloEndpointType, string description, ProvisioningState? provisioningState, string storageAccountResourceId, string blobContainerName) : base(qumuloEndpointType, description, provisioningState)
+        internal StorageBlobContainerEndpointProperties(QumuloEndpointType qumuloEndpointType, string description, ProvisioningState? provisioningState, string storageAccountResourceId, string blobContainerName) : base(qumuloEndpointType, description, provisioningState)
         {
             StorageAccountResourceId = storageAccountResourceId;
             BlobContainerName = blobContainerName;

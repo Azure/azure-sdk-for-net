@@ -293,12 +293,6 @@ namespace Azure.ResourceManager.LiftrQumulo
 }
 namespace Azure.ResourceManager.LiftrQumulo.Models
 {
-    public partial class AzureStorageBlobContainerQumuloEndpointProperties : Azure.ResourceManager.LiftrQumulo.Models.QumuloEndpointBaseProperties
-    {
-        public AzureStorageBlobContainerQumuloEndpointProperties(string storageAccountResourceId, string blobContainerName) { }
-        public string BlobContainerName { get { throw null; } set { } }
-        public string StorageAccountResourceId { get { throw null; } set { } }
-    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct CopyMode : System.IEquatable<Azure.ResourceManager.LiftrQumulo.Models.CopyMode>
     {
@@ -476,5 +470,11 @@ namespace Azure.ResourceManager.LiftrQumulo.Models
         public QumuloQumuloStorageMoverPatch() { }
         public string Description { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+    }
+    public partial class StorageBlobContainerEndpointProperties : Azure.ResourceManager.LiftrQumulo.Models.QumuloEndpointBaseProperties
+    {
+        public StorageBlobContainerEndpointProperties(string storageAccountResourceId, string blobContainerName) { }
+        public string BlobContainerName { get { throw null; } set { } }
+        public string StorageAccountResourceId { get { throw null; } set { } }
     }
 }

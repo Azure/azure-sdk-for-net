@@ -61,4 +61,5 @@ rename-mapping:
     JobRunData.AgentResourceId: -|arm-id
     JobRunData.SourceResourceId: -|arm-id
     QumuloAgentData.LocalIPAddress: -|ip-address
+    AzureStorageBlobContainerQumuloEndpointProperties.StorageAccountResourceId: -|arm-id
 ```

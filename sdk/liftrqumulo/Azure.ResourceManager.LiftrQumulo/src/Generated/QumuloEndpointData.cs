@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.LiftrQumulo
         /// <param name="properties">
         /// The resource specific properties for the Storage Mover resource.
         /// Please note <see cref="QumuloEndpointBaseProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AzureStorageBlobContainerQumuloEndpointProperties"/> and <see cref="NfsMountQumuloEndpointProperties"/>.
+        /// The available derived classes include <see cref="StorageBlobContainerEndpointProperties"/> and <see cref="NfsMountQumuloEndpointProperties"/>.
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
         public QumuloEndpointData(QumuloEndpointBaseProperties properties)
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.LiftrQumulo
         /// <param name="properties">
         /// The resource specific properties for the Storage Mover resource.
         /// Please note <see cref="QumuloEndpointBaseProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AzureStorageBlobContainerQumuloEndpointProperties"/> and <see cref="NfsMountQumuloEndpointProperties"/>.
+        /// The available derived classes include <see cref="StorageBlobContainerEndpointProperties"/> and <see cref="NfsMountQumuloEndpointProperties"/>.
         /// </param>
         internal QumuloEndpointData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, QumuloEndpointBaseProperties properties) : base(id, name, resourceType, systemData)
         {
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.LiftrQumulo
         /// <summary>
         /// The resource specific properties for the Storage Mover resource.
         /// Please note <see cref="QumuloEndpointBaseProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AzureStorageBlobContainerQumuloEndpointProperties"/> and <see cref="NfsMountQumuloEndpointProperties"/>.
+        /// The available derived classes include <see cref="StorageBlobContainerEndpointProperties"/> and <see cref="NfsMountQumuloEndpointProperties"/>.
         /// </summary>
         public QumuloEndpointBaseProperties Properties { get; set; }
     }

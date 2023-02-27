@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.LiftrQumulo.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "AzureStorageBlobContainer": return AzureStorageBlobContainerQumuloEndpointProperties.DeserializeAzureStorageBlobContainerQumuloEndpointProperties(element);
+                    case "AzureStorageBlobContainer": return StorageBlobContainerEndpointProperties.DeserializeStorageBlobContainerEndpointProperties(element);
                     case "NfsMount": return NfsMountQumuloEndpointProperties.DeserializeNfsMountQumuloEndpointProperties(element);
                 }
             }

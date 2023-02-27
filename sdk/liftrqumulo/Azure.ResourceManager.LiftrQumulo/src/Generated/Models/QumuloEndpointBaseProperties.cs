@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.LiftrQumulo.Models
     /// <summary>
     /// The resource specific properties for the Storage Mover resource.
     /// Please note <see cref="QumuloEndpointBaseProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="AzureStorageBlobContainerQumuloEndpointProperties"/> and <see cref="NfsMountQumuloEndpointProperties"/>.
+    /// The available derived classes include <see cref="StorageBlobContainerEndpointProperties"/> and <see cref="NfsMountQumuloEndpointProperties"/>.
     /// </summary>
     public abstract partial class QumuloEndpointBaseProperties
     {

@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.LiftrQumulo.Models
 {
-    public partial class AzureStorageBlobContainerQumuloEndpointProperties : IUtf8JsonSerializable
+    public partial class StorageBlobContainerEndpointProperties : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.LiftrQumulo.Models
             writer.WriteEndObject();
         }
 
-        internal static AzureStorageBlobContainerQumuloEndpointProperties DeserializeAzureStorageBlobContainerQumuloEndpointProperties(JsonElement element)
+        internal static StorageBlobContainerEndpointProperties DeserializeStorageBlobContainerEndpointProperties(JsonElement element)
         {
             string storageAccountResourceId = default;
             string blobContainerName = default;
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.LiftrQumulo.Models
                     continue;
                 }
             }
-            return new AzureStorageBlobContainerQumuloEndpointProperties(qumuloEndpointType, description.Value, Optional.ToNullable(provisioningState), storageAccountResourceId, blobContainerName);
+            return new StorageBlobContainerEndpointProperties(qumuloEndpointType, description.Value, Optional.ToNullable(provisioningState), storageAccountResourceId, blobContainerName);
         }
     }
 }
