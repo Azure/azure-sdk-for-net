@@ -5,6 +5,9 @@ extends:
   parameters:
     ServiceDirectory: communication
     Project: Azure.Communication.Identity
+    MatrixConfigs:
+        - Name: Identity_NET_matrix
+          Path: sdk/communication/Azure.Communication.Identity/identity-livetest-matrix.json
     CloudConfig:
       Public:
         SubscriptionConfigurations:
