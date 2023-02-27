@@ -76,7 +76,7 @@ namespace Azure.Communication
             }
 
             var segments = rawId.Split(':');
-            if (segments.Length < 3)
+            if (segments.Length > 3 || segments.Length < 3)
             {
                 if (segments.Length == 2 && segments[0] == "28")
                 {

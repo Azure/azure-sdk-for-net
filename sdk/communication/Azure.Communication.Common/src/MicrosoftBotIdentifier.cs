@@ -71,20 +71,18 @@ namespace Azure.Communication
         /// <param name="botId">Id of the Microsoft bot. The unique Microsoft app ID for the bot as registered with the Bot Framework.</param>
         /// <param name="isGlobal">Set this to true if the bot is global.</param>
         /// <param name="cloud">The cloud that the Microsoft bot belongs to. A null value translates to the Public cloud.</param>
-        /// <param name="rawId">Raw id of the Microsoft bot optional.</param>
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when the <paramref name="botId"/> is null.
         /// </exception>
         /// <exception cref="System.ArgumentException">
         /// Thrown when the <paramref name="botId"/> is empty.
         /// </exception>
-        public MicrosoftBotIdentifier(string botId, bool isGlobal = false, CommunicationCloudEnvironment? cloud = null, string rawId = null)
+        public MicrosoftBotIdentifier(string botId, bool isGlobal = false, CommunicationCloudEnvironment? cloud = null)
         {
             Argument.AssertNotNullOrEmpty(botId, nameof(botId));
             BotId = botId;
             IsGlobal = isGlobal;
             Cloud = cloud ?? CommunicationCloudEnvironment.Public;
-            _rawId = rawId;
         }
 
         /// <inheritdoc />
