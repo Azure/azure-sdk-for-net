@@ -10,7 +10,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Avs
 {
-    /// <summary> A class representing the WorkloadNetworkGateway data model. </summary>
+    /// <summary>
+    /// A class representing the WorkloadNetworkGateway data model.
+    /// NSX Gateway.
+    /// </summary>
     public partial class WorkloadNetworkGatewayData : ResourceData
     {
         /// <summary> Initializes a new instance of WorkloadNetworkGatewayData. </summary>

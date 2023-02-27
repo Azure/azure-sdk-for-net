@@ -13,7 +13,10 @@ using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
-    /// <summary> A class representing the ExtendedDatabaseBlobAuditingPolicy data model. </summary>
+    /// <summary>
+    /// A class representing the ExtendedDatabaseBlobAuditingPolicy data model.
+    /// An extended database blob auditing policy.
+    /// </summary>
     public partial class ExtendedDatabaseBlobAuditingPolicyData : ResourceData
     {
         /// <summary> Initializes a new instance of ExtendedDatabaseBlobAuditingPolicyData. </summary>

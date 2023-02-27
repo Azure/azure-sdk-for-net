@@ -11,7 +11,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Batch
 {
-    /// <summary> A class representing the BatchApplication data model. </summary>
+    /// <summary>
+    /// A class representing the BatchApplication data model.
+    /// Contains information about an application in a Batch account.
+    /// </summary>
     public partial class BatchApplicationData : ResourceData
     {
         /// <summary> Initializes a new instance of BatchApplicationData. </summary>

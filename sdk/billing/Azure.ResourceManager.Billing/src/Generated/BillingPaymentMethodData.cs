@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Billing
 {
-    /// <summary> A class representing the BillingPaymentMethod data model. </summary>
+    /// <summary>
+    /// A class representing the BillingPaymentMethod data model.
+    /// A payment method.
+    /// </summary>
     public partial class BillingPaymentMethodData : ResourceData
     {
         /// <summary> Initializes a new instance of BillingPaymentMethodData. </summary>

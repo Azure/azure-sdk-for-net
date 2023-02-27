@@ -11,7 +11,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Sql
 {
-    /// <summary> A class representing the DeletedServer data model. </summary>
+    /// <summary>
+    /// A class representing the DeletedServer data model.
+    /// A deleted server.
+    /// </summary>
     public partial class DeletedServerData : ResourceData
     {
         /// <summary> Initializes a new instance of DeletedServerData. </summary>

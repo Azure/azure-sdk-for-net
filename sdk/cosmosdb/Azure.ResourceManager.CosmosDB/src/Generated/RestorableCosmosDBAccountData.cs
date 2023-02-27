@@ -13,7 +13,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.CosmosDB
 {
-    /// <summary> A class representing the RestorableCosmosDBAccount data model. </summary>
+    /// <summary>
+    /// A class representing the RestorableCosmosDBAccount data model.
+    /// A Azure Cosmos DB restorable database account.
+    /// </summary>
     public partial class RestorableCosmosDBAccountData : ResourceData
     {
         /// <summary> Initializes a new instance of RestorableCosmosDBAccountData. </summary>
