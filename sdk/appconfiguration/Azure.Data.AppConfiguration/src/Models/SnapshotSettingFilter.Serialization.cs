@@ -6,7 +6,7 @@ using Azure.Core;
 
 namespace Azure.Data.AppConfiguration
 {
-    public partial class ConfigurationSettingFilter : IUtf8JsonSerializable
+    public partial class SnapshotSettingFilter : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -21,7 +21,7 @@ namespace Azure.Data.AppConfiguration
             writer.WriteEndObject();
         }
 
-        internal static ConfigurationSettingFilter DeserializeKeyValueFilter(JsonElement element)
+        internal static SnapshotSettingFilter DeserializeKeyValueFilter(JsonElement element)
         {
             string key = default;
             Optional<string> label = default;
@@ -38,7 +38,7 @@ namespace Azure.Data.AppConfiguration
                     continue;
                 }
             }
-            return new ConfigurationSettingFilter(key, label.Value);
+            return new SnapshotSettingFilter(key, label.Value);
         }
     }
 }

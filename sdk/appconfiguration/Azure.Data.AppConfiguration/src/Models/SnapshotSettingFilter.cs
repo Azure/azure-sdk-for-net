@@ -7,12 +7,13 @@ using Azure.Core;
 namespace Azure.Data.AppConfiguration
 {
     /// <summary> Enables filtering of key-values. </summary>
-    public partial class ConfigurationSettingFilter
+    [CodeGenModel("ConfigurationSettingFilter")]
+    public partial class SnapshotSettingFilter
     {
         /// <summary> Initializes a new instance of KeyValueFilter. </summary>
         /// <param name="key"> Filters key-values by their key field. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        public ConfigurationSettingFilter(string key)
+        public SnapshotSettingFilter(string key)
         {
             Argument.AssertNotNull(key, nameof(key));
 
@@ -22,7 +23,7 @@ namespace Azure.Data.AppConfiguration
         /// <summary> Initializes a new instance of KeyValueFilter. </summary>
         /// <param name="key"> Filters key-values by their key field. </param>
         /// <param name="label"> Filters key-values by their label field. </param>
-        internal ConfigurationSettingFilter(string key, string label)
+        internal SnapshotSettingFilter(string key, string label)
         {
             Key = key;
             Label = label;

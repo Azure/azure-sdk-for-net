@@ -23,7 +23,7 @@ namespace Azure.Data.AppConfiguration.Samples
                 client.SetConfigurationSetting(setting);
 
                 // #region Snippet:AzConfigSample11_CreateSnapshot
-                List<ConfigurationSettingFilter> snapshotFilter = new(new ConfigurationSettingFilter[] { new ConfigurationSettingFilter(setting.Key) });
+                List<SnapshotSettingFilter> snapshotFilter = new(new SnapshotSettingFilter[] { new SnapshotSettingFilter(setting.Key) });
                 var settingsSnapshot = new ConfigurationSettingsSnapshot(snapshotFilter);
 
                 ConfigurationSettingsSnapshot createdSnapshot = client.CreateSnapshot("some_snapshot", settingsSnapshot);
@@ -56,7 +56,7 @@ namespace Azure.Data.AppConfiguration.Samples
             {
                 client.SetConfigurationSetting(setting);
 
-                List<ConfigurationSettingFilter> snapshotFilter = new(new ConfigurationSettingFilter[] { new ConfigurationSettingFilter(setting.Key) });
+                List<SnapshotSettingFilter> snapshotFilter = new(new SnapshotSettingFilter[] { new SnapshotSettingFilter(setting.Key) });
                 var settingsSnapshot = new ConfigurationSettingsSnapshot(snapshotFilter);
 
                 ConfigurationSettingsSnapshot createdSnapshot = client.CreateSnapshot("some_snapshot", settingsSnapshot);
@@ -100,14 +100,14 @@ namespace Azure.Data.AppConfiguration.Samples
             client.SetConfigurationSetting(firstSetting);
             client.SetConfigurationSetting(secondSetting);
 
-            List<ConfigurationSettingFilter> firstSnapshotFilter = new(new ConfigurationSettingFilter[] { new ConfigurationSettingFilter(firstSetting.Key) });
+            List<SnapshotSettingFilter> firstSnapshotFilter = new(new SnapshotSettingFilter[] { new SnapshotSettingFilter(firstSetting.Key) });
             ConfigurationSettingsSnapshot createdfirstSnapshot = client.CreateSnapshot("first_snapshot", new ConfigurationSettingsSnapshot(firstSnapshotFilter));
             Console.WriteLine($"Created configuration setting snapshot is: {createdfirstSnapshot}");
 
             Assert.NotNull(createdfirstSnapshot);
             Assert.AreEqual("first_snapshot", createdfirstSnapshot.Name);
 
-            List<ConfigurationSettingFilter> secondSnapshotFilter = new(new ConfigurationSettingFilter[] { new ConfigurationSettingFilter(secondSetting.Key) });
+            List<SnapshotSettingFilter> secondSnapshotFilter = new(new SnapshotSettingFilter[] { new SnapshotSettingFilter(secondSetting.Key) });
             ConfigurationSettingsSnapshot createdsecondSnapshot = client.CreateSnapshot("second_snapshot", new ConfigurationSettingsSnapshot(secondSnapshotFilter));
             Console.WriteLine($"Created configuration setting snapshot is: {createdsecondSnapshot}");
 

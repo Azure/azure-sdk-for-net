@@ -14,7 +14,7 @@ namespace Azure.Data.AppConfiguration
         /// <summary> Initializes a new instance of Snapshot. </summary>
         /// <param name="filters"> A list of filters used to filter the key-values included in the snapshot. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="filters"/> is null. </exception>
-        public ConfigurationSettingsSnapshot(IEnumerable<ConfigurationSettingFilter> filters)
+        public ConfigurationSettingsSnapshot(IEnumerable<SnapshotSettingFilter> filters)
         {
             Argument.AssertNotNull(filters, nameof(filters));
 
@@ -35,7 +35,7 @@ namespace Azure.Data.AppConfiguration
         /// <param name="itemCount"> The amount of key-values in the snapshot. </param>
         /// <param name="tags"> The tags of the snapshot. </param>
         /// <param name="etag"> A value representing the current state of the snapshot. </param>
-        internal ConfigurationSettingsSnapshot(string name, SnapshotStatus? status, int? statusCode, IList<ConfigurationSettingFilter> filters, CompositionType? compositionType, DateTimeOffset? created, DateTimeOffset? expires, long? retentionPeriod, long? size, long? itemCount, IDictionary<string, string> tags, ETag etag)
+        internal ConfigurationSettingsSnapshot(string name, SnapshotStatus? status, int? statusCode, IList<SnapshotSettingFilter> filters, CompositionType? compositionType, DateTimeOffset? created, DateTimeOffset? expires, long? retentionPeriod, long? size, long? itemCount, IDictionary<string, string> tags, ETag etag)
         {
             Name = name;
             Status = status;
@@ -58,7 +58,7 @@ namespace Azure.Data.AppConfiguration
         /// <summary> Provides additional information about the status of the snapshot. The status code values are modeled after HTTP status codes. </summary>
         public int? StatusCode { get; }
         /// <summary> A list of filters used to filter the key-values included in the snapshot. </summary>
-        public IList<ConfigurationSettingFilter> Filters { get; }
+        public IList<SnapshotSettingFilter> Filters { get; }
         /// <summary> The composition type describes how the key-values within the snapshot are composed. The &apos;all&apos; composition type includes all key-values. The &apos;group_by_key&apos; composition type ensures there are no two key-values containing the same key. </summary>
         public CompositionType? CompositionType { get; set; }
         /// <summary> The time that the snapshot was created. </summary>

@@ -49,7 +49,7 @@ namespace Azure.Data.AppConfiguration
             Optional<string> name = default;
             Optional<SnapshotStatus> status = default;
             Optional<int> statusCode = default;
-            IList<ConfigurationSettingFilter> filters = default;
+            IList<SnapshotSettingFilter> filters = default;
             Optional<CompositionType> compositionType = default;
             Optional<DateTimeOffset> created = default;
             Optional<DateTimeOffset?> expires = default;
@@ -87,10 +87,10 @@ namespace Azure.Data.AppConfiguration
                 }
                 if (property.NameEquals("filters"))
                 {
-                    List<ConfigurationSettingFilter> array = new List<ConfigurationSettingFilter>();
+                    List<SnapshotSettingFilter> array = new List<SnapshotSettingFilter>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ConfigurationSettingFilter.DeserializeKeyValueFilter(item));
+                        array.Add(SnapshotSettingFilter.DeserializeKeyValueFilter(item));
                     }
                     filters = array;
                     continue;
