@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.BillingBenefits
 {
-    /// <summary> A class representing the BillingBenefitsReservationOrderAlias data model. </summary>
+    /// <summary>
+    /// A class representing the BillingBenefitsReservationOrderAlias data model.
+    /// Reservation order alias
+    /// </summary>
     public partial class BillingBenefitsReservationOrderAliasData : ResourceData
     {
         /// <summary> Initializes a new instance of BillingBenefitsReservationOrderAliasData. </summary>

@@ -13,7 +13,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Blueprint
 {
-    /// <summary> A class representing the Blueprint data model. </summary>
+    /// <summary>
+    /// A class representing the Blueprint data model.
+    /// Represents a Blueprint definition.
+    /// </summary>
     public partial class BlueprintData : ResourceData
     {
         /// <summary> Initializes a new instance of BlueprintData. </summary>

@@ -14,7 +14,10 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.ArcScVmm
 {
-    /// <summary> A class representing the ScVmmServer data model. </summary>
+    /// <summary>
+    /// A class representing the ScVmmServer data model.
+    /// The VmmServers resource definition.
+    /// </summary>
     public partial class ScVmmServerData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of ScVmmServerData. </summary>
