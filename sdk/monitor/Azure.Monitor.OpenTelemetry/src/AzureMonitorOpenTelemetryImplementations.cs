@@ -4,6 +4,7 @@
 using System;
 using Azure.Monitor.OpenTelemetry.Exporter;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using OpenTelemetry.Metrics;
 using OpenTelemetry.Trace;
@@ -36,6 +37,26 @@ namespace Azure.Monitor.OpenTelemetry
                             .AddAspNetCoreInstrumentation()
                             .AddHttpClientInstrumentation()
                             .AddAzureMonitorMetricExporter());
+
+            services.AddLogging(logging =>
+            {
+                AzureMonitorOpenTelemetryOptions logExporterOptions = new();
+                if (configureAzureMonitorOpenTelemetry != null)
+                {
+                    configureAzureMonitorOpenTelemetry(logExporterOptions);
+                }
+
+                if (logExporterOptions.EnableLogs)
+                {
+                    logging.AddOpenTelemetry(builderOptions =>
+                    {
+                        builderOptions.IncludeFormattedMessage = true;
+                        builderOptions.ParseStateValues = true;
+                        builderOptions.IncludeScopes = false;
+                        builderOptions.AddAzureMonitorLogExporter(o => logExporterOptions.SetValueToExporterOptions(o));
+                    });
+                }
+            });
 
             ServiceDescriptor? sdkTracerProviderServiceRegistration = null;
             ServiceDescriptor? sdkMeterProviderServiceRegistration = null;

@@ -5,6 +5,7 @@
 using System.Diagnostics;
 using Azure.Monitor.OpenTelemetry;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.Logging;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,7 +16,11 @@ builder.Services.AddAzureMonitorOpenTelemetry(o =>
 });
 
 var app = builder.Build();
-app.MapGet("/", () => $"Hello World! OpenTelemetry Trace: {Activity.Current?.Id}");
+app.MapGet("/", () =>
+{
+    app.Logger.LogInformation("Hello World!");
+    return $"Hello World! OpenTelemetry Trace: {Activity.Current?.Id}";
+});
 
 app.Run();
 #endif
