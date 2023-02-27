@@ -75,6 +75,7 @@ rename-mapping:
   ConnectionSettingParameter: BotConnectionSettingParameter
   ConnectionSettingProperties: BotConnectionSettingProperties
   CreateEmailSignInUrlResponse: BotCreateEmailSignInUriResult
+  CreateEmailSignInUrlResponse.id: -|arm-id
   Site: BotChannelSite
   HostSettingsResponse: BotServiceHostSettingsResult
   Key: BotServiceKey
@@ -95,6 +96,11 @@ rename-mapping:
   SkypeChannelProperties.enableCalling: IsCallingEnabled
   SkypeChannelProperties.enableScreenSharing: IsScreenSharingEnabled
   SkypeChannelProperties.enableGroups: IsGroupsEnabled
+  ServiceProviderParameterMetadataConstraints.required: IsRequired
+  DirectLineSpeechChannelProperties.cognitiveServiceResourceId: -|arm-id
+  TelephonyChannelResourceApiConfiguration.cognitiveServiceResourceId: -|arm-id
+  TelephonyPhoneNumbers.acsResourceId: -|arm-id
+  TelephonyPhoneNumbers.cognitiveServiceResourceId: -|arm-id
 
 directive:
   - remove-operation: OperationResults_Get # remove this because this is a LRO related operations, we should not expose it.

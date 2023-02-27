@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using Azure.Core;
+
 namespace Azure.ResourceManager.BotService.Models
 {
     /// <summary> A resource Api configuration for the Telephony channel. </summary>
@@ -22,7 +24,7 @@ namespace Azure.ResourceManager.BotService.Models
         /// <param name="cognitiveServiceRegion"> The cognitive service region. </param>
         /// <param name="cognitiveServiceResourceId"> The cognitive service resourceId. </param>
         /// <param name="defaultLocale"> The default locale. </param>
-        internal TelephonyChannelResourceApiConfiguration(string id, string providerName, string cognitiveServiceSubscriptionKey, string cognitiveServiceRegion, string cognitiveServiceResourceId, string defaultLocale)
+        internal TelephonyChannelResourceApiConfiguration(string id, string providerName, string cognitiveServiceSubscriptionKey, string cognitiveServiceRegion, ResourceIdentifier cognitiveServiceResourceId, string defaultLocale)
         {
             Id = id;
             ProviderName = providerName;
@@ -41,7 +43,7 @@ namespace Azure.ResourceManager.BotService.Models
         /// <summary> The cognitive service region. </summary>
         public string CognitiveServiceRegion { get; set; }
         /// <summary> The cognitive service resourceId. </summary>
-        public string CognitiveServiceResourceId { get; set; }
+        public ResourceIdentifier CognitiveServiceResourceId { get; set; }
         /// <summary> The default locale. </summary>
         public string DefaultLocale { get; set; }
     }

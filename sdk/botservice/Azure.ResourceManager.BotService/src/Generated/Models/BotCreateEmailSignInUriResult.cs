@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.BotService.Models
         /// <param name="id"> Specifies the resource ID. </param>
         /// <param name="location"> Specifies the location of the resource. </param>
         /// <param name="properties"> The set of properties specific to sign in url. </param>
-        internal BotCreateEmailSignInUriResult(string id, AzureLocation? location, CreateEmailSignInUrlResponseProperties properties)
+        internal BotCreateEmailSignInUriResult(ResourceIdentifier id, AzureLocation? location, CreateEmailSignInUrlResponseProperties properties)
         {
             Id = id;
             Location = location;
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.BotService.Models
         }
 
         /// <summary> Specifies the resource ID. </summary>
-        public string Id { get; }
+        public ResourceIdentifier Id { get; }
         /// <summary> Specifies the location of the resource. </summary>
         public AzureLocation? Location { get; }
         /// <summary> The set of properties specific to sign in url. </summary>

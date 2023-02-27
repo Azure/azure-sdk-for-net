@@ -130,10 +130,10 @@ namespace Azure.ResourceManager.BotService.Models
             Optional<string> phoneNumber = default;
             Optional<string> acsEndpoint = default;
             Optional<string> acsSecret = default;
-            Optional<string> acsResourceId = default;
+            Optional<ResourceIdentifier> acsResourceId = default;
             Optional<string> cognitiveServiceSubscriptionKey = default;
             Optional<string> cognitiveServiceRegion = default;
-            Optional<string> cognitiveServiceResourceId = default;
+            Optional<ResourceIdentifier> cognitiveServiceResourceId = default;
             Optional<string> defaultLocale = default;
             Optional<string> offerType = default;
             foreach (var property in element.EnumerateObject())
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.BotService.Models
                         acsResourceId = null;
                         continue;
                     }
-                    acsResourceId = property.Value.GetString();
+                    acsResourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("cognitiveServiceSubscriptionKey"u8))
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.BotService.Models
                         cognitiveServiceResourceId = null;
                         continue;
                     }
-                    cognitiveServiceResourceId = property.Value.GetString();
+                    cognitiveServiceResourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("defaultLocale"u8))

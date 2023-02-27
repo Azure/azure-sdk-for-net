@@ -349,7 +349,7 @@ namespace Azure.ResourceManager.BotService.Models
     {
         internal BotCreateEmailSignInUriResult() { }
         public System.Uri CreateEmailSignInUrlResponseUri { get { throw null; } }
-        public string Id { get { throw null; } }
+        public Azure.Core.ResourceIdentifier Id { get { throw null; } }
         public Azure.Core.AzureLocation? Location { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
@@ -526,8 +526,8 @@ namespace Azure.ResourceManager.BotService.Models
         public string Description { get { throw null; } }
         public string DisplayName { get { throw null; } }
         public System.Uri HelpUri { get { throw null; } }
+        public bool? IsRequired { get { throw null; } }
         public string Name { get { throw null; } }
-        public bool? Required { get { throw null; } }
         public string ServiceProviderParameterType { get { throw null; } }
     }
     public partial class BotServiceProviderProperties
@@ -626,7 +626,7 @@ namespace Azure.ResourceManager.BotService.Models
     {
         public DirectLineSpeechChannelProperties() { }
         public string CognitiveServiceRegion { get { throw null; } set { } }
-        public string CognitiveServiceResourceId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier CognitiveServiceResourceId { get { throw null; } set { } }
         public string CognitiveServiceSubscriptionKey { get { throw null; } set { } }
         public string CustomSpeechModelId { get { throw null; } set { } }
         public string CustomVoiceDeploymentId { get { throw null; } set { } }
@@ -840,7 +840,7 @@ namespace Azure.ResourceManager.BotService.Models
     {
         public TelephonyChannelResourceApiConfiguration() { }
         public string CognitiveServiceRegion { get { throw null; } set { } }
-        public string CognitiveServiceResourceId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier CognitiveServiceResourceId { get { throw null; } set { } }
         public string CognitiveServiceSubscriptionKey { get { throw null; } set { } }
         public string DefaultLocale { get { throw null; } set { } }
         public string Id { get { throw null; } set { } }
@@ -850,10 +850,10 @@ namespace Azure.ResourceManager.BotService.Models
     {
         public TelephonyPhoneNumbers() { }
         public string AcsEndpoint { get { throw null; } set { } }
-        public string AcsResourceId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier AcsResourceId { get { throw null; } set { } }
         public string AcsSecret { get { throw null; } set { } }
         public string CognitiveServiceRegion { get { throw null; } set { } }
-        public string CognitiveServiceResourceId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier CognitiveServiceResourceId { get { throw null; } set { } }
         public string CognitiveServiceSubscriptionKey { get { throw null; } set { } }
         public string DefaultLocale { get { throw null; } set { } }
         public string Id { get { throw null; } set { } }

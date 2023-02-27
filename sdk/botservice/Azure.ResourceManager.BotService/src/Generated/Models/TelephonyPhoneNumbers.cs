@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using Azure.Core;
+
 namespace Azure.ResourceManager.BotService.Models
 {
     /// <summary> A telephone number for the Telephony channel. </summary>
@@ -26,7 +28,7 @@ namespace Azure.ResourceManager.BotService.Models
         /// <param name="cognitiveServiceResourceId"> The resource id of cognitive service. </param>
         /// <param name="defaultLocale"> The default locale of the phone number. </param>
         /// <param name="offerType"> Optional Property that will determine the offering type of the phone. </param>
-        internal TelephonyPhoneNumbers(string id, string phoneNumber, string acsEndpoint, string acsSecret, string acsResourceId, string cognitiveServiceSubscriptionKey, string cognitiveServiceRegion, string cognitiveServiceResourceId, string defaultLocale, string offerType)
+        internal TelephonyPhoneNumbers(string id, string phoneNumber, string acsEndpoint, string acsSecret, ResourceIdentifier acsResourceId, string cognitiveServiceSubscriptionKey, string cognitiveServiceRegion, ResourceIdentifier cognitiveServiceResourceId, string defaultLocale, string offerType)
         {
             Id = id;
             PhoneNumber = phoneNumber;
@@ -49,13 +51,13 @@ namespace Azure.ResourceManager.BotService.Models
         /// <summary> The secret of ACS. </summary>
         public string AcsSecret { get; set; }
         /// <summary> The resource id of ACS. </summary>
-        public string AcsResourceId { get; set; }
+        public ResourceIdentifier AcsResourceId { get; set; }
         /// <summary> The subscription key of cognitive service. </summary>
         public string CognitiveServiceSubscriptionKey { get; set; }
         /// <summary> The service region of cognitive service. </summary>
         public string CognitiveServiceRegion { get; set; }
         /// <summary> The resource id of cognitive service. </summary>
-        public string CognitiveServiceResourceId { get; set; }
+        public ResourceIdentifier CognitiveServiceResourceId { get; set; }
         /// <summary> The default locale of the phone number. </summary>
         public string DefaultLocale { get; set; }
         /// <summary> Optional Property that will determine the offering type of the phone. </summary>

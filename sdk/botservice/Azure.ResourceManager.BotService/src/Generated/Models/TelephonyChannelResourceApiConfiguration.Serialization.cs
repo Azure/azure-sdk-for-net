@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.BotService.Models
             Optional<string> providerName = default;
             Optional<string> cognitiveServiceSubscriptionKey = default;
             Optional<string> cognitiveServiceRegion = default;
-            Optional<string> cognitiveServiceResourceId = default;
+            Optional<ResourceIdentifier> cognitiveServiceResourceId = default;
             Optional<string> defaultLocale = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.BotService.Models
                         cognitiveServiceResourceId = null;
                         continue;
                     }
-                    cognitiveServiceResourceId = property.Value.GetString();
+                    cognitiveServiceResourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("defaultLocale"u8))
