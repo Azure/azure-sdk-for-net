@@ -33,8 +33,8 @@ namespace Azure.ResourceManager.Network
         private AzureFirewallFqdnTagsRestOperations _azureFirewallFqdnTagsRestClient;
         private ClientDiagnostics _bastionHostClientDiagnostics;
         private BastionHostsRestOperations _bastionHostRestClient;
-        private ClientDiagnostics _defaultClientDiagnostics;
-        private NetworkManagementRestOperations _defaultRestClient;
+        private ClientDiagnostics _expressRouteProviderPortClientDiagnostics;
+        private NetworkManagementRestOperations _expressRouteProviderPortRestClient;
         private ClientDiagnostics _customIPPrefixClientDiagnostics;
         private CustomIPPrefixesRestOperations _customIPPrefixRestClient;
         private ClientDiagnostics _ddosProtectionPlanClientDiagnostics;
@@ -121,6 +121,8 @@ namespace Azure.ResourceManager.Network
         private ExpressRouteGatewaysRestOperations _expressRouteGatewayRestClient;
         private ClientDiagnostics _webApplicationFirewallPolicyClientDiagnostics;
         private WebApplicationFirewallPoliciesRestOperations _webApplicationFirewallPolicyRestClient;
+        private ClientDiagnostics _networkManagerClientDiagnostics;
+        private NetworkManagersRestOperations _networkManagerRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="SubscriptionResourceExtensionClient"/> class for mocking. </summary>
         protected SubscriptionResourceExtensionClient()
@@ -148,8 +150,8 @@ namespace Azure.ResourceManager.Network
         private AzureFirewallFqdnTagsRestOperations AzureFirewallFqdnTagsRestClient => _azureFirewallFqdnTagsRestClient ??= new AzureFirewallFqdnTagsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
         private ClientDiagnostics BastionHostClientDiagnostics => _bastionHostClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network", BastionHostResource.ResourceType.Namespace, Diagnostics);
         private BastionHostsRestOperations BastionHostRestClient => _bastionHostRestClient ??= new BastionHostsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(BastionHostResource.ResourceType));
-        private ClientDiagnostics DefaultClientDiagnostics => _defaultClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-        private NetworkManagementRestOperations DefaultRestClient => _defaultRestClient ??= new NetworkManagementRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+        private ClientDiagnostics ExpressRouteProviderPortClientDiagnostics => _expressRouteProviderPortClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network", ExpressRouteProviderPortResource.ResourceType.Namespace, Diagnostics);
+        private NetworkManagementRestOperations ExpressRouteProviderPortRestClient => _expressRouteProviderPortRestClient ??= new NetworkManagementRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(ExpressRouteProviderPortResource.ResourceType));
         private ClientDiagnostics CustomIPPrefixClientDiagnostics => _customIPPrefixClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network", CustomIPPrefixResource.ResourceType.Namespace, Diagnostics);
         private CustomIPPrefixesRestOperations CustomIPPrefixRestClient => _customIPPrefixRestClient ??= new CustomIPPrefixesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(CustomIPPrefixResource.ResourceType));
         private ClientDiagnostics DdosProtectionPlanClientDiagnostics => _ddosProtectionPlanClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network", DdosProtectionPlanResource.ResourceType.Namespace, Diagnostics);
@@ -236,6 +238,8 @@ namespace Azure.ResourceManager.Network
         private ExpressRouteGatewaysRestOperations ExpressRouteGatewayRestClient => _expressRouteGatewayRestClient ??= new ExpressRouteGatewaysRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(ExpressRouteGatewayResource.ResourceType));
         private ClientDiagnostics WebApplicationFirewallPolicyClientDiagnostics => _webApplicationFirewallPolicyClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network", WebApplicationFirewallPolicyResource.ResourceType.Namespace, Diagnostics);
         private WebApplicationFirewallPoliciesRestOperations WebApplicationFirewallPolicyRestClient => _webApplicationFirewallPolicyRestClient ??= new WebApplicationFirewallPoliciesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(WebApplicationFirewallPolicyResource.ResourceType));
+        private ClientDiagnostics NetworkManagerClientDiagnostics => _networkManagerClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network", NetworkManagerResource.ResourceType.Namespace, Diagnostics);
+        private NetworkManagersRestOperations NetworkManagerRestClient => _networkManagerRestClient ??= new NetworkManagersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(NetworkManagerResource.ResourceType));
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
@@ -250,6 +254,13 @@ namespace Azure.ResourceManager.Network
             return GetCachedClient(Client => new AzureWebCategoryCollection(Client, Id));
         }
 
+        /// <summary> Gets a collection of ExpressRouteProviderPortResources in the SubscriptionResource. </summary>
+        /// <returns> An object representing collection of ExpressRouteProviderPortResources and their operations over a ExpressRouteProviderPortResource. </returns>
+        public virtual ExpressRouteProviderPortCollection GetExpressRouteProviderPorts()
+        {
+            return GetCachedClient(Client => new ExpressRouteProviderPortCollection(Client, Id));
+        }
+
         /// <summary> Gets a collection of ExpressRoutePortsLocationResources in the SubscriptionResource. </summary>
         /// <returns> An object representing collection of ExpressRoutePortsLocationResources and their operations over a ExpressRoutePortsLocationResource. </returns>
         public virtual ExpressRoutePortsLocationCollection GetExpressRoutePortsLocations()
@@ -262,6 +273,21 @@ namespace Azure.ResourceManager.Network
         public virtual NetworkVirtualApplianceSkuCollection GetNetworkVirtualApplianceSkus()
         {
             return GetCachedClient(Client => new NetworkVirtualApplianceSkuCollection(Client, Id));
+        }
+
+        /// <summary> Gets a collection of ApplicationGatewayWafDynamicManifestResultResources in the SubscriptionResource. </summary>
+        /// <param name="location"> The region where the nrp are located at. </param>
+        /// <returns> An object representing collection of ApplicationGatewayWafDynamicManifestResultResources and their operations over a ApplicationGatewayWafDynamicManifestResultResource. </returns>
+        public virtual ApplicationGatewayWafDynamicManifestResultCollection GetApplicationGatewayWafDynamicManifestResults(AzureLocation location)
+        {
+            return new ApplicationGatewayWafDynamicManifestResultCollection(Client, Id, location);
+        }
+
+        /// <summary> Gets a collection of SubscriptionNetworkManagerConnectionResources in the SubscriptionResource. </summary>
+        /// <returns> An object representing collection of SubscriptionNetworkManagerConnectionResources and their operations over a SubscriptionNetworkManagerConnectionResource. </returns>
+        public virtual SubscriptionNetworkManagerConnectionCollection GetSubscriptionNetworkManagerConnections()
+        {
+            return GetCachedClient(Client => new SubscriptionNetworkManagerConnectionCollection(Client, Id));
         }
 
         /// <summary>
@@ -928,11 +954,11 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<DnsNameAvailabilityResult>> CheckDnsNameAvailabilityAsync(AzureLocation location, string domainNameLabel, CancellationToken cancellationToken = default)
         {
-            using var scope = DefaultClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckDnsNameAvailability");
+            using var scope = ExpressRouteProviderPortClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckDnsNameAvailability");
             scope.Start();
             try
             {
-                var response = await DefaultRestClient.CheckDnsNameAvailabilityAsync(Id.SubscriptionId, location, domainNameLabel, cancellationToken).ConfigureAwait(false);
+                var response = await ExpressRouteProviderPortRestClient.CheckDnsNameAvailabilityAsync(Id.SubscriptionId, location, domainNameLabel, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -960,11 +986,11 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<DnsNameAvailabilityResult> CheckDnsNameAvailability(AzureLocation location, string domainNameLabel, CancellationToken cancellationToken = default)
         {
-            using var scope = DefaultClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckDnsNameAvailability");
+            using var scope = ExpressRouteProviderPortClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckDnsNameAvailability");
             scope.Start();
             try
             {
-                var response = DefaultRestClient.CheckDnsNameAvailability(Id.SubscriptionId, location, domainNameLabel, cancellationToken);
+                var response = ExpressRouteProviderPortRestClient.CheckDnsNameAvailability(Id.SubscriptionId, location, domainNameLabel, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -3036,6 +3062,54 @@ namespace Azure.ResourceManager.Network
             HttpMessage FirstPageRequest(int? pageSizeHint) => WebApplicationFirewallPolicyRestClient.CreateListAllRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => WebApplicationFirewallPolicyRestClient.CreateListAllNextPageRequest(nextLink, Id.SubscriptionId);
             return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new WebApplicationFirewallPolicyResource(Client, WebApplicationFirewallPolicyData.DeserializeWebApplicationFirewallPolicyData(e)), WebApplicationFirewallPolicyClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetWebApplicationFirewallPolicies", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// List all network managers in a subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/networkManagers</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkManagers_ListBySubscription</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="top"> An optional query parameter which specifies the maximum number of records to be returned by the server. </param>
+        /// <param name="skipToken"> SkipToken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skipToken parameter that specifies a starting point to use for subsequent calls. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="NetworkManagerResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<NetworkManagerResource> GetNetworkManagersAsync(int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => NetworkManagerRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, top, skipToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => NetworkManagerRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, top, skipToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NetworkManagerResource(Client, NetworkManagerData.DeserializeNetworkManagerData(e)), NetworkManagerClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetNetworkManagers", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// List all network managers in a subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/networkManagers</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkManagers_ListBySubscription</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="top"> An optional query parameter which specifies the maximum number of records to be returned by the server. </param>
+        /// <param name="skipToken"> SkipToken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skipToken parameter that specifies a starting point to use for subsequent calls. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="NetworkManagerResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<NetworkManagerResource> GetNetworkManagers(int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => NetworkManagerRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, top, skipToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => NetworkManagerRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, top, skipToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NetworkManagerResource(Client, NetworkManagerData.DeserializeNetworkManagerData(e)), NetworkManagerClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetNetworkManagers", "value", "nextLink", cancellationToken);
         }
     }
 }

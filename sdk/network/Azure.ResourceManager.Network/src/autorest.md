@@ -447,5 +447,15 @@ input-file:
 #   - https://github.com/Azure/azure-rest-api-specs/blob/d70ba571ddb519a63aa2ad96a96faff04647f81c/specification/network/resource-manager/Microsoft.Network/stable/2022-09-01/vmssNetworkInterface.json
 #   - https://github.com/Azure/azure-rest-api-specs/blob/d70ba571ddb519a63aa2ad96a96faff04647f81c/specification/network/resource-manager/Microsoft.Network/stable/2022-09-01/vmssPublicIpAddress.json
   - https://github.com/Azure/azure-rest-api-specs/blob/d70ba571ddb519a63aa2ad96a96faff04647f81c/specification/network/resource-manager/Microsoft.Network/stable/2022-09-01/webapplicationfirewall.json
+  - https://github.com/Azure/azure-rest-api-specs/blob/d70ba571ddb519a63aa2ad96a96faff04647f81c/specification/network/resource-manager/Microsoft.Network/stable/2022-09-01/applicationGatewayWafDynamicManifests.json
+  - https://github.com/Azure/azure-rest-api-specs/blob/d70ba571ddb519a63aa2ad96a96faff04647f81c/specification/network/resource-manager/Microsoft.Network/stable/2022-09-01/cloudServiceSwap.json
+  - https://github.com/Azure/azure-rest-api-specs/blob/d70ba571ddb519a63aa2ad96a96faff04647f81c/specification/network/resource-manager/Microsoft.Network/stable/2022-09-01/expressRouteProviderPort.json
+  - https://github.com/Azure/azure-rest-api-specs/blob/d70ba571ddb519a63aa2ad96a96faff04647f81c/specification/network/resource-manager/Microsoft.Network/stable/2022-09-01/networkManager.json
+  - https://github.com/Azure/azure-rest-api-specs/blob/d70ba571ddb519a63aa2ad96a96faff04647f81c/specification/network/resource-manager/Microsoft.Network/stable/2022-09-01/networkManagerActiveConfiguration.json
+  - https://github.com/Azure/azure-rest-api-specs/blob/d70ba571ddb519a63aa2ad96a96faff04647f81c/specification/network/resource-manager/Microsoft.Network/stable/2022-09-01/networkManagerConnection.json
+  - https://github.com/Azure/azure-rest-api-specs/blob/d70ba571ddb519a63aa2ad96a96faff04647f81c/specification/network/resource-manager/Microsoft.Network/stable/2022-09-01/networkManagerConnectivityConfiguration.json
+  - https://github.com/Azure/azure-rest-api-specs/blob/d70ba571ddb519a63aa2ad96a96faff04647f81c/specification/network/resource-manager/Microsoft.Network/stable/2022-09-01/networkManagerEffectiveConfiguration.json
+  - https://github.com/Azure/azure-rest-api-specs/blob/d70ba571ddb519a63aa2ad96a96faff04647f81c/specification/network/resource-manager/Microsoft.Network/stable/2022-09-01/networkManagerGroup.json
+  - https://github.com/Azure/azure-rest-api-specs/blob/d70ba571ddb519a63aa2ad96a96faff04647f81c/specification/network/resource-manager/Microsoft.Network/stable/2022-09-01/networkManagerScopeConnection.json
+  - https://github.com/Azure/azure-rest-api-specs/blob/d70ba571ddb519a63aa2ad96a96faff04647f81c/specification/network/resource-manager/Microsoft.Network/stable/2022-09-01/networkManagerSecurityAdminConfiguration.json
 ```
-
