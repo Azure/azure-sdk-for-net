@@ -39,12 +39,12 @@ extends:
       parameters:
         EnableNuGetCache: false
     - ${{ if parameters.Profile }}:
-      - task: DotNetCoreCLI@2
+      - task: PowerShell@2
         displayName: 'Install dotnet-trace'
         inputs:
-          command: custom
-          custom: tool
-          arguments: 'install -g dotnet-trace'
+          targetType: 'inline'
+          script: 'dotnet tool install -g dotnet-trace'
+          workingDirectory: '$(Build.SourcesDirectory)/sdk'
     ServiceDirectory: ${{ parameters.ServiceDirectory }}
     PackageVersions: ${{ parameters.PackageVersions }}
     Tests: ${{ parameters.Tests }}
