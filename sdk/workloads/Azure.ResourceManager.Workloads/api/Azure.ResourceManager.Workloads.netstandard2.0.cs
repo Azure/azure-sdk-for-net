@@ -1,62 +1,6 @@
 namespace Azure.ResourceManager.Workloads
 {
-    public partial class PhpWorkloadResource : Azure.ResourceManager.ArmResource
-    {
-        public static readonly Azure.Core.ResourceType ResourceType;
-        protected PhpWorkloadResource() { }
-        public virtual Azure.ResourceManager.Workloads.PhpWorkloadResourceData Data { get { throw null; } }
-        public virtual bool HasData { get { throw null; } }
-        public virtual Azure.Response<Azure.ResourceManager.Workloads.PhpWorkloadResource> AddTag(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Workloads.PhpWorkloadResource>> AddTagAsync(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string phpWorkloadName) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, string deleteInfra = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, string deleteInfra = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Workloads.PhpWorkloadResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Workloads.PhpWorkloadResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.Workloads.WordPressInstanceResource GetWordPressInstanceResource() { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Workloads.PhpWorkloadResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Workloads.PhpWorkloadResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Workloads.PhpWorkloadResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Workloads.PhpWorkloadResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Workloads.PhpWorkloadResource> Update(Azure.ResourceManager.Workloads.Models.PhpWorkloadResourcePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Workloads.PhpWorkloadResource>> UpdateAsync(Azure.ResourceManager.Workloads.Models.PhpWorkloadResourcePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
-    public partial class PhpWorkloadResourceCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Workloads.PhpWorkloadResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Workloads.PhpWorkloadResource>, System.Collections.IEnumerable
-    {
-        protected PhpWorkloadResourceCollection() { }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Workloads.PhpWorkloadResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string phpWorkloadName, Azure.ResourceManager.Workloads.PhpWorkloadResourceData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Workloads.PhpWorkloadResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string phpWorkloadName, Azure.ResourceManager.Workloads.PhpWorkloadResourceData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<bool> Exists(string phpWorkloadName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string phpWorkloadName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Workloads.PhpWorkloadResource> Get(string phpWorkloadName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.Workloads.PhpWorkloadResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.Workloads.PhpWorkloadResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Workloads.PhpWorkloadResource>> GetAsync(string phpWorkloadName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Workloads.PhpWorkloadResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Workloads.PhpWorkloadResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
-        System.Collections.Generic.IEnumerator<Azure.ResourceManager.Workloads.PhpWorkloadResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Workloads.PhpWorkloadResource>.GetEnumerator() { throw null; }
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
-    }
-    public partial class PhpWorkloadResourceData : Azure.ResourceManager.Models.TrackedResourceData
-    {
-        public PhpWorkloadResourceData(Azure.Core.AzureLocation location, Azure.ResourceManager.Workloads.Models.WorkloadKind kind) : base (default(Azure.Core.AzureLocation)) { }
-        public Azure.ResourceManager.Workloads.Models.UserProfile AdminUserProfile { get { throw null; } set { } }
-        public Azure.Core.AzureLocation? AppLocation { get { throw null; } set { } }
-        public Azure.ResourceManager.Workloads.Models.BackupProfile BackupProfile { get { throw null; } set { } }
-        public Azure.ResourceManager.Workloads.Models.CacheProfile CacheProfile { get { throw null; } set { } }
-        public Azure.ResourceManager.Workloads.Models.NodeProfile ControllerProfile { get { throw null; } set { } }
-        public Azure.ResourceManager.Workloads.Models.DatabaseProfile DatabaseProfile { get { throw null; } set { } }
         public Azure.ResourceManager.Workloads.Models.FileshareProfile FileshareProfile { get { throw null; } set { } }
-        public Azure.ResourceManager.Workloads.Models.PhpWorkloadResourceIdentity Identity { get { throw null; } set { } }
-        public Azure.ResourceManager.Workloads.Models.WorkloadKind Kind { get { throw null; } set { } }
-        public string ManagedResourceGroupName { get { throw null; } set { } }
-        public Azure.ResourceManager.Workloads.Models.NetworkProfile NetworkProfile { get { throw null; } set { } }
-        public Azure.ResourceManager.Workloads.Models.PhpVersion? PhpVersion { get { throw null; } set { } }
-        public Azure.ResourceManager.Workloads.Models.PhpWorkloadProvisioningState? ProvisioningState { get { throw null; } }
-        public Azure.ResourceManager.Workloads.Models.SearchProfile SearchProfile { get { throw null; } set { } }
-        public string SiteDomainName { get { throw null; } set { } }
-        public Azure.ResourceManager.Workloads.Models.WorkloadsSku Sku { get { throw null; } set { } }
-        public Azure.ResourceManager.Workloads.Models.VmssNodesProfile WebNodesProfile { get { throw null; } set { } }
-    }
     public partial class SapApplicationServerInstanceCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Workloads.SapApplicationServerInstanceResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Workloads.SapApplicationServerInstanceResource>, System.Collections.IEnumerable
     {
         protected SapApplicationServerInstanceCollection() { }
@@ -85,10 +29,11 @@ namespace Azure.ResourceManager.Workloads
         public string IPAddress { get { throw null; } }
         public string KernelPatch { get { throw null; } }
         public string KernelVersion { get { throw null; } }
+        public Azure.Core.ResourceIdentifier LoadBalancerDetailsId { get { throw null; } }
         public Azure.ResourceManager.Workloads.Models.SapVirtualInstanceProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.Workloads.Models.SapVirtualInstanceStatus? Status { get { throw null; } }
         public Azure.Core.ResourceIdentifier SubnetId { get { throw null; } }
-        public Azure.Core.ResourceIdentifier VirtualMachineId { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Workloads.Models.ApplicationServerVmDetails> VmDetails { get { throw null; } }
     }
     public partial class SapApplicationServerInstanceResource : Azure.ResourceManager.ArmResource
     {
@@ -107,6 +52,10 @@ namespace Azure.ResourceManager.Workloads
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Workloads.SapApplicationServerInstanceResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Workloads.SapApplicationServerInstanceResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Workloads.SapApplicationServerInstanceResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Models.OperationStatusResult> StartInstance(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Models.OperationStatusResult>> StartInstanceAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Models.OperationStatusResult> StopInstance(Azure.WaitUntil waitUntil, Azure.ResourceManager.Workloads.Models.StopRequest body = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Models.OperationStatusResult>> StopInstanceAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Workloads.Models.StopRequest body = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Workloads.SapApplicationServerInstanceResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Workloads.Models.SapApplicationServerInstancePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Workloads.SapApplicationServerInstanceResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Workloads.Models.SapApplicationServerInstancePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -136,6 +85,7 @@ namespace Azure.ResourceManager.Workloads
         public string InstanceNo { get { throw null; } }
         public string KernelPatch { get { throw null; } }
         public string KernelVersion { get { throw null; } }
+        public Azure.Core.ResourceIdentifier LoadBalancerDetailsId { get { throw null; } }
         public Azure.ResourceManager.Workloads.Models.MessageServerProperties MessageServerProperties { get { throw null; } set { } }
         public Azure.ResourceManager.Workloads.Models.SapVirtualInstanceProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.Workloads.Models.SapVirtualInstanceStatus? Status { get { throw null; } }
@@ -159,6 +109,10 @@ namespace Azure.ResourceManager.Workloads
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Workloads.SapCentralServerInstanceResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Workloads.SapCentralServerInstanceResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Workloads.SapCentralServerInstanceResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Models.OperationStatusResult> StartInstance(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Models.OperationStatusResult>> StartInstanceAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Models.OperationStatusResult> StopInstance(Azure.WaitUntil waitUntil, Azure.ResourceManager.Workloads.Models.StopRequest body = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Models.OperationStatusResult>> StopInstanceAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Workloads.Models.StopRequest body = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Workloads.SapCentralServerInstanceResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Workloads.Models.SapCentralServerInstancePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Workloads.SapCentralServerInstanceResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Workloads.Models.SapCentralServerInstancePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -184,6 +138,7 @@ namespace Azure.ResourceManager.Workloads
         public string DatabaseType { get { throw null; } }
         public Azure.ResourceManager.Workloads.Models.SapVirtualInstanceErrorDetail ErrorsProperties { get { throw null; } }
         public string IPAddress { get { throw null; } }
+        public Azure.Core.ResourceIdentifier LoadBalancerDetailsId { get { throw null; } }
         public Azure.ResourceManager.Workloads.Models.SapVirtualInstanceProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.Workloads.Models.SapVirtualInstanceStatus? Status { get { throw null; } }
         public Azure.Core.ResourceIdentifier SubnetId { get { throw null; } }
@@ -206,8 +161,35 @@ namespace Azure.ResourceManager.Workloads
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Workloads.SapDatabaseInstanceResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Workloads.SapDatabaseInstanceResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Workloads.SapDatabaseInstanceResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Models.OperationStatusResult> StartInstance(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Models.OperationStatusResult>> StartInstanceAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Models.OperationStatusResult> StopInstance(Azure.WaitUntil waitUntil, Azure.ResourceManager.Workloads.Models.StopRequest body = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Models.OperationStatusResult>> StopInstanceAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Workloads.Models.StopRequest body = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Workloads.SapDatabaseInstanceResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Workloads.Models.SapDatabaseInstancePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Workloads.SapDatabaseInstanceResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Workloads.Models.SapDatabaseInstancePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class SapLandscapeMonitorData : Azure.ResourceManager.Models.ResourceData
+    {
+        public SapLandscapeMonitorData() { }
+        public Azure.ResourceManager.Workloads.Models.SapLandscapeMonitorPropertiesGrouping Grouping { get { throw null; } set { } }
+        public Azure.ResourceManager.Workloads.Models.SapLandscapeMonitorProvisioningState? ProvisioningState { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Workloads.Models.SapLandscapeMonitorMetricThresholds> TopMetricsThresholds { get { throw null; } }
+    }
+    public partial class SapLandscapeMonitorResource : Azure.ResourceManager.ArmResource
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected SapLandscapeMonitorResource() { }
+        public virtual Azure.ResourceManager.Workloads.SapLandscapeMonitorData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Workloads.SapLandscapeMonitorResource> CreateOrUpdate(Azure.WaitUntil waitUntil, Azure.ResourceManager.Workloads.SapLandscapeMonitorData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Workloads.SapLandscapeMonitorResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Workloads.SapLandscapeMonitorData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string monitorName) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Workloads.SapLandscapeMonitorResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Workloads.SapLandscapeMonitorResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Workloads.SapLandscapeMonitorResource> Update(Azure.ResourceManager.Workloads.SapLandscapeMonitorData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Workloads.SapLandscapeMonitorResource>> UpdateAsync(Azure.ResourceManager.Workloads.SapLandscapeMonitorData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class SapMonitorCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Workloads.SapMonitorResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Workloads.SapMonitorResource>, System.Collections.IEnumerable
     {
@@ -229,12 +211,15 @@ namespace Azure.ResourceManager.Workloads
         public SapMonitorData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
         public Azure.Core.AzureLocation? AppLocation { get { throw null; } set { } }
         public Azure.ResponseError Errors { get { throw null; } }
+        public Azure.ResourceManager.Workloads.Models.UserAssignedServiceIdentity Identity { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier LogAnalyticsWorkspaceArmId { get { throw null; } set { } }
         public string ManagedResourceGroupName { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier MonitorSubnetId { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier MsiArmId { get { throw null; } }
         public Azure.ResourceManager.Workloads.Models.WorkloadMonitorProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.Workloads.Models.RoutingPreference? RoutingPreference { get { throw null; } set { } }
+        public string StorageAccountArmId { get { throw null; } }
+        public string ZoneRedundancyPreference { get { throw null; } set { } }
     }
     public partial class SapMonitorResource : Azure.ResourceManager.ArmResource
     {
@@ -249,6 +234,7 @@ namespace Azure.ResourceManager.Workloads
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Models.OperationStatusResult>> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Workloads.SapMonitorResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Workloads.SapMonitorResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.Workloads.SapLandscapeMonitorResource GetSapLandscapeMonitor() { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Workloads.SapProviderInstanceResource> GetSapProviderInstance(string providerInstanceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Workloads.SapProviderInstanceResource>> GetSapProviderInstanceAsync(string providerInstanceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.Workloads.SapProviderInstanceCollection GetSapProviderInstances() { throw null; }
@@ -278,6 +264,7 @@ namespace Azure.ResourceManager.Workloads
     {
         public SapProviderInstanceData() { }
         public Azure.ResponseError Errors { get { throw null; } }
+        public Azure.ResourceManager.Workloads.Models.UserAssignedServiceIdentity Identity { get { throw null; } set { } }
         public Azure.ResourceManager.Workloads.Models.ProviderSpecificProperties ProviderSettings { get { throw null; } set { } }
         public Azure.ResourceManager.Workloads.Models.WorkloadMonitorProvisioningState? ProvisioningState { get { throw null; } }
     }
@@ -352,45 +339,17 @@ namespace Azure.ResourceManager.Workloads
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Workloads.SapVirtualInstanceResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Models.OperationStatusResult> Start(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Models.OperationStatusResult>> StartAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Models.OperationStatusResult> Stop(Azure.WaitUntil waitUntil, Azure.ResourceManager.Workloads.Models.StopContent content = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Models.OperationStatusResult>> StopAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Workloads.Models.StopContent content = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Models.OperationStatusResult> Stop(Azure.WaitUntil waitUntil, Azure.ResourceManager.Workloads.Models.StopRequest body = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Models.OperationStatusResult>> StopAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Workloads.Models.StopRequest body = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Workloads.SapVirtualInstanceResource> Update(Azure.ResourceManager.Workloads.Models.SapVirtualInstancePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Workloads.SapVirtualInstanceResource>> UpdateAsync(Azure.ResourceManager.Workloads.Models.SapVirtualInstancePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class WordPressInstanceResource : Azure.ResourceManager.ArmResource
-    {
-        public static readonly Azure.Core.ResourceType ResourceType;
-        protected WordPressInstanceResource() { }
-        public virtual Azure.ResourceManager.Workloads.WordPressInstanceResourceData Data { get { throw null; } }
-        public virtual bool HasData { get { throw null; } }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Workloads.WordPressInstanceResource> CreateOrUpdate(Azure.WaitUntil waitUntil, Azure.ResourceManager.Workloads.WordPressInstanceResourceData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Workloads.WordPressInstanceResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Workloads.WordPressInstanceResourceData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string phpWorkloadName) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Workloads.WordPressInstanceResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Workloads.WordPressInstanceResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
-    public partial class WordPressInstanceResourceData : Azure.ResourceManager.Models.ResourceData
-    {
-        public WordPressInstanceResourceData() { }
-        public string DatabaseName { get { throw null; } set { } }
-        public string DatabaseUser { get { throw null; } set { } }
-        public Azure.ResourceManager.Workloads.Models.ApplicationProvisioningState? ProvisioningState { get { throw null; } }
-        public System.Uri SiteUri { get { throw null; } }
-        public Azure.ResourceManager.Workloads.Models.WordPressVersion? Version { get { throw null; } set { } }
-    }
     public static partial class WorkloadsExtensions
     {
-        public static Azure.ResourceManager.Workloads.PhpWorkloadResource GetPhpWorkloadResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.Response<Azure.ResourceManager.Workloads.PhpWorkloadResource> GetPhpWorkloadResource(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string phpWorkloadName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Workloads.PhpWorkloadResource>> GetPhpWorkloadResourceAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string phpWorkloadName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.ResourceManager.Workloads.PhpWorkloadResourceCollection GetPhpWorkloadResources(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource) { throw null; }
-        public static Azure.Pageable<Azure.ResourceManager.Workloads.PhpWorkloadResource> GetPhpWorkloadResources(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.AsyncPageable<Azure.ResourceManager.Workloads.PhpWorkloadResource> GetPhpWorkloadResourcesAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.Workloads.SapApplicationServerInstanceResource GetSapApplicationServerInstanceResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.Workloads.SapCentralServerInstanceResource GetSapCentralServerInstanceResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.Workloads.SapDatabaseInstanceResource GetSapDatabaseInstanceResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.Workloads.SapLandscapeMonitorResource GetSapLandscapeMonitorResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.Response<Azure.ResourceManager.Workloads.SapMonitorResource> GetSapMonitor(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string monitorName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Workloads.SapMonitorResource>> GetSapMonitorAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string monitorName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.Workloads.SapMonitorResource GetSapMonitorResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
@@ -404,9 +363,6 @@ namespace Azure.ResourceManager.Workloads
         public static Azure.ResourceManager.Workloads.SapVirtualInstanceCollection GetSapVirtualInstances(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource) { throw null; }
         public static Azure.Pageable<Azure.ResourceManager.Workloads.SapVirtualInstanceResource> GetSapVirtualInstances(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.AsyncPageable<Azure.ResourceManager.Workloads.SapVirtualInstanceResource> GetSapVirtualInstancesAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.Pageable<Azure.ResourceManager.Workloads.Models.SkuDefinition> GetSkus(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.AsyncPageable<Azure.ResourceManager.Workloads.Models.SkuDefinition> GetSkusAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.ResourceManager.Workloads.WordPressInstanceResource GetWordPressInstanceResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.Response<Azure.ResourceManager.Workloads.Models.SapAvailabilityZoneDetailsResult> SapAvailabilityZoneDetails(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation location, Azure.ResourceManager.Workloads.Models.SapAvailabilityZoneDetailsContent content = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Workloads.Models.SapAvailabilityZoneDetailsResult>> SapAvailabilityZoneDetailsAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation location, Azure.ResourceManager.Workloads.Models.SapAvailabilityZoneDetailsContent content = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Response<Azure.ResourceManager.Workloads.Models.SapDiskConfigurationsResult> SapDiskConfigurations(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation location, Azure.ResourceManager.Workloads.Models.SapDiskConfigurationsContent content = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -419,29 +375,6 @@ namespace Azure.ResourceManager.Workloads
 }
 namespace Azure.ResourceManager.Workloads.Models
 {
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct ApplicationProvisioningState : System.IEquatable<Azure.ResourceManager.Workloads.Models.ApplicationProvisioningState>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public ApplicationProvisioningState(string value) { throw null; }
-        public static Azure.ResourceManager.Workloads.Models.ApplicationProvisioningState Accepted { get { throw null; } }
-        public static Azure.ResourceManager.Workloads.Models.ApplicationProvisioningState Canceled { get { throw null; } }
-        public static Azure.ResourceManager.Workloads.Models.ApplicationProvisioningState Created { get { throw null; } }
-        public static Azure.ResourceManager.Workloads.Models.ApplicationProvisioningState Failed { get { throw null; } }
-        public static Azure.ResourceManager.Workloads.Models.ApplicationProvisioningState Installing { get { throw null; } }
-        public static Azure.ResourceManager.Workloads.Models.ApplicationProvisioningState NotSpecified { get { throw null; } }
-        public static Azure.ResourceManager.Workloads.Models.ApplicationProvisioningState Succeeded { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Workloads.Models.ApplicationProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Workloads.Models.ApplicationProvisioningState left, Azure.ResourceManager.Workloads.Models.ApplicationProvisioningState right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Workloads.Models.ApplicationProvisioningState (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Workloads.Models.ApplicationProvisioningState left, Azure.ResourceManager.Workloads.Models.ApplicationProvisioningState right) { throw null; }
-        public override string ToString() { throw null; }
-    }
     public partial class ApplicationServerConfiguration
     {
         public ApplicationServerConfiguration(Azure.Core.ResourceIdentifier subnetId, Azure.ResourceManager.Workloads.Models.VirtualMachineConfiguration virtualMachineConfiguration, long instanceCount) { }
@@ -449,38 +382,37 @@ namespace Azure.ResourceManager.Workloads.Models
         public Azure.Core.ResourceIdentifier SubnetId { get { throw null; } set { } }
         public Azure.ResourceManager.Workloads.Models.VirtualMachineConfiguration VirtualMachineConfiguration { get { throw null; } set { } }
     }
+    public partial class ApplicationServerFullResourceNames
+    {
+        public ApplicationServerFullResourceNames() { }
+        public string AvailabilitySetName { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Workloads.Models.VirtualMachineResourceNames> VirtualMachines { get { throw null; } }
+    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct AzureFrontDoorEnabled : System.IEquatable<Azure.ResourceManager.Workloads.Models.AzureFrontDoorEnabled>
+    public readonly partial struct ApplicationServerVirtualMachineType : System.IEquatable<Azure.ResourceManager.Workloads.Models.ApplicationServerVirtualMachineType>
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
-        public AzureFrontDoorEnabled(string value) { throw null; }
-        public static Azure.ResourceManager.Workloads.Models.AzureFrontDoorEnabled Disabled { get { throw null; } }
-        public static Azure.ResourceManager.Workloads.Models.AzureFrontDoorEnabled Enabled { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Workloads.Models.AzureFrontDoorEnabled other) { throw null; }
+        public ApplicationServerVirtualMachineType(string value) { throw null; }
+        public static Azure.ResourceManager.Workloads.Models.ApplicationServerVirtualMachineType Active { get { throw null; } }
+        public static Azure.ResourceManager.Workloads.Models.ApplicationServerVirtualMachineType Standby { get { throw null; } }
+        public static Azure.ResourceManager.Workloads.Models.ApplicationServerVirtualMachineType Unknown { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Workloads.Models.ApplicationServerVirtualMachineType other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Workloads.Models.AzureFrontDoorEnabled left, Azure.ResourceManager.Workloads.Models.AzureFrontDoorEnabled right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Workloads.Models.AzureFrontDoorEnabled (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Workloads.Models.AzureFrontDoorEnabled left, Azure.ResourceManager.Workloads.Models.AzureFrontDoorEnabled right) { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Workloads.Models.ApplicationServerVirtualMachineType left, Azure.ResourceManager.Workloads.Models.ApplicationServerVirtualMachineType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Workloads.Models.ApplicationServerVirtualMachineType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Workloads.Models.ApplicationServerVirtualMachineType left, Azure.ResourceManager.Workloads.Models.ApplicationServerVirtualMachineType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class BackupProfile
+    public partial class ApplicationServerVmDetails
     {
-        public BackupProfile(Azure.ResourceManager.Workloads.Models.EnableBackup backupEnabled) { }
-        public Azure.ResourceManager.Workloads.Models.EnableBackup BackupEnabled { get { throw null; } set { } }
-        public Azure.Core.ResourceIdentifier VaultResourceId { get { throw null; } }
-    }
-    public partial class CacheProfile
-    {
-        public CacheProfile(string skuName, Azure.ResourceManager.Workloads.Models.RedisCacheFamily family, long capacity) { }
-        public Azure.Core.ResourceIdentifier CacheResourceId { get { throw null; } }
-        public long Capacity { get { throw null; } set { } }
-        public Azure.ResourceManager.Workloads.Models.RedisCacheFamily Family { get { throw null; } set { } }
-        public string Name { get { throw null; } set { } }
-        public string SkuName { get { throw null; } set { } }
+        internal ApplicationServerVmDetails() { }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.SubResource> StorageDetails { get { throw null; } }
+        public Azure.Core.ResourceIdentifier VirtualMachineId { get { throw null; } }
+        public Azure.ResourceManager.Workloads.Models.ApplicationServerVirtualMachineType? VirtualMachineType { get { throw null; } }
     }
     public partial class CentralServerConfiguration
     {
@@ -488,6 +420,13 @@ namespace Azure.ResourceManager.Workloads.Models
         public long InstanceCount { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier SubnetId { get { throw null; } set { } }
         public Azure.ResourceManager.Workloads.Models.VirtualMachineConfiguration VirtualMachineConfiguration { get { throw null; } set { } }
+    }
+    public partial class CentralServerFullResourceNames
+    {
+        public CentralServerFullResourceNames() { }
+        public string AvailabilitySetName { get { throw null; } set { } }
+        public Azure.ResourceManager.Workloads.Models.LoadBalancerResourceNames LoadBalancer { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Workloads.Models.VirtualMachineResourceNames> VirtualMachines { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct CentralServerVirtualMachineType : System.IEquatable<Azure.ResourceManager.Workloads.Models.CentralServerVirtualMachineType>
@@ -515,60 +454,37 @@ namespace Azure.ResourceManager.Workloads.Models
     public partial class CentralServerVmDetails
     {
         internal CentralServerVmDetails() { }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.SubResource> StorageDetails { get { throw null; } }
         public Azure.Core.ResourceIdentifier VirtualMachineId { get { throw null; } }
         public Azure.ResourceManager.Workloads.Models.CentralServerVirtualMachineType? VirtualMachineType { get { throw null; } }
+    }
+    public partial class CreateAndMountFileShareConfiguration : Azure.ResourceManager.Workloads.Models.FileShareConfiguration
+    {
+        public CreateAndMountFileShareConfiguration() { }
+        public string ResourceGroup { get { throw null; } set { } }
+        public string StorageAccountName { get { throw null; } set { } }
     }
     public partial class DatabaseConfiguration
     {
         public DatabaseConfiguration(Azure.Core.ResourceIdentifier subnetId, Azure.ResourceManager.Workloads.Models.VirtualMachineConfiguration virtualMachineConfiguration, long instanceCount) { }
         public Azure.ResourceManager.Workloads.Models.SapDatabaseType? DatabaseType { get { throw null; } set { } }
+        public System.Collections.Generic.IDictionary<string, Azure.ResourceManager.Workloads.Models.DiskVolumeConfiguration> DiskVolumeConfigurations { get { throw null; } }
         public long InstanceCount { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier SubnetId { get { throw null; } set { } }
         public Azure.ResourceManager.Workloads.Models.VirtualMachineConfiguration VirtualMachineConfiguration { get { throw null; } set { } }
     }
-    public partial class DatabaseProfile
+    public partial class DatabaseServerFullResourceNames
     {
-        public DatabaseProfile(Azure.ResourceManager.Workloads.Models.DatabaseType databaseType, string sku, Azure.ResourceManager.Workloads.Models.DatabaseTier tier) { }
-        public int? BackupRetentionDays { get { throw null; } set { } }
-        public Azure.ResourceManager.Workloads.Models.DatabaseType DatabaseType { get { throw null; } set { } }
-        public Azure.ResourceManager.Workloads.Models.HAEnabled? HAEnabled { get { throw null; } set { } }
-        public string ServerName { get { throw null; } set { } }
-        public Azure.Core.ResourceIdentifier ServerResourceId { get { throw null; } }
-        public string Sku { get { throw null; } set { } }
-        public Azure.ResourceManager.Workloads.Models.EnableSslEnforcement? SslEnforcementEnabled { get { throw null; } set { } }
-        public long? StorageInGB { get { throw null; } set { } }
-        public long? StorageIops { get { throw null; } set { } }
-        public string StorageSku { get { throw null; } set { } }
-        public Azure.ResourceManager.Workloads.Models.DatabaseTier Tier { get { throw null; } set { } }
-        public string Version { get { throw null; } set { } }
-    }
-    public enum DatabaseTier
-    {
-        Burstable = 0,
-        GeneralPurpose = 1,
-        MemoryOptimized = 2,
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct DatabaseType : System.IEquatable<Azure.ResourceManager.Workloads.Models.DatabaseType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public DatabaseType(string value) { throw null; }
-        public static Azure.ResourceManager.Workloads.Models.DatabaseType MySql { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Workloads.Models.DatabaseType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Workloads.Models.DatabaseType left, Azure.ResourceManager.Workloads.Models.DatabaseType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Workloads.Models.DatabaseType (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Workloads.Models.DatabaseType left, Azure.ResourceManager.Workloads.Models.DatabaseType right) { throw null; }
-        public override string ToString() { throw null; }
+        public DatabaseServerFullResourceNames() { }
+        public string AvailabilitySetName { get { throw null; } set { } }
+        public Azure.ResourceManager.Workloads.Models.LoadBalancerResourceNames LoadBalancer { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Workloads.Models.VirtualMachineResourceNames> VirtualMachines { get { throw null; } }
     }
     public partial class DatabaseVmDetails
     {
         internal DatabaseVmDetails() { }
         public Azure.ResourceManager.Workloads.Models.SapVirtualInstanceStatus? Status { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.SubResource> StorageDetails { get { throw null; } }
         public Azure.Core.ResourceIdentifier VirtualMachineId { get { throw null; } }
     }
     public partial class DB2ProviderInstanceProperties : Azure.ResourceManager.Workloads.Models.ProviderSpecificProperties
@@ -581,6 +497,8 @@ namespace Azure.ResourceManager.Workloads.Models
         public string DBUsername { get { throw null; } set { } }
         public string Hostname { get { throw null; } set { } }
         public string SapSid { get { throw null; } set { } }
+        public System.Uri SslCertificateUri { get { throw null; } set { } }
+        public Azure.ResourceManager.Workloads.Models.SslPreference? SslPreference { get { throw null; } set { } }
     }
     public partial class DeployerVmPackages
     {
@@ -608,54 +526,48 @@ namespace Azure.ResourceManager.Workloads.Models
         public DiscoveryConfiguration() { }
         public Azure.Core.AzureLocation? AppLocation { get { throw null; } }
         public string CentralServerVmId { get { throw null; } set { } }
+        public string ManagedRgStorageAccountName { get { throw null; } set { } }
     }
-    public partial class DiskInfo
+    public partial class DiskDetails
     {
-        public DiskInfo(Azure.ResourceManager.Workloads.Models.DiskStorageType storageType) { }
-        public long? SizeInGB { get { throw null; } set { } }
-        public Azure.ResourceManager.Workloads.Models.DiskStorageType StorageType { get { throw null; } set { } }
-    }
-    public enum DiskStorageType
-    {
-        PremiumLrs = 0,
-        StandardLrs = 1,
-        StandardSsdLrs = 2,
+        internal DiskDetails() { }
+        public string DiskTier { get { throw null; } }
+        public long? IopsReadWrite { get { throw null; } }
+        public long? MaximumSupportedDiskCount { get { throw null; } }
+        public long? MbpsReadWrite { get { throw null; } }
+        public long? MinimumSupportedDiskCount { get { throw null; } }
+        public long? SizeGB { get { throw null; } }
+        public Azure.ResourceManager.Workloads.Models.DiskSkuName? SkuName { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct EnableBackup : System.IEquatable<Azure.ResourceManager.Workloads.Models.EnableBackup>
+    public readonly partial struct DiskSkuName : System.IEquatable<Azure.ResourceManager.Workloads.Models.DiskSkuName>
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
-        public EnableBackup(string value) { throw null; }
-        public static Azure.ResourceManager.Workloads.Models.EnableBackup Disabled { get { throw null; } }
-        public static Azure.ResourceManager.Workloads.Models.EnableBackup Enabled { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Workloads.Models.EnableBackup other) { throw null; }
+        public DiskSkuName(string value) { throw null; }
+        public static Azure.ResourceManager.Workloads.Models.DiskSkuName PremiumLrs { get { throw null; } }
+        public static Azure.ResourceManager.Workloads.Models.DiskSkuName PremiumV2Lrs { get { throw null; } }
+        public static Azure.ResourceManager.Workloads.Models.DiskSkuName PremiumZrs { get { throw null; } }
+        public static Azure.ResourceManager.Workloads.Models.DiskSkuName StandardLrs { get { throw null; } }
+        public static Azure.ResourceManager.Workloads.Models.DiskSkuName StandardSsdLrs { get { throw null; } }
+        public static Azure.ResourceManager.Workloads.Models.DiskSkuName StandardSsdZrs { get { throw null; } }
+        public static Azure.ResourceManager.Workloads.Models.DiskSkuName UltraSsdLrs { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Workloads.Models.DiskSkuName other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Workloads.Models.EnableBackup left, Azure.ResourceManager.Workloads.Models.EnableBackup right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Workloads.Models.EnableBackup (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Workloads.Models.EnableBackup left, Azure.ResourceManager.Workloads.Models.EnableBackup right) { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Workloads.Models.DiskSkuName left, Azure.ResourceManager.Workloads.Models.DiskSkuName right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Workloads.Models.DiskSkuName (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Workloads.Models.DiskSkuName left, Azure.ResourceManager.Workloads.Models.DiskSkuName right) { throw null; }
         public override string ToString() { throw null; }
     }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct EnableSslEnforcement : System.IEquatable<Azure.ResourceManager.Workloads.Models.EnableSslEnforcement>
+    public partial class DiskVolumeConfiguration
     {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public EnableSslEnforcement(string value) { throw null; }
-        public static Azure.ResourceManager.Workloads.Models.EnableSslEnforcement Disabled { get { throw null; } }
-        public static Azure.ResourceManager.Workloads.Models.EnableSslEnforcement Enabled { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Workloads.Models.EnableSslEnforcement other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Workloads.Models.EnableSslEnforcement left, Azure.ResourceManager.Workloads.Models.EnableSslEnforcement right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Workloads.Models.EnableSslEnforcement (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Workloads.Models.EnableSslEnforcement left, Azure.ResourceManager.Workloads.Models.EnableSslEnforcement right) { throw null; }
-        public override string ToString() { throw null; }
+        public DiskVolumeConfiguration() { }
+        public long? Count { get { throw null; } set { } }
+        public long? SizeGB { get { throw null; } set { } }
+        public Azure.ResourceManager.Workloads.Models.DiskSkuName? SkuName { get { throw null; } set { } }
     }
     public partial class EnqueueReplicationServerProperties
     {
@@ -694,52 +606,14 @@ namespace Azure.ResourceManager.Workloads.Models
         public string IPAddress { get { throw null; } }
         public long? Port { get { throw null; } }
     }
-    public partial class FileshareProfile
+    public partial class ExternalInstallationSoftwareConfiguration : Azure.ResourceManager.Workloads.Models.SoftwareConfiguration
     {
-        public FileshareProfile(Azure.ResourceManager.Workloads.Models.FileShareType shareType, Azure.ResourceManager.Workloads.Models.FileShareStorageType storageType) { }
-        public string ShareName { get { throw null; } }
-        public long? ShareSizeInGB { get { throw null; } set { } }
-        public Azure.ResourceManager.Workloads.Models.FileShareType ShareType { get { throw null; } set { } }
-        public Azure.Core.ResourceIdentifier StorageResourceId { get { throw null; } }
-        public Azure.ResourceManager.Workloads.Models.FileShareStorageType StorageType { get { throw null; } set { } }
+        public ExternalInstallationSoftwareConfiguration() { }
+        public string CentralServerVmId { get { throw null; } set { } }
     }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct FileShareStorageType : System.IEquatable<Azure.ResourceManager.Workloads.Models.FileShareStorageType>
+    public abstract partial class FileShareConfiguration
     {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public FileShareStorageType(string value) { throw null; }
-        public static Azure.ResourceManager.Workloads.Models.FileShareStorageType PremiumLrs { get { throw null; } }
-        public static Azure.ResourceManager.Workloads.Models.FileShareStorageType StandardGrs { get { throw null; } }
-        public static Azure.ResourceManager.Workloads.Models.FileShareStorageType StandardLrs { get { throw null; } }
-        public static Azure.ResourceManager.Workloads.Models.FileShareStorageType StandardZrs { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Workloads.Models.FileShareStorageType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Workloads.Models.FileShareStorageType left, Azure.ResourceManager.Workloads.Models.FileShareStorageType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Workloads.Models.FileShareStorageType (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Workloads.Models.FileShareStorageType left, Azure.ResourceManager.Workloads.Models.FileShareStorageType right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct FileShareType : System.IEquatable<Azure.ResourceManager.Workloads.Models.FileShareType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public FileShareType(string value) { throw null; }
-        public static Azure.ResourceManager.Workloads.Models.FileShareType AzureFiles { get { throw null; } }
-        public static Azure.ResourceManager.Workloads.Models.FileShareType NfsOnController { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Workloads.Models.FileShareType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Workloads.Models.FileShareType left, Azure.ResourceManager.Workloads.Models.FileShareType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Workloads.Models.FileShareType (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Workloads.Models.FileShareType left, Azure.ResourceManager.Workloads.Models.FileShareType right) { throw null; }
-        public override string ToString() { throw null; }
+        protected FileShareConfiguration() { }
     }
     public partial class GatewayServerProperties
     {
@@ -747,36 +621,20 @@ namespace Azure.ResourceManager.Workloads.Models
         public Azure.ResourceManager.Workloads.Models.SapHealthState? Health { get { throw null; } }
         public long? Port { get { throw null; } }
     }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct HAEnabled : System.IEquatable<Azure.ResourceManager.Workloads.Models.HAEnabled>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public HAEnabled(string value) { throw null; }
-        public static Azure.ResourceManager.Workloads.Models.HAEnabled Disabled { get { throw null; } }
-        public static Azure.ResourceManager.Workloads.Models.HAEnabled Enabled { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Workloads.Models.HAEnabled other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Workloads.Models.HAEnabled left, Azure.ResourceManager.Workloads.Models.HAEnabled right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Workloads.Models.HAEnabled (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Workloads.Models.HAEnabled left, Azure.ResourceManager.Workloads.Models.HAEnabled right) { throw null; }
-        public override string ToString() { throw null; }
-    }
     public partial class HanaDBProviderInstanceProperties : Azure.ResourceManager.Workloads.Models.ProviderSpecificProperties
     {
         public HanaDBProviderInstanceProperties() { }
         public string DBName { get { throw null; } set { } }
         public string DBPassword { get { throw null; } set { } }
         public System.Uri DBPasswordUri { get { throw null; } set { } }
-        public System.Uri DBSslCertificateUri { get { throw null; } set { } }
         public string DBUsername { get { throw null; } set { } }
         public string Hostname { get { throw null; } set { } }
         public string InstanceNumber { get { throw null; } set { } }
+        public string SapSid { get { throw null; } set { } }
         public string SqlPort { get { throw null; } set { } }
+        public System.Uri SslCertificateUri { get { throw null; } set { } }
         public string SslHostNameInCertificate { get { throw null; } set { } }
+        public Azure.ResourceManager.Workloads.Models.SslPreference? SslPreference { get { throw null; } set { } }
     }
     public partial class HighAvailabilitySoftwareConfiguration
     {
@@ -806,41 +664,13 @@ namespace Azure.ResourceManager.Workloads.Models
         public Azure.ResourceManager.Workloads.Models.SshKeyPair SshKeyPair { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Workloads.Models.SshPublicKey> SshPublicKeys { get { throw null; } }
     }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct LoadBalancerType : System.IEquatable<Azure.ResourceManager.Workloads.Models.LoadBalancerType>
+    public partial class LoadBalancerResourceNames
     {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public LoadBalancerType(string value) { throw null; }
-        public static Azure.ResourceManager.Workloads.Models.LoadBalancerType ApplicationGateway { get { throw null; } }
-        public static Azure.ResourceManager.Workloads.Models.LoadBalancerType LoadBalancer { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Workloads.Models.LoadBalancerType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Workloads.Models.LoadBalancerType left, Azure.ResourceManager.Workloads.Models.LoadBalancerType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Workloads.Models.LoadBalancerType (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Workloads.Models.LoadBalancerType left, Azure.ResourceManager.Workloads.Models.LoadBalancerType right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct LocationType : System.IEquatable<Azure.ResourceManager.Workloads.Models.LocationType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public LocationType(string value) { throw null; }
-        public static Azure.ResourceManager.Workloads.Models.LocationType EdgeZone { get { throw null; } }
-        public static Azure.ResourceManager.Workloads.Models.LocationType Region { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Workloads.Models.LocationType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Workloads.Models.LocationType left, Azure.ResourceManager.Workloads.Models.LocationType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Workloads.Models.LocationType (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Workloads.Models.LocationType left, Azure.ResourceManager.Workloads.Models.LocationType right) { throw null; }
-        public override string ToString() { throw null; }
+        public LoadBalancerResourceNames() { }
+        public System.Collections.Generic.IList<string> BackendPoolNames { get { throw null; } }
+        public System.Collections.Generic.IList<string> FrontendIPConfigurationNames { get { throw null; } }
+        public System.Collections.Generic.IList<string> HealthProbeNames { get { throw null; } }
+        public string LoadBalancerName { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ManagedServiceIdentityType : System.IEquatable<Azure.ResourceManager.Workloads.Models.ManagedServiceIdentityType>
@@ -871,6 +701,12 @@ namespace Azure.ResourceManager.Workloads.Models
         public string IPAddress { get { throw null; } }
         public long? MsPort { get { throw null; } }
     }
+    public partial class MountFileShareConfiguration : Azure.ResourceManager.Workloads.Models.FileShareConfiguration
+    {
+        public MountFileShareConfiguration(string id, string privateEndpointId) { }
+        public string Id { get { throw null; } set { } }
+        public string PrivateEndpointId { get { throw null; } set { } }
+    }
     public partial class MsSqlServerProviderInstanceProperties : Azure.ResourceManager.Workloads.Models.ProviderSpecificProperties
     {
         public MsSqlServerProviderInstanceProperties() { }
@@ -880,111 +716,17 @@ namespace Azure.ResourceManager.Workloads.Models
         public string DBUsername { get { throw null; } set { } }
         public string Hostname { get { throw null; } set { } }
         public string SapSid { get { throw null; } set { } }
+        public System.Uri SslCertificateUri { get { throw null; } set { } }
+        public Azure.ResourceManager.Workloads.Models.SslPreference? SslPreference { get { throw null; } set { } }
     }
-    public partial class NetworkProfile
+    public partial class NetworkInterfaceResourceNames
     {
-        public NetworkProfile(Azure.ResourceManager.Workloads.Models.LoadBalancerType loadBalancerType) { }
-        public Azure.ResourceManager.Workloads.Models.AzureFrontDoorEnabled? AzureFrontDoorEnabled { get { throw null; } set { } }
-        public Azure.Core.ResourceIdentifier AzureFrontDoorResourceId { get { throw null; } }
-        public int? Capacity { get { throw null; } set { } }
-        public Azure.Core.ResourceIdentifier FrontEndPublicIPResourceId { get { throw null; } }
-        public Azure.Core.ResourceIdentifier LoadBalancerResourceId { get { throw null; } }
-        public string LoadBalancerSku { get { throw null; } set { } }
-        public string LoadBalancerTier { get { throw null; } set { } }
-        public Azure.ResourceManager.Workloads.Models.LoadBalancerType LoadBalancerType { get { throw null; } set { } }
-        public System.Collections.Generic.IReadOnlyList<string> OutboundPublicIPResourceIds { get { throw null; } }
-        public Azure.Core.ResourceIdentifier VNetResourceId { get { throw null; } }
-    }
-    public partial class NodeProfile
-    {
-        public NodeProfile(string nodeSku, Azure.ResourceManager.Workloads.Models.OSImageProfile osImage, Azure.ResourceManager.Workloads.Models.DiskInfo osDisk) { }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Workloads.Models.DiskInfo> DataDisks { get { throw null; } }
-        public string Name { get { throw null; } set { } }
-        public System.Collections.Generic.IReadOnlyList<Azure.Core.ResourceIdentifier> NodeResourceIds { get { throw null; } }
-        public string NodeSku { get { throw null; } set { } }
-        public Azure.ResourceManager.Workloads.Models.DiskInfo OSDisk { get { throw null; } set { } }
-        public Azure.ResourceManager.Workloads.Models.OSImageProfile OSImage { get { throw null; } set { } }
+        public NetworkInterfaceResourceNames() { }
+        public string NetworkInterfaceName { get { throw null; } set { } }
     }
     public abstract partial class OSConfiguration
     {
         protected OSConfiguration() { }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct OSImageOffer : System.IEquatable<Azure.ResourceManager.Workloads.Models.OSImageOffer>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public OSImageOffer(string value) { throw null; }
-        public static Azure.ResourceManager.Workloads.Models.OSImageOffer UbuntuServer { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Workloads.Models.OSImageOffer other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Workloads.Models.OSImageOffer left, Azure.ResourceManager.Workloads.Models.OSImageOffer right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Workloads.Models.OSImageOffer (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Workloads.Models.OSImageOffer left, Azure.ResourceManager.Workloads.Models.OSImageOffer right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    public partial class OSImageProfile
-    {
-        public OSImageProfile() { }
-        public Azure.ResourceManager.Workloads.Models.OSImageOffer? Offer { get { throw null; } set { } }
-        public Azure.ResourceManager.Workloads.Models.OSImagePublisher? Publisher { get { throw null; } set { } }
-        public Azure.ResourceManager.Workloads.Models.OSImageSku? Sku { get { throw null; } set { } }
-        public Azure.ResourceManager.Workloads.Models.OSImageVersion? Version { get { throw null; } set { } }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct OSImagePublisher : System.IEquatable<Azure.ResourceManager.Workloads.Models.OSImagePublisher>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public OSImagePublisher(string value) { throw null; }
-        public static Azure.ResourceManager.Workloads.Models.OSImagePublisher Canonical { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Workloads.Models.OSImagePublisher other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Workloads.Models.OSImagePublisher left, Azure.ResourceManager.Workloads.Models.OSImagePublisher right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Workloads.Models.OSImagePublisher (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Workloads.Models.OSImagePublisher left, Azure.ResourceManager.Workloads.Models.OSImagePublisher right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct OSImageSku : System.IEquatable<Azure.ResourceManager.Workloads.Models.OSImageSku>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public OSImageSku(string value) { throw null; }
-        public static Azure.ResourceManager.Workloads.Models.OSImageSku Ubuntu16_04Lts { get { throw null; } }
-        public static Azure.ResourceManager.Workloads.Models.OSImageSku Ubuntu18_04Lts { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Workloads.Models.OSImageSku other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Workloads.Models.OSImageSku left, Azure.ResourceManager.Workloads.Models.OSImageSku right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Workloads.Models.OSImageSku (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Workloads.Models.OSImageSku left, Azure.ResourceManager.Workloads.Models.OSImageSku right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct OSImageVersion : System.IEquatable<Azure.ResourceManager.Workloads.Models.OSImageVersion>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public OSImageVersion(string value) { throw null; }
-        public static Azure.ResourceManager.Workloads.Models.OSImageVersion Latest { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Workloads.Models.OSImageVersion other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Workloads.Models.OSImageVersion left, Azure.ResourceManager.Workloads.Models.OSImageVersion right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Workloads.Models.OSImageVersion (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Workloads.Models.OSImageVersion left, Azure.ResourceManager.Workloads.Models.OSImageVersion right) { throw null; }
-        public override string ToString() { throw null; }
     }
     public partial class OSProfile
     {
@@ -999,63 +741,6 @@ namespace Azure.ResourceManager.Workloads.Models
         public Azure.ResourceManager.Workloads.Models.DeployerVmPackages DeployerVmPackages { get { throw null; } set { } }
         public string SapFqdn { get { throw null; } set { } }
     }
-    public partial class PatchResourceRequestBodyIdentity : Azure.ResourceManager.Workloads.Models.UserAssignedServiceIdentity
-    {
-        public PatchResourceRequestBodyIdentity(Azure.ResourceManager.Workloads.Models.ManagedServiceIdentityType managedServiceIdentityType) : base (default(Azure.ResourceManager.Workloads.Models.ManagedServiceIdentityType)) { }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct PhpVersion : System.IEquatable<Azure.ResourceManager.Workloads.Models.PhpVersion>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public PhpVersion(string value) { throw null; }
-        public static Azure.ResourceManager.Workloads.Models.PhpVersion V7_2 { get { throw null; } }
-        public static Azure.ResourceManager.Workloads.Models.PhpVersion V7_3 { get { throw null; } }
-        public static Azure.ResourceManager.Workloads.Models.PhpVersion V7_4 { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Workloads.Models.PhpVersion other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Workloads.Models.PhpVersion left, Azure.ResourceManager.Workloads.Models.PhpVersion right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Workloads.Models.PhpVersion (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Workloads.Models.PhpVersion left, Azure.ResourceManager.Workloads.Models.PhpVersion right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct PhpWorkloadProvisioningState : System.IEquatable<Azure.ResourceManager.Workloads.Models.PhpWorkloadProvisioningState>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public PhpWorkloadProvisioningState(string value) { throw null; }
-        public static Azure.ResourceManager.Workloads.Models.PhpWorkloadProvisioningState Accepted { get { throw null; } }
-        public static Azure.ResourceManager.Workloads.Models.PhpWorkloadProvisioningState Canceled { get { throw null; } }
-        public static Azure.ResourceManager.Workloads.Models.PhpWorkloadProvisioningState Created { get { throw null; } }
-        public static Azure.ResourceManager.Workloads.Models.PhpWorkloadProvisioningState Deleting { get { throw null; } }
-        public static Azure.ResourceManager.Workloads.Models.PhpWorkloadProvisioningState Failed { get { throw null; } }
-        public static Azure.ResourceManager.Workloads.Models.PhpWorkloadProvisioningState NotSpecified { get { throw null; } }
-        public static Azure.ResourceManager.Workloads.Models.PhpWorkloadProvisioningState Provisioning { get { throw null; } }
-        public static Azure.ResourceManager.Workloads.Models.PhpWorkloadProvisioningState Succeeded { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Workloads.Models.PhpWorkloadProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Workloads.Models.PhpWorkloadProvisioningState left, Azure.ResourceManager.Workloads.Models.PhpWorkloadProvisioningState right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Workloads.Models.PhpWorkloadProvisioningState (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Workloads.Models.PhpWorkloadProvisioningState left, Azure.ResourceManager.Workloads.Models.PhpWorkloadProvisioningState right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    public partial class PhpWorkloadResourceIdentity : Azure.ResourceManager.Workloads.Models.UserAssignedServiceIdentity
-    {
-        public PhpWorkloadResourceIdentity(Azure.ResourceManager.Workloads.Models.ManagedServiceIdentityType managedServiceIdentityType) : base (default(Azure.ResourceManager.Workloads.Models.ManagedServiceIdentityType)) { }
-    }
-    public partial class PhpWorkloadResourcePatch
-    {
-        public PhpWorkloadResourcePatch() { }
-        public Azure.ResourceManager.Workloads.Models.PatchResourceRequestBodyIdentity Identity { get { throw null; } set { } }
-        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
-    }
     public partial class PrometheusHAClusterProviderInstanceProperties : Azure.ResourceManager.Workloads.Models.ProviderSpecificProperties
     {
         public PrometheusHAClusterProviderInstanceProperties() { }
@@ -1063,39 +748,20 @@ namespace Azure.ResourceManager.Workloads.Models
         public string Hostname { get { throw null; } set { } }
         public System.Uri PrometheusUri { get { throw null; } set { } }
         public string Sid { get { throw null; } set { } }
+        public System.Uri SslCertificateUri { get { throw null; } set { } }
+        public Azure.ResourceManager.Workloads.Models.SslPreference? SslPreference { get { throw null; } set { } }
     }
     public partial class PrometheusOSProviderInstanceProperties : Azure.ResourceManager.Workloads.Models.ProviderSpecificProperties
     {
         public PrometheusOSProviderInstanceProperties() { }
         public System.Uri PrometheusUri { get { throw null; } set { } }
+        public string SapSid { get { throw null; } set { } }
+        public System.Uri SslCertificateUri { get { throw null; } set { } }
+        public Azure.ResourceManager.Workloads.Models.SslPreference? SslPreference { get { throw null; } set { } }
     }
     public abstract partial class ProviderSpecificProperties
     {
         protected ProviderSpecificProperties() { }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct RedisCacheFamily : System.IEquatable<Azure.ResourceManager.Workloads.Models.RedisCacheFamily>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public RedisCacheFamily(string value) { throw null; }
-        public static Azure.ResourceManager.Workloads.Models.RedisCacheFamily C { get { throw null; } }
-        public static Azure.ResourceManager.Workloads.Models.RedisCacheFamily P { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Workloads.Models.RedisCacheFamily other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Workloads.Models.RedisCacheFamily left, Azure.ResourceManager.Workloads.Models.RedisCacheFamily right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Workloads.Models.RedisCacheFamily (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Workloads.Models.RedisCacheFamily left, Azure.ResourceManager.Workloads.Models.RedisCacheFamily right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    public partial class RestrictionInfo
-    {
-        internal RestrictionInfo() { }
-        public System.Collections.Generic.IReadOnlyList<Azure.Core.AzureLocation> Locations { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<string> Zones { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct RoutingPreference : System.IEquatable<Azure.ResourceManager.Workloads.Models.RoutingPreference>
@@ -1208,13 +874,8 @@ namespace Azure.ResourceManager.Workloads.Models
     public partial class SapDiskConfiguration
     {
         internal SapDiskConfiguration() { }
-        public long? DiskCount { get { throw null; } }
-        public long? DiskIopsReadWrite { get { throw null; } }
-        public long? DiskMBpsReadWrite { get { throw null; } }
-        public long? DiskSizeGB { get { throw null; } }
-        public string DiskStorageType { get { throw null; } }
-        public string DiskType { get { throw null; } }
-        public string Volume { get { throw null; } }
+        public Azure.ResourceManager.Workloads.Models.DiskVolumeConfiguration RecommendedConfiguration { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Workloads.Models.DiskDetails> SupportedConfigurations { get { throw null; } }
     }
     public partial class SapDiskConfigurationsContent
     {
@@ -1229,7 +890,7 @@ namespace Azure.ResourceManager.Workloads.Models
     public partial class SapDiskConfigurationsResult
     {
         internal SapDiskConfigurationsResult() { }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Workloads.Models.SapDiskConfiguration> DiskConfigurations { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyDictionary<string, Azure.ResourceManager.Workloads.Models.SapDiskConfiguration> VolumeConfigurations { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct SapEnvironmentType : System.IEquatable<Azure.ResourceManager.Workloads.Models.SapEnvironmentType>
@@ -1295,9 +956,51 @@ namespace Azure.ResourceManager.Workloads.Models
         public string SapBitsStorageAccountId { get { throw null; } set { } }
         public string SoftwareVersion { get { throw null; } set { } }
     }
+    public partial class SapLandscapeMonitorMetricThresholds
+    {
+        public SapLandscapeMonitorMetricThresholds() { }
+        public float? Green { get { throw null; } set { } }
+        public string Name { get { throw null; } set { } }
+        public float? Red { get { throw null; } set { } }
+        public float? Yellow { get { throw null; } set { } }
+    }
+    public partial class SapLandscapeMonitorPropertiesGrouping
+    {
+        public SapLandscapeMonitorPropertiesGrouping() { }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Workloads.Models.SapLandscapeMonitorSidMapping> Landscape { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Workloads.Models.SapLandscapeMonitorSidMapping> SapApplication { get { throw null; } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct SapLandscapeMonitorProvisioningState : System.IEquatable<Azure.ResourceManager.Workloads.Models.SapLandscapeMonitorProvisioningState>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public SapLandscapeMonitorProvisioningState(string value) { throw null; }
+        public static Azure.ResourceManager.Workloads.Models.SapLandscapeMonitorProvisioningState Accepted { get { throw null; } }
+        public static Azure.ResourceManager.Workloads.Models.SapLandscapeMonitorProvisioningState Canceled { get { throw null; } }
+        public static Azure.ResourceManager.Workloads.Models.SapLandscapeMonitorProvisioningState Created { get { throw null; } }
+        public static Azure.ResourceManager.Workloads.Models.SapLandscapeMonitorProvisioningState Failed { get { throw null; } }
+        public static Azure.ResourceManager.Workloads.Models.SapLandscapeMonitorProvisioningState Succeeded { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Workloads.Models.SapLandscapeMonitorProvisioningState other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Workloads.Models.SapLandscapeMonitorProvisioningState left, Azure.ResourceManager.Workloads.Models.SapLandscapeMonitorProvisioningState right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Workloads.Models.SapLandscapeMonitorProvisioningState (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Workloads.Models.SapLandscapeMonitorProvisioningState left, Azure.ResourceManager.Workloads.Models.SapLandscapeMonitorProvisioningState right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class SapLandscapeMonitorSidMapping
+    {
+        public SapLandscapeMonitorSidMapping() { }
+        public string Name { get { throw null; } set { } }
+        public System.Collections.Generic.IList<string> TopSid { get { throw null; } }
+    }
     public partial class SapMonitorPatch
     {
         public SapMonitorPatch() { }
+        public Azure.ResourceManager.Workloads.Models.UserAssignedServiceIdentity Identity { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
     }
     public partial class SapNetWeaverProviderInstanceProperties : Azure.ResourceManager.Workloads.Models.ProviderSpecificProperties
@@ -1311,8 +1014,9 @@ namespace Azure.ResourceManager.Workloads.Models
         public System.Uri SapPasswordUri { get { throw null; } set { } }
         public string SapPortNumber { get { throw null; } set { } }
         public string SapSid { get { throw null; } set { } }
-        public System.Uri SapSslCertificateUri { get { throw null; } set { } }
         public string SapUsername { get { throw null; } set { } }
+        public System.Uri SslCertificateUri { get { throw null; } set { } }
+        public Azure.ResourceManager.Workloads.Models.SslPreference? SslPreference { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct SapProductType : System.IEquatable<Azure.ResourceManager.Workloads.Models.SapProductType>
@@ -1419,6 +1123,8 @@ namespace Azure.ResourceManager.Workloads.Models
         public static Azure.ResourceManager.Workloads.Models.SapVirtualInstanceState InfrastructureDeploymentInProgress { get { throw null; } }
         public static Azure.ResourceManager.Workloads.Models.SapVirtualInstanceState InfrastructureDeploymentPending { get { throw null; } }
         public static Azure.ResourceManager.Workloads.Models.SapVirtualInstanceState RegistrationComplete { get { throw null; } }
+        public static Azure.ResourceManager.Workloads.Models.SapVirtualInstanceState SoftwareDetectionFailed { get { throw null; } }
+        public static Azure.ResourceManager.Workloads.Models.SapVirtualInstanceState SoftwareDetectionInProgress { get { throw null; } }
         public static Azure.ResourceManager.Workloads.Models.SapVirtualInstanceState SoftwareInstallationFailed { get { throw null; } }
         public static Azure.ResourceManager.Workloads.Models.SapVirtualInstanceState SoftwareInstallationInProgress { get { throw null; } }
         public static Azure.ResourceManager.Workloads.Models.SapVirtualInstanceState SoftwareInstallationPending { get { throw null; } }
@@ -1441,6 +1147,7 @@ namespace Azure.ResourceManager.Workloads.Models
         public static Azure.ResourceManager.Workloads.Models.SapVirtualInstanceStatus Offline { get { throw null; } }
         public static Azure.ResourceManager.Workloads.Models.SapVirtualInstanceStatus PartiallyRunning { get { throw null; } }
         public static Azure.ResourceManager.Workloads.Models.SapVirtualInstanceStatus Running { get { throw null; } }
+        public static Azure.ResourceManager.Workloads.Models.SapVirtualInstanceStatus SoftShutdown { get { throw null; } }
         public static Azure.ResourceManager.Workloads.Models.SapVirtualInstanceStatus Starting { get { throw null; } }
         public static Azure.ResourceManager.Workloads.Models.SapVirtualInstanceStatus Stopping { get { throw null; } }
         public static Azure.ResourceManager.Workloads.Models.SapVirtualInstanceStatus Unavailable { get { throw null; } }
@@ -1454,28 +1161,6 @@ namespace Azure.ResourceManager.Workloads.Models
         public static bool operator !=(Azure.ResourceManager.Workloads.Models.SapVirtualInstanceStatus left, Azure.ResourceManager.Workloads.Models.SapVirtualInstanceStatus right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class SearchProfile : Azure.ResourceManager.Workloads.Models.NodeProfile
-    {
-        public SearchProfile(string nodeSku, Azure.ResourceManager.Workloads.Models.OSImageProfile osImage, Azure.ResourceManager.Workloads.Models.DiskInfo osDisk, Azure.ResourceManager.Workloads.Models.SearchType searchType) : base (default(string), default(Azure.ResourceManager.Workloads.Models.OSImageProfile), default(Azure.ResourceManager.Workloads.Models.DiskInfo)) { }
-        public Azure.ResourceManager.Workloads.Models.SearchType SearchType { get { throw null; } set { } }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct SearchType : System.IEquatable<Azure.ResourceManager.Workloads.Models.SearchType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public SearchType(string value) { throw null; }
-        public static Azure.ResourceManager.Workloads.Models.SearchType Elastic { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Workloads.Models.SearchType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Workloads.Models.SearchType left, Azure.ResourceManager.Workloads.Models.SearchType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Workloads.Models.SearchType (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Workloads.Models.SearchType left, Azure.ResourceManager.Workloads.Models.SearchType right) { throw null; }
-        public override string ToString() { throw null; }
-    }
     public partial class ServiceInitiatedSoftwareConfiguration : Azure.ResourceManager.Workloads.Models.SoftwareConfiguration
     {
         public ServiceInitiatedSoftwareConfiguration(System.Uri bomUri, string softwareVersion, string sapBitsStorageAccountId, string sapFqdn, string sshPrivateKey) { }
@@ -1486,108 +1171,39 @@ namespace Azure.ResourceManager.Workloads.Models
         public string SoftwareVersion { get { throw null; } set { } }
         public string SshPrivateKey { get { throw null; } set { } }
     }
+    public partial class SharedStorageResourceNames
+    {
+        public SharedStorageResourceNames() { }
+        public string SharedStorageAccountName { get { throw null; } set { } }
+        public string SharedStorageAccountPrivateEndPointName { get { throw null; } set { } }
+    }
     public partial class SingleServerConfiguration : Azure.ResourceManager.Workloads.Models.InfrastructureConfiguration
     {
         public SingleServerConfiguration(string appResourceGroup, Azure.Core.ResourceIdentifier subnetId, Azure.ResourceManager.Workloads.Models.VirtualMachineConfiguration virtualMachineConfiguration) : base (default(string)) { }
+        public Azure.ResourceManager.Workloads.Models.SingleServerCustomResourceNames CustomResourceNames { get { throw null; } set { } }
         public Azure.ResourceManager.Workloads.Models.SapDatabaseType? DatabaseType { get { throw null; } set { } }
+        public System.Collections.Generic.IDictionary<string, Azure.ResourceManager.Workloads.Models.DiskVolumeConfiguration> DiskVolumeConfigurations { get { throw null; } }
         public bool? IsSecondaryIPEnabled { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier SubnetId { get { throw null; } set { } }
         public Azure.ResourceManager.Workloads.Models.VirtualMachineConfiguration VirtualMachineConfiguration { get { throw null; } set { } }
+    }
+    public abstract partial class SingleServerCustomResourceNames
+    {
+        protected SingleServerCustomResourceNames() { }
+    }
+    public partial class SingleServerFullResourceNames : Azure.ResourceManager.Workloads.Models.SingleServerCustomResourceNames
+    {
+        public SingleServerFullResourceNames() { }
+        public Azure.ResourceManager.Workloads.Models.VirtualMachineResourceNames VirtualMachine { get { throw null; } set { } }
     }
     public partial class SingleServerRecommendationResult : Azure.ResourceManager.Workloads.Models.SapSizingRecommendationResult
     {
         internal SingleServerRecommendationResult() { }
         public string VmSku { get { throw null; } }
     }
-    public partial class SkuCapability
+    public partial class SkipFileShareConfiguration : Azure.ResourceManager.Workloads.Models.FileShareConfiguration
     {
-        internal SkuCapability() { }
-        public string Name { get { throw null; } }
-        public string Value { get { throw null; } }
-    }
-    public partial class SkuCost
-    {
-        internal SkuCost() { }
-        public string ExtendedUnit { get { throw null; } }
-        public string MeterId { get { throw null; } }
-        public int? Quantity { get { throw null; } }
-    }
-    public partial class SkuDefinition
-    {
-        internal SkuDefinition() { }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Workloads.Models.SkuCapability> Capabilities { get { throw null; } }
-        public System.BinaryData Capacity { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Workloads.Models.SkuCost> Costs { get { throw null; } }
-        public string Family { get { throw null; } }
-        public string Kind { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Workloads.Models.SkuLocationAndZones> LocationInfo { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.Core.AzureLocation> Locations { get { throw null; } }
-        public string Name { get { throw null; } }
-        public string ResourceType { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Workloads.Models.SkuRestriction> Restrictions { get { throw null; } }
-        public string Size { get { throw null; } }
-        public string Tier { get { throw null; } }
-    }
-    public partial class SkuLocationAndZones
-    {
-        internal SkuLocationAndZones() { }
-        public System.Collections.Generic.IReadOnlyList<string> ExtendedLocations { get { throw null; } }
-        public Azure.Core.AzureLocation? Location { get { throw null; } }
-        public Azure.ResourceManager.Workloads.Models.LocationType? LocationType { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Workloads.Models.SkuZoneDetail> ZoneDetails { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<string> Zones { get { throw null; } }
-    }
-    public partial class SkuRestriction
-    {
-        internal SkuRestriction() { }
-        public Azure.ResourceManager.Workloads.Models.SkuRestrictionReasonCode? ReasonCode { get { throw null; } }
-        public Azure.ResourceManager.Workloads.Models.RestrictionInfo RestrictionInfo { get { throw null; } }
-        public Azure.ResourceManager.Workloads.Models.SkuRestrictionType? RestrictionType { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<string> Values { get { throw null; } }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct SkuRestrictionReasonCode : System.IEquatable<Azure.ResourceManager.Workloads.Models.SkuRestrictionReasonCode>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public SkuRestrictionReasonCode(string value) { throw null; }
-        public static Azure.ResourceManager.Workloads.Models.SkuRestrictionReasonCode NotAvailableForSubscription { get { throw null; } }
-        public static Azure.ResourceManager.Workloads.Models.SkuRestrictionReasonCode NotSpecified { get { throw null; } }
-        public static Azure.ResourceManager.Workloads.Models.SkuRestrictionReasonCode QuotaId { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Workloads.Models.SkuRestrictionReasonCode other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Workloads.Models.SkuRestrictionReasonCode left, Azure.ResourceManager.Workloads.Models.SkuRestrictionReasonCode right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Workloads.Models.SkuRestrictionReasonCode (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Workloads.Models.SkuRestrictionReasonCode left, Azure.ResourceManager.Workloads.Models.SkuRestrictionReasonCode right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct SkuRestrictionType : System.IEquatable<Azure.ResourceManager.Workloads.Models.SkuRestrictionType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public SkuRestrictionType(string value) { throw null; }
-        public static Azure.ResourceManager.Workloads.Models.SkuRestrictionType Location { get { throw null; } }
-        public static Azure.ResourceManager.Workloads.Models.SkuRestrictionType NotSpecified { get { throw null; } }
-        public static Azure.ResourceManager.Workloads.Models.SkuRestrictionType Zone { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Workloads.Models.SkuRestrictionType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Workloads.Models.SkuRestrictionType left, Azure.ResourceManager.Workloads.Models.SkuRestrictionType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Workloads.Models.SkuRestrictionType (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Workloads.Models.SkuRestrictionType left, Azure.ResourceManager.Workloads.Models.SkuRestrictionType right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    public partial class SkuZoneDetail
-    {
-        internal SkuZoneDetail() { }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Workloads.Models.SkuCapability> Capabilities { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<string> Zones { get { throw null; } }
+        public SkipFileShareConfiguration() { }
     }
     public abstract partial class SoftwareConfiguration
     {
@@ -1604,19 +1220,52 @@ namespace Azure.ResourceManager.Workloads.Models
         public SshPublicKey() { }
         public string KeyData { get { throw null; } set { } }
     }
-    public partial class StopContent
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct SslPreference : System.IEquatable<Azure.ResourceManager.Workloads.Models.SslPreference>
     {
-        public StopContent() { }
-        public bool? HardStop { get { throw null; } set { } }
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public SslPreference(string value) { throw null; }
+        public static Azure.ResourceManager.Workloads.Models.SslPreference Disabled { get { throw null; } }
+        public static Azure.ResourceManager.Workloads.Models.SslPreference RootCertificate { get { throw null; } }
+        public static Azure.ResourceManager.Workloads.Models.SslPreference ServerCertificate { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Workloads.Models.SslPreference other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Workloads.Models.SslPreference left, Azure.ResourceManager.Workloads.Models.SslPreference right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Workloads.Models.SslPreference (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Workloads.Models.SslPreference left, Azure.ResourceManager.Workloads.Models.SslPreference right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class StopRequest
+    {
+        public StopRequest() { }
+        public long? SoftStopTimeoutSeconds { get { throw null; } set { } }
     }
     public partial class ThreeTierConfiguration : Azure.ResourceManager.Workloads.Models.InfrastructureConfiguration
     {
         public ThreeTierConfiguration(string appResourceGroup, Azure.ResourceManager.Workloads.Models.CentralServerConfiguration centralServer, Azure.ResourceManager.Workloads.Models.ApplicationServerConfiguration applicationServer, Azure.ResourceManager.Workloads.Models.DatabaseConfiguration databaseServer) : base (default(string)) { }
         public Azure.ResourceManager.Workloads.Models.ApplicationServerConfiguration ApplicationServer { get { throw null; } set { } }
         public Azure.ResourceManager.Workloads.Models.CentralServerConfiguration CentralServer { get { throw null; } set { } }
+        public Azure.ResourceManager.Workloads.Models.ThreeTierCustomResourceNames CustomResourceNames { get { throw null; } set { } }
         public Azure.ResourceManager.Workloads.Models.DatabaseConfiguration DatabaseServer { get { throw null; } set { } }
         public Azure.ResourceManager.Workloads.Models.SapHighAvailabilityType? HighAvailabilityType { get { throw null; } set { } }
         public bool? IsSecondaryIPEnabled { get { throw null; } set { } }
+        public Azure.ResourceManager.Workloads.Models.FileShareConfiguration StorageTransportFileShareConfiguration { get { throw null; } set { } }
+    }
+    public abstract partial class ThreeTierCustomResourceNames
+    {
+        protected ThreeTierCustomResourceNames() { }
+    }
+    public partial class ThreeTierFullResourceNames : Azure.ResourceManager.Workloads.Models.ThreeTierCustomResourceNames
+    {
+        public ThreeTierFullResourceNames() { }
+        public Azure.ResourceManager.Workloads.Models.ApplicationServerFullResourceNames ApplicationServer { get { throw null; } set { } }
+        public Azure.ResourceManager.Workloads.Models.CentralServerFullResourceNames CentralServer { get { throw null; } set { } }
+        public Azure.ResourceManager.Workloads.Models.DatabaseServerFullResourceNames DatabaseServer { get { throw null; } set { } }
+        public Azure.ResourceManager.Workloads.Models.SharedStorageResourceNames SharedStorage { get { throw null; } set { } }
     }
     public partial class ThreeTierRecommendationResult : Azure.ResourceManager.Workloads.Models.SapSizingRecommendationResult
     {
@@ -1634,12 +1283,6 @@ namespace Azure.ResourceManager.Workloads.Models
         public Azure.ResourceManager.Workloads.Models.ManagedServiceIdentityType ManagedServiceIdentityType { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, Azure.ResourceManager.Models.UserAssignedIdentity> UserAssignedIdentities { get { throw null; } }
     }
-    public partial class UserProfile
-    {
-        public UserProfile(string userName, string sshPublicKey) { }
-        public string SshPublicKey { get { throw null; } set { } }
-        public string UserName { get { throw null; } set { } }
-    }
     public partial class VirtualMachineConfiguration
     {
         public VirtualMachineConfiguration(string vmSize, Azure.ResourceManager.Workloads.Models.ImageReference imageReference, Azure.ResourceManager.Workloads.Models.OSProfile osProfile) { }
@@ -1647,52 +1290,18 @@ namespace Azure.ResourceManager.Workloads.Models
         public Azure.ResourceManager.Workloads.Models.OSProfile OSProfile { get { throw null; } set { } }
         public string VmSize { get { throw null; } set { } }
     }
-    public partial class VmssNodesProfile : Azure.ResourceManager.Workloads.Models.NodeProfile
+    public partial class VirtualMachineResourceNames
     {
-        public VmssNodesProfile(string nodeSku, Azure.ResourceManager.Workloads.Models.OSImageProfile osImage, Azure.ResourceManager.Workloads.Models.DiskInfo osDisk) : base (default(string), default(Azure.ResourceManager.Workloads.Models.OSImageProfile), default(Azure.ResourceManager.Workloads.Models.DiskInfo)) { }
-        public int? AutoScaleMaxCount { get { throw null; } set { } }
-        public int? AutoScaleMinCount { get { throw null; } set { } }
+        public VirtualMachineResourceNames() { }
+        public System.Collections.Generic.IDictionary<string, System.Collections.Generic.IList<string>> DataDiskNames { get { throw null; } }
+        public string HostName { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Workloads.Models.NetworkInterfaceResourceNames> NetworkInterfaces { get { throw null; } }
+        public string OSDiskName { get { throw null; } set { } }
+        public string VmName { get { throw null; } set { } }
     }
     public partial class WindowsConfiguration : Azure.ResourceManager.Workloads.Models.OSConfiguration
     {
         public WindowsConfiguration() { }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct WordPressVersion : System.IEquatable<Azure.ResourceManager.Workloads.Models.WordPressVersion>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public WordPressVersion(string value) { throw null; }
-        public static Azure.ResourceManager.Workloads.Models.WordPressVersion V5_4_0 { get { throw null; } }
-        public static Azure.ResourceManager.Workloads.Models.WordPressVersion V5_4_1 { get { throw null; } }
-        public static Azure.ResourceManager.Workloads.Models.WordPressVersion V5_4_2 { get { throw null; } }
-        public static Azure.ResourceManager.Workloads.Models.WordPressVersion V5_4_3 { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Workloads.Models.WordPressVersion other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Workloads.Models.WordPressVersion left, Azure.ResourceManager.Workloads.Models.WordPressVersion right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Workloads.Models.WordPressVersion (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Workloads.Models.WordPressVersion left, Azure.ResourceManager.Workloads.Models.WordPressVersion right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct WorkloadKind : System.IEquatable<Azure.ResourceManager.Workloads.Models.WorkloadKind>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public WorkloadKind(string value) { throw null; }
-        public static Azure.ResourceManager.Workloads.Models.WorkloadKind WordPress { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Workloads.Models.WorkloadKind other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Workloads.Models.WorkloadKind left, Azure.ResourceManager.Workloads.Models.WorkloadKind right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Workloads.Models.WorkloadKind (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Workloads.Models.WorkloadKind left, Azure.ResourceManager.Workloads.Models.WorkloadKind right) { throw null; }
-        public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct WorkloadMonitorProvisioningState : System.IEquatable<Azure.ResourceManager.Workloads.Models.WorkloadMonitorProvisioningState>
@@ -1716,21 +1325,5 @@ namespace Azure.ResourceManager.Workloads.Models
         public static implicit operator Azure.ResourceManager.Workloads.Models.WorkloadMonitorProvisioningState (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Workloads.Models.WorkloadMonitorProvisioningState left, Azure.ResourceManager.Workloads.Models.WorkloadMonitorProvisioningState right) { throw null; }
         public override string ToString() { throw null; }
-    }
-    public partial class WorkloadsSku
-    {
-        public WorkloadsSku(string name) { }
-        public int? Capacity { get { throw null; } set { } }
-        public string Family { get { throw null; } set { } }
-        public string Name { get { throw null; } set { } }
-        public string Size { get { throw null; } set { } }
-        public Azure.ResourceManager.Workloads.Models.WorkloadsSkuTier? Tier { get { throw null; } set { } }
-    }
-    public enum WorkloadsSkuTier
-    {
-        Free = 0,
-        Basic = 1,
-        Standard = 2,
-        Premium = 3,
     }
 }

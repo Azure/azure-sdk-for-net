@@ -15,26 +15,26 @@ namespace Azure.ResourceManager.Workloads.Models
     {
         internal static SapDiskConfigurationsResult DeserializeSapDiskConfigurationsResult(JsonElement element)
         {
-            Optional<IReadOnlyList<SapDiskConfiguration>> diskConfigurations = default;
+            Optional<IReadOnlyDictionary<string, SapDiskConfiguration>> volumeConfigurations = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("diskConfigurations"u8))
+                if (property.NameEquals("volumeConfigurations"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<SapDiskConfiguration> array = new List<SapDiskConfiguration>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    Dictionary<string, SapDiskConfiguration> dictionary = new Dictionary<string, SapDiskConfiguration>();
+                    foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        array.Add(SapDiskConfiguration.DeserializeSapDiskConfiguration(item));
+                        dictionary.Add(property0.Name, SapDiskConfiguration.DeserializeSapDiskConfiguration(property0.Value));
                     }
-                    diskConfigurations = array;
+                    volumeConfigurations = dictionary;
                     continue;
                 }
             }
-            return new SapDiskConfigurationsResult(Optional.ToList(diskConfigurations));
+            return new SapDiskConfigurationsResult(Optional.ToDictionary(volumeConfigurations));
         }
     }
 }

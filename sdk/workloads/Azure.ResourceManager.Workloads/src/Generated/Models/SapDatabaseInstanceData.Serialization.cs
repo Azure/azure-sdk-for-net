@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.Workloads.Models;
 
 namespace Azure.ResourceManager.Workloads
@@ -49,6 +50,7 @@ namespace Azure.ResourceManager.Workloads
             Optional<string> databaseSid = default;
             Optional<string> databaseType = default;
             Optional<string> ipAddress = default;
+            Optional<SubResource> loadBalancerDetails = default;
             Optional<IReadOnlyList<DatabaseVmDetails>> vmDetails = default;
             Optional<SapVirtualInstanceStatus> status = default;
             Optional<SapVirtualInstanceProvisioningState> provisioningState = default;
@@ -134,6 +136,16 @@ namespace Azure.ResourceManager.Workloads
                             ipAddress = property0.Value.GetString();
                             continue;
                         }
+                        if (property0.NameEquals("loadBalancerDetails"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            loadBalancerDetails = JsonSerializer.Deserialize<SubResource>(property0.Value.GetRawText());
+                            continue;
+                        }
                         if (property0.NameEquals("vmDetails"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -183,7 +195,7 @@ namespace Azure.ResourceManager.Workloads
                     continue;
                 }
             }
-            return new SapDatabaseInstanceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, subnet.Value, databaseSid.Value, databaseType.Value, ipAddress.Value, Optional.ToList(vmDetails), Optional.ToNullable(status), Optional.ToNullable(provisioningState), errors.Value);
+            return new SapDatabaseInstanceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, subnet.Value, databaseSid.Value, databaseType.Value, ipAddress.Value, loadBalancerDetails, Optional.ToList(vmDetails), Optional.ToNullable(status), Optional.ToNullable(provisioningState), errors.Value);
         }
     }
 }

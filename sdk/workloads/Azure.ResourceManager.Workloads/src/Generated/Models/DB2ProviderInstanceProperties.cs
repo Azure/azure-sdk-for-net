@@ -27,7 +27,9 @@ namespace Azure.ResourceManager.Workloads.Models
         /// <param name="dbPassword"> Gets or sets the db2 database password. </param>
         /// <param name="dbPasswordUri"> Gets or sets the key vault URI to secret with the database password. </param>
         /// <param name="sapSid"> Gets or sets the SAP System Identifier. </param>
-        internal DB2ProviderInstanceProperties(string providerType, string hostname, string dbName, string dbPort, string dbUsername, string dbPassword, Uri dbPasswordUri, string sapSid) : base(providerType)
+        /// <param name="sslPreference"> Gets or sets certificate preference if secure communication is enabled. </param>
+        /// <param name="sslCertificateUri"> Gets or sets the blob URI to SSL certificate for the DB2 Database. </param>
+        internal DB2ProviderInstanceProperties(string providerType, string hostname, string dbName, string dbPort, string dbUsername, string dbPassword, Uri dbPasswordUri, string sapSid, SslPreference? sslPreference, Uri sslCertificateUri) : base(providerType)
         {
             Hostname = hostname;
             DBName = dbName;
@@ -36,6 +38,8 @@ namespace Azure.ResourceManager.Workloads.Models
             DBPassword = dbPassword;
             DBPasswordUri = dbPasswordUri;
             SapSid = sapSid;
+            SslPreference = sslPreference;
+            SslCertificateUri = sslCertificateUri;
             ProviderType = providerType ?? "Db2";
         }
 
@@ -53,5 +57,9 @@ namespace Azure.ResourceManager.Workloads.Models
         public Uri DBPasswordUri { get; set; }
         /// <summary> Gets or sets the SAP System Identifier. </summary>
         public string SapSid { get; set; }
+        /// <summary> Gets or sets certificate preference if secure communication is enabled. </summary>
+        public SslPreference? SslPreference { get; set; }
+        /// <summary> Gets or sets the blob URI to SSL certificate for the DB2 Database. </summary>
+        public Uri SslCertificateUri { get; set; }
     }
 }

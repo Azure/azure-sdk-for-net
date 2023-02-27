@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Workloads.Models
@@ -30,24 +31,32 @@ namespace Azure.ResourceManager.Workloads.Models
         }
 
         /// <summary> Initializes a new instance of SingleServerConfiguration. </summary>
-        /// <param name="deploymentType"> The deployment Type. </param>
+        /// <param name="deploymentType"> The type of SAP deployment, single server or Three tier. </param>
         /// <param name="appResourceGroup"> The application resource group where SAP system resources will be deployed. </param>
         /// <param name="networkConfiguration"> Network configuration for the server. </param>
         /// <param name="databaseType"> The database type. </param>
         /// <param name="subnetId"> The subnet id. </param>
         /// <param name="virtualMachineConfiguration"> Gets or sets the virtual machine configuration. </param>
-        internal SingleServerConfiguration(SapDeploymentType deploymentType, string appResourceGroup, NetworkConfiguration networkConfiguration, SapDatabaseType? databaseType, ResourceIdentifier subnetId, VirtualMachineConfiguration virtualMachineConfiguration) : base(deploymentType, appResourceGroup)
+        /// <param name="dbDiskConfiguration"> Gets or sets the disk configuration. </param>
+        /// <param name="customResourceNames">
+        /// The set of custom names to be used for underlying azure resources that are part of the SAP system.
+        /// Please note <see cref="SingleServerCustomResourceNames"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="SingleServerFullResourceNames"/>.
+        /// </param>
+        internal SingleServerConfiguration(SapDeploymentType deploymentType, string appResourceGroup, NetworkConfiguration networkConfiguration, SapDatabaseType? databaseType, ResourceIdentifier subnetId, VirtualMachineConfiguration virtualMachineConfiguration, DiskConfiguration dbDiskConfiguration, SingleServerCustomResourceNames customResourceNames) : base(deploymentType, appResourceGroup)
         {
             NetworkConfiguration = networkConfiguration;
             DatabaseType = databaseType;
             SubnetId = subnetId;
             VirtualMachineConfiguration = virtualMachineConfiguration;
+            DBDiskConfiguration = dbDiskConfiguration;
+            CustomResourceNames = customResourceNames;
             DeploymentType = deploymentType;
         }
 
         /// <summary> Network configuration for the server. </summary>
         internal NetworkConfiguration NetworkConfiguration { get; set; }
-        /// <summary> Specifies whether a secondary IP address should be added to the network interface on all VMs. </summary>
+        /// <summary> Specifies whether a secondary IP address should be added to the network interface on all VMs of the SAP system being deployed. </summary>
         public bool? IsSecondaryIPEnabled
         {
             get => NetworkConfiguration is null ? default : NetworkConfiguration.IsSecondaryIPEnabled;
@@ -65,5 +74,24 @@ namespace Azure.ResourceManager.Workloads.Models
         public ResourceIdentifier SubnetId { get; set; }
         /// <summary> Gets or sets the virtual machine configuration. </summary>
         public VirtualMachineConfiguration VirtualMachineConfiguration { get; set; }
+        /// <summary> Gets or sets the disk configuration. </summary>
+        internal DiskConfiguration DBDiskConfiguration { get; set; }
+        /// <summary> The disk configuration for the db volume. For HANA, Required volumes are: [&apos;hana/data&apos;, &apos;hana/log&apos;, hana/shared&apos;, &apos;usr/sap&apos;, &apos;os&apos;], Optional volume : [&apos;backup&apos;]. </summary>
+        public IDictionary<string, DiskVolumeConfiguration> DiskVolumeConfigurations
+        {
+            get
+            {
+                if (DBDiskConfiguration is null)
+                    DBDiskConfiguration = new DiskConfiguration();
+                return DBDiskConfiguration.DiskVolumeConfigurations;
+            }
+        }
+
+        /// <summary>
+        /// The set of custom names to be used for underlying azure resources that are part of the SAP system.
+        /// Please note <see cref="SingleServerCustomResourceNames"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="SingleServerFullResourceNames"/>.
+        /// </summary>
+        public SingleServerCustomResourceNames CustomResourceNames { get; set; }
     }
 }

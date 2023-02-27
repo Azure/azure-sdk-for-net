@@ -5,48 +5,32 @@
 
 #nullable disable
 
+using System.Collections.Generic;
+using Azure.Core;
+
 namespace Azure.ResourceManager.Workloads.Models
 {
-    /// <summary> The SAP Disk Configuration. </summary>
+    /// <summary> The SAP Disk Configuration contains &apos;recommended disk&apos; details and list of supported disks detail for a volume type. </summary>
     public partial class SapDiskConfiguration
     {
         /// <summary> Initializes a new instance of SapDiskConfiguration. </summary>
         internal SapDiskConfiguration()
         {
+            SupportedConfigurations = new ChangeTrackingList<DiskDetails>();
         }
 
         /// <summary> Initializes a new instance of SapDiskConfiguration. </summary>
-        /// <param name="volume"> The volume name. </param>
-        /// <param name="diskType"> The disk type. </param>
-        /// <param name="diskCount"> The disk count. </param>
-        /// <param name="diskSizeGB"> The disk size in GB. </param>
-        /// <param name="diskIopsReadWrite"> The disk Iops. </param>
-        /// <param name="diskMBpsReadWrite"> The disk provisioned throughput in MBps. </param>
-        /// <param name="diskStorageType"> The disk storage type. </param>
-        internal SapDiskConfiguration(string volume, string diskType, long? diskCount, long? diskSizeGB, long? diskIopsReadWrite, long? diskMBpsReadWrite, string diskStorageType)
+        /// <param name="recommendedConfiguration"> The recommended disk details for a given VM Sku. </param>
+        /// <param name="supportedConfigurations"> The list of supported disks for a given VM Sku. </param>
+        internal SapDiskConfiguration(DiskVolumeConfiguration recommendedConfiguration, IReadOnlyList<DiskDetails> supportedConfigurations)
         {
-            Volume = volume;
-            DiskType = diskType;
-            DiskCount = diskCount;
-            DiskSizeGB = diskSizeGB;
-            DiskIopsReadWrite = diskIopsReadWrite;
-            DiskMBpsReadWrite = diskMBpsReadWrite;
-            DiskStorageType = diskStorageType;
+            RecommendedConfiguration = recommendedConfiguration;
+            SupportedConfigurations = supportedConfigurations;
         }
 
-        /// <summary> The volume name. </summary>
-        public string Volume { get; }
-        /// <summary> The disk type. </summary>
-        public string DiskType { get; }
-        /// <summary> The disk count. </summary>
-        public long? DiskCount { get; }
-        /// <summary> The disk size in GB. </summary>
-        public long? DiskSizeGB { get; }
-        /// <summary> The disk Iops. </summary>
-        public long? DiskIopsReadWrite { get; }
-        /// <summary> The disk provisioned throughput in MBps. </summary>
-        public long? DiskMBpsReadWrite { get; }
-        /// <summary> The disk storage type. </summary>
-        public string DiskStorageType { get; }
+        /// <summary> The recommended disk details for a given VM Sku. </summary>
+        public DiskVolumeConfiguration RecommendedConfiguration { get; }
+        /// <summary> The list of supported disks for a given VM Sku. </summary>
+        public IReadOnlyList<DiskDetails> SupportedConfigurations { get; }
     }
 }

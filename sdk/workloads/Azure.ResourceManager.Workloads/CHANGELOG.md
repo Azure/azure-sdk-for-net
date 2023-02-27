@@ -4,7 +4,17 @@
 
 ### Features Added
 
+- Added Inctance start/stop support for ASCS and App Instance.
+- Added Instance level start/stop support for DB Instance
+- Added support for LB and storage details changes.
+- Added support for SapLandscapeMonitor.
+
 ### Breaking Changes
+
+- Removed PHP Resource Type
+- Removed `VirtualMachineId` from SapApplicationServerInstanceData.
+- Added `VmDetails` to SapApplicationServerInstanceData.
+- Added `Identity`, `StorageAccountArmId`, `ZoneRedundancyPreference` to SapMonitorData.
 
 ### Bugs Fixed
 
