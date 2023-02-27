@@ -1,6 +1,5 @@
 namespace Azure.ResourceManager.Workloads
 {
-        public Azure.ResourceManager.Workloads.Models.FileshareProfile FileshareProfile { get { throw null; } set { } }
     public partial class SapApplicationServerInstanceCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Workloads.SapApplicationServerInstanceResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Workloads.SapApplicationServerInstanceResource>, System.Collections.IEnumerable
     {
         protected SapApplicationServerInstanceCollection() { }
