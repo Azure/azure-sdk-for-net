@@ -111,6 +111,7 @@ namespace Azure.Core.Dynamic
     public static partial class BinaryDataExtensions
     {
         public static dynamic ToDynamic(this System.BinaryData data) { throw null; }
+        public static dynamic ToDynamic(this System.BinaryData data, Azure.Core.Dynamic.DynamicJsonNameMapping propertyNameCasing) { throw null; }
         public static dynamic ToDynamic(this System.BinaryData data, Azure.Core.Dynamic.DynamicJsonOptions options) { throw null; }
     }
     public abstract partial class DynamicData

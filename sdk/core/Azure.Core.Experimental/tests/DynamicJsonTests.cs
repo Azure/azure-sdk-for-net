@@ -696,6 +696,17 @@ namespace Azure.Core.Experimental.Tests
             Assert.AreEqual(3, (int)dynamicJson.Bar);
         }
 
+        [Test]
+        public void CanPassPropertyNameCasingEnumDirectly()
+        {
+            string json = """{ "foo" : 1 }""";
+
+            dynamic dynamicJson = new BinaryData(json).ToDynamic(DynamicJsonNameMapping.None);
+
+            Assert.AreEqual(1, (int)dynamicJson.foo);
+            Assert.AreEqual(null, dynamicJson.Foo);
+        }
+
         #region Helpers
         internal static dynamic GetDynamicJson(string json)
         {
