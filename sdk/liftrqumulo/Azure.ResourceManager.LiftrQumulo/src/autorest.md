@@ -49,14 +49,16 @@ rename-rules:
     JobRun: QumuloJobRun
     Project: QumuloProject
     StorageMover: QumuloStorageMover
+    AzureStorageBlobContainerEndpointProperties: StorageBlobContainerEndpointProperties
 
 rename-mapping:
-    AgentData.ArcResourceId: -|uuid
+    AgentData.ArcResourceId: -|arm-id
     AgentData.ArcVmUuid: -|uuid
-    JobDefinitionData.AgentResourceId: -|uuid
-    JobDefinitionData.LatestJobRunResourceId: -|uuid
-    JobDefinitionData.SourceResourceId: -|uuid
-    JobDefinitionData.TargetResourceId: -|uuid
-    JobRunData.AgentResourceId: -|uuid
-    JobRunData.SourceResourceId: -|uuid
+    JobDefinitionData.AgentResourceId: -|arm-id
+    JobDefinitionData.LatestJobRunResourceId: -|arm-id
+    JobDefinitionData.SourceResourceId: -|arm-id
+    JobDefinitionData.TargetResourceId: -|arm-id
+    JobRunData.AgentResourceId: -|arm-id
+    JobRunData.SourceResourceId: -|arm-id
+    QumuloAgentData.LocalIPAddress: -|ip-address
 ```
