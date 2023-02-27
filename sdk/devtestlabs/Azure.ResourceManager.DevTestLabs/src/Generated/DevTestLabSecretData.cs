@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DevTestLabs
 {
-    /// <summary> A class representing the DevTestLabSecret data model. </summary>
+    /// <summary>
+    /// A class representing the DevTestLabSecret data model.
+    /// A secret.
+    /// </summary>
     public partial class DevTestLabSecretData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of DevTestLabSecretData. </summary>

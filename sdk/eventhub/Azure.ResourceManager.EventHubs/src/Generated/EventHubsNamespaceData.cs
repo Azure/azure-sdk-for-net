@@ -13,7 +13,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.EventHubs
 {
-    /// <summary> A class representing the EventHubsNamespace data model. </summary>
+    /// <summary>
+    /// A class representing the EventHubsNamespace data model.
+    /// Single Namespace item in List or Get Operation
+    /// </summary>
     public partial class EventHubsNamespaceData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of EventHubsNamespaceData. </summary>

@@ -13,6 +13,7 @@ namespace Azure.ResourceManager.DataShare
 {
     /// <summary>
     /// A class representing the ShareDataSetMapping data model.
+    /// A data set mapping data transfer object.
     /// Please note <see cref="ShareDataSetMappingData"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="AdlsGen2FileDataSetMapping"/>, <see cref="AdlsGen2FileSystemDataSetMapping"/>, <see cref="AdlsGen2FolderDataSetMapping"/>, <see cref="BlobDataSetMapping"/>, <see cref="BlobFolderDataSetMapping"/>, <see cref="BlobContainerDataSetMapping"/>, <see cref="KustoClusterDataSetMapping"/>, <see cref="KustoDatabaseDataSetMapping"/>, <see cref="KustoTableDataSetMapping"/>, <see cref="SqlDBTableDataSetMapping"/>, <see cref="SqlDWTableDataSetMapping"/> and <see cref="SynapseWorkspaceSqlPoolTableDataSetMapping"/>.
     /// </summary>

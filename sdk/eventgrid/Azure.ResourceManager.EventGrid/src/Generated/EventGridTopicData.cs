@@ -13,7 +13,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.EventGrid
 {
-    /// <summary> A class representing the EventGridTopic data model. </summary>
+    /// <summary>
+    /// A class representing the EventGridTopic data model.
+    /// EventGrid Topic
+    /// </summary>
     public partial class EventGridTopicData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of EventGridTopicData. </summary>
