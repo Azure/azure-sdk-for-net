@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.Synapse.Models
 
         public static SynapseRestorePointType ToSynapseRestorePointType(this string value)
         {
-            if (string.Equals(value, "CONTINUOUS", StringComparison.InvariantCultureIgnoreCase)) return SynapseRestorePointType.Continuous;
-            if (string.Equals(value, "DISCRETE", StringComparison.InvariantCultureIgnoreCase)) return SynapseRestorePointType.Discrete;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "CONTINUOUS")) return SynapseRestorePointType.Continuous;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "DISCRETE")) return SynapseRestorePointType.Discrete;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown SynapseRestorePointType value.");
         }
     }

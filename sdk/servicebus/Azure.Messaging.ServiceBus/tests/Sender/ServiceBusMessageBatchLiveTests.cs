@@ -21,7 +21,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Sender
                 ClientDiagnosticListener listener = null;
                 if (enableTracing)
                 {
-                    listener = new ClientDiagnosticListener(EntityScopeFactory.DiagnosticNamespace);
+                    listener = new ClientDiagnosticListener(DiagnosticProperty.DiagnosticNamespace);
                 }
                 try
                 {

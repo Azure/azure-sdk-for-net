@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.BotService.Models
 
         public static BotServiceKey ToBotServiceKey(this string value)
         {
-            if (string.Equals(value, "key1", StringComparison.InvariantCultureIgnoreCase)) return BotServiceKey.Key1;
-            if (string.Equals(value, "key2", StringComparison.InvariantCultureIgnoreCase)) return BotServiceKey.Key2;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "key1")) return BotServiceKey.Key1;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "key2")) return BotServiceKey.Key2;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown BotServiceKey value.");
         }
     }

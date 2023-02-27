@@ -171,10 +171,13 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         private static AzureMonitorTransmitter GetTransmitter(MockResponse mockResponse)
         {
             MockTransport mockTransport = new MockTransport(mockResponse);
-            AzureMonitorExporterOptions options = new AzureMonitorExporterOptions();
-            options.ConnectionString = $"InstrumentationKey={testIkey};IngestionEndpoint={testEndpoint}";
-            options.StorageDirectory = StorageHelper.GetDefaultStorageDirectory() + "\\test";
-            options.Transport = mockTransport;
+            AzureMonitorExporterOptions options = new AzureMonitorExporterOptions
+            {
+                ConnectionString = $"InstrumentationKey={testIkey};IngestionEndpoint={testEndpoint}",
+                StorageDirectory = StorageHelper.GetDefaultStorageDirectory() + "\\test",
+                Transport = mockTransport,
+                EnableStatsbeat = false, // disabled in tests.
+            };
             AzureMonitorTransmitter transmitter = new AzureMonitorTransmitter(options);
 
             // Overwrite storage with mock

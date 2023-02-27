@@ -29,17 +29,17 @@ namespace Azure.Search.Documents.Indexes.Models
 
         public static PhoneticEncoder ToPhoneticEncoder(this string value)
         {
-            if (string.Equals(value, "metaphone", StringComparison.InvariantCultureIgnoreCase)) return PhoneticEncoder.Metaphone;
-            if (string.Equals(value, "doubleMetaphone", StringComparison.InvariantCultureIgnoreCase)) return PhoneticEncoder.DoubleMetaphone;
-            if (string.Equals(value, "soundex", StringComparison.InvariantCultureIgnoreCase)) return PhoneticEncoder.Soundex;
-            if (string.Equals(value, "refinedSoundex", StringComparison.InvariantCultureIgnoreCase)) return PhoneticEncoder.RefinedSoundex;
-            if (string.Equals(value, "caverphone1", StringComparison.InvariantCultureIgnoreCase)) return PhoneticEncoder.Caverphone1;
-            if (string.Equals(value, "caverphone2", StringComparison.InvariantCultureIgnoreCase)) return PhoneticEncoder.Caverphone2;
-            if (string.Equals(value, "cologne", StringComparison.InvariantCultureIgnoreCase)) return PhoneticEncoder.Cologne;
-            if (string.Equals(value, "nysiis", StringComparison.InvariantCultureIgnoreCase)) return PhoneticEncoder.Nysiis;
-            if (string.Equals(value, "koelnerPhonetik", StringComparison.InvariantCultureIgnoreCase)) return PhoneticEncoder.KoelnerPhonetik;
-            if (string.Equals(value, "haasePhonetik", StringComparison.InvariantCultureIgnoreCase)) return PhoneticEncoder.HaasePhonetik;
-            if (string.Equals(value, "beiderMorse", StringComparison.InvariantCultureIgnoreCase)) return PhoneticEncoder.BeiderMorse;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "metaphone")) return PhoneticEncoder.Metaphone;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "doubleMetaphone")) return PhoneticEncoder.DoubleMetaphone;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "soundex")) return PhoneticEncoder.Soundex;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "refinedSoundex")) return PhoneticEncoder.RefinedSoundex;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "caverphone1")) return PhoneticEncoder.Caverphone1;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "caverphone2")) return PhoneticEncoder.Caverphone2;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "cologne")) return PhoneticEncoder.Cologne;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "nysiis")) return PhoneticEncoder.Nysiis;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "koelnerPhonetik")) return PhoneticEncoder.KoelnerPhonetik;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "haasePhonetik")) return PhoneticEncoder.HaasePhonetik;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "beiderMorse")) return PhoneticEncoder.BeiderMorse;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown PhoneticEncoder value.");
         }
     }

@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.Sql.Models
 
         public static SqlServerJobScheduleType ToSqlServerJobScheduleType(this string value)
         {
-            if (string.Equals(value, "Once", StringComparison.InvariantCultureIgnoreCase)) return SqlServerJobScheduleType.Once;
-            if (string.Equals(value, "Recurring", StringComparison.InvariantCultureIgnoreCase)) return SqlServerJobScheduleType.Recurring;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Once")) return SqlServerJobScheduleType.Once;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Recurring")) return SqlServerJobScheduleType.Recurring;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown SqlServerJobScheduleType value.");
         }
     }

@@ -5,6 +5,12 @@
 ### Features Added
 
 ### Breaking Changes
+> Note: The following breaking changes only apply when upgrading from the previous beta version (5.3.0-beta.1) and do not impact stable versions.
+- Renamed the `WellKnownFhirVersion` enum to `FhirVersion`.
+- Changed the type of the `AnalyzeHealthcareEntitiesResult.FhirBundle` property from `IReadOnlyDictionary<string, object>` to `BinaryData`.
+- Removed the `options` parameter from the following methods for consistency: `TextAnalyticsClient.DynamicClassify` and `TextAnalyticsClient.DynamicClassifyAsync`.
+- Removed the `DynamicClassifyOptions` class.
+- Added the `classificationType` parameter to the following methods: `TextAnalyticsClient.DynamicClassify`, `TextAnalyticsClient.DynamicClassifyAsync`, `TextAnalyticsClient.DynamicClassifyBatch` and `TextAnalyticsClient.DynamicClassifyBatchAsync`.
 
 ### Bugs Fixed
 
