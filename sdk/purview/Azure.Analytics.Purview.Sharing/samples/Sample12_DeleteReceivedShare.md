@@ -2,6 +2,8 @@
 
 ## Import the namespaces
 
+This sample demonstrates how to delete a received share by providing the received share id.
+
 ```C# Snippet:ReceivedSharesClientSample_ImportNamespaces
 using System;
 using System.Threading.Tasks;

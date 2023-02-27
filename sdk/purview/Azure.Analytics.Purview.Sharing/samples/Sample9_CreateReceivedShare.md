@@ -2,6 +2,8 @@
 
 ## Import the namespaces
 
+This sample demonstrates how to create a received share. This is typically done after an invitation has been sent. You can retrieve the received share id by listing all detached received shares.
+
 ```C# Snippet:ReceivedSharesClientSample_ImportNamespaces
 using System;
 using System.Threading.Tasks;

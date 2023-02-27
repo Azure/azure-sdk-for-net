@@ -2,6 +2,8 @@
 
 ## Import the namespaces
 
+This sample demonstrates how to delete a sent share given its id.
+
 ```C# Snippet:SentSharesClientSample_ImportNamespaces
 using System;
 using System.Threading.Tasks;

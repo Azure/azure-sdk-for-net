@@ -1,5 +1,7 @@
 # Azure purview share client samples - Create sent share invitation
 
+This sample demonstrates how to send an invitation for a given sent share. The invitation can be sent to a service principal or an azure active directory user.
+ 
 ## Import the namespaces
 
 ```C# Snippet:SentSharesClientSample_ImportNamespaces

@@ -1,5 +1,7 @@
 # Azure purview share client samples - Create sent share
 
+This sample demonstrates how to create a sent share. Once a sent share is created, you will typically want to send an invitation to a list of recipients.
+
 ## Import the namespaces
 
 ```C# Snippet:SentSharesClientSample_ImportNamespaces

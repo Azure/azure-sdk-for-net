@@ -2,6 +2,8 @@
 
 ## Import the namespaces
 
+This sample demonstrates how to list all detached received shares. This is typically called to determine the pending invitations that a user has with the goal of attaching the received share.
+
 ```C# Snippet:ReceivedSharesClientSample_ImportNamespaces
 using System;
 using System.Threading.Tasks;

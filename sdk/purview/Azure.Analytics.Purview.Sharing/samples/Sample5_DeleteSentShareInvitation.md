@@ -2,6 +2,8 @@
 
 ## Import the namespaces
 
+This sample demonstrates how to delete a sent share invitation. It is an action provided to the sender's side of sharing.
+
 ```C# Snippet:SentSharesClientSample_ImportNamespaces
 using System;
 using System.Threading.Tasks;

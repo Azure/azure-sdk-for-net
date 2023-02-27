@@ -2,6 +2,8 @@
 
 ## Import the namespaces
 
+This sample demonstrates how to get a received share. It can be used to determine if a specific received share is 'Attached' or 'Detached'.
+
 ```C# Snippet:ReceivedSharesClientSample_ImportNamespaces
 using System;
 using System.Threading.Tasks;

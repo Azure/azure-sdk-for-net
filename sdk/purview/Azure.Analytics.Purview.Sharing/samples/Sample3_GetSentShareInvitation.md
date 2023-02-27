@@ -1,5 +1,7 @@
 # Azure purview share client samples - Get sent share invitation
 
+This sample demonstrates how to get the details of a specific sent share invitation. You can see whether the invitation was sent to a user or a service principal, the expiration date can be viewed as well if applicable. 
+
 ## Import the namespaces
 
 ```C# Snippet:SentSharesClientSample_ImportNamespaces

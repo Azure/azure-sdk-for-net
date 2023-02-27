@@ -2,6 +2,8 @@
 
 ## Import the namespaces
 
+This sample demonstrates how to get the details of a sent share given it's id.
+
 ```C# Snippet:SentSharesClientSample_ImportNamespaces
 using System;
 using System.Threading.Tasks;

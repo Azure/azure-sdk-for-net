@@ -1,4 +1,6 @@
-# Azure purview share client samples - List sent share invitation
+# Azure purview share client samples - List sent share invitations
+
+This sample demonstrates how to list all sent share invitations for a given sent share.
 
 ## Import the namespaces
 
@@ -9,7 +11,7 @@ using Azure.Core;
 using Azure.Identity;
 ```
 
-## List sent share invitation
+## List sent share invitations
 
 ```C# Snippet:SentSharesClientSample_ListSentShareInvitations
 var credential = new DefaultAzureCredential();

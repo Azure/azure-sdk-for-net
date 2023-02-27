@@ -2,6 +2,8 @@
 
 ## Import the namespaces
 
+This sample demonstrates how to list all your sent shares. The reference name will be your storage account resource id.
+
 ```C# Snippet:SentSharesClientSample_ImportNamespaces
 using System;
 using System.Threading.Tasks;

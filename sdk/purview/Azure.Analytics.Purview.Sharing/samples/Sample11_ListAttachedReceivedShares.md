@@ -2,6 +2,8 @@
 
 ## Import the namespaces
 
+This sample demonstrates how to get all attached received shares. The response will contain all active received shares given your reference name.
+ 
 ```C# Snippet:ReceivedSharesClientSample_ImportNamespaces
 using System;
 using System.Threading.Tasks;
