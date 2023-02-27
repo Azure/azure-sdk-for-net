@@ -781,7 +781,7 @@
         "kind": "ScheduleBased",
         "properties": {
           "recurrenceInterval": "Day",
-          "synchronizationTime": "2023-02-27T16:00:00.0000000Z"
+          "synchronizationTime": "2023-02-28T00:00:00.0000000Z"
         }
       },
       "StatusCode": 201,
