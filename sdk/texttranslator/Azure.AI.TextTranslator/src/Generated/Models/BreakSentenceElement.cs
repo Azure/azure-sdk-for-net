@@ -6,6 +6,8 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using Azure.Core;
 
 namespace Azure.AI.TextTranslator.Models
@@ -14,27 +16,36 @@ namespace Azure.AI.TextTranslator.Models
     public partial class BreakSentenceElement
     {
         /// <summary> Initializes a new instance of BreakSentenceElement. </summary>
-        /// <param name="sentLen"> Sentence boundaries in the input and output texts. </param>
+        /// <param name="sentLen">
+        /// An integer array representing the lengths of the sentences in the input text.
+        /// The length of the array is the number of sentences, and the values are the length of each sentence.
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sentLen"/> is null. </exception>
-        internal BreakSentenceElement(SentenceLength sentLen)
+        internal BreakSentenceElement(IEnumerable<int> sentLen)
         {
             Argument.AssertNotNull(sentLen, nameof(sentLen));
 
-            SentLen = sentLen;
+            SentLen = sentLen.ToList();
         }
 
         /// <summary> Initializes a new instance of BreakSentenceElement. </summary>
         /// <param name="detectedLanguage"> The detectedLanguage property is only present in the result object when language auto-detection is requested. </param>
-        /// <param name="sentLen"> Sentence boundaries in the input and output texts. </param>
-        internal BreakSentenceElement(DetectedLanguage detectedLanguage, SentenceLength sentLen)
+        /// <param name="sentLen">
+        /// An integer array representing the lengths of the sentences in the input text.
+        /// The length of the array is the number of sentences, and the values are the length of each sentence.
+        /// </param>
+        internal BreakSentenceElement(DetectedLanguage detectedLanguage, IReadOnlyList<int> sentLen)
         {
             DetectedLanguage = detectedLanguage;
-            SentLen = sentLen;
+            SentLen = sentLen.ToList();
         }
 
         /// <summary> The detectedLanguage property is only present in the result object when language auto-detection is requested. </summary>
         public DetectedLanguage DetectedLanguage { get; }
-        /// <summary> Sentence boundaries in the input and output texts. </summary>
-        public SentenceLength SentLen { get; }
+        /// <summary>
+        /// An integer array representing the lengths of the sentences in the input text.
+        /// The length of the array is the number of sentences, and the values are the length of each sentence.
+        /// </summary>
+        public IReadOnlyList<int> SentLen { get; }
     }
 }

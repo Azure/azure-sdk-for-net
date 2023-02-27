@@ -257,30 +257,6 @@ namespace Azure.AI.TextTranslator
             return this.Transliterate(language, fromScript, toScript, content as object, clientTraceId, cancellationToken);
         }
 
-        /// <summary> Detect Languages. </summary>
-        /// <param name="content"> Array of the text for which values the language detection will be applied. </param>
-        /// <param name="clientTraceId"> A client-generated GUID to uniquely identify the request. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Task<Response<IReadOnlyList<DetectedLanguageWithAlternatives>>> DetectAsync(IEnumerable<InputText> content, string clientTraceId = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(content, nameof(content));
-
-            return this.DetectAsync(content as object, clientTraceId, cancellationToken);
-        }
-
-        /// <summary> Detect Languages. </summary>
-        /// <param name="content"> Array of the text for which values the language detection will be applied. </param>
-        /// <param name="clientTraceId"> A client-generated GUID to uniquely identify the request. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<IReadOnlyList<DetectedLanguageWithAlternatives>> Detect(IEnumerable<InputText> content, string clientTraceId = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(content, nameof(content));
-
-            return this.Detect(content as object, clientTraceId, cancellationToken);
-        }
-
         /// <summary> Break Sentence. </summary>
         /// <param name="content"> Array of the text for which values the sentence boundaries will be calculated. </param>
         /// <param name="clientTraceId"> A client-generated GUID to uniquely identify the request. </param>

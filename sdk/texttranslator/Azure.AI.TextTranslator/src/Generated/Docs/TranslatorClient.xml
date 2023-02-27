@@ -473,160 +473,6 @@ Schema for <c>TransliteratedText</c>:
 
 </remarks>
     </member>
-    <member name="DetectAsync(RequestContent,String,RequestContext)">
-<example>
-This sample shows how to call DetectAsync with required parameters and request content, and how to parse the result.
-<code><![CDATA[
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new TranslatorClient(endpoint);
-
-var data = new[] {
-    new {
-        text = "<text>",
-    }
-};
-
-Response response = await client.DetectAsync(RequestContent.Create(data));
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result[0].GetProperty("alternatives")[0].GetProperty("language").ToString());
-Console.WriteLine(result[0].GetProperty("alternatives")[0].GetProperty("score").ToString());
-Console.WriteLine(result[0].GetProperty("language").ToString());
-Console.WriteLine(result[0].GetProperty("score").ToString());
-Console.WriteLine(result[0].GetProperty("isTranslationSupported").ToString());
-Console.WriteLine(result[0].GetProperty("isTransliterationSupported").ToString());
-]]></code>
-This sample shows how to call DetectAsync with all parameters and request content, and how to parse the result.
-<code><![CDATA[
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new TranslatorClient(endpoint);
-
-var data = new[] {
-    new {
-        text = "<text>",
-    }
-};
-
-Response response = await client.DetectAsync(RequestContent.Create(data), "<clientTraceId>");
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result[0].GetProperty("alternatives")[0].GetProperty("language").ToString());
-Console.WriteLine(result[0].GetProperty("alternatives")[0].GetProperty("score").ToString());
-Console.WriteLine(result[0].GetProperty("language").ToString());
-Console.WriteLine(result[0].GetProperty("score").ToString());
-Console.WriteLine(result[0].GetProperty("isTranslationSupported").ToString());
-Console.WriteLine(result[0].GetProperty("isTransliterationSupported").ToString());
-]]></code>
-</example>
-<remarks>
-Below is the JSON schema for the request and response payloads.
-
-Request Body:
-
-Schema for <c>InputTextElement</c>:
-<code>{
-  text: string, # Required. Text to translate.
-}
-</code>
-
-Response Body:
-
-Schema for <c>DetectedLanguageWithAlternatives</c>:
-<code>{
-  alternatives: [
-    {
-      language: string, # Required. A string representing the code of the detected language.
-      score: number, # Required. A float value indicating the confidence in the result.
-The score is between zero and one and a low score indicates a low confidence.
-    }
-  ], # Required. An array of other possible languages.
-  language: string, # Required. Code of the detected language.
-  score: number, # Required. A float value indicating the confidence in the result. The score is between zero and one 
-and a low score indicates a low confidence.
-  isTranslationSupported: boolean, # Required. A boolean value which is true if the detected language is one of the languages supported for text translation.
-  isTransliterationSupported: boolean, # Required. A boolean value which is true if the detected language is one of the languages supported for transliteration.
-}
-</code>
-
-</remarks>
-    </member>
-    <member name="Detect(RequestContent,String,RequestContext)">
-<example>
-This sample shows how to call Detect with required parameters and request content, and how to parse the result.
-<code><![CDATA[
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new TranslatorClient(endpoint);
-
-var data = new[] {
-    new {
-        text = "<text>",
-    }
-};
-
-Response response = client.Detect(RequestContent.Create(data));
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result[0].GetProperty("alternatives")[0].GetProperty("language").ToString());
-Console.WriteLine(result[0].GetProperty("alternatives")[0].GetProperty("score").ToString());
-Console.WriteLine(result[0].GetProperty("language").ToString());
-Console.WriteLine(result[0].GetProperty("score").ToString());
-Console.WriteLine(result[0].GetProperty("isTranslationSupported").ToString());
-Console.WriteLine(result[0].GetProperty("isTransliterationSupported").ToString());
-]]></code>
-This sample shows how to call Detect with all parameters and request content, and how to parse the result.
-<code><![CDATA[
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new TranslatorClient(endpoint);
-
-var data = new[] {
-    new {
-        text = "<text>",
-    }
-};
-
-Response response = client.Detect(RequestContent.Create(data), "<clientTraceId>");
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result[0].GetProperty("alternatives")[0].GetProperty("language").ToString());
-Console.WriteLine(result[0].GetProperty("alternatives")[0].GetProperty("score").ToString());
-Console.WriteLine(result[0].GetProperty("language").ToString());
-Console.WriteLine(result[0].GetProperty("score").ToString());
-Console.WriteLine(result[0].GetProperty("isTranslationSupported").ToString());
-Console.WriteLine(result[0].GetProperty("isTransliterationSupported").ToString());
-]]></code>
-</example>
-<remarks>
-Below is the JSON schema for the request and response payloads.
-
-Request Body:
-
-Schema for <c>InputTextElement</c>:
-<code>{
-  text: string, # Required. Text to translate.
-}
-</code>
-
-Response Body:
-
-Schema for <c>DetectedLanguageWithAlternatives</c>:
-<code>{
-  alternatives: [
-    {
-      language: string, # Required. A string representing the code of the detected language.
-      score: number, # Required. A float value indicating the confidence in the result.
-The score is between zero and one and a low score indicates a low confidence.
-    }
-  ], # Required. An array of other possible languages.
-  language: string, # Required. Code of the detected language.
-  score: number, # Required. A float value indicating the confidence in the result. The score is between zero and one 
-and a low score indicates a low confidence.
-  isTranslationSupported: boolean, # Required. A boolean value which is true if the detected language is one of the languages supported for text translation.
-  isTransliterationSupported: boolean, # Required. A boolean value which is true if the detected language is one of the languages supported for transliteration.
-}
-</code>
-
-</remarks>
-    </member>
     <member name="BreakSentenceAsync(RequestContent,String,String,String,RequestContext)">
 <example>
 This sample shows how to call BreakSentenceAsync with required parameters and request content, and how to parse the result.
@@ -643,8 +489,7 @@ var data = new[] {
 Response response = await client.BreakSentenceAsync(RequestContent.Create(data));
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result[0].GetProperty("sentLen").GetProperty("srcSentLen")[0].ToString());
-Console.WriteLine(result[0].GetProperty("sentLen").GetProperty("transSentLen")[0].ToString());
+Console.WriteLine(result[0].GetProperty("sentLen").GetProperty("sentLen")[0].ToString());
 ]]></code>
 This sample shows how to call BreakSentenceAsync with all parameters and request content, and how to parse the result.
 <code><![CDATA[
@@ -662,8 +507,7 @@ Response response = await client.BreakSentenceAsync(RequestContent.Create(data),
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result[0].GetProperty("detectedLanguage").GetProperty("language").ToString());
 Console.WriteLine(result[0].GetProperty("detectedLanguage").GetProperty("score").ToString());
-Console.WriteLine(result[0].GetProperty("sentLen").GetProperty("srcSentLen")[0].ToString());
-Console.WriteLine(result[0].GetProperty("sentLen").GetProperty("transSentLen")[0].ToString());
+Console.WriteLine(result[0].GetProperty("sentLen").GetProperty("sentLen")[0].ToString());
 ]]></code>
 </example>
 <remarks>
@@ -687,9 +531,7 @@ Schema for <c>BreakSentenceElement</c>:
 The score is between zero and one and a low score indicates a low confidence.
   }, # Optional. The detectedLanguage property is only present in the result object when language auto-detection is requested.
   sentLen: {
-    srcSentLen: [number], # Required. An integer array representing the lengths of the sentences in the input text. 
-The length of the array is the number of sentences, and the values are the length of each sentence.
-    transSentLen: [number], # Required. An integer array representing the lengths of the sentences in the translated text. 
+    sentLen: [number], # Required. An integer array representing the lengths of the sentences in the input text.
 The length of the array is the number of sentences, and the values are the length of each sentence.
   }, # Required. Sentence boundaries in the input and output texts.
 }
@@ -713,8 +555,7 @@ var data = new[] {
 Response response = client.BreakSentence(RequestContent.Create(data));
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result[0].GetProperty("sentLen").GetProperty("srcSentLen")[0].ToString());
-Console.WriteLine(result[0].GetProperty("sentLen").GetProperty("transSentLen")[0].ToString());
+Console.WriteLine(result[0].GetProperty("sentLen").GetProperty("sentLen")[0].ToString());
 ]]></code>
 This sample shows how to call BreakSentence with all parameters and request content, and how to parse the result.
 <code><![CDATA[
@@ -732,8 +573,7 @@ Response response = client.BreakSentence(RequestContent.Create(data), "<clientTr
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result[0].GetProperty("detectedLanguage").GetProperty("language").ToString());
 Console.WriteLine(result[0].GetProperty("detectedLanguage").GetProperty("score").ToString());
-Console.WriteLine(result[0].GetProperty("sentLen").GetProperty("srcSentLen")[0].ToString());
-Console.WriteLine(result[0].GetProperty("sentLen").GetProperty("transSentLen")[0].ToString());
+Console.WriteLine(result[0].GetProperty("sentLen").GetProperty("sentLen")[0].ToString());
 ]]></code>
 </example>
 <remarks>
@@ -757,9 +597,7 @@ Schema for <c>BreakSentenceElement</c>:
 The score is between zero and one and a low score indicates a low confidence.
   }, # Optional. The detectedLanguage property is only present in the result object when language auto-detection is requested.
   sentLen: {
-    srcSentLen: [number], # Required. An integer array representing the lengths of the sentences in the input text. 
-The length of the array is the number of sentences, and the values are the length of each sentence.
-    transSentLen: [number], # Required. An integer array representing the lengths of the sentences in the translated text. 
+    sentLen: [number], # Required. An integer array representing the lengths of the sentences in the input text.
 The length of the array is the number of sentences, and the values are the length of each sentence.
   }, # Required. Sentence boundaries in the input and output texts.
 }
