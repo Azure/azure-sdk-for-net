@@ -12,7 +12,10 @@ using Azure.ResourceManager.Monitor.Models;
 
 namespace Azure.ResourceManager.Monitor
 {
-    /// <summary> A class representing the ActivityLogAlert data model. </summary>
+    /// <summary>
+    /// A class representing the ActivityLogAlert data model.
+    /// An Activity Log Alert rule resource.
+    /// </summary>
     public partial class ActivityLogAlertData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of ActivityLogAlertData. </summary>
