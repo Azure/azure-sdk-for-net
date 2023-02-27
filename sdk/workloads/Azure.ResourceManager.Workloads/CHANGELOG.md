@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-beta.3 (Unreleased)
+## 1.1.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -8,13 +8,18 @@
 - Added Instance level start/stop support for DB Instance
 - Added support for LB and storage details changes.
 - Added support for SapLandscapeMonitor.
+- Added support for SAP Trans Fileshare configs.
+- Added support for secure communication
 
 ### Breaking Changes
 
 - Removed PHP Resource Type
-- Removed `VirtualMachineId` from SapApplicationServerInstanceData.
-- Added `VmDetails` to SapApplicationServerInstanceData.
+- Added `VmDetails` to replace `VirtualMachineId` in SapApplicationServerInstanceData.
 - Added `Identity`, `StorageAccountArmId`, `ZoneRedundancyPreference` to SapMonitorData.
+- Added a few new states for SapVirtualInstance, for detecting the SAP Software Installation.
+- Added SAP SID for HANA provider.
+- Added DiskConfiguration Optional property.
+- Adding new Endpoint for Storing SPOG Config.
 
 ### Bugs Fixed
 
