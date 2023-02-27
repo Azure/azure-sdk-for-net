@@ -20,7 +20,6 @@ parameters:
   type: number
   default: '5'
 - name: Profile
-  displayName: Enable profiling
   type: boolean
   default: false
 - name: AdditionalArguments
