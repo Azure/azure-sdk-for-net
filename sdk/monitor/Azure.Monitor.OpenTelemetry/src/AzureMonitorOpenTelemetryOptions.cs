@@ -3,6 +3,7 @@
 
 #nullable disable
 
+using Azure.Core;
 using Azure.Monitor.OpenTelemetry.Exporter;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
@@ -22,6 +23,11 @@ namespace Azure.Monitor.OpenTelemetry
         /// (https://docs.microsoft.com/azure/azure-monitor/app/sdk-connection-string).
         /// </remarks>
         public string ConnectionString { get; set; }
+
+        /// <summary>
+        /// Get or sets the value of <see cref="TokenCredential" />.
+        /// </summary>
+        public TokenCredential Credential { get; set; }
 
         /// <summary>
         /// Disable offline storage.
@@ -72,6 +78,7 @@ namespace Azure.Monitor.OpenTelemetry
         internal void SetValueToExporterOptions(AzureMonitorExporterOptions exporterOptions)
         {
             exporterOptions.ConnectionString = ConnectionString;
+            exporterOptions.Credential = Credential;
             exporterOptions.DisableOfflineStorage = DisableOfflineStorage;
             exporterOptions.StorageDirectory = StorageDirectory;
         }
