@@ -1,5 +1,15 @@
 # Release History
 
+## 1.1.0-beta.1 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
 ## 1.0.1 (2023-02-21)
 
 ### Other Changes
@@ -15,6 +25,7 @@ This release is the first stable release of the Monitor Management library.
 
 - The type of `MonitorScaleCapacity.minimum`, `MonitorScaleCapacity.maximum` and `MonitorScaleCapacity.default` were changed to `integer`.
 - The type of `RecurrentSchedule.Days` was changed to `MonitorDayOfWeek`.
+- Removed the extension methods `GetDiagnosticSettings` and `GetDiagnosticSetting` that extends from `ArmResource`.
 
 ### Other Changes
 

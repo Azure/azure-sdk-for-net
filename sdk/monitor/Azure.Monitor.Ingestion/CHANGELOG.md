@@ -1,6 +1,16 @@
 # Release History
 
-## 1.0.0 (2023-02-17)
+## 1.1.0-beta.1 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 1.0.0 (2023-02-21)
 
 ### Features Added
 - Added EventHandler to LogsUploadOptions for error handling.

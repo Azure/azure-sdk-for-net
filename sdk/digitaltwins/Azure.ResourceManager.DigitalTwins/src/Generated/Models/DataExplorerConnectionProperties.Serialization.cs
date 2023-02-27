@@ -34,6 +34,30 @@ namespace Azure.ResourceManager.DigitalTwins.Models
                     writer.WriteNull("adxTableName");
                 }
             }
+            if (Optional.IsDefined(AdxTwinLifecycleEventsTableName))
+            {
+                if (AdxTwinLifecycleEventsTableName != null)
+                {
+                    writer.WritePropertyName("adxTwinLifecycleEventsTableName"u8);
+                    writer.WriteStringValue(AdxTwinLifecycleEventsTableName);
+                }
+                else
+                {
+                    writer.WriteNull("adxTwinLifecycleEventsTableName");
+                }
+            }
+            if (Optional.IsDefined(AdxRelationshipLifecycleEventsTableName))
+            {
+                if (AdxRelationshipLifecycleEventsTableName != null)
+                {
+                    writer.WritePropertyName("adxRelationshipLifecycleEventsTableName"u8);
+                    writer.WriteStringValue(AdxRelationshipLifecycleEventsTableName);
+                }
+                else
+                {
+                    writer.WriteNull("adxRelationshipLifecycleEventsTableName");
+                }
+            }
             writer.WritePropertyName("eventHubEndpointUri"u8);
             writer.WriteStringValue(EventHubEndpointUri.AbsoluteUri);
             writer.WritePropertyName("eventHubEntityPath"u8);
@@ -50,6 +74,18 @@ namespace Azure.ResourceManager.DigitalTwins.Models
                 else
                 {
                     writer.WriteNull("eventHubConsumerGroup");
+                }
+            }
+            if (Optional.IsDefined(RecordPropertyAndItemRemovals))
+            {
+                if (RecordPropertyAndItemRemovals != null)
+                {
+                    writer.WritePropertyName("recordPropertyAndItemRemovals"u8);
+                    writer.WriteStringValue(RecordPropertyAndItemRemovals.Value.ToString());
+                }
+                else
+                {
+                    writer.WriteNull("recordPropertyAndItemRemovals");
                 }
             }
             writer.WritePropertyName("connectionType"u8);
@@ -75,10 +111,13 @@ namespace Azure.ResourceManager.DigitalTwins.Models
             Uri adxEndpointUri = default;
             string adxDatabaseName = default;
             Optional<string> adxTableName = default;
+            Optional<string> adxTwinLifecycleEventsTableName = default;
+            Optional<string> adxRelationshipLifecycleEventsTableName = default;
             Uri eventHubEndpointUri = default;
             string eventHubEntityPath = default;
             ResourceIdentifier eventHubNamespaceResourceId = default;
             Optional<string> eventHubConsumerGroup = default;
+            Optional<RecordPropertyAndItemRemoval?> recordPropertyAndItemRemovals = default;
             ConnectionType connectionType = default;
             Optional<TimeSeriesDatabaseConnectionState> provisioningState = default;
             Optional<DigitalTwinsManagedIdentityReference> identity = default;
@@ -109,6 +148,26 @@ namespace Azure.ResourceManager.DigitalTwins.Models
                     adxTableName = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("adxTwinLifecycleEventsTableName"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        adxTwinLifecycleEventsTableName = null;
+                        continue;
+                    }
+                    adxTwinLifecycleEventsTableName = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("adxRelationshipLifecycleEventsTableName"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        adxRelationshipLifecycleEventsTableName = null;
+                        continue;
+                    }
+                    adxRelationshipLifecycleEventsTableName = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("eventHubEndpointUri"u8))
                 {
                     eventHubEndpointUri = new Uri(property.Value.GetString());
@@ -132,6 +191,16 @@ namespace Azure.ResourceManager.DigitalTwins.Models
                         continue;
                     }
                     eventHubConsumerGroup = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("recordPropertyAndItemRemovals"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        recordPropertyAndItemRemovals = null;
+                        continue;
+                    }
+                    recordPropertyAndItemRemovals = new RecordPropertyAndItemRemoval(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("connectionType"u8))
@@ -160,7 +229,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
                     continue;
                 }
             }
-            return new DataExplorerConnectionProperties(connectionType, Optional.ToNullable(provisioningState), identity.Value, adxResourceId, adxEndpointUri, adxDatabaseName, adxTableName.Value, eventHubEndpointUri, eventHubEntityPath, eventHubNamespaceResourceId, eventHubConsumerGroup.Value);
+            return new DataExplorerConnectionProperties(connectionType, Optional.ToNullable(provisioningState), identity.Value, adxResourceId, adxEndpointUri, adxDatabaseName, adxTableName.Value, adxTwinLifecycleEventsTableName.Value, adxRelationshipLifecycleEventsTableName.Value, eventHubEndpointUri, eventHubEntityPath, eventHubNamespaceResourceId, eventHubConsumerGroup.Value, Optional.ToNullable(recordPropertyAndItemRemovals));
         }
     }
 }

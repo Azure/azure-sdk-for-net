@@ -1,6 +1,11 @@
 # Release History
 
-## 12.13.0-beta.2 (Unreleased)
+## 12.14.0-beta.1 (Unreleased)
+- Added support for service version 2022-11-02.
+- Added support for Encryption Context.
+
+## 12.13.0 (2023-02-21)
+- Includes all features from 12.13.0-beta.1.
 - Added FileDownloadDetails.CreatedOn property.
 
 ## 12.13.0-beta.1 (2023-02-07)

@@ -21,9 +21,9 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
 
         public static DebugDataAccessLevel ToDebugDataAccessLevel(this string value)
         {
-            if (string.Equals(value, "None", StringComparison.InvariantCultureIgnoreCase)) return DebugDataAccessLevel.None;
-            if (string.Equals(value, "All", StringComparison.InvariantCultureIgnoreCase)) return DebugDataAccessLevel.All;
-            if (string.Equals(value, "Customer", StringComparison.InvariantCultureIgnoreCase)) return DebugDataAccessLevel.Customer;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "None")) return DebugDataAccessLevel.None;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "All")) return DebugDataAccessLevel.All;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Customer")) return DebugDataAccessLevel.Customer;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown DebugDataAccessLevel value.");
         }
     }

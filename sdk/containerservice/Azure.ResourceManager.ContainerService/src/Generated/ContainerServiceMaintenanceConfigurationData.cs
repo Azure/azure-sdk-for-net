@@ -29,15 +29,19 @@ namespace Azure.ResourceManager.ContainerService
         /// <param name="systemData"> The systemData. </param>
         /// <param name="timesInWeek"> If two array entries specify the same day of the week, the applied configuration is the union of times in both entries. </param>
         /// <param name="notAllowedTimes"> Time slots on which upgrade is not allowed. </param>
-        internal ContainerServiceMaintenanceConfigurationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IList<ContainerServiceTimeInWeek> timesInWeek, IList<ContainerServiceTimeSpan> notAllowedTimes) : base(id, name, resourceType, systemData)
+        /// <param name="maintenanceWindow"> Maintenance window for the maintenance configuration. </param>
+        internal ContainerServiceMaintenanceConfigurationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IList<ContainerServiceTimeInWeek> timesInWeek, IList<ContainerServiceTimeSpan> notAllowedTimes, ContainerServiceMaintenanceWindow maintenanceWindow) : base(id, name, resourceType, systemData)
         {
             TimesInWeek = timesInWeek;
             NotAllowedTimes = notAllowedTimes;
+            MaintenanceWindow = maintenanceWindow;
         }
 
         /// <summary> If two array entries specify the same day of the week, the applied configuration is the union of times in both entries. </summary>
         public IList<ContainerServiceTimeInWeek> TimesInWeek { get; }
         /// <summary> Time slots on which upgrade is not allowed. </summary>
         public IList<ContainerServiceTimeSpan> NotAllowedTimes { get; }
+        /// <summary> Maintenance window for the maintenance configuration. </summary>
+        public ContainerServiceMaintenanceWindow MaintenanceWindow { get; set; }
     }
 }

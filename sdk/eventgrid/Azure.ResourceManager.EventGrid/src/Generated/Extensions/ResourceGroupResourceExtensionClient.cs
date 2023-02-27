@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <returns> Returns a <see cref="PartnerConfigurationResource" /> object. </returns>
         public virtual PartnerConfigurationResource GetPartnerConfiguration()
         {
-            return new PartnerConfigurationResource(Client, new ResourceIdentifier(Id.ToString() + "/providers/Microsoft.EventGrid/partnerConfigurations/default"));
+            return new PartnerConfigurationResource(Client, Id.AppendProviderResource("Microsoft.EventGrid", "partnerConfigurations", "default"));
         }
 
         /// <summary> Gets a collection of PartnerNamespaceResources in the ResourceGroupResource. </summary>

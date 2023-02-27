@@ -616,7 +616,7 @@ namespace Azure.Messaging.EventHubs.Primitives
                         }
                         else
                         {
-                            diagnosticScope.SetTraceparent(diagnosticId);
+                            diagnosticScope.SetTraceContext(diagnosticId);
                             diagnosticScope.AddAttribute(
                                 DiagnosticProperty.EnqueuedTimeAttribute,
                                 eventData.EnqueuedTime.ToUnixTimeMilliseconds().ToString(CultureInfo.InvariantCulture));

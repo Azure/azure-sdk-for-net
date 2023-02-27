@@ -31,19 +31,19 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         public static BackupMonthOfYear ToBackupMonthOfYear(this string value)
         {
-            if (string.Equals(value, "Invalid", StringComparison.InvariantCultureIgnoreCase)) return BackupMonthOfYear.Invalid;
-            if (string.Equals(value, "January", StringComparison.InvariantCultureIgnoreCase)) return BackupMonthOfYear.January;
-            if (string.Equals(value, "February", StringComparison.InvariantCultureIgnoreCase)) return BackupMonthOfYear.February;
-            if (string.Equals(value, "March", StringComparison.InvariantCultureIgnoreCase)) return BackupMonthOfYear.March;
-            if (string.Equals(value, "April", StringComparison.InvariantCultureIgnoreCase)) return BackupMonthOfYear.April;
-            if (string.Equals(value, "May", StringComparison.InvariantCultureIgnoreCase)) return BackupMonthOfYear.May;
-            if (string.Equals(value, "June", StringComparison.InvariantCultureIgnoreCase)) return BackupMonthOfYear.June;
-            if (string.Equals(value, "July", StringComparison.InvariantCultureIgnoreCase)) return BackupMonthOfYear.July;
-            if (string.Equals(value, "August", StringComparison.InvariantCultureIgnoreCase)) return BackupMonthOfYear.August;
-            if (string.Equals(value, "September", StringComparison.InvariantCultureIgnoreCase)) return BackupMonthOfYear.September;
-            if (string.Equals(value, "October", StringComparison.InvariantCultureIgnoreCase)) return BackupMonthOfYear.October;
-            if (string.Equals(value, "November", StringComparison.InvariantCultureIgnoreCase)) return BackupMonthOfYear.November;
-            if (string.Equals(value, "December", StringComparison.InvariantCultureIgnoreCase)) return BackupMonthOfYear.December;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Invalid")) return BackupMonthOfYear.Invalid;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "January")) return BackupMonthOfYear.January;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "February")) return BackupMonthOfYear.February;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "March")) return BackupMonthOfYear.March;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "April")) return BackupMonthOfYear.April;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "May")) return BackupMonthOfYear.May;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "June")) return BackupMonthOfYear.June;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "July")) return BackupMonthOfYear.July;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "August")) return BackupMonthOfYear.August;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "September")) return BackupMonthOfYear.September;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "October")) return BackupMonthOfYear.October;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "November")) return BackupMonthOfYear.November;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "December")) return BackupMonthOfYear.December;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown BackupMonthOfYear value.");
         }
     }
