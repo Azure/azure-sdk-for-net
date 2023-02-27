@@ -41,12 +41,16 @@ namespace Azure.ResourceManager.Network
         /// <param name="virtualHub"> The Virtual Hub where Network Virtual Appliance is being deployed. </param>
         /// <param name="cloudInitConfigurationBlobs"> CloudInitConfigurationBlob storage URLs. </param>
         /// <param name="cloudInitConfiguration"> CloudInitConfiguration string in plain text. </param>
-        /// <param name="virtualApplianceAsn"> VirtualAppliance ASN. </param>
+        /// <param name="virtualApplianceAsn"> VirtualAppliance ASN. Microsoft private, public and IANA reserved ASN are not supported. </param>
+        /// <param name="sshPublicKey"> Public key for SSH login. </param>
         /// <param name="virtualApplianceNics"> List of Virtual Appliance Network Interfaces. </param>
         /// <param name="virtualApplianceSites"> List of references to VirtualApplianceSite. </param>
         /// <param name="inboundSecurityRules"> List of references to InboundSecurityRules. </param>
         /// <param name="provisioningState"> The provisioning state of the resource. </param>
-        internal NetworkVirtualApplianceData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, ManagedServiceIdentity identity, ETag? etag, VirtualApplianceSkuProperties nvaSku, string addressPrefix, IList<string> bootStrapConfigurationBlobs, WritableSubResource virtualHub, IList<string> cloudInitConfigurationBlobs, string cloudInitConfiguration, long? virtualApplianceAsn, IReadOnlyList<VirtualApplianceNicProperties> virtualApplianceNics, IReadOnlyList<WritableSubResource> virtualApplianceSites, IReadOnlyList<WritableSubResource> inboundSecurityRules, NetworkProvisioningState? provisioningState) : base(id, name, resourceType, location, tags)
+        /// <param name="deploymentType"> The deployment type. PartnerManaged for the SaaS NVA. </param>
+        /// <param name="delegation"> The delegation for the Virtual Appliance. </param>
+        /// <param name="partnerManagedResource"> The delegation for the Virtual Appliance. </param>
+        internal NetworkVirtualApplianceData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, ManagedServiceIdentity identity, ETag? etag, VirtualApplianceSkuProperties nvaSku, string addressPrefix, IList<string> bootStrapConfigurationBlobs, WritableSubResource virtualHub, IList<string> cloudInitConfigurationBlobs, string cloudInitConfiguration, long? virtualApplianceAsn, string sshPublicKey, IReadOnlyList<VirtualApplianceNicProperties> virtualApplianceNics, IReadOnlyList<WritableSubResource> virtualApplianceSites, IReadOnlyList<WritableSubResource> inboundSecurityRules, NetworkProvisioningState? provisioningState, string deploymentType, DelegationProperties delegation, PartnerManagedResourceProperties partnerManagedResource) : base(id, name, resourceType, location, tags)
         {
             Identity = identity;
             ETag = etag;
@@ -57,10 +61,14 @@ namespace Azure.ResourceManager.Network
             CloudInitConfigurationBlobs = cloudInitConfigurationBlobs;
             CloudInitConfiguration = cloudInitConfiguration;
             VirtualApplianceAsn = virtualApplianceAsn;
+            SshPublicKey = sshPublicKey;
             VirtualApplianceNics = virtualApplianceNics;
             VirtualApplianceSites = virtualApplianceSites;
             InboundSecurityRules = inboundSecurityRules;
             ProvisioningState = provisioningState;
+            DeploymentType = deploymentType;
+            Delegation = delegation;
+            PartnerManagedResource = partnerManagedResource;
         }
 
         /// <summary> The service principal that has read access to cloud-init and config blob. </summary>
@@ -91,8 +99,10 @@ namespace Azure.ResourceManager.Network
         public IList<string> CloudInitConfigurationBlobs { get; }
         /// <summary> CloudInitConfiguration string in plain text. </summary>
         public string CloudInitConfiguration { get; set; }
-        /// <summary> VirtualAppliance ASN. </summary>
+        /// <summary> VirtualAppliance ASN. Microsoft private, public and IANA reserved ASN are not supported. </summary>
         public long? VirtualApplianceAsn { get; set; }
+        /// <summary> Public key for SSH login. </summary>
+        public string SshPublicKey { get; set; }
         /// <summary> List of Virtual Appliance Network Interfaces. </summary>
         public IReadOnlyList<VirtualApplianceNicProperties> VirtualApplianceNics { get; }
         /// <summary> List of references to VirtualApplianceSite. </summary>
@@ -101,5 +111,11 @@ namespace Azure.ResourceManager.Network
         public IReadOnlyList<WritableSubResource> InboundSecurityRules { get; }
         /// <summary> The provisioning state of the resource. </summary>
         public NetworkProvisioningState? ProvisioningState { get; }
+        /// <summary> The deployment type. PartnerManaged for the SaaS NVA. </summary>
+        public string DeploymentType { get; }
+        /// <summary> The delegation for the Virtual Appliance. </summary>
+        public DelegationProperties Delegation { get; set; }
+        /// <summary> The delegation for the Virtual Appliance. </summary>
+        public PartnerManagedResourceProperties PartnerManagedResource { get; set; }
     }
 }

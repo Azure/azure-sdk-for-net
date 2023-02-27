@@ -51,6 +51,11 @@ namespace Azure.ResourceManager.Network
                 writer.WritePropertyName("numberOfProbes"u8);
                 writer.WriteNumberValue(NumberOfProbes.Value);
             }
+            if (Optional.IsDefined(ProbeThreshold))
+            {
+                writer.WritePropertyName("probeThreshold"u8);
+                writer.WriteNumberValue(ProbeThreshold.Value);
+            }
             if (Optional.IsDefined(RequestPath))
             {
                 writer.WritePropertyName("requestPath"u8);
@@ -71,6 +76,7 @@ namespace Azure.ResourceManager.Network
             Optional<int> port = default;
             Optional<int> intervalInSeconds = default;
             Optional<int> numberOfProbes = default;
+            Optional<int> probeThreshold = default;
             Optional<string> requestPath = default;
             Optional<NetworkProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
@@ -174,6 +180,16 @@ namespace Azure.ResourceManager.Network
                             numberOfProbes = property0.Value.GetInt32();
                             continue;
                         }
+                        if (property0.NameEquals("probeThreshold"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            probeThreshold = property0.Value.GetInt32();
+                            continue;
+                        }
                         if (property0.NameEquals("requestPath"u8))
                         {
                             requestPath = property0.Value.GetString();
@@ -193,7 +209,7 @@ namespace Azure.ResourceManager.Network
                     continue;
                 }
             }
-            return new ProbeData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(etag), Optional.ToList(loadBalancingRules), Optional.ToNullable(protocol), Optional.ToNullable(port), Optional.ToNullable(intervalInSeconds), Optional.ToNullable(numberOfProbes), requestPath.Value, Optional.ToNullable(provisioningState));
+            return new ProbeData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(etag), Optional.ToList(loadBalancingRules), Optional.ToNullable(protocol), Optional.ToNullable(port), Optional.ToNullable(intervalInSeconds), Optional.ToNullable(numberOfProbes), Optional.ToNullable(probeThreshold), requestPath.Value, Optional.ToNullable(provisioningState));
         }
     }
 }

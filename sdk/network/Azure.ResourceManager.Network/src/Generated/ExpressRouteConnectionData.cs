@@ -29,8 +29,9 @@ namespace Azure.ResourceManager.Network
         /// <param name="routingWeight"> The routing weight associated to the connection. </param>
         /// <param name="enableInternetSecurity"> Enable internet security. </param>
         /// <param name="expressRouteGatewayBypass"> Enable FastPath to vWan Firewall hub. </param>
+        /// <param name="enablePrivateLinkFastPath"> Bypass the ExpressRoute gateway when accessing private-links. ExpressRoute FastPath (expressRouteGatewayBypass) must be enabled. </param>
         /// <param name="routingConfiguration"> The Routing Configuration indicating the associated and propagated route tables on this connection. </param>
-        internal ExpressRouteConnectionData(ResourceIdentifier id, string name, ResourceType? resourceType, NetworkProvisioningState? provisioningState, WritableSubResource expressRouteCircuitPeering, string authorizationKey, int? routingWeight, bool? enableInternetSecurity, bool? expressRouteGatewayBypass, RoutingConfiguration routingConfiguration) : base(id, name, resourceType)
+        internal ExpressRouteConnectionData(ResourceIdentifier id, string name, ResourceType? resourceType, NetworkProvisioningState? provisioningState, WritableSubResource expressRouteCircuitPeering, string authorizationKey, int? routingWeight, bool? enableInternetSecurity, bool? expressRouteGatewayBypass, bool? enablePrivateLinkFastPath, RoutingConfiguration routingConfiguration) : base(id, name, resourceType)
         {
             ProvisioningState = provisioningState;
             ExpressRouteCircuitPeering = expressRouteCircuitPeering;
@@ -38,6 +39,7 @@ namespace Azure.ResourceManager.Network
             RoutingWeight = routingWeight;
             EnableInternetSecurity = enableInternetSecurity;
             ExpressRouteGatewayBypass = expressRouteGatewayBypass;
+            EnablePrivateLinkFastPath = enablePrivateLinkFastPath;
             RoutingConfiguration = routingConfiguration;
         }
 
@@ -65,6 +67,8 @@ namespace Azure.ResourceManager.Network
         public bool? EnableInternetSecurity { get; set; }
         /// <summary> Enable FastPath to vWan Firewall hub. </summary>
         public bool? ExpressRouteGatewayBypass { get; set; }
+        /// <summary> Bypass the ExpressRoute gateway when accessing private-links. ExpressRoute FastPath (expressRouteGatewayBypass) must be enabled. </summary>
+        public bool? EnablePrivateLinkFastPath { get; set; }
         /// <summary> The Routing Configuration indicating the associated and propagated route tables on this connection. </summary>
         public RoutingConfiguration RoutingConfiguration { get; set; }
     }

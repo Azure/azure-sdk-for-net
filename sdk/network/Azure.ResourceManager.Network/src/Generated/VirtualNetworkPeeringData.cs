@@ -35,12 +35,13 @@ namespace Azure.ResourceManager.Network
         /// <param name="remoteAddressSpace"> The reference to the address space peered with the remote virtual network. </param>
         /// <param name="remoteVirtualNetworkAddressSpace"> The reference to the current address space of the remote virtual network. </param>
         /// <param name="remoteBgpCommunities"> The reference to the remote virtual network&apos;s Bgp Communities. </param>
+        /// <param name="remoteVirtualNetworkEncryption"> The reference to the remote virtual network&apos;s encryption. </param>
         /// <param name="peeringState"> The status of the virtual network peering. </param>
         /// <param name="peeringSyncLevel"> The peering sync status of the virtual network peering. </param>
         /// <param name="provisioningState"> The provisioning state of the virtual network peering resource. </param>
         /// <param name="doNotVerifyRemoteGateways"> If we need to verify the provisioning state of the remote gateway. </param>
         /// <param name="resourceGuid"> The resourceGuid property of the Virtual Network peering resource. </param>
-        internal VirtualNetworkPeeringData(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? etag, bool? allowVirtualNetworkAccess, bool? allowForwardedTraffic, bool? allowGatewayTransit, bool? useRemoteGateways, WritableSubResource remoteVirtualNetwork, AddressSpace remoteAddressSpace, AddressSpace remoteVirtualNetworkAddressSpace, VirtualNetworkBgpCommunities remoteBgpCommunities, VirtualNetworkPeeringState? peeringState, VirtualNetworkPeeringLevel? peeringSyncLevel, NetworkProvisioningState? provisioningState, bool? doNotVerifyRemoteGateways, Guid? resourceGuid) : base(id, name, resourceType)
+        internal VirtualNetworkPeeringData(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? etag, bool? allowVirtualNetworkAccess, bool? allowForwardedTraffic, bool? allowGatewayTransit, bool? useRemoteGateways, WritableSubResource remoteVirtualNetwork, AddressSpace remoteAddressSpace, AddressSpace remoteVirtualNetworkAddressSpace, VirtualNetworkBgpCommunities remoteBgpCommunities, VirtualNetworkEncryption remoteVirtualNetworkEncryption, VirtualNetworkPeeringState? peeringState, VirtualNetworkPeeringLevel? peeringSyncLevel, NetworkProvisioningState? provisioningState, bool? doNotVerifyRemoteGateways, Guid? resourceGuid) : base(id, name, resourceType)
         {
             ETag = etag;
             AllowVirtualNetworkAccess = allowVirtualNetworkAccess;
@@ -51,6 +52,7 @@ namespace Azure.ResourceManager.Network
             RemoteAddressSpace = remoteAddressSpace;
             RemoteVirtualNetworkAddressSpace = remoteVirtualNetworkAddressSpace;
             RemoteBgpCommunities = remoteBgpCommunities;
+            RemoteVirtualNetworkEncryption = remoteVirtualNetworkEncryption;
             PeeringState = peeringState;
             PeeringSyncLevel = peeringSyncLevel;
             ProvisioningState = provisioningState;
@@ -110,6 +112,8 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> The reference to the remote virtual network&apos;s Bgp Communities. </summary>
         public VirtualNetworkBgpCommunities RemoteBgpCommunities { get; set; }
+        /// <summary> The reference to the remote virtual network&apos;s encryption. </summary>
+        public VirtualNetworkEncryption RemoteVirtualNetworkEncryption { get; }
         /// <summary> The status of the virtual network peering. </summary>
         public VirtualNetworkPeeringState? PeeringState { get; set; }
         /// <summary> The peering sync status of the virtual network peering. </summary>

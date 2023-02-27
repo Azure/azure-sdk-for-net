@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    internal partial class ApplicationGatewayClientAuthConfiguration : IUtf8JsonSerializable
+    public partial class ApplicationGatewayClientAuthConfiguration : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -20,12 +20,18 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("verifyClientCertIssuerDN"u8);
                 writer.WriteBooleanValue(VerifyClientCertIssuerDN.Value);
             }
+            if (Optional.IsDefined(VerifyClientRevocation))
+            {
+                writer.WritePropertyName("verifyClientRevocation"u8);
+                writer.WriteStringValue(VerifyClientRevocation.Value.ToString());
+            }
             writer.WriteEndObject();
         }
 
         internal static ApplicationGatewayClientAuthConfiguration DeserializeApplicationGatewayClientAuthConfiguration(JsonElement element)
         {
             Optional<bool> verifyClientCertIssuerDN = default;
+            Optional<ApplicationGatewayClientRevocationOption> verifyClientRevocation = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("verifyClientCertIssuerDN"u8))
@@ -38,8 +44,18 @@ namespace Azure.ResourceManager.Network.Models
                     verifyClientCertIssuerDN = property.Value.GetBoolean();
                     continue;
                 }
+                if (property.NameEquals("verifyClientRevocation"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    verifyClientRevocation = new ApplicationGatewayClientRevocationOption(property.Value.GetString());
+                    continue;
+                }
             }
-            return new ApplicationGatewayClientAuthConfiguration(Optional.ToNullable(verifyClientCertIssuerDN));
+            return new ApplicationGatewayClientAuthConfiguration(Optional.ToNullable(verifyClientCertIssuerDN), Optional.ToNullable(verifyClientRevocation));
         }
     }
 }

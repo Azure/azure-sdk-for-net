@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Network
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2021-02-01";
+            _apiVersion = apiVersion ?? "2022-09-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Network
             return message;
         }
 
-        /// <summary> Gets all the inbound nat rules in a load balancer. </summary>
+        /// <summary> Gets all the inbound NAT rules in a load balancer. </summary>
         /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="loadBalancerName"> The name of the load balancer. </param>
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Gets all the inbound nat rules in a load balancer. </summary>
+        /// <summary> Gets all the inbound NAT rules in a load balancer. </summary>
         /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="loadBalancerName"> The name of the load balancer. </param>
@@ -138,11 +138,11 @@ namespace Azure.ResourceManager.Network
             return message;
         }
 
-        /// <summary> Deletes the specified load balancer inbound nat rule. </summary>
+        /// <summary> Deletes the specified load balancer inbound NAT rule. </summary>
         /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="loadBalancerName"> The name of the load balancer. </param>
-        /// <param name="inboundNatRuleName"> The name of the inbound nat rule. </param>
+        /// <param name="inboundNatRuleName"> The name of the inbound NAT rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="loadBalancerName"/> or <paramref name="inboundNatRuleName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="loadBalancerName"/> or <paramref name="inboundNatRuleName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -166,11 +166,11 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Deletes the specified load balancer inbound nat rule. </summary>
+        /// <summary> Deletes the specified load balancer inbound NAT rule. </summary>
         /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="loadBalancerName"> The name of the load balancer. </param>
-        /// <param name="inboundNatRuleName"> The name of the inbound nat rule. </param>
+        /// <param name="inboundNatRuleName"> The name of the inbound NAT rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="loadBalancerName"/> or <paramref name="inboundNatRuleName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="loadBalancerName"/> or <paramref name="inboundNatRuleName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -220,11 +220,11 @@ namespace Azure.ResourceManager.Network
             return message;
         }
 
-        /// <summary> Gets the specified load balancer inbound nat rule. </summary>
+        /// <summary> Gets the specified load balancer inbound NAT rule. </summary>
         /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="loadBalancerName"> The name of the load balancer. </param>
-        /// <param name="inboundNatRuleName"> The name of the inbound nat rule. </param>
+        /// <param name="inboundNatRuleName"> The name of the inbound NAT rule. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="loadBalancerName"/> or <paramref name="inboundNatRuleName"/> is null. </exception>
@@ -254,11 +254,11 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Gets the specified load balancer inbound nat rule. </summary>
+        /// <summary> Gets the specified load balancer inbound NAT rule. </summary>
         /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="loadBalancerName"> The name of the load balancer. </param>
-        /// <param name="inboundNatRuleName"> The name of the inbound nat rule. </param>
+        /// <param name="inboundNatRuleName"> The name of the inbound NAT rule. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="loadBalancerName"/> or <paramref name="inboundNatRuleName"/> is null. </exception>
@@ -314,12 +314,12 @@ namespace Azure.ResourceManager.Network
             return message;
         }
 
-        /// <summary> Creates or updates a load balancer inbound nat rule. </summary>
+        /// <summary> Creates or updates a load balancer inbound NAT rule. </summary>
         /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="loadBalancerName"> The name of the load balancer. </param>
-        /// <param name="inboundNatRuleName"> The name of the inbound nat rule. </param>
-        /// <param name="data"> Parameters supplied to the create or update inbound nat rule operation. </param>
+        /// <param name="inboundNatRuleName"> The name of the inbound NAT rule. </param>
+        /// <param name="data"> Parameters supplied to the create or update inbound NAT rule operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="loadBalancerName"/>, <paramref name="inboundNatRuleName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="loadBalancerName"/> or <paramref name="inboundNatRuleName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -343,12 +343,12 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Creates or updates a load balancer inbound nat rule. </summary>
+        /// <summary> Creates or updates a load balancer inbound NAT rule. </summary>
         /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="loadBalancerName"> The name of the load balancer. </param>
-        /// <param name="inboundNatRuleName"> The name of the inbound nat rule. </param>
-        /// <param name="data"> Parameters supplied to the create or update inbound nat rule operation. </param>
+        /// <param name="inboundNatRuleName"> The name of the inbound NAT rule. </param>
+        /// <param name="data"> Parameters supplied to the create or update inbound NAT rule operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="loadBalancerName"/>, <paramref name="inboundNatRuleName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="loadBalancerName"/> or <paramref name="inboundNatRuleName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -386,7 +386,7 @@ namespace Azure.ResourceManager.Network
             return message;
         }
 
-        /// <summary> Gets all the inbound nat rules in a load balancer. </summary>
+        /// <summary> Gets all the inbound NAT rules in a load balancer. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
@@ -417,7 +417,7 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Gets all the inbound nat rules in a load balancer. </summary>
+        /// <summary> Gets all the inbound NAT rules in a load balancer. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>

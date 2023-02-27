@@ -21,6 +21,7 @@ namespace Azure.ResourceManager.Network
         public VirtualNetworkGatewayData()
         {
             IPConfigurations = new ChangeTrackingList<VirtualNetworkGatewayIPConfiguration>();
+            VirtualNetworkGatewayPolicyGroups = new ChangeTrackingList<VirtualNetworkGatewayPolicyGroup>();
             NatRules = new ChangeTrackingList<VirtualNetworkGatewayNatRuleData>();
         }
 
@@ -39,9 +40,11 @@ namespace Azure.ResourceManager.Network
         /// <param name="enableBgp"> Whether BGP is enabled for this virtual network gateway or not. </param>
         /// <param name="enablePrivateIPAddress"> Whether private IP needs to be enabled on this gateway for connections or not. </param>
         /// <param name="active"> ActiveActive flag. </param>
+        /// <param name="disableIPSecReplayProtection"> disableIPSecReplayProtection flag. </param>
         /// <param name="gatewayDefaultSite"> The reference to the LocalNetworkGateway resource which represents local network site having default routes. Assign Null value in case of removing existing default site setting. </param>
         /// <param name="sku"> The reference to the VirtualNetworkGatewaySku resource which represents the SKU selected for Virtual network gateway. </param>
         /// <param name="vpnClientConfiguration"> The reference to the VpnClientConfiguration resource which represents the P2S VpnClient configurations. </param>
+        /// <param name="virtualNetworkGatewayPolicyGroups"> The reference to the VirtualNetworkGatewayPolicyGroup resource which represents the available VirtualNetworkGatewayPolicyGroup for the gateway. </param>
         /// <param name="bgpSettings"> Virtual network gateway&apos;s BGP speaker settings. </param>
         /// <param name="customRoutes"> The reference to the address space resource which represents the custom routes address space specified by the customer for virtual network gateway and VpnClient. </param>
         /// <param name="resourceGuid"> The resource GUID property of the virtual network gateway resource. </param>
@@ -51,7 +54,9 @@ namespace Azure.ResourceManager.Network
         /// <param name="vNetExtendedLocationResourceId"> Customer vnet resource id. VirtualNetworkGateway of type local gateway is associated with the customer vnet. </param>
         /// <param name="natRules"> NatRules for virtual network gateway. </param>
         /// <param name="enableBgpRouteTranslationForNat"> EnableBgpRouteTranslationForNat flag. </param>
-        internal VirtualNetworkGatewayData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, ExtendedLocation extendedLocation, ETag? etag, IList<VirtualNetworkGatewayIPConfiguration> ipConfigurations, VirtualNetworkGatewayType? gatewayType, VpnType? vpnType, VpnGatewayGeneration? vpnGatewayGeneration, bool? enableBgp, bool? enablePrivateIPAddress, bool? active, WritableSubResource gatewayDefaultSite, VirtualNetworkGatewaySku sku, VpnClientConfiguration vpnClientConfiguration, BgpSettings bgpSettings, AddressSpace customRoutes, Guid? resourceGuid, NetworkProvisioningState? provisioningState, bool? enableDnsForwarding, string inboundDnsForwardingEndpoint, ResourceIdentifier vNetExtendedLocationResourceId, IList<VirtualNetworkGatewayNatRuleData> natRules, bool? enableBgpRouteTranslationForNat) : base(id, name, resourceType, location, tags)
+        /// <param name="allowVirtualWanTraffic"> Configures this gateway to accept traffic from remote Virtual WAN networks. </param>
+        /// <param name="allowRemoteVnetTraffic"> Configure this gateway to accept traffic from other Azure Virtual Networks. This configuration does not support connectivity to Azure Virtual WAN. </param>
+        internal VirtualNetworkGatewayData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, ExtendedLocation extendedLocation, ETag? etag, IList<VirtualNetworkGatewayIPConfiguration> ipConfigurations, VirtualNetworkGatewayType? gatewayType, VpnType? vpnType, VpnGatewayGeneration? vpnGatewayGeneration, bool? enableBgp, bool? enablePrivateIPAddress, bool? active, bool? disableIPSecReplayProtection, WritableSubResource gatewayDefaultSite, VirtualNetworkGatewaySku sku, VpnClientConfiguration vpnClientConfiguration, IList<VirtualNetworkGatewayPolicyGroup> virtualNetworkGatewayPolicyGroups, BgpSettings bgpSettings, AddressSpace customRoutes, Guid? resourceGuid, NetworkProvisioningState? provisioningState, bool? enableDnsForwarding, string inboundDnsForwardingEndpoint, ResourceIdentifier vNetExtendedLocationResourceId, IList<VirtualNetworkGatewayNatRuleData> natRules, bool? enableBgpRouteTranslationForNat, bool? allowVirtualWanTraffic, bool? allowRemoteVnetTraffic) : base(id, name, resourceType, location, tags)
         {
             ExtendedLocation = extendedLocation;
             ETag = etag;
@@ -62,9 +67,11 @@ namespace Azure.ResourceManager.Network
             EnableBgp = enableBgp;
             EnablePrivateIPAddress = enablePrivateIPAddress;
             Active = active;
+            DisableIPSecReplayProtection = disableIPSecReplayProtection;
             GatewayDefaultSite = gatewayDefaultSite;
             Sku = sku;
             VpnClientConfiguration = vpnClientConfiguration;
+            VirtualNetworkGatewayPolicyGroups = virtualNetworkGatewayPolicyGroups;
             BgpSettings = bgpSettings;
             CustomRoutes = customRoutes;
             ResourceGuid = resourceGuid;
@@ -74,6 +81,8 @@ namespace Azure.ResourceManager.Network
             VNetExtendedLocationResourceId = vNetExtendedLocationResourceId;
             NatRules = natRules;
             EnableBgpRouteTranslationForNat = enableBgpRouteTranslationForNat;
+            AllowVirtualWanTraffic = allowVirtualWanTraffic;
+            AllowRemoteVnetTraffic = allowRemoteVnetTraffic;
         }
 
         /// <summary> The extended location of type local virtual network gateway. </summary>
@@ -94,6 +103,8 @@ namespace Azure.ResourceManager.Network
         public bool? EnablePrivateIPAddress { get; set; }
         /// <summary> ActiveActive flag. </summary>
         public bool? Active { get; set; }
+        /// <summary> disableIPSecReplayProtection flag. </summary>
+        public bool? DisableIPSecReplayProtection { get; set; }
         /// <summary> The reference to the LocalNetworkGateway resource which represents local network site having default routes. Assign Null value in case of removing existing default site setting. </summary>
         internal WritableSubResource GatewayDefaultSite { get; set; }
         /// <summary> Gets or sets Id. </summary>
@@ -112,6 +123,8 @@ namespace Azure.ResourceManager.Network
         public VirtualNetworkGatewaySku Sku { get; set; }
         /// <summary> The reference to the VpnClientConfiguration resource which represents the P2S VpnClient configurations. </summary>
         public VpnClientConfiguration VpnClientConfiguration { get; set; }
+        /// <summary> The reference to the VirtualNetworkGatewayPolicyGroup resource which represents the available VirtualNetworkGatewayPolicyGroup for the gateway. </summary>
+        public IList<VirtualNetworkGatewayPolicyGroup> VirtualNetworkGatewayPolicyGroups { get; }
         /// <summary> Virtual network gateway&apos;s BGP speaker settings. </summary>
         public BgpSettings BgpSettings { get; set; }
         /// <summary> The reference to the address space resource which represents the custom routes address space specified by the customer for virtual network gateway and VpnClient. </summary>
@@ -141,5 +154,9 @@ namespace Azure.ResourceManager.Network
         public IList<VirtualNetworkGatewayNatRuleData> NatRules { get; }
         /// <summary> EnableBgpRouteTranslationForNat flag. </summary>
         public bool? EnableBgpRouteTranslationForNat { get; set; }
+        /// <summary> Configures this gateway to accept traffic from remote Virtual WAN networks. </summary>
+        public bool? AllowVirtualWanTraffic { get; set; }
+        /// <summary> Configure this gateway to accept traffic from other Azure Virtual Networks. This configuration does not support connectivity to Azure Virtual WAN. </summary>
+        public bool? AllowRemoteVnetTraffic { get; set; }
     }
 }

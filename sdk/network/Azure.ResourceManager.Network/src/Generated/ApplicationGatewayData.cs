@@ -32,15 +32,19 @@ namespace Azure.ResourceManager.Network
             Probes = new ChangeTrackingList<ApplicationGatewayProbe>();
             BackendAddressPools = new ChangeTrackingList<ApplicationGatewayBackendAddressPool>();
             BackendHttpSettingsCollection = new ChangeTrackingList<ApplicationGatewayBackendHttpSettings>();
+            BackendSettingsCollection = new ChangeTrackingList<ApplicationGatewayBackendSettings>();
             HttpListeners = new ChangeTrackingList<ApplicationGatewayHttpListener>();
+            Listeners = new ChangeTrackingList<ApplicationGatewayListener>();
             SslProfiles = new ChangeTrackingList<ApplicationGatewaySslProfile>();
             UrlPathMaps = new ChangeTrackingList<ApplicationGatewayUrlPathMap>();
             RequestRoutingRules = new ChangeTrackingList<ApplicationGatewayRequestRoutingRule>();
+            RoutingRules = new ChangeTrackingList<ApplicationGatewayRoutingRule>();
             RewriteRuleSets = new ChangeTrackingList<ApplicationGatewayRewriteRuleSet>();
             RedirectConfigurations = new ChangeTrackingList<ApplicationGatewayRedirectConfiguration>();
             PrivateLinkConfigurations = new ChangeTrackingList<ApplicationGatewayPrivateLinkConfiguration>();
             PrivateEndpointConnections = new ChangeTrackingList<ApplicationGatewayPrivateEndpointConnectionData>();
             CustomErrorConfigurations = new ChangeTrackingList<ApplicationGatewayCustomError>();
+            LoadDistributionPolicies = new ChangeTrackingList<ApplicationGatewayLoadDistributionPolicy>();
         }
 
         /// <summary> Initializes a new instance of ApplicationGatewayData. </summary>
@@ -65,10 +69,13 @@ namespace Azure.ResourceManager.Network
         /// <param name="probes"> Probes of the application gateway resource. </param>
         /// <param name="backendAddressPools"> Backend address pool of the application gateway resource. For default limits, see [Application Gateway limits](https://docs.microsoft.com/azure/azure-subscription-service-limits#application-gateway-limits). </param>
         /// <param name="backendHttpSettingsCollection"> Backend http settings of the application gateway resource. For default limits, see [Application Gateway limits](https://docs.microsoft.com/azure/azure-subscription-service-limits#application-gateway-limits). </param>
+        /// <param name="backendSettingsCollection"> Backend settings of the application gateway resource. For default limits, see [Application Gateway limits](https://docs.microsoft.com/azure/azure-subscription-service-limits#application-gateway-limits). </param>
         /// <param name="httpListeners"> Http listeners of the application gateway resource. For default limits, see [Application Gateway limits](https://docs.microsoft.com/azure/azure-subscription-service-limits#application-gateway-limits). </param>
+        /// <param name="listeners"> Listeners of the application gateway resource. For default limits, see [Application Gateway limits](https://docs.microsoft.com/azure/azure-subscription-service-limits#application-gateway-limits). </param>
         /// <param name="sslProfiles"> SSL profiles of the application gateway resource. For default limits, see [Application Gateway limits](https://docs.microsoft.com/azure/azure-subscription-service-limits#application-gateway-limits). </param>
         /// <param name="urlPathMaps"> URL path map of the application gateway resource. For default limits, see [Application Gateway limits](https://docs.microsoft.com/azure/azure-subscription-service-limits#application-gateway-limits). </param>
         /// <param name="requestRoutingRules"> Request routing rules of the application gateway resource. </param>
+        /// <param name="routingRules"> Routing rules of the application gateway resource. </param>
         /// <param name="rewriteRuleSets"> Rewrite rules for the application gateway resource. </param>
         /// <param name="redirectConfigurations"> Redirect configurations of the application gateway resource. For default limits, see [Application Gateway limits](https://docs.microsoft.com/azure/azure-subscription-service-limits#application-gateway-limits). </param>
         /// <param name="webApplicationFirewallConfiguration"> Web application firewall configuration. </param>
@@ -82,7 +89,9 @@ namespace Azure.ResourceManager.Network
         /// <param name="provisioningState"> The provisioning state of the application gateway resource. </param>
         /// <param name="customErrorConfigurations"> Custom error configurations of the application gateway resource. </param>
         /// <param name="forceFirewallPolicyAssociation"> If true, associates a firewall policy with an application gateway regardless whether the policy differs from the WAF Config. </param>
-        internal ApplicationGatewayData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, ETag? etag, IList<string> availabilityZones, ManagedServiceIdentity identity, ApplicationGatewaySku sku, ApplicationGatewaySslPolicy sslPolicy, ApplicationGatewayOperationalState? operationalState, IList<ApplicationGatewayIPConfiguration> gatewayIPConfigurations, IList<ApplicationGatewayAuthenticationCertificate> authenticationCertificates, IList<ApplicationGatewayTrustedRootCertificate> trustedRootCertificates, IList<ApplicationGatewayTrustedClientCertificate> trustedClientCertificates, IList<ApplicationGatewaySslCertificate> sslCertificates, IList<ApplicationGatewayFrontendIPConfiguration> frontendIPConfigurations, IList<ApplicationGatewayFrontendPort> frontendPorts, IList<ApplicationGatewayProbe> probes, IList<ApplicationGatewayBackendAddressPool> backendAddressPools, IList<ApplicationGatewayBackendHttpSettings> backendHttpSettingsCollection, IList<ApplicationGatewayHttpListener> httpListeners, IList<ApplicationGatewaySslProfile> sslProfiles, IList<ApplicationGatewayUrlPathMap> urlPathMaps, IList<ApplicationGatewayRequestRoutingRule> requestRoutingRules, IList<ApplicationGatewayRewriteRuleSet> rewriteRuleSets, IList<ApplicationGatewayRedirectConfiguration> redirectConfigurations, ApplicationGatewayWebApplicationFirewallConfiguration webApplicationFirewallConfiguration, WritableSubResource firewallPolicy, bool? enableHttp2, bool? enableFips, ApplicationGatewayAutoscaleConfiguration autoscaleConfiguration, IList<ApplicationGatewayPrivateLinkConfiguration> privateLinkConfigurations, IReadOnlyList<ApplicationGatewayPrivateEndpointConnectionData> privateEndpointConnections, Guid? resourceGuid, NetworkProvisioningState? provisioningState, IList<ApplicationGatewayCustomError> customErrorConfigurations, bool? forceFirewallPolicyAssociation) : base(id, name, resourceType, location, tags)
+        /// <param name="loadDistributionPolicies"> Load distribution policies of the application gateway resource. </param>
+        /// <param name="globalConfiguration"> Global Configuration. </param>
+        internal ApplicationGatewayData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, ETag? etag, IList<string> availabilityZones, ManagedServiceIdentity identity, ApplicationGatewaySku sku, ApplicationGatewaySslPolicy sslPolicy, ApplicationGatewayOperationalState? operationalState, IList<ApplicationGatewayIPConfiguration> gatewayIPConfigurations, IList<ApplicationGatewayAuthenticationCertificate> authenticationCertificates, IList<ApplicationGatewayTrustedRootCertificate> trustedRootCertificates, IList<ApplicationGatewayTrustedClientCertificate> trustedClientCertificates, IList<ApplicationGatewaySslCertificate> sslCertificates, IList<ApplicationGatewayFrontendIPConfiguration> frontendIPConfigurations, IList<ApplicationGatewayFrontendPort> frontendPorts, IList<ApplicationGatewayProbe> probes, IList<ApplicationGatewayBackendAddressPool> backendAddressPools, IList<ApplicationGatewayBackendHttpSettings> backendHttpSettingsCollection, IList<ApplicationGatewayBackendSettings> backendSettingsCollection, IList<ApplicationGatewayHttpListener> httpListeners, IList<ApplicationGatewayListener> listeners, IList<ApplicationGatewaySslProfile> sslProfiles, IList<ApplicationGatewayUrlPathMap> urlPathMaps, IList<ApplicationGatewayRequestRoutingRule> requestRoutingRules, IList<ApplicationGatewayRoutingRule> routingRules, IList<ApplicationGatewayRewriteRuleSet> rewriteRuleSets, IList<ApplicationGatewayRedirectConfiguration> redirectConfigurations, ApplicationGatewayWebApplicationFirewallConfiguration webApplicationFirewallConfiguration, WritableSubResource firewallPolicy, bool? enableHttp2, bool? enableFips, ApplicationGatewayAutoscaleConfiguration autoscaleConfiguration, IList<ApplicationGatewayPrivateLinkConfiguration> privateLinkConfigurations, IReadOnlyList<ApplicationGatewayPrivateEndpointConnectionData> privateEndpointConnections, Guid? resourceGuid, NetworkProvisioningState? provisioningState, IList<ApplicationGatewayCustomError> customErrorConfigurations, bool? forceFirewallPolicyAssociation, IList<ApplicationGatewayLoadDistributionPolicy> loadDistributionPolicies, ApplicationGatewayGlobalConfiguration globalConfiguration) : base(id, name, resourceType, location, tags)
         {
             ETag = etag;
             AvailabilityZones = availabilityZones;
@@ -100,10 +109,13 @@ namespace Azure.ResourceManager.Network
             Probes = probes;
             BackendAddressPools = backendAddressPools;
             BackendHttpSettingsCollection = backendHttpSettingsCollection;
+            BackendSettingsCollection = backendSettingsCollection;
             HttpListeners = httpListeners;
+            Listeners = listeners;
             SslProfiles = sslProfiles;
             UrlPathMaps = urlPathMaps;
             RequestRoutingRules = requestRoutingRules;
+            RoutingRules = routingRules;
             RewriteRuleSets = rewriteRuleSets;
             RedirectConfigurations = redirectConfigurations;
             WebApplicationFirewallConfiguration = webApplicationFirewallConfiguration;
@@ -117,6 +129,8 @@ namespace Azure.ResourceManager.Network
             ProvisioningState = provisioningState;
             CustomErrorConfigurations = customErrorConfigurations;
             ForceFirewallPolicyAssociation = forceFirewallPolicyAssociation;
+            LoadDistributionPolicies = loadDistributionPolicies;
+            GlobalConfiguration = globalConfiguration;
         }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
@@ -151,14 +165,20 @@ namespace Azure.ResourceManager.Network
         public IList<ApplicationGatewayBackendAddressPool> BackendAddressPools { get; }
         /// <summary> Backend http settings of the application gateway resource. For default limits, see [Application Gateway limits](https://docs.microsoft.com/azure/azure-subscription-service-limits#application-gateway-limits). </summary>
         public IList<ApplicationGatewayBackendHttpSettings> BackendHttpSettingsCollection { get; }
+        /// <summary> Backend settings of the application gateway resource. For default limits, see [Application Gateway limits](https://docs.microsoft.com/azure/azure-subscription-service-limits#application-gateway-limits). </summary>
+        public IList<ApplicationGatewayBackendSettings> BackendSettingsCollection { get; }
         /// <summary> Http listeners of the application gateway resource. For default limits, see [Application Gateway limits](https://docs.microsoft.com/azure/azure-subscription-service-limits#application-gateway-limits). </summary>
         public IList<ApplicationGatewayHttpListener> HttpListeners { get; }
+        /// <summary> Listeners of the application gateway resource. For default limits, see [Application Gateway limits](https://docs.microsoft.com/azure/azure-subscription-service-limits#application-gateway-limits). </summary>
+        public IList<ApplicationGatewayListener> Listeners { get; }
         /// <summary> SSL profiles of the application gateway resource. For default limits, see [Application Gateway limits](https://docs.microsoft.com/azure/azure-subscription-service-limits#application-gateway-limits). </summary>
         public IList<ApplicationGatewaySslProfile> SslProfiles { get; }
         /// <summary> URL path map of the application gateway resource. For default limits, see [Application Gateway limits](https://docs.microsoft.com/azure/azure-subscription-service-limits#application-gateway-limits). </summary>
         public IList<ApplicationGatewayUrlPathMap> UrlPathMaps { get; }
         /// <summary> Request routing rules of the application gateway resource. </summary>
         public IList<ApplicationGatewayRequestRoutingRule> RequestRoutingRules { get; }
+        /// <summary> Routing rules of the application gateway resource. </summary>
+        public IList<ApplicationGatewayRoutingRule> RoutingRules { get; }
         /// <summary> Rewrite rules for the application gateway resource. </summary>
         public IList<ApplicationGatewayRewriteRuleSet> RewriteRuleSets { get; }
         /// <summary> Redirect configurations of the application gateway resource. For default limits, see [Application Gateway limits](https://docs.microsoft.com/azure/azure-subscription-service-limits#application-gateway-limits). </summary>
@@ -197,5 +217,9 @@ namespace Azure.ResourceManager.Network
         public IList<ApplicationGatewayCustomError> CustomErrorConfigurations { get; }
         /// <summary> If true, associates a firewall policy with an application gateway regardless whether the policy differs from the WAF Config. </summary>
         public bool? ForceFirewallPolicyAssociation { get; set; }
+        /// <summary> Load distribution policies of the application gateway resource. </summary>
+        public IList<ApplicationGatewayLoadDistributionPolicy> LoadDistributionPolicies { get; }
+        /// <summary> Global Configuration. </summary>
+        public ApplicationGatewayGlobalConfiguration GlobalConfiguration { get; set; }
     }
 }

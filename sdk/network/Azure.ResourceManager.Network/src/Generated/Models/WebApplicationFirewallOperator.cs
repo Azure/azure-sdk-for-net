@@ -33,6 +33,7 @@ namespace Azure.ResourceManager.Network.Models
         private const string EndsWithValue = "EndsWith";
         private const string RegexValue = "Regex";
         private const string GeoMatchValue = "GeoMatch";
+        private const string AnyValue = "Any";
 
         /// <summary> IPMatch. </summary>
         public static WebApplicationFirewallOperator IPMatch { get; } = new WebApplicationFirewallOperator(IPMatchValue);
@@ -56,6 +57,8 @@ namespace Azure.ResourceManager.Network.Models
         public static WebApplicationFirewallOperator Regex { get; } = new WebApplicationFirewallOperator(RegexValue);
         /// <summary> GeoMatch. </summary>
         public static WebApplicationFirewallOperator GeoMatch { get; } = new WebApplicationFirewallOperator(GeoMatchValue);
+        /// <summary> Any. </summary>
+        public static WebApplicationFirewallOperator Any { get; } = new WebApplicationFirewallOperator(AnyValue);
         /// <summary> Determines if two <see cref="WebApplicationFirewallOperator"/> values are the same. </summary>
         public static bool operator ==(WebApplicationFirewallOperator left, WebApplicationFirewallOperator right) => left.Equals(right);
         /// <summary> Determines if two <see cref="WebApplicationFirewallOperator"/> values are not the same. </summary>

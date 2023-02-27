@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.ResourceManager.Network;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -56,6 +59,8 @@ namespace Azure.ResourceManager.Network.Models
             Optional<AddressSpace> vpnClientAddressPool = default;
             Optional<RoutingConfiguration> routingConfiguration = default;
             Optional<bool> enableInternetSecurity = default;
+            Optional<IReadOnlyList<WritableSubResource>> configurationPolicyGroupAssociations = default;
+            Optional<IReadOnlyList<VpnServerConfigurationPolicyGroupData>> previousConfigurationPolicyGroupAssociations = default;
             Optional<NetworkProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -133,6 +138,36 @@ namespace Azure.ResourceManager.Network.Models
                             enableInternetSecurity = property0.Value.GetBoolean();
                             continue;
                         }
+                        if (property0.NameEquals("configurationPolicyGroupAssociations"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            List<WritableSubResource> array = new List<WritableSubResource>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(JsonSerializer.Deserialize<WritableSubResource>(item.GetRawText()));
+                            }
+                            configurationPolicyGroupAssociations = array;
+                            continue;
+                        }
+                        if (property0.NameEquals("previousConfigurationPolicyGroupAssociations"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            List<VpnServerConfigurationPolicyGroupData> array = new List<VpnServerConfigurationPolicyGroupData>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(VpnServerConfigurationPolicyGroupData.DeserializeVpnServerConfigurationPolicyGroupData(item));
+                            }
+                            previousConfigurationPolicyGroupAssociations = array;
+                            continue;
+                        }
                         if (property0.NameEquals("provisioningState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -147,7 +182,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new P2SConnectionConfiguration(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(etag), vpnClientAddressPool.Value, routingConfiguration.Value, Optional.ToNullable(enableInternetSecurity), Optional.ToNullable(provisioningState));
+            return new P2SConnectionConfiguration(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(etag), vpnClientAddressPool.Value, routingConfiguration.Value, Optional.ToNullable(enableInternetSecurity), Optional.ToList(configurationPolicyGroupAssociations), Optional.ToList(previousConfigurationPolicyGroupAssociations), Optional.ToNullable(provisioningState));
         }
     }
 }

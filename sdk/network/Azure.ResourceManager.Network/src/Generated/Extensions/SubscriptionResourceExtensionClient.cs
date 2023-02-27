@@ -95,6 +95,8 @@ namespace Azure.ResourceManager.Network
         private ServiceEndpointPoliciesRestOperations _serviceEndpointPolicyRestClient;
         private ClientDiagnostics _serviceTagsClientDiagnostics;
         private ServiceTagsRestOperations _serviceTagsRestClient;
+        private ClientDiagnostics _serviceTagInformationClientDiagnostics;
+        private ServiceTagInformationRestOperations _serviceTagInformationRestClient;
         private ClientDiagnostics _usagesClientDiagnostics;
         private UsagesRestOperations _usagesRestClient;
         private ClientDiagnostics _virtualNetworkClientDiagnostics;
@@ -208,6 +210,8 @@ namespace Azure.ResourceManager.Network
         private ServiceEndpointPoliciesRestOperations ServiceEndpointPolicyRestClient => _serviceEndpointPolicyRestClient ??= new ServiceEndpointPoliciesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(ServiceEndpointPolicyResource.ResourceType));
         private ClientDiagnostics ServiceTagsClientDiagnostics => _serviceTagsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private ServiceTagsRestOperations ServiceTagsRestClient => _serviceTagsRestClient ??= new ServiceTagsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+        private ClientDiagnostics ServiceTagInformationClientDiagnostics => _serviceTagInformationClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private ServiceTagInformationRestOperations ServiceTagInformationRestClient => _serviceTagInformationRestClient ??= new ServiceTagInformationRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
         private ClientDiagnostics UsagesClientDiagnostics => _usagesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private UsagesRestOperations UsagesRestClient => _usagesRestClient ??= new UsagesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
         private ClientDiagnostics VirtualNetworkClientDiagnostics => _virtualNetworkClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network", VirtualNetworkResource.ResourceType.Namespace, Diagnostics);
@@ -2454,6 +2458,56 @@ namespace Azure.ResourceManager.Network
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary>
+        /// Gets a list of service tag information resources with pagination.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/serviceTagDetails</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ServiceTagInformation_List</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="location"> The location that will be used as a reference for cloud (not as a filter based on location, you will get the list of service tags with prefix details across all regions but limited to the cloud that your subscription belongs to). </param>
+        /// <param name="noAddressPrefixes"> Do not return address prefixes for the tag(s). </param>
+        /// <param name="tagName"> Return tag information for a particular tag. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="ServiceTagInformation" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ServiceTagInformation> GetAllServiceTagInformationAsync(AzureLocation location, bool? noAddressPrefixes = null, string tagName = null, CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => ServiceTagInformationRestClient.CreateListRequest(Id.SubscriptionId, location, noAddressPrefixes, tagName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ServiceTagInformationRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, location, noAddressPrefixes, tagName);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ServiceTagInformation.DeserializeServiceTagInformation, ServiceTagInformationClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetAllServiceTagInformation", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets a list of service tag information resources with pagination.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/serviceTagDetails</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ServiceTagInformation_List</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="location"> The location that will be used as a reference for cloud (not as a filter based on location, you will get the list of service tags with prefix details across all regions but limited to the cloud that your subscription belongs to). </param>
+        /// <param name="noAddressPrefixes"> Do not return address prefixes for the tag(s). </param>
+        /// <param name="tagName"> Return tag information for a particular tag. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="ServiceTagInformation" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ServiceTagInformation> GetAllServiceTagInformation(AzureLocation location, bool? noAddressPrefixes = null, string tagName = null, CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => ServiceTagInformationRestClient.CreateListRequest(Id.SubscriptionId, location, noAddressPrefixes, tagName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ServiceTagInformationRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, location, noAddressPrefixes, tagName);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ServiceTagInformation.DeserializeServiceTagInformation, ServiceTagInformationClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetAllServiceTagInformation", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

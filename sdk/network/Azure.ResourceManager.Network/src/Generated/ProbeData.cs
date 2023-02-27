@@ -32,9 +32,10 @@ namespace Azure.ResourceManager.Network
         /// <param name="port"> The port for communicating the probe. Possible values range from 1 to 65535, inclusive. </param>
         /// <param name="intervalInSeconds"> The interval, in seconds, for how frequently to probe the endpoint for health status. Typically, the interval is slightly less than half the allocated timeout period (in seconds) which allows two full probes before taking the instance out of rotation. The default value is 15, the minimum value is 5. </param>
         /// <param name="numberOfProbes"> The number of probes where if no response, will result in stopping further traffic from being delivered to the endpoint. This values allows endpoints to be taken out of rotation faster or slower than the typical times used in Azure. </param>
+        /// <param name="probeThreshold"> The number of consecutive successful or failed probes in order to allow or deny traffic from being delivered to this endpoint. After failing the number of consecutive probes equal to this value, the endpoint will be taken out of rotation and require the same number of successful consecutive probes to be placed back in rotation. </param>
         /// <param name="requestPath"> The URI used for requesting health status from the VM. Path is required if a protocol is set to http. Otherwise, it is not allowed. There is no default value. </param>
         /// <param name="provisioningState"> The provisioning state of the probe resource. </param>
-        internal ProbeData(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? etag, IReadOnlyList<WritableSubResource> loadBalancingRules, ProbeProtocol? protocol, int? port, int? intervalInSeconds, int? numberOfProbes, string requestPath, NetworkProvisioningState? provisioningState) : base(id, name, resourceType)
+        internal ProbeData(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? etag, IReadOnlyList<WritableSubResource> loadBalancingRules, ProbeProtocol? protocol, int? port, int? intervalInSeconds, int? numberOfProbes, int? probeThreshold, string requestPath, NetworkProvisioningState? provisioningState) : base(id, name, resourceType)
         {
             ETag = etag;
             LoadBalancingRules = loadBalancingRules;
@@ -42,6 +43,7 @@ namespace Azure.ResourceManager.Network
             Port = port;
             IntervalInSeconds = intervalInSeconds;
             NumberOfProbes = numberOfProbes;
+            ProbeThreshold = probeThreshold;
             RequestPath = requestPath;
             ProvisioningState = provisioningState;
         }
@@ -58,6 +60,8 @@ namespace Azure.ResourceManager.Network
         public int? IntervalInSeconds { get; set; }
         /// <summary> The number of probes where if no response, will result in stopping further traffic from being delivered to the endpoint. This values allows endpoints to be taken out of rotation faster or slower than the typical times used in Azure. </summary>
         public int? NumberOfProbes { get; set; }
+        /// <summary> The number of consecutive successful or failed probes in order to allow or deny traffic from being delivered to this endpoint. After failing the number of consecutive probes equal to this value, the endpoint will be taken out of rotation and require the same number of successful consecutive probes to be placed back in rotation. </summary>
+        public int? ProbeThreshold { get; set; }
         /// <summary> The URI used for requesting health status from the VM. Path is required if a protocol is set to http. Otherwise, it is not allowed. There is no default value. </summary>
         public string RequestPath { get; set; }
         /// <summary> The provisioning state of the probe resource. </summary>

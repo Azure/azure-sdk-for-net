@@ -42,6 +42,11 @@ namespace Azure.ResourceManager.Network
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
+            if (Optional.IsDefined(FlushConnection))
+            {
+                writer.WritePropertyName("flushConnection"u8);
+                writer.WriteBooleanValue(FlushConnection.Value);
+            }
             if (Optional.IsCollectionDefined(SecurityRules))
             {
                 writer.WritePropertyName("securityRules"u8);
@@ -64,6 +69,7 @@ namespace Azure.ResourceManager.Network
             Optional<ResourceType> type = default;
             Optional<AzureLocation> location = default;
             Optional<IDictionary<string, string>> tags = default;
+            Optional<bool> flushConnection = default;
             Optional<IList<SecurityRuleData>> securityRules = default;
             Optional<IReadOnlyList<SecurityRuleData>> defaultSecurityRules = default;
             Optional<IReadOnlyList<NetworkInterfaceData>> networkInterfaces = default;
@@ -142,6 +148,16 @@ namespace Azure.ResourceManager.Network
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
+                        if (property0.NameEquals("flushConnection"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            flushConnection = property0.Value.GetBoolean();
+                            continue;
+                        }
                         if (property0.NameEquals("securityRules"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -241,7 +257,7 @@ namespace Azure.ResourceManager.Network
                     continue;
                 }
             }
-            return new NetworkSecurityGroupData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), Optional.ToNullable(etag), Optional.ToList(securityRules), Optional.ToList(defaultSecurityRules), Optional.ToList(networkInterfaces), Optional.ToList(subnets), Optional.ToList(flowLogs), Optional.ToNullable(resourceGuid), Optional.ToNullable(provisioningState));
+            return new NetworkSecurityGroupData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), Optional.ToNullable(etag), Optional.ToNullable(flushConnection), Optional.ToList(securityRules), Optional.ToList(defaultSecurityRules), Optional.ToList(networkInterfaces), Optional.ToList(subnets), Optional.ToList(flowLogs), Optional.ToNullable(resourceGuid), Optional.ToNullable(provisioningState));
         }
     }
 }

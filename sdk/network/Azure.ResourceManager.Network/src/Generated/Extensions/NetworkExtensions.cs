@@ -2217,6 +2217,54 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary>
+        /// Gets a list of service tag information resources with pagination.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/serviceTagDetails</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ServiceTagInformation_List</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="location"> The location that will be used as a reference for cloud (not as a filter based on location, you will get the list of service tags with prefix details across all regions but limited to the cloud that your subscription belongs to). </param>
+        /// <param name="noAddressPrefixes"> Do not return address prefixes for the tag(s). </param>
+        /// <param name="tagName"> Return tag information for a particular tag. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="ServiceTagInformation" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<ServiceTagInformation> GetAllServiceTagInformationAsync(this SubscriptionResource subscriptionResource, AzureLocation location, bool? noAddressPrefixes = null, string tagName = null, CancellationToken cancellationToken = default)
+        {
+            return GetExtensionClient(subscriptionResource).GetAllServiceTagInformationAsync(location, noAddressPrefixes, tagName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets a list of service tag information resources with pagination.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/serviceTagDetails</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ServiceTagInformation_List</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="location"> The location that will be used as a reference for cloud (not as a filter based on location, you will get the list of service tags with prefix details across all regions but limited to the cloud that your subscription belongs to). </param>
+        /// <param name="noAddressPrefixes"> Do not return address prefixes for the tag(s). </param>
+        /// <param name="tagName"> Return tag information for a particular tag. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="ServiceTagInformation" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<ServiceTagInformation> GetAllServiceTagInformation(this SubscriptionResource subscriptionResource, AzureLocation location, bool? noAddressPrefixes = null, string tagName = null, CancellationToken cancellationToken = default)
+        {
+            return GetExtensionClient(subscriptionResource).GetAllServiceTagInformation(location, noAddressPrefixes, tagName, cancellationToken);
+        }
+
+        /// <summary>
         /// List network usages for a subscription.
         /// <list type="bullet">
         /// <item>
@@ -5785,6 +5833,25 @@ namespace Azure.ResourceManager.Network
         }
         #endregion
 
+        #region ExpressRoutePortAuthorizationResource
+        /// <summary>
+        /// Gets an object representing an <see cref="ExpressRoutePortAuthorizationResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ExpressRoutePortAuthorizationResource.CreateResourceIdentifier" /> to create an <see cref="ExpressRoutePortAuthorizationResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ExpressRoutePortAuthorizationResource" /> object. </returns>
+        public static ExpressRoutePortAuthorizationResource GetExpressRoutePortAuthorizationResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                ExpressRoutePortAuthorizationResource.ValidateResourceId(id);
+                return new ExpressRoutePortAuthorizationResource(client, id);
+            }
+            );
+        }
+        #endregion
+
         #region FirewallPolicyResource
         /// <summary>
         /// Gets an object representing a <see cref="FirewallPolicyResource" /> along with the instance operations that can be performed on it but with no data.
@@ -5818,6 +5885,25 @@ namespace Azure.ResourceManager.Network
             {
                 FirewallPolicyRuleCollectionGroupResource.ValidateResourceId(id);
                 return new FirewallPolicyRuleCollectionGroupResource(client, id);
+            }
+            );
+        }
+        #endregion
+
+        #region SignaturesOverrideResource
+        /// <summary>
+        /// Gets an object representing a <see cref="SignaturesOverrideResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SignaturesOverrideResource.CreateResourceIdentifier" /> to create a <see cref="SignaturesOverrideResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="SignaturesOverrideResource" /> object. </returns>
+        public static SignaturesOverrideResource GetSignaturesOverrideResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                SignaturesOverrideResource.ValidateResourceId(id);
+                return new SignaturesOverrideResource(client, id);
             }
             );
         }
@@ -6792,6 +6878,25 @@ namespace Azure.ResourceManager.Network
         }
         #endregion
 
+        #region VpnServerConfigurationPolicyGroupResource
+        /// <summary>
+        /// Gets an object representing a <see cref="VpnServerConfigurationPolicyGroupResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="VpnServerConfigurationPolicyGroupResource.CreateResourceIdentifier" /> to create a <see cref="VpnServerConfigurationPolicyGroupResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="VpnServerConfigurationPolicyGroupResource" /> object. </returns>
+        public static VpnServerConfigurationPolicyGroupResource GetVpnServerConfigurationPolicyGroupResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                VpnServerConfigurationPolicyGroupResource.ValidateResourceId(id);
+                return new VpnServerConfigurationPolicyGroupResource(client, id);
+            }
+            );
+        }
+        #endregion
+
         #region VirtualHubResource
         /// <summary>
         /// Gets an object representing a <see cref="VirtualHubResource" /> along with the instance operations that can be performed on it but with no data.
@@ -6806,6 +6911,25 @@ namespace Azure.ResourceManager.Network
             {
                 VirtualHubResource.ValidateResourceId(id);
                 return new VirtualHubResource(client, id);
+            }
+            );
+        }
+        #endregion
+
+        #region RouteMapResource
+        /// <summary>
+        /// Gets an object representing a <see cref="RouteMapResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="RouteMapResource.CreateResourceIdentifier" /> to create a <see cref="RouteMapResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="RouteMapResource" /> object. </returns>
+        public static RouteMapResource GetRouteMapResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                RouteMapResource.ValidateResourceId(id);
+                return new RouteMapResource(client, id);
             }
             );
         }
@@ -7034,6 +7158,25 @@ namespace Azure.ResourceManager.Network
             {
                 HubRouteTableResource.ValidateResourceId(id);
                 return new HubRouteTableResource(client, id);
+            }
+            );
+        }
+        #endregion
+
+        #region RoutingIntentResource
+        /// <summary>
+        /// Gets an object representing a <see cref="RoutingIntentResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="RoutingIntentResource.CreateResourceIdentifier" /> to create a <see cref="RoutingIntentResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="RoutingIntentResource" /> object. </returns>
+        public static RoutingIntentResource GetRoutingIntentResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                RoutingIntentResource.ValidateResourceId(id);
+                return new RoutingIntentResource(client, id);
             }
             );
         }

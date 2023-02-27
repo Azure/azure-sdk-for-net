@@ -18,20 +18,25 @@ namespace Azure.ResourceManager.Network.Models
         {
             SignatureOverrides = new ChangeTrackingList<FirewallPolicyIntrusionDetectionSignatureSpecification>();
             BypassTrafficSettings = new ChangeTrackingList<FirewallPolicyIntrusionDetectionBypassTrafficSpecifications>();
+            PrivateRanges = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of FirewallPolicyIntrusionDetectionConfiguration. </summary>
         /// <param name="signatureOverrides"> List of specific signatures states. </param>
         /// <param name="bypassTrafficSettings"> List of rules for traffic to bypass. </param>
-        internal FirewallPolicyIntrusionDetectionConfiguration(IList<FirewallPolicyIntrusionDetectionSignatureSpecification> signatureOverrides, IList<FirewallPolicyIntrusionDetectionBypassTrafficSpecifications> bypassTrafficSettings)
+        /// <param name="privateRanges"> IDPS Private IP address ranges are used to identify traffic direction (i.e. inbound, outbound, etc.). By default, only ranges defined by IANA RFC 1918 are considered private IP addresses. To modify default ranges, specify your Private IP address ranges with this property. </param>
+        internal FirewallPolicyIntrusionDetectionConfiguration(IList<FirewallPolicyIntrusionDetectionSignatureSpecification> signatureOverrides, IList<FirewallPolicyIntrusionDetectionBypassTrafficSpecifications> bypassTrafficSettings, IList<string> privateRanges)
         {
             SignatureOverrides = signatureOverrides;
             BypassTrafficSettings = bypassTrafficSettings;
+            PrivateRanges = privateRanges;
         }
 
         /// <summary> List of specific signatures states. </summary>
         public IList<FirewallPolicyIntrusionDetectionSignatureSpecification> SignatureOverrides { get; }
         /// <summary> List of rules for traffic to bypass. </summary>
         public IList<FirewallPolicyIntrusionDetectionBypassTrafficSpecifications> BypassTrafficSettings { get; }
+        /// <summary> IDPS Private IP address ranges are used to identify traffic direction (i.e. inbound, outbound, etc.). By default, only ranges defined by IANA RFC 1918 are considered private IP addresses. To modify default ranges, specify your Private IP address ranges with this property. </summary>
+        public IList<string> PrivateRanges { get; }
     }
 }

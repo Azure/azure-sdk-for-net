@@ -54,6 +54,11 @@ namespace Azure.ResourceManager.Network
                 writer.WritePropertyName("expressRouteGatewayBypass"u8);
                 writer.WriteBooleanValue(ExpressRouteGatewayBypass.Value);
             }
+            if (Optional.IsDefined(EnablePrivateLinkFastPath))
+            {
+                writer.WritePropertyName("enablePrivateLinkFastPath"u8);
+                writer.WriteBooleanValue(EnablePrivateLinkFastPath.Value);
+            }
             if (Optional.IsDefined(RoutingConfiguration))
             {
                 writer.WritePropertyName("routingConfiguration"u8);
@@ -74,6 +79,7 @@ namespace Azure.ResourceManager.Network
             Optional<int> routingWeight = default;
             Optional<bool> enableInternetSecurity = default;
             Optional<bool> expressRouteGatewayBypass = default;
+            Optional<bool> enablePrivateLinkFastPath = default;
             Optional<RoutingConfiguration> routingConfiguration = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -166,6 +172,16 @@ namespace Azure.ResourceManager.Network
                             expressRouteGatewayBypass = property0.Value.GetBoolean();
                             continue;
                         }
+                        if (property0.NameEquals("enablePrivateLinkFastPath"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            enablePrivateLinkFastPath = property0.Value.GetBoolean();
+                            continue;
+                        }
                         if (property0.NameEquals("routingConfiguration"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -180,7 +196,7 @@ namespace Azure.ResourceManager.Network
                     continue;
                 }
             }
-            return new ExpressRouteConnectionData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(provisioningState), expressRouteCircuitPeering, authorizationKey.Value, Optional.ToNullable(routingWeight), Optional.ToNullable(enableInternetSecurity), Optional.ToNullable(expressRouteGatewayBypass), routingConfiguration.Value);
+            return new ExpressRouteConnectionData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(provisioningState), expressRouteCircuitPeering, authorizationKey.Value, Optional.ToNullable(routingWeight), Optional.ToNullable(enableInternetSecurity), Optional.ToNullable(expressRouteGatewayBypass), Optional.ToNullable(enablePrivateLinkFastPath), routingConfiguration.Value);
         }
     }
 }

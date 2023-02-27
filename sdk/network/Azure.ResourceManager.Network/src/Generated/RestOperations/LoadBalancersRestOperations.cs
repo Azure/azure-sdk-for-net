@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Network
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2021-02-01";
+            _apiVersion = apiVersion ?? "2022-09-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -561,6 +561,91 @@ namespace Azure.ResourceManager.Network
             Argument.AssertNotNull(content, nameof(content));
 
             using var message = CreateSwapPublicIPAddressesRequest(subscriptionId, location, content);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                case 202:
+                    return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateListInboundNatRulePortMappingsRequest(string subscriptionId, string groupName, string loadBalancerName, string backendPoolName, QueryInboundNatRulePortMappingContent content)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(groupName, true);
+            uri.AppendPath("/providers/Microsoft.Network/loadBalancers/", false);
+            uri.AppendPath(loadBalancerName, true);
+            uri.AppendPath("/backendAddressPools/", false);
+            uri.AppendPath(backendPoolName, true);
+            uri.AppendPath("/queryInboundNatRulePortMapping", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(content);
+            request.Content = content0;
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        /// <summary> List of inbound NAT rule port mappings. </summary>
+        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="groupName"> The name of the resource group. </param>
+        /// <param name="loadBalancerName"> The name of the load balancer. </param>
+        /// <param name="backendPoolName"> The name of the load balancer backend address pool. </param>
+        /// <param name="content"> Query inbound NAT rule port mapping request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="groupName"/>, <paramref name="loadBalancerName"/>, <paramref name="backendPoolName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="groupName"/>, <paramref name="loadBalancerName"/> or <paramref name="backendPoolName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response> ListInboundNatRulePortMappingsAsync(string subscriptionId, string groupName, string loadBalancerName, string backendPoolName, QueryInboundNatRulePortMappingContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
+            Argument.AssertNotNullOrEmpty(loadBalancerName, nameof(loadBalancerName));
+            Argument.AssertNotNullOrEmpty(backendPoolName, nameof(backendPoolName));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var message = CreateListInboundNatRulePortMappingsRequest(subscriptionId, groupName, loadBalancerName, backendPoolName, content);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                case 202:
+                    return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> List of inbound NAT rule port mappings. </summary>
+        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="groupName"> The name of the resource group. </param>
+        /// <param name="loadBalancerName"> The name of the load balancer. </param>
+        /// <param name="backendPoolName"> The name of the load balancer backend address pool. </param>
+        /// <param name="content"> Query inbound NAT rule port mapping request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="groupName"/>, <paramref name="loadBalancerName"/>, <paramref name="backendPoolName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="groupName"/>, <paramref name="loadBalancerName"/> or <paramref name="backendPoolName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response ListInboundNatRulePortMappings(string subscriptionId, string groupName, string loadBalancerName, string backendPoolName, QueryInboundNatRulePortMappingContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
+            Argument.AssertNotNullOrEmpty(loadBalancerName, nameof(loadBalancerName));
+            Argument.AssertNotNullOrEmpty(backendPoolName, nameof(backendPoolName));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var message = CreateListInboundNatRulePortMappingsRequest(subscriptionId, groupName, loadBalancerName, backendPoolName, content);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

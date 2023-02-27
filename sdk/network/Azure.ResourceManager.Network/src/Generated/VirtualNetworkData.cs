@@ -23,6 +23,7 @@ namespace Azure.ResourceManager.Network
             Subnets = new ChangeTrackingList<SubnetData>();
             VirtualNetworkPeerings = new ChangeTrackingList<VirtualNetworkPeeringData>();
             IPAllocations = new ChangeTrackingList<WritableSubResource>();
+            FlowLogs = new ChangeTrackingList<FlowLogData>();
         }
 
         /// <summary> Initializes a new instance of VirtualNetworkData. </summary>
@@ -44,8 +45,10 @@ namespace Azure.ResourceManager.Network
         /// <param name="enableVmProtection"> Indicates if VM protection is enabled for all the subnets in the virtual network. </param>
         /// <param name="ddosProtectionPlan"> The DDoS protection plan associated with the virtual network. </param>
         /// <param name="bgpCommunities"> Bgp Communities sent over ExpressRoute with each route corresponding to a prefix in this VNET. </param>
+        /// <param name="encryption"> Indicates if encryption is enabled on virtual network and if VM without encryption is allowed in encrypted VNet. </param>
         /// <param name="ipAllocations"> Array of IpAllocation which reference this VNET. </param>
-        internal VirtualNetworkData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, ExtendedLocation extendedLocation, ETag? etag, AddressSpace addressSpace, DhcpOptions dhcpOptions, int? flowTimeoutInMinutes, IList<SubnetData> subnets, IList<VirtualNetworkPeeringData> virtualNetworkPeerings, Guid? resourceGuid, NetworkProvisioningState? provisioningState, bool? enableDdosProtection, bool? enableVmProtection, WritableSubResource ddosProtectionPlan, VirtualNetworkBgpCommunities bgpCommunities, IList<WritableSubResource> ipAllocations) : base(id, name, resourceType, location, tags)
+        /// <param name="flowLogs"> A collection of references to flow log resources. </param>
+        internal VirtualNetworkData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, ExtendedLocation extendedLocation, ETag? etag, AddressSpace addressSpace, DhcpOptions dhcpOptions, int? flowTimeoutInMinutes, IList<SubnetData> subnets, IList<VirtualNetworkPeeringData> virtualNetworkPeerings, Guid? resourceGuid, NetworkProvisioningState? provisioningState, bool? enableDdosProtection, bool? enableVmProtection, WritableSubResource ddosProtectionPlan, VirtualNetworkBgpCommunities bgpCommunities, VirtualNetworkEncryption encryption, IList<WritableSubResource> ipAllocations, IReadOnlyList<FlowLogData> flowLogs) : base(id, name, resourceType, location, tags)
         {
             ExtendedLocation = extendedLocation;
             ETag = etag;
@@ -60,7 +63,9 @@ namespace Azure.ResourceManager.Network
             EnableVmProtection = enableVmProtection;
             DdosProtectionPlan = ddosProtectionPlan;
             BgpCommunities = bgpCommunities;
+            Encryption = encryption;
             IPAllocations = ipAllocations;
+            FlowLogs = flowLogs;
         }
 
         /// <summary> The extended location of the virtual network. </summary>
@@ -123,7 +128,11 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Bgp Communities sent over ExpressRoute with each route corresponding to a prefix in this VNET. </summary>
         public VirtualNetworkBgpCommunities BgpCommunities { get; set; }
+        /// <summary> Indicates if encryption is enabled on virtual network and if VM without encryption is allowed in encrypted VNet. </summary>
+        public VirtualNetworkEncryption Encryption { get; set; }
         /// <summary> Array of IpAllocation which reference this VNET. </summary>
         public IList<WritableSubResource> IPAllocations { get; }
+        /// <summary> A collection of references to flow log resources. </summary>
+        public IReadOnlyList<FlowLogData> FlowLogs { get; }
     }
 }
