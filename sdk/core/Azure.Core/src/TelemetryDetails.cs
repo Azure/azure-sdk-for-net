@@ -109,7 +109,17 @@ namespace Azure.Core
         private static string EscapeProductInformation(string productInfo)
         {
             // If the string is already valid, we don't need to escape anything
-            if (ProductInfoHeaderValue.TryParse(productInfo, out var _))
+            bool success = false;
+            try
+            {
+                success = ProductInfoHeaderValue.TryParse(productInfo, out var _);
+            }
+            catch (Exception)
+            {
+                // Invalid values can throw in Framework due to https://github.com/dotnet/runtime/issues/28558
+                // Treat this as a failure to parse.
+            }
+            if (success)
             {
                 return productInfo;
             }
