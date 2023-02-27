@@ -117,6 +117,7 @@
 
     <!-- OpenTelemetry dependency approved for Azure.Monitor.OpenTelemetry.Exporter package only -->
     <PackageReference Update="OpenTelemetry" Version="1.4.0"  Condition="'$(MSBuildProjectName)' == 'Azure.Monitor.OpenTelemetry.Exporter'" />
+    <PackageReference Update="OpenTelemetry.Extensions.AzureMonitor" VersionOverride="1.0.0-beta.3" />
     <PackageReference Update="OpenTelemetry.Extensions.Hosting" Version="1.4.0" />
     <PackageReference Update="OpenTelemetry.Instrumentation.AspNetCore" Version="1.0.0-rc9.14" />
     <PackageReference Update="OpenTelemetry.Instrumentation.Http" Version="1.0.0-rc9.14" />
