@@ -10,7 +10,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary> A class representing the AppServiceIdentifier data model. </summary>
+    /// <summary>
+    /// A class representing the AppServiceIdentifier data model.
+    /// A domain specific resource identifier.
+    /// </summary>
     public partial class AppServiceIdentifierData : ResourceData
     {
         /// <summary> Initializes a new instance of AppServiceIdentifierData. </summary>

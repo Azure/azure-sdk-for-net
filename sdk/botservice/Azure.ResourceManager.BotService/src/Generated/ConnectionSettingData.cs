@@ -13,7 +13,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.BotService
 {
-    /// <summary> A class representing the ConnectionSetting data model. </summary>
+    /// <summary>
+    /// A class representing the ConnectionSetting data model.
+    /// Bot channel resource definition
+    /// </summary>
     public partial class ConnectionSettingData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of ConnectionSettingData. </summary>

@@ -13,7 +13,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Media
 {
-    /// <summary> A class representing the ContentKeyPolicy data model. </summary>
+    /// <summary>
+    /// A class representing the ContentKeyPolicy data model.
+    /// A Content Key Policy resource.
+    /// </summary>
     public partial class ContentKeyPolicyData : ResourceData
     {
         /// <summary> Initializes a new instance of ContentKeyPolicyData. </summary>

@@ -13,7 +13,10 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> A class representing the AzureFirewall data model. </summary>
+    /// <summary>
+    /// A class representing the AzureFirewall data model.
+    /// Azure Firewall resource.
+    /// </summary>
     public partial class AzureFirewallData : NetworkTrackedResourceData
     {
         /// <summary> Initializes a new instance of AzureFirewallData. </summary>

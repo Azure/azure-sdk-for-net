@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Communication
 {
-    /// <summary> A class representing the CommunicationDomainResource data model. </summary>
+    /// <summary>
+    /// A class representing the CommunicationDomainResource data model.
+    /// A class representing a Domains resource.
+    /// </summary>
     public partial class CommunicationDomainResourceData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of CommunicationDomainResourceData. </summary>

@@ -11,7 +11,10 @@ using Azure.ResourceManager.WebPubSub.Models;
 
 namespace Azure.ResourceManager.WebPubSub
 {
-    /// <summary> A class representing the WebPubSubSharedPrivateLink data model. </summary>
+    /// <summary>
+    /// A class representing the WebPubSubSharedPrivateLink data model.
+    /// Describes a Shared Private Link Resource
+    /// </summary>
     public partial class WebPubSubSharedPrivateLinkData : ResourceData
     {
         /// <summary> Initializes a new instance of WebPubSubSharedPrivateLinkData. </summary>

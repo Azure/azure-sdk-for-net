@@ -14,7 +14,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Automation
 {
-    /// <summary> A class representing the DscNode data model. </summary>
+    /// <summary>
+    /// A class representing the DscNode data model.
+    /// Definition of a DscNode
+    /// </summary>
     public partial class DscNodeData : ResourceData
     {
         /// <summary> Initializes a new instance of DscNodeData. </summary>

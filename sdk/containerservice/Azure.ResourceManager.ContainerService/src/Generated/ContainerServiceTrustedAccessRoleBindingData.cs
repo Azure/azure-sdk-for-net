@@ -14,7 +14,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ContainerService
 {
-    /// <summary> A class representing the ContainerServiceTrustedAccessRoleBinding data model. </summary>
+    /// <summary>
+    /// A class representing the ContainerServiceTrustedAccessRoleBinding data model.
+    /// Defines binding between a resource and role
+    /// </summary>
     public partial class ContainerServiceTrustedAccessRoleBindingData : ResourceData
     {
         /// <summary> Initializes a new instance of ContainerServiceTrustedAccessRoleBindingData. </summary>

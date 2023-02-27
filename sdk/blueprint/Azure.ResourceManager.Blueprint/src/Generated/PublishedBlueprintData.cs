@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Blueprint
 {
-    /// <summary> A class representing the PublishedBlueprint data model. </summary>
+    /// <summary>
+    /// A class representing the PublishedBlueprint data model.
+    /// Represents a published blueprint.
+    /// </summary>
     public partial class PublishedBlueprintData : ResourceData
     {
         /// <summary> Initializes a new instance of PublishedBlueprintData. </summary>

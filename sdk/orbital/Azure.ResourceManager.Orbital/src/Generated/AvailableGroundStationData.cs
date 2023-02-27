@@ -11,7 +11,10 @@ using Azure.ResourceManager.Orbital.Models;
 
 namespace Azure.ResourceManager.Orbital
 {
-    /// <summary> A class representing the AvailableGroundStation data model. </summary>
+    /// <summary>
+    /// A class representing the AvailableGroundStation data model.
+    /// Ground Stations available to schedule Contacts.
+    /// </summary>
     public partial class AvailableGroundStationData : ResourceData
     {
         /// <summary> Initializes a new instance of AvailableGroundStationData. </summary>

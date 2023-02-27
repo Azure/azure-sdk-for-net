@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.HybridCompute
 {
-    /// <summary> A class representing the HybridComputeMachine data model. </summary>
+    /// <summary>
+    /// A class representing the HybridComputeMachine data model.
+    /// Describes a hybrid machine.
+    /// </summary>
     public partial class HybridComputeMachineData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of HybridComputeMachineData. </summary>

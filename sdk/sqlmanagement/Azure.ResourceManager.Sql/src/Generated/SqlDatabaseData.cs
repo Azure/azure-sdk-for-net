@@ -13,7 +13,10 @@ using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
-    /// <summary> A class representing the SqlDatabase data model. </summary>
+    /// <summary>
+    /// A class representing the SqlDatabase data model.
+    /// A database resource.
+    /// </summary>
     public partial class SqlDatabaseData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of SqlDatabaseData. </summary>

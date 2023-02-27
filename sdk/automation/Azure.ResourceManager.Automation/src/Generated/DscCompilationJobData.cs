@@ -13,7 +13,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Automation
 {
-    /// <summary> A class representing the DscCompilationJob data model. </summary>
+    /// <summary>
+    /// A class representing the DscCompilationJob data model.
+    /// Definition of the Dsc Compilation job.
+    /// </summary>
     public partial class DscCompilationJobData : ResourceData
     {
         /// <summary> Initializes a new instance of DscCompilationJobData. </summary>
