@@ -21,29 +21,29 @@ namespace Azure.ResourceManager.Hci
             writer.WriteStartObject();
             if (Optional.IsDefined(Location))
             {
-                writer.WritePropertyName("location");
+                writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(InstalledOn))
             {
-                writer.WritePropertyName("installedDate");
+                writer.WritePropertyName("installedDate"u8);
                 writer.WriteStringValue(InstalledOn.Value, "O");
             }
             if (Optional.IsDefined(Description))
             {
-                writer.WritePropertyName("description");
+                writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
             if (Optional.IsDefined(State))
             {
-                writer.WritePropertyName("state");
+                writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
             if (Optional.IsCollectionDefined(Prerequisites))
             {
-                writer.WritePropertyName("prerequisites");
+                writer.WritePropertyName("prerequisites"u8);
                 writer.WriteStartArray();
                 foreach (var item in Prerequisites)
                 {
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Hci
             }
             if (Optional.IsCollectionDefined(ComponentVersions))
             {
-                writer.WritePropertyName("componentVersions");
+                writer.WritePropertyName("componentVersions"u8);
                 writer.WriteStartArray();
                 foreach (var item in ComponentVersions)
                 {
@@ -63,17 +63,17 @@ namespace Azure.ResourceManager.Hci
             }
             if (Optional.IsDefined(RebootRequired))
             {
-                writer.WritePropertyName("rebootRequired");
+                writer.WritePropertyName("rebootRequired"u8);
                 writer.WriteStringValue(RebootRequired.Value.ToString());
             }
             if (Optional.IsDefined(HealthState))
             {
-                writer.WritePropertyName("healthState");
+                writer.WritePropertyName("healthState"u8);
                 writer.WriteStringValue(HealthState.Value.ToString());
             }
             if (Optional.IsCollectionDefined(HealthCheckResult))
             {
-                writer.WritePropertyName("healthCheckResult");
+                writer.WritePropertyName("healthCheckResult"u8);
                 writer.WriteStartArray();
                 foreach (var item in HealthCheckResult)
                 {
@@ -83,64 +83,64 @@ namespace Azure.ResourceManager.Hci
             }
             if (Optional.IsDefined(HealthCheckOn))
             {
-                writer.WritePropertyName("healthCheckDate");
+                writer.WritePropertyName("healthCheckDate"u8);
                 writer.WriteStringValue(HealthCheckOn.Value, "O");
             }
             if (Optional.IsDefined(PackagePath))
             {
-                writer.WritePropertyName("packagePath");
+                writer.WritePropertyName("packagePath"u8);
                 writer.WriteStringValue(PackagePath);
             }
             if (Optional.IsDefined(PackageSizeInMb))
             {
-                writer.WritePropertyName("packageSizeInMb");
+                writer.WritePropertyName("packageSizeInMb"u8);
                 writer.WriteNumberValue(PackageSizeInMb.Value);
             }
             if (Optional.IsDefined(DisplayName))
             {
-                writer.WritePropertyName("displayName");
+                writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
             if (Optional.IsDefined(Version))
             {
-                writer.WritePropertyName("version");
+                writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version);
             }
             if (Optional.IsDefined(Publisher))
             {
-                writer.WritePropertyName("publisher");
+                writer.WritePropertyName("publisher"u8);
                 writer.WriteStringValue(Publisher);
             }
             if (Optional.IsDefined(ReleaseLink))
             {
-                writer.WritePropertyName("releaseLink");
+                writer.WritePropertyName("releaseLink"u8);
                 writer.WriteStringValue(ReleaseLink);
             }
             if (Optional.IsDefined(AvailabilityType))
             {
-                writer.WritePropertyName("availabilityType");
+                writer.WritePropertyName("availabilityType"u8);
                 writer.WriteStringValue(AvailabilityType.Value.ToString());
             }
             if (Optional.IsDefined(PackageType))
             {
-                writer.WritePropertyName("packageType");
+                writer.WritePropertyName("packageType"u8);
                 writer.WriteStringValue(PackageType);
             }
             if (Optional.IsDefined(AdditionalProperties))
             {
-                writer.WritePropertyName("additionalProperties");
+                writer.WritePropertyName("additionalProperties"u8);
                 writer.WriteStringValue(AdditionalProperties);
             }
-            writer.WritePropertyName("updateStateProperties");
+            writer.WritePropertyName("updateStateProperties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(ProgressPercentage))
             {
-                writer.WritePropertyName("progressPercentage");
+                writer.WritePropertyName("progressPercentage"u8);
                 writer.WriteNumberValue(ProgressPercentage.Value);
             }
             if (Optional.IsDefined(NotifyMessage))
             {
-                writer.WritePropertyName("notifyMessage");
+                writer.WritePropertyName("notifyMessage"u8);
                 writer.WriteStringValue(NotifyMessage);
             }
             writer.WriteEndObject();
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.Hci
             Optional<string> notifyMessage = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("location"))
+                if (property.NameEquals("location"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -188,22 +188,22 @@ namespace Azure.ResourceManager.Hci
                     location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.Hci
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.Hci
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("provisioningState"))
+                        if (property0.NameEquals("provisioningState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.Hci
                             provisioningState = new HciProvisioningState(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("installedDate"))
+                        if (property0.NameEquals("installedDate"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -242,12 +242,12 @@ namespace Azure.ResourceManager.Hci
                             installedDate = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("description"))
+                        if (property0.NameEquals("description"u8))
                         {
                             description = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("state"))
+                        if (property0.NameEquals("state"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -257,7 +257,7 @@ namespace Azure.ResourceManager.Hci
                             state = new HciUpdateState(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("prerequisites"))
+                        if (property0.NameEquals("prerequisites"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -272,7 +272,7 @@ namespace Azure.ResourceManager.Hci
                             prerequisites = array;
                             continue;
                         }
-                        if (property0.NameEquals("componentVersions"))
+                        if (property0.NameEquals("componentVersions"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.Hci
                             componentVersions = array;
                             continue;
                         }
-                        if (property0.NameEquals("rebootRequired"))
+                        if (property0.NameEquals("rebootRequired"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -297,7 +297,7 @@ namespace Azure.ResourceManager.Hci
                             rebootRequired = new HciNodeRebootRequirement(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("healthState"))
+                        if (property0.NameEquals("healthState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -307,7 +307,7 @@ namespace Azure.ResourceManager.Hci
                             healthState = new HciHealthState(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("healthCheckResult"))
+                        if (property0.NameEquals("healthCheckResult"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.Hci
                             healthCheckResult = array;
                             continue;
                         }
-                        if (property0.NameEquals("healthCheckDate"))
+                        if (property0.NameEquals("healthCheckDate"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -332,12 +332,12 @@ namespace Azure.ResourceManager.Hci
                             healthCheckDate = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("packagePath"))
+                        if (property0.NameEquals("packagePath"u8))
                         {
                             packagePath = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("packageSizeInMb"))
+                        if (property0.NameEquals("packageSizeInMb"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -347,27 +347,27 @@ namespace Azure.ResourceManager.Hci
                             packageSizeInMb = property0.Value.GetSingle();
                             continue;
                         }
-                        if (property0.NameEquals("displayName"))
+                        if (property0.NameEquals("displayName"u8))
                         {
                             displayName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("version"))
+                        if (property0.NameEquals("version"u8))
                         {
                             version = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("publisher"))
+                        if (property0.NameEquals("publisher"u8))
                         {
                             publisher = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("releaseLink"))
+                        if (property0.NameEquals("releaseLink"u8))
                         {
                             releaseLink = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("availabilityType"))
+                        if (property0.NameEquals("availabilityType"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -377,17 +377,17 @@ namespace Azure.ResourceManager.Hci
                             availabilityType = new HciAvailabilityType(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("packageType"))
+                        if (property0.NameEquals("packageType"u8))
                         {
                             packageType = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("additionalProperties"))
+                        if (property0.NameEquals("additionalProperties"u8))
                         {
                             additionalProperties = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("updateStateProperties"))
+                        if (property0.NameEquals("updateStateProperties"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -396,7 +396,7 @@ namespace Azure.ResourceManager.Hci
                             }
                             foreach (var property1 in property0.Value.EnumerateObject())
                             {
-                                if (property1.NameEquals("progressPercentage"))
+                                if (property1.NameEquals("progressPercentage"u8))
                                 {
                                     if (property1.Value.ValueKind == JsonValueKind.Null)
                                     {
@@ -406,7 +406,7 @@ namespace Azure.ResourceManager.Hci
                                     progressPercentage = property1.Value.GetSingle();
                                     continue;
                                 }
-                                if (property1.NameEquals("notifyMessage"))
+                                if (property1.NameEquals("notifyMessage"u8))
                                 {
                                     notifyMessage = property1.Value.GetString();
                                     continue;

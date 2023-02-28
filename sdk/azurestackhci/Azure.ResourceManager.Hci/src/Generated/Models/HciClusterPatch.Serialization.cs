@@ -49,16 +49,16 @@ namespace Azure.ResourceManager.Hci.Models
                 writer.WriteObjectValue(DesiredProperties);
             }
             writer.WriteEndObject();
-            writer.WritePropertyName("identity");
+            writer.WritePropertyName("identity"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(ManagedServiceIdentityType))
             {
-                writer.WritePropertyName("type");
+                writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ManagedServiceIdentityType.Value.ToString());
             }
             if (Optional.IsCollectionDefined(UserAssignedIdentities))
             {
-                writer.WritePropertyName("userAssignedIdentities");
+                writer.WritePropertyName("userAssignedIdentities"u8);
                 writer.WriteStartObject();
                 foreach (var item in UserAssignedIdentities)
                 {

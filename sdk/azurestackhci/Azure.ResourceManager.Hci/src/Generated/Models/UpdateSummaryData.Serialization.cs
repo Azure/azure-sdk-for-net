@@ -21,24 +21,24 @@ namespace Azure.ResourceManager.Hci
             writer.WriteStartObject();
             if (Optional.IsDefined(Location))
             {
-                writer.WritePropertyName("location");
+                writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(OemFamily))
             {
-                writer.WritePropertyName("oemFamily");
+                writer.WritePropertyName("oemFamily"u8);
                 writer.WriteStringValue(OemFamily);
             }
             if (Optional.IsDefined(HardwareModel))
             {
-                writer.WritePropertyName("hardwareModel");
+                writer.WritePropertyName("hardwareModel"u8);
                 writer.WriteStringValue(HardwareModel);
             }
             if (Optional.IsCollectionDefined(PackageVersions))
             {
-                writer.WritePropertyName("packageVersions");
+                writer.WritePropertyName("packageVersions"u8);
                 writer.WriteStartArray();
                 foreach (var item in PackageVersions)
                 {
@@ -48,27 +48,27 @@ namespace Azure.ResourceManager.Hci
             }
             if (Optional.IsDefined(CurrentVersion))
             {
-                writer.WritePropertyName("currentVersion");
+                writer.WritePropertyName("currentVersion"u8);
                 writer.WriteStringValue(CurrentVersion);
             }
             if (Optional.IsDefined(LastUpdated))
             {
-                writer.WritePropertyName("lastUpdated");
+                writer.WritePropertyName("lastUpdated"u8);
                 writer.WriteStringValue(LastUpdated.Value, "O");
             }
             if (Optional.IsDefined(LastChecked))
             {
-                writer.WritePropertyName("lastChecked");
+                writer.WritePropertyName("lastChecked"u8);
                 writer.WriteStringValue(LastChecked.Value, "O");
             }
             if (Optional.IsDefined(HealthState))
             {
-                writer.WritePropertyName("healthState");
+                writer.WritePropertyName("healthState"u8);
                 writer.WriteStringValue(HealthState.Value.ToString());
             }
             if (Optional.IsCollectionDefined(HealthCheckResult))
             {
-                writer.WritePropertyName("healthCheckResult");
+                writer.WritePropertyName("healthCheckResult"u8);
                 writer.WriteStartArray();
                 foreach (var item in HealthCheckResult)
                 {
@@ -78,12 +78,12 @@ namespace Azure.ResourceManager.Hci
             }
             if (Optional.IsDefined(HealthCheckOn))
             {
-                writer.WritePropertyName("healthCheckDate");
+                writer.WritePropertyName("healthCheckDate"u8);
                 writer.WriteStringValue(HealthCheckOn.Value, "O");
             }
             if (Optional.IsDefined(State))
             {
-                writer.WritePropertyName("state");
+                writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
             writer.WriteEndObject();
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Hci
             Optional<UpdateSummariesPropertiesState> state = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("location"))
+                if (property.NameEquals("location"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -120,22 +120,22 @@ namespace Azure.ResourceManager.Hci
                     location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.Hci
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.Hci
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("provisioningState"))
+                        if (property0.NameEquals("provisioningState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -164,17 +164,17 @@ namespace Azure.ResourceManager.Hci
                             provisioningState = new HciProvisioningState(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("oemFamily"))
+                        if (property0.NameEquals("oemFamily"u8))
                         {
                             oemFamily = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("hardwareModel"))
+                        if (property0.NameEquals("hardwareModel"u8))
                         {
                             hardwareModel = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("packageVersions"))
+                        if (property0.NameEquals("packageVersions"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -189,12 +189,12 @@ namespace Azure.ResourceManager.Hci
                             packageVersions = array;
                             continue;
                         }
-                        if (property0.NameEquals("currentVersion"))
+                        if (property0.NameEquals("currentVersion"u8))
                         {
                             currentVersion = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("lastUpdated"))
+                        if (property0.NameEquals("lastUpdated"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.Hci
                             lastUpdated = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("lastChecked"))
+                        if (property0.NameEquals("lastChecked"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.Hci
                             lastChecked = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("healthState"))
+                        if (property0.NameEquals("healthState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.Hci
                             healthState = new HciHealthState(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("healthCheckResult"))
+                        if (property0.NameEquals("healthCheckResult"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.Hci
                             healthCheckResult = array;
                             continue;
                         }
-                        if (property0.NameEquals("healthCheckDate"))
+                        if (property0.NameEquals("healthCheckDate"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.Hci
                             healthCheckDate = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("state"))
+                        if (property0.NameEquals("state"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

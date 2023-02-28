@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Hci
             }
             if (Optional.IsDefined(SoftwareAssuranceProperties))
             {
-                writer.WritePropertyName("softwareAssuranceProperties");
+                writer.WritePropertyName("softwareAssuranceProperties"u8);
                 writer.WriteObjectValue(SoftwareAssuranceProperties);
             }
             if (Optional.IsDefined(DesiredProperties))
@@ -70,16 +70,16 @@ namespace Azure.ResourceManager.Hci
                 writer.WriteObjectValue(DesiredProperties);
             }
             writer.WriteEndObject();
-            writer.WritePropertyName("identity");
+            writer.WritePropertyName("identity"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(TypeIdentityType))
             {
-                writer.WritePropertyName("type");
+                writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(TypeIdentityType.Value.ToString());
             }
             if (Optional.IsCollectionDefined(UserAssignedIdentities))
             {
-                writer.WritePropertyName("userAssignedIdentities");
+                writer.WritePropertyName("userAssignedIdentities"u8);
                 writer.WriteStartObject();
                 foreach (var item in UserAssignedIdentities)
                 {
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.Hci
                             aadServicePrincipalObjectId = property0.Value.GetGuid();
                             continue;
                         }
-                        if (property0.NameEquals("softwareAssuranceProperties"))
+                        if (property0.NameEquals("softwareAssuranceProperties"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -263,7 +263,7 @@ namespace Azure.ResourceManager.Hci
                             softwareAssuranceProperties = SoftwareAssuranceProperties.DeserializeSoftwareAssuranceProperties(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("desiredProperties"))
+                        if (property0.NameEquals("desiredProperties"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -333,7 +333,7 @@ namespace Azure.ResourceManager.Hci
                             serviceEndpoint = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("resourceProviderObjectId"))
+                        if (property0.NameEquals("resourceProviderObjectId"u8))
                         {
                             resourceProviderObjectId = property0.Value.GetString();
                             continue;
@@ -341,7 +341,7 @@ namespace Azure.ResourceManager.Hci
                     }
                     continue;
                 }
-                if (property.NameEquals("identity"))
+                if (property.NameEquals("identity"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -350,7 +350,7 @@ namespace Azure.ResourceManager.Hci
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("principalId"))
+                        if (property0.NameEquals("principalId"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -360,7 +360,7 @@ namespace Azure.ResourceManager.Hci
                             principalId = property0.Value.GetGuid();
                             continue;
                         }
-                        if (property0.NameEquals("tenantId"))
+                        if (property0.NameEquals("tenantId"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -370,7 +370,7 @@ namespace Azure.ResourceManager.Hci
                             tenantId = property0.Value.GetGuid();
                             continue;
                         }
-                        if (property0.NameEquals("type"))
+                        if (property0.NameEquals("type"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -380,7 +380,7 @@ namespace Azure.ResourceManager.Hci
                             type0 = new HciManagedServiceIdentityType(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("userAssignedIdentities"))
+                        if (property0.NameEquals("userAssignedIdentities"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

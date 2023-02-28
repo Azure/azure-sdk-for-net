@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.Hci
         /// <returns> Returns a <see cref="UpdateSummaryResource" /> object. </returns>
         public virtual UpdateSummaryResource GetUpdateSummary()
         {
-            return new UpdateSummaryResource(Client, new ResourceIdentifier(Id.ToString() + "/updateSummaries/default"));
+            return new UpdateSummaryResource(Client, Id.AppendChildResource("updateSummaries", "default"));
         }
 
         /// <summary> Gets a collection of UpdateResources in the HciCluster. </summary>

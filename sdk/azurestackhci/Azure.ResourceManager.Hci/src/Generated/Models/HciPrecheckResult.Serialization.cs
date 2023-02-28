@@ -18,62 +18,62 @@ namespace Azure.ResourceManager.Hci.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Name))
             {
-                writer.WritePropertyName("name");
+                writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
             if (Optional.IsDefined(Tags))
             {
-                writer.WritePropertyName("tags");
+                writer.WritePropertyName("tags"u8);
                 writer.WriteObjectValue(Tags);
             }
             if (Optional.IsDefined(Title))
             {
-                writer.WritePropertyName("title");
+                writer.WritePropertyName("title"u8);
                 writer.WriteStringValue(Title);
             }
             if (Optional.IsDefined(Status))
             {
-                writer.WritePropertyName("status");
+                writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
             if (Optional.IsDefined(Severity))
             {
-                writer.WritePropertyName("severity");
+                writer.WritePropertyName("severity"u8);
                 writer.WriteStringValue(Severity.Value.ToString());
             }
             if (Optional.IsDefined(Description))
             {
-                writer.WritePropertyName("description");
+                writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
             if (Optional.IsDefined(Remediation))
             {
-                writer.WritePropertyName("remediation");
+                writer.WritePropertyName("remediation"u8);
                 writer.WriteStringValue(Remediation);
             }
             if (Optional.IsDefined(TargetResourceId))
             {
-                writer.WritePropertyName("targetResourceID");
+                writer.WritePropertyName("targetResourceID"u8);
                 writer.WriteStringValue(TargetResourceId);
             }
             if (Optional.IsDefined(TargetResourceName))
             {
-                writer.WritePropertyName("targetResourceName");
+                writer.WritePropertyName("targetResourceName"u8);
                 writer.WriteStringValue(TargetResourceName);
             }
             if (Optional.IsDefined(Timestamp))
             {
-                writer.WritePropertyName("timestamp");
+                writer.WritePropertyName("timestamp"u8);
                 writer.WriteStringValue(Timestamp.Value, "O");
             }
             if (Optional.IsDefined(AdditionalData))
             {
-                writer.WritePropertyName("additionalData");
+                writer.WritePropertyName("additionalData"u8);
                 writer.WriteStringValue(AdditionalData);
             }
             if (Optional.IsDefined(HealthCheckSource))
             {
-                writer.WritePropertyName("healthCheckSource");
+                writer.WritePropertyName("healthCheckSource"u8);
                 writer.WriteStringValue(HealthCheckSource);
             }
             writer.WriteEndObject();
@@ -95,12 +95,12 @@ namespace Azure.ResourceManager.Hci.Models
             Optional<string> healthCheckSource = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("tags"))
+                if (property.NameEquals("tags"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -110,12 +110,12 @@ namespace Azure.ResourceManager.Hci.Models
                     tags = HciPrecheckResultTags.DeserializeHciPrecheckResultTags(property.Value);
                     continue;
                 }
-                if (property.NameEquals("title"))
+                if (property.NameEquals("title"u8))
                 {
                     title = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("status"))
+                if (property.NameEquals("status"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Hci.Models
                     status = new HciClusterStatus(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("severity"))
+                if (property.NameEquals("severity"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -135,27 +135,27 @@ namespace Azure.ResourceManager.Hci.Models
                     severity = new UpdateSeverity(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("description"))
+                if (property.NameEquals("description"u8))
                 {
                     description = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("remediation"))
+                if (property.NameEquals("remediation"u8))
                 {
                     remediation = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("targetResourceID"))
+                if (property.NameEquals("targetResourceID"u8))
                 {
                     targetResourceId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("targetResourceName"))
+                if (property.NameEquals("targetResourceName"u8))
                 {
                     targetResourceName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("timestamp"))
+                if (property.NameEquals("timestamp"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -165,12 +165,12 @@ namespace Azure.ResourceManager.Hci.Models
                     timestamp = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("additionalData"))
+                if (property.NameEquals("additionalData"u8))
                 {
                     additionalData = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("healthCheckSource"))
+                if (property.NameEquals("healthCheckSource"u8))
                 {
                     healthCheckSource = property.Value.GetString();
                     continue;

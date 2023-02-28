@@ -21,71 +21,71 @@ namespace Azure.ResourceManager.Hci
             writer.WriteStartObject();
             if (Optional.IsDefined(Location))
             {
-                writer.WritePropertyName("location");
+                writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(TimeStarted))
             {
-                writer.WritePropertyName("timeStarted");
+                writer.WritePropertyName("timeStarted"u8);
                 writer.WriteStringValue(TimeStarted.Value, "O");
             }
             if (Optional.IsDefined(LastUpdatedOn))
             {
-                writer.WritePropertyName("lastUpdatedTime");
+                writer.WritePropertyName("lastUpdatedTime"u8);
                 writer.WriteStringValue(LastUpdatedOn.Value, "O");
             }
             if (Optional.IsDefined(Duration))
             {
-                writer.WritePropertyName("duration");
+                writer.WritePropertyName("duration"u8);
                 writer.WriteStringValue(Duration);
             }
             if (Optional.IsDefined(State))
             {
-                writer.WritePropertyName("state");
+                writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
-            writer.WritePropertyName("progress");
+            writer.WritePropertyName("progress"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(NamePropertiesProgressName))
             {
-                writer.WritePropertyName("name");
+                writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(NamePropertiesProgressName);
             }
             if (Optional.IsDefined(Description))
             {
-                writer.WritePropertyName("description");
+                writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
             if (Optional.IsDefined(ErrorMessage))
             {
-                writer.WritePropertyName("errorMessage");
+                writer.WritePropertyName("errorMessage"u8);
                 writer.WriteStringValue(ErrorMessage);
             }
             if (Optional.IsDefined(Status))
             {
-                writer.WritePropertyName("status");
+                writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status);
             }
             if (Optional.IsDefined(StartTimeUtc))
             {
-                writer.WritePropertyName("startTimeUtc");
+                writer.WritePropertyName("startTimeUtc"u8);
                 writer.WriteStringValue(StartTimeUtc.Value, "O");
             }
             if (Optional.IsDefined(EndTimeUtc))
             {
-                writer.WritePropertyName("endTimeUtc");
+                writer.WritePropertyName("endTimeUtc"u8);
                 writer.WriteStringValue(EndTimeUtc.Value, "O");
             }
             if (Optional.IsDefined(LastUpdatedTimeUtc))
             {
-                writer.WritePropertyName("lastUpdatedTimeUtc");
+                writer.WritePropertyName("lastUpdatedTimeUtc"u8);
                 writer.WriteStringValue(LastUpdatedTimeUtc.Value, "O");
             }
             if (Optional.IsCollectionDefined(Steps))
             {
-                writer.WritePropertyName("steps");
+                writer.WritePropertyName("steps"u8);
                 writer.WriteStartArray();
                 foreach (var item in Steps)
                 {
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.Hci
             Optional<IList<HciUpdateStep>> steps = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("location"))
+                if (property.NameEquals("location"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -130,22 +130,22 @@ namespace Azure.ResourceManager.Hci
                     location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.Hci
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.Hci
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("provisioningState"))
+                        if (property0.NameEquals("provisioningState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.Hci
                             provisioningState = new HciProvisioningState(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("timeStarted"))
+                        if (property0.NameEquals("timeStarted"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.Hci
                             timeStarted = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("lastUpdatedTime"))
+                        if (property0.NameEquals("lastUpdatedTime"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -194,12 +194,12 @@ namespace Azure.ResourceManager.Hci
                             lastUpdatedTime = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("duration"))
+                        if (property0.NameEquals("duration"u8))
                         {
                             duration = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("state"))
+                        if (property0.NameEquals("state"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.Hci
                             state = new UpdateRunPropertiesState(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("progress"))
+                        if (property0.NameEquals("progress"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -218,27 +218,27 @@ namespace Azure.ResourceManager.Hci
                             }
                             foreach (var property1 in property0.Value.EnumerateObject())
                             {
-                                if (property1.NameEquals("name"))
+                                if (property1.NameEquals("name"u8))
                                 {
                                     name0 = property1.Value.GetString();
                                     continue;
                                 }
-                                if (property1.NameEquals("description"))
+                                if (property1.NameEquals("description"u8))
                                 {
                                     description = property1.Value.GetString();
                                     continue;
                                 }
-                                if (property1.NameEquals("errorMessage"))
+                                if (property1.NameEquals("errorMessage"u8))
                                 {
                                     errorMessage = property1.Value.GetString();
                                     continue;
                                 }
-                                if (property1.NameEquals("status"))
+                                if (property1.NameEquals("status"u8))
                                 {
                                     status = property1.Value.GetString();
                                     continue;
                                 }
-                                if (property1.NameEquals("startTimeUtc"))
+                                if (property1.NameEquals("startTimeUtc"u8))
                                 {
                                     if (property1.Value.ValueKind == JsonValueKind.Null)
                                     {
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.Hci
                                     startTimeUtc = property1.Value.GetDateTimeOffset("O");
                                     continue;
                                 }
-                                if (property1.NameEquals("endTimeUtc"))
+                                if (property1.NameEquals("endTimeUtc"u8))
                                 {
                                     if (property1.Value.ValueKind == JsonValueKind.Null)
                                     {
@@ -258,7 +258,7 @@ namespace Azure.ResourceManager.Hci
                                     endTimeUtc = property1.Value.GetDateTimeOffset("O");
                                     continue;
                                 }
-                                if (property1.NameEquals("lastUpdatedTimeUtc"))
+                                if (property1.NameEquals("lastUpdatedTimeUtc"u8))
                                 {
                                     if (property1.Value.ValueKind == JsonValueKind.Null)
                                     {
@@ -268,7 +268,7 @@ namespace Azure.ResourceManager.Hci
                                     lastUpdatedTimeUtc = property1.Value.GetDateTimeOffset("O");
                                     continue;
                                 }
-                                if (property1.NameEquals("steps"))
+                                if (property1.NameEquals("steps"u8))
                                 {
                                     if (property1.Value.ValueKind == JsonValueKind.Null)
                                     {

@@ -18,17 +18,17 @@ namespace Azure.ResourceManager.Hci.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(PackageType))
             {
-                writer.WritePropertyName("packageType");
+                writer.WritePropertyName("packageType"u8);
                 writer.WriteStringValue(PackageType);
             }
             if (Optional.IsDefined(Version))
             {
-                writer.WritePropertyName("version");
+                writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version);
             }
             if (Optional.IsDefined(LastUpdated))
             {
-                writer.WritePropertyName("lastUpdated");
+                writer.WritePropertyName("lastUpdated"u8);
                 writer.WriteStringValue(LastUpdated.Value, "O");
             }
             writer.WriteEndObject();
@@ -41,17 +41,17 @@ namespace Azure.ResourceManager.Hci.Models
             Optional<DateTimeOffset> lastUpdated = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("packageType"))
+                if (property.NameEquals("packageType"u8))
                 {
                     packageType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("version"))
+                if (property.NameEquals("version"u8))
                 {
                     version = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("lastUpdated"))
+                if (property.NameEquals("lastUpdated"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

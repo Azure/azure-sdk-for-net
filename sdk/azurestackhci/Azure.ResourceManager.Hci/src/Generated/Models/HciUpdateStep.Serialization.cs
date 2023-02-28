@@ -19,42 +19,42 @@ namespace Azure.ResourceManager.Hci.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Name))
             {
-                writer.WritePropertyName("name");
+                writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
             if (Optional.IsDefined(Description))
             {
-                writer.WritePropertyName("description");
+                writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
             if (Optional.IsDefined(ErrorMessage))
             {
-                writer.WritePropertyName("errorMessage");
+                writer.WritePropertyName("errorMessage"u8);
                 writer.WriteStringValue(ErrorMessage);
             }
             if (Optional.IsDefined(Status))
             {
-                writer.WritePropertyName("status");
+                writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status);
             }
             if (Optional.IsDefined(StartTimeUtc))
             {
-                writer.WritePropertyName("startTimeUtc");
+                writer.WritePropertyName("startTimeUtc"u8);
                 writer.WriteStringValue(StartTimeUtc.Value, "O");
             }
             if (Optional.IsDefined(EndTimeUtc))
             {
-                writer.WritePropertyName("endTimeUtc");
+                writer.WritePropertyName("endTimeUtc"u8);
                 writer.WriteStringValue(EndTimeUtc.Value, "O");
             }
             if (Optional.IsDefined(LastUpdatedTimeUtc))
             {
-                writer.WritePropertyName("lastUpdatedTimeUtc");
+                writer.WritePropertyName("lastUpdatedTimeUtc"u8);
                 writer.WriteStringValue(LastUpdatedTimeUtc.Value, "O");
             }
             if (Optional.IsCollectionDefined(Steps))
             {
-                writer.WritePropertyName("steps");
+                writer.WritePropertyName("steps"u8);
                 writer.WriteStartArray();
                 foreach (var item in Steps)
                 {
@@ -77,27 +77,27 @@ namespace Azure.ResourceManager.Hci.Models
             Optional<IList<HciUpdateStep>> steps = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("description"))
+                if (property.NameEquals("description"u8))
                 {
                     description = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("errorMessage"))
+                if (property.NameEquals("errorMessage"u8))
                 {
                     errorMessage = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("status"))
+                if (property.NameEquals("status"u8))
                 {
                     status = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("startTimeUtc"))
+                if (property.NameEquals("startTimeUtc"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Hci.Models
                     startTimeUtc = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("endTimeUtc"))
+                if (property.NameEquals("endTimeUtc"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Hci.Models
                     endTimeUtc = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("lastUpdatedTimeUtc"))
+                if (property.NameEquals("lastUpdatedTimeUtc"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Hci.Models
                     lastUpdatedTimeUtc = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("steps"))
+                if (property.NameEquals("steps"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

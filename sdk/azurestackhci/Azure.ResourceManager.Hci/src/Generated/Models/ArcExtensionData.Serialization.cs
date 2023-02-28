@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Hci
             }
             if (Optional.IsDefined(EnableAutomaticUpgrade))
             {
-                writer.WritePropertyName("enableAutomaticUpgrade");
+                writer.WritePropertyName("enableAutomaticUpgrade"u8);
                 writer.WriteBooleanValue(EnableAutomaticUpgrade.Value);
             }
             writer.WriteEndObject();
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.Hci
                                     protectedSettings = BinaryData.FromString(property1.Value.GetRawText());
                                     continue;
                                 }
-                                if (property1.NameEquals("enableAutomaticUpgrade"))
+                                if (property1.NameEquals("enableAutomaticUpgrade"u8))
                                 {
                                     if (property1.Value.ValueKind == JsonValueKind.Null)
                                     {

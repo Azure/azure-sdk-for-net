@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Hci.Models
                     windowsServerSubscription = new WindowsServerSubscription(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("nodeType"))
+                if (property.NameEquals("nodeType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -64,12 +64,12 @@ namespace Azure.ResourceManager.Hci.Models
                     nodeType = new ClusterNodeType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("ehcResourceId"))
+                if (property.NameEquals("ehcResourceId"u8))
                 {
                     ehcResourceId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("manufacturer"))
+                if (property.NameEquals("manufacturer"u8))
                 {
                     manufacturer = property.Value.GetString();
                     continue;
@@ -89,12 +89,12 @@ namespace Azure.ResourceManager.Hci.Models
                     osVersion = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("osDisplayVersion"))
+                if (property.NameEquals("osDisplayVersion"u8))
                 {
                     osDisplayVersion = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("serialNumber"))
+                if (property.NameEquals("serialNumber"u8))
                 {
                     serialNumber = property.Value.GetString();
                     continue;

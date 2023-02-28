@@ -17,17 +17,17 @@ namespace Azure.ResourceManager.Hci.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(UpdateType))
             {
-                writer.WritePropertyName("updateType");
+                writer.WritePropertyName("updateType"u8);
                 writer.WriteStringValue(UpdateType);
             }
             if (Optional.IsDefined(Version))
             {
-                writer.WritePropertyName("version");
+                writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version);
             }
             if (Optional.IsDefined(PackageName))
             {
-                writer.WritePropertyName("packageName");
+                writer.WritePropertyName("packageName"u8);
                 writer.WriteStringValue(PackageName);
             }
             writer.WriteEndObject();
@@ -40,17 +40,17 @@ namespace Azure.ResourceManager.Hci.Models
             Optional<string> packageName = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("updateType"))
+                if (property.NameEquals("updateType"u8))
                 {
                     updateType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("version"))
+                if (property.NameEquals("version"u8))
                 {
                     version = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("packageName"))
+                if (property.NameEquals("packageName"u8))
                 {
                     packageName = property.Value.GetString();
                     continue;

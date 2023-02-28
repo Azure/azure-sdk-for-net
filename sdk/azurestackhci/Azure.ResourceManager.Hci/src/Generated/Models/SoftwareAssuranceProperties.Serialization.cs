@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.Hci.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(SoftwareAssuranceStatus))
             {
-                writer.WritePropertyName("softwareAssuranceStatus");
+                writer.WritePropertyName("softwareAssuranceStatus"u8);
                 writer.WriteStringValue(SoftwareAssuranceStatus.Value.ToString());
             }
             if (Optional.IsDefined(SoftwareAssuranceIntent))
             {
-                writer.WritePropertyName("softwareAssuranceIntent");
+                writer.WritePropertyName("softwareAssuranceIntent"u8);
                 writer.WriteStringValue(SoftwareAssuranceIntent.Value.ToString());
             }
             writer.WriteEndObject();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Hci.Models
             Optional<DateTimeOffset> lastUpdated = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("softwareAssuranceStatus"))
+                if (property.NameEquals("softwareAssuranceStatus"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Hci.Models
                     softwareAssuranceStatus = new SoftwareAssuranceStatus(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("softwareAssuranceIntent"))
+                if (property.NameEquals("softwareAssuranceIntent"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Hci.Models
                     softwareAssuranceIntent = new SoftwareAssuranceIntent(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("lastUpdated"))
+                if (property.NameEquals("lastUpdated"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

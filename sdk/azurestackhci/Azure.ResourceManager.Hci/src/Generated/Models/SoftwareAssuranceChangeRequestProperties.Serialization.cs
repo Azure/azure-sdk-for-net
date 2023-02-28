@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Hci.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(SoftwareAssuranceIntent))
             {
-                writer.WritePropertyName("softwareAssuranceIntent");
+                writer.WritePropertyName("softwareAssuranceIntent"u8);
                 writer.WriteStringValue(SoftwareAssuranceIntent.Value.ToString());
             }
             writer.WriteEndObject();

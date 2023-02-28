@@ -18,17 +18,17 @@ namespace Azure.ResourceManager.Hci.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(CatalogPlanId))
             {
-                writer.WritePropertyName("catalogPlanId");
+                writer.WritePropertyName("catalogPlanId"u8);
                 writer.WriteStringValue(CatalogPlanId);
             }
             if (Optional.IsDefined(MarketplaceSkuId))
             {
-                writer.WritePropertyName("marketplaceSkuId");
+                writer.WritePropertyName("marketplaceSkuId"u8);
                 writer.WriteStringValue(MarketplaceSkuId);
             }
             if (Optional.IsCollectionDefined(MarketplaceSkuVersions))
             {
-                writer.WritePropertyName("marketplaceSkuVersions");
+                writer.WritePropertyName("marketplaceSkuVersions"u8);
                 writer.WriteStartArray();
                 foreach (var item in MarketplaceSkuVersions)
                 {
@@ -46,17 +46,17 @@ namespace Azure.ResourceManager.Hci.Models
             Optional<IList<string>> marketplaceSkuVersions = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("catalogPlanId"))
+                if (property.NameEquals("catalogPlanId"u8))
                 {
                     catalogPlanId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("marketplaceSkuId"))
+                if (property.NameEquals("marketplaceSkuId"u8))
                 {
                     marketplaceSkuId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("marketplaceSkuVersions"))
+                if (property.NameEquals("marketplaceSkuVersions"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

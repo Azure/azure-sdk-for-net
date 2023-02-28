@@ -18,26 +18,26 @@ namespace Azure.ResourceManager.Hci
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(PublisherId))
             {
-                writer.WritePropertyName("publisherId");
+                writer.WritePropertyName("publisherId"u8);
                 writer.WriteStringValue(PublisherId);
             }
             if (Optional.IsDefined(Content))
             {
-                writer.WritePropertyName("content");
+                writer.WritePropertyName("content"u8);
                 writer.WriteStringValue(Content);
             }
             if (Optional.IsDefined(ContentVersion))
             {
-                writer.WritePropertyName("contentVersion");
+                writer.WritePropertyName("contentVersion"u8);
                 writer.WriteStringValue(ContentVersion);
             }
             if (Optional.IsCollectionDefined(SkuMappings))
             {
-                writer.WritePropertyName("skuMappings");
+                writer.WritePropertyName("skuMappings"u8);
                 writer.WriteStartArray();
                 foreach (var item in SkuMappings)
                 {
@@ -62,22 +62,22 @@ namespace Azure.ResourceManager.Hci
             Optional<IList<HciSkuMappings>> skuMappings = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Hci
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -96,27 +96,27 @@ namespace Azure.ResourceManager.Hci
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("provisioningState"))
+                        if (property0.NameEquals("provisioningState"u8))
                         {
                             provisioningState = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("publisherId"))
+                        if (property0.NameEquals("publisherId"u8))
                         {
                             publisherId = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("content"))
+                        if (property0.NameEquals("content"u8))
                         {
                             content = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("contentVersion"))
+                        if (property0.NameEquals("contentVersion"u8))
                         {
                             contentVersion = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("skuMappings"))
+                        if (property0.NameEquals("skuMappings"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Hci.Models
                     diagnosticLevel = new HciClusterDiagnosticLevel(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("supportedCapabilities"))
+                if (property.NameEquals("supportedCapabilities"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
