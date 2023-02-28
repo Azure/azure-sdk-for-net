@@ -331,7 +331,12 @@ namespace Azure.Messaging.EventHubs.Primitives
 
             ConnectionFactory = () => new EventHubConnection(connectionString, eventHubName, options.ConnectionOptions);
             LoadBalancer = new PartitionLoadBalancer(CreateCheckpointStore(this), Identifier, ConsumerGroup, FullyQualifiedNamespace, EventHubName, options.PartitionOwnershipExpirationInterval, options.LoadBalancingUpdateInterval);
-            ClientDiagnostics = new MessagingClientDiagnostics(DiagnosticProperty.DiagnosticNamespace, DiagnosticProperty.ResourceProviderNamespace, DiagnosticProperty.EventHubsServiceContext, FullyQualifiedNamespace, eventHubName);
+            ClientDiagnostics = new MessagingClientDiagnostics(
+                DiagnosticProperty.DiagnosticNamespace,
+                DiagnosticProperty.ResourceProviderNamespace,
+                DiagnosticProperty.EventHubsServiceContext,
+                FullyQualifiedNamespace,
+                EventHubName);
         }
 
         /// <summary>
@@ -455,7 +460,7 @@ namespace Azure.Messaging.EventHubs.Primitives
                 DiagnosticProperty.ResourceProviderNamespace,
                 DiagnosticProperty.EventHubsServiceContext,
                 FullyQualifiedNamespace,
-                eventHubName);
+                EventHubName);
         }
 
         /// <summary>
