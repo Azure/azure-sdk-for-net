@@ -163,6 +163,7 @@ namespace Azure.Core.Dynamic
     public partial struct DynamicJsonOptions
     {
         private int _dummyPrimitive;
+        public static readonly Azure.Core.Dynamic.DynamicJsonOptions AzureDefault;
         public DynamicJsonOptions() { throw null; }
         public Azure.Core.Dynamic.DynamicJsonNameMapping PropertyNameCasing { get { throw null; } set { } }
     }
