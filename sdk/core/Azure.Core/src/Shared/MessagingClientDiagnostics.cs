@@ -190,7 +190,9 @@ namespace Azure.Core.Shared
                 }
             }
             else
+            {
                 TryExtractTraceContext(properties, out traceparent, out tracestate);
+            }
         }
 
         /// <summary>

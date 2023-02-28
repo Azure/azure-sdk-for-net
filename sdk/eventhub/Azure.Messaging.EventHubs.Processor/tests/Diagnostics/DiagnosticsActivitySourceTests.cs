@@ -41,8 +41,9 @@ namespace Azure.Messaging.EventHubs.Tests
     public class DiagnosticsActivitySourceTests
     {
         /// <summary>
-        /// Resets the activity source feature switch after each test.
+        ///   Resets the activity source feature switch after each test.
         /// </summary>
+        ///
         [SetUp]
         [TearDown]
         public void ResetFeatureSwitch()

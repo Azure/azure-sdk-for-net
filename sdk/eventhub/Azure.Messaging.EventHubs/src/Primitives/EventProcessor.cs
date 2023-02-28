@@ -229,6 +229,7 @@ namespace Azure.Messaging.EventHubs.Primitives
         /// <summary>
         ///   The client diagnostics for this processor.
         /// </summary>
+        ///
         private MessagingClientDiagnostics ClientDiagnostics { get; }
 
         /// <summary>

@@ -40,8 +40,9 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
-        /// Mock client diagnostics instance to pass through to EventDataBatch constructor.
+        ///   Mock client diagnostics instance to pass through to EventDataBatch constructor.
         /// </summary>
+        ///
         private static MessagingClientDiagnostics MockClientDiagnostics { get; } = new("mock", "mock", "mock", "mock", "mock");
 
         /// <summary>

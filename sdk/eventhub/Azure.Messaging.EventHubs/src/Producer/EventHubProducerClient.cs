@@ -154,6 +154,7 @@ namespace Azure.Messaging.EventHubs.Producer
         /// <summary>
         ///   The client diagnostics for this producer.
         /// </summary>
+        ///
         private MessagingClientDiagnostics ClientDiagnostics { get; }
 
         /// <summary>

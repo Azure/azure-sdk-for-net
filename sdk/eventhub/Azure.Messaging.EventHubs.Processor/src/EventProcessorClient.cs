@@ -344,6 +344,7 @@ namespace Azure.Messaging.EventHubs
         /// <summary>
         ///   The client diagnostics for this processor.
         /// </summary>
+        ///
         private MessagingClientDiagnostics ClientDiagnostics { get; }
 
         /// <summary>
