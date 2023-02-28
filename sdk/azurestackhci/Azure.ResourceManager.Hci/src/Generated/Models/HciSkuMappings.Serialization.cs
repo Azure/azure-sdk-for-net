@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Hci.Models
 {
-    public partial class SkuMappings : IUtf8JsonSerializable
+    public partial class HciSkuMappings : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Hci.Models
             writer.WriteEndObject();
         }
 
-        internal static SkuMappings DeserializeSkuMappings(JsonElement element)
+        internal static HciSkuMappings DeserializeHciSkuMappings(JsonElement element)
         {
             Optional<string> catalogPlanId = default;
             Optional<string> marketplaceSkuId = default;
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Hci.Models
                     continue;
                 }
             }
-            return new SkuMappings(catalogPlanId.Value, marketplaceSkuId.Value, Optional.ToList(marketplaceSkuVersions));
+            return new HciSkuMappings(catalogPlanId.Value, marketplaceSkuId.Value, Optional.ToList(marketplaceSkuVersions));
         }
     }
 }

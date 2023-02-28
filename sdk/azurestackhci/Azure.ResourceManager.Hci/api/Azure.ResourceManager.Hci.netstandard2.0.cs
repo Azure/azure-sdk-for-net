@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Hci
         public Azure.ResourceManager.Hci.Models.HciClusterStatus? Status { get { throw null; } }
         public System.Guid? TenantId { get { throw null; } }
         public float? TrialDaysRemaining { get { throw null; } }
-        public Azure.ResourceManager.Hci.Models.ManagedServiceIdentityType? TypeIdentityType { get { throw null; } set { } }
+        public Azure.ResourceManager.Hci.Models.HciManagedServiceIdentityType? TypeIdentityType { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, Azure.ResourceManager.Models.UserAssignedIdentity> UserAssignedIdentities { get { throw null; } }
     }
     public partial class HciClusterResource : Azure.ResourceManager.ArmResource
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.Hci
         public string OfferId { get { throw null; } set { } }
         public string ProvisioningState { get { throw null; } }
         public string PublisherId { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Hci.Models.SkuMappings> SkuMappings { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Hci.Models.HciSkuMappings> SkuMappings { get { throw null; } }
     }
     public partial class HciSkuResource : Azure.ResourceManager.ArmResource
     {
@@ -242,7 +242,7 @@ namespace Azure.ResourceManager.Hci
         public string ContentVersion { get { throw null; } set { } }
         public string ProvisioningState { get { throw null; } }
         public string PublisherId { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Hci.Models.SkuMappings> SkuMappings { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Hci.Models.HciSkuMappings> SkuMappings { get { throw null; } }
     }
     public partial class OfferResource : Azure.ResourceManager.ArmResource
     {
@@ -307,13 +307,13 @@ namespace Azure.ResourceManager.Hci
     {
         public UpdateData() { }
         public string AdditionalProperties { get { throw null; } set { } }
-        public Azure.ResourceManager.Hci.Models.AvailabilityType? AvailabilityType { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Hci.Models.PackageVersionInfo> ComponentVersions { get { throw null; } }
+        public Azure.ResourceManager.Hci.Models.HciAvailabilityType? AvailabilityType { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Hci.Models.HciPackageVersionInfo> ComponentVersions { get { throw null; } }
         public string Description { get { throw null; } set { } }
         public string DisplayName { get { throw null; } set { } }
         public System.DateTimeOffset? HealthCheckOn { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Hci.Models.PrecheckResult> HealthCheckResult { get { throw null; } }
-        public Azure.ResourceManager.Hci.Models.HealthState? HealthState { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Hci.Models.HciPrecheckResult> HealthCheckResult { get { throw null; } }
+        public Azure.ResourceManager.Hci.Models.HciHealthState? HealthState { get { throw null; } set { } }
         public System.DateTimeOffset? InstalledOn { get { throw null; } set { } }
         public Azure.Core.AzureLocation? Location { get { throw null; } set { } }
         public string NotifyMessage { get { throw null; } set { } }
@@ -324,9 +324,9 @@ namespace Azure.ResourceManager.Hci
         public float? ProgressPercentage { get { throw null; } set { } }
         public Azure.ResourceManager.Hci.Models.HciProvisioningState? ProvisioningState { get { throw null; } }
         public string Publisher { get { throw null; } set { } }
-        public Azure.ResourceManager.Hci.Models.RebootRequirement? RebootRequired { get { throw null; } set { } }
+        public Azure.ResourceManager.Hci.Models.HciNodeRebootRequirement? RebootRequired { get { throw null; } set { } }
         public string ReleaseLink { get { throw null; } set { } }
-        public Azure.ResourceManager.Hci.Models.State? State { get { throw null; } set { } }
+        public Azure.ResourceManager.Hci.Models.HciUpdateState? State { get { throw null; } set { } }
         public string Version { get { throw null; } set { } }
     }
     public partial class UpdateResource : Azure.ResourceManager.ArmResource
@@ -378,7 +378,7 @@ namespace Azure.ResourceManager.Hci
         public System.DateTimeOffset? StartTimeUtc { get { throw null; } set { } }
         public Azure.ResourceManager.Hci.Models.UpdateRunPropertiesState? State { get { throw null; } set { } }
         public string Status { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Hci.Models.Step> Steps { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Hci.Models.HciUpdateStep> Steps { get { throw null; } }
         public System.DateTimeOffset? TimeStarted { get { throw null; } set { } }
     }
     public partial class UpdateRunResource : Azure.ResourceManager.ArmResource
@@ -401,13 +401,13 @@ namespace Azure.ResourceManager.Hci
         public string CurrentVersion { get { throw null; } set { } }
         public string HardwareModel { get { throw null; } set { } }
         public System.DateTimeOffset? HealthCheckOn { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Hci.Models.PrecheckResult> HealthCheckResult { get { throw null; } }
-        public Azure.ResourceManager.Hci.Models.HealthState? HealthState { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Hci.Models.HciPrecheckResult> HealthCheckResult { get { throw null; } }
+        public Azure.ResourceManager.Hci.Models.HciHealthState? HealthState { get { throw null; } set { } }
         public System.DateTimeOffset? LastChecked { get { throw null; } set { } }
         public System.DateTimeOffset? LastUpdated { get { throw null; } set { } }
         public Azure.Core.AzureLocation? Location { get { throw null; } set { } }
         public string OemFamily { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Hci.Models.PackageVersionInfo> PackageVersions { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Hci.Models.HciPackageVersionInfo> PackageVersions { get { throw null; } }
         public Azure.ResourceManager.Hci.Models.HciProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.Hci.Models.UpdateSummariesPropertiesState? State { get { throw null; } set { } }
     }
@@ -518,25 +518,6 @@ namespace Azure.ResourceManager.Hci.Models
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct AvailabilityType : System.IEquatable<Azure.ResourceManager.Hci.Models.AvailabilityType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public AvailabilityType(string value) { throw null; }
-        public static Azure.ResourceManager.Hci.Models.AvailabilityType Local { get { throw null; } }
-        public static Azure.ResourceManager.Hci.Models.AvailabilityType Notify { get { throw null; } }
-        public static Azure.ResourceManager.Hci.Models.AvailabilityType Online { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Hci.Models.AvailabilityType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Hci.Models.AvailabilityType left, Azure.ResourceManager.Hci.Models.AvailabilityType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Hci.Models.AvailabilityType (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Hci.Models.AvailabilityType left, Azure.ResourceManager.Hci.Models.AvailabilityType right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ClusterNodeType : System.IEquatable<Azure.ResourceManager.Hci.Models.ClusterNodeType>
     {
         private readonly object _dummy;
@@ -552,6 +533,25 @@ namespace Azure.ResourceManager.Hci.Models
         public static bool operator ==(Azure.ResourceManager.Hci.Models.ClusterNodeType left, Azure.ResourceManager.Hci.Models.ClusterNodeType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Hci.Models.ClusterNodeType (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Hci.Models.ClusterNodeType left, Azure.ResourceManager.Hci.Models.ClusterNodeType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct HciAvailabilityType : System.IEquatable<Azure.ResourceManager.Hci.Models.HciAvailabilityType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public HciAvailabilityType(string value) { throw null; }
+        public static Azure.ResourceManager.Hci.Models.HciAvailabilityType Local { get { throw null; } }
+        public static Azure.ResourceManager.Hci.Models.HciAvailabilityType Notify { get { throw null; } }
+        public static Azure.ResourceManager.Hci.Models.HciAvailabilityType Online { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Hci.Models.HciAvailabilityType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Hci.Models.HciAvailabilityType left, Azure.ResourceManager.Hci.Models.HciAvailabilityType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Hci.Models.HciAvailabilityType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Hci.Models.HciAvailabilityType left, Azure.ResourceManager.Hci.Models.HciAvailabilityType right) { throw null; }
         public override string ToString() { throw null; }
     }
     public partial class HciClusterCertificateContent
@@ -616,7 +616,7 @@ namespace Azure.ResourceManager.Hci.Models
         public System.Guid? AadTenantId { get { throw null; } set { } }
         public string CloudManagementEndpoint { get { throw null; } set { } }
         public Azure.ResourceManager.Hci.Models.HciClusterDesiredProperties DesiredProperties { get { throw null; } set { } }
-        public Azure.ResourceManager.Hci.Models.ManagedServiceIdentityType? ManagedServiceIdentityType { get { throw null; } set { } }
+        public Azure.ResourceManager.Hci.Models.HciManagedServiceIdentityType? ManagedServiceIdentityType { get { throw null; } set { } }
         public System.Guid? PrincipalId { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
         public System.Guid? TenantId { get { throw null; } }
@@ -660,6 +660,96 @@ namespace Azure.ResourceManager.Hci.Models
         public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct HciHealthState : System.IEquatable<Azure.ResourceManager.Hci.Models.HciHealthState>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public HciHealthState(string value) { throw null; }
+        public static Azure.ResourceManager.Hci.Models.HciHealthState Error { get { throw null; } }
+        public static Azure.ResourceManager.Hci.Models.HciHealthState Failure { get { throw null; } }
+        public static Azure.ResourceManager.Hci.Models.HciHealthState InProgress { get { throw null; } }
+        public static Azure.ResourceManager.Hci.Models.HciHealthState Success { get { throw null; } }
+        public static Azure.ResourceManager.Hci.Models.HciHealthState Unknown { get { throw null; } }
+        public static Azure.ResourceManager.Hci.Models.HciHealthState Warning { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Hci.Models.HciHealthState other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Hci.Models.HciHealthState left, Azure.ResourceManager.Hci.Models.HciHealthState right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Hci.Models.HciHealthState (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Hci.Models.HciHealthState left, Azure.ResourceManager.Hci.Models.HciHealthState right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct HciManagedServiceIdentityType : System.IEquatable<Azure.ResourceManager.Hci.Models.HciManagedServiceIdentityType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public HciManagedServiceIdentityType(string value) { throw null; }
+        public static Azure.ResourceManager.Hci.Models.HciManagedServiceIdentityType None { get { throw null; } }
+        public static Azure.ResourceManager.Hci.Models.HciManagedServiceIdentityType SystemAssigned { get { throw null; } }
+        public static Azure.ResourceManager.Hci.Models.HciManagedServiceIdentityType SystemAssignedUserAssigned { get { throw null; } }
+        public static Azure.ResourceManager.Hci.Models.HciManagedServiceIdentityType UserAssigned { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Hci.Models.HciManagedServiceIdentityType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Hci.Models.HciManagedServiceIdentityType left, Azure.ResourceManager.Hci.Models.HciManagedServiceIdentityType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Hci.Models.HciManagedServiceIdentityType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Hci.Models.HciManagedServiceIdentityType left, Azure.ResourceManager.Hci.Models.HciManagedServiceIdentityType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct HciNodeRebootRequirement : System.IEquatable<Azure.ResourceManager.Hci.Models.HciNodeRebootRequirement>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public HciNodeRebootRequirement(string value) { throw null; }
+        public static Azure.ResourceManager.Hci.Models.HciNodeRebootRequirement False { get { throw null; } }
+        public static Azure.ResourceManager.Hci.Models.HciNodeRebootRequirement True { get { throw null; } }
+        public static Azure.ResourceManager.Hci.Models.HciNodeRebootRequirement Unknown { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Hci.Models.HciNodeRebootRequirement other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Hci.Models.HciNodeRebootRequirement left, Azure.ResourceManager.Hci.Models.HciNodeRebootRequirement right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Hci.Models.HciNodeRebootRequirement (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Hci.Models.HciNodeRebootRequirement left, Azure.ResourceManager.Hci.Models.HciNodeRebootRequirement right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class HciPackageVersionInfo
+    {
+        public HciPackageVersionInfo() { }
+        public System.DateTimeOffset? LastUpdated { get { throw null; } set { } }
+        public string PackageType { get { throw null; } set { } }
+        public string Version { get { throw null; } set { } }
+    }
+    public partial class HciPrecheckResult
+    {
+        public HciPrecheckResult() { }
+        public string AdditionalData { get { throw null; } set { } }
+        public string Description { get { throw null; } set { } }
+        public string HealthCheckSource { get { throw null; } set { } }
+        public string Name { get { throw null; } set { } }
+        public string Remediation { get { throw null; } set { } }
+        public Azure.ResourceManager.Hci.Models.UpdateSeverity? Severity { get { throw null; } set { } }
+        public Azure.ResourceManager.Hci.Models.HciClusterStatus? Status { get { throw null; } set { } }
+        public Azure.ResourceManager.Hci.Models.HciPrecheckResultTags Tags { get { throw null; } set { } }
+        public string TargetResourceId { get { throw null; } set { } }
+        public string TargetResourceName { get { throw null; } set { } }
+        public System.DateTimeOffset? Timestamp { get { throw null; } set { } }
+        public string Title { get { throw null; } set { } }
+    }
+    public partial class HciPrecheckResultTags
+    {
+        public HciPrecheckResultTags() { }
+        public string Key { get { throw null; } set { } }
+        public string Value { get { throw null; } set { } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct HciProvisioningState : System.IEquatable<Azure.ResourceManager.Hci.Models.HciProvisioningState>
     {
         private readonly object _dummy;
@@ -693,27 +783,58 @@ namespace Azure.ResourceManager.Hci.Models
         public static bool operator !=(Azure.ResourceManager.Hci.Models.HciProvisioningState left, Azure.ResourceManager.Hci.Models.HciProvisioningState right) { throw null; }
         public override string ToString() { throw null; }
     }
+    public partial class HciSkuMappings
+    {
+        public HciSkuMappings() { }
+        public string CatalogPlanId { get { throw null; } set { } }
+        public string MarketplaceSkuId { get { throw null; } set { } }
+        public System.Collections.Generic.IList<string> MarketplaceSkuVersions { get { throw null; } }
+    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct HealthState : System.IEquatable<Azure.ResourceManager.Hci.Models.HealthState>
+    public readonly partial struct HciUpdateState : System.IEquatable<Azure.ResourceManager.Hci.Models.HciUpdateState>
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
-        public HealthState(string value) { throw null; }
-        public static Azure.ResourceManager.Hci.Models.HealthState Error { get { throw null; } }
-        public static Azure.ResourceManager.Hci.Models.HealthState Failure { get { throw null; } }
-        public static Azure.ResourceManager.Hci.Models.HealthState InProgress { get { throw null; } }
-        public static Azure.ResourceManager.Hci.Models.HealthState Success { get { throw null; } }
-        public static Azure.ResourceManager.Hci.Models.HealthState Unknown { get { throw null; } }
-        public static Azure.ResourceManager.Hci.Models.HealthState Warning { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Hci.Models.HealthState other) { throw null; }
+        public HciUpdateState(string value) { throw null; }
+        public static Azure.ResourceManager.Hci.Models.HciUpdateState DownloadFailed { get { throw null; } }
+        public static Azure.ResourceManager.Hci.Models.HciUpdateState Downloading { get { throw null; } }
+        public static Azure.ResourceManager.Hci.Models.HciUpdateState HasPrerequisite { get { throw null; } }
+        public static Azure.ResourceManager.Hci.Models.HciUpdateState HealthCheckFailed { get { throw null; } }
+        public static Azure.ResourceManager.Hci.Models.HciUpdateState HealthChecking { get { throw null; } }
+        public static Azure.ResourceManager.Hci.Models.HciUpdateState InstallationFailed { get { throw null; } }
+        public static Azure.ResourceManager.Hci.Models.HciUpdateState Installed { get { throw null; } }
+        public static Azure.ResourceManager.Hci.Models.HciUpdateState Installing { get { throw null; } }
+        public static Azure.ResourceManager.Hci.Models.HciUpdateState Invalid { get { throw null; } }
+        public static Azure.ResourceManager.Hci.Models.HciUpdateState NotApplicableBecauseAnotherUpdateIsInProgress { get { throw null; } }
+        public static Azure.ResourceManager.Hci.Models.HciUpdateState Obsolete { get { throw null; } }
+        public static Azure.ResourceManager.Hci.Models.HciUpdateState PreparationFailed { get { throw null; } }
+        public static Azure.ResourceManager.Hci.Models.HciUpdateState Preparing { get { throw null; } }
+        public static Azure.ResourceManager.Hci.Models.HciUpdateState Ready { get { throw null; } }
+        public static Azure.ResourceManager.Hci.Models.HciUpdateState ReadyToInstall { get { throw null; } }
+        public static Azure.ResourceManager.Hci.Models.HciUpdateState Recalled { get { throw null; } }
+        public static Azure.ResourceManager.Hci.Models.HciUpdateState ScanFailed { get { throw null; } }
+        public static Azure.ResourceManager.Hci.Models.HciUpdateState ScanInProgress { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Hci.Models.HciUpdateState other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Hci.Models.HealthState left, Azure.ResourceManager.Hci.Models.HealthState right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Hci.Models.HealthState (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Hci.Models.HealthState left, Azure.ResourceManager.Hci.Models.HealthState right) { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Hci.Models.HciUpdateState left, Azure.ResourceManager.Hci.Models.HciUpdateState right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Hci.Models.HciUpdateState (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Hci.Models.HciUpdateState left, Azure.ResourceManager.Hci.Models.HciUpdateState right) { throw null; }
         public override string ToString() { throw null; }
+    }
+    public partial class HciUpdateStep
+    {
+        public HciUpdateStep() { }
+        public string Description { get { throw null; } set { } }
+        public System.DateTimeOffset? EndTimeUtc { get { throw null; } set { } }
+        public string ErrorMessage { get { throw null; } set { } }
+        public System.DateTimeOffset? LastUpdatedTimeUtc { get { throw null; } set { } }
+        public string Name { get { throw null; } set { } }
+        public System.DateTimeOffset? StartTimeUtc { get { throw null; } set { } }
+        public string Status { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Hci.Models.HciUpdateStep> Steps { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ImdsAttestationState : System.IEquatable<Azure.ResourceManager.Hci.Models.ImdsAttestationState>
@@ -731,26 +852,6 @@ namespace Azure.ResourceManager.Hci.Models
         public static bool operator ==(Azure.ResourceManager.Hci.Models.ImdsAttestationState left, Azure.ResourceManager.Hci.Models.ImdsAttestationState right) { throw null; }
         public static implicit operator Azure.ResourceManager.Hci.Models.ImdsAttestationState (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Hci.Models.ImdsAttestationState left, Azure.ResourceManager.Hci.Models.ImdsAttestationState right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct ManagedServiceIdentityType : System.IEquatable<Azure.ResourceManager.Hci.Models.ManagedServiceIdentityType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public ManagedServiceIdentityType(string value) { throw null; }
-        public static Azure.ResourceManager.Hci.Models.ManagedServiceIdentityType None { get { throw null; } }
-        public static Azure.ResourceManager.Hci.Models.ManagedServiceIdentityType SystemAssigned { get { throw null; } }
-        public static Azure.ResourceManager.Hci.Models.ManagedServiceIdentityType SystemAssignedUserAssigned { get { throw null; } }
-        public static Azure.ResourceManager.Hci.Models.ManagedServiceIdentityType UserAssigned { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Hci.Models.ManagedServiceIdentityType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Hci.Models.ManagedServiceIdentityType left, Azure.ResourceManager.Hci.Models.ManagedServiceIdentityType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Hci.Models.ManagedServiceIdentityType (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Hci.Models.ManagedServiceIdentityType left, Azure.ResourceManager.Hci.Models.ManagedServiceIdentityType right) { throw null; }
         public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
@@ -820,13 +921,6 @@ namespace Azure.ResourceManager.Hci.Models
         public static bool operator !=(Azure.ResourceManager.Hci.Models.NodeExtensionState left, Azure.ResourceManager.Hci.Models.NodeExtensionState right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class PackageVersionInfo
-    {
-        public PackageVersionInfo() { }
-        public System.DateTimeOffset? LastUpdated { get { throw null; } set { } }
-        public string PackageType { get { throw null; } set { } }
-        public string Version { get { throw null; } set { } }
-    }
     public partial class PerNodeArcState
     {
         internal PerNodeArcState() { }
@@ -840,74 +934,6 @@ namespace Azure.ResourceManager.Hci.Models
         public string Extension { get { throw null; } }
         public string Name { get { throw null; } }
         public Azure.ResourceManager.Hci.Models.NodeExtensionState? State { get { throw null; } }
-    }
-    public partial class PrecheckResult
-    {
-        public PrecheckResult() { }
-        public string AdditionalData { get { throw null; } set { } }
-        public string Description { get { throw null; } set { } }
-        public string HealthCheckSource { get { throw null; } set { } }
-        public string Name { get { throw null; } set { } }
-        public string Remediation { get { throw null; } set { } }
-        public Azure.ResourceManager.Hci.Models.Severity? Severity { get { throw null; } set { } }
-        public Azure.ResourceManager.Hci.Models.HciClusterStatus? Status { get { throw null; } set { } }
-        public Azure.ResourceManager.Hci.Models.PrecheckResultTags Tags { get { throw null; } set { } }
-        public string TargetResourceId { get { throw null; } set { } }
-        public string TargetResourceName { get { throw null; } set { } }
-        public System.DateTimeOffset? Timestamp { get { throw null; } set { } }
-        public string Title { get { throw null; } set { } }
-    }
-    public partial class PrecheckResultTags
-    {
-        public PrecheckResultTags() { }
-        public string Key { get { throw null; } set { } }
-        public string Value { get { throw null; } set { } }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct RebootRequirement : System.IEquatable<Azure.ResourceManager.Hci.Models.RebootRequirement>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public RebootRequirement(string value) { throw null; }
-        public static Azure.ResourceManager.Hci.Models.RebootRequirement False { get { throw null; } }
-        public static Azure.ResourceManager.Hci.Models.RebootRequirement True { get { throw null; } }
-        public static Azure.ResourceManager.Hci.Models.RebootRequirement Unknown { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Hci.Models.RebootRequirement other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Hci.Models.RebootRequirement left, Azure.ResourceManager.Hci.Models.RebootRequirement right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Hci.Models.RebootRequirement (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Hci.Models.RebootRequirement left, Azure.ResourceManager.Hci.Models.RebootRequirement right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct Severity : System.IEquatable<Azure.ResourceManager.Hci.Models.Severity>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public Severity(string value) { throw null; }
-        public static Azure.ResourceManager.Hci.Models.Severity Critical { get { throw null; } }
-        public static Azure.ResourceManager.Hci.Models.Severity Hidden { get { throw null; } }
-        public static Azure.ResourceManager.Hci.Models.Severity Informational { get { throw null; } }
-        public static Azure.ResourceManager.Hci.Models.Severity Warning { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Hci.Models.Severity other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Hci.Models.Severity left, Azure.ResourceManager.Hci.Models.Severity right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Hci.Models.Severity (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Hci.Models.Severity left, Azure.ResourceManager.Hci.Models.Severity right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    public partial class SkuMappings
-    {
-        public SkuMappings() { }
-        public string CatalogPlanId { get { throw null; } set { } }
-        public string MarketplaceSkuId { get { throw null; } set { } }
-        public System.Collections.Generic.IList<string> MarketplaceSkuVersions { get { throw null; } }
     }
     public partial class SoftwareAssuranceChangeContent
     {
@@ -957,52 +983,6 @@ namespace Azure.ResourceManager.Hci.Models
         public static bool operator !=(Azure.ResourceManager.Hci.Models.SoftwareAssuranceStatus left, Azure.ResourceManager.Hci.Models.SoftwareAssuranceStatus right) { throw null; }
         public override string ToString() { throw null; }
     }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct State : System.IEquatable<Azure.ResourceManager.Hci.Models.State>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public State(string value) { throw null; }
-        public static Azure.ResourceManager.Hci.Models.State DownloadFailed { get { throw null; } }
-        public static Azure.ResourceManager.Hci.Models.State Downloading { get { throw null; } }
-        public static Azure.ResourceManager.Hci.Models.State HasPrerequisite { get { throw null; } }
-        public static Azure.ResourceManager.Hci.Models.State HealthCheckFailed { get { throw null; } }
-        public static Azure.ResourceManager.Hci.Models.State HealthChecking { get { throw null; } }
-        public static Azure.ResourceManager.Hci.Models.State InstallationFailed { get { throw null; } }
-        public static Azure.ResourceManager.Hci.Models.State Installed { get { throw null; } }
-        public static Azure.ResourceManager.Hci.Models.State Installing { get { throw null; } }
-        public static Azure.ResourceManager.Hci.Models.State Invalid { get { throw null; } }
-        public static Azure.ResourceManager.Hci.Models.State NotApplicableBecauseAnotherUpdateIsInProgress { get { throw null; } }
-        public static Azure.ResourceManager.Hci.Models.State Obsolete { get { throw null; } }
-        public static Azure.ResourceManager.Hci.Models.State PreparationFailed { get { throw null; } }
-        public static Azure.ResourceManager.Hci.Models.State Preparing { get { throw null; } }
-        public static Azure.ResourceManager.Hci.Models.State Ready { get { throw null; } }
-        public static Azure.ResourceManager.Hci.Models.State ReadyToInstall { get { throw null; } }
-        public static Azure.ResourceManager.Hci.Models.State Recalled { get { throw null; } }
-        public static Azure.ResourceManager.Hci.Models.State ScanFailed { get { throw null; } }
-        public static Azure.ResourceManager.Hci.Models.State ScanInProgress { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Hci.Models.State other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Hci.Models.State left, Azure.ResourceManager.Hci.Models.State right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Hci.Models.State (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Hci.Models.State left, Azure.ResourceManager.Hci.Models.State right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    public partial class Step
-    {
-        public Step() { }
-        public string Description { get { throw null; } set { } }
-        public System.DateTimeOffset? EndTimeUtc { get { throw null; } set { } }
-        public string ErrorMessage { get { throw null; } set { } }
-        public System.DateTimeOffset? LastUpdatedTimeUtc { get { throw null; } set { } }
-        public string Name { get { throw null; } set { } }
-        public System.DateTimeOffset? StartTimeUtc { get { throw null; } set { } }
-        public string Status { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Hci.Models.Step> Steps { get { throw null; } }
-    }
     public partial class UpdatePrerequisite
     {
         public UpdatePrerequisite() { }
@@ -1028,6 +1008,26 @@ namespace Azure.ResourceManager.Hci.Models
         public static bool operator ==(Azure.ResourceManager.Hci.Models.UpdateRunPropertiesState left, Azure.ResourceManager.Hci.Models.UpdateRunPropertiesState right) { throw null; }
         public static implicit operator Azure.ResourceManager.Hci.Models.UpdateRunPropertiesState (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Hci.Models.UpdateRunPropertiesState left, Azure.ResourceManager.Hci.Models.UpdateRunPropertiesState right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct UpdateSeverity : System.IEquatable<Azure.ResourceManager.Hci.Models.UpdateSeverity>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public UpdateSeverity(string value) { throw null; }
+        public static Azure.ResourceManager.Hci.Models.UpdateSeverity Critical { get { throw null; } }
+        public static Azure.ResourceManager.Hci.Models.UpdateSeverity Hidden { get { throw null; } }
+        public static Azure.ResourceManager.Hci.Models.UpdateSeverity Informational { get { throw null; } }
+        public static Azure.ResourceManager.Hci.Models.UpdateSeverity Warning { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Hci.Models.UpdateSeverity other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Hci.Models.UpdateSeverity left, Azure.ResourceManager.Hci.Models.UpdateSeverity right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Hci.Models.UpdateSeverity (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Hci.Models.UpdateSeverity left, Azure.ResourceManager.Hci.Models.UpdateSeverity right) { throw null; }
         public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]

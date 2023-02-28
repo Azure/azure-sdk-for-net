@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Hci
         /// <summary> Initializes a new instance of HciSkuData. </summary>
         public HciSkuData()
         {
-            SkuMappings = new ChangeTrackingList<SkuMappings>();
+            SkuMappings = new ChangeTrackingList<HciSkuMappings>();
         }
 
         /// <summary> Initializes a new instance of HciSkuData. </summary>
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Hci
         /// <param name="content"> JSON serialized catalog content of the sku offer. </param>
         /// <param name="contentVersion"> The API version of the catalog service used to serve the catalog content. </param>
         /// <param name="skuMappings"> Array of SKU mappings. </param>
-        internal HciSkuData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string provisioningState, string publisherId, string offerId, string content, string contentVersion, IList<SkuMappings> skuMappings) : base(id, name, resourceType, systemData)
+        internal HciSkuData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string provisioningState, string publisherId, string offerId, string content, string contentVersion, IList<HciSkuMappings> skuMappings) : base(id, name, resourceType, systemData)
         {
             ProvisioningState = provisioningState;
             PublisherId = publisherId;
@@ -53,6 +53,6 @@ namespace Azure.ResourceManager.Hci
         /// <summary> The API version of the catalog service used to serve the catalog content. </summary>
         public string ContentVersion { get; set; }
         /// <summary> Array of SKU mappings. </summary>
-        public IList<SkuMappings> SkuMappings { get; }
+        public IList<HciSkuMappings> SkuMappings { get; }
     }
 }

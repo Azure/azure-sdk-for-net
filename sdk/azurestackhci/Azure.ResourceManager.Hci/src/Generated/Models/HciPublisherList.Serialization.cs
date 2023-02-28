@@ -12,11 +12,11 @@ using Azure.ResourceManager.Hci;
 
 namespace Azure.ResourceManager.Hci.Models
 {
-    internal partial class UpdateList
+    internal partial class HciPublisherList
     {
-        internal static UpdateList DeserializeUpdateList(JsonElement element)
+        internal static HciPublisherList DeserializeHciPublisherList(JsonElement element)
         {
-            Optional<IReadOnlyList<UpdateData>> value = default;
+            Optional<IReadOnlyList<PublisherData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.Hci.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<UpdateData> array = new List<UpdateData>();
+                    List<PublisherData> array = new List<PublisherData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(UpdateData.DeserializeUpdateData(item));
+                        array.Add(PublisherData.DeserializePublisherData(item));
                     }
                     value = array;
                     continue;
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Hci.Models
                     continue;
                 }
             }
-            return new UpdateList(Optional.ToList(value), nextLink.Value);
+            return new HciPublisherList(Optional.ToList(value), nextLink.Value);
         }
     }
 }

@@ -12,9 +12,9 @@ using Azure.ResourceManager.Hci;
 
 namespace Azure.ResourceManager.Hci.Models
 {
-    internal partial class SkuList
+    internal partial class HciSkuList
     {
-        internal static SkuList DeserializeSkuList(JsonElement element)
+        internal static HciSkuList DeserializeHciSkuList(JsonElement element)
         {
             Optional<IReadOnlyList<HciSkuData>> value = default;
             Optional<string> nextLink = default;
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Hci.Models
                     continue;
                 }
             }
-            return new SkuList(Optional.ToList(value), nextLink.Value);
+            return new HciSkuList(Optional.ToList(value), nextLink.Value);
         }
     }
 }

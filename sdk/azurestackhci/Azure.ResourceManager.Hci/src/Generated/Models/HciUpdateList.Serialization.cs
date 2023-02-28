@@ -12,11 +12,11 @@ using Azure.ResourceManager.Hci;
 
 namespace Azure.ResourceManager.Hci.Models
 {
-    internal partial class OfferList
+    internal partial class HciUpdateList
     {
-        internal static OfferList DeserializeOfferList(JsonElement element)
+        internal static HciUpdateList DeserializeHciUpdateList(JsonElement element)
         {
-            Optional<IReadOnlyList<OfferData>> value = default;
+            Optional<IReadOnlyList<UpdateData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.Hci.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<OfferData> array = new List<OfferData>();
+                    List<UpdateData> array = new List<UpdateData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(OfferData.DeserializeOfferData(item));
+                        array.Add(UpdateData.DeserializeUpdateData(item));
                     }
                     value = array;
                     continue;
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Hci.Models
                     continue;
                 }
             }
-            return new OfferList(Optional.ToList(value), nextLink.Value);
+            return new HciUpdateList(Optional.ToList(value), nextLink.Value);
         }
     }
 }

@@ -12,18 +12,18 @@ using Azure.ResourceManager.Hci;
 namespace Azure.ResourceManager.Hci.Models
 {
     /// <summary> List of Updates. </summary>
-    internal partial class UpdateList
+    internal partial class HciUpdateList
     {
-        /// <summary> Initializes a new instance of UpdateList. </summary>
-        internal UpdateList()
+        /// <summary> Initializes a new instance of HciUpdateList. </summary>
+        internal HciUpdateList()
         {
             Value = new ChangeTrackingList<UpdateData>();
         }
 
-        /// <summary> Initializes a new instance of UpdateList. </summary>
+        /// <summary> Initializes a new instance of HciUpdateList. </summary>
         /// <param name="value"> List of Updates. </param>
         /// <param name="nextLink"> Link to the next set of results. </param>
-        internal UpdateList(IReadOnlyList<UpdateData> value, string nextLink)
+        internal HciUpdateList(IReadOnlyList<UpdateData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;

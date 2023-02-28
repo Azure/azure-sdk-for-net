@@ -12,18 +12,18 @@ using Azure.ResourceManager.Hci;
 namespace Azure.ResourceManager.Hci.Models
 {
     /// <summary> List of SKU proxy resources for the HCI cluster. </summary>
-    internal partial class SkuList
+    internal partial class HciSkuList
     {
-        /// <summary> Initializes a new instance of SkuList. </summary>
-        internal SkuList()
+        /// <summary> Initializes a new instance of HciSkuList. </summary>
+        internal HciSkuList()
         {
             Value = new ChangeTrackingList<HciSkuData>();
         }
 
-        /// <summary> Initializes a new instance of SkuList. </summary>
+        /// <summary> Initializes a new instance of HciSkuList. </summary>
         /// <param name="value"> List of SKU proxy resources. </param>
         /// <param name="nextLink"> Link to the next set of results. </param>
-        internal SkuList(IReadOnlyList<HciSkuData> value, string nextLink)
+        internal HciSkuList(IReadOnlyList<HciSkuData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;

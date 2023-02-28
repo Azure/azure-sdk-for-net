@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Hci.Models
         /// <summary> The tenant ID of the system assigned identity. This property will only be provided for a system assigned identity. </summary>
         public Guid? TenantId { get; }
         /// <summary> Type of managed service identity (where both SystemAssigned and UserAssigned types are allowed). </summary>
-        public ManagedServiceIdentityType? ManagedServiceIdentityType { get; set; }
+        public HciManagedServiceIdentityType? ManagedServiceIdentityType { get; set; }
         /// <summary> The set of user assigned identities associated with the resource. The userAssignedIdentities dictionary keys will be ARM resource ids in the form: &apos;/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}. The dictionary values can be empty objects ({}) in requests. </summary>
         public IDictionary<string, UserAssignedIdentity> UserAssignedIdentities { get; }
     }

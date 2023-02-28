@@ -54,6 +54,18 @@ prepend-rp-prefix:
   - ClusterDesiredProperties
   - ClusterNode
   - ClusterReportedProperties
+  - AvailabilityType
+  - HealthState
+  - ManagedServiceIdentityType
+  - OfferList
+  - PackageVersionInfo
+  - PrecheckResult
+  - PrecheckResultTags
+  - PublisherList
+  - SkuList
+  - SkuMappings
+  - UpdateList
+  - PublisherCollection
 rename-mapping:
   Extension: ArcExtension
   Extension.properties.extensionParameters.autoUpgradeMinorVersion: ShouldAutoUpgradeMinorVersion
@@ -73,6 +85,13 @@ rename-mapping:
   UploadCertificateRequest: HciClusterCertificateContent
   RawCertificateData: HciClusterRawCertificate
   PerNodeState: PerNodeArcState
+  RebootRequirement: HciNodeRebootRequirement
+  Severity: UpdateSeverity
+  State: HciUpdateState
+  Step: HciUpdateStep
+  OfferCollection: HciOfferCollection
+  OfferData: HciOfferData
+
 
 directive:
   - from: swagger-document

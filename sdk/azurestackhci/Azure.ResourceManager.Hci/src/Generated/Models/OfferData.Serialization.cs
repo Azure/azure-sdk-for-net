@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Hci
             Optional<string> publisherId = default;
             Optional<string> content = default;
             Optional<string> contentVersion = default;
-            Optional<IList<SkuMappings>> skuMappings = default;
+            Optional<IList<HciSkuMappings>> skuMappings = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
@@ -123,10 +123,10 @@ namespace Azure.ResourceManager.Hci
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<SkuMappings> array = new List<SkuMappings>();
+                            List<HciSkuMappings> array = new List<HciSkuMappings>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(Models.SkuMappings.DeserializeSkuMappings(item));
+                                array.Add(HciSkuMappings.DeserializeHciSkuMappings(item));
                             }
                             skuMappings = array;
                             continue;

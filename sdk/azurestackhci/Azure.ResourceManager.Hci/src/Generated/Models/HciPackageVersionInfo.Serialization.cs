@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Hci.Models
 {
-    public partial class PackageVersionInfo : IUtf8JsonSerializable
+    public partial class HciPackageVersionInfo : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Hci.Models
             writer.WriteEndObject();
         }
 
-        internal static PackageVersionInfo DeserializePackageVersionInfo(JsonElement element)
+        internal static HciPackageVersionInfo DeserializeHciPackageVersionInfo(JsonElement element)
         {
             Optional<string> packageType = default;
             Optional<string> version = default;
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Hci.Models
                     continue;
                 }
             }
-            return new PackageVersionInfo(packageType.Value, version.Value, Optional.ToNullable(lastUpdated));
+            return new HciPackageVersionInfo(packageType.Value, version.Value, Optional.ToNullable(lastUpdated));
         }
     }
 }

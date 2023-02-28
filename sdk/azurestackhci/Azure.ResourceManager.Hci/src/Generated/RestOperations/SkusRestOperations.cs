@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Hci
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/>, <paramref name="publisherName"/> or <paramref name="offerName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/>, <paramref name="publisherName"/> or <paramref name="offerName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<SkuList>> ListByOfferAsync(string subscriptionId, string resourceGroupName, string clusterName, string publisherName, string offerName, string expand = null, CancellationToken cancellationToken = default)
+        public async Task<Response<HciSkuList>> ListByOfferAsync(string subscriptionId, string resourceGroupName, string clusterName, string publisherName, string offerName, string expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -90,9 +90,9 @@ namespace Azure.ResourceManager.Hci
             {
                 case 200:
                     {
-                        SkuList value = default;
+                        HciSkuList value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = SkuList.DeserializeSkuList(document.RootElement);
+                        value = HciSkuList.DeserializeHciSkuList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Hci
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/>, <paramref name="publisherName"/> or <paramref name="offerName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/>, <paramref name="publisherName"/> or <paramref name="offerName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<SkuList> ListByOffer(string subscriptionId, string resourceGroupName, string clusterName, string publisherName, string offerName, string expand = null, CancellationToken cancellationToken = default)
+        public Response<HciSkuList> ListByOffer(string subscriptionId, string resourceGroupName, string clusterName, string publisherName, string offerName, string expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -124,9 +124,9 @@ namespace Azure.ResourceManager.Hci
             {
                 case 200:
                     {
-                        SkuList value = default;
+                        HciSkuList value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = SkuList.DeserializeSkuList(document.RootElement);
+                        value = HciSkuList.DeserializeHciSkuList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -265,7 +265,7 @@ namespace Azure.ResourceManager.Hci
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/>, <paramref name="publisherName"/> or <paramref name="offerName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/>, <paramref name="publisherName"/> or <paramref name="offerName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<SkuList>> ListByOfferNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string clusterName, string publisherName, string offerName, string expand = null, CancellationToken cancellationToken = default)
+        public async Task<Response<HciSkuList>> ListByOfferNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string clusterName, string publisherName, string offerName, string expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -280,9 +280,9 @@ namespace Azure.ResourceManager.Hci
             {
                 case 200:
                     {
-                        SkuList value = default;
+                        HciSkuList value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = SkuList.DeserializeSkuList(document.RootElement);
+                        value = HciSkuList.DeserializeHciSkuList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -301,7 +301,7 @@ namespace Azure.ResourceManager.Hci
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/>, <paramref name="publisherName"/> or <paramref name="offerName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/>, <paramref name="publisherName"/> or <paramref name="offerName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<SkuList> ListByOfferNextPage(string nextLink, string subscriptionId, string resourceGroupName, string clusterName, string publisherName, string offerName, string expand = null, CancellationToken cancellationToken = default)
+        public Response<HciSkuList> ListByOfferNextPage(string nextLink, string subscriptionId, string resourceGroupName, string clusterName, string publisherName, string offerName, string expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -316,9 +316,9 @@ namespace Azure.ResourceManager.Hci
             {
                 case 200:
                     {
-                        SkuList value = default;
+                        HciSkuList value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = SkuList.DeserializeSkuList(document.RootElement);
+                        value = HciSkuList.DeserializeHciSkuList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

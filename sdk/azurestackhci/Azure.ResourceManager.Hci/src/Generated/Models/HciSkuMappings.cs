@@ -11,19 +11,19 @@ using Azure.Core;
 namespace Azure.ResourceManager.Hci.Models
 {
     /// <summary> SKU Mapping details. </summary>
-    public partial class SkuMappings
+    public partial class HciSkuMappings
     {
-        /// <summary> Initializes a new instance of SkuMappings. </summary>
-        public SkuMappings()
+        /// <summary> Initializes a new instance of HciSkuMappings. </summary>
+        public HciSkuMappings()
         {
             MarketplaceSkuVersions = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of SkuMappings. </summary>
+        /// <summary> Initializes a new instance of HciSkuMappings. </summary>
         /// <param name="catalogPlanId"> Identifier of the CatalogPlan for the sku. </param>
         /// <param name="marketplaceSkuId"> Identifier for the sku. </param>
         /// <param name="marketplaceSkuVersions"> Array of SKU versions available. </param>
-        internal SkuMappings(string catalogPlanId, string marketplaceSkuId, IList<string> marketplaceSkuVersions)
+        internal HciSkuMappings(string catalogPlanId, string marketplaceSkuId, IList<string> marketplaceSkuVersions)
         {
             CatalogPlanId = catalogPlanId;
             MarketplaceSkuId = marketplaceSkuId;

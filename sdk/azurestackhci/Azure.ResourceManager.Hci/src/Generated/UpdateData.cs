@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.Hci
         public UpdateData()
         {
             Prerequisites = new ChangeTrackingList<UpdatePrerequisite>();
-            ComponentVersions = new ChangeTrackingList<PackageVersionInfo>();
-            HealthCheckResult = new ChangeTrackingList<PrecheckResult>();
+            ComponentVersions = new ChangeTrackingList<HciPackageVersionInfo>();
+            HealthCheckResult = new ChangeTrackingList<HciPrecheckResult>();
         }
 
         /// <summary> Initializes a new instance of UpdateData. </summary>
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Hci
         /// <param name="additionalProperties"> Extensible KV pairs serialized as a string. This is currently used to report the stamp OEM family and hardware model information when an update is flagged as Invalid for the stamp based on OEM type. </param>
         /// <param name="progressPercentage"> Progress percentage of ongoing operation. Currently this property is only valid when the update is in the Downloading state, where it maps to how much of the update content has been downloaded. </param>
         /// <param name="notifyMessage"> Brief message with instructions for updates of AvailabilityType Notify. </param>
-        internal UpdateData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, HciProvisioningState? provisioningState, DateTimeOffset? installedOn, string description, State? state, IList<UpdatePrerequisite> prerequisites, IList<PackageVersionInfo> componentVersions, RebootRequirement? rebootRequired, HealthState? healthState, IList<PrecheckResult> healthCheckResult, DateTimeOffset? healthCheckOn, string packagePath, float? packageSizeInMb, string displayName, string version, string publisher, string releaseLink, AvailabilityType? availabilityType, string packageType, string additionalProperties, float? progressPercentage, string notifyMessage) : base(id, name, resourceType, systemData)
+        internal UpdateData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, HciProvisioningState? provisioningState, DateTimeOffset? installedOn, string description, HciUpdateState? state, IList<UpdatePrerequisite> prerequisites, IList<HciPackageVersionInfo> componentVersions, HciNodeRebootRequirement? rebootRequired, HciHealthState? healthState, IList<HciPrecheckResult> healthCheckResult, DateTimeOffset? healthCheckOn, string packagePath, float? packageSizeInMb, string displayName, string version, string publisher, string releaseLink, HciAvailabilityType? availabilityType, string packageType, string additionalProperties, float? progressPercentage, string notifyMessage) : base(id, name, resourceType, systemData)
         {
             Location = location;
             ProvisioningState = provisioningState;
@@ -86,17 +86,17 @@ namespace Azure.ResourceManager.Hci
         /// <summary> Description of the update. </summary>
         public string Description { get; set; }
         /// <summary> State of the update as it relates to this stamp. </summary>
-        public State? State { get; set; }
+        public HciUpdateState? State { get; set; }
         /// <summary> If update State is HasPrerequisite, this property contains an array of objects describing prerequisite updates before installing this update. Otherwise, it is empty. </summary>
         public IList<UpdatePrerequisite> Prerequisites { get; }
         /// <summary> An array of component versions for a Solution Bundle update, and an empty array otherwise.  </summary>
-        public IList<PackageVersionInfo> ComponentVersions { get; }
+        public IList<HciPackageVersionInfo> ComponentVersions { get; }
         /// <summary> Gets or sets the reboot required. </summary>
-        public RebootRequirement? RebootRequired { get; set; }
+        public HciNodeRebootRequirement? RebootRequired { get; set; }
         /// <summary> Overall health state for update-specific health checks. </summary>
-        public HealthState? HealthState { get; set; }
+        public HciHealthState? HealthState { get; set; }
         /// <summary> An array of PrecheckResult objects. </summary>
-        public IList<PrecheckResult> HealthCheckResult { get; }
+        public IList<HciPrecheckResult> HealthCheckResult { get; }
         /// <summary> Last time the package-specific checks were run. </summary>
         public DateTimeOffset? HealthCheckOn { get; set; }
         /// <summary> Path where the update package is available. </summary>
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Hci
         /// <summary> Link to release notes for the update. </summary>
         public string ReleaseLink { get; set; }
         /// <summary> Indicates the way the update content can be downloaded. </summary>
-        public AvailabilityType? AvailabilityType { get; set; }
+        public HciAvailabilityType? AvailabilityType { get; set; }
         /// <summary> Customer-visible type of the update. </summary>
         public string PackageType { get; set; }
         /// <summary> Extensible KV pairs serialized as a string. This is currently used to report the stamp OEM family and hardware model information when an update is flagged as Invalid for the stamp based on OEM type. </summary>

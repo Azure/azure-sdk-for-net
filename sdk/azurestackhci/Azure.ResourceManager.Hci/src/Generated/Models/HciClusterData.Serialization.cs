@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.Hci
             Optional<string> resourceProviderObjectId = default;
             Optional<Guid> principalId = default;
             Optional<Guid> tenantId = default;
-            Optional<Models.ManagedServiceIdentityType> type0 = default;
+            Optional<HciManagedServiceIdentityType> type0 = default;
             Optional<IDictionary<string, UserAssignedIdentity>> userAssignedIdentities = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -377,7 +377,7 @@ namespace Azure.ResourceManager.Hci
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            type0 = new Models.ManagedServiceIdentityType(property0.Value.GetString());
+                            type0 = new HciManagedServiceIdentityType(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("userAssignedIdentities"))

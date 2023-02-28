@@ -158,12 +158,12 @@ namespace Azure.ResourceManager.Hci
             Optional<HciProvisioningState> provisioningState = default;
             Optional<DateTimeOffset> installedDate = default;
             Optional<string> description = default;
-            Optional<State> state = default;
+            Optional<HciUpdateState> state = default;
             Optional<IList<UpdatePrerequisite>> prerequisites = default;
-            Optional<IList<PackageVersionInfo>> componentVersions = default;
-            Optional<RebootRequirement> rebootRequired = default;
-            Optional<HealthState> healthState = default;
-            Optional<IList<PrecheckResult>> healthCheckResult = default;
+            Optional<IList<HciPackageVersionInfo>> componentVersions = default;
+            Optional<HciNodeRebootRequirement> rebootRequired = default;
+            Optional<HciHealthState> healthState = default;
+            Optional<IList<HciPrecheckResult>> healthCheckResult = default;
             Optional<DateTimeOffset> healthCheckDate = default;
             Optional<string> packagePath = default;
             Optional<float> packageSizeInMb = default;
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.Hci
             Optional<string> version = default;
             Optional<string> publisher = default;
             Optional<string> releaseLink = default;
-            Optional<AvailabilityType> availabilityType = default;
+            Optional<HciAvailabilityType> availabilityType = default;
             Optional<string> packageType = default;
             Optional<string> additionalProperties = default;
             Optional<float> progressPercentage = default;
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.Hci
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            state = new State(property0.Value.GetString());
+                            state = new HciUpdateState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("prerequisites"))
@@ -279,10 +279,10 @@ namespace Azure.ResourceManager.Hci
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<PackageVersionInfo> array = new List<PackageVersionInfo>();
+                            List<HciPackageVersionInfo> array = new List<HciPackageVersionInfo>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(PackageVersionInfo.DeserializePackageVersionInfo(item));
+                                array.Add(HciPackageVersionInfo.DeserializeHciPackageVersionInfo(item));
                             }
                             componentVersions = array;
                             continue;
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.Hci
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            rebootRequired = new RebootRequirement(property0.Value.GetString());
+                            rebootRequired = new HciNodeRebootRequirement(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("healthState"))
@@ -304,7 +304,7 @@ namespace Azure.ResourceManager.Hci
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            healthState = new HealthState(property0.Value.GetString());
+                            healthState = new HciHealthState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("healthCheckResult"))
@@ -314,10 +314,10 @@ namespace Azure.ResourceManager.Hci
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<PrecheckResult> array = new List<PrecheckResult>();
+                            List<HciPrecheckResult> array = new List<HciPrecheckResult>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(PrecheckResult.DeserializePrecheckResult(item));
+                                array.Add(HciPrecheckResult.DeserializeHciPrecheckResult(item));
                             }
                             healthCheckResult = array;
                             continue;
@@ -374,7 +374,7 @@ namespace Azure.ResourceManager.Hci
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            availabilityType = new AvailabilityType(property0.Value.GetString());
+                            availabilityType = new HciAvailabilityType(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("packageType"))

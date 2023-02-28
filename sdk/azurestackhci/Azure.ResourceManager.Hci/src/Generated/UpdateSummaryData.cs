@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.Hci
         /// <summary> Initializes a new instance of UpdateSummaryData. </summary>
         public UpdateSummaryData()
         {
-            PackageVersions = new ChangeTrackingList<PackageVersionInfo>();
-            HealthCheckResult = new ChangeTrackingList<PrecheckResult>();
+            PackageVersions = new ChangeTrackingList<HciPackageVersionInfo>();
+            HealthCheckResult = new ChangeTrackingList<HciPrecheckResult>();
         }
 
         /// <summary> Initializes a new instance of UpdateSummaryData. </summary>
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Hci
         /// <param name="healthCheckResult"> An array of pre-check result objects. </param>
         /// <param name="healthCheckOn"> Last time the package-specific checks were run. </param>
         /// <param name="state"> Overall update state of the stamp. </param>
-        internal UpdateSummaryData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, HciProvisioningState? provisioningState, string oemFamily, string hardwareModel, IList<PackageVersionInfo> packageVersions, string currentVersion, DateTimeOffset? lastUpdated, DateTimeOffset? lastChecked, HealthState? healthState, IList<PrecheckResult> healthCheckResult, DateTimeOffset? healthCheckOn, UpdateSummariesPropertiesState? state) : base(id, name, resourceType, systemData)
+        internal UpdateSummaryData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, HciProvisioningState? provisioningState, string oemFamily, string hardwareModel, IList<HciPackageVersionInfo> packageVersions, string currentVersion, DateTimeOffset? lastUpdated, DateTimeOffset? lastChecked, HciHealthState? healthState, IList<HciPrecheckResult> healthCheckResult, DateTimeOffset? healthCheckOn, UpdateSummariesPropertiesState? state) : base(id, name, resourceType, systemData)
         {
             Location = location;
             ProvisioningState = provisioningState;
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Hci
         /// <summary> Name of the hardware model. </summary>
         public string HardwareModel { get; set; }
         /// <summary> Current version of each updatable component. </summary>
-        public IList<PackageVersionInfo> PackageVersions { get; }
+        public IList<HciPackageVersionInfo> PackageVersions { get; }
         /// <summary> Current Solution Bundle version of the stamp. </summary>
         public string CurrentVersion { get; set; }
         /// <summary> Last time an update installation completed successfully. </summary>
@@ -73,9 +73,9 @@ namespace Azure.ResourceManager.Hci
         /// <summary> Last time the update service successfully checked for updates. </summary>
         public DateTimeOffset? LastChecked { get; set; }
         /// <summary> Overall health state for update-specific health checks. </summary>
-        public HealthState? HealthState { get; set; }
+        public HciHealthState? HealthState { get; set; }
         /// <summary> An array of pre-check result objects. </summary>
-        public IList<PrecheckResult> HealthCheckResult { get; }
+        public IList<HciPrecheckResult> HealthCheckResult { get; }
         /// <summary> Last time the package-specific checks were run. </summary>
         public DateTimeOffset? HealthCheckOn { get; set; }
         /// <summary> Overall update state of the stamp. </summary>

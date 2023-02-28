@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Hci
             Optional<DateTimeOffset> startTimeUtc = default;
             Optional<DateTimeOffset> endTimeUtc = default;
             Optional<DateTimeOffset> lastUpdatedTimeUtc = default;
-            Optional<IList<Step>> steps = default;
+            Optional<IList<HciUpdateStep>> steps = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("location"))
@@ -275,10 +275,10 @@ namespace Azure.ResourceManager.Hci
                                         property1.ThrowNonNullablePropertyIsNull();
                                         continue;
                                     }
-                                    List<Step> array = new List<Step>();
+                                    List<HciUpdateStep> array = new List<HciUpdateStep>();
                                     foreach (var item in property1.Value.EnumerateArray())
                                     {
-                                        array.Add(Step.DeserializeStep(item));
+                                        array.Add(HciUpdateStep.DeserializeHciUpdateStep(item));
                                     }
                                     steps = array;
                                     continue;

@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Hci.Models
 {
-    public partial class PrecheckResultTags : IUtf8JsonSerializable
+    public partial class HciPrecheckResultTags : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Hci.Models
             writer.WriteEndObject();
         }
 
-        internal static PrecheckResultTags DeserializePrecheckResultTags(JsonElement element)
+        internal static HciPrecheckResultTags DeserializeHciPrecheckResultTags(JsonElement element)
         {
             Optional<string> key = default;
             Optional<string> value = default;
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Hci.Models
                     continue;
                 }
             }
-            return new PrecheckResultTags(key.Value, value.Value);
+            return new HciPrecheckResultTags(key.Value, value.Value);
         }
     }
 }

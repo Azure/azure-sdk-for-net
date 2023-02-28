@@ -8,17 +8,17 @@
 namespace Azure.ResourceManager.Hci.Models
 {
     /// <summary> Key-value pairs that allow grouping/filtering individual tests. </summary>
-    public partial class PrecheckResultTags
+    public partial class HciPrecheckResultTags
     {
-        /// <summary> Initializes a new instance of PrecheckResultTags. </summary>
-        public PrecheckResultTags()
+        /// <summary> Initializes a new instance of HciPrecheckResultTags. </summary>
+        public HciPrecheckResultTags()
         {
         }
 
-        /// <summary> Initializes a new instance of PrecheckResultTags. </summary>
+        /// <summary> Initializes a new instance of HciPrecheckResultTags. </summary>
         /// <param name="key"> Key that allow grouping/filtering individual tests. </param>
         /// <param name="value"> Value of the key that allow grouping/filtering individual tests. </param>
-        internal PrecheckResultTags(string key, string value)
+        internal HciPrecheckResultTags(string key, string value)
         {
             Key = key;
             Value = value;

@@ -100,12 +100,12 @@ namespace Azure.ResourceManager.Hci
             Optional<HciProvisioningState> provisioningState = default;
             Optional<string> oemFamily = default;
             Optional<string> hardwareModel = default;
-            Optional<IList<PackageVersionInfo>> packageVersions = default;
+            Optional<IList<HciPackageVersionInfo>> packageVersions = default;
             Optional<string> currentVersion = default;
             Optional<DateTimeOffset> lastUpdated = default;
             Optional<DateTimeOffset> lastChecked = default;
-            Optional<HealthState> healthState = default;
-            Optional<IList<PrecheckResult>> healthCheckResult = default;
+            Optional<HciHealthState> healthState = default;
+            Optional<IList<HciPrecheckResult>> healthCheckResult = default;
             Optional<DateTimeOffset> healthCheckDate = default;
             Optional<UpdateSummariesPropertiesState> state = default;
             foreach (var property in element.EnumerateObject())
@@ -181,10 +181,10 @@ namespace Azure.ResourceManager.Hci
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<PackageVersionInfo> array = new List<PackageVersionInfo>();
+                            List<HciPackageVersionInfo> array = new List<HciPackageVersionInfo>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(PackageVersionInfo.DeserializePackageVersionInfo(item));
+                                array.Add(HciPackageVersionInfo.DeserializeHciPackageVersionInfo(item));
                             }
                             packageVersions = array;
                             continue;
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.Hci
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            healthState = new HealthState(property0.Value.GetString());
+                            healthState = new HciHealthState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("healthCheckResult"))
@@ -231,10 +231,10 @@ namespace Azure.ResourceManager.Hci
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<PrecheckResult> array = new List<PrecheckResult>();
+                            List<HciPrecheckResult> array = new List<HciPrecheckResult>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(PrecheckResult.DeserializePrecheckResult(item));
+                                array.Add(HciPrecheckResult.DeserializeHciPrecheckResult(item));
                             }
                             healthCheckResult = array;
                             continue;

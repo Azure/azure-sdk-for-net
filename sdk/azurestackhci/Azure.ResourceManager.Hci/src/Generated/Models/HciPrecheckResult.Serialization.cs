@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Hci.Models
 {
-    public partial class PrecheckResult : IUtf8JsonSerializable
+    public partial class HciPrecheckResult : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -79,13 +79,13 @@ namespace Azure.ResourceManager.Hci.Models
             writer.WriteEndObject();
         }
 
-        internal static PrecheckResult DeserializePrecheckResult(JsonElement element)
+        internal static HciPrecheckResult DeserializeHciPrecheckResult(JsonElement element)
         {
             Optional<string> name = default;
-            Optional<PrecheckResultTags> tags = default;
+            Optional<HciPrecheckResultTags> tags = default;
             Optional<string> title = default;
             Optional<HciClusterStatus> status = default;
-            Optional<Severity> severity = default;
+            Optional<UpdateSeverity> severity = default;
             Optional<string> description = default;
             Optional<string> remediation = default;
             Optional<string> targetResourceId = default;
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Hci.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    tags = PrecheckResultTags.DeserializePrecheckResultTags(property.Value);
+                    tags = HciPrecheckResultTags.DeserializeHciPrecheckResultTags(property.Value);
                     continue;
                 }
                 if (property.NameEquals("title"))
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Hci.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    severity = new Severity(property.Value.GetString());
+                    severity = new UpdateSeverity(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("description"))
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.Hci.Models
                     continue;
                 }
             }
-            return new PrecheckResult(name.Value, tags.Value, title.Value, Optional.ToNullable(status), Optional.ToNullable(severity), description.Value, remediation.Value, targetResourceId.Value, targetResourceName.Value, Optional.ToNullable(timestamp), additionalData.Value, healthCheckSource.Value);
+            return new HciPrecheckResult(name.Value, tags.Value, title.Value, Optional.ToNullable(status), Optional.ToNullable(severity), description.Value, remediation.Value, targetResourceId.Value, targetResourceName.Value, Optional.ToNullable(timestamp), additionalData.Value, healthCheckSource.Value);
         }
     }
 }

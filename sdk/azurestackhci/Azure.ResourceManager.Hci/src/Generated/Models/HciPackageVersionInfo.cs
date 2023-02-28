@@ -10,18 +10,18 @@ using System;
 namespace Azure.ResourceManager.Hci.Models
 {
     /// <summary> Current version of each updatable component. </summary>
-    public partial class PackageVersionInfo
+    public partial class HciPackageVersionInfo
     {
-        /// <summary> Initializes a new instance of PackageVersionInfo. </summary>
-        public PackageVersionInfo()
+        /// <summary> Initializes a new instance of HciPackageVersionInfo. </summary>
+        public HciPackageVersionInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of PackageVersionInfo. </summary>
+        /// <summary> Initializes a new instance of HciPackageVersionInfo. </summary>
         /// <param name="packageType"> Package type. </param>
         /// <param name="version"> Package version. </param>
         /// <param name="lastUpdated"> Last time this component was updated. </param>
-        internal PackageVersionInfo(string packageType, string version, DateTimeOffset? lastUpdated)
+        internal HciPackageVersionInfo(string packageType, string version, DateTimeOffset? lastUpdated)
         {
             PackageType = packageType;
             Version = version;

@@ -12,18 +12,18 @@ using Azure.ResourceManager.Hci;
 namespace Azure.ResourceManager.Hci.Models
 {
     /// <summary> List of Publisher proxy resources for the HCI cluster. </summary>
-    internal partial class PublisherList
+    internal partial class HciPublisherList
     {
-        /// <summary> Initializes a new instance of PublisherList. </summary>
-        internal PublisherList()
+        /// <summary> Initializes a new instance of HciPublisherList. </summary>
+        internal HciPublisherList()
         {
             Value = new ChangeTrackingList<PublisherData>();
         }
 
-        /// <summary> Initializes a new instance of PublisherList. </summary>
+        /// <summary> Initializes a new instance of HciPublisherList. </summary>
         /// <param name="value"> List of Publisher proxy resources. </param>
         /// <param name="nextLink"> Link to the next set of results. </param>
-        internal PublisherList(IReadOnlyList<PublisherData> value, string nextLink)
+        internal HciPublisherList(IReadOnlyList<PublisherData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;

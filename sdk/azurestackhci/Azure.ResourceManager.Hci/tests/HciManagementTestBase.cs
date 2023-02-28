@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Hci.Tests
             {
                 AadClientId = new Guid(TestEnvironment.ClientId),
                 AadTenantId = new Guid(TestEnvironment.TenantId),
-                TypeIdentityType = ManagedServiceIdentityType.None
+                TypeIdentityType = HciManagedServiceIdentityType.None
             };
             var lro = await resourceGroup.GetHciClusters().CreateOrUpdateAsync(WaitUntil.Completed, clusterName, clusterData);
             return lro.Value;

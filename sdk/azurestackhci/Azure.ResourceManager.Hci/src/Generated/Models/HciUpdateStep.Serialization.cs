@@ -12,7 +12,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Hci.Models
 {
-    public partial class Step : IUtf8JsonSerializable
+    public partial class HciUpdateStep : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Hci.Models
             writer.WriteEndObject();
         }
 
-        internal static Step DeserializeStep(JsonElement element)
+        internal static HciUpdateStep DeserializeHciUpdateStep(JsonElement element)
         {
             Optional<string> name = default;
             Optional<string> description = default;
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Hci.Models
             Optional<DateTimeOffset> startTimeUtc = default;
             Optional<DateTimeOffset> endTimeUtc = default;
             Optional<DateTimeOffset> lastUpdatedTimeUtc = default;
-            Optional<IList<Step>> steps = default;
+            Optional<IList<HciUpdateStep>> steps = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
@@ -134,16 +134,16 @@ namespace Azure.ResourceManager.Hci.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<Step> array = new List<Step>();
+                    List<HciUpdateStep> array = new List<HciUpdateStep>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DeserializeStep(item));
+                        array.Add(DeserializeHciUpdateStep(item));
                     }
                     steps = array;
                     continue;
                 }
             }
-            return new Step(name.Value, description.Value, errorMessage.Value, status.Value, Optional.ToNullable(startTimeUtc), Optional.ToNullable(endTimeUtc), Optional.ToNullable(lastUpdatedTimeUtc), Optional.ToList(steps));
+            return new HciUpdateStep(name.Value, description.Value, errorMessage.Value, status.Value, Optional.ToNullable(startTimeUtc), Optional.ToNullable(endTimeUtc), Optional.ToNullable(lastUpdatedTimeUtc), Optional.ToList(steps));
         }
     }
 }

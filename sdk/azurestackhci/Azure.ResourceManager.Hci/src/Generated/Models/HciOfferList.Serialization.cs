@@ -12,11 +12,11 @@ using Azure.ResourceManager.Hci;
 
 namespace Azure.ResourceManager.Hci.Models
 {
-    internal partial class PublisherList
+    internal partial class HciOfferList
     {
-        internal static PublisherList DeserializePublisherList(JsonElement element)
+        internal static HciOfferList DeserializeHciOfferList(JsonElement element)
         {
-            Optional<IReadOnlyList<PublisherData>> value = default;
+            Optional<IReadOnlyList<OfferData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.Hci.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<PublisherData> array = new List<PublisherData>();
+                    List<OfferData> array = new List<OfferData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PublisherData.DeserializePublisherData(item));
+                        array.Add(OfferData.DeserializeOfferData(item));
                     }
                     value = array;
                     continue;
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Hci.Models
                     continue;
                 }
             }
-            return new PublisherList(Optional.ToList(value), nextLink.Value);
+            return new HciOfferList(Optional.ToList(value), nextLink.Value);
         }
     }
 }

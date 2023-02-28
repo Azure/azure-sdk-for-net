@@ -11,13 +11,13 @@ using System.ComponentModel;
 namespace Azure.ResourceManager.Hci.Models
 {
     /// <summary> State of the update as it relates to this stamp. </summary>
-    public readonly partial struct State : IEquatable<State>
+    public readonly partial struct HciUpdateState : IEquatable<HciUpdateState>
     {
         private readonly string _value;
 
-        /// <summary> Initializes a new instance of <see cref="State"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="HciUpdateState"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public State(string value)
+        public HciUpdateState(string value)
         {
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
@@ -42,53 +42,53 @@ namespace Azure.ResourceManager.Hci.Models
         private const string ScanFailedValue = "ScanFailed";
 
         /// <summary> HasPrerequisite. </summary>
-        public static State HasPrerequisite { get; } = new State(HasPrerequisiteValue);
+        public static HciUpdateState HasPrerequisite { get; } = new HciUpdateState(HasPrerequisiteValue);
         /// <summary> Obsolete. </summary>
-        public static State Obsolete { get; } = new State(ObsoleteValue);
+        public static HciUpdateState Obsolete { get; } = new HciUpdateState(ObsoleteValue);
         /// <summary> Ready. </summary>
-        public static State Ready { get; } = new State(ReadyValue);
+        public static HciUpdateState Ready { get; } = new HciUpdateState(ReadyValue);
         /// <summary> NotApplicableBecauseAnotherUpdateIsInProgress. </summary>
-        public static State NotApplicableBecauseAnotherUpdateIsInProgress { get; } = new State(NotApplicableBecauseAnotherUpdateIsInProgressValue);
+        public static HciUpdateState NotApplicableBecauseAnotherUpdateIsInProgress { get; } = new HciUpdateState(NotApplicableBecauseAnotherUpdateIsInProgressValue);
         /// <summary> Preparing. </summary>
-        public static State Preparing { get; } = new State(PreparingValue);
+        public static HciUpdateState Preparing { get; } = new HciUpdateState(PreparingValue);
         /// <summary> Installing. </summary>
-        public static State Installing { get; } = new State(InstallingValue);
+        public static HciUpdateState Installing { get; } = new HciUpdateState(InstallingValue);
         /// <summary> Installed. </summary>
-        public static State Installed { get; } = new State(InstalledValue);
+        public static HciUpdateState Installed { get; } = new HciUpdateState(InstalledValue);
         /// <summary> PreparationFailed. </summary>
-        public static State PreparationFailed { get; } = new State(PreparationFailedValue);
+        public static HciUpdateState PreparationFailed { get; } = new HciUpdateState(PreparationFailedValue);
         /// <summary> InstallationFailed. </summary>
-        public static State InstallationFailed { get; } = new State(InstallationFailedValue);
+        public static HciUpdateState InstallationFailed { get; } = new HciUpdateState(InstallationFailedValue);
         /// <summary> Invalid. </summary>
-        public static State Invalid { get; } = new State(InvalidValue);
+        public static HciUpdateState Invalid { get; } = new HciUpdateState(InvalidValue);
         /// <summary> Recalled. </summary>
-        public static State Recalled { get; } = new State(RecalledValue);
+        public static HciUpdateState Recalled { get; } = new HciUpdateState(RecalledValue);
         /// <summary> Downloading. </summary>
-        public static State Downloading { get; } = new State(DownloadingValue);
+        public static HciUpdateState Downloading { get; } = new HciUpdateState(DownloadingValue);
         /// <summary> DownloadFailed. </summary>
-        public static State DownloadFailed { get; } = new State(DownloadFailedValue);
+        public static HciUpdateState DownloadFailed { get; } = new HciUpdateState(DownloadFailedValue);
         /// <summary> HealthChecking. </summary>
-        public static State HealthChecking { get; } = new State(HealthCheckingValue);
+        public static HciUpdateState HealthChecking { get; } = new HciUpdateState(HealthCheckingValue);
         /// <summary> HealthCheckFailed. </summary>
-        public static State HealthCheckFailed { get; } = new State(HealthCheckFailedValue);
+        public static HciUpdateState HealthCheckFailed { get; } = new HciUpdateState(HealthCheckFailedValue);
         /// <summary> ReadyToInstall. </summary>
-        public static State ReadyToInstall { get; } = new State(ReadyToInstallValue);
+        public static HciUpdateState ReadyToInstall { get; } = new HciUpdateState(ReadyToInstallValue);
         /// <summary> ScanInProgress. </summary>
-        public static State ScanInProgress { get; } = new State(ScanInProgressValue);
+        public static HciUpdateState ScanInProgress { get; } = new HciUpdateState(ScanInProgressValue);
         /// <summary> ScanFailed. </summary>
-        public static State ScanFailed { get; } = new State(ScanFailedValue);
-        /// <summary> Determines if two <see cref="State"/> values are the same. </summary>
-        public static bool operator ==(State left, State right) => left.Equals(right);
-        /// <summary> Determines if two <see cref="State"/> values are not the same. </summary>
-        public static bool operator !=(State left, State right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="State"/>. </summary>
-        public static implicit operator State(string value) => new State(value);
+        public static HciUpdateState ScanFailed { get; } = new HciUpdateState(ScanFailedValue);
+        /// <summary> Determines if two <see cref="HciUpdateState"/> values are the same. </summary>
+        public static bool operator ==(HciUpdateState left, HciUpdateState right) => left.Equals(right);
+        /// <summary> Determines if two <see cref="HciUpdateState"/> values are not the same. </summary>
+        public static bool operator !=(HciUpdateState left, HciUpdateState right) => !left.Equals(right);
+        /// <summary> Converts a string to a <see cref="HciUpdateState"/>. </summary>
+        public static implicit operator HciUpdateState(string value) => new HciUpdateState(value);
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is State other && Equals(other);
+        public override bool Equals(object obj) => obj is HciUpdateState other && Equals(other);
         /// <inheritdoc />
-        public bool Equals(State other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(HciUpdateState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]

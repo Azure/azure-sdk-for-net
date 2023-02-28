@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Hci
         /// <summary> Initializes a new instance of UpdateRunData. </summary>
         public UpdateRunData()
         {
-            Steps = new ChangeTrackingList<Step>();
+            Steps = new ChangeTrackingList<HciUpdateStep>();
         }
 
         /// <summary> Initializes a new instance of UpdateRunData. </summary>
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Hci
         /// <param name="endTimeUtc"> When the step reached a terminal state. </param>
         /// <param name="lastUpdatedTimeUtc"> Completion time of this step or the last completed sub-step. </param>
         /// <param name="steps"> Recursive model for child steps of this step. </param>
-        internal UpdateRunData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, HciProvisioningState? provisioningState, DateTimeOffset? timeStarted, DateTimeOffset? lastUpdatedOn, string duration, UpdateRunPropertiesState? state, string namePropertiesProgressName, string description, string errorMessage, string status, DateTimeOffset? startTimeUtc, DateTimeOffset? endTimeUtc, DateTimeOffset? lastUpdatedTimeUtc, IList<Step> steps) : base(id, name, resourceType, systemData)
+        internal UpdateRunData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, HciProvisioningState? provisioningState, DateTimeOffset? timeStarted, DateTimeOffset? lastUpdatedOn, string duration, UpdateRunPropertiesState? state, string namePropertiesProgressName, string description, string errorMessage, string status, DateTimeOffset? startTimeUtc, DateTimeOffset? endTimeUtc, DateTimeOffset? lastUpdatedTimeUtc, IList<HciUpdateStep> steps) : base(id, name, resourceType, systemData)
         {
             Location = location;
             ProvisioningState = provisioningState;
@@ -86,6 +86,6 @@ namespace Azure.ResourceManager.Hci
         /// <summary> Completion time of this step or the last completed sub-step. </summary>
         public DateTimeOffset? LastUpdatedTimeUtc { get; set; }
         /// <summary> Recursive model for child steps of this step. </summary>
-        public IList<Step> Steps { get; }
+        public IList<HciUpdateStep> Steps { get; }
     }
 }

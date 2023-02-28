@@ -9,15 +9,15 @@ using System;
 
 namespace Azure.ResourceManager.Hci.Models
 {
-    /// <summary> The PrecheckResult. </summary>
-    public partial class PrecheckResult
+    /// <summary> The HciPrecheckResult. </summary>
+    public partial class HciPrecheckResult
     {
-        /// <summary> Initializes a new instance of PrecheckResult. </summary>
-        public PrecheckResult()
+        /// <summary> Initializes a new instance of HciPrecheckResult. </summary>
+        public HciPrecheckResult()
         {
         }
 
-        /// <summary> Initializes a new instance of PrecheckResult. </summary>
+        /// <summary> Initializes a new instance of HciPrecheckResult. </summary>
         /// <param name="name"> Name of the individual test/rule/alert that was executed. Unique, not exposed to the customer. </param>
         /// <param name="tags"> Key-value pairs that allow grouping/filtering individual tests. </param>
         /// <param name="title"> User-facing name; one or more sentences indicating the direct issue. </param>
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="timestamp"> The Time in which the HealthCheck was called. </param>
         /// <param name="additionalData"> Property bag of key value pairs for additional information. </param>
         /// <param name="healthCheckSource"> The name of the services called for the HealthCheck (I.E. Test-AzureStack, Test-Cluster). </param>
-        internal PrecheckResult(string name, PrecheckResultTags tags, string title, HciClusterStatus? status, Severity? severity, string description, string remediation, string targetResourceId, string targetResourceName, DateTimeOffset? timestamp, string additionalData, string healthCheckSource)
+        internal HciPrecheckResult(string name, HciPrecheckResultTags tags, string title, HciClusterStatus? status, UpdateSeverity? severity, string description, string remediation, string targetResourceId, string targetResourceName, DateTimeOffset? timestamp, string additionalData, string healthCheckSource)
         {
             Name = name;
             Tags = tags;
@@ -49,13 +49,13 @@ namespace Azure.ResourceManager.Hci.Models
         /// <summary> Name of the individual test/rule/alert that was executed. Unique, not exposed to the customer. </summary>
         public string Name { get; set; }
         /// <summary> Key-value pairs that allow grouping/filtering individual tests. </summary>
-        public PrecheckResultTags Tags { get; set; }
+        public HciPrecheckResultTags Tags { get; set; }
         /// <summary> User-facing name; one or more sentences indicating the direct issue. </summary>
         public string Title { get; set; }
         /// <summary> The status of the check running (i.e. Failed, Succeeded, In Progress). This answers whether the check ran, and passed or failed. </summary>
         public HciClusterStatus? Status { get; set; }
         /// <summary> Severity of the result (Critical, Warning, Informational, Hidden). This answers how important the result is. Critical is the only update-blocking severity. </summary>
-        public Severity? Severity { get; set; }
+        public UpdateSeverity? Severity { get; set; }
         /// <summary> Detailed overview of the issue and what impact the issue has on the stamp. </summary>
         public string Description { get; set; }
         /// <summary> Set of steps that can be taken to resolve the issue found. </summary>
