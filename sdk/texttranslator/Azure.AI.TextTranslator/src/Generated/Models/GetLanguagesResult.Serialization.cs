@@ -16,13 +16,18 @@ namespace Azure.AI.TextTranslator.Models
     {
         internal static GetLanguagesResult DeserializeGetLanguagesResult(JsonElement element)
         {
-            IReadOnlyDictionary<string, TranslationLanguage> translation = default;
-            IReadOnlyDictionary<string, TransliterationLanguage> transliteration = default;
-            IReadOnlyDictionary<string, SourceDictionaryLanguage> dictionary = default;
+            Optional<IReadOnlyDictionary<string, TranslationLanguage>> translation = default;
+            Optional<IReadOnlyDictionary<string, TransliterationLanguage>> transliteration = default;
+            Optional<IReadOnlyDictionary<string, SourceDictionaryLanguage>> dictionary = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("translation"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     Dictionary<string, TranslationLanguage> dictionary0 = new Dictionary<string, TranslationLanguage>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
@@ -33,6 +38,11 @@ namespace Azure.AI.TextTranslator.Models
                 }
                 if (property.NameEquals("transliteration"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     Dictionary<string, TransliterationLanguage> dictionary0 = new Dictionary<string, TransliterationLanguage>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
@@ -43,6 +53,11 @@ namespace Azure.AI.TextTranslator.Models
                 }
                 if (property.NameEquals("dictionary"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     Dictionary<string, SourceDictionaryLanguage> dictionary0 = new Dictionary<string, SourceDictionaryLanguage>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
@@ -52,7 +67,7 @@ namespace Azure.AI.TextTranslator.Models
                     continue;
                 }
             }
-            return new GetLanguagesResult(translation, transliteration, dictionary);
+            return new GetLanguagesResult(Optional.ToDictionary(translation), Optional.ToDictionary(transliteration), Optional.ToDictionary(dictionary));
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>

@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -15,16 +14,19 @@ namespace Azure.AI.TextTranslator.Models
     public partial class GetLanguagesResult
     {
         /// <summary> Initializes a new instance of GetLanguagesResult. </summary>
+        internal GetLanguagesResult()
+        {
+            Translation = new ChangeTrackingDictionary<string, TranslationLanguage>();
+            Transliteration = new ChangeTrackingDictionary<string, TransliterationLanguage>();
+            Dictionary = new ChangeTrackingDictionary<string, SourceDictionaryLanguage>();
+        }
+
+        /// <summary> Initializes a new instance of GetLanguagesResult. </summary>
         /// <param name="translation"> Languages that support translate API. </param>
         /// <param name="transliteration"> Languages that support transliteration API. </param>
         /// <param name="dictionary"> Languages that support dictionary API. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="translation"/>, <paramref name="transliteration"/> or <paramref name="dictionary"/> is null. </exception>
         internal GetLanguagesResult(IReadOnlyDictionary<string, TranslationLanguage> translation, IReadOnlyDictionary<string, TransliterationLanguage> transliteration, IReadOnlyDictionary<string, SourceDictionaryLanguage> dictionary)
         {
-            Argument.AssertNotNull(translation, nameof(translation));
-            Argument.AssertNotNull(transliteration, nameof(transliteration));
-            Argument.AssertNotNull(dictionary, nameof(dictionary));
-
             Translation = translation;
             Transliteration = transliteration;
             Dictionary = dictionary;
