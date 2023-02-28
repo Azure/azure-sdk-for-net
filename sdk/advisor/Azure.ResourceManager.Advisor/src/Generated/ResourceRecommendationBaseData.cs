@@ -13,7 +13,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Advisor
 {
-    /// <summary> A class representing the ResourceRecommendationBase data model. </summary>
+    /// <summary>
+    /// A class representing the ResourceRecommendationBase data model.
+    /// Advisor Recommendation.
+    /// </summary>
     public partial class ResourceRecommendationBaseData : ResourceData
     {
         /// <summary> Initializes a new instance of ResourceRecommendationBaseData. </summary>

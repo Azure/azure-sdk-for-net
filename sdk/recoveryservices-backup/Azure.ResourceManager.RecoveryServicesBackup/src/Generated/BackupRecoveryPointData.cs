@@ -13,7 +13,10 @@ using Azure.ResourceManager.RecoveryServicesBackup.Models;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup
 {
-    /// <summary> A class representing the BackupRecoveryPoint data model. </summary>
+    /// <summary>
+    /// A class representing the BackupRecoveryPoint data model.
+    /// Base class for backup copies. Workload-specific backup copies are derived from this class.
+    /// </summary>
     public partial class BackupRecoveryPointData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of BackupRecoveryPointData. </summary>

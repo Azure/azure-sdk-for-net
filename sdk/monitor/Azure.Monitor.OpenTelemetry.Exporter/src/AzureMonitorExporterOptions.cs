@@ -26,6 +26,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
         public string? ConnectionString { get; set; }
 
         /// <summary>
+        /// Get or sets the value of <see cref="TokenCredential" />.
+        /// </summary>
+        public TokenCredential? Credential { get; set; }
+
+        /// <summary>
         /// The <see cref="ServiceVersion"/> of the Azure Monitor ingestion API.
         /// </summary>
         public ServiceVersion Version { get; set; } = LatestVersion;

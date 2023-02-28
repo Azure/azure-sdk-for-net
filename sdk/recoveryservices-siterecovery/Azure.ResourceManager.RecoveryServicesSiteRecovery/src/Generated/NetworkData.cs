@@ -11,7 +11,10 @@ using Azure.ResourceManager.RecoveryServicesSiteRecovery.Models;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
 {
-    /// <summary> A class representing the Network data model. </summary>
+    /// <summary>
+    /// A class representing the Network data model.
+    /// Network model.
+    /// </summary>
     public partial class NetworkData : ResourceData
     {
         /// <summary> Initializes a new instance of NetworkData. </summary>

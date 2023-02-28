@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.LabServices
 {
-    /// <summary> A class representing the LabServicesSchedule data model. </summary>
+    /// <summary>
+    /// A class representing the LabServicesSchedule data model.
+    /// Schedule for automatically turning virtual machines in a lab on and off at specified times.
+    /// </summary>
     public partial class LabServicesScheduleData : ResourceData
     {
         /// <summary> Initializes a new instance of LabServicesScheduleData. </summary>

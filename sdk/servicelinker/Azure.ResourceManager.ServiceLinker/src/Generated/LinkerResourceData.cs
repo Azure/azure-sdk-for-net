@@ -11,7 +11,10 @@ using Azure.ResourceManager.ServiceLinker.Models;
 
 namespace Azure.ResourceManager.ServiceLinker
 {
-    /// <summary> A class representing the LinkerResource data model. </summary>
+    /// <summary>
+    /// A class representing the LinkerResource data model.
+    /// Linker of source and target resource
+    /// </summary>
     public partial class LinkerResourceData : ResourceData
     {
         /// <summary> Initializes a new instance of LinkerResourceData. </summary>

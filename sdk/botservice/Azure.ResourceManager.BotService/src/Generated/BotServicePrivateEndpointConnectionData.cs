@@ -13,7 +13,10 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.BotService
 {
-    /// <summary> A class representing the BotServicePrivateEndpointConnection data model. </summary>
+    /// <summary>
+    /// A class representing the BotServicePrivateEndpointConnection data model.
+    /// The Private Endpoint Connection resource.
+    /// </summary>
     public partial class BotServicePrivateEndpointConnectionData : ResourceData
     {
         /// <summary> Initializes a new instance of BotServicePrivateEndpointConnectionData. </summary>
