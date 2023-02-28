@@ -39,27 +39,8 @@ namespace Azure.Storage.DataMovement
         /// </summary>
         public readonly object writeLock = new object();
 
-        /// <summary>
-        /// Constructor to create a new Memory Mapped file
-        /// </summary>
-        /// <param name="id"></param>
-        /// <param name="jobPart"></param>
-        /// <param name="checkpointerPath">Path to where all checkpointer files are stored.</param>
-        /// <param name="chunkCount"></param>
-        public JobPartPlanFile(string checkpointerPath, string id, int jobPart, int chunkCount)
-        {
-            // To create pesistent memory mapped file, a file must be created first
-            // to back the Memory Mapped File.
-            JobPartPlanHeader structure = new JobPartPlanHeader();
-            JobChunkPlanBody bodyStructure = new JobChunkPlanBody();
-
-            // size of header + padding 8 bytes + size each chunk body * num of chunks
-            int size = Marshal.SizeOf(structure) + DataMovementConstants.PlanFile.Padding + (Marshal.SizeOf(bodyStructure) * chunkCount);
-            string mapName = String.Join(id, jobPart);
-            _jobPlanFileName = new JobPartPlanFileName(checkpointerPath: checkpointerPath, id: id, jobPartNumber: jobPart);
-            File.Create(_jobPlanFileName.ToString(), size);
-            MemoryMappedFileReference = MemoryMappedFile.CreateFromFile(_jobPlanFileName.ToString(), FileMode.Open, mapName, size);
-        }
+        private JobPartPlanFile()
+        { }
 
         /// <summary>
         /// Constructor if the plan file already exists
@@ -72,25 +53,23 @@ namespace Azure.Storage.DataMovement
             _jobPlanFileName = existingFile;
         }
 
-        public async Task WriteHeaderAsync(Stream headerStream)
+        public static async Task<JobPartPlanFile> CreateJobPartPlanFile(
+            string checkpointerPath,
+            string id,
+            int jobPart,
+            Stream headerStream)
         {
-            JobPartPlanHeader structure = new JobPartPlanHeader();
-            using (MemoryMappedViewStream accessorStream =
-                MemoryMappedFileReference.CreateViewStream(offset: 0, Marshal.SizeOf(structure)))
-            {
-                await headerStream.CopyToAsync(accessorStream).ConfigureAwait(false);
-            }
-        }
+            long size = headerStream.Length;
+            JobPartPlanFile result = new JobPartPlanFile();
 
-        public async Task WriteChunkBodyAsync(int chunkIndex, Stream headerStream)
-        {
-            JobChunkPlanBody structure = new JobChunkPlanBody();
-            int offset = chunkIndex * Marshal.SizeOf(structure);
-            using (MemoryMappedViewStream accessorStream =
-                MemoryMappedFileReference.CreateViewStream(offset: offset, Marshal.SizeOf(structure)))
+            string mapName = string.Concat(id, jobPart);
+            result._jobPlanFileName = new JobPartPlanFileName(checkpointerPath: checkpointerPath, id: id, jobPartNumber: jobPart);
+            using (FileStream fileStream = File.Create(result._jobPlanFileName.ToString()))
             {
-                await headerStream.CopyToAsync(accessorStream).ConfigureAwait(false);
+                await headerStream.CopyToAsync(fileStream).ConfigureAwait(false);
             }
+            result.MemoryMappedFileReference = MemoryMappedFile.CreateFromFile(result._jobPlanFileName.ToString(), FileMode.Open, mapName, size);
+            return result;
         }
     }
 }

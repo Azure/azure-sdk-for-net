@@ -2,8 +2,6 @@
 // Licensed under the MIT License.
 using System;
 using System.Collections.Generic;
-using System.Runtime.InteropServices;
-using System.Text.Json;
 
 namespace Azure.Storage.DataMovement
 {
@@ -93,22 +91,27 @@ namespace Azure.Storage.DataMovement
         /// <summary>
         /// Metadata
         /// </summary>
-        public IDictionary<string,string> Metadata;
+        public string Metadata;
 
         /// <summary>
         /// Length of blob tags
         /// </summary>
-        public ushort BlobTagsLength;
+        public long BlobTagsLength;
 
         /// <summary>
         /// Blob Tags
         /// </summary>
-        public byte[] BlobTags;
+        public string BlobTags;
 
         /// <summary>
         /// Client Provided Key information
         /// </summary>
-        public bool CpkInfo;
+        public long CpkInfoLength;
+
+        /// <summary>
+        /// Client Provided Key information
+        /// </summary>
+        public string CpkInfo;
 
         /// <summary>
         /// Is source encrypted?
@@ -116,18 +119,147 @@ namespace Azure.Storage.DataMovement
         public bool IsSourceEncrypted;
 
         /// <summary>
-        /// Length of CPK encryption scope.
-        /// </summary>
-        public byte[] CpkScopeInfo;
-
-        /// <summary>
         /// CPK encryption scope.
         /// </summary>
-        public ushort CpkScopeInfoLength;
+        public long CpkScopeInfoLength;
+
+        /// <summary>
+        /// Length of CPK encryption scope.
+        /// </summary>
+        public string CpkScopeInfo;
 
         /// <summary>
         /// Specifies the maximum size of block which determines the number of chunks and chunk size of a transfer
         /// </summary>
         public long BlockSize;
+
+        public JobPartPlanDestinationBlob(
+            JobPlanBlobType blobType,
+            bool noGuessMimeType,
+            string contentType,
+            string contentEncoding,
+            string contentLanguage,
+            string contentDisposition,
+            string cacheControl,
+            JobPartPlanBlockBlobTier blockBlobTier,
+            JobPartPlanPageBlobTier pageBlobTier,
+            bool putMd5,
+            IDictionary<string,string> metadata,
+            IDictionary<string, string> blobTags,
+            long cpkInfoLength,
+            string cpkInfo,
+            bool isSourceEncrypted,
+            long cpkScopeInfoLength,
+            string cpkScopeInfo,
+            long blockSize)
+        {
+            BlobType = blobType;
+            NoGuessMimeType = noGuessMimeType;
+            if (contentType.Length <= DataMovementConstants.PlanFile.PathStrMaxSize)
+            {
+                ContentType = contentType;
+                ContentTypeLength = contentType.Length;
+            }
+            else
+            {
+                throw Errors.InvalidPlanFileJson(
+                    elementName: nameof(ContentType),
+                    expectedSize: DataMovementConstants.PlanFile.PathStrMaxSize,
+                    actualSize: contentType.Length);
+            }
+            if (contentEncoding.Length <= DataMovementConstants.PlanFile.PathStrMaxSize)
+            {
+                ContentEncoding = contentEncoding;
+                ContentEncodingLength = contentEncoding.Length;
+            }
+            else
+            {
+                throw Errors.InvalidPlanFileJson(
+                    elementName: nameof(ContentEncoding),
+                    expectedSize: DataMovementConstants.PlanFile.PathStrMaxSize,
+                    actualSize: contentEncoding.Length);
+            }
+            if (contentLanguage.Length < DataMovementConstants.PlanFile.PathStrMaxSize)
+            {
+                ContentLanguage = contentLanguage;
+                ContentLanguageLength = contentLanguage.Length;
+            }
+            else
+            {
+                throw Errors.InvalidPlanFileJson(
+                    elementName: nameof(ContentLanguage),
+                    expectedSize: DataMovementConstants.PlanFile.PathStrMaxSize,
+                    actualSize: contentLanguage.Length);
+            }
+            if (contentDisposition.Length <= DataMovementConstants.PlanFile.PathStrMaxSize)
+            {
+                ContentDisposition = contentDisposition;
+                ContentDispositionLength = contentDisposition.Length;
+            }
+            else
+            {
+                throw Errors.InvalidPlanFileJson(
+                    elementName: nameof(ContentDisposition),
+                    expectedSize: DataMovementConstants.PlanFile.PathStrMaxSize,
+                    actualSize: contentDisposition.Length);
+            }
+            if (cacheControl.Length <= DataMovementConstants.PlanFile.PathStrMaxSize)
+            {
+                CacheControl = cacheControl;
+                CacheControlLength = cacheControl.Length;
+            }
+            else
+            {
+                throw Errors.InvalidPlanFileJson(
+                    elementName: nameof(CacheControl),
+                    expectedSize: DataMovementConstants.PlanFile.PathStrMaxSize,
+                    actualSize: cacheControl.Length);
+            }
+            BlockBlobTier = blockBlobTier;
+            PageBlobTier = pageBlobTier;
+            PutMd5 = putMd5;
+            string metadataConvert = DictionaryToString(metadata);
+            if (metadataConvert.Length <= DataMovementConstants.PlanFile.MetadataStrMaxSize)
+            {
+                Metadata = metadataConvert;
+                MetadataLength = metadataConvert.Length;
+            }
+            else
+            {
+                throw Errors.InvalidPlanFileJson(
+                    elementName: nameof(Metadata),
+                    expectedSize: DataMovementConstants.PlanFile.PathStrMaxSize,
+                    actualSize: metadataConvert.Length);
+            }
+            string blobTagsConvert = DictionaryToString(blobTags);
+            if (blobTagsConvert.Length <= DataMovementConstants.PlanFile.BlobTagsStrMaxSize)
+            {
+                BlobTags = blobTagsConvert;
+                BlobTagsLength = blobTagsConvert.Length;
+            }
+            else
+            {
+                throw Errors.InvalidPlanFileJson(
+                    elementName: nameof(blobTags),
+                    expectedSize: DataMovementConstants.PlanFile.PathStrMaxSize,
+                    actualSize: blobTagsConvert.Length);
+            }
+            CpkInfoLength = cpkInfoLength;
+            CpkInfo = cpkInfo;
+            IsSourceEncrypted = isSourceEncrypted;
+            CpkScopeInfoLength = cpkScopeInfoLength;
+            CpkScopeInfo = cpkScopeInfo;
+            BlockSize = blockSize;
+        }
+
+        private static string DictionaryToString(IDictionary<string, string> dict)
+        {
+            string concatStr = "";
+            foreach (KeyValuePair<string, string> kv in dict)
+            {
+                concatStr = string.Join(" ", new string[] { concatStr, kv.Key, kv.Value });
+            }
+            return concatStr;
+        }
     }
 }

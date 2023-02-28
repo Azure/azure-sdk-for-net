@@ -55,7 +55,7 @@ namespace Azure.Storage.DataMovement
             JobPartPlanHeader header = planFileStream.ToJobStruct();
 
             // Apply credentials to the saved transfer job path
-            StorageTransferStatus jobPartStatus = (StorageTransferStatus) header.AtomicJobStatus;
+            StorageTransferStatus jobPartStatus = header.AtomicJobStatus;
             StreamToUriJobPart jobPart = new StreamToUriJobPart(
                 job: baseJob,
                 partNumber: Convert.ToInt32(header.PartNumber),
@@ -121,9 +121,9 @@ namespace Azure.Storage.DataMovement
             JobPartPlanHeader header = planFileStream.ToJobStruct();
 
             // Apply credentials to the saved transfer job path
-            string childSourcePath = Encoding.UTF8.GetString(header.SourcePath);
-            string childDestinationPath = Encoding.UTF8.GetString(header.SourcePath);
-            StorageTransferStatus jobPartStatus = (StorageTransferStatus)header.atomicJobStatus;
+            string childSourcePath = header.SourcePath;
+            string childDestinationPath = header.SourcePath;
+            StorageTransferStatus jobPartStatus = (StorageTransferStatus)header.AtomicJobStatus;
             StreamToUriJobPart jobPart = new StreamToUriJobPart(
                 job: baseJob,
                 partNumber: Convert.ToInt32(header.PartNumber),
@@ -145,9 +145,9 @@ namespace Azure.Storage.DataMovement
             JobPartPlanHeader header = planFileStream.ToJobStruct();
 
             // Apply credentials to the saved transfer job path
-            string childSourcePath = Encoding.UTF8.GetString(header.SourcePath);
-            string childDestinationPath = Encoding.UTF8.GetString(header.SourcePath);
-            StorageTransferStatus jobPartStatus = (StorageTransferStatus)header.atomicJobStatus;
+            string childSourcePath = header.SourcePath;
+            string childDestinationPath = header.SourcePath;
+            StorageTransferStatus jobPartStatus = (StorageTransferStatus)header.AtomicJobStatus;
             ServiceToServiceJobPart jobPart = new ServiceToServiceJobPart(
                 job: baseJob,
                 partNumber: Convert.ToInt32(header.PartNumber),
@@ -169,9 +169,9 @@ namespace Azure.Storage.DataMovement
             JobPartPlanHeader header = planFileStream.ToJobStruct();
 
             // Apply credentials to the saved transfer job path
-            string childSourcePath = Encoding.UTF8.GetString(header.SourcePath);
-            string childDestinationPath = Encoding.UTF8.GetString(header.SourcePath);
-            StorageTransferStatus jobPartStatus = (StorageTransferStatus)header.atomicJobStatus;
+            string childSourcePath = header.SourcePath;
+            string childDestinationPath = header.SourcePath;
+            StorageTransferStatus jobPartStatus = (StorageTransferStatus)header.AtomicJobStatus;
             UriToStreamJobPart jobPart = new UriToStreamJobPart(
                 job: baseJob,
                 partNumber: Convert.ToInt32(header.PartNumber),
@@ -188,48 +188,39 @@ namespace Azure.Storage.DataMovement
         /// </summary>
         internal static JobPartPlanHeader ToJobPartPlanHeader(this JobPartInternal jobPart, StorageTransferStatus jobStatus)
         {
-            byte[] sourceRoot = jobPart._sourceResource.UriToByteArray();
-            byte[] sourceQueryParams = jobPart._sourceResource.UriQueryToByteArray();
-            byte[] destinationRoot = jobPart._destinationResource.UriToByteArray();
-            byte[] destinationQueryParams = jobPart._destinationResource.UriQueryToByteArray();
-            return new JobPartPlanHeader()
-            {
-                Version = Encoding.Unicode.GetBytes(DataMovementConstants.PlanFile.SchemaVersion),
-                StartTime = 0, // TODO: update to job start time
-                TransferId = jobPart._dataTransfer.Id,
-                PartNumber = (uint)jobPart.PartNumber,
-                SourcePathLength = (ushort)sourceRoot.Length,
-                SourcePath = sourceRoot,
-                SourceExtraQueryLength = (ushort)sourceQueryParams.Length,
-                SourceExtraQuery = sourceQueryParams,
-                DestinationRootLength = (ushort)destinationRoot.Length,
-                DestinationRoot = destinationRoot,
-                DestExtraQueryLength = (ushort)destinationQueryParams.Length,
-                DestExtraQuery = destinationQueryParams,
-                IsFinalPart = false, // TODO: change but we might remove this param
-                ForceWrite = jobPart._createMode == StorageResourceCreateMode.Overwrite, // TODO: change to enum value
-                ForceIfReadOnly = false, // TODO: revisit for Azure Files
-                AutoDecompress = false, // TODO: revisit if we want to support this feature
-                Priority = 0, // TODO: add priority feature
-                TTLAfterCompletion = 0, // TODO: revisit for Azure Files
-                FromTo = 0, // TODO: revisit when we add this feature
-                FolderPropertyOption = FolderPropertiesMode.None, // TODO: revisit for Azure Files
-                numberChunks = 0, // TODO: revisit when added
-                DstBlobData = default, // TODO: revisit when we add feature to cache this info
-                DstLocalData = default, // TODO: revisit when we add feature to cache this info
-                PreserveSMBPermissions = 0, // TODO: revisit for Azure Files
-                PreserveSMBInfo = false, // TODO: revisit for Azure Files
-                S2SGetPropertiesInBackend = false, // TODO: revisit for Azure Files
-                S2SSourceChangeValidation = false, // TODO: revisit for Azure Files
-                DestLengthValidation = false, // TODO: revisit when features is added
-                S2SInvalidMetadataHandleOption = 0, // TODO: revisit when supported
-                atomicJobStatus = (uint)jobStatus,
-                atomicPartStatus = (uint)jobPart.JobPartStatus,
-                DeleteSnapshotsOption = JobPartDeleteSnapshotsOption.None, // TODO: revisit when feature is added
-                PermanentDeleteOption = JobPartPermanentDeleteOption.None, // TODO: revisit when feature is added
-                RehydratePriorityType = JobPartPlanRehydratePriorityType.None, // TODO: revisit when feature is added
-            };
-        }
+            return new JobPartPlanHeader(
+                version: DataMovementConstants.PlanFile.SchemaVersion,
+                startTime: DateTimeOffset.UtcNow, // TODO: update to job start time
+                transferId: jobPart._dataTransfer.Id,
+                partNumber: (uint)jobPart.PartNumber,
+                sourcePath: jobPart._sourceResource.Path,
+                sourceExtraQuery: "", // TODO: convert options to string
+                destinationPath: jobPart._destinationResource.Path,
+                destinationExtraQuery: "", // TODO: convert options to string
+                isFinalPart: false, // TODO: change but we might remove this param
+                forceWrite: jobPart._createMode == StorageResourceCreateMode.Overwrite, // TODO: change to enum value
+                forceIfReadOnly: false, // TODO: revisit for Azure Files
+                autoDecompress: false, // TODO: revisit if we want to support this feature
+                priority: 0, // TODO: add priority feature
+                ttlAfterCompletion: DateTimeOffset.MinValue, // TODO: revisit for Azure Files
+                fromTo: 0, // TODO: revisit when we add this feature
+                folderPropertyOption: FolderPropertiesMode.None, // TODO: revisit for Azure Files
+                numberChunks: 0, // TODO: revisit when added
+                dstBlobData: default, // TODO: revisit when we add feature to cache this info
+                dstLocalData: default, // TODO: revisit when we add feature to cache this info
+                preserveSMBPermissions: false, // TODO: revisit for Azure Files
+                preserveSMBInfo: false, // TODO: revisit for Azure Files
+                s2sGetPropertiesInBackend: false, // TODO: revisit for Azure Files
+                s2sSourceChangeValidation: false, // TODO: revisit for Azure Files
+                destLengthValidation: false, // TODO: revisit when features is added
+                s2sInvalidMetadataHandleOption: 0, // TODO: revisit when supported
+                deleteSnapshotsOption: JobPartDeleteSnapshotsOption.None, // TODO: revisit when feature is added
+                permanentDeleteOption: JobPartPermanentDeleteOption.None, // TODO: revisit when feature is added
+                rehydratePriorityType: JobPartPlanRehydratePriorityType.None, // TODO: revisit when feature is added
+                atomicJobStatus: jobStatus,
+                atomicPartStatus: jobPart.JobPartStatus
+            );
+    }
 
         internal static JobPartPlanHeader GetJobPartPlanHeader(this JobPartPlanFileName fileName)
         {

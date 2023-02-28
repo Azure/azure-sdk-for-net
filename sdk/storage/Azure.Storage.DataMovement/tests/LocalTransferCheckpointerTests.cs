@@ -10,20 +10,15 @@ using System.Threading.Tasks;
 using NUnit.Framework;
 using Azure.Storage.DataMovement.Models;
 using Azure.Storage.DataMovement.JobPlanModels;
+using Azure.Core.TestFramework;
 
 namespace Azure.Storage.DataMovement.Tests
 {
-    public class LocalTransferCheckpointerTests
+    public class LocalTransferCheckpointerTests : DataMovementTestBase
     {
-        public static string GetNewTransferId() => Guid.NewGuid().ToString();
-        public static DisposingLocalDirectory GetTestLocalDirectoryAsync(string directoryPath = default)
+        public LocalTransferCheckpointerTests(bool async)
+            : base(async, null)
         {
-            if (string.IsNullOrEmpty(directoryPath))
-            {
-                directoryPath = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString());
-            }
-            Directory.CreateDirectory(directoryPath);
-            return new DisposingLocalDirectory(directoryPath);
         }
 
         internal JobPartPlanHeader CreateJobPartHeader(
@@ -40,15 +35,15 @@ namespace Azure.Storage.DataMovement.Tests
                 transferId: transferId,
                 partNumber: partNumber,
                 sourcePath: sourcePath,
-                sourceExtraQuery: default,
+                sourceExtraQuery: "samplequery",
                 destinationPath: destinationPath,
-                destinationExtraQuery: default,
+                destinationExtraQuery: "sampleQuery",
                 isFinalPart: false,
                 forceWrite: false,
                 forceIfReadOnly: false,
                 autoDecompress: false,
                 priority: 0,
-                ttlAfterCompletion: 0,
+                ttlAfterCompletion: DateTimeOffset.MinValue,
                 fromTo: 0,
                 folderPropertyOption: FolderPropertiesMode.None,
                 numberChunks: 0,
@@ -79,8 +74,6 @@ namespace Azure.Storage.DataMovement.Tests
             List<string> sourcePaths = default,
             List<string> destinationPaths = default)
         {
-            Random rand = new Random();
-
             // Populate sourcePaths if not provided
             if (sourcePaths == default)
             {

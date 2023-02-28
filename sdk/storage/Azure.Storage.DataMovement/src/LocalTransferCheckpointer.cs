@@ -98,8 +98,11 @@ namespace Azure.Storage.DataMovement
             Stream headerStream,
             CancellationToken cancellationToken = default)
         {
-            JobPartPlanFile mappedFile = new JobPartPlanFile(_pathToCheckpointer, transferId, partNumber, chunksTotal);
-            await mappedFile.WriteHeaderAsync(headerStream).ConfigureAwait(false);
+            JobPartPlanFile mappedFile = await JobPartPlanFile.CreateJobPartPlanFile(
+                _pathToCheckpointer,
+                transferId,
+                partNumber,
+                headerStream).ConfigureAwait(false);
 
             // Add the job part in the spec
             if (_transferStates.ContainsKey(transferId))

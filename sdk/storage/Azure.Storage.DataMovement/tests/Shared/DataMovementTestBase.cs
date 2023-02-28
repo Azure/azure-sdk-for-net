@@ -6,6 +6,7 @@ using Azure.Core.TestFramework;
 using Azure.Storage.Test.Shared;
 using System.IO;
 using System.Collections.Generic;
+using System;
 
 namespace Azure.Storage.DataMovement.Tests
 {
@@ -23,6 +24,7 @@ namespace Azure.Storage.DataMovement.Tests
         public void Setup()
         {
         }
+        public static string GetNewTransferId() => Guid.NewGuid().ToString();
 
         public List<string> ListFilesInDirectory(string directory)
         {
@@ -73,6 +75,16 @@ namespace Azure.Storage.DataMovement.Tests
                 }
             }
             return files;
+        }
+
+        public static DisposingLocalDirectory GetTestLocalDirectoryAsync(string directoryPath = default)
+        {
+            if (string.IsNullOrEmpty(directoryPath))
+            {
+                directoryPath = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString());
+            }
+            Directory.CreateDirectory(directoryPath);
+            return new DisposingLocalDirectory(directoryPath);
         }
     }
 }
