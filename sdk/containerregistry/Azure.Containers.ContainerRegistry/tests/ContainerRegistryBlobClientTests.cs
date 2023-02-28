@@ -86,7 +86,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
                 Audience = ContainerRegistryAudience.AzureResourceManagerPublicCloud
             };
 
-            ContainerRegistryBlobClient client = new(endpoint, new MockCredential(), repository, options);
+            ContainerRegistryBlobClient client = new(endpoint, repository, new MockCredential(), options);
 
             // Act
 
