@@ -1,8 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
-
 namespace Azure.Core.Dynamic
 {
     /// <summary>
@@ -11,6 +9,14 @@ namespace Azure.Core.Dynamic
     public struct DynamicJsonOptions
     {
         /// <summary>
+        /// Gets the default <see cref="DynamicJsonOptions"/> for Azure services.
+        /// </summary>
+        public static readonly DynamicJsonOptions AzureDefault = new()
+        {
+            PropertyNameCasing = DynamicJsonNameMapping.PascalCaseGettersCamelCaseSetters
+        };
+
+        /// <summary>
         /// Creates a new instance of DynamicJsonOptions.
         /// </summary>
         public DynamicJsonOptions() { }
@@ -18,6 +24,6 @@ namespace Azure.Core.Dynamic
         /// <summary>
         /// Specifies how properties on <see cref="DynamicJson"/> will be accessed in the underlying JSON buffer.
         /// </summary>
-        public DynamicJsonNameMapping PropertyNameCasing { get; set; } = DynamicJsonNameMapping.PascalCaseGettersCamelCaseSetters;
+        public DynamicJsonNameMapping PropertyNameCasing { get; set; }
     }
 }

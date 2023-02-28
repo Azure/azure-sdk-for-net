@@ -73,6 +73,11 @@ namespace Azure.Core.Dynamic
 
         private static string GetAsCamelCase(string value)
         {
+            if (value.Length < 2)
+            {
+                return value.ToLowerInvariant();
+            }
+
             return $"{char.ToLowerInvariant(value[0])}{value.Substring(1)}";
         }
 
