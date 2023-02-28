@@ -134,7 +134,7 @@ namespace Azure.Core
                 {
                     sb.Append('\\');
                 }
-                // If we see a \, we don't need to escape it if it's followed by a '\', '(', or ')'
+                // If we see a \, we don't need to escape it if it's followed by a '\', '(', or ')', because it is already escaped.
                 else if (c == '\\')
                 {
                     if (i + 1 < (productInfo.Length - 1))
