@@ -111,6 +111,8 @@ namespace Azure.Core.Dynamic
     public static partial class BinaryDataExtensions
     {
         public static dynamic ToDynamic(this System.BinaryData data) { throw null; }
+        public static dynamic ToDynamic(this System.BinaryData data, Azure.Core.Dynamic.DynamicJsonNameMapping propertyNameCasing) { throw null; }
+        public static dynamic ToDynamic(this System.BinaryData data, Azure.Core.Dynamic.DynamicJsonOptions options) { throw null; }
     }
     public abstract partial class DynamicData
     {
@@ -173,6 +175,20 @@ namespace Azure.Core.Dynamic
         private readonly int _dummyPrimitive;
         public string Name { get { throw null; } }
         public Azure.Core.Dynamic.DynamicJson Value { get { throw null; } }
+    }
+    public enum DynamicJsonNameMapping
+    {
+        None = 0,
+        PascalCaseGetters = 1,
+        PascalCaseGettersCamelCaseSetters = 2,
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public partial struct DynamicJsonOptions
+    {
+        private int _dummyPrimitive;
+        public static readonly Azure.Core.Dynamic.DynamicJsonOptions AzureDefault;
+        public DynamicJsonOptions() { throw null; }
+        public Azure.Core.Dynamic.DynamicJsonNameMapping PropertyNameCasing { get { throw null; } set { } }
     }
 }
 namespace Azure.Core.Json
