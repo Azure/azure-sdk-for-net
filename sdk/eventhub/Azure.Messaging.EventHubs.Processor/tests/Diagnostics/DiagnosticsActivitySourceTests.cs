@@ -2,11 +2,15 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Core.Pipeline;
+using Azure.Core.Shared;
+using Azure.Core.TestFramework;
 using Azure.Core.Tests;
 using Azure.Messaging.EventHubs.Consumer;
 using Azure.Messaging.EventHubs.Diagnostics;
@@ -18,9 +22,10 @@ using NUnit.Framework;
 
 namespace Azure.Messaging.EventHubs.Tests
 {
+#if NET5_0_OR_GREATER
     /// <summary>
     ///   The suite of tests for validating the diagnostics instrumentation
-    ///   of the client library.  These tests are not constrained to a specific
+    ///   of the client library when ActivitySource is enabled.  These tests are not constrained to a specific
     ///   class or functional area.
     /// </summary>
     ///
@@ -33,8 +38,18 @@ namespace Azure.Messaging.EventHubs.Tests
     ///
     [NonParallelizable]
     [TestFixture]
-    public class DiagnosticsTests
+    public class DiagnosticsActivitySourceTests
     {
+        /// <summary>
+        /// Resets the activity source feature switch after each test.
+        /// </summary>
+        [SetUp]
+        [TearDown]
+        public void ResetFeatureSwitch()
+        {
+            ActivityExtensions.ResetFeatureSwitch();
+        }
+
         /// <summary>
         ///   Verifies diagnostics functionality of the <see cref="EventProcessorClient.UpdateCheckpointAsync" />
         ///   method.
@@ -62,15 +77,18 @@ namespace Azure.Messaging.EventHubs.Tests
 
             mockProcessor.Object.Logger = mockLogger.Object;
 
-            using var listener = new ClientDiagnosticListener(DiagnosticProperty.DiagnosticNamespace);
+            using var _ = SetAppConfigSwitch();
+
+            using var listener = new TestActivitySourceListener(DiagnosticProperty.DiagnosticNamespace);
             await InvokeUpdateCheckpointAsync(mockProcessor.Object, mockContext.Object.PartitionId, 65, 998, default);
 
             await Task.WhenAny(completionSource.Task, Task.Delay(Timeout.Infinite, cancellationSource.Token));
             Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
 
-            ClientDiagnosticListener.ProducedDiagnosticScope scope = listener.Scopes.Single();
-            Assert.That(scope.Name, Is.EqualTo(DiagnosticProperty.EventProcessorCheckpointActivityName));
-
+            var checkpointActivity = listener.AssertAndRemoveActivity(DiagnosticProperty.EventProcessorCheckpointActivityName);
+            CollectionAssert.Contains(checkpointActivity.Tags, new KeyValuePair<string, string>(MessagingClientDiagnostics.NetPeerName, "host"));
+            CollectionAssert.Contains(checkpointActivity.Tags, new KeyValuePair<string, string>(MessagingClientDiagnostics.DestinationName, "hub"));
+            CollectionAssert.Contains(checkpointActivity.Tags, new KeyValuePair<string, string>(MessagingClientDiagnostics.MessagingSystem, DiagnosticProperty.EventHubsServiceContext));
             cancellationSource.Cancel();
         }
 
@@ -95,5 +113,16 @@ namespace Azure.Messaging.EventHubs.Tests
                 typeof(EventProcessorClient)
                     .GetMethod("UpdateCheckpointAsync", BindingFlags.Instance | BindingFlags.NonPublic)
                     .Invoke(target, new object[] { partitionId, offset, sequenceNumber, cancellationToken });
+
+        /// <summary>
+        /// Sets and returns the app config switch to enable Activity Source. The switch must be disposed at the end of the test.
+        /// </summary>
+        private static TestAppContextSwitch SetAppConfigSwitch()
+        {
+            var s = new TestAppContextSwitch("Azure.Experimental.EnableActivitySource", "true");
+            ActivityExtensions.ResetFeatureSwitch();
+            return s;
+        }
     }
+#endif
 }

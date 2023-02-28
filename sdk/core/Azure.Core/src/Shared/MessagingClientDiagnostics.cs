@@ -51,6 +51,14 @@ namespace Azure.Core.Shared
             _scopeFactory = new DiagnosticScopeFactory(clientNamespace, resourceProviderNamespace, true, false);
         }
 
+        /// <summary>
+        /// Creates a diagnostic scope to be used for messaging operations. This method will add messaging-specific attributes to the scope taking into account the
+        /// ActivitySource configuration. Links are not added here as in many instances links can only be added after the scope is already created.
+        /// </summary>
+        /// <param name="activityName">The name to apply to the activity.</param>
+        /// <param name="kind">The kind to apply to the activity.</param>
+        /// <param name="operation">The type of messaging operation.</param>
+        /// <returns>The created diagnostic scope containing the common set of messaging attributes that are knowable upon creation.</returns>
         public DiagnosticScope CreateScope(
             string activityName,
             DiagnosticScope.ActivityKind kind,
@@ -91,7 +99,7 @@ namespace Azure.Core.Shared
             traceparent = null;
             tracestate = null;
 
-            if (properties.TryGetValue(TraceParent, out var traceParent) && traceParent is string traceParentString)
+            if (ActivityExtensions.SupportsActivitySource() && properties.TryGetValue(TraceParent, out var traceParent) && traceParent is string traceParentString)
             {
                 traceparent = traceParentString;
                 if (properties.TryGetValue(TraceState, out object state) && state is string stateString)
@@ -123,7 +131,7 @@ namespace Azure.Core.Shared
             traceparent = null;
             tracestate = null;
 
-            if (properties.TryGetValue(TraceParent, out var traceParent) && traceParent is string traceParentString)
+            if (ActivityExtensions.SupportsActivitySource() && properties.TryGetValue(TraceParent, out var traceParent) && traceParent is string traceParentString)
             {
                 traceparent = traceParentString;
                 if (properties.TryGetValue(TraceState, out object state) && state is string stateString)
@@ -148,23 +156,55 @@ namespace Azure.Core.Shared
         /// </summary>
         /// <param name="properties">The dictionary of application message properties.</param>
         /// <param name="activityName">The activity name to use for the diagnostic scope.</param>
-        public void InstrumentMessage(IDictionary<string, object> properties, string activityName)
+        /// <param name="scopeCreated">Whether or not a new scope was created while instrumenting the message.</param>
+        /// <param name="traceparent">The traceparent that was either added, or that already existed in the message properties.</param>
+        /// <param name="tracestate">The tracestate that was either added, or that already existed in the message properties.</param>
+        public void InstrumentMessage(IDictionary<string, object> properties, string activityName, out bool scopeCreated, out string? traceparent, out string? tracestate)
         {
+            scopeCreated = false;
+            traceparent = null;
+            tracestate = null;
+
             if (!properties.ContainsKey(DiagnosticIdAttribute) && !properties.ContainsKey(TraceParent))
             {
                 using DiagnosticScope messageScope = CreateScope(
                     activityName,
                     DiagnosticScope.ActivityKind.Producer);
                 messageScope.Start();
+                scopeCreated = true;
 
                 Activity activity = Activity.Current;
                 if (activity != null)
                 {
-                    properties[DiagnosticIdAttribute] = activity.Id;
-                    properties[TraceParent] = activity.Id;
-                    if (activity.TraceStateString != null)
-                        properties[TraceState] = activity.TraceStateString;
+                    traceparent = activity.Id;
+                    properties[DiagnosticIdAttribute] = traceparent;
+                    if (ActivityExtensions.SupportsActivitySource())
+                    {
+                        properties[TraceParent] = traceparent;
+                        if (activity.TraceStateString != null)
+                        {
+                            tracestate = activity.TraceStateString;
+                            properties[TraceState] = tracestate;
+                        }
+                    }
                 }
+            }
+            else
+                TryExtractTraceContext(properties, out traceparent, out tracestate);
+        }
+
+        /// <summary>
+        ///   Resets the instrumentation associated with a properties bag.
+        /// </summary>
+        ///
+        /// <param name="properties">The properties to reset.</param>
+        public static void ResetEvent(IDictionary<string, object> properties)
+        {
+            properties.Remove(DiagnosticIdAttribute);
+            if (ActivityExtensions.SupportsActivitySource())
+            {
+                properties.Remove(TraceParent);
+                properties.Remove(TraceState);
             }
         }
     }
