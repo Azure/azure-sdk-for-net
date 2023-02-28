@@ -41,8 +41,9 @@ namespace Azure.Messaging.EventHubs.Tests
     public class DiagnosticsActivitySourceTests
     {
         /// <summary>
-        /// Resets the activity source feature switch after each test.
+        ///   Resets the activity source feature switch after each test.
         /// </summary>
+        ///
         [SetUp]
         [TearDown]
         public void ResetFeatureSwitch()
@@ -551,8 +552,9 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
-        /// Sets and returns the app config switch to enable Activity Source. The switch must be disposed at the end of the test.
+        ///   Sets and returns the app config switch to enable Activity Source. The switch must be disposed at the end of the test.
         /// </summary>
+        ///
         private static TestAppContextSwitch SetAppConfigSwitch()
         {
             var s = new TestAppContextSwitch("Azure.Experimental.EnableActivitySource", "true");
