@@ -13,7 +13,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Hci
 {
-    /// <summary> A class representing the UpdateRun data model. </summary>
+    /// <summary>
+    /// A class representing the UpdateRun data model.
+    /// Details of an Update run
+    /// </summary>
     public partial class UpdateRunData : ResourceData
     {
         /// <summary> Initializes a new instance of UpdateRunData. </summary>

@@ -10,7 +10,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Hci
 {
-    /// <summary> A class representing the Publisher data model. </summary>
+    /// <summary>
+    /// A class representing the Publisher data model.
+    /// Publisher details.
+    /// </summary>
     public partial class PublisherData : ResourceData
     {
         /// <summary> Initializes a new instance of PublisherData. </summary>

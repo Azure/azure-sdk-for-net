@@ -13,7 +13,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Hci
 {
-    /// <summary> A class representing the Update data model. </summary>
+    /// <summary>
+    /// A class representing the Update data model.
+    /// Update details
+    /// </summary>
     public partial class UpdateData : ResourceData
     {
         /// <summary> Initializes a new instance of UpdateData. </summary>

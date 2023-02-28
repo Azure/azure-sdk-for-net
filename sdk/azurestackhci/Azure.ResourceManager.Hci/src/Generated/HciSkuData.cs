@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Hci
 {
-    /// <summary> A class representing the HciSku data model. </summary>
+    /// <summary>
+    /// A class representing the HciSku data model.
+    /// Sku details.
+    /// </summary>
     public partial class HciSkuData : ResourceData
     {
         /// <summary> Initializes a new instance of HciSkuData. </summary>

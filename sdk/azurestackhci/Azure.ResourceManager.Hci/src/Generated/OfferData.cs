@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Hci
 {
-    /// <summary> A class representing the Offer data model. </summary>
+    /// <summary>
+    /// A class representing the Offer data model.
+    /// Offer details.
+    /// </summary>
     public partial class OfferData : ResourceData
     {
         /// <summary> Initializes a new instance of OfferData. </summary>
