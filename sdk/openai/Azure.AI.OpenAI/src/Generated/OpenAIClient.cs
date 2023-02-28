@@ -26,13 +26,13 @@ namespace Azure.AI.OpenAI
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
 
-        /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
-        public virtual HttpPipeline Pipeline => _pipeline;
-
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
         /// <summary> Initializes a new instance of OpenAIClient for mocking. </summary>
+        /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
+        public virtual HttpPipeline Pipeline => _pipeline;
+
         protected OpenAIClient()
         {
         }
@@ -93,7 +93,6 @@ namespace Azure.AI.OpenAI
             Argument.AssertNotNull(endpoint, nameof(endpoint));
             Argument.AssertNotNull(credential, nameof(credential));
             options ??= new OpenAIClientOptions();
-
 
             ClientDiagnostics = new ClientDiagnostics(options, true);
             _tokenCredential = credential;
