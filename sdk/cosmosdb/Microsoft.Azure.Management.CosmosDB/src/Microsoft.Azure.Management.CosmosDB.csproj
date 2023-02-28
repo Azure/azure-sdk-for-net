@@ -6,7 +6,7 @@
   <PropertyGroup>
     <PackageId>Microsoft.Azure.Management.CosmosDB</PackageId>
     <Description>Provides developers with libraries for the CosmosDB under Azure Resource manager to manage CosmosDB Account, Databases and child resources and their available management capabilities. Create, Delete, Update CosmosDB Account, Databases and child resources. Note: This client library is for CosmosDB under Azure Resource Manager.</Description>
-    <Version>3.4.0</Version>
+    <Version>3.9.1-preview</Version>
     <AssemblyName>Microsoft.Azure.Management.CosmosDB</AssemblyName>
     <PackageTags>management;cosmosdb;</PackageTags>
     <PackageReleaseNotes>
