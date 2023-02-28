@@ -171,7 +171,7 @@ namespace Azure.Identity.Tests
                 TenantId = TenantId,
                 ResolvedTenantId = TenantId,
                 RequestContext = new TokenRequestContext(MockScopes.Default),
-                AdditionallyAllowedTenants = null,
+                AdditionallyAllowedTenants = new List<string>(),
                 DisableInstanceDiscovery = false
             };
             // Configure mock cache to return a token for the expected user
