@@ -13,7 +13,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Hci
 {
-    /// <summary> A class representing the ArcExtension data model. </summary>
+    /// <summary>
+    /// A class representing the ArcExtension data model.
+    /// Details of a particular extension in HCI Cluster.
+    /// </summary>
     public partial class ArcExtensionData : ResourceData
     {
         /// <summary> Initializes a new instance of ArcExtensionData. </summary>

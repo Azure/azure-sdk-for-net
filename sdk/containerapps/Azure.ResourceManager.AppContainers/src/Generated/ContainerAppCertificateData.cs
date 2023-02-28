@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppContainers
 {
-    /// <summary> A class representing the ContainerAppCertificate data model. </summary>
+    /// <summary>
+    /// A class representing the ContainerAppCertificate data model.
+    /// Certificate used for Custom Domain bindings of Container Apps in a Managed Environment
+    /// </summary>
     public partial class ContainerAppCertificateData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of ContainerAppCertificateData. </summary>

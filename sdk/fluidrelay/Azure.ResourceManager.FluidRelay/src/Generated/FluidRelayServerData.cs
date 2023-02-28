@@ -13,7 +13,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.FluidRelay
 {
-    /// <summary> A class representing the FluidRelayServer data model. </summary>
+    /// <summary>
+    /// A class representing the FluidRelayServer data model.
+    /// A FluidRelay Server.
+    /// </summary>
     public partial class FluidRelayServerData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of FluidRelayServerData. </summary>

@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.MachineLearning
 {
-    /// <summary> A class representing the MachineLearningPrivateEndpointConnection data model. </summary>
+    /// <summary>
+    /// A class representing the MachineLearningPrivateEndpointConnection data model.
+    /// The Private Endpoint Connection resource.
+    /// </summary>
     public partial class MachineLearningPrivateEndpointConnectionData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of MachineLearningPrivateEndpointConnectionData. </summary>

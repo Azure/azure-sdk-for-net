@@ -22,10 +22,10 @@ namespace Azure.Storage.Files.DataLake.Models
 
         public static DataLakeLeaseAction ToDataLakeLeaseAction(this string value)
         {
-            if (string.Equals(value, "acquire", StringComparison.InvariantCultureIgnoreCase)) return DataLakeLeaseAction.Acquire;
-            if (string.Equals(value, "auto-renew", StringComparison.InvariantCultureIgnoreCase)) return DataLakeLeaseAction.AutoRenew;
-            if (string.Equals(value, "release", StringComparison.InvariantCultureIgnoreCase)) return DataLakeLeaseAction.Release;
-            if (string.Equals(value, "acquire-release", StringComparison.InvariantCultureIgnoreCase)) return DataLakeLeaseAction.AcquireRelease;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "acquire")) return DataLakeLeaseAction.Acquire;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "auto-renew")) return DataLakeLeaseAction.AutoRenew;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "release")) return DataLakeLeaseAction.Release;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "acquire-release")) return DataLakeLeaseAction.AcquireRelease;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown DataLakeLeaseAction value.");
         }
     }

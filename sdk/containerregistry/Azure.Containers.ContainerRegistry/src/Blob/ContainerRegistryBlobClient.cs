@@ -504,7 +504,15 @@ namespace Azure.Containers.ContainerRegistry.Specialized
                 rawResponse.Headers.TryGetValue("Content-Type", out string contentType);
 
                 var contentDigest = BlobHelper.ComputeDigest(rawResponse.ContentStream);
-                ValidateDigest(contentDigest, digest);
+
+                if (ReferenceIsDigest(tagOrDigest))
+                {
+                    ValidateDigest(contentDigest, tagOrDigest, "The digest of the received manifest does not match the requested digest reference.");
+                }
+                else
+                {
+                    ValidateDigest(contentDigest, digest);
+                }
 
                 return Response.FromValue(new DownloadManifestResult(digest, contentType, rawResponse.Content), rawResponse);
             }
@@ -539,7 +547,15 @@ namespace Azure.Containers.ContainerRegistry.Specialized
                 rawResponse.Headers.TryGetValue("Content-Type", out string contentType);
 
                 var contentDigest = BlobHelper.ComputeDigest(rawResponse.ContentStream);
-                ValidateDigest(contentDigest, digest);
+
+                if (ReferenceIsDigest(tagOrDigest))
+                {
+                    ValidateDigest(contentDigest, tagOrDigest, "The digest of the received manifest does not match the requested digest reference.");
+                }
+                else
+                {
+                    ValidateDigest(contentDigest, digest);
+                }
 
                 return Response.FromValue(new DownloadManifestResult(digest, contentType, rawResponse.Content), rawResponse);
             }
@@ -572,11 +588,18 @@ namespace Azure.Containers.ContainerRegistry.Specialized
             return sb.ToString();
         }
 
-        private static void ValidateDigest(string clientDigest, string serverDigest)
+        private static bool ReferenceIsDigest(string reference)
         {
+            return reference.StartsWith("sha256:", StringComparison.OrdinalIgnoreCase);
+        }
+
+        private static void ValidateDigest(string clientDigest, string serverDigest, string message = default)
+        {
+            message ??= "The server-computed digest does not match the client-computed digest.";
+
             if (!clientDigest.Equals(serverDigest, StringComparison.OrdinalIgnoreCase))
             {
-                throw new RequestFailedException("The server-computed digest does not match the client-computed digest.");
+                throw new RequestFailedException(message);
             }
         }
 

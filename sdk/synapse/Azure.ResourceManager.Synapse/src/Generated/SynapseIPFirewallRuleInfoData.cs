@@ -12,7 +12,10 @@ using Azure.ResourceManager.Synapse.Models;
 
 namespace Azure.ResourceManager.Synapse
 {
-    /// <summary> A class representing the SynapseIPFirewallRuleInfo data model. </summary>
+    /// <summary>
+    /// A class representing the SynapseIPFirewallRuleInfo data model.
+    /// IP firewall rule
+    /// </summary>
     public partial class SynapseIPFirewallRuleInfoData : ResourceData
     {
         /// <summary> Initializes a new instance of SynapseIPFirewallRuleInfoData. </summary>

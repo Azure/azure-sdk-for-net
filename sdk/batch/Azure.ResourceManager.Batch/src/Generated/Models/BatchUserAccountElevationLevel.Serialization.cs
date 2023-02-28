@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.Batch.Models
 
         public static BatchUserAccountElevationLevel ToBatchUserAccountElevationLevel(this string value)
         {
-            if (string.Equals(value, "NonAdmin", StringComparison.InvariantCultureIgnoreCase)) return BatchUserAccountElevationLevel.NonAdmin;
-            if (string.Equals(value, "Admin", StringComparison.InvariantCultureIgnoreCase)) return BatchUserAccountElevationLevel.Admin;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "NonAdmin")) return BatchUserAccountElevationLevel.NonAdmin;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Admin")) return BatchUserAccountElevationLevel.Admin;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown BatchUserAccountElevationLevel value.");
         }
     }

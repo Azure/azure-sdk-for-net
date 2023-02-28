@@ -20,8 +20,8 @@ namespace Azure.Storage.Blobs.Models
 
         public static LeaseDurationType ToLeaseDurationType(this string value)
         {
-            if (string.Equals(value, "infinite", StringComparison.InvariantCultureIgnoreCase)) return LeaseDurationType.Infinite;
-            if (string.Equals(value, "fixed", StringComparison.InvariantCultureIgnoreCase)) return LeaseDurationType.Fixed;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "infinite")) return LeaseDurationType.Infinite;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "fixed")) return LeaseDurationType.Fixed;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown LeaseDurationType value.");
         }
     }

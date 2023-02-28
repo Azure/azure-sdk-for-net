@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.Compute.Models
 
         public static InstanceViewType ToInstanceViewType(this string value)
         {
-            if (string.Equals(value, "instanceView", StringComparison.InvariantCultureIgnoreCase)) return InstanceViewType.InstanceView;
-            if (string.Equals(value, "userData", StringComparison.InvariantCultureIgnoreCase)) return InstanceViewType.UserData;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "instanceView")) return InstanceViewType.InstanceView;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "userData")) return InstanceViewType.UserData;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown InstanceViewType value.");
         }
     }

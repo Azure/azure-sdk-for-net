@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.LabServices.Models
 
         public static LabServicesEnableState ToLabServicesEnableState(this string value)
         {
-            if (string.Equals(value, "Enabled", StringComparison.InvariantCultureIgnoreCase)) return LabServicesEnableState.Enabled;
-            if (string.Equals(value, "Disabled", StringComparison.InvariantCultureIgnoreCase)) return LabServicesEnableState.Disabled;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Enabled")) return LabServicesEnableState.Enabled;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Disabled")) return LabServicesEnableState.Disabled;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown LabServicesEnableState value.");
         }
     }

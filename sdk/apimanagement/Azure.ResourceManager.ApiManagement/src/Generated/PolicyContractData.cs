@@ -11,7 +11,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ApiManagement
 {
-    /// <summary> A class representing the PolicyContract data model. </summary>
+    /// <summary>
+    /// A class representing the PolicyContract data model.
+    /// Policy Contract details.
+    /// </summary>
     public partial class PolicyContractData : ResourceData
     {
         /// <summary> Initializes a new instance of PolicyContractData. </summary>

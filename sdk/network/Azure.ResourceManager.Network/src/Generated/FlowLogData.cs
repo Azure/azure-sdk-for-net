@@ -13,7 +13,10 @@ using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> A class representing the FlowLog data model. </summary>
+    /// <summary>
+    /// A class representing the FlowLog data model.
+    /// A flow log resource.
+    /// </summary>
     public partial class FlowLogData : NetworkTrackedResourceData
     {
         /// <summary> Initializes a new instance of FlowLogData. </summary>

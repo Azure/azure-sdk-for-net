@@ -4,15 +4,27 @@
 
 ### Features Added
 
+* AAD can now be configured via `AzureMonitorExporterOptions`
+  ([#34555](https://github.com/Azure/azure-sdk-for-net/pull/34555))
+
+* `dependencies\duration` and `requests\duration` standard metrics will now be
+  exported by default when trace exporter is used alongside metric exporter
+  ([#34010](https://github.com/Azure/azure-sdk-for-net/pull/34010))
+  ([#33999](https://github.com/Azure/azure-sdk-for-net/pull/33999))
+
+* Added support for named options ([#33803](https://github.com/Azure/azure-sdk-for-net/pull/33803))
+
 ### Breaking Changes
 
 ### Bugs Fixed
 
+* Fixed an issue of missing logs due to unhandled exception. ([#34423](https://github.com/Azure/azure-sdk-for-net/pull/34423))
+
 ### Other Changes
 
 * Update OpenTelemetry dependencies
-  ([#34128](https://github.com/Azure/azure-sdk-for-net/pull/34128))
-  - OpenTelemetry 1.4.0-rc.4
+  ([#34551](https://github.com/Azure/azure-sdk-for-net/pull/34551))
+  - OpenTelemetry 1.4.0
 
 ## 1.0.0-beta.7 (2023-02-07)
 

@@ -10,6 +10,7 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.ConnectionString;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.PersistentStorage;
+using Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat;
 using Azure.Monitor.OpenTelemetry.Exporter.Models;
 
 using OpenTelemetry;
@@ -43,23 +44,30 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             _fileBlobProvider = InitializeOfflineStorage(options);
 
             // TODO: uncomment following line for enablement.
-            // InitializeStatsbeat(_connectionVars);
+            // InitializeStatsbeat(options, _connectionVars);
         }
 
-        private static void InitializeStatsbeat(ConnectionVars connectionVars)
+        private static void InitializeStatsbeat(AzureMonitorExporterOptions options, ConnectionVars connectionVars)
         {
-            try
+            if (options.EnableStatsbeat && connectionVars != null)
             {
-                // Do not initialize statsbeat for statsbeat.
-                if (connectionVars != null && connectionVars.InstrumentationKey != ConnectionStringParser.GetValues(Statsbeat.Statsbeat_ConnectionString_EU).InstrumentationKey && connectionVars.InstrumentationKey != ConnectionStringParser.GetValues(Statsbeat.Statsbeat_ConnectionString_NonEU).InstrumentationKey)
+                try
                 {
+                    var disableStatsbeat = Environment.GetEnvironmentVariable("APPLICATIONINSIGHTS_STATSBEAT_DISABLED");
+                    if (string.Equals(disableStatsbeat, "true", StringComparison.OrdinalIgnoreCase))
+                    {
+                        AzureMonitorExporterEventSource.Log.WriteInformational("StatsbeatInitialization: ", "Statsbeat was disabled via environment variable");
+
+                        return;
+                    }
+
                     // TODO: Implement IDisposable for transmitter and dispose statsbeat.
-                    _ = new Statsbeat(connectionVars);
+                    _ = new AzureMonitorStatsbeat(connectionVars);
                 }
-            }
-            catch (Exception ex)
-            {
-                AzureMonitorExporterEventSource.Log.WriteWarning($"ErrorInitializingStatsBeatfor:{connectionVars.InstrumentationKey}", ex);
+                catch (Exception ex)
+                {
+                    AzureMonitorExporterEventSource.Log.WriteWarning($"ErrorInitializingStatsbeatFor:{connectionVars.InstrumentationKey}", ex);
+                }
             }
         }
 

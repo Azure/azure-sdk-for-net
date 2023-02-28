@@ -11,7 +11,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppPlatform
 {
-    /// <summary> A class representing the AppPlatformBuildpackBinding data model. </summary>
+    /// <summary>
+    /// A class representing the AppPlatformBuildpackBinding data model.
+    /// Buildpack Binding Resource object
+    /// </summary>
     public partial class AppPlatformBuildpackBindingData : ResourceData
     {
         /// <summary> Initializes a new instance of AppPlatformBuildpackBindingData. </summary>
