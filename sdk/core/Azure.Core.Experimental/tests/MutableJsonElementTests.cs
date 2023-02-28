@@ -219,12 +219,12 @@ namespace Azure.Core.Experimental.Tests
 
             MutableJsonElement.ObjectEnumerator enumerator = mdoc.RootElement.EnumerateObject();
 
-            int expected = 0;
+            int index = 0;
             foreach ((string Name, MutableJsonElement Value) property in enumerator)
             {
-                Assert.AreEqual(expectedNames[expected], property.Name);
-                Assert.AreEqual(expected, property.Value.GetInt32());
-                expected++;
+                Assert.AreEqual(expectedNames[index], property.Name);
+                Assert.AreEqual(index + 1, property.Value.GetInt32());
+                index++;
             }
         }
     }

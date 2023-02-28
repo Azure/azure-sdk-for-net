@@ -103,8 +103,36 @@ namespace Azure.Core.Experimental.Tests
             foreach (dynamic property in json)
             {
                 Assert.AreEqual(expectedNames[expected], property.Name);
-                Assert.AreEqual(expected, property.Value.GetInt32());
+                Assert.IsTrue(expected == property.Value);
                 expected++;
+            }
+        }
+
+        [Test]
+        public void CanForEachOverObjectWithChanges()
+        {
+            dynamic json = DynamicJsonTests.GetDynamicJson("""
+                {
+                  "Zero" : 0,
+                  "One" : 1,
+                  "Two" : 2,
+                  "Three" : 3
+                }
+                """);
+
+            string[] expectedNames = new string[] { "Zero", "One", "Two", "Three" };
+
+            for (int i = 0; i < 4; i++)
+            {
+                json[expectedNames[i]] = i + 1;
+            }
+
+            int index = 0;
+            foreach (dynamic property in json)
+            {
+                Assert.AreEqual(expectedNames[index], property.Name);
+                Assert.IsTrue(index + 1 == property.Value);
+                index++;
             }
         }
     }

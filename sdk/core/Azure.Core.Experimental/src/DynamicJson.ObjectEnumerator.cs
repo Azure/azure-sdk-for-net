@@ -14,7 +14,7 @@ namespace Azure.Core.Dynamic
         /// An enumerable and enumerator for the properties of a mutable JSON object.
         /// </summary>
         [DebuggerDisplay("{Current,nq}")]
-        public struct ObjectEnumerator : IEnumerable<(string Name, DynamicJson Value)>, IEnumerator<(string Name, DynamicJson Value)>
+        public struct ObjectEnumerator : IEnumerable<DynamicJsonProperty>, IEnumerator<DynamicJsonProperty>
         {
             private MutableJsonElement.ObjectEnumerator _enumerator;
 
@@ -39,13 +39,13 @@ namespace Azure.Core.Dynamic
             public ObjectEnumerator GetEnumerator() => new(_enumerator.GetEnumerator());
 
             /// <inheritdoc />
-            public (string Name, DynamicJson Value) Current => (_enumerator.Current.Name, new(_enumerator.Current.Value));
+            public DynamicJsonProperty Current => new(_enumerator.Current.Name, new(_enumerator.Current.Value));
 
             /// <inheritdoc />
             IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
             /// <inheritdoc />
-            IEnumerator<(string Name, DynamicJson Value)> IEnumerable<(string Name, DynamicJson Value)>.GetEnumerator() => GetEnumerator();
+            IEnumerator<DynamicJsonProperty> IEnumerable<DynamicJsonProperty>.GetEnumerator() => GetEnumerator();
 
             /// <inheritdoc />
             public void Reset() => _enumerator.Reset();

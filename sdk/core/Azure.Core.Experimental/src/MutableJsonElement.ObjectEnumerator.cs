@@ -27,7 +27,7 @@ namespace Azure.Core.Json
                 Debug.Assert(target.ValueKind == JsonValueKind.Object);
 
                 _target = target;
-                _enumerator = target._element.EnumerateObject();
+                _enumerator = target.GetJsonElement().EnumerateObject();
             }
 
             /// <inheritdoc />
