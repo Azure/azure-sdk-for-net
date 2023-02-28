@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using NUnit.Framework;
 
 namespace Azure.AI.TextAnalytics.Samples
@@ -10,12 +11,13 @@ namespace Azure.AI.TextAnalytics.Samples
     public partial class TextAnalyticsSamples : TextAnalyticsSampleBase
     {
         [Test]
-        public void ExtractiveSummarize()
+        public async Task ExtractSummaryConvenienceAsync()
         {
             Uri endpoint = new(TestEnvironment.Endpoint);
             AzureKeyCredential credential = new(TestEnvironment.ApiKey);
             TextAnalyticsClient client = new(endpoint, credential, CreateSampleOptions());
 
+            #region Snippet:Sample12_ExtractSummaryConvenienceAsync
             string document =
                 "Windows 365 was in the works before COVID-19 sent companies around the world on a scramble to secure"
                 + " solutions to support employees suddenly forced to work from home, but “what really put the"
@@ -55,27 +57,20 @@ namespace Azure.AI.TextAnalytics.Samples
 
             // Prepare the input of the text analysis operation. You can add multiple documents to this list and
             // perform the same operation on all of them simultaneously.
-            List<TextDocumentInput> batchedDocuments = new()
+            List<string> batchedDocuments = new()
             {
-                new TextDocumentInput("1", document)
-                {
-                     Language = "en",
-                }
-            };
-
-            ExtractiveSummarizeOptions options = new()
-            {
-                MaxSentenceCount = 5,
-                OrderBy = ExtractiveSummarySentencesOrder.Rank
+                document
             };
 
             // Perform the text analysis operation.
-            ExtractiveSummarizeOperation operation = client.StartExtractiveSummarize(batchedDocuments, options);
-            operation.WaitForCompletion();
+            ExtractSummaryOperation operation = client.StartExtractSummary(batchedDocuments);
+            await operation.WaitForCompletionAsync();
+            #endregion
 
             Console.WriteLine($"The operation has completed.");
             Console.WriteLine();
 
+            #region Snippet:Sample12_ExtractSummaryConvenienceAsync_ViewOperationStatus
             // View the operation status.
             Console.WriteLine($"Created On   : {operation.CreatedOn}");
             Console.WriteLine($"Expires On   : {operation.ExpiresOn}");
@@ -83,14 +78,16 @@ namespace Azure.AI.TextAnalytics.Samples
             Console.WriteLine($"Status       : {operation.Status}");
             Console.WriteLine($"Last Modified: {operation.LastModified}");
             Console.WriteLine();
+            #endregion
 
+            #region Snippet:Sample12_ExtractSummaryConvenienceAsync_ViewResults
             // View the operation results.
-            foreach (ExtractiveSummarizeResultCollection documentsInPage in operation.GetValues())
+            await foreach (ExtractSummaryResultCollection documentsInPage in operation.Value)
             {
-                Console.WriteLine($"Extractive Summarize, model version: \"{documentsInPage.ModelVersion}\"");
+                Console.WriteLine($"Extract Summary, version: \"{documentsInPage.ModelVersion}\"");
                 Console.WriteLine();
 
-                foreach (ExtractiveSummarizeResult documentResult in documentsInPage)
+                foreach (ExtractSummaryResult documentResult in documentsInPage)
                 {
                     if (documentResult.HasError)
                     {
@@ -103,7 +100,7 @@ namespace Azure.AI.TextAnalytics.Samples
                     Console.WriteLine($"  Extracted {documentResult.Sentences.Count} sentence(s):");
                     Console.WriteLine();
 
-                    foreach (ExtractiveSummarySentence sentence in documentResult.Sentences)
+                    foreach (SummarySentence sentence in documentResult.Sentences)
                     {
                         Console.WriteLine($"  Sentence: {sentence.Text}");
                         Console.WriteLine($"  Rank Score: {sentence.RankScore}");
@@ -113,6 +110,7 @@ namespace Azure.AI.TextAnalytics.Samples
                     }
                 }
             }
+            #endregion
         }
     }
 }

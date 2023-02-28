@@ -176,13 +176,13 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [Test]
-        public void ExtractiveSummarizeArgumentValidation()
+        public void ExtractSummaryArgumentValidation()
         {
-            Assert.ThrowsAsync<ArgumentNullException>(() => Client.StartExtractiveSummarizeAsync((string[])null));
-            Assert.ThrowsAsync<ArgumentException>(() => Client.StartExtractiveSummarizeAsync(Array.Empty<string>()));
+            Assert.ThrowsAsync<ArgumentNullException>(() => Client.StartExtractSummaryAsync((string[])null));
+            Assert.ThrowsAsync<ArgumentException>(() => Client.StartExtractSummaryAsync(Array.Empty<string>()));
 
-            Assert.ThrowsAsync<ArgumentNullException>(() => Client.StartExtractiveSummarizeAsync((TextDocumentInput[])null));
-            Assert.ThrowsAsync<ArgumentException>(() => Client.StartExtractiveSummarizeAsync(Array.Empty<TextDocumentInput>()));
+            Assert.ThrowsAsync<ArgumentNullException>(() => Client.StartExtractSummaryAsync((TextDocumentInput[])null));
+            Assert.ThrowsAsync<ArgumentException>(() => Client.StartExtractSummaryAsync(Array.Empty<TextDocumentInput>()));
         }
 
         [Test]

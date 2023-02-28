@@ -14,7 +14,7 @@
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
-        "displayName": "AnalyzeOperationExtractiveSummarize",
+        "displayName": "AnalyzeOperationExtractSummary",
         "analysisInput": {
           "documents": [
             {
@@ -76,7 +76,7 @@
         "expirationDateTime": "2022-10-27T05:57:50Z",
         "status": "notStarted",
         "errors": [],
-        "displayName": "AnalyzeOperationExtractiveSummarize",
+        "displayName": "AnalyzeOperationExtractSummary",
         "tasks": {
           "completed": 0,
           "failed": 0,
@@ -115,7 +115,7 @@
         "expirationDateTime": "2022-10-27T05:57:50Z",
         "status": "succeeded",
         "errors": [],
-        "displayName": "AnalyzeOperationExtractiveSummarize",
+        "displayName": "AnalyzeOperationExtractSummary",
         "tasks": {
           "completed": 1,
           "failed": 0,

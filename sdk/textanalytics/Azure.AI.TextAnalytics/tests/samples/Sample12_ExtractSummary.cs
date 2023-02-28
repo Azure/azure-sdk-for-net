@@ -10,7 +10,7 @@ namespace Azure.AI.TextAnalytics.Samples
     public partial class TextAnalyticsSamples : TextAnalyticsSampleBase
     {
         [Test]
-        public void ExtractiveSummarizeConvenience()
+        public void ExtractSummary()
         {
             Uri endpoint = new(TestEnvironment.Endpoint);
             AzureKeyCredential credential = new(TestEnvironment.ApiKey);
@@ -55,13 +55,22 @@ namespace Azure.AI.TextAnalytics.Samples
 
             // Prepare the input of the text analysis operation. You can add multiple documents to this list and
             // perform the same operation on all of them simultaneously.
-            List<string> batchedDocuments = new()
+            List<TextDocumentInput> batchedDocuments = new()
             {
-                document
+                new TextDocumentInput("1", document)
+                {
+                     Language = "en",
+                }
+            };
+
+            ExtractSummaryOptions options = new()
+            {
+                MaxSentenceCount = 5,
+                OrderBy = SummarySentencesOrder.Rank
             };
 
             // Perform the text analysis operation.
-            ExtractiveSummarizeOperation operation = client.StartExtractiveSummarize(batchedDocuments);
+            ExtractSummaryOperation operation = client.StartExtractSummary(batchedDocuments, options);
             operation.WaitForCompletion();
 
             Console.WriteLine($"The operation has completed.");
@@ -76,12 +85,12 @@ namespace Azure.AI.TextAnalytics.Samples
             Console.WriteLine();
 
             // View the operation results.
-            foreach (ExtractiveSummarizeResultCollection documentsInPage in operation.GetValues())
+            foreach (ExtractSummaryResultCollection documentsInPage in operation.GetValues())
             {
-                Console.WriteLine($"Extractive Summarize, model version: \"{documentsInPage.ModelVersion}\"");
+                Console.WriteLine($"Extract Summary, model version: \"{documentsInPage.ModelVersion}\"");
                 Console.WriteLine();
 
-                foreach (ExtractiveSummarizeResult documentResult in documentsInPage)
+                foreach (ExtractSummaryResult documentResult in documentsInPage)
                 {
                     if (documentResult.HasError)
                     {
@@ -94,7 +103,7 @@ namespace Azure.AI.TextAnalytics.Samples
                     Console.WriteLine($"  Extracted {documentResult.Sentences.Count} sentence(s):");
                     Console.WriteLine();
 
-                    foreach (ExtractiveSummarySentence sentence in documentResult.Sentences)
+                    foreach (SummarySentence sentence in documentResult.Sentences)
                     {
                         Console.WriteLine($"  Sentence: {sentence.Text}");
                         Console.WriteLine($"  Rank Score: {sentence.RankScore}");

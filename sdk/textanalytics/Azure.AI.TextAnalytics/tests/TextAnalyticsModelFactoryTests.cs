@@ -70,10 +70,10 @@ namespace Azure.AI.TextAnalytics.Tests
                 TextAnalyticsModelFactory.AnalyzeHealthcareEntitiesActionResult(default, default, default),
             };
 
-            var extractiveSummarizeActionResults = new List<ExtractiveSummarizeActionResult>()
+            var extractSummaryActionResults = new List<ExtractSummaryActionResult>()
             {
-                TextAnalyticsModelFactory.ExtractiveSummarizeActionResult(default, default, default),
-                TextAnalyticsModelFactory.ExtractiveSummarizeActionResult(default, default, default),
+                TextAnalyticsModelFactory.ExtractSummaryActionResult(default, default, default),
+                TextAnalyticsModelFactory.ExtractSummaryActionResult(default, default, default),
             };
 
             var abstractiveSummarizeActionResults = new List<AbstractiveSummarizeActionResult>()
@@ -105,7 +105,7 @@ namespace Azure.AI.TextAnalytics.Tests
                 singleLabelClassifyActionResults,
                 multiLabelClassifyActionResults,
                 analyzeHealthcareEntitiesActionResults,
-                extractiveSummarizeActionResults,
+                extractSummaryActionResults,
                 abstractiveSummarizeActionResults);
 
             CollectionAssert.AreEquivalent(extractKeyPhrasesActionResults, actionsResult.ExtractKeyPhrasesResults);
@@ -117,7 +117,7 @@ namespace Azure.AI.TextAnalytics.Tests
             CollectionAssert.AreEquivalent(singleLabelClassifyActionResults, actionsResult.SingleLabelClassifyResults);
             CollectionAssert.AreEquivalent(multiLabelClassifyActionResults, actionsResult.MultiLabelClassifyResults);
             CollectionAssert.AreEquivalent(analyzeHealthcareEntitiesActionResults, actionsResult.AnalyzeHealthcareEntitiesResults);
-            CollectionAssert.AreEquivalent(extractiveSummarizeActionResults, actionsResult.ExtractiveSummarizeResults);
+            CollectionAssert.AreEquivalent(extractSummaryActionResults, actionsResult.ExtractSummaryResults);
             CollectionAssert.AreEquivalent(abstractiveSummarizeActionResults, actionsResult.AbstractiveSummarizeResults);
         }
         #endregion Action Result Models

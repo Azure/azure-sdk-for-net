@@ -532,28 +532,28 @@ namespace Azure.AI.TextAnalytics
 
         #endregion
 
-        #region Extractive Summarize
+        #region Extract Summary
 
-        internal static List<ExtractiveSummarySentence> ConvertToExtractiveSummarySentenceList(IEnumerable<ExtractedSummarySentence> sentences)
-            => sentences.Select((sentence) => new ExtractiveSummarySentence(sentence)).ToList();
+        internal static List<SummarySentence> ConvertToExtractiveSummarySentenceList(IEnumerable<ExtractedSummarySentence> sentences)
+            => sentences.Select((sentence) => new SummarySentence(sentence)).ToList();
 
-        internal static ExtractiveSummarizeResultCollection ConvertToExtractiveSummarizeResultCollection(
+        internal static ExtractSummaryResultCollection ConvertToExtractSummaryResultCollection(
             ExtractiveSummarizationResult results,
             IDictionary<string, int> idToIndexMap)
         {
-            List<ExtractiveSummarizeResult> extractiveSummarizeResults = new(results.Documents.Count);
+            List<ExtractSummaryResult> extractSummaryResults = new(results.Documents.Count);
 
             // Read errors.
             foreach (InputError error in results.Errors)
             {
-                extractiveSummarizeResults.Add(new ExtractiveSummarizeResult(error.Id, ConvertToError(error.Error)));
+                extractSummaryResults.Add(new ExtractSummaryResult(error.Id, ConvertToError(error.Error)));
             }
 
             // Read results.
             foreach (ExtractedSummaryDocumentResultWithDetectedLanguage document in results.Documents)
             {
-                extractiveSummarizeResults.Add(
-                    new ExtractiveSummarizeResult(
+                extractSummaryResults.Add(
+                    new ExtractSummaryResult(
                         document.Id,
                         document.Statistics ?? default,
                         ConvertToExtractiveSummarySentenceList(document.Sentences),
@@ -561,19 +561,19 @@ namespace Azure.AI.TextAnalytics
                         ConvertToWarnings(document.Warnings)));
             }
 
-            extractiveSummarizeResults = SortHeterogeneousCollection(extractiveSummarizeResults, idToIndexMap);
+            extractSummaryResults = SortHeterogeneousCollection(extractSummaryResults, idToIndexMap);
 
-            return new ExtractiveSummarizeResultCollection(extractiveSummarizeResults, results.Statistics, results.ModelVersion);
+            return new ExtractSummaryResultCollection(extractSummaryResults, results.Statistics, results.ModelVersion);
         }
 
-        internal static ExtractiveSummarizeResultCollection ConvertToExtractiveSummarizeResultCollection(
+        internal static ExtractSummaryResultCollection ConvertToExtractSummaryResultCollection(
             AnalyzeTextJobState jobState,
             IDictionary<string, int> idToIndexMap)
         {
             AnalyzeTextLROResult task = jobState.Tasks.Items[0];
             if (task.Kind == AnalyzeTextLROResultsKind.ExtractiveSummarizationLROResults)
             {
-                return ConvertToExtractiveSummarizeResultCollection((task as ExtractiveSummarizationLROResult).Results, idToIndexMap);
+                return ConvertToExtractSummaryResultCollection((task as ExtractiveSummarizationLROResult).Results, idToIndexMap);
             }
             throw new InvalidOperationException($"Invalid task executed. Expected a {nameof(AnalyzeTextLROResultsKind.ExtractiveSummarizationLROResults)} but instead got {task.Kind}.");
         }
@@ -760,7 +760,7 @@ namespace Azure.AI.TextAnalytics
             };
         }
 
-        internal static ExtractiveSummarizationLROTask ConvertToExtractiveSummarizationTask(ExtractiveSummarizeAction action)
+        internal static ExtractiveSummarizationLROTask ConvertToExtractiveSummarizationTask(ExtractSummaryAction action)
         {
             return new ExtractiveSummarizationLROTask()
             {
@@ -900,11 +900,11 @@ namespace Azure.AI.TextAnalytics
             return list;
         }
 
-        internal static IList<ExtractiveSummarizationLROTask> ConvertFromExtractiveSummarizeActionsToTasks(IReadOnlyCollection<ExtractiveSummarizeAction> extractiveSummarizeActions)
+        internal static IList<ExtractiveSummarizationLROTask> ConvertFromExtractSummaryActionsToTasks(IReadOnlyCollection<ExtractSummaryAction> extractSummaryActions)
         {
-            List<ExtractiveSummarizationLROTask> list = new(extractiveSummarizeActions.Count);
+            List<ExtractiveSummarizationLROTask> list = new(extractSummaryActions.Count);
 
-            foreach (ExtractiveSummarizeAction action in extractiveSummarizeActions)
+            foreach (ExtractSummaryAction action in extractSummaryActions)
             {
                 list.Add(ConvertToExtractiveSummarizationTask(action));
             }
@@ -935,7 +935,7 @@ namespace Azure.AI.TextAnalytics
             List<SingleLabelClassifyActionResult> singleLabelClassify = new();
             List<MultiLabelClassifyActionResult> multiLabelClassify = new();
             List<AnalyzeHealthcareEntitiesActionResult> analyzeHealthcareEntities = new();
-            List<ExtractiveSummarizeActionResult> extractiveSummarize = new();
+            List<ExtractSummaryActionResult> extractSummary = new();
             List<AbstractiveSummarizeActionResult> abstractiveSummarize = new();
 
             foreach (AnalyzeTextLROResult task in jobState.Tasks.Items)
@@ -978,7 +978,7 @@ namespace Azure.AI.TextAnalytics
                 }
                 else if (task.Kind == AnalyzeTextLROResultsKind.ExtractiveSummarizationLROResults)
                 {
-                    extractiveSummarize.Add(new ExtractiveSummarizeActionResult(ConvertToExtractiveSummarizeResultCollection((task as ExtractiveSummarizationLROResult).Results, map), task.TaskName, task.LastUpdateDateTime));
+                    extractSummary.Add(new ExtractSummaryActionResult(ConvertToExtractSummaryResultCollection((task as ExtractiveSummarizationLROResult).Results, map), task.TaskName, task.LastUpdateDateTime));
                 }
                 else if (task.Kind == AnalyzeTextLROResultsKind.AbstractiveSummarizationLROResults)
                 {
@@ -996,7 +996,7 @@ namespace Azure.AI.TextAnalytics
                 singleLabelClassify,
                 multiLabelClassify,
                 analyzeHealthcareEntities,
-                extractiveSummarize,
+                extractSummary,
                 abstractiveSummarize);
         }
 

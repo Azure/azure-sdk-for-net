@@ -11,13 +11,13 @@ using System.ComponentModel;
 namespace Azure.AI.TextAnalytics
 {
     /// <summary> The sorting criteria to use for the results of Extractive Summarization. </summary>
-    public readonly partial struct ExtractiveSummarySentencesOrder : IEquatable<ExtractiveSummarySentencesOrder>
+    public readonly partial struct SummarySentencesOrder : IEquatable<SummarySentencesOrder>
     {
         private readonly string _value;
 
-        /// <summary> Initializes a new instance of <see cref="ExtractiveSummarySentencesOrder"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SummarySentencesOrder"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public ExtractiveSummarySentencesOrder(string value)
+        public SummarySentencesOrder(string value)
         {
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
@@ -26,21 +26,21 @@ namespace Azure.AI.TextAnalytics
         private const string RankValue = "Rank";
 
         /// <summary> Indicates that results should be sorted in order of appearance in the text. </summary>
-        public static ExtractiveSummarySentencesOrder Offset { get; } = new ExtractiveSummarySentencesOrder(OffsetValue);
+        public static SummarySentencesOrder Offset { get; } = new SummarySentencesOrder(OffsetValue);
         /// <summary> Indicates that results should be sorted in order of importance (i.e. rank score) according to the model. </summary>
-        public static ExtractiveSummarySentencesOrder Rank { get; } = new ExtractiveSummarySentencesOrder(RankValue);
-        /// <summary> Determines if two <see cref="ExtractiveSummarySentencesOrder"/> values are the same. </summary>
-        public static bool operator ==(ExtractiveSummarySentencesOrder left, ExtractiveSummarySentencesOrder right) => left.Equals(right);
-        /// <summary> Determines if two <see cref="ExtractiveSummarySentencesOrder"/> values are not the same. </summary>
-        public static bool operator !=(ExtractiveSummarySentencesOrder left, ExtractiveSummarySentencesOrder right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ExtractiveSummarySentencesOrder"/>. </summary>
-        public static implicit operator ExtractiveSummarySentencesOrder(string value) => new ExtractiveSummarySentencesOrder(value);
+        public static SummarySentencesOrder Rank { get; } = new SummarySentencesOrder(RankValue);
+        /// <summary> Determines if two <see cref="SummarySentencesOrder"/> values are the same. </summary>
+        public static bool operator ==(SummarySentencesOrder left, SummarySentencesOrder right) => left.Equals(right);
+        /// <summary> Determines if two <see cref="SummarySentencesOrder"/> values are not the same. </summary>
+        public static bool operator !=(SummarySentencesOrder left, SummarySentencesOrder right) => !left.Equals(right);
+        /// <summary> Converts a string to a <see cref="SummarySentencesOrder"/>. </summary>
+        public static implicit operator SummarySentencesOrder(string value) => new SummarySentencesOrder(value);
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is ExtractiveSummarySentencesOrder other && Equals(other);
+        public override bool Equals(object obj) => obj is SummarySentencesOrder other && Equals(other);
         /// <inheritdoc />
-        public bool Equals(ExtractiveSummarySentencesOrder other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(SummarySentencesOrder other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
