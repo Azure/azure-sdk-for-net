@@ -16,15 +16,15 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("maxPercentDeltaUnhealthyNodes");
+            writer.WritePropertyName("maxPercentDeltaUnhealthyNodes"u8);
             writer.WriteNumberValue(MaxPercentDeltaUnhealthyNodes);
-            writer.WritePropertyName("maxPercentUpgradeDomainDeltaUnhealthyNodes");
+            writer.WritePropertyName("maxPercentUpgradeDomainDeltaUnhealthyNodes"u8);
             writer.WriteNumberValue(MaxPercentUpgradeDomainDeltaUnhealthyNodes);
-            writer.WritePropertyName("maxPercentDeltaUnhealthyApplications");
+            writer.WritePropertyName("maxPercentDeltaUnhealthyApplications"u8);
             writer.WriteNumberValue(MaxPercentDeltaUnhealthyApplications);
             if (Optional.IsCollectionDefined(ApplicationDeltaHealthPolicies))
             {
-                writer.WritePropertyName("applicationDeltaHealthPolicies");
+                writer.WritePropertyName("applicationDeltaHealthPolicies"u8);
                 writer.WriteStartObject();
                 foreach (var item in ApplicationDeltaHealthPolicies)
                 {
@@ -44,22 +44,22 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             Optional<IDictionary<string, ApplicationDeltaHealthPolicy>> applicationDeltaHealthPolicies = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("maxPercentDeltaUnhealthyNodes"))
+                if (property.NameEquals("maxPercentDeltaUnhealthyNodes"u8))
                 {
                     maxPercentDeltaUnhealthyNodes = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("maxPercentUpgradeDomainDeltaUnhealthyNodes"))
+                if (property.NameEquals("maxPercentUpgradeDomainDeltaUnhealthyNodes"u8))
                 {
                     maxPercentUpgradeDomainDeltaUnhealthyNodes = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("maxPercentDeltaUnhealthyApplications"))
+                if (property.NameEquals("maxPercentDeltaUnhealthyApplications"u8))
                 {
                     maxPercentDeltaUnhealthyApplications = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("applicationDeltaHealthPolicies"))
+                if (property.NameEquals("applicationDeltaHealthPolicies"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

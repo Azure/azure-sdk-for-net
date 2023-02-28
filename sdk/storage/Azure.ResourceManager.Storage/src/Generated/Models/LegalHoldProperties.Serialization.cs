@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Storage.Models
             Optional<ProtectedAppendWritesHistory> protectedAppendWritesHistory = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("hasLegalHold"))
+                if (property.NameEquals("hasLegalHold"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Storage.Models
                     hasLegalHold = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("tags"))
+                if (property.NameEquals("tags"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Storage.Models
                     tags = array;
                     continue;
                 }
-                if (property.NameEquals("protectedAppendWritesHistory"))
+                if (property.NameEquals("protectedAppendWritesHistory"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

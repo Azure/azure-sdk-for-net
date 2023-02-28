@@ -44,14 +44,8 @@ namespace Azure.ResourceManager.MachineLearning.Samples
             MachineLearningModelVersionCollection collection = machineLearningModelContainer.GetMachineLearningModelVersions();
 
             // invoke the operation and iterate over the result
-            string orderBy = "string";
-            int? top = 1;
-            string version = "string";
-            string description = "string";
-            int? offset = 1;
-            string tags = "string";
-            string properties = "string";
-            await foreach (MachineLearningModelVersionResource item in collection.GetAllAsync(orderBy: orderBy, top: top, version: version, description: description, offset: offset, tags: tags, properties: properties))
+            MachineLearningModelVersionCollectionGetAllOptions options = new MachineLearningModelVersionCollectionGetAllOptions() { OrderBy = "string", Top = 1, Version = "string", Description = "string", Offset = 1, Tags = "string", Properties = "string" };
+            await foreach (MachineLearningModelVersionResource item in collection.GetAllAsync(options))
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance

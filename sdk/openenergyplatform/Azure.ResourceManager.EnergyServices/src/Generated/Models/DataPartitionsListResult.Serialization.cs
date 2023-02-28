@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.EnergyServices.Models
             Optional<IReadOnlyList<DataPartition>> dataPartitionInfo = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("dataPartitionInfo"))
+                if (property.NameEquals("dataPartitionInfo"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

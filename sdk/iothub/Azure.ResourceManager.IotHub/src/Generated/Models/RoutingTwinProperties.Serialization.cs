@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.IotHub.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Desired))
             {
-                writer.WritePropertyName("desired");
+                writer.WritePropertyName("desired"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(Desired);
 #else
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.IotHub.Models
             }
             if (Optional.IsDefined(Reported))
             {
-                writer.WritePropertyName("reported");
+                writer.WritePropertyName("reported"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(Reported);
 #else

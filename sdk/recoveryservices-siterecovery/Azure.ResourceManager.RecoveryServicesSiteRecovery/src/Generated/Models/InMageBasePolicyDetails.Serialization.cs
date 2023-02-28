@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             string instanceType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("recoveryPointThresholdInMinutes"))
+                if (property.NameEquals("recoveryPointThresholdInMinutes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     recoveryPointThresholdInMinutes = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("recoveryPointHistory"))
+                if (property.NameEquals("recoveryPointHistory"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     recoveryPointHistory = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("appConsistentFrequencyInMinutes"))
+                if (property.NameEquals("appConsistentFrequencyInMinutes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -51,12 +51,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     appConsistentFrequencyInMinutes = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("multiVmSyncStatus"))
+                if (property.NameEquals("multiVmSyncStatus"u8))
                 {
                     multiVmSyncStatus = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("instanceType"))
+                if (property.NameEquals("instanceType"u8))
                 {
                     instanceType = property.Value.GetString();
                     continue;

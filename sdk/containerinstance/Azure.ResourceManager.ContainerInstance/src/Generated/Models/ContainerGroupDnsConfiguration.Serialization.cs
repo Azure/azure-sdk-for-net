@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("nameServers");
+            writer.WritePropertyName("nameServers"u8);
             writer.WriteStartArray();
             foreach (var item in NameServers)
             {
@@ -25,12 +25,12 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             writer.WriteEndArray();
             if (Optional.IsDefined(SearchDomains))
             {
-                writer.WritePropertyName("searchDomains");
+                writer.WritePropertyName("searchDomains"u8);
                 writer.WriteStringValue(SearchDomains);
             }
             if (Optional.IsDefined(Options))
             {
-                writer.WritePropertyName("options");
+                writer.WritePropertyName("options"u8);
                 writer.WriteStringValue(Options);
             }
             writer.WriteEndObject();
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             Optional<string> options = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("nameServers"))
+                if (property.NameEquals("nameServers"u8))
                 {
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
@@ -53,12 +53,12 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                     nameServers = array;
                     continue;
                 }
-                if (property.NameEquals("searchDomains"))
+                if (property.NameEquals("searchDomains"u8))
                 {
                     searchDomains = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("options"))
+                if (property.NameEquals("options"u8))
                 {
                     options = property.Value.GetString();
                     continue;

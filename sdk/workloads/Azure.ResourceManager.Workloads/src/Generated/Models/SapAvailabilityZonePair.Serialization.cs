@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Workloads.Models
             Optional<long> zoneB = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("zoneA"))
+                if (property.NameEquals("zoneA"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Workloads.Models
                     zoneA = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("zoneB"))
+                if (property.NameEquals("zoneB"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -17,7 +17,7 @@ namespace Azure.Communication.ShortCodes.Models
             CommunicationError error = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("error"))
+                if (property.NameEquals("error"u8))
                 {
                     error = CommunicationError.DeserializeCommunicationError(property.Value);
                     continue;

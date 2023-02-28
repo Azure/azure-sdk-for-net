@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Optional<int> preemptedNodeCount = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("idleNodeCount"))
+                if (property.NameEquals("idleNodeCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     idleNodeCount = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("runningNodeCount"))
+                if (property.NameEquals("runningNodeCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     runningNodeCount = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("preparingNodeCount"))
+                if (property.NameEquals("preparingNodeCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     preparingNodeCount = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("unusableNodeCount"))
+                if (property.NameEquals("unusableNodeCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     unusableNodeCount = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("leavingNodeCount"))
+                if (property.NameEquals("leavingNodeCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     leavingNodeCount = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("preemptedNodeCount"))
+                if (property.NameEquals("preemptedNodeCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

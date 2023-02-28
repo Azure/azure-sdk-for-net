@@ -18,9 +18,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("triggerName");
+            writer.WritePropertyName("triggerName"u8);
             writer.WriteStringValue(TriggerName);
-            writer.WritePropertyName("provisioningStatus");
+            writer.WritePropertyName("provisioningStatus"u8);
             writer.WriteStringValue(ProvisioningStatus);
             writer.WriteEndObject();
         }
@@ -31,12 +31,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             string provisioningStatus = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("triggerName"))
+                if (property.NameEquals("triggerName"u8))
                 {
                     triggerName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("provisioningStatus"))
+                if (property.NameEquals("provisioningStatus"u8))
                 {
                     provisioningStatus = property.Value.GetString();
                     continue;

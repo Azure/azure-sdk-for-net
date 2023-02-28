@@ -40,13 +40,8 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Samples
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // invoke the operation and iterate over the result
-            string filter = "test_filter";
-            int? top = 1;
-            int? skip = 1;
-            string select = "test_select";
-            string orderby = "test_orderby";
-            bool? count = false;
-            await foreach (DataLakeAnalyticsAccountBasic item in subscriptionResource.GetAccountsAsync(filter: filter, top: top, skip: skip, select: select, orderby: orderby, count: count))
+            SubscriptionResourceGetAccountsOptions options = new SubscriptionResourceGetAccountsOptions() { Filter = "test_filter", Top = 1, Skip = 1, Select = "test_select", Orderby = "test_orderby", Count = false };
+            await foreach (DataLakeAnalyticsAccountBasic item in subscriptionResource.GetAccountsAsync(options))
             {
                 Console.WriteLine($"Succeeded: {item}");
             }

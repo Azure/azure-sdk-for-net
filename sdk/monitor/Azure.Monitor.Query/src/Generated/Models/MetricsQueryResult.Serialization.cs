@@ -24,7 +24,7 @@ namespace Azure.Monitor.Query.Models
             IReadOnlyList<MetricResult> value = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("cost"))
+                if (property.NameEquals("cost"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -34,12 +34,12 @@ namespace Azure.Monitor.Query.Models
                     cost = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("timespan"))
+                if (property.NameEquals("timespan"u8))
                 {
                     timespan = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("interval"))
+                if (property.NameEquals("interval"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -49,17 +49,17 @@ namespace Azure.Monitor.Query.Models
                     interval = property.Value.GetTimeSpan("P");
                     continue;
                 }
-                if (property.NameEquals("namespace"))
+                if (property.NameEquals("namespace"u8))
                 {
                     @namespace = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("resourceregion"))
+                if (property.NameEquals("resourceregion"u8))
                 {
                     resourceregion = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     List<MetricResult> array = new List<MetricResult>();
                     foreach (var item in property.Value.EnumerateArray())

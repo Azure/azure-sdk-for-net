@@ -5,6 +5,7 @@ Run `dotnet build /t:GenerateCode` to generate code.
 ``` yaml
 
 azure-arm: true
+generate-model-factory: false
 csharp: true
 library-name: LoadTesting
 namespace: Azure.ResourceManager.LoadTesting
@@ -26,8 +27,8 @@ rename-mapping:
   LoadTestResource: LoadTestingResource
   QuotaResource: LoadTestingQuota
   CheckQuotaAvailabilityResponse: LoadTestingQuotaAvailabilityResult
-  EncryptionProperties: CustomerManagedKeyEncryptionProperties
-  EncryptionPropertiesIdentity: CustomerManagedKeyIdentity
+  EncryptionProperties: LoadTestingCmkEncryptionProperties
+  EncryptionPropertiesIdentity: LoadTestingCmkIdentity
   EndpointDependency: LoadTestingEndpointDependency
   EndpointDetail: LoadTestingEndpointDetail
   OutboundEnvironmentEndpointCollection: OutboundEnvironmentEndpointListResult
@@ -35,8 +36,9 @@ rename-mapping:
   QuotaBucketRequestPropertiesDimensions: LoadTestingQuotaBucketDimensions
   QuotaResourceList: LoadTestingQuotaListResult
   ResourceState: LoadTestingProvisioningState
-  Type: CustomerManagedKeyIdentityType
+  Type: LoadTestingCmkIdentityType
   EncryptionPropertiesIdentity.resourceId: -|arm-id
+  OutboundEnvironmentEndpoint: LoadTestingOutboundEnvironmentEndpoint
 
 format-by-name-rules:
   'tenantId': 'uuid'

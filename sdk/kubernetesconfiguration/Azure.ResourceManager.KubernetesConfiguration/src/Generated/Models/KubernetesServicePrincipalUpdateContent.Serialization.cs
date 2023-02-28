@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             {
                 if (ClientId != null)
                 {
-                    writer.WritePropertyName("clientId");
+                    writer.WritePropertyName("clientId"u8);
                     writer.WriteStringValue(ClientId.Value);
                 }
                 else
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             {
                 if (TenantId != null)
                 {
-                    writer.WritePropertyName("tenantId");
+                    writer.WritePropertyName("tenantId"u8);
                     writer.WriteStringValue(TenantId.Value);
                 }
                 else
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             {
                 if (ClientSecret != null)
                 {
-                    writer.WritePropertyName("clientSecret");
+                    writer.WritePropertyName("clientSecret"u8);
                     writer.WriteStringValue(ClientSecret);
                 }
                 else
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             {
                 if (ClientCertificate != null)
                 {
-                    writer.WritePropertyName("clientCertificate");
+                    writer.WritePropertyName("clientCertificate"u8);
                     writer.WriteStringValue(ClientCertificate);
                 }
                 else
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             {
                 if (ClientCertificatePassword != null)
                 {
-                    writer.WritePropertyName("clientCertificatePassword");
+                    writer.WritePropertyName("clientCertificatePassword"u8);
                     writer.WriteStringValue(ClientCertificatePassword);
                 }
                 else
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             }
             if (Optional.IsDefined(ClientCertificateSendChain))
             {
-                writer.WritePropertyName("clientCertificateSendChain");
+                writer.WritePropertyName("clientCertificateSendChain"u8);
                 writer.WriteBooleanValue(ClientCertificateSendChain.Value);
             }
             writer.WriteEndObject();

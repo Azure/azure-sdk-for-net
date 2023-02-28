@@ -324,6 +324,7 @@ namespace Azure.Messaging.ServiceBus
         public System.TimeSpan TimeToLive { get { throw null; } }
         public string To { get { throw null; } }
         public string TransactionPartitionKey { get { throw null; } }
+        public static Azure.Messaging.ServiceBus.ServiceBusReceivedMessage FromAmqpMessage(Azure.Core.Amqp.AmqpAnnotatedMessage message, System.BinaryData lockTokenBytes) { throw null; }
         public Azure.Core.Amqp.AmqpAnnotatedMessage GetRawAmqpMessage() { throw null; }
         public override string ToString() { throw null; }
     }

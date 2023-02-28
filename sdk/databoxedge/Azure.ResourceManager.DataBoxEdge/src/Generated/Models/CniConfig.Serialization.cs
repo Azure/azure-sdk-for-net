@@ -20,22 +20,22 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             Optional<string> serviceSubnet = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("version"))
+                if (property.NameEquals("version"u8))
                 {
                     version = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("podSubnet"))
+                if (property.NameEquals("podSubnet"u8))
                 {
                     podSubnet = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("serviceSubnet"))
+                if (property.NameEquals("serviceSubnet"u8))
                 {
                     serviceSubnet = property.Value.GetString();
                     continue;

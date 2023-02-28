@@ -18,29 +18,28 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="targetResourceId"> ARM Id of target vault. </param>
         /// <param name="targetRegion"> Target Region. </param>
         /// <param name="dataMoveLevel"> DataMove Level. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="targetResourceId"/> or <paramref name="targetRegion"/> is null. </exception>
-        public PrepareDataMoveContent(string targetResourceId, string targetRegion, DataMoveLevel dataMoveLevel)
+        /// <exception cref="ArgumentNullException"> <paramref name="targetResourceId"/> is null. </exception>
+        public PrepareDataMoveContent(ResourceIdentifier targetResourceId, AzureLocation targetRegion, DataMoveLevel dataMoveLevel)
         {
             Argument.AssertNotNull(targetResourceId, nameof(targetResourceId));
-            Argument.AssertNotNull(targetRegion, nameof(targetRegion));
 
             TargetResourceId = targetResourceId;
             TargetRegion = targetRegion;
             DataMoveLevel = dataMoveLevel;
-            SourceContainerArmIds = new ChangeTrackingList<string>();
+            SourceContainerArmIds = new ChangeTrackingList<ResourceIdentifier>();
         }
 
         /// <summary> ARM Id of target vault. </summary>
-        public string TargetResourceId { get; }
+        public ResourceIdentifier TargetResourceId { get; }
         /// <summary> Target Region. </summary>
-        public string TargetRegion { get; }
+        public AzureLocation TargetRegion { get; }
         /// <summary> DataMove Level. </summary>
         public DataMoveLevel DataMoveLevel { get; }
         /// <summary>
         /// Source Container ArmIds
         /// This needs to be populated only if DataMoveLevel is set to container
         /// </summary>
-        public IList<string> SourceContainerArmIds { get; }
+        public IList<ResourceIdentifier> SourceContainerArmIds { get; }
         /// <summary> Ignore the artifacts which are already moved. </summary>
         public bool? IgnoreMoved { get; set; }
     }

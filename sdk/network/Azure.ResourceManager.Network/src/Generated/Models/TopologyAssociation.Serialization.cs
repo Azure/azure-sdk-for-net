@@ -19,12 +19,12 @@ namespace Azure.ResourceManager.Network.Models
             Optional<AssociationType> associationType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("resourceId"))
+                if (property.NameEquals("resourceId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Network.Models
                     resourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("associationType"))
+                if (property.NameEquals("associationType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Hci.Models
             Optional<IReadOnlyList<string>> supportedCapabilities = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("clusterName"))
+                if (property.NameEquals("clusterName"u8))
                 {
                     clusterName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("clusterId"))
+                if (property.NameEquals("clusterId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -41,12 +41,12 @@ namespace Azure.ResourceManager.Hci.Models
                     clusterId = property.Value.GetGuid();
                     continue;
                 }
-                if (property.NameEquals("clusterVersion"))
+                if (property.NameEquals("clusterVersion"u8))
                 {
                     clusterVersion = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("nodes"))
+                if (property.NameEquals("nodes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Hci.Models
                     nodes = array;
                     continue;
                 }
-                if (property.NameEquals("lastUpdated"))
+                if (property.NameEquals("lastUpdated"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Hci.Models
                     lastUpdated = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("imdsAttestation"))
+                if (property.NameEquals("imdsAttestation"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Hci.Models
                     imdsAttestation = new ImdsAttestationState(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("diagnosticLevel"))
+                if (property.NameEquals("diagnosticLevel"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <returns> Returns a <see cref="MonitoringMetricConfigurationResource" /> object. </returns>
         public virtual MonitoringMetricConfigurationResource GetMonitoringMetricConfiguration()
         {
-            return new MonitoringMetricConfigurationResource(Client, new ResourceIdentifier(Id.ToString() + "/monitoringConfig/default"));
+            return new MonitoringMetricConfigurationResource(Client, Id.AppendChildResource("monitoringConfig", "default"));
         }
 
         /// <summary>

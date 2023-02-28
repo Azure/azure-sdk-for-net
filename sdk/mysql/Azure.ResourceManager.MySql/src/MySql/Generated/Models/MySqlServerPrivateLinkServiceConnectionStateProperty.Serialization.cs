@@ -19,17 +19,17 @@ namespace Azure.ResourceManager.MySql.Models
             Optional<MySqlPrivateLinkServiceConnectionStateRequiredAction> actionsRequired = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("status"))
+                if (property.NameEquals("status"u8))
                 {
                     status = new MySqlPrivateLinkServiceConnectionStateStatus(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("description"))
+                if (property.NameEquals("description"u8))
                 {
                     description = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("actionsRequired"))
+                if (property.NameEquals("actionsRequired"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="subscriptionId"> Key Vault Subscription Id. </param>
         /// <param name="lastUpdateStatus"></param>
         /// <param name="infrastructureEncryptionState"></param>
-        internal BackupResourceEncryptionConfig(EncryptionAtRestType? encryptionAtRestType, Uri keyUri, string subscriptionId, LastUpdateStatus? lastUpdateStatus, InfrastructureEncryptionState? infrastructureEncryptionState)
+        internal BackupResourceEncryptionConfig(BackupEncryptionAtRestType? encryptionAtRestType, Uri keyUri, string subscriptionId, LastUpdateStatus? lastUpdateStatus, InfrastructureEncryptionState? infrastructureEncryptionState)
         {
             EncryptionAtRestType = encryptionAtRestType;
             KeyUri = keyUri;
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <summary> Encryption At Rest Type. </summary>
-        public EncryptionAtRestType? EncryptionAtRestType { get; set; }
+        public BackupEncryptionAtRestType? EncryptionAtRestType { get; set; }
         /// <summary> Key Vault Key URI. </summary>
         public Uri KeyUri { get; set; }
         /// <summary> Key Vault Subscription Id. </summary>

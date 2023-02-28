@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.NetApp
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Tags))
             {
-                writer.WritePropertyName("tags");
+                writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
                 foreach (var item in Tags)
                 {
@@ -31,29 +31,29 @@ namespace Azure.ResourceManager.NetApp
                 }
                 writer.WriteEndObject();
             }
-            writer.WritePropertyName("location");
+            writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            writer.WritePropertyName("size");
+            writer.WritePropertyName("size"u8);
             writer.WriteNumberValue(Size);
-            writer.WritePropertyName("serviceLevel");
+            writer.WritePropertyName("serviceLevel"u8);
             writer.WriteStringValue(ServiceLevel.ToString());
             if (Optional.IsDefined(QosType))
             {
-                writer.WritePropertyName("qosType");
+                writer.WritePropertyName("qosType"u8);
                 writer.WriteStringValue(QosType.Value.ToString());
             }
             if (Optional.IsDefined(IsCoolAccessEnabled))
             {
-                writer.WritePropertyName("coolAccess");
+                writer.WritePropertyName("coolAccess"u8);
                 writer.WriteBooleanValue(IsCoolAccessEnabled.Value);
             }
             if (Optional.IsDefined(EncryptionType))
             {
                 if (EncryptionType != null)
                 {
-                    writer.WritePropertyName("encryptionType");
+                    writer.WritePropertyName("encryptionType"u8);
                     writer.WriteStringValue(EncryptionType.Value.ToString());
                 }
                 else
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.NetApp
             Optional<CapacityPoolEncryptionType?> encryptionType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("etag"))
+                if (property.NameEquals("etag"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.NetApp
                     etag = new ETag(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("tags"))
+                if (property.NameEquals("tags"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -110,27 +110,27 @@ namespace Azure.ResourceManager.NetApp
                     tags = dictionary;
                     continue;
                 }
-                if (property.NameEquals("location"))
+                if (property.NameEquals("location"u8))
                 {
                     location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.NetApp
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.NetApp
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("poolId"))
+                        if (property0.NameEquals("poolId"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -159,22 +159,22 @@ namespace Azure.ResourceManager.NetApp
                             poolId = property0.Value.GetGuid();
                             continue;
                         }
-                        if (property0.NameEquals("size"))
+                        if (property0.NameEquals("size"u8))
                         {
                             size = property0.Value.GetInt64();
                             continue;
                         }
-                        if (property0.NameEquals("serviceLevel"))
+                        if (property0.NameEquals("serviceLevel"u8))
                         {
                             serviceLevel = new NetAppFileServiceLevel(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("provisioningState"))
+                        if (property0.NameEquals("provisioningState"u8))
                         {
                             provisioningState = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("totalThroughputMibps"))
+                        if (property0.NameEquals("totalThroughputMibps"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.NetApp
                             totalThroughputMibps = property0.Value.GetSingle();
                             continue;
                         }
-                        if (property0.NameEquals("utilizedThroughputMibps"))
+                        if (property0.NameEquals("utilizedThroughputMibps"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.NetApp
                             utilizedThroughputMibps = property0.Value.GetSingle();
                             continue;
                         }
-                        if (property0.NameEquals("qosType"))
+                        if (property0.NameEquals("qosType"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.NetApp
                             qosType = new CapacityPoolQosType(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("coolAccess"))
+                        if (property0.NameEquals("coolAccess"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.NetApp
                             coolAccess = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("encryptionType"))
+                        if (property0.NameEquals("encryptionType"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

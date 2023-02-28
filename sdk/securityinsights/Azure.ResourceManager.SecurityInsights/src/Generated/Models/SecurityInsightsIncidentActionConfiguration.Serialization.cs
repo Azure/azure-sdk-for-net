@@ -18,37 +18,37 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Severity))
             {
-                writer.WritePropertyName("severity");
+                writer.WritePropertyName("severity"u8);
                 writer.WriteStringValue(Severity.Value.ToString());
             }
             if (Optional.IsDefined(Status))
             {
-                writer.WritePropertyName("status");
+                writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
             if (Optional.IsDefined(Classification))
             {
-                writer.WritePropertyName("classification");
+                writer.WritePropertyName("classification"u8);
                 writer.WriteStringValue(Classification.Value.ToString());
             }
             if (Optional.IsDefined(ClassificationReason))
             {
-                writer.WritePropertyName("classificationReason");
+                writer.WritePropertyName("classificationReason"u8);
                 writer.WriteStringValue(ClassificationReason.Value.ToString());
             }
             if (Optional.IsDefined(ClassificationComment))
             {
-                writer.WritePropertyName("classificationComment");
+                writer.WritePropertyName("classificationComment"u8);
                 writer.WriteStringValue(ClassificationComment);
             }
             if (Optional.IsDefined(Owner))
             {
-                writer.WritePropertyName("owner");
+                writer.WritePropertyName("owner"u8);
                 writer.WriteObjectValue(Owner);
             }
             if (Optional.IsCollectionDefined(Labels))
             {
-                writer.WritePropertyName("labels");
+                writer.WritePropertyName("labels"u8);
                 writer.WriteStartArray();
                 foreach (var item in Labels)
                 {
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             Optional<IList<SecurityInsightsIncidentLabel>> labels = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("severity"))
+                if (property.NameEquals("severity"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     severity = new SecurityInsightsIncidentSeverity(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("status"))
+                if (property.NameEquals("status"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     status = new SecurityInsightsIncidentStatus(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("classification"))
+                if (property.NameEquals("classification"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     classification = new SecurityInsightsIncidentClassification(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("classificationReason"))
+                if (property.NameEquals("classificationReason"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -110,12 +110,12 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     classificationReason = new SecurityInsightsIncidentClassificationReason(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("classificationComment"))
+                if (property.NameEquals("classificationComment"u8))
                 {
                     classificationComment = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("owner"))
+                if (property.NameEquals("owner"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     owner = SecurityInsightsIncidentOwnerInfo.DeserializeSecurityInsightsIncidentOwnerInfo(property.Value);
                     continue;
                 }
-                if (property.NameEquals("labels"))
+                if (property.NameEquals("labels"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -17,17 +17,17 @@ namespace Azure.ResourceManager.Dns.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Flags))
             {
-                writer.WritePropertyName("flags");
+                writer.WritePropertyName("flags"u8);
                 writer.WriteNumberValue(Flags.Value);
             }
             if (Optional.IsDefined(Tag))
             {
-                writer.WritePropertyName("tag");
+                writer.WritePropertyName("tag"u8);
                 writer.WriteStringValue(Tag);
             }
             if (Optional.IsDefined(Value))
             {
-                writer.WritePropertyName("value");
+                writer.WritePropertyName("value"u8);
                 writer.WriteStringValue(Value);
             }
             writer.WriteEndObject();
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Dns.Models
             Optional<string> value = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("flags"))
+                if (property.NameEquals("flags"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -50,12 +50,12 @@ namespace Azure.ResourceManager.Dns.Models
                     flags = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("tag"))
+                if (property.NameEquals("tag"u8))
                 {
                     tag = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     value = property.Value.GetString();
                     continue;

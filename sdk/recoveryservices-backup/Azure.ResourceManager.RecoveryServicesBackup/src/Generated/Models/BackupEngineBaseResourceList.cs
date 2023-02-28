@@ -17,20 +17,20 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <summary> Initializes a new instance of BackupEngineBaseResourceList. </summary>
         internal BackupEngineBaseResourceList()
         {
-            Value = new ChangeTrackingList<BackupEngineBaseResourceData>();
+            Value = new ChangeTrackingList<BackupEngineData>();
         }
 
         /// <summary> Initializes a new instance of BackupEngineBaseResourceList. </summary>
         /// <param name="value"> List of resources. </param>
         /// <param name="nextLink"> The uri to fetch the next page of resources. </param>
-        internal BackupEngineBaseResourceList(IReadOnlyList<BackupEngineBaseResourceData> value, string nextLink)
+        internal BackupEngineBaseResourceList(IReadOnlyList<BackupEngineData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> List of resources. </summary>
-        public IReadOnlyList<BackupEngineBaseResourceData> Value { get; }
+        public IReadOnlyList<BackupEngineData> Value { get; }
         /// <summary> The uri to fetch the next page of resources. </summary>
         public string NextLink { get; }
     }

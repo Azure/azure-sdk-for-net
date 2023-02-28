@@ -1,0 +1,74 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://sdk2319.openai.azure.com/openai/deployments/text-davinci-002/completions?api-version=2022-12-01",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "api-key": "***********",
+        "Content-Length": "61",
+        "Content-Type": "application/json",
+        "traceparent": "00-91f381e335caef6ec60652ddae7559e3-2c9fc1631b862efb-00",
+        "User-Agent": "azsdk-net-AI.OpenAI/1.0.0-alpha.20230214.1 (.NET 7.0.2; Microsoft Windows 10.0.22623)",
+        "x-ms-client-request-id": "d93800d680c0988ad981cf6217137822",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "prompt": [
+          "Hello world",
+          "running over the same old ground"
+        ]
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Access-Control-Allow-Origin": "*",
+        "apim-request-id": "f482fe1d-8c62-4742-9f9b-be03fbf2073c",
+        "Cache-Control": "must-revalidate, no-cache",
+        "Content-Type": "application/json",
+        "Date": "Tue, 14 Feb 2023 23:03:23 GMT",
+        "openai-model": "text-davinci-002",
+        "openai-processing-ms": "329.296",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "Transfer-Encoding": "chunked",
+        "x-accel-buffering": "no",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "d93800d680c0988ad981cf6217137822",
+        "x-ms-region": "West Europe",
+        "X-Request-ID": "d79595fd-5f3b-413c-b3a3-3ba5c4c5ea25"
+      },
+      "ResponseBody": {
+        "id": "cmpl-6jycV2Es4owEGF0L7J8zJELYum61f",
+        "object": "text_completion",
+        "created": 1676415803,
+        "model": "text-davinci-002",
+        "choices": [
+          {
+            "text": "!\n\n\u6B22\u8FCE\uFF0C\u4E16\u754C",
+            "index": 0,
+            "logprobs": null,
+            "finish_reason": "length"
+          },
+          {
+            "text": ", I know, but I\u0027ll still - it looks as though we\u0027re really",
+            "index": 1,
+            "logprobs": null,
+            "finish_reason": "length"
+          }
+        ],
+        "usage": {
+          "prompt_tokens": 8,
+          "completion_tokens": 31,
+          "total_tokens": 39
+        }
+      }
+    }
+  ],
+  "Variables": {
+    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
+    "OPENAI_DEPLOYMENT_ID": "text-davinci-002",
+    "OPENAI_EMBEDDINGS_DEPLOYMENT_ID": "text-similarity-davinci-001",
+    "OPENAI_ENDPOINT": "https://sdk2319.openai.azure.com/",
+    "RandomSeed": "2044677211",
+    "SUBSCRIPTION_ID": "e72e5254-f265-4e95-9bd2-9ee8e7329051"
+  }
+}

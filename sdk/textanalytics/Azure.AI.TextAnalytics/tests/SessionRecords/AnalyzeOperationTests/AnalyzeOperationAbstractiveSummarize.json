@@ -1,0 +1,161 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://javatextanalyticslivetestresources.cognitiveservices.azure.com/language/analyze-text/jobs?api-version=2022-10-01-preview",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Content-Length": "619",
+        "Content-Type": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "traceparent": "00-8b826840e9d8fb33eb07c68390cd085f-ea749f6d615a38a1-00",
+        "User-Agent": "azsdk-net-AI.TextAnalytics/5.3.0-alpha.20221106.1 (.NET 6.0.10; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "97f936e58c60d0070247acc29b19ffe5",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "displayName": "AnalyzeOperationAbstractiveSummarize",
+        "analysisInput": {
+          "documents": [
+            {
+              "id": "0",
+              "text": "Extractive summarization extracts sentences that collectively represent the most important or relevant information within the original content. Abstractive summarization generates a summary with concise, coherent sentences or words which are not simply extract sentences from the original document. These features are designed to shorten content that could be considered too long to read.",
+              "language": "en"
+            }
+          ]
+        },
+        "tasks": [
+          {
+            "parameters": {
+              "sentenceCount": 2,
+              "stringIndexType": "Utf16CodeUnit"
+            },
+            "kind": "AbstractiveSummarization"
+          }
+        ]
+      },
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "apim-request-id": "c6a45d3b-7154-446a-994b-52d2f9c71882",
+        "Content-Length": "0",
+        "Date": "Mon, 07 Nov 2022 06:09:52 GMT",
+        "operation-location": "https://javatextanalyticslivetestresources.cognitiveservices.azure.com/language/analyze-text/jobs/98fe2eea-d4a6-488b-b7af-7f65e85f647e?api-version=2022-10-01-preview",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "305",
+        "x-ms-region": "East US"
+      },
+      "ResponseBody": null
+    },
+    {
+      "RequestUri": "https://javatextanalyticslivetestresources.cognitiveservices.azure.com/language/analyze-text/jobs/98fe2eea-d4a6-488b-b7af-7f65e85f647e?api-version=2022-10-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.TextAnalytics/5.3.0-alpha.20221106.1 (.NET 6.0.10; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "3e3968363c25d268c30fbd5e825a7a51",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "4870549c-edef-4c35-8f6d-f3339c4570a2",
+        "Content-Length": "330",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 07 Nov 2022 06:09:52 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "10",
+        "x-ms-region": "East US"
+      },
+      "ResponseBody": {
+        "jobId": "98fe2eea-d4a6-488b-b7af-7f65e85f647e",
+        "lastUpdateDateTime": "2022-11-07T06:09:52Z",
+        "createdDateTime": "2022-11-07T06:09:52Z",
+        "expirationDateTime": "2022-11-08T06:09:52Z",
+        "status": "notStarted",
+        "errors": [],
+        "displayName": "AnalyzeOperationAbstractiveSummarize",
+        "tasks": {
+          "completed": 0,
+          "failed": 0,
+          "inProgress": 1,
+          "total": 1,
+          "items": []
+        }
+      }
+    },
+    {
+      "RequestUri": "https://javatextanalyticslivetestresources.cognitiveservices.azure.com/language/analyze-text/jobs/98fe2eea-d4a6-488b-b7af-7f65e85f647e?api-version=2022-10-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.TextAnalytics/5.3.0-alpha.20221106.1 (.NET 6.0.10; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "960092bda8a389f1f9660a9ae66bcd70",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "60d26450-f04b-445e-be57-09cdcdaa5a2e",
+        "Content-Length": "831",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 07 Nov 2022 06:09:53 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "133",
+        "x-ms-region": "East US"
+      },
+      "ResponseBody": {
+        "jobId": "98fe2eea-d4a6-488b-b7af-7f65e85f647e",
+        "lastUpdateDateTime": "2022-11-07T06:09:53Z",
+        "createdDateTime": "2022-11-07T06:09:52Z",
+        "expirationDateTime": "2022-11-08T06:09:52Z",
+        "status": "succeeded",
+        "errors": [],
+        "displayName": "AnalyzeOperationAbstractiveSummarize",
+        "tasks": {
+          "completed": 1,
+          "failed": 0,
+          "inProgress": 0,
+          "total": 1,
+          "items": [
+            {
+              "kind": "AbstractiveSummarizationLROResults",
+              "lastUpdateDateTime": "2022-11-07T06:09:53.9745428Z",
+              "status": "succeeded",
+              "results": {
+                "documents": [
+                  {
+                    "summaries": [
+                      {
+                        "text": "Extractive summarization extracts sentences that collectively represent the most important or relevant information within the original content. abstractive summarization generates a summary with concise, coherent sentences or words.",
+                        "contexts": [
+                          {
+                            "offset": 0,
+                            "length": 388
+                          }
+                        ]
+                      }
+                    ],
+                    "id": "0",
+                    "warnings": []
+                  }
+                ],
+                "errors": [],
+                "modelVersion": "latest"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "Variables": {
+    "RandomSeed": "520717074",
+    "TEXT_ANALYTICS_API_KEY": "Sanitized",
+    "TEXT_ANALYTICS_ENDPOINT": "https://javatextanalyticslivetestresources.cognitiveservices.azure.com/"
+  }
+}

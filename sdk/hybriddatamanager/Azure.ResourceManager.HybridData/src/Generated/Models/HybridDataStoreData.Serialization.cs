@@ -19,29 +19,29 @@ namespace Azure.ResourceManager.HybridData
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(RepositoryId))
             {
-                writer.WritePropertyName("repositoryId");
+                writer.WritePropertyName("repositoryId"u8);
                 writer.WriteStringValue(RepositoryId);
             }
-            writer.WritePropertyName("state");
+            writer.WritePropertyName("state"u8);
             writer.WriteStringValue(State.ToSerialString());
             if (Optional.IsDefined(ExtendedProperties))
             {
-                writer.WritePropertyName("extendedProperties");
+                writer.WritePropertyName("extendedProperties"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(ExtendedProperties);
 #else
                 JsonSerializer.Serialize(writer, JsonDocument.Parse(ExtendedProperties.ToString()).RootElement);
 #endif
             }
-            writer.WritePropertyName("dataStoreTypeId");
+            writer.WritePropertyName("dataStoreTypeId"u8);
             writer.WriteStringValue(DataStoreTypeId);
             if (Optional.IsCollectionDefined(CustomerSecrets))
             {
-                writer.WritePropertyName("customerSecrets");
+                writer.WritePropertyName("customerSecrets"u8);
                 writer.WriteStartArray();
                 foreach (var item in CustomerSecrets)
                 {
@@ -66,22 +66,22 @@ namespace Azure.ResourceManager.HybridData
             Optional<IList<HybridDataCustomerSecret>> customerSecrets = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.HybridData
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.HybridData
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("repositoryId"))
+                        if (property0.NameEquals("repositoryId"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -110,12 +110,12 @@ namespace Azure.ResourceManager.HybridData
                             repositoryId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("state"))
+                        if (property0.NameEquals("state"u8))
                         {
                             state = property0.Value.GetString().ToHybridDataState();
                             continue;
                         }
-                        if (property0.NameEquals("extendedProperties"))
+                        if (property0.NameEquals("extendedProperties"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -125,12 +125,12 @@ namespace Azure.ResourceManager.HybridData
                             extendedProperties = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
-                        if (property0.NameEquals("dataStoreTypeId"))
+                        if (property0.NameEquals("dataStoreTypeId"u8))
                         {
                             dataStoreTypeId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("customerSecrets"))
+                        if (property0.NameEquals("customerSecrets"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

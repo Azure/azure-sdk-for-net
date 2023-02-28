@@ -18,77 +18,77 @@ namespace Azure.IoT.Hub.Service.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(JobId))
             {
-                writer.WritePropertyName("jobId");
+                writer.WritePropertyName("jobId"u8);
                 writer.WriteStringValue(JobId);
             }
             if (Optional.IsDefined(StartTimeUtc))
             {
-                writer.WritePropertyName("startTimeUtc");
+                writer.WritePropertyName("startTimeUtc"u8);
                 writer.WriteStringValue(StartTimeUtc.Value, "O");
             }
             if (Optional.IsDefined(EndTimeUtc))
             {
-                writer.WritePropertyName("endTimeUtc");
+                writer.WritePropertyName("endTimeUtc"u8);
                 writer.WriteStringValue(EndTimeUtc.Value, "O");
             }
             if (Optional.IsDefined(Type))
             {
-                writer.WritePropertyName("type");
+                writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(Type.Value.ToString());
             }
             if (Optional.IsDefined(Status))
             {
-                writer.WritePropertyName("status");
+                writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
             if (Optional.IsDefined(Progress))
             {
-                writer.WritePropertyName("progress");
+                writer.WritePropertyName("progress"u8);
                 writer.WriteNumberValue(Progress.Value);
             }
             if (Optional.IsDefined(InputBlobContainerUri))
             {
-                writer.WritePropertyName("inputBlobContainerUri");
+                writer.WritePropertyName("inputBlobContainerUri"u8);
                 writer.WriteStringValue(InputBlobContainerUri);
             }
             if (Optional.IsDefined(InputBlobName))
             {
-                writer.WritePropertyName("inputBlobName");
+                writer.WritePropertyName("inputBlobName"u8);
                 writer.WriteStringValue(InputBlobName);
             }
             if (Optional.IsDefined(OutputBlobContainerUri))
             {
-                writer.WritePropertyName("outputBlobContainerUri");
+                writer.WritePropertyName("outputBlobContainerUri"u8);
                 writer.WriteStringValue(OutputBlobContainerUri);
             }
             if (Optional.IsDefined(OutputBlobName))
             {
-                writer.WritePropertyName("outputBlobName");
+                writer.WritePropertyName("outputBlobName"u8);
                 writer.WriteStringValue(OutputBlobName);
             }
             if (Optional.IsDefined(ExcludeKeysInExport))
             {
-                writer.WritePropertyName("excludeKeysInExport");
+                writer.WritePropertyName("excludeKeysInExport"u8);
                 writer.WriteBooleanValue(ExcludeKeysInExport.Value);
             }
             if (Optional.IsDefined(StorageAuthenticationType))
             {
-                writer.WritePropertyName("storageAuthenticationType");
+                writer.WritePropertyName("storageAuthenticationType"u8);
                 writer.WriteStringValue(StorageAuthenticationType.Value.ToString());
             }
             if (Optional.IsDefined(FailureReason))
             {
-                writer.WritePropertyName("failureReason");
+                writer.WritePropertyName("failureReason"u8);
                 writer.WriteStringValue(FailureReason);
             }
             if (Optional.IsDefined(IncludeConfigurations))
             {
-                writer.WritePropertyName("includeConfigurations");
+                writer.WritePropertyName("includeConfigurations"u8);
                 writer.WriteBooleanValue(IncludeConfigurations.Value);
             }
             if (Optional.IsDefined(ConfigurationsBlobName))
             {
-                writer.WritePropertyName("configurationsBlobName");
+                writer.WritePropertyName("configurationsBlobName"u8);
                 writer.WriteStringValue(ConfigurationsBlobName);
             }
             writer.WriteEndObject();
@@ -113,12 +113,12 @@ namespace Azure.IoT.Hub.Service.Models
             Optional<string> configurationsBlobName = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("jobId"))
+                if (property.NameEquals("jobId"u8))
                 {
                     jobId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("startTimeUtc"))
+                if (property.NameEquals("startTimeUtc"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -128,7 +128,7 @@ namespace Azure.IoT.Hub.Service.Models
                     startTimeUtc = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("endTimeUtc"))
+                if (property.NameEquals("endTimeUtc"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -138,7 +138,7 @@ namespace Azure.IoT.Hub.Service.Models
                     endTimeUtc = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -148,7 +148,7 @@ namespace Azure.IoT.Hub.Service.Models
                     type = new JobPropertiesType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("status"))
+                if (property.NameEquals("status"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -158,7 +158,7 @@ namespace Azure.IoT.Hub.Service.Models
                     status = new JobPropertiesStatus(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("progress"))
+                if (property.NameEquals("progress"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -168,27 +168,27 @@ namespace Azure.IoT.Hub.Service.Models
                     progress = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("inputBlobContainerUri"))
+                if (property.NameEquals("inputBlobContainerUri"u8))
                 {
                     inputBlobContainerUri = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("inputBlobName"))
+                if (property.NameEquals("inputBlobName"u8))
                 {
                     inputBlobName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("outputBlobContainerUri"))
+                if (property.NameEquals("outputBlobContainerUri"u8))
                 {
                     outputBlobContainerUri = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("outputBlobName"))
+                if (property.NameEquals("outputBlobName"u8))
                 {
                     outputBlobName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("excludeKeysInExport"))
+                if (property.NameEquals("excludeKeysInExport"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -198,7 +198,7 @@ namespace Azure.IoT.Hub.Service.Models
                     excludeKeysInExport = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("storageAuthenticationType"))
+                if (property.NameEquals("storageAuthenticationType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -208,12 +208,12 @@ namespace Azure.IoT.Hub.Service.Models
                     storageAuthenticationType = new JobPropertiesStorageAuthenticationType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("failureReason"))
+                if (property.NameEquals("failureReason"u8))
                 {
                     failureReason = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("includeConfigurations"))
+                if (property.NameEquals("includeConfigurations"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -223,7 +223,7 @@ namespace Azure.IoT.Hub.Service.Models
                     includeConfigurations = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("configurationsBlobName"))
+                if (property.NameEquals("configurationsBlobName"u8))
                 {
                     configurationsBlobName = property.Value.GetString();
                     continue;

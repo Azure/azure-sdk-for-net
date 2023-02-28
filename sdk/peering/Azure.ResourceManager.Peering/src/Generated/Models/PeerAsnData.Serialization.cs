@@ -18,16 +18,16 @@ namespace Azure.ResourceManager.Peering
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(PeerAsn))
             {
-                writer.WritePropertyName("peerAsn");
+                writer.WritePropertyName("peerAsn"u8);
                 writer.WriteNumberValue(PeerAsn.Value);
             }
             if (Optional.IsCollectionDefined(PeerContactDetail))
             {
-                writer.WritePropertyName("peerContactDetail");
+                writer.WritePropertyName("peerContactDetail"u8);
                 writer.WriteStartArray();
                 foreach (var item in PeerContactDetail)
                 {
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Peering
             }
             if (Optional.IsDefined(PeerName))
             {
-                writer.WritePropertyName("peerName");
+                writer.WritePropertyName("peerName"u8);
                 writer.WriteStringValue(PeerName);
             }
             writer.WriteEndObject();
@@ -57,22 +57,22 @@ namespace Azure.ResourceManager.Peering
             Optional<string> errorMessage = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Peering
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Peering
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("peerAsn"))
+                        if (property0.NameEquals("peerAsn"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Peering
                             peerAsn = property0.Value.GetInt32();
                             continue;
                         }
-                        if (property0.NameEquals("peerContactDetail"))
+                        if (property0.NameEquals("peerContactDetail"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -116,12 +116,12 @@ namespace Azure.ResourceManager.Peering
                             peerContactDetail = array;
                             continue;
                         }
-                        if (property0.NameEquals("peerName"))
+                        if (property0.NameEquals("peerName"u8))
                         {
                             peerName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("validationState"))
+                        if (property0.NameEquals("validationState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Peering
                             validationState = new PeerAsnValidationState(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("errorMessage"))
+                        if (property0.NameEquals("errorMessage"u8))
                         {
                             errorMessage = property0.Value.GetString();
                             continue;

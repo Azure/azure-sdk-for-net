@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.ContainerService.Models
 {
     /// <summary> AzureDisk CSI Driver settings for the storage profile. </summary>
-    internal partial class ManagedClusterStorageProfileDiskCsiDriver
+    public partial class ManagedClusterStorageProfileDiskCsiDriver
     {
         /// <summary> Initializes a new instance of ManagedClusterStorageProfileDiskCsiDriver. </summary>
         public ManagedClusterStorageProfileDiskCsiDriver()
@@ -17,12 +17,16 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> Initializes a new instance of ManagedClusterStorageProfileDiskCsiDriver. </summary>
         /// <param name="isEnabled"> Whether to enable AzureDisk CSI Driver. The default value is true. </param>
-        internal ManagedClusterStorageProfileDiskCsiDriver(bool? isEnabled)
+        /// <param name="version"> The version of AzureDisk CSI Driver. The default value is v1. </param>
+        internal ManagedClusterStorageProfileDiskCsiDriver(bool? isEnabled, string version)
         {
             IsEnabled = isEnabled;
+            Version = version;
         }
 
         /// <summary> Whether to enable AzureDisk CSI Driver. The default value is true. </summary>
         public bool? IsEnabled { get; set; }
+        /// <summary> The version of AzureDisk CSI Driver. The default value is v1. </summary>
+        public string Version { get; set; }
     }
 }

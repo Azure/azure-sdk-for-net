@@ -21,12 +21,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Identity))
             {
-                writer.WritePropertyName("identity");
+                writer.WritePropertyName("identity"u8);
                 writer.WriteObjectValue(Identity);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
-                writer.WritePropertyName("tags");
+                writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
                 foreach (var item in Tags)
                 {
@@ -35,38 +35,38 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 writer.WriteEndObject();
             }
-            writer.WritePropertyName("location");
+            writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(DefaultDataLakeStorage))
             {
-                writer.WritePropertyName("defaultDataLakeStorage");
+                writer.WritePropertyName("defaultDataLakeStorage"u8);
                 writer.WriteObjectValue(DefaultDataLakeStorage);
             }
             if (Optional.IsDefined(SqlAdministratorLoginPassword))
             {
-                writer.WritePropertyName("sqlAdministratorLoginPassword");
+                writer.WritePropertyName("sqlAdministratorLoginPassword"u8);
                 writer.WriteStringValue(SqlAdministratorLoginPassword);
             }
             if (Optional.IsDefined(ManagedResourceGroupName))
             {
-                writer.WritePropertyName("managedResourceGroupName");
+                writer.WritePropertyName("managedResourceGroupName"u8);
                 writer.WriteStringValue(ManagedResourceGroupName);
             }
             if (Optional.IsDefined(SqlAdministratorLogin))
             {
-                writer.WritePropertyName("sqlAdministratorLogin");
+                writer.WritePropertyName("sqlAdministratorLogin"u8);
                 writer.WriteStringValue(SqlAdministratorLogin);
             }
             if (Optional.IsDefined(VirtualNetworkProfile))
             {
-                writer.WritePropertyName("virtualNetworkProfile");
+                writer.WritePropertyName("virtualNetworkProfile"u8);
                 writer.WriteObjectValue(VirtualNetworkProfile);
             }
             if (Optional.IsCollectionDefined(ConnectivityEndpoints))
             {
-                writer.WritePropertyName("connectivityEndpoints");
+                writer.WritePropertyName("connectivityEndpoints"u8);
                 writer.WriteStartObject();
                 foreach (var item in ConnectivityEndpoints)
                 {
@@ -77,12 +77,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
             if (Optional.IsDefined(ManagedVirtualNetwork))
             {
-                writer.WritePropertyName("managedVirtualNetwork");
+                writer.WritePropertyName("managedVirtualNetwork"u8);
                 writer.WriteStringValue(ManagedVirtualNetwork);
             }
             if (Optional.IsCollectionDefined(PrivateEndpointConnections))
             {
-                writer.WritePropertyName("privateEndpointConnections");
+                writer.WritePropertyName("privateEndpointConnections"u8);
                 writer.WriteStartArray();
                 foreach (var item in PrivateEndpointConnections)
                 {
@@ -92,22 +92,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
             if (Optional.IsDefined(Encryption))
             {
-                writer.WritePropertyName("encryption");
+                writer.WritePropertyName("encryption"u8);
                 writer.WriteObjectValue(Encryption);
             }
             if (Optional.IsDefined(ManagedVirtualNetworkSettings))
             {
-                writer.WritePropertyName("managedVirtualNetworkSettings");
+                writer.WritePropertyName("managedVirtualNetworkSettings"u8);
                 writer.WriteObjectValue(ManagedVirtualNetworkSettings);
             }
             if (Optional.IsDefined(WorkspaceRepositoryConfiguration))
             {
-                writer.WritePropertyName("workspaceRepositoryConfiguration");
+                writer.WritePropertyName("workspaceRepositoryConfiguration"u8);
                 writer.WriteObjectValue(WorkspaceRepositoryConfiguration);
             }
             if (Optional.IsDefined(PurviewConfiguration))
             {
-                writer.WritePropertyName("purviewConfiguration");
+                writer.WritePropertyName("purviewConfiguration"u8);
                 writer.WriteObjectValue(PurviewConfiguration);
             }
             writer.WriteEndObject();
@@ -140,7 +140,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Optional<string> adlaResourceId = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("identity"))
+                if (property.NameEquals("identity"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -150,7 +150,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     identity = ManagedIdentity.DeserializeManagedIdentity(property.Value);
                     continue;
                 }
-                if (property.NameEquals("tags"))
+                if (property.NameEquals("tags"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -165,27 +165,27 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     tags = dictionary;
                     continue;
                 }
-                if (property.NameEquals("location"))
+                if (property.NameEquals("location"u8))
                 {
                     location = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -194,7 +194,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("defaultDataLakeStorage"))
+                        if (property0.NameEquals("defaultDataLakeStorage"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -204,27 +204,27 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                             defaultDataLakeStorage = DataLakeStorageAccountDetails.DeserializeDataLakeStorageAccountDetails(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("sqlAdministratorLoginPassword"))
+                        if (property0.NameEquals("sqlAdministratorLoginPassword"u8))
                         {
                             sqlAdministratorLoginPassword = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("managedResourceGroupName"))
+                        if (property0.NameEquals("managedResourceGroupName"u8))
                         {
                             managedResourceGroupName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("provisioningState"))
+                        if (property0.NameEquals("provisioningState"u8))
                         {
                             provisioningState = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("sqlAdministratorLogin"))
+                        if (property0.NameEquals("sqlAdministratorLogin"u8))
                         {
                             sqlAdministratorLogin = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("virtualNetworkProfile"))
+                        if (property0.NameEquals("virtualNetworkProfile"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -234,7 +234,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                             virtualNetworkProfile = VirtualNetworkProfile.DeserializeVirtualNetworkProfile(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("connectivityEndpoints"))
+                        if (property0.NameEquals("connectivityEndpoints"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -249,12 +249,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                             connectivityEndpoints = dictionary;
                             continue;
                         }
-                        if (property0.NameEquals("managedVirtualNetwork"))
+                        if (property0.NameEquals("managedVirtualNetwork"u8))
                         {
                             managedVirtualNetwork = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("privateEndpointConnections"))
+                        if (property0.NameEquals("privateEndpointConnections"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -269,7 +269,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                             privateEndpointConnections = array;
                             continue;
                         }
-                        if (property0.NameEquals("encryption"))
+                        if (property0.NameEquals("encryption"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -279,7 +279,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                             encryption = EncryptionDetails.DeserializeEncryptionDetails(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("workspaceUID"))
+                        if (property0.NameEquals("workspaceUID"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -289,7 +289,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                             workspaceUID = property0.Value.GetGuid();
                             continue;
                         }
-                        if (property0.NameEquals("extraProperties"))
+                        if (property0.NameEquals("extraProperties"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -304,7 +304,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                             extraProperties = dictionary;
                             continue;
                         }
-                        if (property0.NameEquals("managedVirtualNetworkSettings"))
+                        if (property0.NameEquals("managedVirtualNetworkSettings"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -314,7 +314,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                             managedVirtualNetworkSettings = ManagedVirtualNetworkSettings.DeserializeManagedVirtualNetworkSettings(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("workspaceRepositoryConfiguration"))
+                        if (property0.NameEquals("workspaceRepositoryConfiguration"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -324,7 +324,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                             workspaceRepositoryConfiguration = WorkspaceRepositoryConfiguration.DeserializeWorkspaceRepositoryConfiguration(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("purviewConfiguration"))
+                        if (property0.NameEquals("purviewConfiguration"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -334,7 +334,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                             purviewConfiguration = PurviewConfiguration.DeserializePurviewConfiguration(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("adlaResourceId"))
+                        if (property0.NameEquals("adlaResourceId"u8))
                         {
                             adlaResourceId = property0.Value.GetString();
                             continue;

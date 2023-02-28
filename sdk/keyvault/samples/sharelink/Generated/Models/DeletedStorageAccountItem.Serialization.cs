@@ -25,12 +25,12 @@ namespace Azure.Security.KeyVault.Storage.Models
             Optional<IReadOnlyDictionary<string, string>> tags = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("recoveryId"))
+                if (property.NameEquals("recoveryId"u8))
                 {
                     recoveryId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("scheduledPurgeDate"))
+                if (property.NameEquals("scheduledPurgeDate"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -40,7 +40,7 @@ namespace Azure.Security.KeyVault.Storage.Models
                     scheduledPurgeDate = property.Value.GetDateTimeOffset("U");
                     continue;
                 }
-                if (property.NameEquals("deletedDate"))
+                if (property.NameEquals("deletedDate"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -50,17 +50,17 @@ namespace Azure.Security.KeyVault.Storage.Models
                     deletedDate = property.Value.GetDateTimeOffset("U");
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("resourceId"))
+                if (property.NameEquals("resourceId"u8))
                 {
                     resourceId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("attributes"))
+                if (property.NameEquals("attributes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -70,7 +70,7 @@ namespace Azure.Security.KeyVault.Storage.Models
                     attributes = StorageAccountAttributes.DeserializeStorageAccountAttributes(property.Value);
                     continue;
                 }
-                if (property.NameEquals("tags"))
+                if (property.NameEquals("tags"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

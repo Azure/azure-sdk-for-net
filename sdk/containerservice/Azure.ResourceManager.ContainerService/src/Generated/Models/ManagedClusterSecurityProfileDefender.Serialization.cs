@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.ContainerService.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(LogAnalyticsWorkspaceResourceId))
             {
-                writer.WritePropertyName("logAnalyticsWorkspaceResourceId");
+                writer.WritePropertyName("logAnalyticsWorkspaceResourceId"u8);
                 writer.WriteStringValue(LogAnalyticsWorkspaceResourceId);
             }
             if (Optional.IsDefined(SecurityMonitoring))
             {
-                writer.WritePropertyName("securityMonitoring");
+                writer.WritePropertyName("securityMonitoring"u8);
                 writer.WriteObjectValue(SecurityMonitoring);
             }
             writer.WriteEndObject();
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             Optional<ManagedClusterSecurityProfileDefenderSecurityMonitoring> securityMonitoring = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("logAnalyticsWorkspaceResourceId"))
+                if (property.NameEquals("logAnalyticsWorkspaceResourceId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     logAnalyticsWorkspaceResourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("securityMonitoring"))
+                if (property.NameEquals("securityMonitoring"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

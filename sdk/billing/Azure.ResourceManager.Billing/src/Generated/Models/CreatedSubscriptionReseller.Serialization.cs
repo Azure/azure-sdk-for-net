@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.Billing.Models
             Optional<string> description = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("resellerId"))
+                if (property.NameEquals("resellerId"u8))
                 {
                     resellerId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("description"))
+                if (property.NameEquals("description"u8))
                 {
                     description = property.Value.GetString();
                     continue;

@@ -17,10 +17,10 @@ namespace Azure.ResourceManager.AppPlatform.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(CustomPersistentDiskProperties))
             {
-                writer.WritePropertyName("customPersistentDiskProperties");
+                writer.WritePropertyName("customPersistentDiskProperties"u8);
                 writer.WriteObjectValue(CustomPersistentDiskProperties);
             }
-            writer.WritePropertyName("storageId");
+            writer.WritePropertyName("storageId"u8);
             writer.WriteStringValue(StorageId);
             writer.WriteEndObject();
         }
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             string storageId = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("customPersistentDiskProperties"))
+                if (property.NameEquals("customPersistentDiskProperties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     customPersistentDiskProperties = AppCustomPersistentDiskProperties.DeserializeAppCustomPersistentDiskProperties(property.Value);
                     continue;
                 }
-                if (property.NameEquals("storageId"))
+                if (property.NameEquals("storageId"u8))
                 {
                     storageId = property.Value.GetString();
                     continue;

@@ -22,22 +22,22 @@ namespace Azure.AI.AnomalyDetector
             Optional<ModelInfo> modelInfo = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("modelId"))
+                if (property.NameEquals("modelId"u8))
                 {
                     modelId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("createdTime"))
+                if (property.NameEquals("createdTime"u8))
                 {
                     createdTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("lastUpdatedTime"))
+                if (property.NameEquals("lastUpdatedTime"u8))
                 {
                     lastUpdatedTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("modelInfo"))
+                if (property.NameEquals("modelInfo"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

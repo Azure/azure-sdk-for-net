@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.TrafficManager.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(ResourceId))
             {
-                writer.WritePropertyName("resourceId");
+                writer.WritePropertyName("resourceId"u8);
                 writer.WriteStringValue(ResourceId);
             }
             if (Optional.IsDefined(EndpointId))
             {
-                writer.WritePropertyName("endpointId");
+                writer.WritePropertyName("endpointId"u8);
                 writer.WriteNumberValue(EndpointId.Value);
             }
             writer.WriteEndObject();
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.TrafficManager.Models
             Optional<int> endpointId = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("resourceId"))
+                if (property.NameEquals("resourceId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.TrafficManager.Models
                     resourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("endpointId"))
+                if (property.NameEquals("endpointId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

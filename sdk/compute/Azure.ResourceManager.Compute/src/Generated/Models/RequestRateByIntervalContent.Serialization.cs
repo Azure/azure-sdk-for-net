@@ -15,37 +15,37 @@ namespace Azure.ResourceManager.Compute.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("intervalLength");
+            writer.WritePropertyName("intervalLength"u8);
             writer.WriteStringValue(IntervalLength.ToSerialString());
-            writer.WritePropertyName("blobContainerSasUri");
+            writer.WritePropertyName("blobContainerSasUri"u8);
             writer.WriteStringValue(BlobContainerSasUri.AbsoluteUri);
-            writer.WritePropertyName("fromTime");
+            writer.WritePropertyName("fromTime"u8);
             writer.WriteStringValue(FromTime, "O");
-            writer.WritePropertyName("toTime");
+            writer.WritePropertyName("toTime"u8);
             writer.WriteStringValue(ToTime, "O");
             if (Optional.IsDefined(GroupByThrottlePolicy))
             {
-                writer.WritePropertyName("groupByThrottlePolicy");
+                writer.WritePropertyName("groupByThrottlePolicy"u8);
                 writer.WriteBooleanValue(GroupByThrottlePolicy.Value);
             }
             if (Optional.IsDefined(GroupByOperationName))
             {
-                writer.WritePropertyName("groupByOperationName");
+                writer.WritePropertyName("groupByOperationName"u8);
                 writer.WriteBooleanValue(GroupByOperationName.Value);
             }
             if (Optional.IsDefined(GroupByResourceName))
             {
-                writer.WritePropertyName("groupByResourceName");
+                writer.WritePropertyName("groupByResourceName"u8);
                 writer.WriteBooleanValue(GroupByResourceName.Value);
             }
             if (Optional.IsDefined(GroupByClientApplicationId))
             {
-                writer.WritePropertyName("groupByClientApplicationId");
+                writer.WritePropertyName("groupByClientApplicationId"u8);
                 writer.WriteBooleanValue(GroupByClientApplicationId.Value);
             }
             if (Optional.IsDefined(GroupByUserAgent))
             {
-                writer.WritePropertyName("groupByUserAgent");
+                writer.WritePropertyName("groupByUserAgent"u8);
                 writer.WriteBooleanValue(GroupByUserAgent.Value);
             }
             writer.WriteEndObject();

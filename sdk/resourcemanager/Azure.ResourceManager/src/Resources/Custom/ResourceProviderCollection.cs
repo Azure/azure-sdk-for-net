@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Resources
 
         private static Dictionary<string, string> GetVersionsFromResult(ResourceProviderResource results)
         {
-            Dictionary<string, string> resourceVersions = new Dictionary<string, string>();
+            Dictionary<string, string> resourceVersions = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
             foreach (var type in results.Data.ResourceTypes)
             {
                 if (type.ApiVersions.Count == 0)
@@ -93,6 +93,54 @@ namespace Azure.ResourceManager.Resources
                 resourceVersions[type.ResourceType] = type.ApiVersions[0];
             }
             return resourceVersions;
+        }
+
+        /// <summary>
+        /// Gets all resource providers for a subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Providers_List</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="top"> [This parameter is no longer supported.] The number of results to return. </param>
+        /// <param name="expand"> The properties to include in the results. For example, use &amp;$expand=metadata in the query string to retrieve resource provider metadata. To include property aliases in response, use $expand=resourceTypes/aliases. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="ResourceProviderResource" /> that may take multiple service requests to iterate over. </returns>
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        [System.ObsoleteAttribute("This method is obsolete as the `top` parameter is not supported by service and will be removed in a future release.", false)]
+        public virtual AsyncPageable<ResourceProviderResource> GetAllAsync(int? top, string expand, CancellationToken cancellationToken = default)
+        {
+            return GetAllAsync(expand, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets all resource providers for a subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Providers_List</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="top"> [This parameter is no longer supported.] The number of results to return. </param>
+        /// <param name="expand"> The properties to include in the results. For example, use &amp;$expand=metadata in the query string to retrieve resource provider metadata. To include property aliases in response, use $expand=resourceTypes/aliases. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="ResourceProviderResource" /> that may take multiple service requests to iterate over. </returns>
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        [System.ObsoleteAttribute("This method is obsolete as the `top` parameter is not supported by service and will be removed in a future release.", false)]
+        public virtual Pageable<ResourceProviderResource> GetAll(int? top, string expand, CancellationToken cancellationToken = default)
+        {
+            return GetAll(expand, cancellationToken);
         }
     }
 }

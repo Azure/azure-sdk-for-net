@@ -8,6 +8,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Automanage;
 
 namespace Azure.ResourceManager.Automanage.Models
 {
@@ -15,20 +16,20 @@ namespace Azure.ResourceManager.Automanage.Models
     {
         internal static ReportList DeserializeReportList(JsonElement element)
         {
-            Optional<IReadOnlyList<Report>> value = default;
+            Optional<IReadOnlyList<AutomanageConfigurationProfileAssignmentReportData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<Report> array = new List<Report>();
+                    List<AutomanageConfigurationProfileAssignmentReportData> array = new List<AutomanageConfigurationProfileAssignmentReportData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Report.DeserializeReport(item));
+                        array.Add(AutomanageConfigurationProfileAssignmentReportData.DeserializeAutomanageConfigurationProfileAssignmentReportData(item));
                     }
                     value = array;
                     continue;

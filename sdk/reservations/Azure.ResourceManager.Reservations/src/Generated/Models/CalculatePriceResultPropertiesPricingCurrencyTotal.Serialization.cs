@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.Reservations.Models
             Optional<float> amount = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("currencyCode"))
+                if (property.NameEquals("currencyCode"u8))
                 {
                     currencyCode = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("amount"))
+                if (property.NameEquals("amount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

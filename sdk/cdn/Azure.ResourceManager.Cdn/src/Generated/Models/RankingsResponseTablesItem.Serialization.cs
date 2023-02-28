@@ -19,12 +19,12 @@ namespace Azure.ResourceManager.Cdn.Models
             Optional<IReadOnlyList<RankingsResponseTablesPropertiesItemsItem>> data = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("ranking"))
+                if (property.NameEquals("ranking"u8))
                 {
                     ranking = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("data"))
+                if (property.NameEquals("data"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

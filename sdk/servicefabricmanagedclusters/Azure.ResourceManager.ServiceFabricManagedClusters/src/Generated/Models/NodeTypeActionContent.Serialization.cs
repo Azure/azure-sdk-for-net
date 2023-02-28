@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("nodes");
+            writer.WritePropertyName("nodes"u8);
             writer.WriteStartArray();
             foreach (var item in Nodes)
             {
@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             writer.WriteEndArray();
             if (Optional.IsDefined(IsForced))
             {
-                writer.WritePropertyName("force");
+                writer.WritePropertyName("force"u8);
                 writer.WriteBooleanValue(IsForced.Value);
             }
             writer.WriteEndObject();

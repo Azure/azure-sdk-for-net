@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Network.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Servers))
             {
-                writer.WritePropertyName("servers");
+                writer.WritePropertyName("servers"u8);
                 writer.WriteStartArray();
                 foreach (var item in Servers)
                 {
@@ -28,14 +28,14 @@ namespace Azure.ResourceManager.Network.Models
             }
             if (Optional.IsDefined(EnableProxy))
             {
-                writer.WritePropertyName("enableProxy");
+                writer.WritePropertyName("enableProxy"u8);
                 writer.WriteBooleanValue(EnableProxy.Value);
             }
             if (Optional.IsDefined(RequireProxyForNetworkRules))
             {
                 if (RequireProxyForNetworkRules != null)
                 {
-                    writer.WritePropertyName("requireProxyForNetworkRules");
+                    writer.WritePropertyName("requireProxyForNetworkRules"u8);
                     writer.WriteBooleanValue(RequireProxyForNetworkRules.Value);
                 }
                 else
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Network.Models
             Optional<bool?> requireProxyForNetworkRules = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("servers"))
+                if (property.NameEquals("servers"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Network.Models
                     servers = array;
                     continue;
                 }
-                if (property.NameEquals("enableProxy"))
+                if (property.NameEquals("enableProxy"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Network.Models
                     enableProxy = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("requireProxyForNetworkRules"))
+                if (property.NameEquals("requireProxyForNetworkRules"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Communication.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("verificationType");
+            writer.WritePropertyName("verificationType"u8);
             writer.WriteStringValue(VerificationType.ToString());
             writer.WriteEndObject();
         }

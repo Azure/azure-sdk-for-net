@@ -17,22 +17,22 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(PublisherName))
             {
-                writer.WritePropertyName("publisherName");
+                writer.WritePropertyName("publisherName"u8);
                 writer.WriteStringValue(PublisherName);
             }
             if (Optional.IsDefined(ProductName))
             {
-                writer.WritePropertyName("productName");
+                writer.WritePropertyName("productName"u8);
                 writer.WriteStringValue(ProductName);
             }
             if (Optional.IsDefined(BinaryName))
             {
-                writer.WritePropertyName("binaryName");
+                writer.WritePropertyName("binaryName"u8);
                 writer.WriteStringValue(BinaryName);
             }
             if (Optional.IsDefined(Version))
             {
-                writer.WritePropertyName("version");
+                writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version);
             }
             writer.WriteEndObject();
@@ -46,22 +46,22 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             Optional<string> version = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("publisherName"))
+                if (property.NameEquals("publisherName"u8))
                 {
                     publisherName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("productName"))
+                if (property.NameEquals("productName"u8))
                 {
                     productName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("binaryName"))
+                if (property.NameEquals("binaryName"u8))
                 {
                     binaryName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("version"))
+                if (property.NameEquals("version"u8))
                 {
                     version = property.Value.GetString();
                     continue;

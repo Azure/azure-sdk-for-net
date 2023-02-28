@@ -19,12 +19,12 @@ namespace Azure.ResourceManager.MySql.Models
             Optional<IReadOnlyList<string>> requiredMembers = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("groupId"))
+                if (property.NameEquals("groupId"u8))
                 {
                     groupId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("requiredMembers"))
+                if (property.NameEquals("requiredMembers"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

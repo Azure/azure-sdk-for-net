@@ -18,22 +18,22 @@ namespace Azure.ResourceManager.Datadog.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(SendAadLogs))
             {
-                writer.WritePropertyName("sendAadLogs");
+                writer.WritePropertyName("sendAadLogs"u8);
                 writer.WriteBooleanValue(SendAadLogs.Value);
             }
             if (Optional.IsDefined(SendSubscriptionLogs))
             {
-                writer.WritePropertyName("sendSubscriptionLogs");
+                writer.WritePropertyName("sendSubscriptionLogs"u8);
                 writer.WriteBooleanValue(SendSubscriptionLogs.Value);
             }
             if (Optional.IsDefined(SendResourceLogs))
             {
-                writer.WritePropertyName("sendResourceLogs");
+                writer.WritePropertyName("sendResourceLogs"u8);
                 writer.WriteBooleanValue(SendResourceLogs.Value);
             }
             if (Optional.IsCollectionDefined(FilteringTags))
             {
-                writer.WritePropertyName("filteringTags");
+                writer.WritePropertyName("filteringTags"u8);
                 writer.WriteStartArray();
                 foreach (var item in FilteringTags)
                 {
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Datadog.Models
             Optional<IList<FilteringTag>> filteringTags = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("sendAadLogs"))
+                if (property.NameEquals("sendAadLogs"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Datadog.Models
                     sendAadLogs = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("sendSubscriptionLogs"))
+                if (property.NameEquals("sendSubscriptionLogs"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Datadog.Models
                     sendSubscriptionLogs = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("sendResourceLogs"))
+                if (property.NameEquals("sendResourceLogs"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Datadog.Models
                     sendResourceLogs = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("filteringTags"))
+                if (property.NameEquals("filteringTags"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.AppService.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(RuntimeStack))
             {
-                writer.WritePropertyName("runtimeStack");
+                writer.WritePropertyName("runtimeStack"u8);
                 writer.WriteStringValue(RuntimeStack);
             }
             if (Optional.IsDefined(RuntimeVersion))
             {
-                writer.WritePropertyName("runtimeVersion");
+                writer.WritePropertyName("runtimeVersion"u8);
                 writer.WriteStringValue(RuntimeVersion);
             }
             writer.WriteEndObject();
@@ -34,12 +34,12 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<string> runtimeVersion = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("runtimeStack"))
+                if (property.NameEquals("runtimeStack"u8))
                 {
                     runtimeStack = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("runtimeVersion"))
+                if (property.NameEquals("runtimeVersion"u8))
                 {
                     runtimeVersion = property.Value.GetString();
                     continue;

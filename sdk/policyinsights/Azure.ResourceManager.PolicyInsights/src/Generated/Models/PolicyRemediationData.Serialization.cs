@@ -18,41 +18,41 @@ namespace Azure.ResourceManager.PolicyInsights
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(PolicyAssignmentId))
             {
-                writer.WritePropertyName("policyAssignmentId");
+                writer.WritePropertyName("policyAssignmentId"u8);
                 writer.WriteStringValue(PolicyAssignmentId);
             }
             if (Optional.IsDefined(PolicyDefinitionReferenceId))
             {
-                writer.WritePropertyName("policyDefinitionReferenceId");
+                writer.WritePropertyName("policyDefinitionReferenceId"u8);
                 writer.WriteStringValue(PolicyDefinitionReferenceId);
             }
             if (Optional.IsDefined(ResourceDiscoveryMode))
             {
-                writer.WritePropertyName("resourceDiscoveryMode");
+                writer.WritePropertyName("resourceDiscoveryMode"u8);
                 writer.WriteStringValue(ResourceDiscoveryMode.Value.ToString());
             }
             if (Optional.IsDefined(Filter))
             {
-                writer.WritePropertyName("filters");
+                writer.WritePropertyName("filters"u8);
                 writer.WriteObjectValue(Filter);
             }
             if (Optional.IsDefined(ResourceCount))
             {
-                writer.WritePropertyName("resourceCount");
+                writer.WritePropertyName("resourceCount"u8);
                 writer.WriteNumberValue(ResourceCount.Value);
             }
             if (Optional.IsDefined(ParallelDeployments))
             {
-                writer.WritePropertyName("parallelDeployments");
+                writer.WritePropertyName("parallelDeployments"u8);
                 writer.WriteNumberValue(ParallelDeployments.Value);
             }
             if (Optional.IsDefined(FailureThreshold))
             {
-                writer.WritePropertyName("failureThreshold");
+                writer.WritePropertyName("failureThreshold"u8);
                 writer.WriteObjectValue(FailureThreshold);
             }
             writer.WriteEndObject();
@@ -80,22 +80,22 @@ namespace Azure.ResourceManager.PolicyInsights
             Optional<RemediationPropertiesFailureThreshold> failureThreshold = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.PolicyInsights
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.PolicyInsights
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("policyAssignmentId"))
+                        if (property0.NameEquals("policyAssignmentId"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -124,12 +124,12 @@ namespace Azure.ResourceManager.PolicyInsights
                             policyAssignmentId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("policyDefinitionReferenceId"))
+                        if (property0.NameEquals("policyDefinitionReferenceId"u8))
                         {
                             policyDefinitionReferenceId = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("resourceDiscoveryMode"))
+                        if (property0.NameEquals("resourceDiscoveryMode"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -139,12 +139,12 @@ namespace Azure.ResourceManager.PolicyInsights
                             resourceDiscoveryMode = new ResourceDiscoveryMode(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("provisioningState"))
+                        if (property0.NameEquals("provisioningState"u8))
                         {
                             provisioningState = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("createdOn"))
+                        if (property0.NameEquals("createdOn"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.PolicyInsights
                             createdOn = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("lastUpdatedOn"))
+                        if (property0.NameEquals("lastUpdatedOn"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.PolicyInsights
                             lastUpdatedOn = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("filters"))
+                        if (property0.NameEquals("filters"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.PolicyInsights
                             filters = RemediationFilters.DeserializeRemediationFilters(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("deploymentStatus"))
+                        if (property0.NameEquals("deploymentStatus"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -184,17 +184,17 @@ namespace Azure.ResourceManager.PolicyInsights
                             deploymentStatus = RemediationDeploymentSummary.DeserializeRemediationDeploymentSummary(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("statusMessage"))
+                        if (property0.NameEquals("statusMessage"u8))
                         {
                             statusMessage = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("correlationId"))
+                        if (property0.NameEquals("correlationId"u8))
                         {
                             correlationId = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("resourceCount"))
+                        if (property0.NameEquals("resourceCount"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.PolicyInsights
                             resourceCount = property0.Value.GetInt32();
                             continue;
                         }
-                        if (property0.NameEquals("parallelDeployments"))
+                        if (property0.NameEquals("parallelDeployments"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.PolicyInsights
                             parallelDeployments = property0.Value.GetInt32();
                             continue;
                         }
-                        if (property0.NameEquals("failureThreshold"))
+                        if (property0.NameEquals("failureThreshold"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

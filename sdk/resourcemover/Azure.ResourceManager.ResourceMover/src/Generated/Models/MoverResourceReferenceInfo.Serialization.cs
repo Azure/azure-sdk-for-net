@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("sourceArmResourceId");
+            writer.WritePropertyName("sourceArmResourceId"u8);
             writer.WriteStringValue(SourceArmResourceId);
             writer.WriteEndObject();
         }
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
             ResourceIdentifier sourceArmResourceId = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("sourceArmResourceId"))
+                if (property.NameEquals("sourceArmResourceId"u8))
                 {
                     sourceArmResourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;

@@ -24,12 +24,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<IReadOnlyList<string>> affectedResourceCorrelationIds = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("summaryCode"))
+                if (property.NameEquals("summaryCode"u8))
                 {
                     summaryCode = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("category"))
+                if (property.NameEquals("category"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     category = new HealthErrorCategory(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("severity"))
+                if (property.NameEquals("severity"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -49,22 +49,22 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     severity = new Severity(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("summaryMessage"))
+                if (property.NameEquals("summaryMessage"u8))
                 {
                     summaryMessage = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("affectedResourceType"))
+                if (property.NameEquals("affectedResourceType"u8))
                 {
                     affectedResourceType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("affectedResourceSubtype"))
+                if (property.NameEquals("affectedResourceSubtype"u8))
                 {
                     affectedResourceSubtype = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("affectedResourceCorrelationIds"))
+                if (property.NameEquals("affectedResourceCorrelationIds"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
