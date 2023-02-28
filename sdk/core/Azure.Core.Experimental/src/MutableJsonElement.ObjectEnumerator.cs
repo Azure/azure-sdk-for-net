@@ -25,7 +25,7 @@ namespace Azure.Core.Json
 
             internal ObjectEnumerator(MutableJsonElement target)
             {
-                Debug.Assert(target.ValueKind == JsonValueKind.Object);
+                target.EnsureObject();
 
                 _target = target;
                 _enumerator = target.GetJsonElement().EnumerateObject();
