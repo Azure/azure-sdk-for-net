@@ -17,7 +17,7 @@ namespace Azure.Monitor.Query.Tests
     {
         private LogsTestData _logsTestData;
 
-        public LogsQueryClientClientLiveTests(bool isAsync) : base(isAsync)
+        public LogsQueryClientClientLiveTests(bool isAsync) : base(isAsync, RecordedTestMode.Live)
         {
         }
 
@@ -441,21 +441,33 @@ namespace Azure.Monitor.Query.Tests
         [RecordedTest]
         public async Task CanQueryWithTimespan()
         {
-            // Get the time of the second event and add a bit of buffer to it (events are 2d apart)
-            var minOffset = (DateTimeOffset)_logsTestData.TableA[1][LogsTestData.TimeGeneratedColumnNameSent];
+            // Get the time of the third event and add a bit of buffer to it (events are 2d apart)
+            var minOffset = (DateTimeOffset)_logsTestData.TableA[2][LogsTestData.TimeGeneratedColumnNameSent];
             var timespan = Recording.UtcNow - minOffset;
-            timespan = timespan.Add(TimeSpan.FromDays(1));
+            timespan = timespan.Subtract(TimeSpan.FromDays(3));
 
             var client = CreateClient();
+            // Empty check
             var results = await client.QueryWorkspaceAsync<DateTimeOffset>(
                 TestEnvironment.WorkspaceId,
                 $"{_logsTestData.TableAName} | distinct * | project {LogsTestData.TimeGeneratedColumnName}",
                 timespan);
 
-            // We should get the second and the third events
-            Assert.AreEqual(2, results.Value.Count);
-            // TODO: Switch to querying DateTimeOffset
-            Assert.True(results.Value.All(r => r >= minOffset));
+            Assert.AreEqual(0, results.Value.Count);
+
+            // Check
+            // Get the time of the third event and add a bit of buffer to it (events are 2d apart)
+            var maxOffset = (DateTimeOffset)_logsTestData.TableA[2][LogsTestData.TimeGeneratedColumnNameSent];
+            timespan = Recording.UtcNow - minOffset;
+            timespan = timespan.Add(TimeSpan.FromDays(7));
+
+            // Make sure there is some data in the range specified
+            results = await client.QueryWorkspaceAsync<DateTimeOffset>(
+                TestEnvironment.WorkspaceId,
+                $"{_logsTestData.TableAName} | distinct * | project {LogsTestData.TimeGeneratedColumnName}",
+                timespan);
+
+            Assert.GreaterOrEqual(results.Value.Count, 3);
         }
 
         [RecordedTest]

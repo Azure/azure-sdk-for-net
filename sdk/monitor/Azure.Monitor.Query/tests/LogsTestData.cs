@@ -51,7 +51,7 @@ namespace Azure.Monitor.Query.Tests
             _testEnvironment = test.TestEnvironment;
 
             var recordingUtcNow = DateTime.SpecifyKind(test.Recording.UtcNow.Date, DateTimeKind.Utc);
-            RetentionWindowStart = recordingUtcNow.AddDays(DayOfWeek.Monday - recordingUtcNow.DayOfWeek - 7);
+            RetentionWindowStart = recordingUtcNow.AddDays(DayOfWeek.Monday - recordingUtcNow.DayOfWeek - 14);
 
             TableA = new()
             {
@@ -65,7 +65,7 @@ namespace Azure.Monitor.Query.Tests
                 },
                 new()
                 {
-                    { IntColumnNameSent, 3},
+                    { IntColumnNameSent, 2},
                     { StringColumnNameSent, "b"},
                     { BoolColumnNameSent, true},
                     { FloatColumnNameSent, 1.2f },
@@ -73,7 +73,7 @@ namespace Azure.Monitor.Query.Tests
                 },
                 new()
                 {
-                    { IntColumnNameSent, 1},
+                    { IntColumnNameSent, 3},
                     { StringColumnNameSent, "c"},
                     { BoolColumnNameSent, false},
                     { FloatColumnNameSent, 1.1f },
