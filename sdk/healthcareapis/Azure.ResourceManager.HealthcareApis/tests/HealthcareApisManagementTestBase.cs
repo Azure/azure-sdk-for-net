@@ -3,6 +3,7 @@
 
 using Azure.Core;
 using Azure.Core.TestFramework;
+using Azure.Core.TestFramework.Models;
 using Azure.ResourceManager.EventHubs;
 using Azure.ResourceManager.HealthcareApis.Models;
 using Azure.ResourceManager.Resources;
@@ -23,12 +24,16 @@ namespace Azure.ResourceManager.HealthcareApis.Tests
         : base(isAsync, mode)
         {
             JsonPathSanitizers.Add("$..authority");
+            UriRegexSanitizers.Add(new UriRegexSanitizer(@"/Microsoft.EventHub/namespaces/[^/]+api-version=(?<group>[a-z0-9-]+)", "**") { GroupForReplace = "group" });
+            UriRegexSanitizers.Add(new UriRegexSanitizer(@"/Microsoft.EventHub/namespaces/[^/]+/eventhubs/[^/]+api-version=(?<group>[a-z0-9-]+)", "**") { GroupForReplace = "group" });
         }
 
         protected HealthcareApisManagementTestBase(bool isAsync)
             : base(isAsync)
         {
             JsonPathSanitizers.Add("$..authority");
+            UriRegexSanitizers.Add(new UriRegexSanitizer(@"/Microsoft.EventHub/namespaces/[^/]+api-version=(?<group>[a-z0-9-]+)", "**") { GroupForReplace = "group" });
+            UriRegexSanitizers.Add(new UriRegexSanitizer(@"/Microsoft.EventHub/namespaces/[^/]+/eventhubs/[^/]+api-version=(?<group>[a-z0-9-]+)", "**") { GroupForReplace = "group" });
         }
 
         [SetUp]
