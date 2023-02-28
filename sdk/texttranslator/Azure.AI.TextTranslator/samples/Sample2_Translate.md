@@ -1,1 +1,289 @@
 # Translate
+
+## Create a `TranslatorClient`
+
+To create a new `TranslatorClient`, you will need the service endpoint and credentials of your Translator resource. To authenticate, you can use the [`DefaultAzureCredential`][DefaultAzureCredential], which combines credentials commonly used to authenticate when deployed on Azure, with credentials used to authenticate in a development environment. In this sample, however, you will use an `AzureKeyCredential` and region, which you can create with an API key.
+
+```C# Snippet:CreateTranslatorClient
+Uri endpoint = new("<endpoint>");
+AzureKeyCredential credential = new("<apiKey>");
+TranslatorClient client = new(endpoint, credential, "<region>");
+```
+
+The values of the `endpoint`, `apiKey` and `region` variables can be retrieved from environment variables, configuration settings, or any other secure approach that works for your application.
+
+### Translate with auto-detection
+You can ommit source languge of the input text. In this case, API will try to auto-detect the language.
+
+> Note that you must provide the source language rather than autodetection when using the dynamic dictionary feature.
+
+> Note you can use `suggestedFrom` paramter that specifies a fallback language if the language of the input text can't be identified. Language autodetection is applied when the from parameter is omitted. If detection fails, the suggestedFrom language will be assumed.
+
+```C# Snippet:Sample2_Translate
+try
+{
+    IEnumerable<string> targetLanguages = new[] { "cs" };
+    IEnumerable<InputText> inputTextElements = new []
+    {
+        new InputText { Text = "This is a test." }
+    };
+
+    Response<IReadOnlyList<TranslatedTextElement>> response = await client.TranslateAsync(targetLanguages, inputTextElements).ConfigureAwait(false);
+    IReadOnlyList<TranslatedTextElement> translations = response.Value;
+    TranslatedTextElement translation = translations.FirstOrDefault();
+
+    Console.WriteLine($"Detected languages of the input text: {translation?.DetectedLanguage?.Language} with score: {translation?.DetectedLanguage?.Score}.");
+    Console.WriteLine($"Text was translated to: '{translation?.Translations?.FirstOrDefault().To}' and the result is: '{translation?.Translations?.FirstOrDefault()?.Text}'.");
+}
+catch (RequestFailedException exception)
+{
+    Console.WriteLine($"Error Code: {exception.ErrorCode}");
+    Console.WriteLine($"Message: {exception.Message}");
+}
+```
+
+### Translate with Transliteration
+You can combine both Translation and Transliteration in one Translate call. Your source Text can be in non-standard Script of a language as well as you can ask for non-standard Script of a target language.
+
+```C# Snippet:Sample2_TranslateWithTransliteration
+try
+{
+    string fromScript = "Latn";
+    string fromLanguage = "ar";
+    string toScript = "Latn";
+    IEnumerable<string> targetLanguages = new[] { "zh-Hans" };
+    IEnumerable<InputText> inputTextElements = new[]
+    {
+        new InputText { Text = "hudha akhtabar." }
+    };
+
+    Response<IReadOnlyList<TranslatedTextElement>> response = await client.TranslateAsync(targetLanguages, inputTextElements, from: fromLanguage, fromScript: fromScript, toScript: toScript).ConfigureAwait(false);
+    IReadOnlyList<TranslatedTextElement> translations = response.Value;
+    TranslatedTextElement translation = translations.FirstOrDefault();
+
+    Console.WriteLine($"Source Text: {translation.SourceText.Text}");
+    Console.WriteLine($"Translation: '{translation?.Translations?.FirstOrDefault()?.Text}'.");
+    Console.WriteLine($"Transliterated text ({translation?.Translations?.FirstOrDefault()?.Transliteration?.Script}): {translation?.Translations?.FirstOrDefault()?.Transliteration?.Text}");
+
+}
+catch (RequestFailedException exception)
+{
+    Console.WriteLine($"Error Code: {exception.ErrorCode}");
+    Console.WriteLine($"Message: {exception.Message}");
+}
+```
+
+### Translate multiple input texts
+You can translate multiple text elements with a various length. Each input element can be in different language (source language parameter needs to be omitted and language auto-detection is used). Refer to [Request limits for Translator](https://learn.microsoft.com/en-us/azure/cognitive-services/translator/request-limits) for current limits.
+
+```C# Snippet:Sample2_TranslateMultipleSources
+try
+{
+    IEnumerable<string> targetLanguages = new[] { "cs" };
+    IEnumerable<InputText> inputTextElements = new[]
+    {
+        new InputText { Text = "This is a test." },
+        new InputText { Text = "Esto es una prueba." },
+        new InputText { Text = "Dies ist ein Test." }
+    };
+
+    Response<IReadOnlyList<TranslatedTextElement>> response = await client.TranslateAsync(targetLanguages, inputTextElements).ConfigureAwait(false);
+    IReadOnlyList<TranslatedTextElement> translations = response.Value;
+
+    foreach (TranslatedTextElement translation in translations)
+    {
+        Console.WriteLine($"Detected languages of the input text: {translation?.DetectedLanguage?.Language} with score: {translation?.DetectedLanguage?.Score}.");
+        Console.WriteLine($"Text was translated to: '{translation?.Translations?.FirstOrDefault().To}' and the result is: '{translation?.Translations?.FirstOrDefault()?.Text}'.");
+    }
+}
+catch (RequestFailedException exception)
+{
+    Console.WriteLine($"Error Code: {exception.ErrorCode}");
+    Console.WriteLine($"Message: {exception.Message}");
+}
+```
+
+### Translate multiple target languages
+You can provide multiple target languages which results to each input element be translated to all target languages.
+
+```C# Snippet:Sample2_TranslateMultipleSources
+try
+{
+    IEnumerable<string> targetLanguages = new[] { "cs", "es", "de" };
+    IEnumerable<InputText> inputTextElements = new[]
+    {
+        new InputText { Text = "This is a test." }
+    };
+
+    Response<IReadOnlyList<TranslatedTextElement>> response = await client.TranslateAsync(targetLanguages, inputTextElements).ConfigureAwait(false);
+    IReadOnlyList<TranslatedTextElement> translations = response.Value;
+
+    foreach (TranslatedTextElement translation in translations)
+    {
+        Console.WriteLine($"Detected languages of the input text: {translation?.DetectedLanguage?.Language} with score: {translation?.DetectedLanguage?.Score}.");
+
+        Console.WriteLine($"Text was translated to: '{translation?.Translations?.FirstOrDefault().To}' and the result is: '{translation?.Translations?.FirstOrDefault()?.Text}'.");
+    }
+}
+catch (RequestFailedException exception)
+{
+    Console.WriteLine($"Error Code: {exception.ErrorCode}");
+    Console.WriteLine($"Message: {exception.Message}");
+}
+```
+
+### Translate different text types
+You can select whether the translated text is plain text or HTML text. Any HTML needs to be a well-formed, complete element. Possible values are: plain (default) or html.
+
+```C# Snippet:Sample2_TranslateTextType
+try
+{
+    TextTypes textType = TextTypes.Html;
+
+    IEnumerable<string> targetLanguages = new[] { "cs" };
+    IEnumerable<InputText> inputTextElements = new[]
+    {
+        new InputText { Text = "<html><body>This <b>is</b> a test.</body></html>" }
+    };
+
+    Response<IReadOnlyList<TranslatedTextElement>> response = await client.TranslateAsync(targetLanguages, inputTextElements, textType: textType).ConfigureAwait(false);
+    IReadOnlyList<TranslatedTextElement> translations = response.Value;
+    TranslatedTextElement translation = translations.FirstOrDefault();
+
+    Console.WriteLine($"Detected languages of the input text: {translation?.DetectedLanguage?.Language} with score: {translation?.DetectedLanguage?.Score}.");
+    Console.WriteLine($"Text was translated to: '{translation?.Translations?.FirstOrDefault().To}' and the result is: '{translation?.Translations?.FirstOrDefault()?.Text}'.");
+}
+catch (RequestFailedException exception)
+{
+    Console.WriteLine($"Error Code: {exception.ErrorCode}");
+    Console.WriteLine($"Message: {exception.Message}");
+}
+```
+
+### Profanity handling
+[Profanity handling](https://learn.microsoft.com/en-us/azure/cognitive-services/translator/reference/v3-0-translate#handle-profanity). Normally the Translator service will retain profanity that is present in the source in the translation. The degree of profanity and the context that makes words profane differ between cultures, and as a result the degree of profanity in the target language may be amplified or reduced.
+
+If you want to avoid getting profanity in the translation, regardless of the presence of profanity in the source text, you can use the profanity filtering option. The option allows you to choose whether you want to see profanity deleted, whether you want to mark profanities with appropriate tags (giving you the option to add your own post-processing), or you want no action taken. The accepted values of `ProfanityAction` are `Deleted`, `Marked` and `NoAction` (default).
+
+```C# Snippet:Sample2_TranslatePrfanity
+try
+{
+    ProfanityActions profanityAction = ProfanityActions.Marked;
+    ProfanityMarkers profanityMarkers = ProfanityMarkers.Asterisk;
+
+    IEnumerable<string> targetLanguages = new[] { "cs" };
+    IEnumerable<InputText> inputTextElements = new[]
+    {
+        new InputText { Text = "This is ***." }
+    };
+
+    Response<IReadOnlyList<TranslatedTextElement>> response = await client.TranslateAsync(targetLanguages, inputTextElements, profanityAction: profanityAction, profanityMarker: profanityMarkers).ConfigureAwait(false);
+    IReadOnlyList<TranslatedTextElement> translations = response.Value;
+    TranslatedTextElement translation = translations.FirstOrDefault();
+
+    Console.WriteLine($"Detected languages of the input text: {translation?.DetectedLanguage?.Language} with score: {translation?.DetectedLanguage?.Score}.");
+    Console.WriteLine($"Text was translated to: '{translation?.Translations?.FirstOrDefault().To}' and the result is: '{translation?.Translations?.FirstOrDefault()?.Text}'.");
+}
+catch (RequestFailedException exception)
+{
+    Console.WriteLine($"Error Code: {exception.ErrorCode}");
+    Console.WriteLine($"Message: {exception.Message}");
+}
+```
+
+### Include alignments into translations
+You can ask translation service to include alignment projection from source text to translated text.
+
+```C# Snippet:Sample2_TranslateAlignments
+try
+{
+    bool includeAlignment = true;
+
+    IEnumerable<string> targetLanguages = new[] { "cs" };
+    IEnumerable<InputText> inputTextElements = new[]
+    {
+        new InputText { Text = "The answer lies in machine translation." }
+    };
+
+    Response<IReadOnlyList<TranslatedTextElement>> response = await client.TranslateAsync(targetLanguages, inputTextElements, includeAlignment: includeAlignment).ConfigureAwait(false);
+    IReadOnlyList<TranslatedTextElement> translations = response.Value;
+    TranslatedTextElement translation = translations.FirstOrDefault();
+
+    Console.WriteLine($"Detected languages of the input text: {translation?.DetectedLanguage?.Language} with score: {translation?.DetectedLanguage?.Score}.");
+    Console.WriteLine($"Text was translated to: '{translation?.Translations?.FirstOrDefault().To}' and the result is: '{translation?.Translations?.FirstOrDefault()?.Text}'.");
+    Console.WriteLine($"Alignments: {translation?.Translations?.FirstOrDefault()?.Alignment?.Proj}");
+
+}
+catch (RequestFailedException exception)
+{
+    Console.WriteLine($"Error Code: {exception.ErrorCode}");
+    Console.WriteLine($"Message: {exception.Message}");
+}
+```
+
+### Include sentence lenght
+You can ask translator service to include sentence boundaries for the input text and the translated text.
+
+```C# Snippet:Sample2_TranslateSenteceLength
+try
+{
+    bool includeSentenceLength = true;
+
+    IEnumerable<string> targetLanguages = new[] { "cs" };
+    IEnumerable<InputText> inputTextElements = new[]
+    {
+        new InputText { Text = "The answer lies in machine translation. This is a test." }
+    };
+
+    Response<IReadOnlyList<TranslatedTextElement>> response = await client.TranslateAsync(targetLanguages, inputTextElements, includeSentenceLength: includeSentenceLength).ConfigureAwait(false);
+    IReadOnlyList<TranslatedTextElement> translations = response.Value;
+    TranslatedTextElement translation = translations.FirstOrDefault();
+
+    Console.WriteLine($"Detected languages of the input text: {translation?.DetectedLanguage?.Language} with score: {translation?.DetectedLanguage?.Score}.");
+    Console.WriteLine($"Text was translated to: '{translation?.Translations?.FirstOrDefault().To}' and the result is: '{translation?.Translations?.FirstOrDefault()?.Text}'.");
+    Console.WriteLine($"Source Sentece length: {string.Join(",", translation?.Translations?.FirstOrDefault()?.SentLen?.SrcSentLen)}");
+    Console.WriteLine($"Translated Sentece length: {string.Join(",", translation?.Translations?.FirstOrDefault()?.SentLen?.TransSentLen)}");
+
+
+}
+catch (RequestFailedException exception)
+{
+    Console.WriteLine($"Error Code: {exception.ErrorCode}");
+    Console.WriteLine($"Message: {exception.Message}");
+}
+```
+
+### Custom Translator
+You can get translations from a customized system built with [Custom Translator](https://learn.microsoft.com/en-us/azure/cognitive-services/translator/customization). Add the Category ID from your Custom Translator [project details](https://learn.microsoft.com/en-us/azure/cognitive-services/translator/custom-translator/how-to-create-project#view-project-details) to this parameter to use your deployed customized system.
+
+It is possible to set `allowFalback` paramter. It specifies that the service is allowed to fall back to a general system when a custom system doesn't exist. Possible values are: `true` (default) or `false`.
+
+`allowFallback=false` specifies that the translation should only use systems trained for the category specified by the request. If a translation for language X to language Y requires chaining through a pivot language E, then all the systems in the chain (X → E and E → Y) will need to be custom and have the same category. If no system is found with the specific category, the request will return a 400 status code. `allowFallback=true` specifies that the service is allowed to fall back to a general system when a custom system doesn't exist.
+
+```C# Snippet:Sample2_Translate
+try
+{
+    string category = "<<Category ID>>";
+    IEnumerable<string> targetLanguages = new[] { "cs" };
+    IEnumerable<InputText> inputTextElements = new[]
+    {
+        new InputText { Text = "This is a test." }
+    };
+
+    Response<IReadOnlyList<TranslatedTextElement>> response = await client.TranslateAsync(targetLanguages, inputTextElements, category: category).ConfigureAwait(false);
+    IReadOnlyList<TranslatedTextElement> translations = response.Value;
+    TranslatedTextElement translation = translations.FirstOrDefault();
+
+    Console.WriteLine($"Detected languages of the input text: {translation?.DetectedLanguage?.Language} with score: {translation?.DetectedLanguage?.Score}.");
+    Console.WriteLine($"Text was translated to: '{translation?.Translations?.FirstOrDefault().To}' and the result is: '{translation?.Translations?.FirstOrDefault()?.Text}'.");
+}
+catch (RequestFailedException exception)
+{
+    Console.WriteLine($"Error Code: {exception.ErrorCode}");
+    Console.WriteLine($"Message: {exception.Message}");
+}
+```
+
+See the [README] of the Text Translator client library for more information, including useful links and instructions.
+
+[README]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/texttranslator/Azure.AI.TextTranslator/README.md
