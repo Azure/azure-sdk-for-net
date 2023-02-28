@@ -14,7 +14,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.KubernetesConfiguration
 {
-    /// <summary> A class representing the KubernetesClusterExtension data model. </summary>
+    /// <summary>
+    /// A class representing the KubernetesClusterExtension data model.
+    /// The Extension object.
+    /// </summary>
     public partial class KubernetesClusterExtensionData : ResourceData
     {
         /// <summary> Initializes a new instance of KubernetesClusterExtensionData. </summary>

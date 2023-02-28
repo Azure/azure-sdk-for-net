@@ -14,7 +14,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataFactory
 {
-    /// <summary> A class representing the DataFactory data model. </summary>
+    /// <summary>
+    /// A class representing the DataFactory data model.
+    /// Factory resource type.
+    /// </summary>
     public partial class DataFactoryData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of DataFactoryData. </summary>

@@ -21,9 +21,9 @@ namespace Azure.ResourceManager.Batch.Models
 
         public static BatchIPAddressProvisioningType ToBatchIPAddressProvisioningType(this string value)
         {
-            if (string.Equals(value, "BatchManaged", StringComparison.InvariantCultureIgnoreCase)) return BatchIPAddressProvisioningType.BatchManaged;
-            if (string.Equals(value, "UserManaged", StringComparison.InvariantCultureIgnoreCase)) return BatchIPAddressProvisioningType.UserManaged;
-            if (string.Equals(value, "NoPublicIPAddresses", StringComparison.InvariantCultureIgnoreCase)) return BatchIPAddressProvisioningType.NoPublicIPAddresses;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "BatchManaged")) return BatchIPAddressProvisioningType.BatchManaged;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "UserManaged")) return BatchIPAddressProvisioningType.UserManaged;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "NoPublicIPAddresses")) return BatchIPAddressProvisioningType.NoPublicIPAddresses;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown BatchIPAddressProvisioningType value.");
         }
     }

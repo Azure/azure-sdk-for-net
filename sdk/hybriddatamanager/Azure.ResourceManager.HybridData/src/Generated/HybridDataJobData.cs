@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.HybridData
 {
-    /// <summary> A class representing the HybridDataJob data model. </summary>
+    /// <summary>
+    /// A class representing the HybridDataJob data model.
+    /// Data service job.
+    /// </summary>
     public partial class HybridDataJobData : ResourceData
     {
         /// <summary> Initializes a new instance of HybridDataJobData. </summary>

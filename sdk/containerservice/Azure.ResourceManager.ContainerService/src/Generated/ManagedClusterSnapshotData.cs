@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ContainerService
 {
-    /// <summary> A class representing the ManagedClusterSnapshot data model. </summary>
+    /// <summary>
+    /// A class representing the ManagedClusterSnapshot data model.
+    /// A managed cluster snapshot resource.
+    /// </summary>
     public partial class ManagedClusterSnapshotData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of ManagedClusterSnapshotData. </summary>

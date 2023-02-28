@@ -60,10 +60,10 @@ namespace Azure.ResourceManager.Compute.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Images_Delete_MaximumSet_Gen
+        // Image_Delete_MaximumSet_Gen
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Delete_ImagesDeleteMaximumSetGen()
+        public async Task Delete_ImageDeleteMaximumSetGen()
         {
             // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-11-01/examples/imageExamples/Images_Delete_MaximumSet_Gen.json
             // this example is just showing the usage of "Images_Delete" operation, for the dependent resources, they will have to be created separately.
@@ -87,10 +87,10 @@ namespace Azure.ResourceManager.Compute.Samples
             Console.WriteLine($"Succeeded");
         }
 
-        // Images_Delete_MinimumSet_Gen
+        // Image_Delete_MinimumSet_Gen
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Delete_ImagesDeleteMinimumSetGen()
+        public async Task Delete_ImageDeleteMinimumSetGen()
         {
             // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-11-01/examples/imageExamples/Images_Delete_MinimumSet_Gen.json
             // this example is just showing the usage of "Images_Delete" operation, for the dependent resources, they will have to be created separately.

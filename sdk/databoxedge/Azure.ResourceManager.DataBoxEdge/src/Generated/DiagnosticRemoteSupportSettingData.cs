@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataBoxEdge
 {
-    /// <summary> A class representing the DiagnosticRemoteSupportSetting data model. </summary>
+    /// <summary>
+    /// A class representing the DiagnosticRemoteSupportSetting data model.
+    /// The remote support settings of a device.
+    /// </summary>
     public partial class DiagnosticRemoteSupportSettingData : ResourceData
     {
         /// <summary> Initializes a new instance of DiagnosticRemoteSupportSettingData. </summary>

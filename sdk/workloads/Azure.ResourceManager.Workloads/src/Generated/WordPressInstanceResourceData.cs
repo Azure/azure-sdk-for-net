@@ -12,7 +12,10 @@ using Azure.ResourceManager.Workloads.Models;
 
 namespace Azure.ResourceManager.Workloads
 {
-    /// <summary> A class representing the WordPressInstanceResource data model. </summary>
+    /// <summary>
+    /// A class representing the WordPressInstanceResource data model.
+    /// WordPress instance resource
+    /// </summary>
     public partial class WordPressInstanceResourceData : ResourceData
     {
         /// <summary> Initializes a new instance of WordPressInstanceResourceData. </summary>

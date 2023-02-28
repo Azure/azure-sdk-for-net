@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.DeploymentManager.Models
 
         public static RestAuthLocation ToRestAuthLocation(this string value)
         {
-            if (string.Equals(value, "Query", StringComparison.InvariantCultureIgnoreCase)) return RestAuthLocation.Query;
-            if (string.Equals(value, "Header", StringComparison.InvariantCultureIgnoreCase)) return RestAuthLocation.Header;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Query")) return RestAuthLocation.Query;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Header")) return RestAuthLocation.Header;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown RestAuthLocation value.");
         }
     }

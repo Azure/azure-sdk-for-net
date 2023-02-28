@@ -11,7 +11,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataProtectionBackup
 {
-    /// <summary> A class representing the DeletedDataProtectionBackupInstance data model. </summary>
+    /// <summary>
+    /// A class representing the DeletedDataProtectionBackupInstance data model.
+    /// Deleted Backup Instance
+    /// </summary>
     public partial class DeletedDataProtectionBackupInstanceData : ResourceData
     {
         /// <summary> Initializes a new instance of DeletedDataProtectionBackupInstanceData. </summary>

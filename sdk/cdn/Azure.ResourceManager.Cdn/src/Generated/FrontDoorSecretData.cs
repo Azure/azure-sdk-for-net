@@ -11,7 +11,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Cdn
 {
-    /// <summary> A class representing the FrontDoorSecret data model. </summary>
+    /// <summary>
+    /// A class representing the FrontDoorSecret data model.
+    /// Friendly Secret name mapping to the any Secret or secret related information.
+    /// </summary>
     public partial class FrontDoorSecretData : ResourceData
     {
         /// <summary> Initializes a new instance of FrontDoorSecretData. </summary>

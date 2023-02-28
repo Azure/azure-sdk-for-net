@@ -12,7 +12,10 @@ using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
-    /// <summary> A class representing the ManagedInstanceLongTermRetentionBackup data model. </summary>
+    /// <summary>
+    /// A class representing the ManagedInstanceLongTermRetentionBackup data model.
+    /// A long term retention backup for a managed database.
+    /// </summary>
     public partial class ManagedInstanceLongTermRetentionBackupData : ResourceData
     {
         /// <summary> Initializes a new instance of ManagedInstanceLongTermRetentionBackupData. </summary>

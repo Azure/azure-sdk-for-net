@@ -13,7 +13,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Cdn
 {
-    /// <summary> A class representing the Profile data model. </summary>
+    /// <summary>
+    /// A class representing the Profile data model.
+    /// A profile is a logical grouping of endpoints that share the same settings.
+    /// </summary>
     public partial class ProfileData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of ProfileData. </summary>

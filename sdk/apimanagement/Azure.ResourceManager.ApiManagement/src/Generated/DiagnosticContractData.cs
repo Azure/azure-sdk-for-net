@@ -11,7 +11,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ApiManagement
 {
-    /// <summary> A class representing the DiagnosticContract data model. </summary>
+    /// <summary>
+    /// A class representing the DiagnosticContract data model.
+    /// Diagnostic details.
+    /// </summary>
     public partial class DiagnosticContractData : ResourceData
     {
         /// <summary> Initializes a new instance of DiagnosticContractData. </summary>
