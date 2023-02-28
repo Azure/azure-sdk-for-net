@@ -39,4 +39,4 @@ string operationId = emailSendOperation.Id;
 Console.WriteLine($"Email operation id = {operationId}");
 ```
 
-[README]: https://learn.microsoft.com/en-us/azure/communication-services/quickstarts/email/send-email?tabs=windows&pivots=platform-azcli#prerequisites
+[README]: https://learn.microsoft.com/azure/communication-services/quickstarts/email/send-email?tabs=windows&pivots=platform-azcli#prerequisites
