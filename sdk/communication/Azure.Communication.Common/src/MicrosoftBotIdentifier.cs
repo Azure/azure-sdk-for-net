@@ -59,7 +59,7 @@ namespace Azure.Communication
         /// <summary>The id of the Microsoft bot.</summary>
         public string BotId { get; }
 
-        /// <summary>True if the bot is global and false (or missing) if the bot is tenantized.</summary>
+        /// <summary>True if the bot is global and false if the bot is tenantized.</summary>
         public bool IsGlobal { get; }
 
         /// <summary> The cloud that the bot belongs to. </summary>
@@ -69,7 +69,7 @@ namespace Azure.Communication
         /// Initializes a new instance of <see cref="MicrosoftBotIdentifier"/>.
         /// </summary>
         /// <param name="botId">Id of the Microsoft bot. The unique Microsoft app ID for the bot as registered with the Bot Framework.</param>
-        /// <param name="isGlobal">Set this to true if the bot is global.</param>
+        /// <param name="isGlobal">Set this to true if the bot is global. If not provided, the default value will be false.</param>
         /// <param name="cloud">The cloud that the Microsoft bot belongs to. A null value translates to the Public cloud.</param>
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when the <paramref name="botId"/> is null.

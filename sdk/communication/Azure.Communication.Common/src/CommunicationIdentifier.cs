@@ -76,13 +76,11 @@ namespace Azure.Communication
             }
 
             var segments = rawId.Split(':');
-            if (segments.Length > 3 || segments.Length < 3)
+            if (segments.Length != 3)
             {
-                if (segments.Length == 2 && segments[0] == "28")
-                {
-                    return new MicrosoftBotIdentifier(segments[1], true, CommunicationCloudEnvironment.Public);
-                }
-                return new UnknownIdentifier(rawId);
+                return segments.Length == 2 && rawId.StartsWith(Bot, StringComparison.OrdinalIgnoreCase)
+                    ? new MicrosoftBotIdentifier(segments[1], true, CommunicationCloudEnvironment.Public)
+                    : new UnknownIdentifier(rawId);
             }
 
             var prefix = $"{segments[0]}:{segments[1]}:";
