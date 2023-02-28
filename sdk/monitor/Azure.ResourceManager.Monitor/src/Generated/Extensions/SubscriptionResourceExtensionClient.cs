@@ -25,6 +25,8 @@ namespace Azure.ResourceManager.Monitor
         private ActionGroupsRestOperations _actionGroupRestClient;
         private ClientDiagnostics _activityLogsClientDiagnostics;
         private ActivityLogsRestOperations _activityLogsRestClient;
+        private ClientDiagnostics _metricsClientDiagnostics;
+        private MetricsRestOperations _metricsRestClient;
         private ClientDiagnostics _metricAlertClientDiagnostics;
         private MetricAlertsRestOperations _metricAlertRestClient;
         private ClientDiagnostics _scheduledQueryRuleClientDiagnostics;
@@ -58,6 +60,8 @@ namespace Azure.ResourceManager.Monitor
         private ActionGroupsRestOperations ActionGroupRestClient => _actionGroupRestClient ??= new ActionGroupsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(ActionGroupResource.ResourceType));
         private ClientDiagnostics ActivityLogsClientDiagnostics => _activityLogsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Monitor", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private ActivityLogsRestOperations ActivityLogsRestClient => _activityLogsRestClient ??= new ActivityLogsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+        private ClientDiagnostics MetricsClientDiagnostics => _metricsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Monitor", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private MetricsRestOperations MetricsRestClient => _metricsRestClient ??= new MetricsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
         private ClientDiagnostics MetricAlertClientDiagnostics => _metricAlertClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Monitor", MetricAlertResource.ResourceType.Namespace, Diagnostics);
         private MetricAlertsRestOperations MetricAlertRestClient => _metricAlertRestClient ??= new MetricAlertsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(MetricAlertResource.ResourceType));
         private ClientDiagnostics ScheduledQueryRuleClientDiagnostics => _scheduledQueryRuleClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Monitor", ScheduledQueryRuleResource.ResourceType.Namespace, Diagnostics);
@@ -258,6 +262,94 @@ namespace Azure.ResourceManager.Monitor
             HttpMessage FirstPageRequest(int? pageSizeHint) => ActivityLogsRestClient.CreateListRequest(Id.SubscriptionId, filter, select);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ActivityLogsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, filter, select);
             return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, EventDataInfo.DeserializeEventDataInfo, ActivityLogsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetActivityLogs", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// **Lists the metric data for a subscription**.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Insights/metrics</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Metrics_ListAtSubscriptionScope</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="SubscriptionMonitorMetric" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<SubscriptionMonitorMetric> GetMonitorMetricsAsync(SubscriptionResourceGetMonitorMetricsOptions options, CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => MetricsRestClient.CreateListAtSubscriptionScopeRequest(Id.SubscriptionId, options.Region, options.Timespan, options.Interval, options.Metricnames, options.Aggregation, options.Top, options.Orderby, options.Filter, options.ResultType, options.Metricnamespace, options.AutoAdjustTimegrain, options.ValidateDimensions);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, SubscriptionMonitorMetric.DeserializeSubscriptionMonitorMetric, MetricsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetMonitorMetrics", "value", null, cancellationToken);
+        }
+
+        /// <summary>
+        /// **Lists the metric data for a subscription**.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Insights/metrics</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Metrics_ListAtSubscriptionScope</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="SubscriptionMonitorMetric" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<SubscriptionMonitorMetric> GetMonitorMetrics(SubscriptionResourceGetMonitorMetricsOptions options, CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => MetricsRestClient.CreateListAtSubscriptionScopeRequest(Id.SubscriptionId, options.Region, options.Timespan, options.Interval, options.Metricnames, options.Aggregation, options.Top, options.Orderby, options.Filter, options.ResultType, options.Metricnamespace, options.AutoAdjustTimegrain, options.ValidateDimensions);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, SubscriptionMonitorMetric.DeserializeSubscriptionMonitorMetric, MetricsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetMonitorMetrics", "value", null, cancellationToken);
+        }
+
+        /// <summary>
+        /// **Lists the metric data for a subscription**. Parameters can be specified on either query params or the body.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Insights/metrics</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Metrics_ListAtSubscriptionScopePost</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="SubscriptionMonitorMetric" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<SubscriptionMonitorMetric> GetMonitorMetricsWithPostAsync(SubscriptionResourceGetMonitorMetricsWithPostOptions options, CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => MetricsRestClient.CreateListAtSubscriptionScopePostRequest(Id.SubscriptionId, options.Region, options.Content, options.Timespan, options.Interval, options.Metricnames, options.Aggregation, options.Top, options.Orderby, options.Filter, options.ResultType, options.Metricnamespace, options.AutoAdjustTimegrain, options.ValidateDimensions);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, SubscriptionMonitorMetric.DeserializeSubscriptionMonitorMetric, MetricsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetMonitorMetricsWithPost", "value", null, cancellationToken);
+        }
+
+        /// <summary>
+        /// **Lists the metric data for a subscription**. Parameters can be specified on either query params or the body.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Insights/metrics</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Metrics_ListAtSubscriptionScopePost</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="SubscriptionMonitorMetric" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<SubscriptionMonitorMetric> GetMonitorMetricsWithPost(SubscriptionResourceGetMonitorMetricsWithPostOptions options, CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => MetricsRestClient.CreateListAtSubscriptionScopePostRequest(Id.SubscriptionId, options.Region, options.Content, options.Timespan, options.Interval, options.Metricnames, options.Aggregation, options.Top, options.Orderby, options.Filter, options.ResultType, options.Metricnamespace, options.AutoAdjustTimegrain, options.ValidateDimensions);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, SubscriptionMonitorMetric.DeserializeSubscriptionMonitorMetric, MetricsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetMonitorMetricsWithPost", "value", null, cancellationToken);
         }
 
         /// <summary>

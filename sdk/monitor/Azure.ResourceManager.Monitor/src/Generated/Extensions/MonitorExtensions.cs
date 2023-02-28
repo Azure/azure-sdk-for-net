@@ -360,6 +360,106 @@ namespace Azure.ResourceManager.Monitor
         }
 
         /// <summary>
+        /// **Lists the metric data for a subscription**.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Insights/metrics</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Metrics_ListAtSubscriptionScope</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        /// <returns> An async collection of <see cref="SubscriptionMonitorMetric" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<SubscriptionMonitorMetric> GetMonitorMetricsAsync(this SubscriptionResource subscriptionResource, SubscriptionResourceGetMonitorMetricsOptions options, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(options, nameof(options));
+
+            return GetExtensionClient(subscriptionResource).GetMonitorMetricsAsync(options, cancellationToken);
+        }
+
+        /// <summary>
+        /// **Lists the metric data for a subscription**.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Insights/metrics</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Metrics_ListAtSubscriptionScope</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        /// <returns> A collection of <see cref="SubscriptionMonitorMetric" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<SubscriptionMonitorMetric> GetMonitorMetrics(this SubscriptionResource subscriptionResource, SubscriptionResourceGetMonitorMetricsOptions options, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(options, nameof(options));
+
+            return GetExtensionClient(subscriptionResource).GetMonitorMetrics(options, cancellationToken);
+        }
+
+        /// <summary>
+        /// **Lists the metric data for a subscription**. Parameters can be specified on either query params or the body.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Insights/metrics</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Metrics_ListAtSubscriptionScopePost</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        /// <returns> An async collection of <see cref="SubscriptionMonitorMetric" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<SubscriptionMonitorMetric> GetMonitorMetricsWithPostAsync(this SubscriptionResource subscriptionResource, SubscriptionResourceGetMonitorMetricsWithPostOptions options, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(options, nameof(options));
+
+            return GetExtensionClient(subscriptionResource).GetMonitorMetricsWithPostAsync(options, cancellationToken);
+        }
+
+        /// <summary>
+        /// **Lists the metric data for a subscription**. Parameters can be specified on either query params or the body.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Insights/metrics</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Metrics_ListAtSubscriptionScopePost</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        /// <returns> A collection of <see cref="SubscriptionMonitorMetric" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<SubscriptionMonitorMetric> GetMonitorMetricsWithPost(this SubscriptionResource subscriptionResource, SubscriptionResourceGetMonitorMetricsWithPostOptions options, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(options, nameof(options));
+
+            return GetExtensionClient(subscriptionResource).GetMonitorMetricsWithPost(options, cancellationToken);
+        }
+
+        /// <summary>
         /// Retrieve alert rule definitions in a subscription.
         /// <list type="bullet">
         /// <item>
