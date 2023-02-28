@@ -33,36 +33,6 @@ namespace Azure.Containers.ContainerRegistry.Tests
             await SetProxyOptionsAsync(new ProxyOptions { Transport = new ProxyOptionsTransport { AllowAutoRedirect = false } });
         }
 
-        /// <summary>
-        /// Create an OciManifest type that matches the contents of the manifest.json test data file.
-        /// </summary>
-        /// <returns></returns>
-        private static OciManifest CreateManifest()
-        {
-            OciManifest manifest = new OciManifest()
-            {
-                SchemaVersion = 2,
-                Config = new OciBlobDescriptor()
-                {
-                    MediaType = "application/vnd.acme.rocket.config",
-                    Digest = "sha256:d25b42d3dbad5361ed2d909624d899e7254a822c9a632b582ebd3a44f9b0dbc8",
-                    Size = 171
-                }
-            };
-            manifest.Layers.Add(new OciBlobDescriptor()
-            {
-                MediaType = "application/vnd.oci.image.layer.v1.tar",
-                Digest = "sha256:654b93f61054e4ce90ed203bb8d556a6200d5f906cf3eca0620738d6dc18cbed",
-                Size = 28,
-                Annotations = new OciAnnotations()
-                {
-                    Name = "artifact.txt"
-                }
-            });
-
-            return manifest;
-        }
-
         [RecordedTest]
         public async Task CanUploadOciManifest()
         {
@@ -72,7 +42,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
             await UploadManifestPrerequisites(client);
 
             // Act
-            var manifest = CreateManifest();
+            var manifest = ContainerRegistryTestDataHelpers.CreateManifest();
             var uploadResult = await client.UploadManifestAsync(manifest);
             string digest = uploadResult.Value.Digest;
 
@@ -181,7 +151,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
             await UploadManifestPrerequisites(client);
 
             // Act
-            var manifest = CreateManifest();
+            var manifest = ContainerRegistryTestDataHelpers.CreateManifest();
             var uploadResult = await client.UploadManifestAsync(manifest, tag);
             var digest = uploadResult.Value.Digest;
 
