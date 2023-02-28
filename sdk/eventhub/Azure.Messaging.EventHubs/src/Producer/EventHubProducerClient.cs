@@ -360,7 +360,7 @@ namespace Azure.Messaging.EventHubs.Producer
                 DiagnosticProperty.ResourceProviderNamespace,
                 DiagnosticProperty.EventHubsServiceContext,
                 FullyQualifiedNamespace,
-                connection.EventHubName);
+                Connection.EventHubName);
         }
 
         /// <summary>
@@ -401,7 +401,7 @@ namespace Azure.Messaging.EventHubs.Producer
                 DiagnosticProperty.ResourceProviderNamespace,
                 DiagnosticProperty.EventHubsServiceContext,
                 FullyQualifiedNamespace,
-                connection.EventHubName);
+                Connection.EventHubName);
         }
 
         /// <summary>
@@ -459,7 +459,7 @@ namespace Azure.Messaging.EventHubs.Producer
                 DiagnosticProperty.ResourceProviderNamespace,
                 DiagnosticProperty.EventHubsServiceContext,
                 FullyQualifiedNamespace,
-                eventHubName);
+                Connection.EventHubName);
         }
 
         /// <summary>
