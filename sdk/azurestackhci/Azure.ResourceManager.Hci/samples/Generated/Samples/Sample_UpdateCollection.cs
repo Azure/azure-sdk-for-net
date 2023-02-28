@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Hci.Samples
             {
                 InstalledOn = DateTimeOffset.Parse("2022-04-06T14:08:18.254Z"),
                 Description = "AzS Update 4.2203.2.32",
-                State = State.Installed,
+                State = HciUpdateState.Installed,
                 Prerequisites =
 {
 new UpdatePrerequisite()
@@ -101,7 +101,7 @@ PackageName = "update package name",
                 Version = "4.2203.2.32",
                 Publisher = "Microsoft",
                 ReleaseLink = "https://docs.microsoft.com/azure-stack/operator/release-notes?view=azs-2203",
-                AvailabilityType = AvailabilityType.Local,
+                AvailabilityType = HciAvailabilityType.Local,
                 PackageType = "Infrastructure",
                 AdditionalProperties = "additional properties",
                 ProgressPercentage = 0,

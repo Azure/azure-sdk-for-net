@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Hci.Samples
                 LastUpdatedTimeUtc = DateTimeOffset.Parse("2022-04-06T13:58:42.969006+00:00"),
                 Steps =
 {
-new Step()
+new HciUpdateStep()
 {
 Name = "PreUpdate Cloud",
 Description = "Prepare for SSU update",
