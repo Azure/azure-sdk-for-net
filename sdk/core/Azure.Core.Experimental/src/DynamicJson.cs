@@ -62,7 +62,12 @@ namespace Azure.Core.Dynamic
 
         private IEnumerable GetEnumerable()
         {
-            return new ArrayEnumerator(_element.EnumerateArray());
+            return _element.ValueKind switch
+            {
+                JsonValueKind.Array => new ArrayEnumerator(_element.EnumerateArray()),
+                JsonValueKind.Object => new ObjectEnumerator(_element.EnumerateObject()),
+                _ => throw new InvalidOperationException($"Unable to enumerate JSON element."),
+            };
         }
 
         private object? SetProperty(string name, object value)
