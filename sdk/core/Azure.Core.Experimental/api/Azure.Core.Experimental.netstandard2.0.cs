@@ -150,6 +150,29 @@ namespace Azure.Core.Dynamic
             System.Collections.Generic.IEnumerator<Azure.Core.Dynamic.DynamicJson> System.Collections.Generic.IEnumerable<Azure.Core.Dynamic.DynamicJson>.GetEnumerator() { throw null; }
             System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
         }
+        [System.Diagnostics.DebuggerDisplayAttribute("{Current,nq}")]
+        [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+        public partial struct ObjectEnumerator : System.Collections.Generic.IEnumerable<Azure.Core.Dynamic.DynamicJsonProperty>, System.Collections.Generic.IEnumerator<Azure.Core.Dynamic.DynamicJsonProperty>, System.Collections.IEnumerable, System.Collections.IEnumerator, System.IDisposable
+        {
+            private object _dummy;
+            private int _dummyPrimitive;
+            public Azure.Core.Dynamic.DynamicJsonProperty Current { get { throw null; } }
+            object System.Collections.IEnumerator.Current { get { throw null; } }
+            public void Dispose() { }
+            public Azure.Core.Dynamic.DynamicJson.ObjectEnumerator GetEnumerator() { throw null; }
+            public bool MoveNext() { throw null; }
+            public void Reset() { }
+            System.Collections.Generic.IEnumerator<Azure.Core.Dynamic.DynamicJsonProperty> System.Collections.Generic.IEnumerable<Azure.Core.Dynamic.DynamicJsonProperty>.GetEnumerator() { throw null; }
+            System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+        }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct DynamicJsonProperty
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public string Name { get { throw null; } }
+        public Azure.Core.Dynamic.DynamicJson Value { get { throw null; } }
     }
 }
 namespace Azure.Core.Json
@@ -170,6 +193,7 @@ namespace Azure.Core.Json
         private readonly int _dummyPrimitive;
         public System.Text.Json.JsonValueKind ValueKind { get { throw null; } }
         public Azure.Core.Json.MutableJsonElement.ArrayEnumerator EnumerateArray() { throw null; }
+        public Azure.Core.Json.MutableJsonElement.ObjectEnumerator EnumerateObject() { throw null; }
         public bool GetBoolean() { throw null; }
         public double GetDouble() { throw null; }
         public int GetInt32() { throw null; }
@@ -202,6 +226,21 @@ namespace Azure.Core.Json
             public bool MoveNext() { throw null; }
             public void Reset() { }
             System.Collections.Generic.IEnumerator<Azure.Core.Json.MutableJsonElement> System.Collections.Generic.IEnumerable<Azure.Core.Json.MutableJsonElement>.GetEnumerator() { throw null; }
+            System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+        }
+        [System.Diagnostics.DebuggerDisplayAttribute("{Current,nq}")]
+        [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+        public partial struct ObjectEnumerator : System.Collections.Generic.IEnumerable<(string, Azure.Core.Json.MutableJsonElement)>, System.Collections.Generic.IEnumerator<(string, Azure.Core.Json.MutableJsonElement)>, System.Collections.IEnumerable, System.Collections.IEnumerator, System.IDisposable
+        {
+            private object _dummy;
+            private int _dummyPrimitive;
+            public (string Name, Azure.Core.Json.MutableJsonElement Value) Current { get { throw null; } }
+            object System.Collections.IEnumerator.Current { get { throw null; } }
+            public void Dispose() { }
+            public Azure.Core.Json.MutableJsonElement.ObjectEnumerator GetEnumerator() { throw null; }
+            public bool MoveNext() { throw null; }
+            public void Reset() { }
+            System.Collections.Generic.IEnumerator<(string Name, Azure.Core.Json.MutableJsonElement Value)> System.Collections.Generic.IEnumerable<(string, Azure.Core.Json.MutableJsonElement)>.GetEnumerator() { throw null; }
             System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
         }
     }
