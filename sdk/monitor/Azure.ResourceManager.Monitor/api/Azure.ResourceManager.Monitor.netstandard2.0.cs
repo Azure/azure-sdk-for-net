@@ -1578,12 +1578,6 @@ namespace Azure.ResourceManager.Monitor.Models
         public string Operator { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> Values { get { throw null; } }
     }
-    public partial class MetricProperties
-    {
-        internal MetricProperties() { }
-        public string InternalId { get { throw null; } }
-        public string PrometheusQueryEndpoint { get { throw null; } }
-    }
     public partial class MetricSettings
     {
         public MetricSettings(bool isEnabled) { }
@@ -2044,7 +2038,13 @@ namespace Azure.ResourceManager.Monitor.Models
     {
         internal MonitorWorkspaceDefaultIngestionSettings() { }
     }
-    public partial class MonitorWorkspaceMetrics : Azure.ResourceManager.Monitor.Models.MetricProperties
+    public partial class MonitorWorkspaceMetricProperties
+    {
+        internal MonitorWorkspaceMetricProperties() { }
+        public string InternalId { get { throw null; } }
+        public string PrometheusQueryEndpoint { get { throw null; } }
+    }
+    public partial class MonitorWorkspaceMetrics : Azure.ResourceManager.Monitor.Models.MonitorWorkspaceMetricProperties
     {
         internal MonitorWorkspaceMetrics() { }
     }
