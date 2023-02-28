@@ -82,6 +82,8 @@ namespace Azure.AI.OpenAI
     public partial class OpenAIClient
     {
         protected OpenAIClient() { }
+        public OpenAIClient(string token) { }
+        public OpenAIClient(string token, Azure.AI.OpenAI.OpenAIClientOptions options) { }
         public OpenAIClient(System.Uri endpoint, Azure.AzureKeyCredential credential) { }
         public OpenAIClient(System.Uri endpoint, Azure.AzureKeyCredential credential, Azure.AI.OpenAI.OpenAIClientOptions options) { }
         public OpenAIClient(System.Uri endpoint, Azure.Core.TokenCredential credential) { }
