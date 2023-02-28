@@ -29,10 +29,10 @@ namespace Azure.AI.OpenAI
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        /// <summary> Initializes a new instance of OpenAIClient for mocking. </summary>
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public virtual HttpPipeline Pipeline => _pipeline;
 
+        /// <summary> Initializes a new instance of OpenAIClient for mocking. </summary>
         protected OpenAIClient()
         {
         }
