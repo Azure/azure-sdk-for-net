@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary> Information about metrics for the Azure Monitor workspace. </summary>
-    public partial class MonitorWorkspaceMetrics : MetricProperties
+    public partial class MonitorWorkspaceMetrics : MonitorWorkspaceMetricProperties
     {
         /// <summary> Initializes a new instance of MonitorWorkspaceMetrics. </summary>
         internal MonitorWorkspaceMetrics()

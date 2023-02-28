@@ -8,17 +8,17 @@
 namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary> Information about metrics for the workspace. </summary>
-    public partial class MetricProperties
+    public partial class MonitorWorkspaceMetricProperties
     {
-        /// <summary> Initializes a new instance of MetricProperties. </summary>
-        internal MetricProperties()
+        /// <summary> Initializes a new instance of MonitorWorkspaceMetricProperties. </summary>
+        internal MonitorWorkspaceMetricProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of MetricProperties. </summary>
+        /// <summary> Initializes a new instance of MonitorWorkspaceMetricProperties. </summary>
         /// <param name="prometheusQueryEndpoint"> The Prometheus query endpoint for the workspace. </param>
         /// <param name="internalId"> An internal identifier for the metrics container. Only to be used by the system. </param>
-        internal MetricProperties(string prometheusQueryEndpoint, string internalId)
+        internal MonitorWorkspaceMetricProperties(string prometheusQueryEndpoint, string internalId)
         {
             PrometheusQueryEndpoint = prometheusQueryEndpoint;
             InternalId = internalId;

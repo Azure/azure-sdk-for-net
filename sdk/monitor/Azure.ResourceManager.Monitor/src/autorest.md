@@ -245,7 +245,7 @@ rename-mapping:
   ComparisonOperationType: MetricTriggerComparisonOperation
   ConditionOperator: MonitorConditionOperator
   ActionType: MonitorWorkspaceActionType
-  Metrics: MetricProperties
+  Metrics: MonitorWorkspaceMetricProperties
   PublicNetworkAccess: MonitorPublicNetworkAccessState
   AzureMonitorWorkspaceResource: MonitorWorkspaceResource
   AzureMonitorWorkspaceResourceCollection: MonitorWorkspaceResourceCollection
