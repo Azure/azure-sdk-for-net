@@ -29,7 +29,9 @@ namespace Azure.Messaging.EventHubs.Experimental.Tests
             // Disable idempotent partitions to avoid a live service call.  This will
             // still allow the pass-through invocation to be validated.
 
-            var producer = new IdempotentProducer(Mock.Of<EventHubConnection>(), new IdempotentProducerOptions
+            var mockConnection = new Mock<EventHubConnection>();
+            mockConnection.Setup(c => c.EventHubName).Returns("fakeHub");
+            var producer = new IdempotentProducer(mockConnection.Object, new IdempotentProducerOptions
             {
                 EnableIdempotentPartitions = false
             });
