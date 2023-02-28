@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -53,10 +54,34 @@ namespace Azure.Core.Json
                 return enumerator;
             }
 
-            /// <inheritdoc />
+            /// <summary>
+            ///   Returns an enumerator that iterates the properties of an object.
+            /// </summary>
+            /// <returns>
+            ///   An <see cref="IEnumerator"/> that can be used to iterate
+            ///   through the properties of the object.
+            /// </returns>
+            /// <remarks>
+            ///   The enumerator will enumerate the properties in the order they are
+            ///   declared, and when an object has multiple definitions of a single
+            ///   property they will all individually be returned (each in the order
+            ///   they appear in the content).
+            /// </remarks>
             IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
-            /// <inheritdoc />
+            /// <summary>
+            ///   Returns an enumerator that iterates the properties of an object.
+            /// </summary>
+            /// <returns>
+            ///   An <see cref="IEnumerator{T}"/> over a <see cref="Tuple{String, MutableJsonElement}"/>
+            ///   that can be used to iterate through the properties of the object.
+            /// </returns>
+            /// <remarks>
+            ///   The enumerator will enumerate the properties in the order they are
+            ///   declared, and when an object has multiple definitions of a single
+            ///   property they will all individually be returned (each in the order
+            ///   they appear in the content).
+            /// </remarks>
             IEnumerator<(string Name, MutableJsonElement Value)> IEnumerable<(string Name, MutableJsonElement Value)>.GetEnumerator() => GetEnumerator();
 
             /// <inheritdoc />
