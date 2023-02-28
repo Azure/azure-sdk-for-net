@@ -925,8 +925,8 @@ namespace Azure.Communication.CallAutomation
     public partial class TextSource : Azure.Communication.CallAutomation.PlaySource
     {
         public TextSource(string text) { }
-        public TextSource(string text, System.Globalization.CultureInfo sourceLocale, Azure.Communication.CallAutomation.GenderType gender) { }
         public TextSource(string text, string voiceName) { }
+        public TextSource(string text, string sourceLocale, Azure.Communication.CallAutomation.GenderType gender) { }
         public string SourceLocale { get { throw null; } set { } }
         public string Text { get { throw null; } }
         public Azure.Communication.CallAutomation.GenderType? VoiceGender { get { throw null; } set { } }
