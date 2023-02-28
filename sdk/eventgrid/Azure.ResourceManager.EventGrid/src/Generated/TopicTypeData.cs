@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.EventGrid
 {
-    /// <summary> A class representing the TopicType data model. </summary>
+    /// <summary>
+    /// A class representing the TopicType data model.
+    /// Properties of a topic type info.
+    /// </summary>
     public partial class TopicTypeData : ResourceData
     {
         /// <summary> Initializes a new instance of TopicTypeData. </summary>

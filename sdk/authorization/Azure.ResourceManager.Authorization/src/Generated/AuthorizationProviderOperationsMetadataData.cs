@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Authorization
 {
-    /// <summary> A class representing the AuthorizationProviderOperationsMetadata data model. </summary>
+    /// <summary>
+    /// A class representing the AuthorizationProviderOperationsMetadata data model.
+    /// Provider Operations metadata
+    /// </summary>
     public partial class AuthorizationProviderOperationsMetadataData : ResourceData
     {
         /// <summary> Initializes a new instance of AuthorizationProviderOperationsMetadataData. </summary>

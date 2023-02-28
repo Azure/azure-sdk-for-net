@@ -13,7 +13,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Hci
 {
-    /// <summary> A class representing the HciCluster data model. </summary>
+    /// <summary>
+    /// A class representing the HciCluster data model.
+    /// Cluster details.
+    /// </summary>
     public partial class HciClusterData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of HciClusterData. </summary>

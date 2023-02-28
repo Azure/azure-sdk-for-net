@@ -10,6 +10,8 @@
 
 ### Other Changes
 
+- Some checks for cancellation that were occurring after a service operation had been completed have been removed.  Because the service operation was already complete, cancellation was not actually performed and the results of the operation should be returned.
+
 ## 7.12.0 (2023-01-12)
 
 ### Acknowledgments

@@ -11,7 +11,10 @@ using Azure.ResourceManager.RecoveryServicesSiteRecovery.Models;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
 {
-    /// <summary> A class representing the ReplicationEligibilityResult data model. </summary>
+    /// <summary>
+    /// A class representing the ReplicationEligibilityResult data model.
+    /// Replication eligibility results response model.
+    /// </summary>
     public partial class ReplicationEligibilityResultData : ResourceData
     {
         /// <summary> Initializes a new instance of ReplicationEligibilityResultData. </summary>

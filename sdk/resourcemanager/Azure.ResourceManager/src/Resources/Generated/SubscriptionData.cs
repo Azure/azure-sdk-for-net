@@ -12,7 +12,10 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Resources
 {
-    /// <summary> A class representing the Subscription data model. </summary>
+    /// <summary>
+    /// A class representing the Subscription data model.
+    /// Subscription information.
+    /// </summary>
     public partial class SubscriptionData
     {
         /// <summary> Initializes a new instance of SubscriptionData. </summary>

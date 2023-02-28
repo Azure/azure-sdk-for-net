@@ -21,9 +21,9 @@ namespace Azure.AI.TextAnalytics.Legacy.Models
 
         public static SentenceSentimentValue ToSentenceSentimentValue(this string value)
         {
-            if (string.Equals(value, "positive", StringComparison.InvariantCultureIgnoreCase)) return SentenceSentimentValue.Positive;
-            if (string.Equals(value, "neutral", StringComparison.InvariantCultureIgnoreCase)) return SentenceSentimentValue.Neutral;
-            if (string.Equals(value, "negative", StringComparison.InvariantCultureIgnoreCase)) return SentenceSentimentValue.Negative;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "positive")) return SentenceSentimentValue.Positive;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "neutral")) return SentenceSentimentValue.Neutral;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "negative")) return SentenceSentimentValue.Negative;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown SentenceSentimentValue value.");
         }
     }

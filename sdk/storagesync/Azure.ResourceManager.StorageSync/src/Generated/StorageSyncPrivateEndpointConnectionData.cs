@@ -12,7 +12,10 @@ using Azure.ResourceManager.StorageSync.Models;
 
 namespace Azure.ResourceManager.StorageSync
 {
-    /// <summary> A class representing the StorageSyncPrivateEndpointConnection data model. </summary>
+    /// <summary>
+    /// A class representing the StorageSyncPrivateEndpointConnection data model.
+    /// The Private Endpoint Connection resource.
+    /// </summary>
     public partial class StorageSyncPrivateEndpointConnectionData : ResourceData
     {
         /// <summary> Initializes a new instance of StorageSyncPrivateEndpointConnectionData. </summary>

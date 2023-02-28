@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.DevCenter
         /// <returns> Returns a <see cref="HealthCheckStatusDetailResource" /> object. </returns>
         public virtual HealthCheckStatusDetailResource GetHealthCheckStatusDetail()
         {
-            return new HealthCheckStatusDetailResource(Client, new ResourceIdentifier(Id.ToString() + "/healthChecks/latest"));
+            return new HealthCheckStatusDetailResource(Client, Id.AppendChildResource("healthChecks", "latest"));
         }
 
         /// <summary>
