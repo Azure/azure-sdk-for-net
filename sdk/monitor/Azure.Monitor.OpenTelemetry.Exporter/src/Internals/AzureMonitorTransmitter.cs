@@ -275,7 +275,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                         content = HttpPipelineHelper.GetPartialContentForRetry(trackResponse, httpMessage.Request.Content);
                         if (content != null)
                         {
-                            retryInterval = HttpPipelineHelper.GetRetryInterval(httpMessage.Response);
+                            retryInterval = HttpPipelineHelper.GetRetryIntervalInMilliseconds(httpMessage.Response);
                             result = _fileBlobProvider.SaveTelemetry(content, retryInterval);
                         }
                         break;
@@ -285,7 +285,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                         // Parse retry-after header
                         // Send Messages To Storage
                         content = HttpPipelineHelper.GetRequestContent(httpMessage.Request.Content);
-                        retryInterval = HttpPipelineHelper.GetRetryInterval(httpMessage.Response);
+                        retryInterval = HttpPipelineHelper.GetRetryIntervalInMilliseconds(httpMessage.Response);
                         result = _fileBlobProvider.SaveTelemetry(content, retryInterval);
                         break;
                     case ResponseStatusCodes.Unauthorized:
@@ -341,7 +341,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                         var content = HttpPipelineHelper.GetPartialContentForRetry(trackResponse, httpMessage.Request.Content);
                         if (content != null)
                         {
-                            retryInterval = HttpPipelineHelper.GetRetryInterval(httpMessage.Response);
+                            retryInterval = HttpPipelineHelper.GetRetryIntervalInMilliseconds(httpMessage.Response);
                             blob.TryDelete();
                             _fileBlobProvider?.SaveTelemetry(content, retryInterval);
                         }
@@ -351,7 +351,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                     case ResponseStatusCodes.ResponseCodeTooManyRequestsAndRefreshCache:
                         // Extend lease time using retry interval period
                         // so that it is not picked up again before that.
-                        retryInterval = HttpPipelineHelper.GetRetryInterval(httpMessage.Response);
+                        retryInterval = HttpPipelineHelper.GetRetryIntervalInMilliseconds(httpMessage.Response);
                         blob.TryLease(retryInterval);
                         break;
                     case ResponseStatusCodes.Unauthorized:
