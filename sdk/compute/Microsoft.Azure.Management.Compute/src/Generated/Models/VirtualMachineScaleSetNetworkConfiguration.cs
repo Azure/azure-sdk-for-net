@@ -22,7 +22,7 @@ namespace Microsoft.Azure.Management.Compute.Models
     /// configurations.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
-    public partial class VirtualMachineScaleSetNetworkConfiguration
+    public partial class VirtualMachineScaleSetNetworkConfiguration : SubResource
     {
         /// <summary>
         /// Initializes a new instance of the
@@ -40,6 +40,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <param name="name">The network configuration name.</param>
         /// <param name="ipConfigurations">Specifies the IP configurations of
         /// the network interface.</param>
+        /// <param name="id">Resource Id</param>
         /// <param name="primary">Specifies the primary network interface in
         /// case the virtual machine has more than 1 network interface.</param>
         /// <param name="enableAcceleratedNetworking">Specifies whether the
@@ -57,7 +58,8 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <param name="deleteOption">Specify what happens to the network
         /// interface when the VM is deleted. Possible values include:
         /// 'Delete', 'Detach'</param>
-        public VirtualMachineScaleSetNetworkConfiguration(string name, IList<VirtualMachineScaleSetIPConfiguration> ipConfigurations, bool? primary = default(bool?), bool? enableAcceleratedNetworking = default(bool?), bool? disableTcpStateTracking = default(bool?), bool? enableFpga = default(bool?), SubResource networkSecurityGroup = default(SubResource), VirtualMachineScaleSetNetworkConfigurationDnsSettings dnsSettings = default(VirtualMachineScaleSetNetworkConfigurationDnsSettings), bool? enableIPForwarding = default(bool?), string deleteOption = default(string))
+        public VirtualMachineScaleSetNetworkConfiguration(string name, IList<VirtualMachineScaleSetIPConfiguration> ipConfigurations, string id = default(string), bool? primary = default(bool?), bool? enableAcceleratedNetworking = default(bool?), bool? disableTcpStateTracking = default(bool?), bool? enableFpga = default(bool?), SubResource networkSecurityGroup = default(SubResource), VirtualMachineScaleSetNetworkConfigurationDnsSettings dnsSettings = default(VirtualMachineScaleSetNetworkConfigurationDnsSettings), bool? enableIPForwarding = default(bool?), string deleteOption = default(string))
+            : base(id)
         {
             Name = name;
             Primary = primary;

@@ -11,7 +11,6 @@
 namespace Microsoft.Azure.Management.Compute.Models
 {
     using Microsoft.Rest;
-    using Microsoft.Rest.Azure;
     using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
     using System.Collections;
@@ -23,7 +22,7 @@ namespace Microsoft.Azure.Management.Compute.Models
     /// configurations.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
-    public partial class VirtualMachineScaleSetUpdateNetworkConfiguration : IResource
+    public partial class VirtualMachineScaleSetUpdateNetworkConfiguration : SubResource
     {
         /// <summary>
         /// Initializes a new instance of the
@@ -38,6 +37,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// Initializes a new instance of the
         /// VirtualMachineScaleSetUpdateNetworkConfiguration class.
         /// </summary>
+        /// <param name="id">Resource Id</param>
         /// <param name="name">The network configuration name.</param>
         /// <param name="primary">Whether this is a primary NIC on a virtual
         /// machine.</param>
@@ -58,7 +58,8 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <param name="deleteOption">Specify what happens to the network
         /// interface when the VM is deleted. Possible values include:
         /// 'Delete', 'Detach'</param>
-        public VirtualMachineScaleSetUpdateNetworkConfiguration(string name = default(string), bool? primary = default(bool?), bool? enableAcceleratedNetworking = default(bool?), bool? disableTcpStateTracking = default(bool?), bool? enableFpga = default(bool?), SubResource networkSecurityGroup = default(SubResource), VirtualMachineScaleSetNetworkConfigurationDnsSettings dnsSettings = default(VirtualMachineScaleSetNetworkConfigurationDnsSettings), IList<VirtualMachineScaleSetUpdateIPConfiguration> ipConfigurations = default(IList<VirtualMachineScaleSetUpdateIPConfiguration>), bool? enableIPForwarding = default(bool?), string deleteOption = default(string))
+        public VirtualMachineScaleSetUpdateNetworkConfiguration(string id = default(string), string name = default(string), bool? primary = default(bool?), bool? enableAcceleratedNetworking = default(bool?), bool? disableTcpStateTracking = default(bool?), bool? enableFpga = default(bool?), SubResource networkSecurityGroup = default(SubResource), VirtualMachineScaleSetNetworkConfigurationDnsSettings dnsSettings = default(VirtualMachineScaleSetNetworkConfigurationDnsSettings), IList<VirtualMachineScaleSetUpdateIPConfiguration> ipConfigurations = default(IList<VirtualMachineScaleSetUpdateIPConfiguration>), bool? enableIPForwarding = default(bool?), string deleteOption = default(string))
+            : base(id)
         {
             Name = name;
             Primary = primary;
