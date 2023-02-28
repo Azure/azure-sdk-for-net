@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.Automation.Models
 
         public static QueryTagOperator ToQueryTagOperator(this string value)
         {
-            if (string.Equals(value, "All", StringComparison.InvariantCultureIgnoreCase)) return QueryTagOperator.All;
-            if (string.Equals(value, "Any", StringComparison.InvariantCultureIgnoreCase)) return QueryTagOperator.Any;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "All")) return QueryTagOperator.All;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Any")) return QueryTagOperator.Any;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown QueryTagOperator value.");
         }
     }

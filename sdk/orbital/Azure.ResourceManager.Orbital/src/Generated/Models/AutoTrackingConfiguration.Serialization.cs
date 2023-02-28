@@ -21,9 +21,9 @@ namespace Azure.ResourceManager.Orbital.Models
 
         public static AutoTrackingConfiguration ToAutoTrackingConfiguration(this string value)
         {
-            if (string.Equals(value, "disabled", StringComparison.InvariantCultureIgnoreCase)) return AutoTrackingConfiguration.Disabled;
-            if (string.Equals(value, "xBand", StringComparison.InvariantCultureIgnoreCase)) return AutoTrackingConfiguration.XBand;
-            if (string.Equals(value, "sBand", StringComparison.InvariantCultureIgnoreCase)) return AutoTrackingConfiguration.SBand;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "disabled")) return AutoTrackingConfiguration.Disabled;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "xBand")) return AutoTrackingConfiguration.XBand;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "sBand")) return AutoTrackingConfiguration.SBand;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown AutoTrackingConfiguration value.");
         }
     }

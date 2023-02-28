@@ -3,20 +3,20 @@
 
 namespace Azure.Communication.CallAutomation
 {
-    /// <summary><see cref="AddParticipantsEventResult"/> is returned from WaitForEvent of <see cref="AddParticipantsResult"/>.</summary>
+    /// <summary><see cref="AddParticipantsEventResult"/> is returned from WaitForEvent of <see cref="AddParticipantResult"/>.</summary>
     public class AddParticipantsEventResult : EventResultBase
     {
         /// <summary>
-        /// <see cref="AddParticipantsSucceeded"/> event will be returned when the participant joined the call successfully.
+        /// <see cref="AddParticipantSucceeded"/> event will be returned when the participant joined the call successfully.
         /// </summary>
-        public AddParticipantsSucceeded SuccessEvent { get; }
+        public AddParticipantSucceeded SuccessEvent { get; }
 
         /// <summary>
-        /// <see cref="AddParticipantsFailed"/> event will be returned when the participant did not join the call.
+        /// <see cref="AddParticipantFailed"/> event will be returned when the participant did not join the call.
         /// </summary>
-        public AddParticipantsFailed FailureEvent { get; }
+        public AddParticipantFailed FailureEvent { get; }
 
-        internal AddParticipantsEventResult(bool isSuccessEvent, AddParticipantsSucceeded successEvent, AddParticipantsFailed failureEvent)
+        internal AddParticipantsEventResult(bool isSuccessEvent, AddParticipantSucceeded successEvent, AddParticipantFailed failureEvent)
         {
             IsSuccessEvent = isSuccessEvent;
             SuccessEvent = successEvent;

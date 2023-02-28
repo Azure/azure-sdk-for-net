@@ -23,8 +23,10 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> Initializes a new instance of ContainerServiceNetworkProfile. </summary>
         /// <param name="networkPlugin"> Network plugin used for building the Kubernetes network. </param>
+        /// <param name="networkPluginMode"> Network plugin mode used for building the Kubernetes network. </param>
         /// <param name="networkPolicy"> Network policy used for building the Kubernetes network. </param>
         /// <param name="networkMode"> This cannot be specified if networkPlugin is anything other than &apos;azure&apos;. </param>
+        /// <param name="ebpfDataplane"> The eBPF dataplane used for building the Kubernetes network. </param>
         /// <param name="podCidr"> A CIDR notation IP range from which to assign pod IPs when kubenet is used. </param>
         /// <param name="serviceCidr"> A CIDR notation IP range from which to assign service cluster IPs. It must not overlap with any Subnet IP ranges. </param>
         /// <param name="dnsServiceIP"> An IP address assigned to the Kubernetes DNS service. It must be within the Kubernetes service address range specified in serviceCidr. </param>
@@ -36,11 +38,14 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <param name="podCidrs"> One IPv4 CIDR is expected for single-stack networking. Two CIDRs, one for each IP family (IPv4/IPv6), is expected for dual-stack networking. </param>
         /// <param name="serviceCidrs"> One IPv4 CIDR is expected for single-stack networking. Two CIDRs, one for each IP family (IPv4/IPv6), is expected for dual-stack networking. They must not overlap with any Subnet IP ranges. </param>
         /// <param name="ipFamilies"> IP families are used to determine single-stack or dual-stack clusters. For single-stack, the expected value is IPv4. For dual-stack, the expected values are IPv4 and IPv6. </param>
-        internal ContainerServiceNetworkProfile(ContainerServiceNetworkPlugin? networkPlugin, ContainerServiceNetworkPolicy? networkPolicy, ContainerServiceNetworkMode? networkMode, string podCidr, string serviceCidr, string dnsServiceIP, string dockerBridgeCidr, ContainerServiceOutboundType? outboundType, ContainerServiceLoadBalancerSku? loadBalancerSku, ManagedClusterLoadBalancerProfile loadBalancerProfile, ManagedClusterNatGatewayProfile natGatewayProfile, IList<string> podCidrs, IList<string> serviceCidrs, IList<IPFamily> ipFamilies)
+        /// <param name="kubeProxyConfig"> Holds configuration customizations for kube-proxy. Any values not defined will use the kube-proxy defaulting behavior. See https://v&lt;version&gt;.docs.kubernetes.io/docs/reference/command-line-tools-reference/kube-proxy/ where &lt;version&gt; is represented by a &lt;major version&gt;-&lt;minor version&gt; string. Kubernetes version 1.23 would be &apos;1-23&apos;. </param>
+        internal ContainerServiceNetworkProfile(ContainerServiceNetworkPlugin? networkPlugin, ContainerServiceNetworkPluginMode? networkPluginMode, ContainerServiceNetworkPolicy? networkPolicy, ContainerServiceNetworkMode? networkMode, EbpfDataplane? ebpfDataplane, string podCidr, string serviceCidr, string dnsServiceIP, string dockerBridgeCidr, ContainerServiceOutboundType? outboundType, ContainerServiceLoadBalancerSku? loadBalancerSku, ManagedClusterLoadBalancerProfile loadBalancerProfile, ManagedClusterNatGatewayProfile natGatewayProfile, IList<string> podCidrs, IList<string> serviceCidrs, IList<IPFamily> ipFamilies, ContainerServiceNetworkProfileKubeProxyConfig kubeProxyConfig)
         {
             NetworkPlugin = networkPlugin;
+            NetworkPluginMode = networkPluginMode;
             NetworkPolicy = networkPolicy;
             NetworkMode = networkMode;
+            EbpfDataplane = ebpfDataplane;
             PodCidr = podCidr;
             ServiceCidr = serviceCidr;
             DnsServiceIP = dnsServiceIP;
@@ -52,14 +57,19 @@ namespace Azure.ResourceManager.ContainerService.Models
             PodCidrs = podCidrs;
             ServiceCidrs = serviceCidrs;
             IPFamilies = ipFamilies;
+            KubeProxyConfig = kubeProxyConfig;
         }
 
         /// <summary> Network plugin used for building the Kubernetes network. </summary>
         public ContainerServiceNetworkPlugin? NetworkPlugin { get; set; }
+        /// <summary> Network plugin mode used for building the Kubernetes network. </summary>
+        public ContainerServiceNetworkPluginMode? NetworkPluginMode { get; set; }
         /// <summary> Network policy used for building the Kubernetes network. </summary>
         public ContainerServiceNetworkPolicy? NetworkPolicy { get; set; }
         /// <summary> This cannot be specified if networkPlugin is anything other than &apos;azure&apos;. </summary>
         public ContainerServiceNetworkMode? NetworkMode { get; set; }
+        /// <summary> The eBPF dataplane used for building the Kubernetes network. </summary>
+        public EbpfDataplane? EbpfDataplane { get; set; }
         /// <summary> A CIDR notation IP range from which to assign pod IPs when kubenet is used. </summary>
         public string PodCidr { get; set; }
         /// <summary> A CIDR notation IP range from which to assign service cluster IPs. It must not overlap with any Subnet IP ranges. </summary>
@@ -82,5 +92,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         public IList<string> ServiceCidrs { get; }
         /// <summary> IP families are used to determine single-stack or dual-stack clusters. For single-stack, the expected value is IPv4. For dual-stack, the expected values are IPv4 and IPv6. </summary>
         public IList<IPFamily> IPFamilies { get; }
+        /// <summary> Holds configuration customizations for kube-proxy. Any values not defined will use the kube-proxy defaulting behavior. See https://v&lt;version&gt;.docs.kubernetes.io/docs/reference/command-line-tools-reference/kube-proxy/ where &lt;version&gt; is represented by a &lt;major version&gt;-&lt;minor version&gt; string. Kubernetes version 1.23 would be &apos;1-23&apos;. </summary>
+        public ContainerServiceNetworkProfileKubeProxyConfig KubeProxyConfig { get; set; }
     }
 }

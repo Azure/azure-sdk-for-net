@@ -42,7 +42,7 @@ namespace Azure.Containers.ContainerRegistry.Specialized
         /// <param name="repository">The name of the repository that logically groups the artifact parts.</param>
         /// <exception cref="ArgumentNullException"> Thrown when the <paramref name="endpoint"/> or <paramref name="repository"/> is null. </exception>
         public ContainerRegistryBlobClient(Uri endpoint, string repository) :
-            this(endpoint, new ContainerRegistryAnonymousAccessCredential(), repository, new ContainerRegistryClientOptions())
+            this(endpoint,  repository, new ContainerRegistryAnonymousAccessCredential(), new ContainerRegistryClientOptions())
         {
         }
 
@@ -57,7 +57,7 @@ namespace Azure.Containers.ContainerRegistry.Specialized
         /// <param name="options">Client configuration options for connecting to Azure Container Registry.</param>
         /// <exception cref="ArgumentNullException"> Thrown when the <paramref name="endpoint"/> or <paramref name="repository"/> is null. </exception>
         public ContainerRegistryBlobClient(Uri endpoint, string repository, ContainerRegistryClientOptions options) :
-            this(endpoint, new ContainerRegistryAnonymousAccessCredential(), repository, options)
+            this(endpoint, repository, new ContainerRegistryAnonymousAccessCredential(), options)
         {
         }
 
@@ -70,7 +70,7 @@ namespace Azure.Containers.ContainerRegistry.Specialized
         /// against the container registry.  </param>
         /// <param name="repository">The name of the repository that logically groups the artifact parts.</param>
         /// <exception cref="ArgumentNullException"> Thrown when the <paramref name="endpoint"/>, <paramref name="credential"/>, or <paramref name="repository"/> is null. </exception>
-        public ContainerRegistryBlobClient(Uri endpoint, TokenCredential credential, string repository) : this(endpoint, credential, repository, new ContainerRegistryClientOptions())
+        public ContainerRegistryBlobClient(Uri endpoint, string repository, TokenCredential credential) : this(endpoint, repository, credential, new ContainerRegistryClientOptions())
         {
         }
 
@@ -84,7 +84,7 @@ namespace Azure.Containers.ContainerRegistry.Specialized
         /// <param name="repository">The name of the repository that logically groups the artifact parts.</param>
         /// <param name="options">Client configuration options for connecting to Azure Container Registry.</param>
         /// <exception cref="ArgumentNullException"> Thrown when the <paramref name="endpoint"/>, <paramref name="credential"/>, or <paramref name="repository"/> is null. </exception>
-        public ContainerRegistryBlobClient(Uri endpoint, TokenCredential credential, string repository, ContainerRegistryClientOptions options) : this(endpoint, credential, repository, null, options)
+        public ContainerRegistryBlobClient(Uri endpoint, string repository, TokenCredential credential, ContainerRegistryClientOptions options) : this(endpoint, credential, repository, null, options)
         {
         }
 
@@ -502,7 +502,15 @@ namespace Azure.Containers.ContainerRegistry.Specialized
                 rawResponse.Headers.TryGetValue("Content-Type", out string contentType);
 
                 var contentDigest = BlobHelper.ComputeDigest(rawResponse.ContentStream);
-                ValidateDigest(contentDigest, digest);
+
+                if (ReferenceIsDigest(tagOrDigest))
+                {
+                    ValidateDigest(contentDigest, tagOrDigest, "The digest of the received manifest does not match the requested digest reference.");
+                }
+                else
+                {
+                    ValidateDigest(contentDigest, digest);
+                }
 
                 return Response.FromValue(new DownloadManifestResult(digest, contentType, rawResponse.Content), rawResponse);
             }
@@ -537,7 +545,15 @@ namespace Azure.Containers.ContainerRegistry.Specialized
                 rawResponse.Headers.TryGetValue("Content-Type", out string contentType);
 
                 var contentDigest = BlobHelper.ComputeDigest(rawResponse.ContentStream);
-                ValidateDigest(contentDigest, digest);
+
+                if (ReferenceIsDigest(tagOrDigest))
+                {
+                    ValidateDigest(contentDigest, tagOrDigest, "The digest of the received manifest does not match the requested digest reference.");
+                }
+                else
+                {
+                    ValidateDigest(contentDigest, digest);
+                }
 
                 return Response.FromValue(new DownloadManifestResult(digest, contentType, rawResponse.Content), rawResponse);
             }
@@ -570,11 +586,18 @@ namespace Azure.Containers.ContainerRegistry.Specialized
             return sb.ToString();
         }
 
-        private static void ValidateDigest(string clientDigest, string serverDigest)
+        private static bool ReferenceIsDigest(string reference)
         {
+            return reference.StartsWith("sha256:", StringComparison.OrdinalIgnoreCase);
+        }
+
+        private static void ValidateDigest(string clientDigest, string serverDigest, string message = default)
+        {
+            message ??= "The server-computed digest does not match the client-computed digest.";
+
             if (!clientDigest.Equals(serverDigest, StringComparison.OrdinalIgnoreCase))
             {
-                throw new RequestFailedException("The server-computed digest does not match the client-computed digest.");
+                throw new RequestFailedException(message);
             }
         }
 

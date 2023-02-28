@@ -1,0 +1,207 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://sdk2319.openai.azure.com/openai/deployments/text-davinci-002/completions?api-version=2022-12-01",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "api-key": "***********",
+        "Content-Length": "205",
+        "Content-Type": "application/json",
+        "traceparent": "00-101601e20905ceb746d8e51f3694431a-5f4d05a17a55466a-00",
+        "User-Agent": "azsdk-net-AI.OpenAI/1.0.0-alpha.20230217.1 (.NET 7.0.2; Microsoft Windows 10.0.22623)",
+        "x-ms-client-request-id": "674c0213d8ac059da4fdcec23ec77316",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "prompt": [
+          "Are bananas especially radioactive?"
+        ],
+        "temperature": 0.75,
+        "user": "AzureSDKOpenAITests",
+        "logprobs": 1,
+        "model": "this is a bogus model parameter in the body",
+        "echo": true,
+        "cache_level": 0,
+        "best_of": 3
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Access-Control-Allow-Origin": "*",
+        "apim-request-id": "eeed481f-92a8-48fe-890d-2e2a6a063266",
+        "Cache-Control": "must-revalidate, no-cache",
+        "Content-Length": "1417",
+        "Content-Type": "application/json",
+        "Date": "Fri, 17 Feb 2023 18:47:27 GMT",
+        "openai-model": "text-davinci-002",
+        "openai-processing-ms": "437.5479",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "x-accel-buffering": "no",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "674c0213d8ac059da4fdcec23ec77316",
+        "x-ms-region": "West Europe",
+        "X-Request-ID": "90819e8c-b27a-4a67-b1df-753efaf1fcbf"
+      },
+      "ResponseBody": {
+        "id": "cmpl-6l03TNLpDJt2vpOMyP82lnPorYZ7Y",
+        "object": "text_completion",
+        "created": 1676659647,
+        "model": "text-davinci-002",
+        "choices": [
+          {
+            "text": "Are bananas especially radioactive?\n\nThere is no scientific evidence to suggest that bananas are radioactive. While bananas",
+            "index": 0,
+            "logprobs": {
+              "tokens": [
+                "Are",
+                " bananas",
+                " especially",
+                " radioactive",
+                "?",
+                "\n",
+                "\n",
+                "There",
+                " is",
+                " no",
+                " scientific",
+                " evidence",
+                " to",
+                " suggest",
+                " that",
+                " bananas",
+                " are",
+                " radioactive",
+                ".",
+                " While",
+                " bananas"
+              ],
+              "token_logprobs": [
+                null,
+                -14.24502,
+                -11.104932,
+                -6.384836,
+                -0.06387941,
+                -0.00042090964,
+                -8.296486e-6,
+                -0.7865527,
+                -0.0007318678,
+                -0.00069768965,
+                -0.5150181,
+                -0.0021184618,
+                -0.07509388,
+                -0.43065464,
+                -0.0023568186,
+                -0.00024036579,
+                -0.012792068,
+                -1.5214678,
+                -0.00002272356,
+                -0.5551019,
+                -0.5472735
+              ],
+              "top_logprobs": [
+                null,
+                {
+                  " you": -0.5478203
+                },
+                {
+                  " good": -1.2670707
+                },
+                {
+                  " good": -0.6982347
+                },
+                {
+                  "?": -0.06387941
+                },
+                {
+                  "\n": -0.00042090964
+                },
+                {
+                  "\n": -8.296486e-6
+                },
+                {
+                  "There": -0.7865527
+                },
+                {
+                  " is": -0.0007318678
+                },
+                {
+                  " no": -0.00069768965
+                },
+                {
+                  " scientific": -0.5150181
+                },
+                {
+                  " evidence": -0.0021184618
+                },
+                {
+                  " to": -0.07509388
+                },
+                {
+                  " suggest": -0.43065464
+                },
+                {
+                  " that": -0.0023568186
+                },
+                {
+                  " bananas": -0.00024036579
+                },
+                {
+                  " are": -0.012792068
+                },
+                {
+                  " especially": -0.74213463
+                },
+                {
+                  ".": -0.00002272356
+                },
+                {
+                  " While": -0.5551019
+                },
+                {
+                  " bananas": -0.5472735
+                }
+              ],
+              "text_offset": [
+                0,
+                3,
+                11,
+                22,
+                34,
+                35,
+                36,
+                37,
+                42,
+                45,
+                48,
+                59,
+                68,
+                71,
+                79,
+                84,
+                92,
+                96,
+                108,
+                109,
+                115
+              ]
+            },
+            "finish_reason": "length"
+          }
+        ],
+        "usage": {
+          "prompt_tokens": 5,
+          "completion_tokens": 42,
+          "total_tokens": 47
+        }
+      }
+    }
+  ],
+  "Variables": {
+    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
+    "OPENAI_DEPLOYMENT_ID": "text-davinci-002",
+    "OPENAI_EMBEDDINGS_DEPLOYMENT_ID": "text-similarity-davinci-001",
+    "OPENAI_ENDPOINT": "https://sdk2319.openai.azure.com/",
+    "RandomSeed": "12066190",
+    "SUBSCRIPTION_ID": "e72e5254-f265-4e95-9bd2-9ee8e7329051"
+  }
+}

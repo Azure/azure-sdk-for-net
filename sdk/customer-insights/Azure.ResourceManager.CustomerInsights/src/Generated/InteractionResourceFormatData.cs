@@ -13,7 +13,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.CustomerInsights
 {
-    /// <summary> A class representing the InteractionResourceFormat data model. </summary>
+    /// <summary>
+    /// A class representing the InteractionResourceFormat data model.
+    /// The interaction resource format.
+    /// </summary>
     public partial class InteractionResourceFormatData : ResourceData
     {
         /// <summary> Initializes a new instance of InteractionResourceFormatData. </summary>

@@ -12,7 +12,10 @@ using Azure.ResourceManager.NetApp.Models;
 
 namespace Azure.ResourceManager.NetApp
 {
-    /// <summary> A class representing the NetAppVolumeGroup data model. </summary>
+    /// <summary>
+    /// A class representing the NetAppVolumeGroup data model.
+    /// Volume group resource for create
+    /// </summary>
     public partial class NetAppVolumeGroupData : ResourceData
     {
         /// <summary> Initializes a new instance of NetAppVolumeGroupData. </summary>

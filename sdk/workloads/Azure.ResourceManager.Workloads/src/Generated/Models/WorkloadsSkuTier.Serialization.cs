@@ -22,10 +22,10 @@ namespace Azure.ResourceManager.Workloads.Models
 
         public static WorkloadsSkuTier ToWorkloadsSkuTier(this string value)
         {
-            if (string.Equals(value, "Free", StringComparison.InvariantCultureIgnoreCase)) return WorkloadsSkuTier.Free;
-            if (string.Equals(value, "Basic", StringComparison.InvariantCultureIgnoreCase)) return WorkloadsSkuTier.Basic;
-            if (string.Equals(value, "Standard", StringComparison.InvariantCultureIgnoreCase)) return WorkloadsSkuTier.Standard;
-            if (string.Equals(value, "Premium", StringComparison.InvariantCultureIgnoreCase)) return WorkloadsSkuTier.Premium;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Free")) return WorkloadsSkuTier.Free;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Basic")) return WorkloadsSkuTier.Basic;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Standard")) return WorkloadsSkuTier.Standard;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Premium")) return WorkloadsSkuTier.Premium;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown WorkloadsSkuTier value.");
         }
     }

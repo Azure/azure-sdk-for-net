@@ -210,22 +210,9 @@ namespace Azure.Storage.Blobs.Test
                 _async,
                 s_cancellationToken)
             ).Returns<HttpRange, BlobRequestConditions, DownloadTransferValidationOptions, IProgress<long>, string, bool, CancellationToken>(
-                (range, conditions, validation, progress, operationName, async, cancellation) =>
-                {
-                    return async
-                        ? dataSource.GetStreamAsync(
-                            range,
-                            conditions,
-                            validation,
-                            progress: progress,
-                            cancellation)
-                        : Task.FromResult(dataSource.GetStream(
-                            range,
-                            conditions,
-                            validation,
-                            progress: progress,
-                            cancellation));
-                });
+                (range, conditions, validation, progress, operationName, async, cancellation) => async
+                    ? dataSource.GetStreamAsync(range, conditions, validation, progress: progress, cancellation)
+                    : new ValueTask<Response<BlobDownloadStreamingResult>>(dataSource.GetStream(range, conditions, validation, progress: progress, cancellation)));
         }
 
         private async Task<Response> InvokeDownloadToAsync(PartitionedDownloader downloader, Stream stream)
@@ -272,7 +259,7 @@ namespace Azure.Storage.Blobs.Test
                     cancellationToken);
             }
 
-            public async Task<Response<BlobDownloadStreamingResult>> GetStreamAsync(HttpRange range, BlobRequestConditions conditions = default, DownloadTransferValidationOptions validation = default, IProgress<long> progress = default, CancellationToken token = default)
+            public async ValueTask<Response<BlobDownloadStreamingResult>> GetStreamAsync(HttpRange range, BlobRequestConditions conditions = default, DownloadTransferValidationOptions validation = default, IProgress<long> progress = default, CancellationToken token = default)
             {
                 await Task.Delay(25);
                 return GetStream(range, conditions, validation, progress, token);

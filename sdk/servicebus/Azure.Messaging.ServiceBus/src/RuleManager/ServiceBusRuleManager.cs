@@ -10,6 +10,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.Core.Shared;
 using Azure.Messaging.ServiceBus.Core;
 using Azure.Messaging.ServiceBus.Diagnostics;
 using Azure.Messaging.ServiceBus.Administration;
@@ -72,7 +73,7 @@ namespace Azure.Messaging.ServiceBus
         /// <summary>
         /// Responsible for creating entity scopes.
         /// </summary>
-        private readonly EntityScopeFactory _scopeFactory;
+        private readonly MessagingClientDiagnostics _clientDiagnostics;
 
         private const int MaxRulesPerRequest = 100;
 
@@ -99,7 +100,12 @@ namespace Azure.Messaging.ServiceBus
                 subscriptionPath: SubscriptionPath,
                 retryPolicy: connection.RetryOptions.ToRetryPolicy(),
                 identifier: Identifier);
-            _scopeFactory = new EntityScopeFactory(subscriptionPath, _connection.FullyQualifiedNamespace);
+            _clientDiagnostics = new MessagingClientDiagnostics(
+                DiagnosticProperty.DiagnosticNamespace,
+                DiagnosticProperty.ResourceProviderNamespace,
+                DiagnosticProperty.ServiceBusServiceContext,
+                FullyQualifiedNamespace,
+                SubscriptionPath);
         }
 
         /// <summary>
@@ -157,7 +163,7 @@ namespace Azure.Messaging.ServiceBus
             EntityNameFormatter.CheckValidRuleName(options.Name);
             ServiceBusEventSource.Log.CreateRuleStart(Identifier, options.Name);
 
-            using DiagnosticScope scope = _scopeFactory.CreateScope(
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope(
                 DiagnosticProperty.CreateRuleActivityName,
                 DiagnosticScope.ActivityKind.Client);
             scope.Start();
@@ -175,7 +181,6 @@ namespace Azure.Messaging.ServiceBus
                 throw;
             }
 
-            cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
             ServiceBusEventSource.Log.CreateRuleComplete(Identifier, options.Name);
         }
 
@@ -196,7 +201,7 @@ namespace Azure.Messaging.ServiceBus
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
             ServiceBusEventSource.Log.DeleteRuleStart(Identifier, ruleName);
 
-            using DiagnosticScope scope = _scopeFactory.CreateScope(
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope(
                 DiagnosticProperty.DeleteRuleActivityName,
                 DiagnosticScope.ActivityKind.Client);
             scope.Start();
@@ -233,7 +238,7 @@ namespace Azure.Messaging.ServiceBus
             while (!cancellationToken.IsCancellationRequested)
             {
                 List<RuleProperties> ruleProperties;
-                using (DiagnosticScope scope = _scopeFactory.CreateScope(
+                using (DiagnosticScope scope = _clientDiagnostics.CreateScope(
                     DiagnosticProperty.GetRulesActivityName,
                     DiagnosticScope.ActivityKind.Client))
                 {

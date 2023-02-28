@@ -11,7 +11,10 @@ using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> A class representing the ExpressRoutePortsLocation data model. </summary>
+    /// <summary>
+    /// A class representing the ExpressRoutePortsLocation data model.
+    /// Definition of the ExpressRoutePorts peering location resource.
+    /// </summary>
     public partial class ExpressRoutePortsLocationData : NetworkTrackedResourceData
     {
         /// <summary> Initializes a new instance of ExpressRoutePortsLocationData. </summary>

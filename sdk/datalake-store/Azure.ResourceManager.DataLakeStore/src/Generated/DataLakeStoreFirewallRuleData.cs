@@ -11,7 +11,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataLakeStore
 {
-    /// <summary> A class representing the DataLakeStoreFirewallRule data model. </summary>
+    /// <summary>
+    /// A class representing the DataLakeStoreFirewallRule data model.
+    /// Data Lake Store firewall rule information.
+    /// </summary>
     public partial class DataLakeStoreFirewallRuleData : ResourceData
     {
         /// <summary> Initializes a new instance of DataLakeStoreFirewallRuleData. </summary>
