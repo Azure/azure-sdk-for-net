@@ -21,6 +21,7 @@ namespace Azure.ResourceManager.Resources.Models
             Optional<IReadOnlyList<ResourceTypeAlias>> aliases = default;
             Optional<IReadOnlyList<string>> apiVersions = default;
             Optional<string> defaultApiVersion = default;
+            Optional<IReadOnlyList<ZoneMapping>> zoneMappings = default;
             Optional<IReadOnlyList<ApiProfile>> apiProfiles = default;
             Optional<string> capabilities = default;
             Optional<IReadOnlyDictionary<string, string>> properties = default;
@@ -96,6 +97,21 @@ namespace Azure.ResourceManager.Resources.Models
                     defaultApiVersion = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("zoneMappings"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    List<ZoneMapping> array = new List<ZoneMapping>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(ZoneMapping.DeserializeZoneMapping(item));
+                    }
+                    zoneMappings = array;
+                    continue;
+                }
                 if (property.NameEquals("apiProfiles"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -132,7 +148,7 @@ namespace Azure.ResourceManager.Resources.Models
                     continue;
                 }
             }
-            return new ProviderResourceType(resourceType.Value, Optional.ToList(locations), Optional.ToList(locationMappings), Optional.ToList(aliases), Optional.ToList(apiVersions), defaultApiVersion.Value, Optional.ToList(apiProfiles), capabilities.Value, Optional.ToDictionary(properties));
+            return new ProviderResourceType(resourceType.Value, Optional.ToList(locations), Optional.ToList(locationMappings), Optional.ToList(aliases), Optional.ToList(apiVersions), defaultApiVersion.Value, Optional.ToList(zoneMappings), Optional.ToList(apiProfiles), capabilities.Value, Optional.ToDictionary(properties));
         }
     }
 }

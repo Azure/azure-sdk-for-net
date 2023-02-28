@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ContainerRegistry
 {
-    /// <summary> A class representing the ContainerRegistryToken data model. </summary>
+    /// <summary>
+    /// A class representing the ContainerRegistryToken data model.
+    /// An object that represents a token for a container registry.
+    /// </summary>
     public partial class ContainerRegistryTokenData : ResourceData
     {
         /// <summary> Initializes a new instance of ContainerRegistryTokenData. </summary>

@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.DataLakeStore.Models
 
         public static DataLakeStoreEncryptionProvisioningState ToDataLakeStoreEncryptionProvisioningState(this string value)
         {
-            if (string.Equals(value, "Creating", StringComparison.InvariantCultureIgnoreCase)) return DataLakeStoreEncryptionProvisioningState.Creating;
-            if (string.Equals(value, "Succeeded", StringComparison.InvariantCultureIgnoreCase)) return DataLakeStoreEncryptionProvisioningState.Succeeded;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Creating")) return DataLakeStoreEncryptionProvisioningState.Creating;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Succeeded")) return DataLakeStoreEncryptionProvisioningState.Succeeded;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown DataLakeStoreEncryptionProvisioningState value.");
         }
     }

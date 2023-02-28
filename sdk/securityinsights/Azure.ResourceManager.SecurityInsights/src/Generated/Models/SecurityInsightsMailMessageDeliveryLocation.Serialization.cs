@@ -27,15 +27,15 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         public static SecurityInsightsMailMessageDeliveryLocation ToSecurityInsightsMailMessageDeliveryLocation(this string value)
         {
-            if (string.Equals(value, "Unknown", StringComparison.InvariantCultureIgnoreCase)) return SecurityInsightsMailMessageDeliveryLocation.Unknown;
-            if (string.Equals(value, "Inbox", StringComparison.InvariantCultureIgnoreCase)) return SecurityInsightsMailMessageDeliveryLocation.Inbox;
-            if (string.Equals(value, "JunkFolder", StringComparison.InvariantCultureIgnoreCase)) return SecurityInsightsMailMessageDeliveryLocation.JunkFolder;
-            if (string.Equals(value, "DeletedFolder", StringComparison.InvariantCultureIgnoreCase)) return SecurityInsightsMailMessageDeliveryLocation.DeletedFolder;
-            if (string.Equals(value, "Quarantine", StringComparison.InvariantCultureIgnoreCase)) return SecurityInsightsMailMessageDeliveryLocation.Quarantine;
-            if (string.Equals(value, "External", StringComparison.InvariantCultureIgnoreCase)) return SecurityInsightsMailMessageDeliveryLocation.External;
-            if (string.Equals(value, "Failed", StringComparison.InvariantCultureIgnoreCase)) return SecurityInsightsMailMessageDeliveryLocation.Failed;
-            if (string.Equals(value, "Dropped", StringComparison.InvariantCultureIgnoreCase)) return SecurityInsightsMailMessageDeliveryLocation.Dropped;
-            if (string.Equals(value, "Forwarded", StringComparison.InvariantCultureIgnoreCase)) return SecurityInsightsMailMessageDeliveryLocation.Forwarded;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Unknown")) return SecurityInsightsMailMessageDeliveryLocation.Unknown;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Inbox")) return SecurityInsightsMailMessageDeliveryLocation.Inbox;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "JunkFolder")) return SecurityInsightsMailMessageDeliveryLocation.JunkFolder;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "DeletedFolder")) return SecurityInsightsMailMessageDeliveryLocation.DeletedFolder;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Quarantine")) return SecurityInsightsMailMessageDeliveryLocation.Quarantine;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "External")) return SecurityInsightsMailMessageDeliveryLocation.External;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Failed")) return SecurityInsightsMailMessageDeliveryLocation.Failed;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Dropped")) return SecurityInsightsMailMessageDeliveryLocation.Dropped;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Forwarded")) return SecurityInsightsMailMessageDeliveryLocation.Forwarded;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown SecurityInsightsMailMessageDeliveryLocation value.");
         }
     }

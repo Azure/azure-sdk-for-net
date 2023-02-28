@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.AppService.Models
 
         public static AppServiceResourceType ToAppServiceResourceType(this string value)
         {
-            if (string.Equals(value, "Website", StringComparison.InvariantCultureIgnoreCase)) return AppServiceResourceType.Website;
-            if (string.Equals(value, "TrafficManager", StringComparison.InvariantCultureIgnoreCase)) return AppServiceResourceType.TrafficManager;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Website")) return AppServiceResourceType.Website;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "TrafficManager")) return AppServiceResourceType.TrafficManager;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown AppServiceResourceType value.");
         }
     }

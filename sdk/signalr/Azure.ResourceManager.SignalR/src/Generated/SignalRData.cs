@@ -12,7 +12,10 @@ using Azure.ResourceManager.SignalR.Models;
 
 namespace Azure.ResourceManager.SignalR
 {
-    /// <summary> A class representing the SignalR data model. </summary>
+    /// <summary>
+    /// A class representing the SignalR data model.
+    /// A class represent a resource.
+    /// </summary>
     public partial class SignalRData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of SignalRData. </summary>

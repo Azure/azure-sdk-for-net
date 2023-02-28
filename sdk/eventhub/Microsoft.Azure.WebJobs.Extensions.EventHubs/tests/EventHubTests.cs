@@ -190,6 +190,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
                 {
                     c.AddInMemoryCollection(new Dictionary<string, string>
                     {
+                        { "AzureWebJobs:extensions:EventHubs:TargetUnprocessedEventThreshold", "300"},
                         { "AzureWebJobs:extensions:EventHubs:EventProcessorOptions:MaxBatchSize", "100" },
                         { "AzureWebJobs:extensions:EventHubs:EventProcessorOptions:PrefetchCount", "200" },
                         { "AzureWebJobs:extensions:EventHubs:BatchCheckpointFrequency", "5" },
@@ -205,6 +206,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
             var options = host.Services.GetService<IOptions<EventHubOptions>>().Value;
 
             var eventProcessorOptions = options.EventProcessorOptions;
+            Assert.AreEqual(300, options.TargetUnprocessedEventThreshold);
             Assert.AreEqual(200, eventProcessorOptions.PrefetchCount);
             Assert.AreEqual(5, options.BatchCheckpointFrequency);
             Assert.AreEqual(100, options.MaxEventBatchSize);

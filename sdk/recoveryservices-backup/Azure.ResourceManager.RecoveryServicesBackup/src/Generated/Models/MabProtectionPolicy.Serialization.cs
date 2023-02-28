@@ -48,8 +48,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         internal static MabProtectionPolicy DeserializeMabProtectionPolicy(JsonElement element)
         {
-            Optional<SchedulePolicy> schedulePolicy = default;
-            Optional<RetentionPolicy> retentionPolicy = default;
+            Optional<BackupSchedulePolicy> schedulePolicy = default;
+            Optional<BackupRetentionPolicy> retentionPolicy = default;
             Optional<int> protectedItemsCount = default;
             string backupManagementType = default;
             Optional<IList<string>> resourceGuardOperationRequests = default;
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    schedulePolicy = SchedulePolicy.DeserializeSchedulePolicy(property.Value);
+                    schedulePolicy = BackupSchedulePolicy.DeserializeBackupSchedulePolicy(property.Value);
                     continue;
                 }
                 if (property.NameEquals("retentionPolicy"u8))
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    retentionPolicy = RetentionPolicy.DeserializeRetentionPolicy(property.Value);
+                    retentionPolicy = BackupRetentionPolicy.DeserializeBackupRetentionPolicy(property.Value);
                     continue;
                 }
                 if (property.NameEquals("protectedItemsCount"u8))

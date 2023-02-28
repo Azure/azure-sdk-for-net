@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AlertsManagement
 {
-    /// <summary> A class representing the AlertProcessingRule data model. </summary>
+    /// <summary>
+    /// A class representing the AlertProcessingRule data model.
+    /// Alert processing rule object containing target scopes, conditions and scheduling logic.
+    /// </summary>
     public partial class AlertProcessingRuleData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of AlertProcessingRuleData. </summary>

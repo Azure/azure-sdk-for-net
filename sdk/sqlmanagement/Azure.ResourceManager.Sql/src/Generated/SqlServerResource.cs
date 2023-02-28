@@ -641,7 +641,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="SqlServerAutomaticTuningResource" /> object. </returns>
         public virtual SqlServerAutomaticTuningResource GetSqlServerAutomaticTuning()
         {
-            return new SqlServerAutomaticTuningResource(Client, new ResourceIdentifier(Id.ToString() + "/automaticTuning/current"));
+            return new SqlServerAutomaticTuningResource(Client, Id.AppendChildResource("automaticTuning", "current"));
         }
 
         /// <summary> Gets a collection of SqlServerAzureADAdministratorResources in the SqlServer. </summary>

@@ -99,6 +99,7 @@ namespace Azure.Storage.DataMovement
         /// Transfer Status for the job.
         /// </summary>
         internal StorageTransferStatus _transferStatus;
+        private object _statusLock = new object();
 
         /// <summary>
         /// To help set the job status when all job parts have completed.
@@ -314,10 +315,19 @@ namespace Azure.Storage.DataMovement
 
         public async Task OnJobStatusChangedAsync(StorageTransferStatus status)
         {
-            //TODO: change to RaiseAsync after implementing ClientDiagnostics for TransferManager
-            if (_transferStatus != status)
+            bool statusChanged = false;
+            lock (_statusLock)
             {
-                _transferStatus = status;
+                //TODO: change to RaiseAsync after implementing ClientDiagnostics for TransferManager
+                if (_transferStatus != status)
+                {
+                    statusChanged = true;
+                    _transferStatus = status;
+                }
+                _dataTransfer._state.SetTransferStatus(status);
+            }
+            if (statusChanged)
+            {
                 if (TransferStatusEventHandler != null)
                 {
                     await TransferStatusEventHandler.Invoke(
@@ -327,7 +337,6 @@ namespace Azure.Storage.DataMovement
                             isRunningSynchronously: false,
                             cancellationToken: _cancellationTokenSource.Token)).ConfigureAwait(false);
                 }
-                await _dataTransfer._state.SetTransferStatus(status).ConfigureAwait(false);
             }
         }
 

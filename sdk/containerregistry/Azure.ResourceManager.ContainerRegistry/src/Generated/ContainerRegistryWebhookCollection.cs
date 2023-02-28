@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.ContainerRegistry
             try
             {
                 var response = await _containerRegistryWebhookWebhooksRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, webhookName, content, cancellationToken).ConfigureAwait(false);
-                var operation = new ContainerRegistryArmOperation<ContainerRegistryWebhookResource>(new ContainerRegistryWebhookOperationSource(Client), _containerRegistryWebhookWebhooksClientDiagnostics, Pipeline, _containerRegistryWebhookWebhooksRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, webhookName, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new ContainerRegistryArmOperation<ContainerRegistryWebhookResource>(new ContainerRegistryWebhookOperationSource(Client), _containerRegistryWebhookWebhooksClientDiagnostics, Pipeline, _containerRegistryWebhookWebhooksRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, webhookName, content).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.ContainerRegistry
             try
             {
                 var response = _containerRegistryWebhookWebhooksRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, webhookName, content, cancellationToken);
-                var operation = new ContainerRegistryArmOperation<ContainerRegistryWebhookResource>(new ContainerRegistryWebhookOperationSource(Client), _containerRegistryWebhookWebhooksClientDiagnostics, Pipeline, _containerRegistryWebhookWebhooksRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, webhookName, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new ContainerRegistryArmOperation<ContainerRegistryWebhookResource>(new ContainerRegistryWebhookOperationSource(Client), _containerRegistryWebhookWebhooksClientDiagnostics, Pipeline, _containerRegistryWebhookWebhooksRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, webhookName, content).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

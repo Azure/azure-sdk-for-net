@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ApiManagement
 {
-    /// <summary> A class representing the ApiManagementCertificate data model. </summary>
+    /// <summary>
+    /// A class representing the ApiManagementCertificate data model.
+    /// Certificate details.
+    /// </summary>
     public partial class ApiManagementCertificateData : ResourceData
     {
         /// <summary> Initializes a new instance of ApiManagementCertificateData. </summary>

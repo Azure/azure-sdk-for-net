@@ -11,7 +11,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Synapse
 {
-    /// <summary> A class representing the SynapseRestorableDroppedSqlPool data model. </summary>
+    /// <summary>
+    /// A class representing the SynapseRestorableDroppedSqlPool data model.
+    /// A restorable dropped Sql pool
+    /// </summary>
     public partial class SynapseRestorableDroppedSqlPoolData : ResourceData
     {
         /// <summary> Initializes a new instance of SynapseRestorableDroppedSqlPoolData. </summary>

@@ -13,7 +13,10 @@ using Azure.ResourceManager.RedisEnterprise.Models;
 
 namespace Azure.ResourceManager.RedisEnterprise
 {
-    /// <summary> A class representing the RedisEnterpriseCluster data model. </summary>
+    /// <summary>
+    /// A class representing the RedisEnterpriseCluster data model.
+    /// Describes the RedisEnterprise cluster
+    /// </summary>
     public partial class RedisEnterpriseClusterData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of RedisEnterpriseClusterData. </summary>

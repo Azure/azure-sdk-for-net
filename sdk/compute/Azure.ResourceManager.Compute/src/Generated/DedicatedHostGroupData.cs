@@ -13,7 +13,10 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute
 {
-    /// <summary> A class representing the DedicatedHostGroup data model. </summary>
+    /// <summary>
+    /// A class representing the DedicatedHostGroup data model.
+    /// Specifies information about the dedicated host group that the dedicated hosts should be assigned to. &lt;br&gt;&lt;br&gt; Currently, a dedicated host can only be added to a dedicated host group at creation time. An existing dedicated host cannot be added to another dedicated host group.
+    /// </summary>
     public partial class DedicatedHostGroupData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of DedicatedHostGroupData. </summary>

@@ -94,6 +94,7 @@ namespace Azure.Core.Tests
         public void ParentIdCanBeSet()
         {
             string parentId = "parentId";
+            string tracestate = "state";
             using var testListener = new TestDiagnosticListener("Azure.Clients");
 
             DiagnosticScopeFactory clientDiagnostics = new DiagnosticScopeFactory(
@@ -103,10 +104,11 @@ namespace Azure.Core.Tests
                 false);
 
             using DiagnosticScope scope = clientDiagnostics.CreateScope("ActivityName");
-            scope.SetTraceparent(parentId);
+            scope.SetTraceContext(parentId, tracestate);
             scope.Start();
 
             Assert.AreEqual(parentId, Activity.Current.ParentId);
+            Assert.AreEqual(tracestate, Activity.Current.TraceStateString);
         }
 
         [Test]
@@ -123,7 +125,7 @@ namespace Azure.Core.Tests
 
             using DiagnosticScope scope = clientDiagnostics.CreateScope("ActivityName");
             scope.Start();
-            Assert.Throws<InvalidOperationException>(() => scope.SetTraceparent(parentId));
+            Assert.Throws<InvalidOperationException>(() => scope.SetTraceContext(parentId));
         }
 
         [Test]

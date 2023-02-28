@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(Protected))
+            if (Optional.IsDefined(IsProtected))
             {
                 writer.WritePropertyName("protected"u8);
-                writer.WriteBooleanValue(Protected.Value);
+                writer.WriteBooleanValue(IsProtected.Value);
             }
             if (Optional.IsDefined(IsPresentOnCloud))
             {
@@ -48,25 +48,25 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 writer.WritePropertyName("lastRefreshedAt"u8);
                 writer.WriteStringValue(LastRefreshedOn.Value, "O");
             }
-            if (Optional.IsDefined(OldestRecoveryPoint))
+            if (Optional.IsDefined(OldestRecoverOn))
             {
                 writer.WritePropertyName("oldestRecoveryPoint"u8);
-                writer.WriteStringValue(OldestRecoveryPoint.Value, "O");
+                writer.WriteStringValue(OldestRecoverOn.Value, "O");
             }
             if (Optional.IsDefined(RecoveryPointCount))
             {
                 writer.WritePropertyName("recoveryPointCount"u8);
                 writer.WriteNumberValue(RecoveryPointCount.Value);
             }
-            if (Optional.IsDefined(OnPremiseOldestRecoveryPoint))
+            if (Optional.IsDefined(OnPremiseOldestRecoverOn))
             {
                 writer.WritePropertyName("onPremiseOldestRecoveryPoint"u8);
-                writer.WriteStringValue(OnPremiseOldestRecoveryPoint.Value, "O");
+                writer.WriteStringValue(OnPremiseOldestRecoverOn.Value, "O");
             }
-            if (Optional.IsDefined(OnPremiseLatestRecoveryPoint))
+            if (Optional.IsDefined(OnPremiseLatestRecoverOn))
             {
                 writer.WritePropertyName("onPremiseLatestRecoveryPoint"u8);
-                writer.WriteStringValue(OnPremiseLatestRecoveryPoint.Value, "O");
+                writer.WriteStringValue(OnPremiseLatestRecoverOn.Value, "O");
             }
             if (Optional.IsDefined(OnPremiseRecoveryPointCount))
             {

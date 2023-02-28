@@ -10,6 +10,17 @@
 
 ### Other Changes
 
+## 1.0.1 (2023-02-20)
+
+### Features Added
+
+- Introduced property bag for the methods with more than 5 parameters.
+
+### Other Changes
+
+- Upgraded dependent `Azure.Core` to `1.28.0`.
+- Upgraded dependent `Azure.ResourceManager` to `1.4.0`.
+
 ## 1.0.0 (2022-09-19)
 
 This release is the first stable release of the AlertsManagement Management client library.

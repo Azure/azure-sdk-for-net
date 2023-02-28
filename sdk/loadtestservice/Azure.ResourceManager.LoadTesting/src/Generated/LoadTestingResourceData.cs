@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.LoadTesting
 {
-    /// <summary> A class representing the LoadTestingResource data model. </summary>
+    /// <summary>
+    /// A class representing the LoadTestingResource data model.
+    /// LoadTest details
+    /// </summary>
     public partial class LoadTestingResourceData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of LoadTestingResourceData. </summary>

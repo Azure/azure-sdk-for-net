@@ -10,7 +10,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ApiManagement
 {
-    /// <summary> A class representing the ApiManagementPortalSignInSetting data model. </summary>
+    /// <summary>
+    /// A class representing the ApiManagementPortalSignInSetting data model.
+    /// Sign-In settings for the Developer Portal.
+    /// </summary>
     public partial class ApiManagementPortalSignInSettingData : ResourceData
     {
         /// <summary> Initializes a new instance of ApiManagementPortalSignInSettingData. </summary>

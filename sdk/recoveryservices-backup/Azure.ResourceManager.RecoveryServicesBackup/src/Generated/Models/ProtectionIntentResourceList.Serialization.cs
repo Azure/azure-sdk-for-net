@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     {
         internal static ProtectionIntentResourceList DeserializeProtectionIntentResourceList(JsonElement element)
         {
-            Optional<IReadOnlyList<ProtectionIntentResourceData>> value = default;
+            Optional<IReadOnlyList<BackupProtectionIntentData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<ProtectionIntentResourceData> array = new List<ProtectionIntentResourceData>();
+                    List<BackupProtectionIntentData> array = new List<BackupProtectionIntentData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ProtectionIntentResourceData.DeserializeProtectionIntentResourceData(item));
+                        array.Add(BackupProtectionIntentData.DeserializeBackupProtectionIntentData(item));
                     }
                     value = array;
                     continue;

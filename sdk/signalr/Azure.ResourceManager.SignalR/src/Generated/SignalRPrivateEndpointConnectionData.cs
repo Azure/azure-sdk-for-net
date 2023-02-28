@@ -13,7 +13,10 @@ using Azure.ResourceManager.SignalR.Models;
 
 namespace Azure.ResourceManager.SignalR
 {
-    /// <summary> A class representing the SignalRPrivateEndpointConnection data model. </summary>
+    /// <summary>
+    /// A class representing the SignalRPrivateEndpointConnection data model.
+    /// A private endpoint connection to an azure resource
+    /// </summary>
     public partial class SignalRPrivateEndpointConnectionData : ResourceData
     {
         /// <summary> Initializes a new instance of SignalRPrivateEndpointConnectionData. </summary>

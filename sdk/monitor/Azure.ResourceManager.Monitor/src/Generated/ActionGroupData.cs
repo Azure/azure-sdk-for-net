@@ -12,7 +12,10 @@ using Azure.ResourceManager.Monitor.Models;
 
 namespace Azure.ResourceManager.Monitor
 {
-    /// <summary> A class representing the ActionGroup data model. </summary>
+    /// <summary>
+    /// A class representing the ActionGroup data model.
+    /// An action group resource.
+    /// </summary>
     public partial class ActionGroupData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of ActionGroupData. </summary>

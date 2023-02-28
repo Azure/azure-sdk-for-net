@@ -23,8 +23,16 @@ namespace Azure.ResourceManager.DataProtectionBackup
     {
         /// <summary>
         /// Updates a ResourceGuard resource belonging to a resource group. For example, updating tags for a resource.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/resourceGuards/{resourceGuardsName}
-        /// Operation Id: ResourceGuards_Patch
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/resourceGuards/{resourceGuardsName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ResourceGuards_Patch</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="patch"> Request body for operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -44,8 +52,16 @@ namespace Azure.ResourceManager.DataProtectionBackup
 
         /// <summary>
         /// Updates a ResourceGuard resource belonging to a resource group. For example, updating tags for a resource.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/resourceGuards/{resourceGuardsName}
-        /// Operation Id: ResourceGuards_Patch
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/resourceGuards/{resourceGuardsName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ResourceGuards_Patch</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="patch"> Request body for operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

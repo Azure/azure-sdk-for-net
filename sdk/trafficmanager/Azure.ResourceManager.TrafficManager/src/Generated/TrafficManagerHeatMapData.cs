@@ -12,7 +12,10 @@ using Azure.ResourceManager.TrafficManager.Models;
 
 namespace Azure.ResourceManager.TrafficManager
 {
-    /// <summary> A class representing the TrafficManagerHeatMap data model. </summary>
+    /// <summary>
+    /// A class representing the TrafficManagerHeatMap data model.
+    /// Class representing a Traffic Manager HeatMap.
+    /// </summary>
     public partial class TrafficManagerHeatMapData : TrafficManagerProxyResourceData
     {
         /// <summary> Initializes a new instance of TrafficManagerHeatMapData. </summary>

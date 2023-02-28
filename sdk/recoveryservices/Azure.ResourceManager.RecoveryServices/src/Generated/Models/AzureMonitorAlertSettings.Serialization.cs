@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
 
         internal static AzureMonitorAlertSettings DeserializeAzureMonitorAlertSettings(JsonElement element)
         {
-            Optional<AlertsState> alertsForAllJobFailures = default;
+            Optional<RecoveryServicesAlertsState> alertsForAllJobFailures = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("alertsForAllJobFailures"u8))
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    alertsForAllJobFailures = new AlertsState(property.Value.GetString());
+                    alertsForAllJobFailures = new RecoveryServicesAlertsState(property.Value.GetString());
                     continue;
                 }
             }

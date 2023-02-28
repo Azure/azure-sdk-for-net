@@ -8,6 +8,7 @@ using System.IO;
 using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Storage.Shared;
 
@@ -18,7 +19,96 @@ namespace Azure.Storage
     internal class PartitionedUploader<TServiceSpecificData, TCompleteUploadReturn>
     {
         #region Definitions
-        // delegte for getting a partition from a stream based on the selected data management stragegy
+
+        #region Content Partitioning Types and Delegates
+        /// <summary>
+        /// Generic wrapper for a content data structure.
+        /// </summary>
+        /// <typeparam name="TContent">
+        /// Data structure housing the content to upload.
+        /// </typeparam>
+        private readonly struct ContentPartition<TContent>
+        {
+            public long AbsolutePosition { get; }
+            public long Length { get; }
+            public TContent Content { get; }
+
+            public ContentPartition(long position, long length, TContent content)
+            {
+                AbsolutePosition = position;
+                Length = length;
+                Content = content;
+            }
+        }
+
+        /// <summary>
+        /// Generic delegate to slice the caller provided content into smaller
+        /// partitions for separate upload.
+        /// </summary>
+        /// <typeparam name="TContent">
+        /// Data structure housing the content to upload.
+        /// </typeparam>
+        /// <param name="content">
+        /// Content to slice.
+        /// </param>
+        /// <param name="contentLength">
+        /// Optional known length of <paramref name="content"/>.
+        /// </param>
+        /// <param name="blockSize">
+        /// Maximum size of the resulting slices.
+        /// </param>
+        /// <param name="async">
+        /// Whether to perform this operation asynchronously.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Cancellation token for the operation.
+        /// </param>
+        /// <returns>
+        /// Async enumerable of the sliced content.
+        /// </returns>
+        private delegate IAsyncEnumerable<ContentPartition<TContent>> GetContentPartitionsAsync<TContent>(
+            TContent content,
+            long? contentLength,
+            long blockSize,
+            bool async,
+            CancellationToken cancellationToken);
+
+        /// <summary>
+        /// Generic delegate to upload and individual content partition.
+        /// </summary>
+        /// <typeparam name="TContent"></typeparam>
+        /// <param name="content">
+        /// Content partition.
+        /// </param>
+        /// <param name="offset">
+        /// Absolute offset of this partition.
+        /// </param>
+        /// <param name="args">
+        /// Service-specific args for upload.
+        /// </param>
+        /// <param name="progressHandler">
+        /// Progress handler for this partition's upload.
+        /// </param>
+        /// <param name="async">
+        /// Whether to perform this operation asynchronously.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// Task for partition upload completion.
+        /// </returns>
+        private delegate Task StageContentPartitionAsync<TContent>(
+            TContent content,
+            long offset,
+            TServiceSpecificData args,
+            IProgress<long> progressHandler,
+            bool async,
+            CancellationToken cancellationToken);
+
+        /// <summary>
+        /// Delegte for getting a partition from a stream based on the selected data management stragegy.
+        /// </summary>
         private delegate Task<SlicedStream> GetNextStreamPartition(
             Stream stream,
             long minCount,
@@ -26,11 +116,12 @@ namespace Azure.Storage
             long absolutePosition,
             bool async,
             CancellationToken cancellationToken);
+        #endregion
 
-        // injected behaviors for services to use partitioned uploads
+        #region Injected Client Behaviors
         public delegate DiagnosticScope CreateScope(string operationName);
         public delegate Task InitializeDestinationInternal(TServiceSpecificData args, bool async, CancellationToken cancellationToken);
-        public delegate Task<Response<TCompleteUploadReturn>> SingleUploadInternal(
+        public delegate Task<Response<TCompleteUploadReturn>> SingleUploadStreamingInternal(
             Stream contentStream,
             TServiceSpecificData args,
             IProgress<long> progressHandler,
@@ -38,7 +129,24 @@ namespace Azure.Storage
             string operationName,
             bool async,
             CancellationToken cancellationToken);
-        public delegate Task UploadPartitionInternal(Stream contentStream,
+        public delegate Task<Response<TCompleteUploadReturn>> SingleUploadBinaryDataInternal(
+            BinaryData content,
+            TServiceSpecificData args,
+            IProgress<long> progressHandler,
+            UploadTransferValidationOptions transferValidation,
+            string operationName,
+            bool async,
+            CancellationToken cancellationToken);
+        public delegate Task UploadPartitionStreamingInternal(
+            Stream contentStream,
+            long offset,
+            TServiceSpecificData args,
+            IProgress<long> progressHandler,
+            UploadTransferValidationOptions transferValidation,
+            bool async,
+            CancellationToken cancellationToken);
+        public delegate Task UploadPartitionBinaryDataInternal(
+            BinaryData content,
             long offset,
             TServiceSpecificData args,
             IProgress<long> progressHandler,
@@ -54,18 +162,23 @@ namespace Azure.Storage
         public struct Behaviors
         {
             public InitializeDestinationInternal InitializeDestination { get; set; }
-            public SingleUploadInternal SingleUpload { get; set; }
-            public UploadPartitionInternal UploadPartition { get; set; }
+            public SingleUploadStreamingInternal SingleUploadStreaming { get; set; }
+            public SingleUploadBinaryDataInternal SingleUploadBinaryData { get; set; }
+            public UploadPartitionStreamingInternal UploadPartitionStreaming { get; set; }
+            public UploadPartitionBinaryDataInternal UploadPartitionBinaryData { get; set; }
             public CommitPartitionedUploadInternal CommitPartitionedUpload { get; set; }
             public CreateScope Scope { get; set; }
         }
 
         public static readonly InitializeDestinationInternal InitializeNoOp = (args, async, cancellationToken) => Task.CompletedTask;
         #endregion
+        #endregion
 
         private readonly InitializeDestinationInternal _initializeDestinationInternal;
-        private readonly SingleUploadInternal _singleUploadInternal;
-        private readonly UploadPartitionInternal _uploadPartitionInternal;
+        private readonly SingleUploadStreamingInternal _singleUploadStreamingInternal;
+        private readonly SingleUploadBinaryDataInternal _singleUploadBinaryDataInternal;
+        private readonly UploadPartitionStreamingInternal _uploadPartitionStreamingInternal;
+        private readonly UploadPartitionBinaryDataInternal _uploadPartitionBinaryDataInternal;
         private readonly CommitPartitionedUploadInternal _commitPartitionedUploadInternal;
         private readonly CreateScope _createScope;
 
@@ -110,14 +223,18 @@ namespace Azure.Storage
         {
             // initialize isn't required for all services and can use a no-op; rest are required
             _initializeDestinationInternal = behaviors.InitializeDestination ?? InitializeNoOp;
-            _singleUploadInternal = behaviors.SingleUpload
-                ?? throw Errors.ArgumentNull(nameof(behaviors.SingleUpload));
-            _uploadPartitionInternal = behaviors.UploadPartition
-                ?? throw Errors.ArgumentNull(nameof(behaviors.UploadPartition));
-            _commitPartitionedUploadInternal = behaviors.CommitPartitionedUpload
-                ?? throw Errors.ArgumentNull(nameof(behaviors.CommitPartitionedUpload));
-            _createScope = behaviors.Scope
-                ?? throw Errors.ArgumentNull(nameof(behaviors.Scope));
+            _singleUploadStreamingInternal = Argument.CheckNotNull(
+                behaviors.SingleUploadStreaming, nameof(behaviors.SingleUploadStreaming));
+            _singleUploadBinaryDataInternal = Argument.CheckNotNull(
+                behaviors.SingleUploadBinaryData, nameof(behaviors.SingleUploadBinaryData));
+            _uploadPartitionStreamingInternal = Argument.CheckNotNull(
+                behaviors.UploadPartitionStreaming, nameof(behaviors.UploadPartitionStreaming));
+            _uploadPartitionBinaryDataInternal = Argument.CheckNotNull(
+                behaviors.UploadPartitionBinaryData, nameof(behaviors.UploadPartitionBinaryData));
+            _commitPartitionedUploadInternal = Argument.CheckNotNull(
+                behaviors.CommitPartitionedUpload, nameof(behaviors.CommitPartitionedUpload));
+            _createScope = Argument.CheckNotNull(
+                behaviors.Scope, nameof(behaviors.Scope));
 
             _arrayPool = arrayPool ?? ArrayPool<byte>.Shared;
 
@@ -163,53 +280,20 @@ namespace Azure.Storage
         }
 
         public async Task<Response<TCompleteUploadReturn>> UploadInternal(
-            Stream content,
-            long? expectedContentLength,
+            BinaryData content,
             TServiceSpecificData args,
             IProgress<long> progressHandler,
             bool async,
             CancellationToken cancellationToken = default)
         {
-            if (content == default)
-            {
-                throw Errors.ArgumentNull(nameof(content));
-            }
-
-            Errors.VerifyStreamPosition(content, nameof(content));
-
-            if (content.CanSeek && content.Position > 0)
-            {
-                content = WindowStream.GetWindow(content, content.Length - content.Position, content.Position);
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             await _initializeDestinationInternal(args, async, cancellationToken).ConfigureAwait(false);
+            long length = content.ToMemory().Length;
 
-            // some strategies are unavailable if we don't know the stream length, and some can still work
-            // we may introduce separately provided stream lengths in the future for unseekable streams with
-            // an expected length
-            long? length = expectedContentLength ?? content.GetLengthOrDefault();
-
-            // If we know the length and it's small enough
             if (length < _singleUploadThreshold)
             {
-                // may not be seekable. buffer if that's the case
-                if (!content.CanSeek)
-                {
-                    content = await PooledMemoryStream.BufferStreamPartitionInternal(
-                        content,
-                        // we've passed a comparison on length; we know there is a value
-                        length.Value,
-                        length.Value,
-                        // for the purposes of a one-shot, absolutePosition is always zero
-                        absolutePosition: 0,
-                        _arrayPool,
-                        maxArrayPoolRentalSize: default,
-                        async,
-                        cancellationToken).ConfigureAwait(false);
-                }
-
-                // Upload it in a single request
-                return await _singleUploadInternal(
+                return await _singleUploadBinaryDataInternal(
                     content,
                     args,
                     progressHandler,
@@ -248,6 +332,8 @@ namespace Azure.Storage
                     blockSize,
                     args,
                     progressHandler,
+                    GetContentPartitionsBinaryDataInternal,
+                    StageBinaryDataPartitionInternal,
                     cancellationToken)
                     .ConfigureAwait(false);
             }
@@ -261,17 +347,131 @@ namespace Azure.Storage
                     blockSize,
                     args,
                     progressHandler,
+                    GetContentPartitionsBinaryDataInternal,
+                    StageBinaryDataPartitionInternal,
                     async: async,
                     cancellationToken).ConfigureAwait(false);
             }
         }
 
-        private async Task<Response<TCompleteUploadReturn>> UploadInSequenceInternal(
+        public async Task<Response<TCompleteUploadReturn>> UploadInternal(
             Stream content,
+            long? expectedContentLength,
+            TServiceSpecificData args,
+            IProgress<long> progressHandler,
+            bool async,
+            CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+            Errors.VerifyStreamPosition(content, nameof(content));
+
+            if (content.CanSeek && content.Position > 0)
+            {
+                content = WindowStream.GetWindow(content, content.Length - content.Position, content.Position);
+            }
+
+            await _initializeDestinationInternal(args, async, cancellationToken).ConfigureAwait(false);
+
+            // some strategies are unavailable if we don't know the stream length, and some can still work
+            // we may introduce separately provided stream lengths in the future for unseekable streams with
+            // an expected length
+            long? length = expectedContentLength ?? content.GetLengthOrDefault();
+
+            // If we know the length and it's small enough
+            if (length < _singleUploadThreshold)
+            {
+                // may not be seekable. buffer if that's the case
+                if (!content.CanSeek)
+                {
+                    content = await PooledMemoryStream.BufferStreamPartitionInternal(
+                        content,
+                        // we've passed a comparison on length; we know there is a value
+                        length.Value,
+                        length.Value,
+                        // for the purposes of a one-shot, absolutePosition is always zero
+                        absolutePosition: 0,
+                        _arrayPool,
+                        maxArrayPoolRentalSize: default,
+                        async,
+                        cancellationToken).ConfigureAwait(false);
+                }
+
+                // Upload it in a single request
+                return await _singleUploadStreamingInternal(
+                    content,
+                    args,
+                    progressHandler,
+                    _validationOptions,
+                    _operationName,
+                    async,
+                    cancellationToken)
+                    .ConfigureAwait(false);
+            }
+
+            // If the caller provided an explicit block size, we'll use it.
+            // Otherwise we'll adjust dynamically based on the size of the
+            // content.
+            long blockSize = _blockSize != null
+                ? _blockSize.Value
+                : length < Constants.LargeUploadThreshold ?
+                    Constants.DefaultBufferSize :
+                    Constants.LargeBufferSize;
+
+            // Otherwise stage individual blocks
+
+            /* We only support parallel upload in an async context to avoid issues in our overall sync story.
+             * We're branching on both async and max worker count, where 3 combinations lead to
+             * UploadInSequenceInternal and 1 combination leads to UploadInParallelAsync. We are guaranteed
+             * to be in an async context when we call UploadInParallelAsync, even though the analyzer can't
+             * detext this, and we properly pass in the async context in the else case when we haven't
+             * explicitly checked.
+             */
+#pragma warning disable AZC0109 // Misuse of 'async' parameter.
+#pragma warning disable AZC0110 // DO NOT use await keyword in possibly synchronous scope.
+            if (async && _maxWorkerCount > 1)
+            {
+                return await UploadInParallelAsync(
+                    content,
+                    length,
+                    blockSize,
+                    args,
+                    progressHandler,
+                    // we always buffer partitions when uploading in parallel
+                    GetStreamPartitioner(GetBufferedPartitionInternal),
+                    StageStreamPartitionInternal,
+                    cancellationToken)
+                    .ConfigureAwait(false);
+            }
+#pragma warning restore AZC0110 // DO NOT use await keyword in possibly synchronous scope.
+#pragma warning restore AZC0109 // Misuse of 'async' parameter.
+            else
+            {
+                // Streamed partitions only work if we can seek the stream; we need retries on individual uploads.
+                GetNextStreamPartition partitionGetter = content.CanSeek
+                            ? (GetNextStreamPartition)GetStreamedPartitionInternal
+                            : /*   redundant cast   */GetBufferedPartitionInternal;
+
+                return await UploadInSequenceInternal(
+                    content,
+                    length,
+                    blockSize,
+                    args,
+                    progressHandler,
+                    GetStreamPartitioner(partitionGetter),
+                    StageStreamPartitionInternal,
+                    async: async,
+                    cancellationToken).ConfigureAwait(false);
+            }
+        }
+
+        private async Task<Response<TCompleteUploadReturn>> UploadInSequenceInternal<TContent>(
+            TContent content,
             long? contentLength,
             long partitionSize,
             TServiceSpecificData args,
             IProgress<long> progressHandler,
+            GetContentPartitionsAsync<TContent> partitionContentAsync,
+            StageContentPartitionAsync<TContent> stageContentAsync,
             bool async,
             CancellationToken cancellationToken)
         {
@@ -292,24 +492,18 @@ namespace Azure.Storage
                 // The list tracking blocks IDs we're going to commit
                 List<(long Offset, long Size)> partitions = new List<(long, long)>();
 
-                // Streamed partitions only work if we can seek the stream; we need retries on individual uploads.
-                GetNextStreamPartition partitionGetter = content.CanSeek
-                            ? (GetNextStreamPartition)GetStreamedPartitionInternal
-                            : /*   redundant cast   */GetBufferedPartitionInternal;
-
                 // Partition the stream into individual blocks and stage them
                 if (async)
                 {
-                    await foreach (SlicedStream block in GetPartitionsAsync(
+                    await foreach (ContentPartition<TContent> block in partitionContentAsync(
                         content,
                         contentLength,
                         partitionSize,
-                        partitionGetter,
                         async: true,
                         cancellationToken).ConfigureAwait(false))
                     {
-                        await StagePartitionAndDisposeInternal(
-                            block,
+                        await stageContentAsync(
+                            block.Content,
                             block.AbsolutePosition,
                             args,
                             progressHandler,
@@ -321,16 +515,15 @@ namespace Azure.Storage
                 }
                 else
                 {
-                    foreach (SlicedStream block in GetPartitionsAsync(
+                    foreach (ContentPartition<TContent> block in partitionContentAsync(
                         content,
                         contentLength,
                         partitionSize,
-                        partitionGetter,
                         async: false,
                         cancellationToken).EnsureSyncEnumerable())
                     {
-                        StagePartitionAndDisposeInternal(
-                            block,
+                        stageContentAsync(
+                            block.Content,
                             block.AbsolutePosition,
                             args,
                             progressHandler,
@@ -360,12 +553,14 @@ namespace Azure.Storage
             }
         }
 
-        private async Task<Response<TCompleteUploadReturn>> UploadInParallelAsync(
-            Stream content,
+        private async Task<Response<TCompleteUploadReturn>> UploadInParallelAsync<TContent>(
+            TContent content,
             long? contentLength,
             long blockSize,
             TServiceSpecificData args,
             IProgress<long> progressHandler,
+            GetContentPartitionsAsync<TContent> partitionContentAsync,
+            StageContentPartitionAsync<TContent> stageContentAsync,
             CancellationToken cancellationToken)
         {
             // Wrap the staging and commit calls in an Upload span for
@@ -390,11 +585,10 @@ namespace Azure.Storage
                 List<Task> runningTasks = new List<Task>();
 
                 // Partition the stream into individual blocks
-                await foreach (SlicedStream block in GetPartitionsAsync(
+                await foreach (ContentPartition<TContent> block in partitionContentAsync(
                     content,
                     contentLength,
                     blockSize,
-                    GetBufferedPartitionInternal, // we always buffer for upload in parallel from stream
                     async: true,
                     cancellationToken).ConfigureAwait(false))
                 {
@@ -404,8 +598,8 @@ namespace Azure.Storage
                     partitions.Add((block.AbsolutePosition, block.Length));
 
                     // Start staging the next block (but don't await the Task!)
-                    Task task = StagePartitionAndDisposeInternal(
-                        block,
+                    Task task = stageContentAsync(
+                        block.Content,
                         block.AbsolutePosition,
                         args,
                         progressHandler,
@@ -461,10 +655,12 @@ namespace Azure.Storage
         }
 
         /// <summary>
+        /// Implementation of <see cref="StageContentPartitionAsync{TContent}"/>
+        /// for <see cref="Stream"/>.
         /// Wraps both the async method and dispose call in one task.
         /// </summary>
-        private async Task StagePartitionAndDisposeInternal(
-            SlicedStream partition,
+        private async Task StageStreamPartitionInternal(
+            Stream partition,
             long offset,
             TServiceSpecificData args,
             IProgress<long> progressHandler,
@@ -473,7 +669,7 @@ namespace Azure.Storage
         {
             try
             {
-                await _uploadPartitionInternal(
+                await _uploadPartitionStreamingInternal(
                     partition,
                     offset,
                     args,
@@ -491,11 +687,101 @@ namespace Azure.Storage
             }
         }
 
-        #region Stream Splitters
+        /// <summary>
+        /// Implementation of <see cref="StageContentPartitionAsync{TContent}"/>
+        /// for <see cref="BinaryData"/>.
+        /// </summary>
+        /// <param name="content"></param>
+        /// <param name="offset"></param>
+        /// <param name="args"></param>
+        /// <param name="progressHandler"></param>
+        /// <param name="async"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        private async Task StageBinaryDataPartitionInternal(
+            BinaryData content,
+            long offset,
+            TServiceSpecificData args,
+            IProgress<long> progressHandler,
+            bool async,
+            CancellationToken cancellationToken)
+        {
+            await _uploadPartitionBinaryDataInternal(
+                content,
+                offset,
+                args,
+                progressHandler,
+                _validationOptions,
+                async,
+                cancellationToken).ConfigureAwait(false);
+        }
+
+        #region Content Slicing Impl
+        /// <summary>
+        /// <see cref="GetContentPartitionsAsync{TContent}"/> implementation for <see cref="BinaryData"/>.
+        /// </summary>
+        /// <remarks>
+        /// Async wrapper over a synchronous operation to satisfy delegate definitions.
+        /// </remarks>
+        private static async IAsyncEnumerable<ContentPartition<BinaryData>> GetContentPartitionsBinaryDataInternal(
+#pragma warning disable CA1801 // Review unused parameters; unused paramters satisfy delegate GetContentPartitionsAsync<T>
+            BinaryData content,
+            long? contentLength,
+            long blockSize,
+            bool async,
+            [EnumeratorCancellation] CancellationToken cancellationToken)
+#pragma warning restore CA1801 // Review unused parameters
+        {
+            foreach (ContentPartition<BinaryData> slice in GetBinaryDataPartitions(content, (int)blockSize))
+            {
+                // method returning IAsyncEnumerable must be async
+                // async method must use await at some point
+                yield return async
+                    ? await Task.FromResult(slice).ConfigureAwait(false)
+                    : slice;
+            }
+        }
+
+        private static IEnumerable<ContentPartition<BinaryData>> GetBinaryDataPartitions(
+            BinaryData content,
+            int blockSize)
+        {
+            int position = 0;
+            ReadOnlyMemory<byte> remaining = content.ToMemory();
+            while (!remaining.IsEmpty)
+            {
+                ReadOnlyMemory<byte> next;
+                if (remaining.Length <= blockSize)
+                {
+                    next = remaining;
+                    remaining = ReadOnlyMemory<byte>.Empty;
+                }
+                else
+                {
+                    next = remaining.Slice(0, blockSize);
+                    remaining = remaining.Slice(blockSize);
+                }
+                yield return new ContentPartition<BinaryData>(position, next.Length, BinaryData.FromBytes(next));
+                position += next.Length;
+            }
+        }
+
+        /// <summary>
+        /// Gets the correct implementation of <see cref="GetContentPartitionsAsync{TContent}"/>
+        /// for <see cref="Stream"/> depending on whether the stream is to be sliced in place or
+        /// to be buffered into its new partitions.
+        /// </summary>
+        /// <param name="partitionCreator">Stream partitioning behavior.</param>
+        private static GetContentPartitionsAsync<Stream> GetStreamPartitioner(GetNextStreamPartition partitionCreator)
+        {
+            return (content, contentLength, blockSize, async, cancellationToken) => GetStreamPartitionsAsync(
+                content, contentLength, blockSize, partitionCreator, async, cancellationToken);
+        }
+
         /// <summary>
         /// Partition a stream into a series of blocks buffered as needed by an array pool.
         /// </summary>
-        private static async IAsyncEnumerable<SlicedStream> GetPartitionsAsync(
+        private static async IAsyncEnumerable<ContentPartition<Stream>> GetStreamPartitionsAsync(
             Stream stream,
             long? streamLength,
             long blockSize,
@@ -545,7 +831,7 @@ namespace Azure.Storage
                     // The StreamParitition is disposable and it'll be the
                     // user's responsibility to return the bytes used to our
                     // ArrayPool
-                    yield return partition;
+                    yield return new ContentPartition<Stream>(partition.AbsolutePosition, partition.Length, partition);
                 }
 
                 // Continue reading blocks until we've exhausted the stream
@@ -553,8 +839,8 @@ namespace Azure.Storage
         }
 
         /// <summary>
+        /// Implementation of <see cref="GetNextStreamPartition"/> for a buffering strategy.
         /// Gets a partition from the current location of the given stream.
-        ///
         /// This partition is buffered and it is safe to get many before using any of them.
         /// </summary>
         /// <param name="stream">
@@ -596,8 +882,8 @@ namespace Azure.Storage
                 cancellationToken).ConfigureAwait(false);
 
         /// <summary>
+        /// Implementation of <see cref="GetNextStreamPartition"/> for a slicing strategy.
         /// Gets a partition from the current location of the given stream.
-        ///
         /// This partition is a facade over the existing stream, and the
         /// previous partition should be consumed before using the next.
         /// </summary>

@@ -5,6 +5,7 @@ Run `dotnet build /t:GenerateCode` to generate code.
 ``` yaml
 
 azure-arm: true
+generate-model-factory: false
 csharp: true
 library-name: PolicyInsights
 namespace: Azure.ResourceManager.PolicyInsights
@@ -101,6 +102,7 @@ rename-mapping:
   Remediation: PolicyRemediation
   Attestation.properties.expiresOn: ExpireOn
   Attestation.properties.policyAssignmentId: -|arm-id
+  Attestation.properties.assessmentDate: AssessOn
   Remediation.properties.policyAssignmentId: -|arm-id
   CheckRestrictionsResult: CheckPolicyRestrictionsResult
   CheckRestrictionsRequest: CheckPolicyRestrictionsContent
