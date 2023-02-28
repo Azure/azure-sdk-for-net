@@ -90,10 +90,9 @@ namespace Azure.Core
             runtimeInformation ??= new RuntimeInformationWrapper();
             var platformInformation = EscapeProductInformation($"({runtimeInformation.FrameworkDescription}; {runtimeInformation.OSDescription})");
 
-            var ua = applicationId != null
+            return applicationId != null
                 ? $"{applicationId} azsdk-net-{assemblyName}/{version} {platformInformation}"
                 : $"azsdk-net-{assemblyName}/{version} {platformInformation}";
-            return ua;
         }
 
         /// <summary>
