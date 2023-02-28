@@ -223,19 +223,19 @@ namespace Azure.AI.TextAnalytics.ServiceClients
 
         #endregion
 
-        #region Abstractive Summarize
+        #region Abstract Summary
 
-        public virtual AbstractiveSummarizeOperation StartAbstractiveSummarize(IEnumerable<string> documents, string language = default, AbstractiveSummarizeOptions options = default, CancellationToken cancellationToken = default) =>
-            throw Validation.NotSupported($"{nameof(TextAnalyticsClient)}.{nameof(TextAnalyticsClient.StartAbstractiveSummarize)}", ServiceVersion.V2022_10_01_Preview, ServiceVersion);
+        public virtual AbstractSummaryOperation StartAbstractSummary(IEnumerable<string> documents, string language = default, AbstractSummaryOptions options = default, CancellationToken cancellationToken = default) =>
+            throw Validation.NotSupported($"{nameof(TextAnalyticsClient)}.{nameof(TextAnalyticsClient.StartAbstractSummary)}", ServiceVersion.V2022_10_01_Preview, ServiceVersion);
 
-        public virtual AbstractiveSummarizeOperation StartAbstractiveSummarize(IEnumerable<TextDocumentInput> documents, AbstractiveSummarizeOptions options = default, CancellationToken cancellationToken = default) =>
-            throw Validation.NotSupported($"{nameof(TextAnalyticsClient)}.{nameof(TextAnalyticsClient.StartAbstractiveSummarize)}", ServiceVersion.V2022_10_01_Preview, ServiceVersion);
+        public virtual AbstractSummaryOperation StartAbstractSummary(IEnumerable<TextDocumentInput> documents, AbstractSummaryOptions options = default, CancellationToken cancellationToken = default) =>
+            throw Validation.NotSupported($"{nameof(TextAnalyticsClient)}.{nameof(TextAnalyticsClient.StartAbstractSummary)}", ServiceVersion.V2022_10_01_Preview, ServiceVersion);
 
-        public virtual Task<AbstractiveSummarizeOperation> StartAbstractiveSummarizeAsync(IEnumerable<string> documents, string language = default, AbstractiveSummarizeOptions options = default, CancellationToken cancellationToken = default) =>
-            throw Validation.NotSupported($"{nameof(TextAnalyticsClient)}.{nameof(TextAnalyticsClient.StartAbstractiveSummarizeAsync)}", ServiceVersion.V2022_10_01_Preview, ServiceVersion);
+        public virtual Task<AbstractSummaryOperation> StartAbstractSummaryAsync(IEnumerable<string> documents, string language = default, AbstractSummaryOptions options = default, CancellationToken cancellationToken = default) =>
+            throw Validation.NotSupported($"{nameof(TextAnalyticsClient)}.{nameof(TextAnalyticsClient.StartAbstractSummaryAsync)}", ServiceVersion.V2022_10_01_Preview, ServiceVersion);
 
-        public virtual Task<AbstractiveSummarizeOperation> StartAbstractiveSummarizeAsync(IEnumerable<TextDocumentInput> documents, AbstractiveSummarizeOptions options = default, CancellationToken cancellationToken = default) =>
-            throw Validation.NotSupported($"{nameof(TextAnalyticsClient)}.{nameof(TextAnalyticsClient.StartAbstractiveSummarizeAsync)}", ServiceVersion.V2022_10_01_Preview, ServiceVersion);
+        public virtual Task<AbstractSummaryOperation> StartAbstractSummaryAsync(IEnumerable<TextDocumentInput> documents, AbstractSummaryOptions options = default, CancellationToken cancellationToken = default) =>
+            throw Validation.NotSupported($"{nameof(TextAnalyticsClient)}.{nameof(TextAnalyticsClient.StartAbstractSummaryAsync)}", ServiceVersion.V2022_10_01_Preview, ServiceVersion);
 
         #endregion
 

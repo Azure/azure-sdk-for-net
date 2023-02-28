@@ -94,11 +94,11 @@ namespace Azure.AI.TextAnalytics
         public IReadOnlyCollection<ExtractSummaryAction> ExtractSummaryActions { get; set; }
 
         /// <summary>
-        /// The set of <see cref="AbstractiveSummarizeAction"/> that will get executed on the input documents.
+        /// The set of <see cref="AbstractSummaryAction"/> that will get executed on the input documents.
         /// </summary>
         /// <remarks>
         /// This property only applies for <see cref="TextAnalyticsClientOptions.ServiceVersion.V2022_10_01_Preview"/> and newer.
         /// </remarks>
-        public IReadOnlyCollection<AbstractiveSummarizeAction> AbstractiveSummarizeActions { get; set; }
+        public IReadOnlyCollection<AbstractSummaryAction> AbstractSummaryActions { get; set; }
     }
 }

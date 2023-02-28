@@ -10,7 +10,7 @@ namespace Azure.AI.TextAnalytics.Samples
     public partial class TextAnalyticsSamples : TextAnalyticsSampleBase
     {
         [Test]
-        public void AbstractiveSummarize()
+        public void AbstractSummaryConvenience()
         {
             Uri endpoint = new(TestEnvironment.Endpoint);
             AzureKeyCredential credential = new(TestEnvironment.ApiKey);
@@ -55,21 +55,13 @@ namespace Azure.AI.TextAnalytics.Samples
 
             // Prepare the input of the text analysis operation. You can add multiple documents to this list and
             // perform the same operation on all of them simultaneously.
-            List<TextDocumentInput> batchedDocuments = new()
+            List<string> batchedDocuments = new()
             {
-                new TextDocumentInput("1", document)
-                {
-                     Language = "en",
-                }
-            };
-
-            AbstractiveSummarizeOptions options = new()
-            {
-                MaxSentenceCount = 2
+                document
             };
 
             // Perform the text analysis operation.
-            AbstractiveSummarizeOperation operation = client.StartAbstractiveSummarize(batchedDocuments, options);
+            AbstractSummaryOperation operation = client.StartAbstractSummary(batchedDocuments);
             operation.WaitForCompletion();
 
             Console.WriteLine($"The operation has completed.");
@@ -84,12 +76,12 @@ namespace Azure.AI.TextAnalytics.Samples
             Console.WriteLine();
 
             // View the operation results.
-            foreach (AbstractiveSummarizeResultCollection documentsInPage in operation.GetValues())
+            foreach (AbstractSummaryResultCollection documentsInPage in operation.GetValues())
             {
-                Console.WriteLine($"Abstractive Summarize, version: \"{documentsInPage.ModelVersion}\"");
+                Console.WriteLine($"Abstract Summary, model version: \"{documentsInPage.ModelVersion}\"");
                 Console.WriteLine();
 
-                foreach (AbstractiveSummarizeResult documentResult in documentsInPage)
+                foreach (AbstractSummaryResult documentResult in documentsInPage)
                 {
                     if (documentResult.HasError)
                     {
@@ -107,7 +99,7 @@ namespace Azure.AI.TextAnalytics.Samples
                         Console.WriteLine($"  Text: {summary.Text.Replace("\n", " ")}");
                         Console.WriteLine($"  Contexts:");
 
-                        foreach (AbstractiveSummaryContext context in summary.Contexts)
+                        foreach (SummaryContext context in summary.Contexts)
                         {
                             Console.WriteLine($"    Offset: {context.Offset}");
                             Console.WriteLine($"    Length: {context.Length}");

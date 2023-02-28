@@ -7,33 +7,33 @@ using Azure.AI.TextAnalytics.Models;
 namespace Azure.AI.TextAnalytics
 {
     /// <summary>
-    /// A representation of the result of performing an <see cref="AbstractiveSummarizeAction"/> on a given set of
+    /// A representation of the result of performing an <see cref="AbstractSummaryAction"/> on a given set of
     /// documents.
     /// </summary>
-    public class AbstractiveSummarizeActionResult : TextAnalyticsActionResult
+    public class AbstractSummaryActionResult : TextAnalyticsActionResult
     {
-        private readonly AbstractiveSummarizeResultCollection _documentsResults;
+        private readonly AbstractSummaryResultCollection _documentsResults;
 
         /// <summary>
-        /// Initializes a successful <see cref="AbstractiveSummarizeActionResult"/>.
+        /// Initializes a successful <see cref="AbstractSummaryActionResult"/>.
         /// </summary>
-        internal AbstractiveSummarizeActionResult(
-            AbstractiveSummarizeResultCollection result, string actionName, DateTimeOffset completedOn)
+        internal AbstractSummaryActionResult(
+            AbstractSummaryResultCollection result, string actionName, DateTimeOffset completedOn)
             : base(actionName, completedOn)
         {
             _documentsResults = result;
         }
 
         /// <summary>
-        /// Initializes an <see cref="AbstractiveSummarizeActionResult"/> with an error.
+        /// Initializes an <see cref="AbstractSummaryActionResult"/> with an error.
         /// </summary>
-        internal AbstractiveSummarizeActionResult(string actionName, DateTimeOffset completedOn, Error error)
+        internal AbstractSummaryActionResult(string actionName, DateTimeOffset completedOn, Error error)
             : base(actionName, completedOn, error) { }
 
         /// <summary>
         /// The collection of results corresponding to each input document.
         /// </summary>
-        public AbstractiveSummarizeResultCollection DocumentsResults
+        public AbstractSummaryResultCollection DocumentsResults
         {
             get
             {

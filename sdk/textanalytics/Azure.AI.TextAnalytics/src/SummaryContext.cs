@@ -8,9 +8,9 @@ namespace Azure.AI.TextAnalytics
     /// <summary>
     /// A representation of the text that was used as context by the service to produce a given summary.
     /// </summary>
-    public readonly struct AbstractiveSummaryContext
+    public readonly struct SummaryContext
     {
-        internal AbstractiveSummaryContext(SummaryContextInternal context)
+        internal SummaryContext(SummaryContextInternal context)
         {
             Offset = context.Offset;
             Length = context.Length;

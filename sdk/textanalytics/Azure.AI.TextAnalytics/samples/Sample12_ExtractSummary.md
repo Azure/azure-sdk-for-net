@@ -102,7 +102,7 @@ await foreach (ExtractSummaryResultCollection documentsInPage in operation.Value
         Console.WriteLine($"  Extracted {documentResult.Sentences.Count} sentence(s):");
         Console.WriteLine();
 
-        foreach (ExtractiveSummarySentence sentence in documentResult.Sentences)
+        foreach (SummarySentence sentence in documentResult.Sentences)
         {
             Console.WriteLine($"  Sentence: {sentence.Text}");
             Console.WriteLine($"  Rank Score: {sentence.RankScore}");

@@ -11,9 +11,9 @@ using NUnit.Framework;
 namespace Azure.AI.TextAnalytics.Tests
 {
     [ServiceVersion(Min = TextAnalyticsClientOptions.ServiceVersion.V2022_10_01_Preview)]
-    public class AbstractiveSummarizeTests : TextAnalyticsClientLiveTestBase
+    public class AbstractSummaryTests : TextAnalyticsClientLiveTestBase
     {
-        public AbstractiveSummarizeTests(bool isAsync, TextAnalyticsClientOptions.ServiceVersion serviceVersion)
+        public AbstractSummaryTests(bool isAsync, TextAnalyticsClientOptions.ServiceVersion serviceVersion)
             : base(isAsync, serviceVersion)
         {
         }
@@ -76,24 +76,24 @@ namespace Azure.AI.TextAnalytics.Tests
         private const int MaxSentenceCount = 3;
 
         [RecordedTest]
-        public async Task AbstractiveSummarizeWithAADTest()
+        public async Task AbstractSummaryWithAADTest()
         {
             TextAnalyticsClient client = GetClient(useTokenCredential: true);
 
-            AbstractiveSummarizeOperation operation = await client.StartAbstractiveSummarizeAsync(s_batchDocuments);
+            AbstractSummaryOperation operation = await client.StartAbstractSummaryAsync(s_batchDocuments);
             await operation.WaitForCompletionAsync();
             ValidateOperationProperties(operation);
 
-            List<AbstractiveSummarizeResultCollection> resultInPages = operation.Value.ToEnumerableAsync().Result;
+            List<AbstractSummaryResultCollection> resultInPages = operation.Value.ToEnumerableAsync().Result;
             Assert.AreEqual(1, resultInPages.Count);
 
             // Take the first page.
-            AbstractiveSummarizeResultCollection resultCollection = resultInPages.FirstOrDefault();
+            AbstractSummaryResultCollection resultCollection = resultInPages.FirstOrDefault();
             ValidateSummaryBatchResult(resultCollection);
         }
 
         [RecordedTest]
-        public async Task AbstractiveSummarizeBatchWithErrorTest()
+        public async Task AbstractSummaryBatchWithErrorTest()
         {
             TextAnalyticsClient client = GetClient();
 
@@ -103,133 +103,133 @@ namespace Azure.AI.TextAnalytics.Tests
                 "",
             };
 
-            AbstractiveSummarizeOperation operation = await client.StartAbstractiveSummarizeAsync(documents, "en");
+            AbstractSummaryOperation operation = await client.StartAbstractSummaryAsync(documents, "en");
             await operation.WaitForCompletionAsync();
             ValidateOperationProperties(operation);
 
-            List<AbstractiveSummarizeResultCollection> resultInPages = operation.Value.ToEnumerableAsync().Result;
+            List<AbstractSummaryResultCollection> resultInPages = operation.Value.ToEnumerableAsync().Result;
             Assert.AreEqual(1, resultInPages.Count);
 
             // Take the first page.
-            AbstractiveSummarizeResultCollection resultCollection = resultInPages.FirstOrDefault();
+            AbstractSummaryResultCollection resultCollection = resultInPages.FirstOrDefault();
             Assert.IsFalse(resultCollection[0].HasError);
             Assert.IsTrue(resultCollection[1].HasError);
             Assert.AreEqual(TextAnalyticsErrorCode.InvalidDocument, resultCollection[1].Error.ErrorCode.ToString());
         }
 
         [RecordedTest]
-        public async Task AbstractiveSummarizeBatchConvenienceTest()
+        public async Task AbstractSummaryBatchConvenienceTest()
         {
             TextAnalyticsClient client = GetClient();
 
-            AbstractiveSummarizeOperation operation = await client.StartAbstractiveSummarizeAsync(s_batchConvenienceDocuments);
+            AbstractSummaryOperation operation = await client.StartAbstractSummaryAsync(s_batchConvenienceDocuments);
             await operation.WaitForCompletionAsync();
             ValidateOperationProperties(operation);
 
-            List<AbstractiveSummarizeResultCollection> resultInPages = operation.Value.ToEnumerableAsync().Result;
+            List<AbstractSummaryResultCollection> resultInPages = operation.Value.ToEnumerableAsync().Result;
             Assert.AreEqual(1, resultInPages.Count);
 
             // Take the first page.
-            AbstractiveSummarizeResultCollection resultCollection = resultInPages.FirstOrDefault();
+            AbstractSummaryResultCollection resultCollection = resultInPages.FirstOrDefault();
             ValidateSummaryBatchResult(resultCollection);
         }
 
         [RecordedTest]
-        public async Task AbstractiveSummarizeBatchConvenienceWithStatisticsTest()
+        public async Task AbstractSummaryBatchConvenienceWithStatisticsTest()
         {
             TextAnalyticsClient client = GetClient();
 
-            AbstractiveSummarizeOptions options = new AbstractiveSummarizeOptions()
+            AbstractSummaryOptions options = new AbstractSummaryOptions()
             {
                 MaxSentenceCount = MaxSentenceCount,
                 IncludeStatistics = true,
             };
 
-            AbstractiveSummarizeOperation operation = await client.StartAbstractiveSummarizeAsync(s_batchConvenienceDocuments, "en", options);
+            AbstractSummaryOperation operation = await client.StartAbstractSummaryAsync(s_batchConvenienceDocuments, "en", options);
             await operation.WaitForCompletionAsync();
             ValidateOperationProperties(operation);
 
-            List<AbstractiveSummarizeResultCollection> resultInPages = operation.Value.ToEnumerableAsync().Result;
+            List<AbstractSummaryResultCollection> resultInPages = operation.Value.ToEnumerableAsync().Result;
             Assert.AreEqual(1, resultInPages.Count);
 
             // Take the first page.
-            AbstractiveSummarizeResultCollection resultCollection = resultInPages.FirstOrDefault();
+            AbstractSummaryResultCollection resultCollection = resultInPages.FirstOrDefault();
             ValidateSummaryBatchResult(resultCollection, MaxSentenceCount, true);
         }
 
         [RecordedTest]
-        public async Task AbstractiveSummarizeBatchTest()
+        public async Task AbstractSummaryBatchTest()
         {
             TextAnalyticsClient client = GetClient();
 
-            AbstractiveSummarizeOperation operation = await client.StartAbstractiveSummarizeAsync(s_batchDocuments);
+            AbstractSummaryOperation operation = await client.StartAbstractSummaryAsync(s_batchDocuments);
             await operation.WaitForCompletionAsync();
             ValidateOperationProperties(operation);
 
-            List<AbstractiveSummarizeResultCollection> resultInPages = operation.Value.ToEnumerableAsync().Result;
+            List<AbstractSummaryResultCollection> resultInPages = operation.Value.ToEnumerableAsync().Result;
             Assert.AreEqual(1, resultInPages.Count);
 
             // Take the first page.
-            AbstractiveSummarizeResultCollection resultCollection = resultInPages.FirstOrDefault();
+            AbstractSummaryResultCollection resultCollection = resultInPages.FirstOrDefault();
             ValidateSummaryBatchResult(resultCollection);
         }
 
         [RecordedTest]
-        public async Task AbstractiveSummarizeBatchWithStatisticsTest()
+        public async Task AbstractSummaryBatchWithStatisticsTest()
         {
             TextAnalyticsClient client = GetClient();
 
-            AbstractiveSummarizeOptions options = new AbstractiveSummarizeOptions()
+            AbstractSummaryOptions options = new AbstractSummaryOptions()
             {
                 MaxSentenceCount = MaxSentenceCount,
                 IncludeStatistics = true,
             };
 
-            AbstractiveSummarizeOperation operation = await client.StartAbstractiveSummarizeAsync(s_batchDocuments, options);
+            AbstractSummaryOperation operation = await client.StartAbstractSummaryAsync(s_batchDocuments, options);
             await operation.WaitForCompletionAsync();
             ValidateOperationProperties(operation);
 
-            List<AbstractiveSummarizeResultCollection> resultInPages = operation.Value.ToEnumerableAsync().Result;
+            List<AbstractSummaryResultCollection> resultInPages = operation.Value.ToEnumerableAsync().Result;
             Assert.AreEqual(1, resultInPages.Count);
 
             // Take the first page.
-            AbstractiveSummarizeResultCollection resultCollection = resultInPages.FirstOrDefault();
+            AbstractSummaryResultCollection resultCollection = resultInPages.FirstOrDefault();
             ValidateSummaryBatchResult(resultCollection, MaxSentenceCount, true);
         }
 
         [RecordedTest]
         [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/32614")]
-        public async Task AbstractiveSummarizeBatchConvenienceWithAutoDetectedLanguageTest()
+        public async Task AbstractSummaryBatchConvenienceWithAutoDetectedLanguageTest()
         {
             TextAnalyticsClient client = GetClient();
 
-            AbstractiveSummarizeOptions options = new()
+            AbstractSummaryOptions options = new()
             {
                 AutoDetectionDefaultLanguage = "en"
             };
 
-            AbstractiveSummarizeOperation operation = await client.StartAbstractiveSummarizeAsync(s_batchConvenienceDocuments, "en", options);
+            AbstractSummaryOperation operation = await client.StartAbstractSummaryAsync(s_batchConvenienceDocuments, "en", options);
             await operation.WaitForCompletionAsync();
             ValidateOperationProperties(operation);
 
-            List<AbstractiveSummarizeResultCollection> resultInPages = operation.Value.ToEnumerableAsync().Result;
+            List<AbstractSummaryResultCollection> resultInPages = operation.Value.ToEnumerableAsync().Result;
             Assert.AreEqual(1, resultInPages.Count);
 
             // Take the first page.
-            AbstractiveSummarizeResultCollection resultCollection = resultInPages.FirstOrDefault();
+            AbstractSummaryResultCollection resultCollection = resultInPages.FirstOrDefault();
             ValidateSummaryBatchResult(resultCollection, isLanguageAutoDetected: true);
         }
 
         [RecordedTest]
         [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/32614")]
-        public async Task AnalyzeOperationAbstractiveSummarizeWithAutoDetectedLanguageTest()
+        public async Task AnalyzeOperationAbstractSummaryWithAutoDetectedLanguageTest()
         {
             TextAnalyticsClient client = GetClient();
             List<string> documents = s_batchConvenienceDocuments;
             TextAnalyticsActions actions = new()
             {
-                AbstractiveSummarizeActions = new List<AbstractiveSummarizeAction>() { new AbstractiveSummarizeAction() },
-                DisplayName = "AbstractiveSummarizeWithAutoDetectedLanguage",
+                AbstractSummaryActions = new List<AbstractSummaryAction>() { new AbstractSummaryAction() },
+                DisplayName = "AbstractSummaryWithAutoDetectedLanguage",
             };
 
             AnalyzeActionsOperation operation = await client.StartAnalyzeActionsAsync(documents, actions, "auto");
@@ -237,14 +237,14 @@ namespace Azure.AI.TextAnalytics.Tests
 
             // Take the first page.
             AnalyzeActionsResult resultCollection = operation.Value.ToEnumerableAsync().Result.FirstOrDefault();
-            IReadOnlyCollection<AbstractiveSummarizeActionResult> actionResults = resultCollection.AbstractiveSummarizeResults;
+            IReadOnlyCollection<AbstractSummaryActionResult> actionResults = resultCollection.AbstractSummaryResults;
             Assert.IsNotNull(actionResults);
 
-            AbstractiveSummarizeResultCollection results = actionResults.FirstOrDefault().DocumentsResults;
+            AbstractSummaryResultCollection results = actionResults.FirstOrDefault().DocumentsResults;
             ValidateSummaryBatchResult(results, isLanguageAutoDetected: true);
         }
 
-        private void ValidateOperationProperties(AbstractiveSummarizeOperation operation)
+        private void ValidateOperationProperties(AbstractSummaryOperation operation)
         {
             Assert.AreNotEqual(new DateTimeOffset(), operation.CreatedOn);
             // TODO: Re-enable this check (https://github.com/Azure/azure-sdk-for-net/issues/31855).
@@ -257,7 +257,7 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         private void ValidateSummaryBatchResult(
-            AbstractiveSummarizeResultCollection results,
+            AbstractSummaryResultCollection results,
             int? maxSentenceCount = default,
             bool includeStatistics = default,
             bool isLanguageAutoDetected = default)
@@ -277,7 +277,7 @@ namespace Azure.AI.TextAnalytics.Tests
                 Assert.IsNull(results.Statistics);
             }
 
-            foreach (AbstractiveSummarizeResult result in results)
+            foreach (AbstractSummaryResult result in results)
             {
                 Assert.That(result.Id, Is.Not.Null.And.Not.Empty);
                 Assert.False(result.HasError);
@@ -328,7 +328,7 @@ namespace Azure.AI.TextAnalytics.Tests
                     Assert.IsNotNull(summary.Contexts);
                     Assert.Greater(summary.Contexts.Count, 0);
 
-                    foreach (AbstractiveSummaryContext context in summary.Contexts)
+                    foreach (SummaryContext context in summary.Contexts)
                     {
                         Assert.GreaterOrEqual(context.Offset, 0);
                         Assert.GreaterOrEqual(context.Length, 0);

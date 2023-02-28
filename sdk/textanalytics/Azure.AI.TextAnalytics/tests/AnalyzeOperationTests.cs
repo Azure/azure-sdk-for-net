@@ -850,7 +850,7 @@ namespace Azure.AI.TextAnalytics.Tests
 
         [RecordedTest]
         [ServiceVersion(Min = TextAnalyticsClientOptions.ServiceVersion.V2022_10_01_Preview)]
-        public async Task AnalyzeOperationAbstractiveSummarize()
+        public async Task AnalyzeOperationAbstractSummary()
         {
             TextAnalyticsClient client = GetClient();
             var documents = new List<string>
@@ -862,8 +862,8 @@ namespace Azure.AI.TextAnalytics.Tests
 
             TextAnalyticsActions batchActions = new TextAnalyticsActions()
             {
-                AbstractiveSummarizeActions = new List<AbstractiveSummarizeAction>() { new AbstractiveSummarizeAction() { MaxSentenceCount = 2 } },
-                DisplayName = "AnalyzeOperationAbstractiveSummarize",
+                AbstractSummaryActions = new List<AbstractSummaryAction>() { new AbstractSummaryAction() { MaxSentenceCount = 2 } },
+                DisplayName = "AnalyzeOperationAbstractSummary",
             };
 
             AnalyzeActionsOperation operation = await client.StartAnalyzeActionsAsync(documents, batchActions);
@@ -871,13 +871,13 @@ namespace Azure.AI.TextAnalytics.Tests
 
             // Take the first page.
             AnalyzeActionsResult resultCollection = operation.Value.ToEnumerableAsync().Result.FirstOrDefault();
-            IReadOnlyCollection<AbstractiveSummarizeActionResult> abstractiveSummarizeActionsResults = resultCollection.AbstractiveSummarizeResults;
-            Assert.IsNotNull(abstractiveSummarizeActionsResults);
+            IReadOnlyCollection<AbstractSummaryActionResult> abstractSummaryActionsResults = resultCollection.AbstractSummaryResults;
+            Assert.IsNotNull(abstractSummaryActionsResults);
 
-            AbstractiveSummarizeResultCollection abstractiveSummarizeDocumentsResults = abstractiveSummarizeActionsResults.FirstOrDefault().DocumentsResults;
-            Assert.AreEqual(1, abstractiveSummarizeDocumentsResults.Count);
+            AbstractSummaryResultCollection abstractSummaryDocumentsResults = abstractSummaryActionsResults.FirstOrDefault().DocumentsResults;
+            Assert.AreEqual(1, abstractSummaryDocumentsResults.Count);
 
-            AbstractiveSummarizeResult result = abstractiveSummarizeDocumentsResults[0];
+            AbstractSummaryResult result = abstractSummaryDocumentsResults[0];
             Assert.Greater(result.Summaries.Count, 0);
 
             AbstractiveSummary summary = result.Summaries.FirstOrDefault();

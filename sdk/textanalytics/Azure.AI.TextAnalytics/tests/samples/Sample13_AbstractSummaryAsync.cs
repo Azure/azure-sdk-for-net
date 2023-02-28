@@ -11,7 +11,7 @@ namespace Azure.AI.TextAnalytics.Samples
     public partial class TextAnalyticsSamples : TextAnalyticsSampleBase
     {
         [Test]
-        public async Task AbstractiveSummarizeAsync()
+        public async Task AbstractSummaryAsync()
         {
             Uri endpoint = new(TestEnvironment.Endpoint);
             AzureKeyCredential credential = new(TestEnvironment.ApiKey);
@@ -64,13 +64,13 @@ namespace Azure.AI.TextAnalytics.Samples
                 }
             };
 
-            AbstractiveSummarizeOptions options = new()
+            AbstractSummaryOptions options = new()
             {
                 MaxSentenceCount = 2
             };
 
             // Perform the text analysis operation.
-            AbstractiveSummarizeOperation operation = client.StartAbstractiveSummarize(batchedDocuments, options);
+            AbstractSummaryOperation operation = client.StartAbstractSummary(batchedDocuments, options);
             await operation.WaitForCompletionAsync();
 
             Console.WriteLine($"The operation has completed.");
@@ -85,12 +85,12 @@ namespace Azure.AI.TextAnalytics.Samples
             Console.WriteLine();
 
             // View the operation results.
-            await foreach (AbstractiveSummarizeResultCollection documentsInPage in operation.Value)
+            await foreach (AbstractSummaryResultCollection documentsInPage in operation.Value)
             {
-                Console.WriteLine($"Abstractive Summarize, model version: \"{documentsInPage.ModelVersion}\"");
+                Console.WriteLine($"Abstract Summary, model version: \"{documentsInPage.ModelVersion}\"");
                 Console.WriteLine();
 
-                foreach (AbstractiveSummarizeResult documentResult in documentsInPage)
+                foreach (AbstractSummaryResult documentResult in documentsInPage)
                 {
                     if (documentResult.HasError)
                     {
@@ -108,7 +108,7 @@ namespace Azure.AI.TextAnalytics.Samples
                         Console.WriteLine($"  Text: {summary.Text.Replace("\n", " ")}");
                         Console.WriteLine($"  Contexts:");
 
-                        foreach (AbstractiveSummaryContext context in summary.Contexts)
+                        foreach (SummaryContext context in summary.Contexts)
                         {
                             Console.WriteLine($"    Offset: {context.Offset}");
                             Console.WriteLine($"    Length: {context.Length}");
