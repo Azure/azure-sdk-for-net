@@ -31,13 +31,7 @@ namespace Azure.Core.Json
             }
 
             /// <inheritdoc />
-            public (string Name, MutableJsonElement Value) Current
-            {
-                get => (
-                    _enumerator.Current.Name,
-                    new MutableJsonElement(_target._root, _enumerator.Current.Value, _target._path, _target._highWaterMark)
-                );
-            }
+            public (string Name, MutableJsonElement Value) Current => (_enumerator.Current.Name, _target.GetProperty(_enumerator.Current.Name));
 
             /// <summary>
             ///   Returns an enumerator that iterates the properties of an object.

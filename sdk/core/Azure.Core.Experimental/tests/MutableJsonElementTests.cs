@@ -170,6 +170,25 @@ namespace Azure.Core.Experimental.Tests
         }
 
         [Test]
+        public void EnumeratedArrayValueCanBeChanged()
+        {
+            string json = "[0, 1, 2, 3]";
+
+            MutableJsonDocument mdoc = MutableJsonDocument.Parse(json);
+            MutableJsonElement.ArrayEnumerator enumerator = mdoc.RootElement.EnumerateArray();
+
+            MutableJsonElement value = default;
+            foreach (MutableJsonElement item in enumerator)
+            {
+                value = item;
+            }
+
+            value.Set(5);
+            Assert.AreEqual(5, value.GetInt32());
+            Assert.AreEqual(5, mdoc.RootElement.GetIndexElement(3).GetInt32());
+        }
+
+        [Test]
         public void CanEnumerateObject()
         {
             string json = """
@@ -226,6 +245,33 @@ namespace Azure.Core.Experimental.Tests
                 Assert.AreEqual(index + 1, property.Value.GetInt32());
                 index++;
             }
+        }
+
+        [Test]
+        public void EnumeratedPropertyValueCanBeChanged()
+        {
+            string json = """
+                {
+                  "Foo" : 0,
+                  "Bar" : 1
+                }
+                """;
+
+            MutableJsonDocument mdoc = MutableJsonDocument.Parse(json);
+            MutableJsonElement.ObjectEnumerator enumerator = mdoc.RootElement.EnumerateObject();
+
+            int index = 0;
+            MutableJsonElement value = default;
+            foreach ((string Name, MutableJsonElement Value) property in enumerator)
+            {
+                value = property.Value;
+                index++;
+            }
+
+            value.Set(5);
+
+            Assert.AreEqual(5, value.GetInt32());
+            Assert.AreEqual(5, mdoc.RootElement.GetProperty("Bar").GetInt32());
         }
     }
 }
