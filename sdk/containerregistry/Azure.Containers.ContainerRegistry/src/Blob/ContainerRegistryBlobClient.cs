@@ -308,10 +308,9 @@ namespace Azure.Containers.ContainerRegistry.Specialized
         /// Upload an artifact blob.
         /// </summary>
         /// <param name="stream">The stream containing the blob data.</param>
-        /// <param name="options">Options for the blob upload.</param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        public virtual Response<UploadBlobResult> UploadBlob(Stream stream, UploadBlobOptions options = default, CancellationToken cancellationToken = default)
+        public virtual Response<UploadBlobResult> UploadBlob(Stream stream, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(stream, nameof(stream));
 
@@ -342,10 +341,9 @@ namespace Azure.Containers.ContainerRegistry.Specialized
         /// Upload an artifact blob.
         /// </summary>
         /// <param name="stream">The stream containing the blob data.</param>
-        /// <param name="options">Options for the blob upload.</param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        public virtual async Task<Response<UploadBlobResult>> UploadBlobAsync(Stream stream, UploadBlobOptions options = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<UploadBlobResult>> UploadBlobAsync(Stream stream, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(stream, nameof(stream));
 
