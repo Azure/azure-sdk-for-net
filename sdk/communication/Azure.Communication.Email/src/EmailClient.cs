@@ -16,12 +16,11 @@ using Azure.Core.Pipeline;
 namespace Azure.Communication.Email
 {
     /// <summary> The Email service client. </summary>
-    [CodeGenClient("EmailClient")]
     public partial class EmailClient
     {
         private readonly ClientDiagnostics _clientDiagnostics;
 
-        internal EmailRestClient RestClient { get; }
+        private readonly EmailRestClient RestClient;
 
         /// <summary> Initializes a new instance of EmailClient for mocking. </summary>
         protected EmailClient()
