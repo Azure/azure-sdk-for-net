@@ -1598,7 +1598,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             using TransportEventBatch transportBatch = await producer.Object.CreateBatchAsync(options, default);
 
-            using var batch = new EventDataBatch(transportBatch, "ns", "eh", options, new MessagingClientDiagnostics("mock", "mock", "mock", "mock", "mock"));
+            using var batch = new EventDataBatch(transportBatch, "ns", "eh", options, MockClientDiagnostics);
             batch.TryAdd(new EventData(new byte[] { 0x15 }));
 
             var messages = batch.AsReadOnlyCollection<AmqpMessage>();
@@ -1651,7 +1651,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             using TransportEventBatch transportBatch = await producer.Object.CreateBatchAsync(options, default);
 
-            using var batch = new EventDataBatch(transportBatch, "ns", "eh", options, new MessagingClientDiagnostics("mock", "mock", "mock", "mock", "mock"));
+            using var batch = new EventDataBatch(transportBatch, "ns", "eh", options, MockClientDiagnostics);
             batch.TryAdd(new EventData(new byte[] { 0x15 }));
 
             await producer.Object.SendAsync(batch, CancellationToken.None);
