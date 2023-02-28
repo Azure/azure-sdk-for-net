@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary> A class representing the SiteSourceControl data model. </summary>
+    /// <summary>
+    /// A class representing the SiteSourceControl data model.
+    /// Source control configuration for an app.
+    /// </summary>
     public partial class SiteSourceControlData : ResourceData
     {
         /// <summary> Initializes a new instance of SiteSourceControlData. </summary>

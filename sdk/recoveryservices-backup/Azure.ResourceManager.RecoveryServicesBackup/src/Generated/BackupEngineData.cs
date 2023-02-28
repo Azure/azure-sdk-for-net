@@ -13,7 +13,10 @@ using Azure.ResourceManager.RecoveryServicesBackup.Models;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup
 {
-    /// <summary> A class representing the BackupEngine data model. </summary>
+    /// <summary>
+    /// A class representing the BackupEngine data model.
+    /// The base backup engine class. All workload specific backup engines derive from this class.
+    /// </summary>
     public partial class BackupEngineData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of BackupEngineData. </summary>

@@ -34,7 +34,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             var options = new AzureMonitorExporterOptions();
             configure?.Invoke(options);
 
-            return loggerOptions.AddProcessor(new BatchLogRecordExportProcessor(new AzureMonitorLogExporter(options, credential)));
+            return loggerOptions.AddProcessor(new BatchLogRecordExportProcessor(new AzureMonitorLogExporter(options, options.Credential ?? credential)));
         }
     }
 }

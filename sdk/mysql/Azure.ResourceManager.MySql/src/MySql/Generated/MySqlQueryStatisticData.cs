@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.MySql
 {
-    /// <summary> A class representing the MySqlQueryStatistic data model. </summary>
+    /// <summary>
+    /// A class representing the MySqlQueryStatistic data model.
+    /// Represents a Query Statistic.
+    /// </summary>
     public partial class MySqlQueryStatisticData : ResourceData
     {
         /// <summary> Initializes a new instance of MySqlQueryStatisticData. </summary>

@@ -3,6 +3,7 @@
 
 #nullable disable
 
+using Azure.Core;
 using Azure.Monitor.OpenTelemetry.Exporter;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
@@ -22,6 +23,16 @@ namespace Azure.Monitor.OpenTelemetry
         /// (https://docs.microsoft.com/azure/azure-monitor/app/sdk-connection-string).
         /// </remarks>
         public string ConnectionString { get; set; }
+
+        /// <summary>
+        /// Get or sets the value of <see cref="TokenCredential" />.
+        /// If <see cref="TokenCredential" /> is not set, AAD authenication is disabled
+        /// and Instrumentation Key from the Connection String will be used.
+        /// </summary>
+        /// <remarks>
+        /// https://learn.microsoft.com/en-us/azure/azure-monitor/app/sdk-connection-string?tabs=net#is-the-connection-string-a-secret
+        /// </remarks>
+        public TokenCredential Credential { get; set; }
 
         /// <summary>
         /// Disable offline storage.
@@ -66,7 +77,13 @@ namespace Azure.Monitor.OpenTelemetry
         internal void SetValueToExporterOptions(IServiceProvider sp)
         {
             var exporterOptions = sp.GetRequiredService<IOptionsMonitor<AzureMonitorExporterOptions>>().Get("");
+            SetValueToExporterOptions(exporterOptions);
+        }
+
+        internal void SetValueToExporterOptions(AzureMonitorExporterOptions exporterOptions)
+        {
             exporterOptions.ConnectionString = ConnectionString;
+            exporterOptions.Credential = Credential;
             exporterOptions.DisableOfflineStorage = DisableOfflineStorage;
             exporterOptions.StorageDirectory = StorageDirectory;
         }

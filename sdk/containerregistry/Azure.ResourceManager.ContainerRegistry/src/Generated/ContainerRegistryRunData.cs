@@ -13,7 +13,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ContainerRegistry
 {
-    /// <summary> A class representing the ContainerRegistryRun data model. </summary>
+    /// <summary>
+    /// A class representing the ContainerRegistryRun data model.
+    /// Run resource properties
+    /// </summary>
     public partial class ContainerRegistryRunData : ResourceData
     {
         /// <summary> Initializes a new instance of ContainerRegistryRunData. </summary>

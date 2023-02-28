@@ -10,6 +10,7 @@ namespace Azure.Monitor.OpenTelemetry
     {
         public AzureMonitorOpenTelemetryOptions() { }
         public string ConnectionString { get { throw null; } set { } }
+        public Azure.Core.TokenCredential Credential { get { throw null; } set { } }
         public bool DisableOfflineStorage { get { throw null; } set { } }
         public bool EnableLogs { get { throw null; } set { } }
         public bool EnableMetrics { get { throw null; } set { } }

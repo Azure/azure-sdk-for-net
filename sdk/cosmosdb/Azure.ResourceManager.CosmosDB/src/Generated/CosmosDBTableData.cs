@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.CosmosDB
 {
-    /// <summary> A class representing the CosmosDBTable data model. </summary>
+    /// <summary>
+    /// A class representing the CosmosDBTable data model.
+    /// An Azure Cosmos DB Table.
+    /// </summary>
     public partial class CosmosDBTableData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of CosmosDBTableData. </summary>

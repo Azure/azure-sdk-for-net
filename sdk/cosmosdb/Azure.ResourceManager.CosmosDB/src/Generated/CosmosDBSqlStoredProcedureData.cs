@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.CosmosDB
 {
-    /// <summary> A class representing the CosmosDBSqlStoredProcedure data model. </summary>
+    /// <summary>
+    /// A class representing the CosmosDBSqlStoredProcedure data model.
+    /// An Azure Cosmos DB storedProcedure.
+    /// </summary>
     public partial class CosmosDBSqlStoredProcedureData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of CosmosDBSqlStoredProcedureData. </summary>
