@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.DataBox.Models
 
         public static DataAccountType ToDataAccountType(this string value)
         {
-            if (string.Equals(value, "StorageAccount", StringComparison.InvariantCultureIgnoreCase)) return DataAccountType.StorageAccount;
-            if (string.Equals(value, "ManagedDisk", StringComparison.InvariantCultureIgnoreCase)) return DataAccountType.ManagedDisk;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "StorageAccount")) return DataAccountType.StorageAccount;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "ManagedDisk")) return DataAccountType.ManagedDisk;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown DataAccountType value.");
         }
     }

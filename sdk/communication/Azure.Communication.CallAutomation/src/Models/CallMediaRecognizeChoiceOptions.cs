@@ -21,5 +21,8 @@ namespace Azure.Communication.CallAutomation
         /// The IvR choices for recognize
         /// </summary>
         public IList<RecognizeChoice> RecognizeChoices { get; }
+
+        /// <summary> Speech language to be recognized, If not set default is en-US. </summary>
+        public string SpeechLanguage { get; set; }
     }
 }

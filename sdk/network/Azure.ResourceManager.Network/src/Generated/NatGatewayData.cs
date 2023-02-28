@@ -14,7 +14,10 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> A class representing the NatGateway data model. </summary>
+    /// <summary>
+    /// A class representing the NatGateway data model.
+    /// Nat Gateway resource.
+    /// </summary>
     public partial class NatGatewayData : NetworkTrackedResourceData
     {
         /// <summary> Initializes a new instance of NatGatewayData. </summary>

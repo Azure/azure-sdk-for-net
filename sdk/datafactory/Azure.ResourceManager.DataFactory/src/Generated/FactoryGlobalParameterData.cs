@@ -14,7 +14,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataFactory
 {
-    /// <summary> A class representing the FactoryGlobalParameter data model. </summary>
+    /// <summary>
+    /// A class representing the FactoryGlobalParameter data model.
+    /// Global parameters resource type.
+    /// </summary>
     public partial class FactoryGlobalParameterData : ResourceData
     {
         /// <summary> Initializes a new instance of FactoryGlobalParameterData. </summary>

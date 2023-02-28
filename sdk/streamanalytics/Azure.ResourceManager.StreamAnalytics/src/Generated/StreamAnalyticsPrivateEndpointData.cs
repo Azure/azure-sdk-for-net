@@ -12,7 +12,10 @@ using Azure.ResourceManager.StreamAnalytics.Models;
 
 namespace Azure.ResourceManager.StreamAnalytics
 {
-    /// <summary> A class representing the StreamAnalyticsPrivateEndpoint data model. </summary>
+    /// <summary>
+    /// A class representing the StreamAnalyticsPrivateEndpoint data model.
+    /// Complete information about the private endpoint.
+    /// </summary>
     public partial class StreamAnalyticsPrivateEndpointData : ResourceData
     {
         /// <summary> Initializes a new instance of StreamAnalyticsPrivateEndpointData. </summary>

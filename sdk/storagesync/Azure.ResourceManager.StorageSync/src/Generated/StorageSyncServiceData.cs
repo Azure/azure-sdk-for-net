@@ -13,7 +13,10 @@ using Azure.ResourceManager.StorageSync.Models;
 
 namespace Azure.ResourceManager.StorageSync
 {
-    /// <summary> A class representing the StorageSyncService data model. </summary>
+    /// <summary>
+    /// A class representing the StorageSyncService data model.
+    /// Storage Sync Service object.
+    /// </summary>
     public partial class StorageSyncServiceData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of StorageSyncServiceData. </summary>

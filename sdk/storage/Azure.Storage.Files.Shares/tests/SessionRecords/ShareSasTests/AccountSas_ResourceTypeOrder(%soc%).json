@@ -120,7 +120,7 @@
       "ResponseBody": null
     },
     {
-      "RequestUri": "https://amandadev3.file.core.windows.net/test-share-6cea2add-91e8-7a9c-2fc6-9bf571fd86a2/test-directory-f4d240c4-23a0-5d21-eb42-4f9845082660/test-file-9aec2081-e7fb-90e3-8c74-e3f959a4248f?sv=2021-12-02\u0026ss=bqtf\u0026srt=soc\u0026se=2022-08-06T23%3A08%3A15Z\u0026sp=racwdlxyuptf\u0026sig=Sanitized",
+      "RequestUri": "https://amandadev3.file.core.windows.net/test-share-6cea2add-91e8-7a9c-2fc6-9bf571fd86a2/test-directory-f4d240c4-23a0-5d21-eb42-4f9845082660/test-file-9aec2081-e7fb-90e3-8c74-e3f959a4248f?sv=2022-11-02\u0026ss=bqtf\u0026srt=soc\u0026se=2022-08-06T23%3A08%3A15Z\u0026sp=racwdlxyuptf\u0026sig=Sanitized",
       "RequestMethod": "HEAD",
       "RequestHeaders": {
         "Accept": "application/xml",

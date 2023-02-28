@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.Search.Models
 
         public static SearchServiceHostingMode ToSearchServiceHostingMode(this string value)
         {
-            if (string.Equals(value, "default", StringComparison.InvariantCultureIgnoreCase)) return SearchServiceHostingMode.Default;
-            if (string.Equals(value, "highDensity", StringComparison.InvariantCultureIgnoreCase)) return SearchServiceHostingMode.HighDensity;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "default")) return SearchServiceHostingMode.Default;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "highDensity")) return SearchServiceHostingMode.HighDensity;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown SearchServiceHostingMode value.");
         }
     }

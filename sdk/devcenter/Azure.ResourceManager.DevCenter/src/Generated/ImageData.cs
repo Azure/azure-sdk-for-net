@@ -11,7 +11,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DevCenter
 {
-    /// <summary> A class representing the Image data model. </summary>
+    /// <summary>
+    /// A class representing the Image data model.
+    /// Represents an image.
+    /// </summary>
     public partial class ImageData : ResourceData
     {
         /// <summary> Initializes a new instance of ImageData. </summary>

@@ -1,12 +1,9 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-#nullable disable // TODO: remove and fix errors
-
 using System;
 using System.Net;
 using System.Threading.Tasks;
-using Azure.Core.TestFramework;
 using Microsoft.AspNetCore.Mvc.Testing;
 
 using Xunit;
@@ -32,7 +29,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Integration.Tests
         {
             // Arrange
             var client = this.factory.CreateClient();
-            var request = new Uri(client.BaseAddress, $"api/home/statuscode/{(int)httpStatusCode}");
+            var request = new Uri(client.BaseAddress!, $"api/home/statuscode/{(int)httpStatusCode}");
 
             // Act
             var response = await client.GetAsync(request);

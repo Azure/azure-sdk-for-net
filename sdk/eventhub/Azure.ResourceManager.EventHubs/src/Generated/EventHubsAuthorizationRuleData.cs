@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.EventHubs
 {
-    /// <summary> A class representing the EventHubsAuthorizationRule data model. </summary>
+    /// <summary>
+    /// A class representing the EventHubsAuthorizationRule data model.
+    /// Single item in a List or Get AuthorizationRule operation
+    /// </summary>
     public partial class EventHubsAuthorizationRuleData : ResourceData
     {
         /// <summary> Initializes a new instance of EventHubsAuthorizationRuleData. </summary>

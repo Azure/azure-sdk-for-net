@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.CustomerInsights.Models
 
         public static LinkType ToLinkType(this string value)
         {
-            if (string.Equals(value, "UpdateAlways", StringComparison.InvariantCultureIgnoreCase)) return LinkType.UpdateAlways;
-            if (string.Equals(value, "CopyIfNull", StringComparison.InvariantCultureIgnoreCase)) return LinkType.CopyIfNull;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "UpdateAlways")) return LinkType.UpdateAlways;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "CopyIfNull")) return LinkType.CopyIfNull;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown LinkType value.");
         }
     }

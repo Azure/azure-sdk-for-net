@@ -247,7 +247,8 @@ namespace Azure.AI.TextAnalytics.Tests
             {
                 Assert.IsNotNull(results.Statistics);
                 Assert.Greater(results.Statistics.DocumentCount, 0);
-                Assert.GreaterOrEqual(results.Statistics.TransactionCount, 0);
+                // BUGBUG: https://github.com/Azure/azure-sdk-for-net/issues/34519
+                // Assert.Greater(results.Statistics.TransactionCount, 0);
                 Assert.GreaterOrEqual(results.Statistics.InvalidDocumentCount, 0);
                 Assert.GreaterOrEqual(results.Statistics.ValidDocumentCount, 0);
             }

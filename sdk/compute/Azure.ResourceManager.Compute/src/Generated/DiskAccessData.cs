@@ -13,7 +13,10 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute
 {
-    /// <summary> A class representing the DiskAccess data model. </summary>
+    /// <summary>
+    /// A class representing the DiskAccess data model.
+    /// disk access resource.
+    /// </summary>
     public partial class DiskAccessData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of DiskAccessData. </summary>

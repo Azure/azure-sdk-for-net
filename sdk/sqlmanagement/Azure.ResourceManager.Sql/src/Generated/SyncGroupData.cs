@@ -12,7 +12,10 @@ using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
-    /// <summary> A class representing the SyncGroup data model. </summary>
+    /// <summary>
+    /// A class representing the SyncGroup data model.
+    /// An Azure SQL Database sync group.
+    /// </summary>
     public partial class SyncGroupData : ResourceData
     {
         /// <summary> Initializes a new instance of SyncGroupData. </summary>

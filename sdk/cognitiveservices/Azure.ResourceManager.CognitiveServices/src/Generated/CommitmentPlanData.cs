@@ -13,7 +13,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.CognitiveServices
 {
-    /// <summary> A class representing the CommitmentPlan data model. </summary>
+    /// <summary>
+    /// A class representing the CommitmentPlan data model.
+    /// Cognitive Services account commitment plan.
+    /// </summary>
     public partial class CommitmentPlanData : ResourceData
     {
         /// <summary> Initializes a new instance of CommitmentPlanData. </summary>

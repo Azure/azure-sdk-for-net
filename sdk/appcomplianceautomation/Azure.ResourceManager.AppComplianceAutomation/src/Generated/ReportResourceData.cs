@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppComplianceAutomation
 {
-    /// <summary> A class representing the ReportResource data model. </summary>
+    /// <summary>
+    /// A class representing the ReportResource data model.
+    /// A class represent an AppComplianceAutomation report resource.
+    /// </summary>
     public partial class ReportResourceData : ResourceData
     {
         /// <summary> Initializes a new instance of ReportResourceData. </summary>

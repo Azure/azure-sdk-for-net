@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <returns> Returns a <see cref="ExtensionTopicResource" /> object. </returns>
         public virtual ExtensionTopicResource GetExtensionTopic()
         {
-            return new ExtensionTopicResource(Client, new ResourceIdentifier(Id.ToString() + "/providers/Microsoft.EventGrid/extensionTopics/default"));
+            return new ExtensionTopicResource(Client, Id.AppendProviderResource("Microsoft.EventGrid", "extensionTopics", "default"));
         }
     }
 }

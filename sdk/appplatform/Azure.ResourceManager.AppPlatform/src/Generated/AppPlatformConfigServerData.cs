@@ -11,7 +11,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppPlatform
 {
-    /// <summary> A class representing the AppPlatformConfigServer data model. </summary>
+    /// <summary>
+    /// A class representing the AppPlatformConfigServer data model.
+    /// Config Server resource
+    /// </summary>
     public partial class AppPlatformConfigServerData : ResourceData
     {
         /// <summary> Initializes a new instance of AppPlatformConfigServerData. </summary>

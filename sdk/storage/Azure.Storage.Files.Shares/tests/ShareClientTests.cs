@@ -333,6 +333,28 @@ namespace Azure.Storage.Files.Shares.Tests
         }
 
         [RecordedTest]
+        [PlaybackOnly("https://github.com/Azure/azure-sdk-for-net/issues/34474")]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2021_04_10)]
+        public async Task CreateAndGetPermissionAsync_OAuth()
+        {
+            string shareName = GetNewShareName();
+            ShareServiceClient sharedKeyServiceClient = SharesClientBuilder.GetServiceClient_OAuthAccount_SharedKey();
+            await using DisposingShare sharedKeyShare = await GetTestShareAsync(sharedKeyServiceClient, shareName);
+            ShareServiceClient oauthServiceClient = SharesClientBuilder.GetServiceClient_OAuth();
+            ShareClient share = oauthServiceClient.GetShareClient(shareName);
+
+            // Arrange
+            var permission = "O:S-1-5-21-2127521184-1604012920-1887927527-21560751G:S-1-5-21-2127521184-1604012920-1887927527-513D:AI(A;;FA;;;SY)(A;;FA;;;BA)(A;;0x1200a9;;;S-1-5-21-397955417-626881126-188441444-3053964)S:NO_ACCESS_CONTROL";
+
+            // Act
+            Response<PermissionInfo> createResponse = await share.CreatePermissionAsync(permission);
+            Response<string> getResponse = await share.GetPermissionAsync(createResponse.Value.FilePermissionKey);
+
+            // Assert
+            Assert.AreEqual(permission, getResponse.Value);
+        }
+
+        [RecordedTest]
         public async Task CreatePermissionAsync_Error()
         {
             await using DisposingShare test = await GetTestShareAsync();
@@ -766,7 +788,7 @@ namespace Azure.Storage.Files.Shares.Tests
             ShareClient share = test.Share;
 
             // Arrange
-            System.Collections.Generic.IDictionary<string, string> metadata = BuildMetadata();
+            IDictionary<string, string> metadata = BuildMetadata();
 
             // Act
             Response<ShareInfo> response = await share.SetMetadataAsync(metadata);

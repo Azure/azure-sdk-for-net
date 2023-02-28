@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.Compute.Models
 
         public static ComputeResourceSkuRestrictionsType ToComputeResourceSkuRestrictionsType(this string value)
         {
-            if (string.Equals(value, "Location", StringComparison.InvariantCultureIgnoreCase)) return ComputeResourceSkuRestrictionsType.Location;
-            if (string.Equals(value, "Zone", StringComparison.InvariantCultureIgnoreCase)) return ComputeResourceSkuRestrictionsType.Zone;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Location")) return ComputeResourceSkuRestrictionsType.Location;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Zone")) return ComputeResourceSkuRestrictionsType.Zone;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ComputeResourceSkuRestrictionsType value.");
         }
     }

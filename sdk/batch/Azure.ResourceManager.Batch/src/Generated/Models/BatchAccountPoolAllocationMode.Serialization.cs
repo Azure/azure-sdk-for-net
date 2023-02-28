@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.Batch.Models
 
         public static BatchAccountPoolAllocationMode ToBatchAccountPoolAllocationMode(this string value)
         {
-            if (string.Equals(value, "BatchService", StringComparison.InvariantCultureIgnoreCase)) return BatchAccountPoolAllocationMode.BatchService;
-            if (string.Equals(value, "UserSubscription", StringComparison.InvariantCultureIgnoreCase)) return BatchAccountPoolAllocationMode.UserSubscription;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "BatchService")) return BatchAccountPoolAllocationMode.BatchService;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "UserSubscription")) return BatchAccountPoolAllocationMode.UserSubscription;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown BatchAccountPoolAllocationMode value.");
         }
     }

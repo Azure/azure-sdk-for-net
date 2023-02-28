@@ -12,7 +12,10 @@ using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
-    /// <summary> A class representing the SqlServerDatabaseRestorePoint data model. </summary>
+    /// <summary>
+    /// A class representing the SqlServerDatabaseRestorePoint data model.
+    /// Database restore points.
+    /// </summary>
     public partial class SqlServerDatabaseRestorePointData : ResourceData
     {
         /// <summary> Initializes a new instance of SqlServerDatabaseRestorePointData. </summary>

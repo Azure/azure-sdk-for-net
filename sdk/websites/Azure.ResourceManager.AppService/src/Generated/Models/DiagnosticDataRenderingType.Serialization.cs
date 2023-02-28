@@ -43,31 +43,31 @@ namespace Azure.ResourceManager.AppService.Models
 
         public static DiagnosticDataRenderingType ToDiagnosticDataRenderingType(this string value)
         {
-            if (string.Equals(value, "NoGraph", StringComparison.InvariantCultureIgnoreCase)) return DiagnosticDataRenderingType.NoGraph;
-            if (string.Equals(value, "Table", StringComparison.InvariantCultureIgnoreCase)) return DiagnosticDataRenderingType.Table;
-            if (string.Equals(value, "TimeSeries", StringComparison.InvariantCultureIgnoreCase)) return DiagnosticDataRenderingType.TimeSeries;
-            if (string.Equals(value, "TimeSeriesPerInstance", StringComparison.InvariantCultureIgnoreCase)) return DiagnosticDataRenderingType.TimeSeriesPerInstance;
-            if (string.Equals(value, "PieChart", StringComparison.InvariantCultureIgnoreCase)) return DiagnosticDataRenderingType.PieChart;
-            if (string.Equals(value, "DataSummary", StringComparison.InvariantCultureIgnoreCase)) return DiagnosticDataRenderingType.DataSummary;
-            if (string.Equals(value, "Email", StringComparison.InvariantCultureIgnoreCase)) return DiagnosticDataRenderingType.Email;
-            if (string.Equals(value, "Insights", StringComparison.InvariantCultureIgnoreCase)) return DiagnosticDataRenderingType.Insights;
-            if (string.Equals(value, "DynamicInsight", StringComparison.InvariantCultureIgnoreCase)) return DiagnosticDataRenderingType.DynamicInsight;
-            if (string.Equals(value, "Markdown", StringComparison.InvariantCultureIgnoreCase)) return DiagnosticDataRenderingType.Markdown;
-            if (string.Equals(value, "Detector", StringComparison.InvariantCultureIgnoreCase)) return DiagnosticDataRenderingType.Detector;
-            if (string.Equals(value, "DropDown", StringComparison.InvariantCultureIgnoreCase)) return DiagnosticDataRenderingType.DropDown;
-            if (string.Equals(value, "Card", StringComparison.InvariantCultureIgnoreCase)) return DiagnosticDataRenderingType.Card;
-            if (string.Equals(value, "Solution", StringComparison.InvariantCultureIgnoreCase)) return DiagnosticDataRenderingType.Solution;
-            if (string.Equals(value, "Guage", StringComparison.InvariantCultureIgnoreCase)) return DiagnosticDataRenderingType.Guage;
-            if (string.Equals(value, "Form", StringComparison.InvariantCultureIgnoreCase)) return DiagnosticDataRenderingType.Form;
-            if (string.Equals(value, "ChangeSets", StringComparison.InvariantCultureIgnoreCase)) return DiagnosticDataRenderingType.ChangeSets;
-            if (string.Equals(value, "ChangeAnalysisOnboarding", StringComparison.InvariantCultureIgnoreCase)) return DiagnosticDataRenderingType.ChangeAnalysisOnboarding;
-            if (string.Equals(value, "ChangesView", StringComparison.InvariantCultureIgnoreCase)) return DiagnosticDataRenderingType.ChangesView;
-            if (string.Equals(value, "AppInsight", StringComparison.InvariantCultureIgnoreCase)) return DiagnosticDataRenderingType.AppInsight;
-            if (string.Equals(value, "DependencyGraph", StringComparison.InvariantCultureIgnoreCase)) return DiagnosticDataRenderingType.DependencyGraph;
-            if (string.Equals(value, "DownTime", StringComparison.InvariantCultureIgnoreCase)) return DiagnosticDataRenderingType.DownTime;
-            if (string.Equals(value, "SummaryCard", StringComparison.InvariantCultureIgnoreCase)) return DiagnosticDataRenderingType.SummaryCard;
-            if (string.Equals(value, "SearchComponent", StringComparison.InvariantCultureIgnoreCase)) return DiagnosticDataRenderingType.SearchComponent;
-            if (string.Equals(value, "AppInsightEnablement", StringComparison.InvariantCultureIgnoreCase)) return DiagnosticDataRenderingType.AppInsightEnablement;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "NoGraph")) return DiagnosticDataRenderingType.NoGraph;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Table")) return DiagnosticDataRenderingType.Table;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "TimeSeries")) return DiagnosticDataRenderingType.TimeSeries;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "TimeSeriesPerInstance")) return DiagnosticDataRenderingType.TimeSeriesPerInstance;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "PieChart")) return DiagnosticDataRenderingType.PieChart;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "DataSummary")) return DiagnosticDataRenderingType.DataSummary;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Email")) return DiagnosticDataRenderingType.Email;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Insights")) return DiagnosticDataRenderingType.Insights;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "DynamicInsight")) return DiagnosticDataRenderingType.DynamicInsight;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Markdown")) return DiagnosticDataRenderingType.Markdown;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Detector")) return DiagnosticDataRenderingType.Detector;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "DropDown")) return DiagnosticDataRenderingType.DropDown;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Card")) return DiagnosticDataRenderingType.Card;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Solution")) return DiagnosticDataRenderingType.Solution;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Guage")) return DiagnosticDataRenderingType.Guage;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Form")) return DiagnosticDataRenderingType.Form;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "ChangeSets")) return DiagnosticDataRenderingType.ChangeSets;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "ChangeAnalysisOnboarding")) return DiagnosticDataRenderingType.ChangeAnalysisOnboarding;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "ChangesView")) return DiagnosticDataRenderingType.ChangesView;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "AppInsight")) return DiagnosticDataRenderingType.AppInsight;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "DependencyGraph")) return DiagnosticDataRenderingType.DependencyGraph;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "DownTime")) return DiagnosticDataRenderingType.DownTime;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "SummaryCard")) return DiagnosticDataRenderingType.SummaryCard;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "SearchComponent")) return DiagnosticDataRenderingType.SearchComponent;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "AppInsightEnablement")) return DiagnosticDataRenderingType.AppInsightEnablement;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown DiagnosticDataRenderingType value.");
         }
     }

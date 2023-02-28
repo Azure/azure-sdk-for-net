@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppPlatform
 {
-    /// <summary> A class representing the AppPlatformService data model. </summary>
+    /// <summary>
+    /// A class representing the AppPlatformService data model.
+    /// Service resource
+    /// </summary>
     public partial class AppPlatformServiceData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of AppPlatformServiceData. </summary>
