@@ -53,7 +53,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     scheduleRunFrequency = new ScheduleRunType(property.Value.GetString());
@@ -63,7 +62,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     hourlySchedule = BackupHourlySchedule.DeserializeBackupHourlySchedule(property.Value);
@@ -73,7 +71,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     dailySchedule = BackupDailySchedule.DeserializeBackupDailySchedule(property.Value);
@@ -83,7 +80,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     weeklySchedule = BackupWeeklySchedule.DeserializeBackupWeeklySchedule(property.Value);

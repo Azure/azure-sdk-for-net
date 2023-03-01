@@ -27,7 +27,6 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     sku = CapacitySku.DeserializeCapacitySku(property.Value);

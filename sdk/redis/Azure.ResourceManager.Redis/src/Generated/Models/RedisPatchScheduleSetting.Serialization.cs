@@ -49,7 +49,6 @@ namespace Azure.ResourceManager.Redis.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     maintenanceWindow = property.Value.GetTimeSpan("P");

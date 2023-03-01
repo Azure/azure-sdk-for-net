@@ -24,7 +24,6 @@ namespace Azure.ResourceManager.Quota.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<CurrentUsagesBaseData> array = new List<CurrentUsagesBaseData>();

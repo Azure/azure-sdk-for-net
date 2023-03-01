@@ -47,7 +47,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     processServer = ProcessServerDetails.DeserializeProcessServerDetails(property.Value);
@@ -57,7 +56,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     rcmProxy = RcmProxyDetails.DeserializeRcmProxyDetails(property.Value);
@@ -67,7 +65,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     pushInstaller = PushInstallerDetails.DeserializePushInstallerDetails(property.Value);
@@ -77,7 +74,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     replicationAgent = ReplicationAgentDetails.DeserializeReplicationAgentDetails(property.Value);
@@ -87,7 +83,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     reprotectAgent = ReprotectAgentDetails.DeserializeReprotectAgentDetails(property.Value);
@@ -97,7 +92,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     marsAgent = MarsAgentDetails.DeserializeMarsAgentDetails(property.Value);
@@ -107,7 +101,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     dra = DraDetails.DeserializeDraDetails(property.Value);
@@ -117,7 +110,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<InMageRcmFabricSwitchProviderBlockingErrorDetails> array = new List<InMageRcmFabricSwitchProviderBlockingErrorDetails>();

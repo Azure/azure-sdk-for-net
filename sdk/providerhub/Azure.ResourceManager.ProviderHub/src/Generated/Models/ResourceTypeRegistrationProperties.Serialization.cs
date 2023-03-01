@@ -291,7 +291,6 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     routingType = new RoutingType(property.Value.GetString());
@@ -301,7 +300,6 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     regionality = new Regionality(property.Value.GetString());
@@ -311,7 +309,6 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ResourceTypeEndpoint> array = new List<ResourceTypeEndpoint>();
@@ -326,7 +323,6 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     extensionOptions = ResourceTypeRegistrationPropertiesExtensionOptions.DeserializeResourceTypeRegistrationPropertiesExtensionOptions(property.Value);
@@ -336,7 +332,6 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     marketplaceType = new ResourceTypeRegistrationPropertiesMarketplaceType(property.Value.GetString());
@@ -346,7 +341,6 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<SwaggerSpecification> array = new List<SwaggerSpecification>();
@@ -361,7 +355,6 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -376,7 +369,6 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<AuthorizationActionMapping> array = new List<AuthorizationActionMapping>();
@@ -391,7 +383,6 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<LinkedAccessCheck> array = new List<LinkedAccessCheck>();
@@ -411,7 +402,6 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<LoggingRule> array = new List<LoggingRule>();
@@ -426,7 +416,6 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ThrottlingRule> array = new List<ThrottlingRule>();
@@ -441,7 +430,6 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -456,7 +444,6 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     featuresRule = ResourceTypeRegistrationPropertiesFeaturesRule.DeserializeResourceTypeRegistrationPropertiesFeaturesRule(property.Value);
@@ -466,7 +453,6 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     enableAsyncOperation = property.Value.GetBoolean();
@@ -476,7 +462,6 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     provisioningState = new ProvisioningState(property.Value.GetString());
@@ -486,7 +471,6 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     enableThirdPartyS2S = property.Value.GetBoolean();
@@ -496,7 +480,6 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     subscriptionLifecycleNotificationSpecifications = ResourceTypeRegistrationPropertiesSubscriptionLifecycleNotificationSpecifications.DeserializeResourceTypeRegistrationPropertiesSubscriptionLifecycleNotificationSpecifications(property.Value);
@@ -506,7 +489,6 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     isPureProxy = property.Value.GetBoolean();
@@ -516,7 +498,6 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     identityManagement = ResourceTypeRegistrationPropertiesIdentityManagement.DeserializeResourceTypeRegistrationPropertiesIdentityManagement(property.Value);
@@ -526,7 +507,6 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     checkNameAvailabilitySpecifications = ResourceTypeRegistrationPropertiesCheckNameAvailabilitySpecifications.DeserializeResourceTypeRegistrationPropertiesCheckNameAvailabilitySpecifications(property.Value);
@@ -536,7 +516,6 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -551,7 +530,6 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ServiceTreeInfo> array = new List<ServiceTreeInfo>();
@@ -566,7 +544,6 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     requestHeaderOptions = ResourceTypeRegistrationPropertiesRequestHeaderOptions.DeserializeResourceTypeRegistrationPropertiesRequestHeaderOptions(property.Value);
@@ -576,7 +553,6 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<SubscriptionStateRule> array = new List<SubscriptionStateRule>();
@@ -591,7 +567,6 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     templateDeploymentOptions = ResourceTypeRegistrationPropertiesTemplateDeploymentOptions.DeserializeResourceTypeRegistrationPropertiesTemplateDeploymentOptions(property.Value);
@@ -601,7 +576,6 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ExtendedLocationOptions> array = new List<ExtendedLocationOptions>();
@@ -616,7 +590,6 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     resourceMovePolicy = ResourceTypeRegistrationPropertiesResourceMovePolicy.DeserializeResourceTypeRegistrationPropertiesResourceMovePolicy(property.Value);
@@ -626,7 +599,6 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     resourceDeletionPolicy = new ResourceDeletionPolicy(property.Value.GetString());
@@ -636,7 +608,6 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, ResourceConcurrencyControlOption> dictionary = new Dictionary<string, ResourceConcurrencyControlOption>();
@@ -651,7 +622,6 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     resourceGraphConfiguration = ResourceTypeRegistrationPropertiesResourceGraphConfiguration.DeserializeResourceTypeRegistrationPropertiesResourceGraphConfiguration(property.Value);
@@ -661,7 +631,6 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     management = ResourceTypeRegistrationPropertiesManagement.DeserializeResourceTypeRegistrationPropertiesManagement(property.Value);
@@ -671,7 +640,6 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     openApiConfiguration = OpenApiConfiguration.DeserializeOpenApiConfiguration(property.Value);

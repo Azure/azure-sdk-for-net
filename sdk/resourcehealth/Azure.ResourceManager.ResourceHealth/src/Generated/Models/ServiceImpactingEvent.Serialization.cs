@@ -26,7 +26,6 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     eventStartTime = property.Value.GetDateTimeOffset("O");
@@ -36,7 +35,6 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     eventStatusLastModifiedTime = property.Value.GetDateTimeOffset("O");
@@ -51,7 +49,6 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     status = ServiceImpactingEventStatus.DeserializeServiceImpactingEventStatus(property.Value);
@@ -61,7 +58,6 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     incidentProperties = ServiceImpactingEventIncidentProperties.DeserializeServiceImpactingEventIncidentProperties(property.Value);

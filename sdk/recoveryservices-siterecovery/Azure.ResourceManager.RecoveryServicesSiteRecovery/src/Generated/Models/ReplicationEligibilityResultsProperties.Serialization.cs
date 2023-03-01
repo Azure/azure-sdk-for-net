@@ -28,7 +28,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ReplicationEligibilityResultsErrorInfo> array = new List<ReplicationEligibilityResultsErrorInfo>();

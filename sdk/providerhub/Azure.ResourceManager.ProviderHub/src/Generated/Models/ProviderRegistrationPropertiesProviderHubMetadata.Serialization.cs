@@ -50,7 +50,6 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ResourceProviderAuthorization> array = new List<ResourceProviderAuthorization>();
@@ -65,7 +64,6 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     providerAuthentication = ProviderHubMetadataProviderAuthentication.DeserializeProviderHubMetadataProviderAuthentication(property.Value);
@@ -75,7 +73,6 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     thirdPartyProviderAuthorization = ProviderHubMetadataThirdPartyProviderAuthorization.DeserializeProviderHubMetadataThirdPartyProviderAuthorization(property.Value);

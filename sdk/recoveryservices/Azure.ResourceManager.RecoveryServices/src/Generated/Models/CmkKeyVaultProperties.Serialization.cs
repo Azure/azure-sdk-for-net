@@ -33,7 +33,6 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        keyUri = null;
                         continue;
                     }
                     keyUri = new Uri(property.Value.GetString());

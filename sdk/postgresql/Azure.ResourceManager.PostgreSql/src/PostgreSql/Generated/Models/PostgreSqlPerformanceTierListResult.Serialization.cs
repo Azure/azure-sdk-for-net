@@ -22,7 +22,6 @@ namespace Azure.ResourceManager.PostgreSql.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<PostgreSqlPerformanceTierProperties> array = new List<PostgreSqlPerformanceTierProperties>();

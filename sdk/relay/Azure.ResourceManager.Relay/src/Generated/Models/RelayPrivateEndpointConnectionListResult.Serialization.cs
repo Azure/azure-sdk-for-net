@@ -24,7 +24,6 @@ namespace Azure.ResourceManager.Relay.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<RelayPrivateEndpointConnectionData> array = new List<RelayPrivateEndpointConnectionData>();

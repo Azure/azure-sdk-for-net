@@ -28,7 +28,6 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     standardTierStorageRedundancy = new StandardTierStorageRedundancy(property.Value.GetString());
@@ -38,7 +37,6 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     crossRegionRestore = new CrossRegionRestore(property.Value.GetString());

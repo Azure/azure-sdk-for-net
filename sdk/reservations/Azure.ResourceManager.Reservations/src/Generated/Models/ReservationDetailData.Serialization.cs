@@ -31,7 +31,6 @@ namespace Azure.ResourceManager.Reservations
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     location = new AzureLocation(property.Value.GetString());
@@ -41,7 +40,6 @@ namespace Azure.ResourceManager.Reservations
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     etag = property.Value.GetInt32();
@@ -51,7 +49,6 @@ namespace Azure.ResourceManager.Reservations
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     sku = ReservationsSkuName.DeserializeReservationsSkuName(property.Value);
@@ -61,7 +58,6 @@ namespace Azure.ResourceManager.Reservations
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     properties = ReservationProperties.DeserializeReservationProperties(property.Value);
@@ -71,7 +67,6 @@ namespace Azure.ResourceManager.Reservations
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     kind = new ReservationKind(property.Value.GetString());
@@ -96,7 +91,6 @@ namespace Azure.ResourceManager.Reservations
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());

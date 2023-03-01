@@ -68,7 +68,6 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     createdByType = new IdentityType(property.Value.GetString());
@@ -78,7 +77,6 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     createdAt = property.Value.GetDateTimeOffset("O");
@@ -93,7 +91,6 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     lastModifiedByType = new IdentityType(property.Value.GetString());
@@ -103,7 +100,6 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     lastModifiedAt = property.Value.GetDateTimeOffset("O");

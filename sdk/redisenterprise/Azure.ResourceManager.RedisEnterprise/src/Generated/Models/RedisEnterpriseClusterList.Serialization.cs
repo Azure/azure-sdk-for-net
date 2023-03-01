@@ -24,7 +24,6 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<RedisEnterpriseClusterData> array = new List<RedisEnterpriseClusterData>();

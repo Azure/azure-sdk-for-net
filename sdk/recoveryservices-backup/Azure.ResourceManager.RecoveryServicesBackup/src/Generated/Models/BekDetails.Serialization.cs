@@ -45,7 +45,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        secretUrl = null;
                         continue;
                     }
                     secretUrl = new Uri(property.Value.GetString());
@@ -55,7 +54,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     secretVaultId = new ResourceIdentifier(property.Value.GetString());

@@ -53,7 +53,6 @@ namespace Azure.ResourceManager.ResourceGraph.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<Facet> array = new List<Facet>();

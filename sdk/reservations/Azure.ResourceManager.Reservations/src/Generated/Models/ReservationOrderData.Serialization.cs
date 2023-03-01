@@ -40,7 +40,6 @@ namespace Azure.ResourceManager.Reservations
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     etag = property.Value.GetInt32();
@@ -65,7 +64,6 @@ namespace Azure.ResourceManager.Reservations
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -89,7 +87,6 @@ namespace Azure.ResourceManager.Reservations
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             requestDateTime = property0.Value.GetDateTimeOffset("O");
@@ -99,7 +96,6 @@ namespace Azure.ResourceManager.Reservations
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             createdDateTime = property0.Value.GetDateTimeOffset("O");
@@ -109,7 +105,6 @@ namespace Azure.ResourceManager.Reservations
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             expiryDate = property0.Value.GetDateTimeOffset("D");
@@ -119,7 +114,6 @@ namespace Azure.ResourceManager.Reservations
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             benefitStartTime = property0.Value.GetDateTimeOffset("O");
@@ -129,7 +123,6 @@ namespace Azure.ResourceManager.Reservations
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             originalQuantity = property0.Value.GetInt32();
@@ -139,7 +132,6 @@ namespace Azure.ResourceManager.Reservations
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             term = new ReservationTerm(property0.Value.GetString());
@@ -149,7 +141,6 @@ namespace Azure.ResourceManager.Reservations
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             provisioningState = new ReservationProvisioningState(property0.Value.GetString());
@@ -159,7 +150,6 @@ namespace Azure.ResourceManager.Reservations
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             billingPlan = new ReservationBillingPlan(property0.Value.GetString());
@@ -169,7 +159,6 @@ namespace Azure.ResourceManager.Reservations
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             planInformation = ReservationOrderBillingPlanInformation.DeserializeReservationOrderBillingPlanInformation(property0.Value);
@@ -179,7 +168,6 @@ namespace Azure.ResourceManager.Reservations
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<ReservationDetailData> array = new List<ReservationDetailData>();

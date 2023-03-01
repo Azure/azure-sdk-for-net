@@ -51,7 +51,6 @@ namespace Azure.ResourceManager.Quantum.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        restrictedAccessUri = null;
                         continue;
                     }
                     restrictedAccessUri = new Uri(property.Value.GetString());
@@ -61,7 +60,6 @@ namespace Azure.ResourceManager.Quantum.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     autoAdd = property.Value.GetBoolean();
@@ -71,7 +69,6 @@ namespace Azure.ResourceManager.Quantum.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -86,7 +83,6 @@ namespace Azure.ResourceManager.Quantum.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<QuotaDimension> array = new List<QuotaDimension>();
@@ -101,7 +97,6 @@ namespace Azure.ResourceManager.Quantum.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<PricingDetail> array = new List<PricingDetail>();

@@ -44,7 +44,6 @@ namespace Azure.ResourceManager.Redis.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     status = new RedisPrivateEndpointServiceConnectionStatus(property.Value.GetString());

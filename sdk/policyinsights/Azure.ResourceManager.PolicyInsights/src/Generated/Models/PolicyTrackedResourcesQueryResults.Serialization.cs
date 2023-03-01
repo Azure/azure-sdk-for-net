@@ -23,7 +23,6 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<PolicyTrackedResourceRecord> array = new List<PolicyTrackedResourceRecord>();

@@ -23,7 +23,6 @@ namespace Azure.ResourceManager.Quantum.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ProviderDescription> array = new List<ProviderDescription>();

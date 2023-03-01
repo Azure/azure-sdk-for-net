@@ -26,7 +26,6 @@ namespace Azure.ResourceManager.ManagementGroups.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     type = new ManagementGroupChildType(property.Value.GetString());
@@ -51,7 +50,6 @@ namespace Azure.ResourceManager.ManagementGroups.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ManagementGroupChildInfo> array = new List<ManagementGroupChildInfo>();

@@ -87,7 +87,6 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     expeditedRollout = DefaultRolloutSpecificationExpeditedRollout.DeserializeDefaultRolloutSpecificationExpeditedRollout(property.Value);
@@ -97,7 +96,6 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     canary = DefaultRolloutSpecificationCanary.DeserializeDefaultRolloutSpecificationCanary(property.Value);
@@ -107,7 +105,6 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     lowTraffic = DefaultRolloutSpecificationLowTraffic.DeserializeDefaultRolloutSpecificationLowTraffic(property.Value);
@@ -117,7 +114,6 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     mediumTraffic = DefaultRolloutSpecificationMediumTraffic.DeserializeDefaultRolloutSpecificationMediumTraffic(property.Value);
@@ -127,7 +123,6 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     highTraffic = DefaultRolloutSpecificationHighTraffic.DeserializeDefaultRolloutSpecificationHighTraffic(property.Value);
@@ -137,7 +132,6 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     restOfTheWorldGroupOne = DefaultRolloutSpecificationRestOfTheWorldGroupOne.DeserializeDefaultRolloutSpecificationRestOfTheWorldGroupOne(property.Value);
@@ -147,7 +141,6 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     restOfTheWorldGroupTwo = DefaultRolloutSpecificationRestOfTheWorldGroupTwo.DeserializeDefaultRolloutSpecificationRestOfTheWorldGroupTwo(property.Value);
@@ -157,7 +150,6 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     providerRegistration = DefaultRolloutSpecificationProviderRegistration.DeserializeDefaultRolloutSpecificationProviderRegistration(property.Value);
@@ -167,7 +159,6 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ResourceTypeRegistrationData> array = new List<ResourceTypeRegistrationData>();

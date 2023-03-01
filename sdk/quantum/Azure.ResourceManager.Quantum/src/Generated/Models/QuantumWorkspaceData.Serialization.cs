@@ -78,7 +78,6 @@ namespace Azure.ResourceManager.Quantum
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
@@ -88,7 +87,6 @@ namespace Azure.ResourceManager.Quantum
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -123,7 +121,6 @@ namespace Azure.ResourceManager.Quantum
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -142,7 +139,6 @@ namespace Azure.ResourceManager.Quantum
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<Provider> array = new List<Provider>();
@@ -157,7 +153,6 @@ namespace Azure.ResourceManager.Quantum
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             usable = new UsableStatus(property0.Value.GetString());
@@ -167,7 +162,6 @@ namespace Azure.ResourceManager.Quantum
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             provisioningState = new ProvisioningStatus(property0.Value.GetString());
@@ -182,7 +176,6 @@ namespace Azure.ResourceManager.Quantum
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                endpointUri = null;
                                 continue;
                             }
                             endpointUri = new Uri(property0.Value.GetString());

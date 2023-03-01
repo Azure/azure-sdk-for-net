@@ -23,7 +23,6 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<FieldRestrictions> array = new List<FieldRestrictions>();
@@ -38,7 +37,6 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     contentEvaluationResult = CheckRestrictionsResultContentEvaluationResult.DeserializeCheckRestrictionsResultContentEvaluationResult(property.Value);

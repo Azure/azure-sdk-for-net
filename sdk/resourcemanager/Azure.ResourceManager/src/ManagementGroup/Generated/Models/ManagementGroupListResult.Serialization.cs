@@ -24,7 +24,6 @@ namespace Azure.ResourceManager.ManagementGroups.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ManagementGroupData> array = new List<ManagementGroupData>();

@@ -100,7 +100,6 @@ namespace Azure.ResourceManager.RedisEnterprise
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -119,7 +118,6 @@ namespace Azure.ResourceManager.RedisEnterprise
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             clientProtocol = new RedisEnterpriseClientProtocol(property0.Value.GetString());
@@ -129,7 +127,6 @@ namespace Azure.ResourceManager.RedisEnterprise
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             port = property0.Value.GetInt32();
@@ -139,7 +136,6 @@ namespace Azure.ResourceManager.RedisEnterprise
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             provisioningState = new RedisEnterpriseProvisioningStatus(property0.Value.GetString());
@@ -149,7 +145,6 @@ namespace Azure.ResourceManager.RedisEnterprise
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             resourceState = new RedisEnterpriseClusterResourceState(property0.Value.GetString());
@@ -159,7 +154,6 @@ namespace Azure.ResourceManager.RedisEnterprise
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             clusteringPolicy = new RedisEnterpriseClusteringPolicy(property0.Value.GetString());
@@ -169,7 +163,6 @@ namespace Azure.ResourceManager.RedisEnterprise
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             evictionPolicy = new RedisEnterpriseEvictionPolicy(property0.Value.GetString());
@@ -179,7 +172,6 @@ namespace Azure.ResourceManager.RedisEnterprise
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             persistence = RedisPersistenceSettings.DeserializeRedisPersistenceSettings(property0.Value);
@@ -189,7 +181,6 @@ namespace Azure.ResourceManager.RedisEnterprise
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<RedisEnterpriseModule> array = new List<RedisEnterpriseModule>();
@@ -204,7 +195,6 @@ namespace Azure.ResourceManager.RedisEnterprise
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             geoReplication = RedisEnterpriseDatabaseGeoReplication.DeserializeRedisEnterpriseDatabaseGeoReplication(property0.Value);

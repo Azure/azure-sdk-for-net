@@ -23,7 +23,6 @@ namespace Azure.ResourceManager.Redis.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<RedisUpgradeNotification> array = new List<RedisUpgradeNotification>();

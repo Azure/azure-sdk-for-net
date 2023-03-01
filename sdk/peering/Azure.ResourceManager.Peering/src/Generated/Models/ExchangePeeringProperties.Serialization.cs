@@ -45,7 +45,6 @@ namespace Azure.ResourceManager.Peering.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<PeeringExchangeConnection> array = new List<PeeringExchangeConnection>();
@@ -60,7 +59,6 @@ namespace Azure.ResourceManager.Peering.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     peerAsn = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());

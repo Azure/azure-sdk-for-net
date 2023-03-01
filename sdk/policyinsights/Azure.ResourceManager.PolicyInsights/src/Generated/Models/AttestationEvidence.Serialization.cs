@@ -44,7 +44,6 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        sourceUri = null;
                         continue;
                     }
                     sourceUri = new Uri(property.Value.GetString());

@@ -29,7 +29,6 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        actionUrl = null;
                         continue;
                     }
                     actionUrl = new Uri(property.Value.GetString());

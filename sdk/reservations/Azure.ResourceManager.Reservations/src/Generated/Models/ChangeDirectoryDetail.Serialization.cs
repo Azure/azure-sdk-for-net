@@ -23,7 +23,6 @@ namespace Azure.ResourceManager.Reservations.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     reservationOrder = ChangeDirectoryResult.DeserializeChangeDirectoryResult(property.Value);
@@ -33,7 +32,6 @@ namespace Azure.ResourceManager.Reservations.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ChangeDirectoryResult> array = new List<ChangeDirectoryResult>();

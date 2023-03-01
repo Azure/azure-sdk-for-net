@@ -22,7 +22,6 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<AffectedMoverResourceInfo> array = new List<AffectedMoverResourceInfo>();

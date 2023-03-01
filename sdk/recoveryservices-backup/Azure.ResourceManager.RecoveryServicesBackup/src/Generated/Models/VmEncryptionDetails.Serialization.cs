@@ -57,7 +57,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     encryptionEnabled = property.Value.GetBoolean();
@@ -67,7 +66,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        kekUrl = null;
                         continue;
                     }
                     kekUrl = new Uri(property.Value.GetString());
@@ -77,7 +75,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        secretKeyUrl = null;
                         continue;
                     }
                     secretKeyUrl = new Uri(property.Value.GetString());
@@ -87,7 +84,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     kekVaultId = new ResourceIdentifier(property.Value.GetString());
@@ -97,7 +93,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     secretKeyVaultId = new ResourceIdentifier(property.Value.GetString());

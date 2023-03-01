@@ -71,7 +71,6 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -105,7 +104,6 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             dataType = new PostgreSqlFlexibleServerConfigurationDataType(property0.Value.GetString());
@@ -125,7 +123,6 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             isDynamicConfig = property0.Value.GetBoolean();
@@ -135,7 +132,6 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             isReadOnly = property0.Value.GetBoolean();
@@ -145,7 +141,6 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             isConfigPendingRestart = property0.Value.GetBoolean();

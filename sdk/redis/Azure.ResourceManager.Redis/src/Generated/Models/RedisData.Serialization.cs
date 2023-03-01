@@ -153,7 +153,6 @@ namespace Azure.ResourceManager.Redis
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -168,7 +167,6 @@ namespace Azure.ResourceManager.Redis
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
@@ -178,7 +176,6 @@ namespace Azure.ResourceManager.Redis
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -213,7 +210,6 @@ namespace Azure.ResourceManager.Redis
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -232,7 +228,6 @@ namespace Azure.ResourceManager.Redis
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             redisConfiguration = RedisCommonConfiguration.DeserializeRedisCommonConfiguration(property0.Value);
@@ -247,7 +242,6 @@ namespace Azure.ResourceManager.Redis
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             enableNonSslPort = property0.Value.GetBoolean();
@@ -257,7 +251,6 @@ namespace Azure.ResourceManager.Redis
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             replicasPerMaster = property0.Value.GetInt32();
@@ -267,7 +260,6 @@ namespace Azure.ResourceManager.Redis
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             replicasPerPrimary = property0.Value.GetInt32();
@@ -277,7 +269,6 @@ namespace Azure.ResourceManager.Redis
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -292,7 +283,6 @@ namespace Azure.ResourceManager.Redis
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             shardCount = property0.Value.GetInt32();
@@ -302,7 +292,6 @@ namespace Azure.ResourceManager.Redis
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             minimumTlsVersion = new RedisTlsVersion(property0.Value.GetString());
@@ -312,7 +301,6 @@ namespace Azure.ResourceManager.Redis
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             publicNetworkAccess = new RedisPublicNetworkAccess(property0.Value.GetString());
@@ -327,7 +315,6 @@ namespace Azure.ResourceManager.Redis
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             subnetId = new ResourceIdentifier(property0.Value.GetString());
@@ -337,7 +324,6 @@ namespace Azure.ResourceManager.Redis
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             staticIP = IPAddress.Parse(property0.Value.GetString());
@@ -347,7 +333,6 @@ namespace Azure.ResourceManager.Redis
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             provisioningState = new RedisProvisioningState(property0.Value.GetString());
@@ -362,7 +347,6 @@ namespace Azure.ResourceManager.Redis
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             port = property0.Value.GetInt32();
@@ -372,7 +356,6 @@ namespace Azure.ResourceManager.Redis
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             sslPort = property0.Value.GetInt32();
@@ -392,7 +375,6 @@ namespace Azure.ResourceManager.Redis
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<SubResource> array = new List<SubResource>();
@@ -407,7 +389,6 @@ namespace Azure.ResourceManager.Redis
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<RedisInstanceDetails> array = new List<RedisInstanceDetails>();
@@ -422,7 +403,6 @@ namespace Azure.ResourceManager.Redis
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<RedisPrivateEndpointConnectionData> array = new List<RedisPrivateEndpointConnectionData>();

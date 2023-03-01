@@ -99,7 +99,6 @@ namespace Azure.ResourceManager.PolicyInsights
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -118,7 +117,6 @@ namespace Azure.ResourceManager.PolicyInsights
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             policyAssignmentId = new ResourceIdentifier(property0.Value.GetString());
@@ -133,7 +131,6 @@ namespace Azure.ResourceManager.PolicyInsights
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             resourceDiscoveryMode = new ResourceDiscoveryMode(property0.Value.GetString());
@@ -148,7 +145,6 @@ namespace Azure.ResourceManager.PolicyInsights
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             createdOn = property0.Value.GetDateTimeOffset("O");
@@ -158,7 +154,6 @@ namespace Azure.ResourceManager.PolicyInsights
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             lastUpdatedOn = property0.Value.GetDateTimeOffset("O");
@@ -168,7 +163,6 @@ namespace Azure.ResourceManager.PolicyInsights
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             filters = RemediationFilters.DeserializeRemediationFilters(property0.Value);
@@ -178,7 +172,6 @@ namespace Azure.ResourceManager.PolicyInsights
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             deploymentStatus = RemediationDeploymentSummary.DeserializeRemediationDeploymentSummary(property0.Value);
@@ -198,7 +191,6 @@ namespace Azure.ResourceManager.PolicyInsights
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             resourceCount = property0.Value.GetInt32();
@@ -208,7 +200,6 @@ namespace Azure.ResourceManager.PolicyInsights
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             parallelDeployments = property0.Value.GetInt32();
@@ -218,7 +209,6 @@ namespace Azure.ResourceManager.PolicyInsights
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             failureThreshold = RemediationPropertiesFailureThreshold.DeserializeRemediationPropertiesFailureThreshold(property0.Value);
