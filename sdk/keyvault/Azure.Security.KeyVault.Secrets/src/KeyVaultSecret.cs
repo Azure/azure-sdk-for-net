@@ -15,7 +15,9 @@ namespace Azure.Security.KeyVault.Secrets
 
         private static readonly JsonEncodedText s_valuePropertyNameBytes = JsonEncodedText.Encode(ValuePropertyName);
 
-        internal KeyVaultSecret(SecretProperties properties = null)
+        internal KeyVaultSecret() : this(new SecretProperties()) { }
+
+        internal KeyVaultSecret(SecretProperties properties)
         {
             Properties = properties ?? new SecretProperties();
         }

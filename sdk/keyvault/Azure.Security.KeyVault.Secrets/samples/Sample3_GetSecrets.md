@@ -81,7 +81,7 @@ foreach (SecretProperties secret in secretVersions)
         continue;
     }
 
-    KeyVaultSecret oldBankSecret = client.GetSecret(secret.Name, secret.Version);
+    KeyVaultSecret oldBankSecret = client.GetSecret(secret.Name, secret.Version, default(CancellationToken));
     if (newBankSecretPassword == oldBankSecret.Value)
     {
         Debug.WriteLine($"Secret {secret.Name} reuses a password");
@@ -116,7 +116,7 @@ while (!bankSecretOperation.HasCompleted || !storageSecretOperation.HasCompleted
 You can now list all the deleted and non-purged secrets, assuming Azure Key Vault is soft delete-enabled.
 
 ```C# Snippet:SecretsSample3ListDeletedSecrets
-IEnumerable<DeletedSecret> secretsDeleted = client.GetDeletedSecrets();
+IEnumerable<DeletedSecret> secretsDeleted = client.GetDeletedSecrets(default(CancellationToken));
 foreach (DeletedSecret secret in secretsDeleted)
 {
     Debug.WriteLine($"Deleted secret's recovery Id {secret.RecoveryId}");

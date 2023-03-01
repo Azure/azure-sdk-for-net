@@ -4,12 +4,14 @@
 using System;
 using Azure.Core;
 
+[assembly: CodeGenSuppressType("SecretClientOptions")]
+
 namespace Azure.Security.KeyVault.Secrets
 {
     /// <summary>
     /// Options that allow you to configure the requests sent to Key Vault.
     /// </summary>
-    public class SecretClientOptions : ClientOptions
+    public partial class SecretClientOptions : ClientOptions
     {
         /// <summary>
         /// The latest service version supported by this client library.

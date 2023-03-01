@@ -81,7 +81,7 @@ namespace Azure.Security.KeyVault.Secrets.Samples
                     continue;
                 }
 
-                KeyVaultSecret oldBankSecret = client.GetSecret(secret.Name, secret.Version);
+                KeyVaultSecret oldBankSecret = client.GetSecret(secret.Name, secret.Version, default(CancellationToken));
                 if (newBankSecretPassword == oldBankSecret.Value)
                 {
                     Debug.WriteLine($"Secret {secret.Name} reuses a password");
@@ -106,7 +106,7 @@ namespace Azure.Security.KeyVault.Secrets.Samples
             #endregion
 
             #region Snippet:SecretsSample3ListDeletedSecrets
-            IEnumerable<DeletedSecret> secretsDeleted = client.GetDeletedSecrets();
+            IEnumerable<DeletedSecret> secretsDeleted = client.GetDeletedSecrets(default(CancellationToken));
             foreach (DeletedSecret secret in secretsDeleted)
             {
                 Debug.WriteLine($"Deleted secret's recovery Id {secret.RecoveryId}");
@@ -114,8 +114,8 @@ namespace Azure.Security.KeyVault.Secrets.Samples
             #endregion
 
             // If the Key Vault is soft delete-enabled, then for permanent deletion, deleted secret needs to be purged.
-            client.PurgeDeletedSecret(bankSecretName);
-            client.PurgeDeletedSecret(storageSecretName);
+            client.PurgeDeletedSecret(bankSecretName, default(CancellationToken));
+            client.PurgeDeletedSecret(storageSecretName, default(CancellationToken));
         }
     }
 }

@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
@@ -141,7 +142,7 @@ namespace Azure.Security.KeyVault.Secrets.Tests
             {
                 using (Recording.DisableRecording())
                 {
-                    await Client.PurgeDeletedSecretAsync(name).ConfigureAwait(false);
+                    await Client.PurgeDeletedSecretAsync(name, default(CancellationToken)).ConfigureAwait(false);
                 }
             }
             catch (RequestFailedException ex) when (ex.Status == 404)
@@ -213,7 +214,7 @@ namespace Azure.Security.KeyVault.Secrets.Tests
                 return TestRetryHelper.RetryAsync(async () => {
                     try
                     {
-                        return await Client.GetDeletedSecretAsync(name).ConfigureAwait(false);
+                        return await Client.GetDeletedSecretAsync(name, default(CancellationToken)).ConfigureAwait(false);
                     }
                     catch (RequestFailedException ex) when (ex.Status == 404)
                     {
@@ -235,7 +236,7 @@ namespace Azure.Security.KeyVault.Secrets.Tests
                 return TestRetryHelper.RetryAsync(async () => {
                     try
                     {
-                        await Client.GetDeletedSecretAsync(name).ConfigureAwait(false);
+                        await Client.GetDeletedSecretAsync(name, default(CancellationToken)).ConfigureAwait(false);
                         throw new InvalidOperationException($"Secret {name} still exists");
                     }
                     catch (RequestFailedException ex) when (ex.Status == 404)

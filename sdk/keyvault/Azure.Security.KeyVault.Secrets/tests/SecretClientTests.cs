@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.Identity;
@@ -51,8 +52,8 @@ namespace Azure.Security.KeyVault.Secrets.Tests
         [Test]
         public void PurgeDeletedArgumentValidation()
         {
-            Assert.ThrowsAsync<ArgumentNullException>(() => Client.PurgeDeletedSecretAsync(null));
-            Assert.ThrowsAsync<ArgumentException>(() => Client.PurgeDeletedSecretAsync(""));
+            Assert.ThrowsAsync<ArgumentNullException>(() => Client.PurgeDeletedSecretAsync(null, default(CancellationToken)));
+            Assert.ThrowsAsync<ArgumentException>(() => Client.PurgeDeletedSecretAsync("", default(CancellationToken)));
         }
 
         [Test]
@@ -72,8 +73,8 @@ namespace Azure.Security.KeyVault.Secrets.Tests
         [Test]
         public void GetDeletedArgumentValidation()
         {
-            Assert.ThrowsAsync<ArgumentNullException>(() => Client.GetDeletedSecretAsync(null));
-            Assert.ThrowsAsync<ArgumentException>(() => Client.GetDeletedSecretAsync(""));
+            Assert.ThrowsAsync<ArgumentNullException>(() => Client.GetDeletedSecretAsync(null, default(CancellationToken)));
+            Assert.ThrowsAsync<ArgumentException>(() => Client.GetDeletedSecretAsync("", default(CancellationToken)));
         }
 
         [Test]
@@ -183,7 +184,7 @@ namespace Azure.Security.KeyVault.Secrets.Tests
 
             SecretClient client = InstrumentClient(new SecretClient(new Uri("https://test"), new MockCredential(), new() { Transport = transport }));
 
-            var secrets = await client.GetDeletedSecretsAsync().ToEnumerableAsync();
+            var secrets = await client.GetDeletedSecretsAsync(default(CancellationToken)).ToEnumerableAsync();
             Assert.AreEqual(3, secrets.Count);
         }
     }

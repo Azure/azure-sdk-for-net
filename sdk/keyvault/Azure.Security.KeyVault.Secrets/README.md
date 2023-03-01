@@ -182,7 +182,7 @@ while (!operation.HasCompleted)
 }
 
 DeletedSecret secret = operation.Value;
-client.PurgeDeletedSecret(secret.Name);
+client.PurgeDeletedSecret(secret.Name, default(CancellationToken));
 ```
 
 ### List secrets
@@ -236,7 +236,7 @@ DeleteSecretOperation operation = await client.StartDeleteSecretAsync("secret-na
 await operation.WaitForCompletionAsync();
 
 DeletedSecret secret = operation.Value;
-await client.PurgeDeletedSecretAsync(secret.Name);
+await client.PurgeDeletedSecretAsync(secret.Name, default(CancellationToken));
 ```
 
 ## Troubleshooting

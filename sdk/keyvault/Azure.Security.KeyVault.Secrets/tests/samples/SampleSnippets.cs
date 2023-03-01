@@ -165,7 +165,7 @@ namespace Azure.Security.KeyVault.Secrets.Samples
             await operation.WaitForCompletionAsync();
 
             DeletedSecret secret = operation.Value;
-            await client.PurgeDeletedSecretAsync(secret.Name);
+            await client.PurgeDeletedSecretAsync(secret.Name, default(CancellationToken));
             #endregion
         }
 
@@ -185,7 +185,7 @@ namespace Azure.Security.KeyVault.Secrets.Samples
             }
 
             DeletedSecret secret = operation.Value;
-            client.PurgeDeletedSecret(secret.Name);
+            client.PurgeDeletedSecret(secret.Name, default(CancellationToken));
             #endregion
         }
 
@@ -231,7 +231,7 @@ namespace Azure.Security.KeyVault.Secrets.Samples
                 KeyVaultSecret secret = await client.GetSecretAsync("secret-name");
 
                 // Get a specific secret value.
-                KeyVaultSecret secretVersion = await client.GetSecretAsync("secret-name", "e43af03a7cbc47d4a4e9f11540186048");
+                KeyVaultSecret secretVersion = await client.GetSecretAsync("secret-name", "e43af03a7cbc47d4a4e9f11540186048", default(CancellationToken));
                 #endregion Snippet:Azure_Security_KeyVault_Secrets_Snippets_MigrationGuide_GetSecret
             }
 
@@ -263,7 +263,7 @@ namespace Azure.Security.KeyVault.Secrets.Samples
                     DeletedSecret deletedSecret = await deleteOperation.WaitForCompletionAsync();
 
                     // Purge the deleted secret.
-                    await client.PurgeDeletedSecretAsync(deletedSecret.Name);
+                    await client.PurgeDeletedSecretAsync(deletedSecret.Name, default(CancellationToken));
 
                     // You can also recover the deleted secret using StartRecoverDeletedSecretAsync,
                     // which returns RecoverDeletedSecretOperation you can await like DeleteSecretOperation above.

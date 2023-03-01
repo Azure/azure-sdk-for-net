@@ -7,6 +7,7 @@ using System;
 using System.IO;
 using System.Threading.Tasks;
 using Azure.Security.KeyVault.Tests;
+using System.Threading;
 
 namespace Azure.Security.KeyVault.Secrets.Samples
 {
@@ -35,7 +36,7 @@ namespace Azure.Security.KeyVault.Secrets.Samples
 
             using (FileStream sourceStream = File.Open(backupPath, FileMode.OpenOrCreate))
             {
-                byte[] byteSecret = await client.BackupSecretAsync(secretName);
+                byte[] byteSecret = await client.BackupSecretAsync(secretName, default(CancellationToken));
                 sourceStream.Seek(0, SeekOrigin.End);
                 await sourceStream.WriteAsync(byteSecret, 0, byteSecret.Length);
             }
@@ -48,7 +49,7 @@ namespace Azure.Security.KeyVault.Secrets.Samples
 
             // If the Key Vault is soft delete-enabled and you want to permanently delete the secret before its `ScheduledPurgeDate`,
             // the deleted secret needs to be purged.
-            await client.PurgeDeletedSecretAsync(secretName);
+            await client.PurgeDeletedSecretAsync(secretName, default(CancellationToken));
 
             SecretProperties restoreSecret = null;
             using (FileStream sourceStream = File.Open(backupPath, FileMode.Open))
@@ -66,7 +67,7 @@ namespace Azure.Security.KeyVault.Secrets.Samples
             // You only need to wait for completion if you want to purge or recover the secret.
             await operation.WaitForCompletionAsync();
 
-            await client.PurgeDeletedSecretAsync(restoreSecret.Name);
+            await client.PurgeDeletedSecretAsync(restoreSecret.Name, default(CancellationToken));
         }
     }
 }

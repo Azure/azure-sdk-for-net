@@ -7,6 +7,7 @@ using System;
 using System.Diagnostics;
 using System.Threading.Tasks;
 using Azure.Security.KeyVault.Tests;
+using System.Threading;
 
 namespace Azure.Security.KeyVault.Secrets.Samples
 {
@@ -48,7 +49,7 @@ namespace Azure.Security.KeyVault.Secrets.Samples
             // You only need to wait for completion if you want to purge or recover the secret.
             await operation.WaitForCompletionAsync();
 
-            await client.PurgeDeletedSecretAsync(secretName);
+            await client.PurgeDeletedSecretAsync(secretName, default(CancellationToken));
             #endregion
         }
     }

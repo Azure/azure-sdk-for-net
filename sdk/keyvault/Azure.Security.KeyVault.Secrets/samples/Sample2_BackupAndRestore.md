@@ -34,7 +34,7 @@ You might make backups in case keys get accidentally deleted. For long term stor
 
 ```C# Snippet:SecretsSample2BackupSecret
 string backupPath = Path.GetTempFileName();
-byte[] secretBackup = client.BackupSecret(secretName);
+byte[] secretBackup = client.BackupSecret(secretName, default(CancellationToken));
 
 File.WriteAllBytes(backupPath, secretBackup);
 ```

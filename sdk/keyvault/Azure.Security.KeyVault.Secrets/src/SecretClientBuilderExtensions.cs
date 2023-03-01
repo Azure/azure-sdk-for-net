@@ -2,8 +2,11 @@
 // Licensed under the MIT License.
 
 using System;
+using Azure.Core;
 using Azure.Core.Extensions;
 using Azure.Security.KeyVault.Secrets;
+
+[assembly: CodeGenSuppressType("SecretClientBuilderExtensions")]
 
 namespace Microsoft.Extensions.Azure
 {

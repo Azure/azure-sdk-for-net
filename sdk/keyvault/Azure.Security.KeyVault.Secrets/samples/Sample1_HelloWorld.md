@@ -82,7 +82,7 @@ while (!operation.HasCompleted)
     operation.UpdateStatus();
 }
 
-client.PurgeDeletedSecret(secretName);
+client.PurgeDeletedSecret(secretName, default(CancellationToken));
 ```
 
 ## Purging a deleted secret asynchronously
@@ -94,7 +94,7 @@ You can optionally pass in a `CancellationToken` to cancel waiting after a certa
 // You only need to wait for completion if you want to purge or recover the secret.
 await operation.WaitForCompletionAsync();
 
-await client.PurgeDeletedSecretAsync(secretName);
+await client.PurgeDeletedSecretAsync(secretName, default(CancellationToken));
 ```
 
 [DefaultAzureCredential]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/README.md

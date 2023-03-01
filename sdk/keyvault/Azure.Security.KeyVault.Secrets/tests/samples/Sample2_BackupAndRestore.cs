@@ -37,7 +37,7 @@ namespace Azure.Security.KeyVault.Secrets.Samples
 
             #region Snippet:SecretsSample2BackupSecret
             string backupPath = Path.GetTempFileName();
-            byte[] secretBackup = client.BackupSecret(secretName);
+            byte[] secretBackup = client.BackupSecret(secretName, default(CancellationToken));
 
             File.WriteAllBytes(backupPath, secretBackup);
             #endregion
@@ -55,7 +55,7 @@ namespace Azure.Security.KeyVault.Secrets.Samples
 
             // If the Key Vault is soft delete-enabled and you want to permanently delete the secret before its `ScheduledPurgeDate`,
             // the deleted secret needs to be purged.
-            client.PurgeDeletedSecret(secretName);
+            client.PurgeDeletedSecret(secretName, default(CancellationToken));
 
             #region Snippet:SecretsSample2RestoreSecret
             byte[] secretBackupToRestore = File.ReadAllBytes(backupPath);
@@ -76,7 +76,7 @@ namespace Azure.Security.KeyVault.Secrets.Samples
                 operation.UpdateStatus();
             }
 
-            client.PurgeDeletedSecret(restoreSecret.Name);
+            client.PurgeDeletedSecret(restoreSecret.Name, default(CancellationToken));
         }
 
         private static void AssertSecretsEqual(SecretProperties exp, SecretProperties act)

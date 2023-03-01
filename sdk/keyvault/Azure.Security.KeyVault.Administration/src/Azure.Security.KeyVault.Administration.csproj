@@ -22,6 +22,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)\..\..\Azure.Security.KeyVault.Shared\src\ChallengeBasedAuthenticationPolicy.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)\..\..\Azure.Security.KeyVault.Shared\src\ClientOptionsExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)\..\..\Azure.Security.KeyVault.Shared\src\IJsonSerializable.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)\..\..\Azure.Security.KeyVault.Shared\src\ModelConverterFactory.cs" />
   </ItemGroup>
 
   <ItemGroup>

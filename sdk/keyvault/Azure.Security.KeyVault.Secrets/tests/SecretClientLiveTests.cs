@@ -10,6 +10,7 @@ using NUnit.Framework;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using NUnit.Framework.Constraints;
+using System.Threading;
 
 namespace Azure.Security.KeyVault.Secrets.Tests
 {
@@ -45,7 +46,7 @@ namespace Azure.Security.KeyVault.Secrets.Tests
             KeyVaultSecret version2 = await Client.SetSecretAsync(secretName, "value2");
             await Client.SetSecretAsync(secretName, "value3");
 
-            KeyVaultSecret secret = await Client.GetSecretAsync(secretName, version2.Properties.Version);
+            KeyVaultSecret secret = await Client.GetSecretAsync(secretName, version2.Properties.Version, default(CancellationToken));
 
             Assert.AreEqual("value2", secret.Value);
         }
@@ -232,7 +233,7 @@ namespace Azure.Security.KeyVault.Secrets.Tests
             KeyVaultSecret version2 = await Client.SetSecretAsync(secretName, "value2");
             await Client.SetSecretAsync(secretName, "value3");
 
-            KeyVaultSecret secret = await Client.GetSecretAsync(secretName, version2.Properties.Version);
+            KeyVaultSecret secret = await Client.GetSecretAsync(secretName, version2.Properties.Version, default(CancellationToken));
 
             Assert.AreEqual("value2", secret.Value);
         }
@@ -254,7 +255,7 @@ namespace Azure.Security.KeyVault.Secrets.Tests
 
             RegisterForCleanup(secret.Name);
 
-            byte[] backup = await Client.BackupSecretAsync(secretName);
+            byte[] backup = await Client.BackupSecretAsync(secretName, default(CancellationToken));
 
             Assert.NotNull(backup);
         }
@@ -262,7 +263,7 @@ namespace Azure.Security.KeyVault.Secrets.Tests
         [RecordedTest]
         public void BackupSecretNonExisting()
         {
-            Assert.ThrowsAsync<RequestFailedException>(() => Client.BackupSecretAsync(Recording.GenerateId()));
+            Assert.ThrowsAsync<RequestFailedException>(() => Client.BackupSecretAsync(Recording.GenerateId(), default(CancellationToken)));
         }
 
         [RecordedTest]
@@ -275,16 +276,16 @@ namespace Azure.Security.KeyVault.Secrets.Tests
 
             RegisterForCleanup(secret.Name);
 
-            byte[] backup = await Client.BackupSecretAsync(secretName);
+            byte[] backup = await Client.BackupSecretAsync(secretName, default(CancellationToken));
 
             await Client.StartDeleteSecretAsync(secretName);
             await WaitForDeletedSecret(secretName);
 
-            await Client.PurgeDeletedSecretAsync(secretName);
+            await Client.PurgeDeletedSecretAsync(secretName, default(CancellationToken));
             await WaitForPurgedSecret(secretName);
 
             Assert.ThrowsAsync<RequestFailedException>(() => Client.GetSecretAsync(secretName));
-            Assert.ThrowsAsync<RequestFailedException>(() => Client.GetDeletedSecretAsync(secretName));
+            Assert.ThrowsAsync<RequestFailedException>(() => Client.GetDeletedSecretAsync(secretName, default(CancellationToken)));
 
             SecretProperties restoreResult = await Client.RestoreSecretBackupAsync(backup);
 
@@ -337,7 +338,7 @@ namespace Azure.Security.KeyVault.Secrets.Tests
 
             await WaitForDeletedSecret(secretName);
 
-            DeletedSecret polledSecret = await Client.GetDeletedSecretAsync(secretName);
+            DeletedSecret polledSecret = await Client.GetDeletedSecretAsync(secretName, default(CancellationToken));
 
             Assert.NotNull(deletedSecret.DeletedOn);
             Assert.NotNull(deletedSecret.RecoveryId);
@@ -350,7 +351,7 @@ namespace Azure.Security.KeyVault.Secrets.Tests
         [RecordedTest]
         public void GetDeletedSecretNonExisting()
         {
-            Assert.ThrowsAsync<RequestFailedException>(() => Client.GetDeletedSecretAsync(Recording.GenerateId()));
+            Assert.ThrowsAsync<RequestFailedException>(() => Client.GetDeletedSecretAsync(Recording.GenerateId(), default(CancellationToken)));
         }
 
         [RecordedTest]
@@ -458,7 +459,7 @@ namespace Azure.Security.KeyVault.Secrets.Tests
 
             await Task.WhenAll(deletingSecrets);
 
-            List<DeletedSecret> allSecrets = await Client.GetDeletedSecretsAsync().ToEnumerableAsync();
+            List<DeletedSecret> allSecrets = await Client.GetDeletedSecretsAsync(default(CancellationToken)).ToEnumerableAsync();
             foreach (KeyVaultSecret deletedSecret in deletedSecrets)
             {
                 KeyVaultSecret returnedSecret = allSecrets.Single(s => s.Name == deletedSecret.Name);

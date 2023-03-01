@@ -65,7 +65,7 @@ namespace Azure.Security.KeyVault.Secrets.Samples
                 operation.UpdateStatus();
             }
 
-            client.PurgeDeletedSecret(secretName);
+            client.PurgeDeletedSecret(secretName, default(CancellationToken));
             #endregion
         }
     }

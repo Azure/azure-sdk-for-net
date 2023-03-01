@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using Azure.Test.Perf;
 
@@ -49,7 +50,7 @@ namespace Azure.Security.KeyVault.Secrets.Perf.Infrastructure
                     {
                         try
                         {
-                            await Client.PurgeDeletedSecretAsync(name);
+                            await Client.PurgeDeletedSecretAsync(name, default(CancellationToken));
                         }
                         catch (RequestFailedException ex) when (ex.Status == 404)
                         {

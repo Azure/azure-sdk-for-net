@@ -16,6 +16,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)KeyVaultIdentifier.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)KeyVaultPipeline.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)KeyVaultPage.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ModelConverterFactory.cs" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="$(AzureCoreSharedSources)HashCodeBuilder.cs" LinkBase="Shared\Core" />

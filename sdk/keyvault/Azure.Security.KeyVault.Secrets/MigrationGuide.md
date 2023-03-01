@@ -140,7 +140,7 @@ Now in `Azure.Security.KeyVault.Secrets`, you get a secret value in the Key Vaul
 KeyVaultSecret secret = await client.GetSecretAsync("secret-name");
 
 // Get a specific secret value.
-KeyVaultSecret secretVersion = await client.GetSecretAsync("secret-name", "e43af03a7cbc47d4a4e9f11540186048");
+KeyVaultSecret secretVersion = await client.GetSecretAsync("secret-name", "e43af03a7cbc47d4a4e9f11540186048", default(CancellationToken));
 ```
 
 Synchronous methods are also available on `SecretClient`, though we recommend you use asynchronous methods throughout your projects when possible for better performing applications.
@@ -233,7 +233,7 @@ if (deleteOperation.Value.RecoveryId != null)
     DeletedSecret deletedSecret = await deleteOperation.WaitForCompletionAsync();
 
     // Purge the deleted secret.
-    await client.PurgeDeletedSecretAsync(deletedSecret.Name);
+    await client.PurgeDeletedSecretAsync(deletedSecret.Name, default(CancellationToken));
 
     // You can also recover the deleted secret using StartRecoverDeletedSecretAsync,
     // which returns RecoverDeletedSecretOperation you can await like DeleteSecretOperation above.

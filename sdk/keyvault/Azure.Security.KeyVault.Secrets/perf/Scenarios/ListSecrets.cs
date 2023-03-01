@@ -26,7 +26,7 @@ namespace Azure.Security.KeyVault.Secrets.Perf.Scenarios
 
             // Validate that vault contains 0 secrets (including soft-deleted secrets), since additional secrets
             // (including soft-deleted) impact performance.
-            if (await Client.GetPropertiesOfSecretsAsync().AnyAsync() || await Client.GetDeletedSecretsAsync().AnyAsync())
+            if (await Client.GetPropertiesOfSecretsAsync().AnyAsync() || await Client.GetDeletedSecretsAsync(default(CancellationToken)).AnyAsync())
             {
                 throw new InvalidOperationException($"KeyVault {PerfTestEnvironment.Instance.VaultUri} must contain 0 " +
                     "secrets (including soft-deleted) before starting perf test");
