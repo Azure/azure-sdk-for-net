@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.EventGrid.Models
 
         internal static EventGridPrivateEndpointConnectionState DeserializeEventGridPrivateEndpointConnectionState(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<EventGridPrivateEndpointPersistedConnectionStatus> status = default;
             Optional<string> description = default;
             Optional<string> actionsRequired = default;

@@ -46,6 +46,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static RedirectIncompatibleRowSettings DeserializeRedirectIncompatibleRowSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             BinaryData linkedServiceName = default;
             Optional<BinaryData> path = default;
             IDictionary<string, BinaryData> additionalProperties = default;

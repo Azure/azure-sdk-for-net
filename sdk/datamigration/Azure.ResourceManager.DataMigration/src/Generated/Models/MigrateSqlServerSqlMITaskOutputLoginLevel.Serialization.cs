@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.DataMigration.Models
     {
         internal static MigrateSqlServerSqlMITaskOutputLoginLevel DeserializeMigrateSqlServerSqlMITaskOutputLoginLevel(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> loginName = default;
             Optional<MigrationState> state = default;
             Optional<LoginMigrationStage> stage = default;

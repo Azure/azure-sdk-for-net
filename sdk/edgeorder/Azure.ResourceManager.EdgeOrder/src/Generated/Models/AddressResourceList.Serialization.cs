@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.EdgeOrder.Models
     {
         internal static AddressResourceList DeserializeAddressResourceList(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<EdgeOrderAddressData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

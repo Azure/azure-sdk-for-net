@@ -14,6 +14,10 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     {
         internal static DeviceConnectionStateEventProperties DeserializeDeviceConnectionStateEventProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> deviceId = default;
             Optional<string> moduleId = default;
             Optional<string> hubName = default;

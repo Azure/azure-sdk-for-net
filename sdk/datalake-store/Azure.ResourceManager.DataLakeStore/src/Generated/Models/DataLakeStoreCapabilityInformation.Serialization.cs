@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.DataLakeStore.Models
     {
         internal static DataLakeStoreCapabilityInformation DeserializeDataLakeStoreCapabilityInformation(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<Guid> subscriptionId = default;
             Optional<DataLakeStoreSubscriptionState> state = default;
             Optional<int> maxAccountCount = default;

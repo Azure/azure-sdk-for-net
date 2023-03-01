@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
 
         internal static DataBoxEdgeSku DeserializeDataBoxEdgeSku(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DataBoxEdgeSkuName> name = default;
             Optional<DataBoxEdgeSkuTier> tier = default;
             foreach (var property in element.EnumerateObject())

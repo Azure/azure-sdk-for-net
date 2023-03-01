@@ -17,6 +17,10 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     {
         internal static KeyVaultSecretNewVersionCreatedEventData DeserializeKeyVaultSecretNewVersionCreatedEventData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> id = default;
             Optional<string> vaultName = default;
             Optional<string> objectType = default;

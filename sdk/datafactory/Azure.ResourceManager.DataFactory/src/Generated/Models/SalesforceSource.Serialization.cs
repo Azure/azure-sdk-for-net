@@ -101,6 +101,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static SalesforceSource DeserializeSalesforceSource(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<BinaryData> query = default;
             Optional<SalesforceSourceReadBehavior> readBehavior = default;
             Optional<BinaryData> queryTimeout = default;

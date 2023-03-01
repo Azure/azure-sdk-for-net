@@ -49,6 +49,10 @@ namespace Azure.ResourceManager.DataMigration.Models
 
         internal static MigrateMySqlAzureDBForMySqlOfflineTaskProperties DeserializeMigrateMySqlAzureDBForMySqlOfflineTaskProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<MigrateMySqlAzureDBForMySqlOfflineTaskInput> input = default;
             Optional<IReadOnlyList<MigrateMySqlAzureDBForMySqlOfflineTaskOutput>> output = default;
             Optional<bool> isCloneable = default;

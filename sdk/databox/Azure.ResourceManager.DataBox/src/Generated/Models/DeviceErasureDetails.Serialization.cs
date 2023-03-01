@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.DataBox.Models
     {
         internal static DeviceErasureDetails DeserializeDeviceErasureDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DataBoxStageStatus> deviceErasureStatus = default;
             Optional<string> erasureOrDestructionCertificateSasKey = default;
             foreach (var property in element.EnumerateObject())

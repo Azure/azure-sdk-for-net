@@ -29,6 +29,10 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
 
         internal static DiagnosticStorageProperties DeserializeDiagnosticStorageProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             AuthenticationType authenticationType = default;
             Optional<string> connectionString = default;
             string resourceId = default;

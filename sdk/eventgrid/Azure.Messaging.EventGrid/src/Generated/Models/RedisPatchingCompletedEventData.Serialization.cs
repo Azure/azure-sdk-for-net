@@ -17,6 +17,10 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     {
         internal static RedisPatchingCompletedEventData DeserializeRedisPatchingCompletedEventData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DateTimeOffset> timestamp = default;
             Optional<string> name = default;
             Optional<string> status = default;

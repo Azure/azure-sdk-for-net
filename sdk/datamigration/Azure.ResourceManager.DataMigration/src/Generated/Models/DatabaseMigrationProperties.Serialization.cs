@@ -57,6 +57,10 @@ namespace Azure.ResourceManager.DataMigration.Models
 
         internal static DatabaseMigrationProperties DeserializeDatabaseMigrationProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             if (element.TryGetProperty("kind", out JsonElement discriminator))
             {
                 switch (discriminator.GetString())
