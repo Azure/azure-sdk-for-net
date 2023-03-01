@@ -98,6 +98,10 @@ namespace Azure.ResourceManager.OperationalInsights
 
         internal static OperationalInsightsWorkspaceData DeserializeOperationalInsightsWorkspaceData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ManagedServiceIdentity> identity = default;
             Optional<ETag> etag = default;
             Optional<IDictionary<string, string>> tags = default;

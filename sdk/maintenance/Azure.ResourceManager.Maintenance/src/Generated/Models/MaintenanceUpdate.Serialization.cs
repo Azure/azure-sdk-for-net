@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Maintenance.Models
     {
         internal static MaintenanceUpdate DeserializeMaintenanceUpdate(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<MaintenanceScope> maintenanceScope = default;
             Optional<MaintenanceImpactType> impactType = default;
             Optional<MaintenanceUpdateStatus> status = default;

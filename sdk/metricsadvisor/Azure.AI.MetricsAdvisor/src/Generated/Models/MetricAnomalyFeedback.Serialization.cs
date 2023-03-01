@@ -58,6 +58,10 @@ namespace Azure.AI.MetricsAdvisor
 
         internal static MetricAnomalyFeedback DeserializeMetricAnomalyFeedback(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             DateTimeOffset startTime = default;
             DateTimeOffset endTime = default;
             AnomalyFeedbackValue value = default;

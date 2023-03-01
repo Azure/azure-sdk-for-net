@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.Media.Models
     {
         internal static ContentKeyPolicyListResult DeserializeContentKeyPolicyListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<ContentKeyPolicyData>> value = default;
             Optional<string> odataNextLink = default;
             foreach (var property in element.EnumerateObject())

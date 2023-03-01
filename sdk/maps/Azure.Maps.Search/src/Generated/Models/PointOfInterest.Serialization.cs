@@ -15,6 +15,10 @@ namespace Azure.Maps.Search.Models
     {
         internal static PointOfInterest DeserializePointOfInterest(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<string> phone = default;
             Optional<string> url = default;

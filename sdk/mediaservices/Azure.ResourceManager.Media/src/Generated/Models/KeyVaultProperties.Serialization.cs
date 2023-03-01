@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.Media.Models
 
         internal static KeyVaultProperties DeserializeKeyVaultProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> keyIdentifier = default;
             Optional<string> currentKeyIdentifier = default;
             foreach (var property in element.EnumerateObject())
