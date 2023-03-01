@@ -29,8 +29,8 @@ namespace Azure.AI.OpenAI.Tests
             Assert.That(tokenClient, Is.InstanceOf<OpenAIClient>());
         }
 
-        [Test]
-        public void PublicOpenAICompletionsTest()
+        [RecordedTest]
+        public async Task PublicOpenAICompletionsTest()
         {
             var client = GetPublicOpenAIClient();
             Assert.That(client, Is.InstanceOf<OpenAIClient>());
@@ -44,12 +44,12 @@ namespace Azure.AI.OpenAI.Tests
                 Model = "text-ada-003",
             };
             Assert.That(requestOptions, Is.InstanceOf<CompletionsOptions>());
-            Response<Completions> response = client.GetCompletions("", requestOptions);
+            Response<Completions> response = await client.GetCompletionsAsync("random_string", requestOptions);
             Assert.That(response, Is.Not.Null);
             Assert.That(response, Is.InstanceOf<Response<Completions>>());
             Assert.That(response.Value, Is.Not.Null);
             Assert.That(response.Value.Choices, Is.Not.Null.Or.Empty);
-            Assert.That(response.Value.Choices.Count, Is.EqualTo(1));
+            Assert.That(response.Value.Choices.Count, Is.EqualTo(requestOptions.Prompt.Count));
             Assert.That(response.Value.Choices[0].FinishReason, Is.Not.Null.Or.Empty);
         }
 
