@@ -26,19 +26,19 @@ namespace Azure.AI.OpenAI
         private string PublicOpenAIToken { get; } = "";
 
         /// <summary> Initializes a instance of OpenAIClient using the public OpenAI endpoint. </summary>
-        /// <param name="token"> A credential used to authenticate to an Azure Service. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="token"/> is null. </exception>
-        public OpenAIClient(string token) : this(token, new OpenAIClientOptions())
+        /// <param name="openAIAuthToken "> A credential used to authenticate to an Azure Service. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="openAIAuthToken"/> is null. </exception>
+        public OpenAIClient(string openAIAuthToken) : this(openAIAuthToken, new OpenAIClientOptions())
         {
         }
 
         /// <summary> Initializes a instance of OpenAIClient using the public OpenAI endpoint. </summary>
-        /// <param name="token"> String token to generate a token credential </param>
+        /// <param name="openAIAuthToken "> String token to generate a token credential </param>
         /// <param name="options"> The options for configuring the client. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="token"/> is null. </exception>
-        public OpenAIClient(string token, OpenAIClientOptions options) : this(new Uri(publicOpenAIEndpoint), CreateDelegatedToken(token), options)
+        /// <exception cref="ArgumentNullException"> <paramref name="openAIAuthToken"/> is null. </exception>
+        public OpenAIClient(string openAIAuthToken, OpenAIClientOptions options) : this(new Uri(publicOpenAIEndpoint), CreateDelegatedToken(openAIAuthToken), options)
         {
-            PublicOpenAIToken = token;
+            PublicOpenAIToken = openAIAuthToken;
         }
 
         /// <summary> Return the completion for a given prompt. </summary>
