@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Sql.Models
     {
         internal static ServerPrivateEndpointConnectionProperties DeserializeServerPrivateEndpointConnectionProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<WritableSubResource> privateEndpoint = default;
             Optional<SqlPrivateLinkServiceConnectionStateProperty> privateLinkServiceConnectionState = default;
             Optional<SqlPrivateEndpointProvisioningState> provisioningState = default;

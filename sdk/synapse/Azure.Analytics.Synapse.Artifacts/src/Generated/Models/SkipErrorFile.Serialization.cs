@@ -33,6 +33,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static SkipErrorFile DeserializeSkipErrorFile(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<object> fileMissing = default;
             Optional<object> dataInconsistency = default;
             foreach (var property in element.EnumerateObject())

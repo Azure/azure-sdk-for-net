@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.Storage.Models
     {
         internal static StoragePrivateEndpointConnectionListResult DeserializeStoragePrivateEndpointConnectionListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<StoragePrivateEndpointConnectionData>> value = default;
             foreach (var property in element.EnumerateObject())
             {

@@ -32,6 +32,10 @@ namespace Azure.ResourceManager.ServiceLinker.Models
 
         internal static UserAssignedIdentityAuthInfo DeserializeUserAssignedIdentityAuthInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> clientId = default;
             Optional<string> subscriptionId = default;
             LinkerAuthType authType = default;

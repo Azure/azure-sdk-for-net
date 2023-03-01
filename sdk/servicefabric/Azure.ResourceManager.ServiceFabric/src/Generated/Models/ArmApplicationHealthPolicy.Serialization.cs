@@ -47,6 +47,10 @@ namespace Azure.ResourceManager.ServiceFabric.Models
 
         internal static ArmApplicationHealthPolicy DeserializeArmApplicationHealthPolicy(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> considerWarningAsError = default;
             Optional<int> maxPercentUnhealthyDeployedApplications = default;
             Optional<ArmServiceTypeHealthPolicy> defaultServiceTypeHealthPolicy = default;

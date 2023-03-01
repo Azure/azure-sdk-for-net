@@ -15,6 +15,10 @@ namespace Azure.Data.SchemaRegistry.Models
     {
         internal static SchemaGroups DeserializeSchemaGroups(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<string>> schemaGroups = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

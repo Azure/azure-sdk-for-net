@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.StorageMover.Models
     {
         internal static ProjectList DeserializeProjectList(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<StorageMoverProjectData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

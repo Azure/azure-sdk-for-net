@@ -45,6 +45,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static WebActivityAuthentication DeserializeWebActivityAuthentication(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string type = default;
             Optional<SecretBase> pfx = default;
             Optional<string> username = default;

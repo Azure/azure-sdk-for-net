@@ -31,6 +31,10 @@ namespace Azure.ResourceManager.Synapse.Models
 
         internal static SynapseIntegrationRuntimeCustomSetupScriptProperties DeserializeSynapseIntegrationRuntimeCustomSetupScriptProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<Uri> blobContainerUri = default;
             Optional<SynapseSecureString> sasToken = default;
             foreach (var property in element.EnumerateObject())

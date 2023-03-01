@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.Sql.Models
 
         internal static PartnerRegionInfo DeserializePartnerRegionInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<AzureLocation> location = default;
             Optional<InstanceFailoverGroupReplicationRole> replicationRole = default;
             foreach (var property in element.EnumerateObject())

@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.StoragePool.Models
     {
         internal static StoragePoolOutboundEnvironment DeserializeStoragePoolOutboundEnvironment(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> category = default;
             Optional<IReadOnlyList<OutboundEndpointDependency>> endpoints = default;
             foreach (var property in element.EnumerateObject())

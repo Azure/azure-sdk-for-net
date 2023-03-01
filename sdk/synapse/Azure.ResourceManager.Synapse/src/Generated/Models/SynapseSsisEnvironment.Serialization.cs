@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Synapse.Models
     {
         internal static SynapseSsisEnvironment DeserializeSynapseSsisEnvironment(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<long> folderId = default;
             Optional<IReadOnlyList<SynapseSsisVariable>> variables = default;
             SynapseSsisObjectMetadataType type = default;

@@ -43,6 +43,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         internal static GcpParentOrganizationalInfo DeserializeGcpParentOrganizationalInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<string>> excludedProjectNumbers = default;
             Optional<string> serviceAccountEmailAddress = default;
             Optional<string> workloadIdentityProviderId = default;

@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Synapse.Models
     {
         internal static SynapseSsisPackage DeserializeSynapseSsisPackage(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<long> folderId = default;
             Optional<long> projectVersion = default;
             Optional<long> projectId = default;

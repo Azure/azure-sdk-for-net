@@ -45,6 +45,10 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
 
         internal static SqlVmAssessmentSchedule DeserializeSqlVmAssessmentSchedule(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> enable = default;
             Optional<int> weeklyInterval = default;
             Optional<int> monthlyOccurrence = default;

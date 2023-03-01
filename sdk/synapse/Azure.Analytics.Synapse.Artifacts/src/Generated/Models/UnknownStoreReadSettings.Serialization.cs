@@ -33,6 +33,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static UnknownStoreReadSettings DeserializeUnknownStoreReadSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string type = "Unknown";
             Optional<object> maxConcurrentConnections = default;
             IDictionary<string, object> additionalProperties = default;

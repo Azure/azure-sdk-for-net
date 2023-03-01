@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Sql.Models
     {
         internal static ElasticPoolEditionCapability DeserializeElasticPoolEditionCapability(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<IReadOnlyList<ElasticPoolPerformanceLevelCapability>> supportedElasticPoolPerformanceLevels = default;
             Optional<bool> zoneRedundant = default;

@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.Synapse.Models
     {
         internal static SynapseGeoBackupPolicyListResult DeserializeSynapseGeoBackupPolicyListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<SynapseGeoBackupPolicyData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
