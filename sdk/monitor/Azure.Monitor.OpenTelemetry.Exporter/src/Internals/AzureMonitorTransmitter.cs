@@ -26,7 +26,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
     {
         private readonly ApplicationInsightsRestClient _applicationInsightsRestClient;
         internal PersistentBlobProvider? _fileBlobProvider;
+        private readonly AzureMonitorStatsbeat? _statsbeat;
         private readonly ConnectionVars _connectionVars;
+        private bool _disposed;
 
         public AzureMonitorTransmitter(AzureMonitorExporterOptions options, TokenCredential? credential = null)
         {
@@ -43,11 +45,84 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
             _fileBlobProvider = InitializeOfflineStorage(options);
 
-            // TODO: uncomment following line for enablement.
-            // InitializeStatsbeat(options, _connectionVars);
+            _statsbeat = InitializeStatsbeat(options, _connectionVars);
         }
 
-        private static void InitializeStatsbeat(AzureMonitorExporterOptions options, ConnectionVars connectionVars)
+        private static ConnectionVars InitializeConnectionVars(AzureMonitorExporterOptions options)
+        {
+            if (options.ConnectionString == null)
+            {
+                var connectionString = Environment.GetEnvironmentVariable("APPLICATIONINSIGHTS_CONNECTION_STRING");
+
+                if (!string.IsNullOrWhiteSpace(connectionString))
+                {
+                    return ConnectionStringParser.GetValues(connectionString);
+                }
+            }
+            else
+            {
+                return ConnectionStringParser.GetValues(options.ConnectionString);
+            }
+
+            throw new InvalidOperationException("A connection string was not found. This MUST be provided via either AzureMonitorExporterOptions or set in the environment variable 'APPLICATIONINSIGHTS_CONNECTION_STRING'");
+        }
+
+        private static ApplicationInsightsRestClient InitializeRestClient(AzureMonitorExporterOptions options, ConnectionVars connectionVars, TokenCredential? credential)
+        {
+            HttpPipeline pipeline;
+
+            if (credential != null)
+            {
+                var scope = AadHelper.GetScope(connectionVars.AadAudience);
+                var httpPipelinePolicy = new HttpPipelinePolicy[]
+                {
+                    new BearerTokenAuthenticationPolicy(credential, scope),
+                    new IngestionRedirectPolicy()
+                };
+
+                pipeline = HttpPipelineBuilder.Build(options, httpPipelinePolicy);
+                AzureMonitorExporterEventSource.Log.WriteInformational("SetAADCredentialsToPipeline", $"HttpPipelineBuilder is built with AAD Credentials. TokenCredential: {credential.GetType().Name} Scope: {scope}");
+            }
+            else
+            {
+                var httpPipelinePolicy = new HttpPipelinePolicy[] { new IngestionRedirectPolicy() };
+                pipeline = HttpPipelineBuilder.Build(options, httpPipelinePolicy);
+            }
+
+            return new ApplicationInsightsRestClient(new ClientDiagnostics(options), pipeline, host: connectionVars.IngestionEndpoint);
+        }
+
+        private static PersistentBlobProvider? InitializeOfflineStorage(AzureMonitorExporterOptions options)
+        {
+            if (!options.DisableOfflineStorage)
+            {
+                try
+                {
+                    var storageDirectory = options.StorageDirectory
+                        ?? StorageHelper.GetDefaultStorageDirectory()
+                        ?? throw new InvalidOperationException("Unable to determine offline storage directory.");
+
+                    // TODO: Fallback to default location if location provided via options does not work.
+                    AzureMonitorExporterEventSource.Log.WriteInformational("InitializedPersistentStorage", storageDirectory);
+
+                    return new FileBlobProvider(storageDirectory);
+                }
+                catch (Exception ex)
+                {
+                    // TODO:
+                    // Remove this when we add an option to disable offline storage.
+                    // So if someone opts in for storage and we cannot initialize, we can throw.
+                    // Change needed on persistent storage side to throw if not able to create storage directory.
+                    AzureMonitorExporterEventSource.Log.WriteError("FailedToInitializePersistentStorage", ex);
+
+                    return null;
+                }
+            }
+
+            return null;
+        }
+
+        private static AzureMonitorStatsbeat? InitializeStatsbeat(AzureMonitorExporterOptions options, ConnectionVars connectionVars)
         {
             if (options.EnableStatsbeat && connectionVars != null)
             {
@@ -58,17 +133,20 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                     {
                         AzureMonitorExporterEventSource.Log.WriteInformational("StatsbeatInitialization: ", "Statsbeat was disabled via environment variable");
 
-                        return;
+                        return null;
                     }
 
-                    // TODO: Implement IDisposable for transmitter and dispose statsbeat.
-                    _ = new AzureMonitorStatsbeat(connectionVars);
+                    // TODO: uncomment following line for enablement.
+                    // return new AzureMonitorStatsbeat(connectionVars);
+                    return null;
                 }
                 catch (Exception ex)
                 {
                     AzureMonitorExporterEventSource.Log.WriteWarning($"ErrorInitializingStatsbeatFor:{connectionVars.InstrumentationKey}", ex);
                 }
             }
+
+            return null;
         }
 
         public string InstrumentationKey => _connectionVars.InstrumentationKey;
@@ -169,80 +247,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             }
 
             return ExportResult.Failure;
-        }
-
-        private static ApplicationInsightsRestClient InitializeRestClient(AzureMonitorExporterOptions options, ConnectionVars connectionVars, TokenCredential? credential)
-        {
-            HttpPipeline pipeline;
-
-            if (credential != null)
-            {
-                var scope = AadHelper.GetScope(connectionVars.AadAudience);
-                var httpPipelinePolicy = new HttpPipelinePolicy[]
-                {
-                    new BearerTokenAuthenticationPolicy(credential, scope),
-                    new IngestionRedirectPolicy()
-                };
-
-                pipeline = HttpPipelineBuilder.Build(options, httpPipelinePolicy);
-                AzureMonitorExporterEventSource.Log.WriteInformational("SetAADCredentialsToPipeline", $"HttpPipelineBuilder is built with AAD Credentials. TokenCredential: {credential.GetType().Name} Scope: {scope}");
-            }
-            else
-            {
-                var httpPipelinePolicy = new HttpPipelinePolicy[] { new IngestionRedirectPolicy() };
-                pipeline = HttpPipelineBuilder.Build(options, httpPipelinePolicy);
-            }
-
-            return new ApplicationInsightsRestClient(new ClientDiagnostics(options), pipeline, host: connectionVars.IngestionEndpoint);
-        }
-
-        private static PersistentBlobProvider? InitializeOfflineStorage(AzureMonitorExporterOptions options)
-        {
-            if (!options.DisableOfflineStorage)
-            {
-                try
-                {
-                    var storageDirectory = options.StorageDirectory
-                        ?? StorageHelper.GetDefaultStorageDirectory()
-                        ?? throw new InvalidOperationException("Unable to determine offline storage directory.");
-
-                    // TODO: Fallback to default location if location provided via options does not work.
-                    AzureMonitorExporterEventSource.Log.WriteInformational("InitializedPersistentStorage", storageDirectory);
-
-                    return new FileBlobProvider(storageDirectory);
-                }
-                catch (Exception ex)
-                {
-                    // TODO:
-                    // Remove this when we add an option to disable offline storage.
-                    // So if someone opts in for storage and we cannot initialize, we can throw.
-                    // Change needed on persistent storage side to throw if not able to create storage directory.
-                    AzureMonitorExporterEventSource.Log.WriteError("FailedToInitializePersistentStorage", ex);
-
-                    return null;
-                }
-            }
-
-            return null;
-        }
-
-        private static ConnectionVars InitializeConnectionVars(AzureMonitorExporterOptions options)
-        {
-            if (options.ConnectionString == null)
-            {
-                var connectionString = Environment.GetEnvironmentVariable("APPLICATIONINSIGHTS_CONNECTION_STRING");
-
-                if (!string.IsNullOrWhiteSpace(connectionString))
-                {
-                    return ConnectionStringParser.GetValues(connectionString);
-                }
-            }
-            else
-            {
-                return ConnectionStringParser.GetValues(options.ConnectionString);
-            }
-
-            throw new InvalidOperationException("A connection string was not found. This MUST be provided via either AzureMonitorExporterOptions or set in the environment variable 'APPLICATIONINSIGHTS_CONNECTION_STRING'");
         }
 
         private ExportResult HandleFailures(HttpMessage httpMessage)
@@ -379,6 +383,27 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             {
                 AzureMonitorExporterEventSource.Log.WriteWarning("FailedToTransmitFromStorage", $"Error code is {statusCode}: Telemetry is dropped");
             }
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!_disposed)
+            {
+                if (disposing)
+                {
+                    AzureMonitorExporterEventSource.Log.WriteVerbose(name: nameof(AzureMonitorTransmitter), message: $"{nameof(AzureMonitorTransmitter)} has been disposed.");
+                    _statsbeat?.Dispose();
+                }
+
+                _disposed = true;
+            }
+        }
+
+        public void Dispose()
+        {
+            // Do not change this code. Put cleanup code in 'Dispose(bool disposing)' method
+            Dispose(disposing: true);
+            GC.SuppressFinalize(this);
         }
     }
 }
