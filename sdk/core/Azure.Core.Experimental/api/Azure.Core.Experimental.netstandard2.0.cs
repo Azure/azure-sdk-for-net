@@ -168,14 +168,6 @@ namespace Azure.Core.Dynamic
             System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
         }
     }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct DynamicJsonProperty
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public string Name { get { throw null; } }
-        public Azure.Core.Dynamic.DynamicJson Value { get { throw null; } }
-    }
     public enum DynamicJsonNameMapping
     {
         None = 0,
@@ -189,6 +181,14 @@ namespace Azure.Core.Dynamic
         public static readonly Azure.Core.Dynamic.DynamicJsonOptions AzureDefault;
         public DynamicJsonOptions() { throw null; }
         public Azure.Core.Dynamic.DynamicJsonNameMapping PropertyNameCasing { get { throw null; } set { } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct DynamicJsonProperty
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public string Name { get { throw null; } }
+        public Azure.Core.Dynamic.DynamicJson Value { get { throw null; } }
     }
 }
 namespace Azure.Core.Json

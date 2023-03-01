@@ -18,10 +18,10 @@ namespace Azure.ResourceManager.Compute.Samples
 {
     public partial class Sample_CapacityReservationResource
     {
-        // CapacityReservation_Update_MaximumSet_Gen
+        // CapacityReservations_Update_MaximumSet_Gen
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Update_CapacityReservationUpdateMaximumSetGen()
+        public async Task Update_CapacityReservationsUpdateMaximumSetGen()
         {
             // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-11-01/examples/capacityReservationExamples/CapacityReservation_Update_MaximumSet_Gen.json
             // this example is just showing the usage of "CapacityReservations_Update" operation, for the dependent resources, they will have to be created separately.
@@ -64,10 +64,10 @@ namespace Azure.ResourceManager.Compute.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // CapacityReservation_Update_MinimumSet_Gen
+        // CapacityReservations_Update_MinimumSet_Gen
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Update_CapacityReservationUpdateMinimumSetGen()
+        public async Task Update_CapacityReservationsUpdateMinimumSetGen()
         {
             // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-11-01/examples/capacityReservationExamples/CapacityReservation_Update_MinimumSet_Gen.json
             // this example is just showing the usage of "CapacityReservations_Update" operation, for the dependent resources, they will have to be created separately.
@@ -98,10 +98,10 @@ namespace Azure.ResourceManager.Compute.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // CapacityReservation_Delete_MaximumSet_Gen
+        // CapacityReservations_Delete_MaximumSet_Gen
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Delete_CapacityReservationDeleteMaximumSetGen()
+        public async Task Delete_CapacityReservationsDeleteMaximumSetGen()
         {
             // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-11-01/examples/capacityReservationExamples/CapacityReservation_Delete_MaximumSet_Gen.json
             // this example is just showing the usage of "CapacityReservations_Delete" operation, for the dependent resources, they will have to be created separately.
@@ -126,10 +126,10 @@ namespace Azure.ResourceManager.Compute.Samples
             Console.WriteLine($"Succeeded");
         }
 
-        // CapacityReservation_Delete_MinimumSet_Gen
+        // CapacityReservations_Delete_MinimumSet_Gen
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Delete_CapacityReservationDeleteMinimumSetGen()
+        public async Task Delete_CapacityReservationsDeleteMinimumSetGen()
         {
             // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-11-01/examples/capacityReservationExamples/CapacityReservation_Delete_MinimumSet_Gen.json
             // this example is just showing the usage of "CapacityReservations_Delete" operation, for the dependent resources, they will have to be created separately.
