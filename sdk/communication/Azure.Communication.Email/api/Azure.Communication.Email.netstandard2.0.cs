@@ -137,5 +137,6 @@ namespace Microsoft.Extensions.Azure
         public static Azure.Core.Extensions.IAzureClientBuilder<Azure.Communication.Email.EmailClient, Azure.Communication.Email.EmailClientOptions> AddEmailClient<TBuilder>(this TBuilder builder, string connectionString) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilder { throw null; }
         public static Azure.Core.Extensions.IAzureClientBuilder<Azure.Communication.Email.EmailClient, Azure.Communication.Email.EmailClientOptions> AddEmailClient<TBuilder>(this TBuilder builder, System.Uri serviceUri) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithCredential { throw null; }
         public static Azure.Core.Extensions.IAzureClientBuilder<Azure.Communication.Email.EmailClient, Azure.Communication.Email.EmailClientOptions> AddEmailClient<TBuilder>(this TBuilder builder, System.Uri serviceUri, Azure.AzureKeyCredential azureKeyCredential) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilder { throw null; }
+        public static Azure.Core.Extensions.IAzureClientBuilder<Azure.Communication.Email.EmailClient, Azure.Communication.Email.EmailClientOptions> AddEmailClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithConfiguration<TConfiguration> { throw null; }
     }
 }
