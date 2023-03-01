@@ -67,7 +67,6 @@ namespace Azure.ResourceManager.NotificationHubs.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                authTokenUrl = null;
                                 continue;
                             }
                             authTokenUrl = new Uri(property0.Value.GetString());

@@ -44,7 +44,6 @@ namespace Azure.ResourceManager.NetworkFunction.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     ingestionType = new IngestionType(property.Value.GetString());
@@ -54,7 +53,6 @@ namespace Azure.ResourceManager.NetworkFunction.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<IngestionSourcesPropertiesFormat> array = new List<IngestionSourcesPropertiesFormat>();

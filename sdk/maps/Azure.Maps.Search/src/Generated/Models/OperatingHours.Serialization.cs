@@ -28,7 +28,6 @@ namespace Azure.Maps.Search.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<OperatingHoursTimeRange> array = new List<OperatingHoursTimeRange>();

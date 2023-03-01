@@ -38,7 +38,6 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             serverCount = property0.Value.GetInt32();
@@ -48,7 +47,6 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             isGateway = property0.Value.GetBoolean();
@@ -68,7 +66,6 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             created = property0.Value.GetDateTimeOffset("O");
@@ -78,7 +75,6 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             dataReceived = property0.Value.GetDateTimeOffset("O");

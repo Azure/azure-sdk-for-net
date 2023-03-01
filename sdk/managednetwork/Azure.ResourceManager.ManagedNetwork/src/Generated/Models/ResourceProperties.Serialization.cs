@@ -29,7 +29,6 @@ namespace Azure.ResourceManager.ManagedNetwork.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     provisioningState = new ProvisioningState(property.Value.GetString());
@@ -39,7 +38,6 @@ namespace Azure.ResourceManager.ManagedNetwork.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     etag = new ETag(property.Value.GetString());

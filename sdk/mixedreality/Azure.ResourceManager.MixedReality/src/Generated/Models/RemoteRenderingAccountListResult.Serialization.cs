@@ -24,7 +24,6 @@ namespace Azure.ResourceManager.MixedReality.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<RemoteRenderingAccountData> array = new List<RemoteRenderingAccountData>();

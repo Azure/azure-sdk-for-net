@@ -33,7 +33,6 @@ namespace Azure.ResourceManager.MySql
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     properties = MySqlPrivateLinkResourceProperties.DeserializeMySqlPrivateLinkResourceProperties(property.Value);
@@ -58,7 +57,6 @@ namespace Azure.ResourceManager.MySql
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());

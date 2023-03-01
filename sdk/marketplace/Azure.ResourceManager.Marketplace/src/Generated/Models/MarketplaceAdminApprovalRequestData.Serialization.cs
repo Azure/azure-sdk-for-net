@@ -107,7 +107,6 @@ namespace Azure.ResourceManager.Marketplace
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -141,7 +140,6 @@ namespace Azure.ResourceManager.Marketplace
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             adminAction = new MarketplaceAdminAction(property0.Value.GetString());
@@ -151,7 +149,6 @@ namespace Azure.ResourceManager.Marketplace
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<string> array = new List<string>();
@@ -176,7 +173,6 @@ namespace Azure.ResourceManager.Marketplace
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<PlanRequesterDetails> array = new List<PlanRequesterDetails>();
@@ -191,7 +187,6 @@ namespace Azure.ResourceManager.Marketplace
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<Guid> array = new List<Guid>();
@@ -206,7 +201,6 @@ namespace Azure.ResourceManager.Marketplace
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                icon = null;
                                 continue;
                             }
                             icon = new Uri(property0.Value.GetString());

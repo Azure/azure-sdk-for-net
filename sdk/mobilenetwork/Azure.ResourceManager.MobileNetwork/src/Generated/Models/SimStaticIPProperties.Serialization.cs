@@ -45,7 +45,6 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     attachedDataNetwork = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());
@@ -55,7 +54,6 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     slice = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());
@@ -65,7 +63,6 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     staticIP = SimStaticIPPropertiesStaticIP.DeserializeSimStaticIPPropertiesStaticIP(property.Value);

@@ -35,7 +35,6 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        actionUri = null;
                         continue;
                     }
                     actionUri = new Uri(property.Value.GetString());

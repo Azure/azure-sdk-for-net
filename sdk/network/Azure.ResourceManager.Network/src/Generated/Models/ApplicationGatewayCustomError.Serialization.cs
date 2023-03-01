@@ -39,7 +39,6 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     statusCode = new ApplicationGatewayCustomErrorStatusCode(property.Value.GetString());
@@ -49,7 +48,6 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        customErrorPageUrl = null;
                         continue;
                     }
                     customErrorPageUrl = new Uri(property.Value.GetString());

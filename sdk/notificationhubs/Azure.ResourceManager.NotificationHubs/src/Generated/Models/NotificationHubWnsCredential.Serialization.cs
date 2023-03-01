@@ -67,7 +67,6 @@ namespace Azure.ResourceManager.NotificationHubs.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                windowsLiveEndpoint = null;
                                 continue;
                             }
                             windowsLiveEndpoint = new Uri(property0.Value.GetString());

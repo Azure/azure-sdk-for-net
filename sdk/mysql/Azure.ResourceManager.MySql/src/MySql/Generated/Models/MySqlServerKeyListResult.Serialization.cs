@@ -24,7 +24,6 @@ namespace Azure.ResourceManager.MySql.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<MySqlServerKeyData> array = new List<MySqlServerKeyData>();

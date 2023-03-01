@@ -24,7 +24,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     itemsReceived = property.Value.GetInt32();
@@ -34,7 +33,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     itemsAccepted = property.Value.GetInt32();
@@ -44,7 +42,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<TelemetryErrorDetails> array = new List<TelemetryErrorDetails>();

@@ -22,7 +22,6 @@ namespace Azure.ResourceManager.EnergyServices.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<DataPartition> array = new List<DataPartition>();

@@ -59,7 +59,6 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     isIdentity = property.Value.GetBoolean();

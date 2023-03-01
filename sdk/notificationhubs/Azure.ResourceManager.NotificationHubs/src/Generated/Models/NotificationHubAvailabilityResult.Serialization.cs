@@ -59,7 +59,6 @@ namespace Azure.ResourceManager.NotificationHubs.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     isAvailiable = property.Value.GetBoolean();
@@ -69,7 +68,6 @@ namespace Azure.ResourceManager.NotificationHubs.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     sku = NotificationHubSku.DeserializeNotificationHubSku(property.Value);
@@ -79,7 +77,6 @@ namespace Azure.ResourceManager.NotificationHubs.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -114,7 +111,6 @@ namespace Azure.ResourceManager.NotificationHubs.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());

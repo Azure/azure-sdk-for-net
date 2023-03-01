@@ -33,7 +33,6 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        keyUrl = null;
                         continue;
                     }
                     keyUrl = new Uri(property.Value.GetString());

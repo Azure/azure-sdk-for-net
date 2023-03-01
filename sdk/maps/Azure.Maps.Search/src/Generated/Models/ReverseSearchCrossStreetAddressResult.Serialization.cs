@@ -23,7 +23,6 @@ namespace Azure.Maps.Search.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     summary = SearchSummary.DeserializeSearchSummary(property.Value);
@@ -33,7 +32,6 @@ namespace Azure.Maps.Search.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ReverseSearchCrossStreetAddressResultItem> array = new List<ReverseSearchCrossStreetAddressResultItem>();

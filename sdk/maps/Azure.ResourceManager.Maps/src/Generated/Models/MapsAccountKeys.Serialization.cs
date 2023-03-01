@@ -25,7 +25,6 @@ namespace Azure.ResourceManager.Maps.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     primaryKeyLastUpdated = property.Value.GetDateTimeOffset("O");
@@ -45,7 +44,6 @@ namespace Azure.ResourceManager.Maps.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     secondaryKeyLastUpdated = property.Value.GetDateTimeOffset("O");

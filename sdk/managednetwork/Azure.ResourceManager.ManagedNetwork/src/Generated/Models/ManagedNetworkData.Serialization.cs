@@ -61,7 +61,6 @@ namespace Azure.ResourceManager.ManagedNetwork
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -96,7 +95,6 @@ namespace Azure.ResourceManager.ManagedNetwork
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -115,7 +113,6 @@ namespace Azure.ResourceManager.ManagedNetwork
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             provisioningState = new ProvisioningState(property0.Value.GetString());
@@ -125,7 +122,6 @@ namespace Azure.ResourceManager.ManagedNetwork
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             etag = new ETag(property0.Value.GetString());
@@ -135,7 +131,6 @@ namespace Azure.ResourceManager.ManagedNetwork
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             scope = Scope.DeserializeScope(property0.Value);
@@ -145,7 +140,6 @@ namespace Azure.ResourceManager.ManagedNetwork
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             connectivity = ConnectivityCollection.DeserializeConnectivityCollection(property0.Value);

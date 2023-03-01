@@ -29,7 +29,6 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        url = null;
                         continue;
                     }
                     url = new Uri(property.Value.GetString());
@@ -39,7 +38,6 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     type = new VirtualWanSecurityProviderType(property.Value.GetString());

@@ -38,7 +38,6 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     mode = new FirewallPolicyIntrusionDetectionStateType(property.Value.GetString());
@@ -48,7 +47,6 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     configuration = FirewallPolicyIntrusionDetectionConfiguration.DeserializeFirewallPolicyIntrusionDetectionConfiguration(property.Value);

@@ -24,7 +24,6 @@ namespace Azure.ResourceManager.NotificationHubs.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<NotificationHubAuthorizationRuleData> array = new List<NotificationHubAuthorizationRuleData>();

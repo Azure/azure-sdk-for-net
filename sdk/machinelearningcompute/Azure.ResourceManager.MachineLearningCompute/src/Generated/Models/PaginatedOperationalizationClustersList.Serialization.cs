@@ -24,7 +24,6 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<OperationalizationClusterData> array = new List<OperationalizationClusterData>();

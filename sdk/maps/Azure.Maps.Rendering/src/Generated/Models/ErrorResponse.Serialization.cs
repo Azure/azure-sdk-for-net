@@ -21,7 +21,6 @@ namespace Azure.Maps.Rendering
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     error = ErrorDetail.DeserializeErrorDetail(property.Value);

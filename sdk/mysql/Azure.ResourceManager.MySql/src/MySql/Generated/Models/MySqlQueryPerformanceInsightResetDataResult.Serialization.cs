@@ -22,7 +22,6 @@ namespace Azure.ResourceManager.MySql.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     status = new MySqlQueryPerformanceInsightResetDataResultState(property.Value.GetString());

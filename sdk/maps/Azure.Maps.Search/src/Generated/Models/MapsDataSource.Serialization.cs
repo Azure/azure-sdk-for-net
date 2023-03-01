@@ -21,7 +21,6 @@ namespace Azure.Maps.Search.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     geometry = GeometryIdentifier.DeserializeGeometryIdentifier(property.Value);

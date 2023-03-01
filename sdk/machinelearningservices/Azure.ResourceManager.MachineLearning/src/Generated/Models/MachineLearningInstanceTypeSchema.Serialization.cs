@@ -74,7 +74,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     resources = MachineLearningInstanceTypeSchemaResources.DeserializeMachineLearningInstanceTypeSchemaResources(property.Value);

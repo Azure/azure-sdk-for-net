@@ -35,7 +35,6 @@ namespace Azure.ResourceManager.Media.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     maxAllowedUnreportedUsageDuration = property.Value.GetTimeSpan("P");
@@ -45,7 +44,6 @@ namespace Azure.ResourceManager.Media.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     eventHubDetails = EdgeUsageDataEventHub.DeserializeEdgeUsageDataEventHub(property.Value);

@@ -50,7 +50,6 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     status = new Status(property.Value.GetString());

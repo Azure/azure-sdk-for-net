@@ -22,7 +22,6 @@ namespace Azure.ResourceManager.Orbital.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<OrbitalAvailableContact> array = new List<OrbitalAvailableContact>();

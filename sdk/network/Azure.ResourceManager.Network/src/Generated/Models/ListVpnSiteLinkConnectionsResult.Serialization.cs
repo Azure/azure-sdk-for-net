@@ -24,7 +24,6 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<VpnSiteLinkConnectionData> array = new List<VpnSiteLinkConnectionData>();

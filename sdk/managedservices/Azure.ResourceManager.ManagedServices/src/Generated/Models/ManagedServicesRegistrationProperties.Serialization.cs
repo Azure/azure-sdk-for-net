@@ -81,7 +81,6 @@ namespace Azure.ResourceManager.ManagedServices.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ManagedServicesEligibleAuthorization> array = new List<ManagedServicesEligibleAuthorization>();
@@ -106,7 +105,6 @@ namespace Azure.ResourceManager.ManagedServices.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     provisioningState = new ManagedServicesProvisioningState(property.Value.GetString());
@@ -116,7 +114,6 @@ namespace Azure.ResourceManager.ManagedServices.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     manageeTenantId = property.Value.GetGuid();

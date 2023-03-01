@@ -29,7 +29,6 @@ namespace Azure.Maps.Routing.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<IList<RouteMatrix>> array = new List<IList<RouteMatrix>>();
@@ -49,7 +48,6 @@ namespace Azure.Maps.Routing.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     summary = RouteMatrixSummary.DeserializeRouteMatrixSummary(property.Value);

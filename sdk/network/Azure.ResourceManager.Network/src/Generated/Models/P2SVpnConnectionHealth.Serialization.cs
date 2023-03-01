@@ -22,7 +22,6 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        sasUrl = null;
                         continue;
                     }
                     sasUrl = new Uri(property.Value.GetString());

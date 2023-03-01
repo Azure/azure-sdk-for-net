@@ -24,7 +24,6 @@ namespace Azure.ResourceManager.MySql.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<MySqlVirtualNetworkRuleData> array = new List<MySqlVirtualNetworkRuleData>();

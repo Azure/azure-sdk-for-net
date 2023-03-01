@@ -49,7 +49,6 @@ namespace Azure.ResourceManager.Nginx.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     privateIPAllocationMethod = new NginxPrivateIPAllocationMethod(property.Value.GetString());

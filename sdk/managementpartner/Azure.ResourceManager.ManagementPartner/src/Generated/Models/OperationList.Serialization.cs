@@ -23,7 +23,6 @@ namespace Azure.ResourceManager.ManagementPartner.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<OperationResponse> array = new List<OperationResponse>();

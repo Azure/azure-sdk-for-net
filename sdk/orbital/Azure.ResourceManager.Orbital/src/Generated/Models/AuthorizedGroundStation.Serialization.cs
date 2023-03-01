@@ -28,7 +28,6 @@ namespace Azure.ResourceManager.Orbital.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     expirationDate = property.Value.GetDateTimeOffset("D");

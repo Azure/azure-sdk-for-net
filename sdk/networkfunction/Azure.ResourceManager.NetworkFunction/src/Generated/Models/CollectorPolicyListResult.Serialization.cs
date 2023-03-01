@@ -24,7 +24,6 @@ namespace Azure.ResourceManager.NetworkFunction.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<CollectorPolicyData> array = new List<CollectorPolicyData>();

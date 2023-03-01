@@ -70,7 +70,6 @@ namespace Azure.ResourceManager.MySql.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -89,7 +88,6 @@ namespace Azure.ResourceManager.MySql.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             sizeInKB = property0.Value.GetInt64();
@@ -99,7 +97,6 @@ namespace Azure.ResourceManager.MySql.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             createdTime = property0.Value.GetDateTimeOffset("O");
@@ -109,7 +106,6 @@ namespace Azure.ResourceManager.MySql.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             lastModifiedTime = property0.Value.GetDateTimeOffset("O");
@@ -124,7 +120,6 @@ namespace Azure.ResourceManager.MySql.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                url = null;
                                 continue;
                             }
                             url = new Uri(property0.Value.GetString());

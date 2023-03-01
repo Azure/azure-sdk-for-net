@@ -23,7 +23,6 @@ namespace Azure.ResourceManager.EnergyServices.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     nameAvailable = property.Value.GetBoolean();
@@ -33,7 +32,6 @@ namespace Azure.ResourceManager.EnergyServices.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     reason = new EnergyServiceNameUnavailableReason(property.Value.GetString());

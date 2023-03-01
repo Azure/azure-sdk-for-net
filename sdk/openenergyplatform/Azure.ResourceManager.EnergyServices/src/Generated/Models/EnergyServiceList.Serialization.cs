@@ -29,7 +29,6 @@ namespace Azure.ResourceManager.EnergyServices.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<EnergyServiceData> array = new List<EnergyServiceData>();

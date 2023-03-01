@@ -53,7 +53,6 @@ namespace Azure.ResourceManager.ManagedServices.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     maximumActivationDuration = property.Value.GetTimeSpan("P");
@@ -63,7 +62,6 @@ namespace Azure.ResourceManager.ManagedServices.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ManagedServicesEligibleApprover> array = new List<ManagedServicesEligibleApprover>();

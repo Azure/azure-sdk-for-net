@@ -44,7 +44,6 @@ namespace Azure.ResourceManager.Monitor.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<LogAnalyticsDestination> array = new List<LogAnalyticsDestination>();
@@ -59,7 +58,6 @@ namespace Azure.ResourceManager.Monitor.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     azureMonitorMetrics = DestinationsSpecAzureMonitorMetrics.DeserializeDestinationsSpecAzureMonitorMetrics(property.Value);

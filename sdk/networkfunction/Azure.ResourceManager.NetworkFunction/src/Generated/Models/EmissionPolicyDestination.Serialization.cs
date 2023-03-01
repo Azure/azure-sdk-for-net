@@ -32,7 +32,6 @@ namespace Azure.ResourceManager.NetworkFunction.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     destinationType = new EmissionDestinationType(property.Value.GetString());

@@ -300,7 +300,6 @@ namespace Azure.ResourceManager.NetApp.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     id = new ResourceIdentifier(property.Value.GetString());
@@ -315,7 +314,6 @@ namespace Azure.ResourceManager.NetApp.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     type = new ResourceType(property.Value.GetString());
@@ -325,7 +323,6 @@ namespace Azure.ResourceManager.NetApp.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -349,7 +346,6 @@ namespace Azure.ResourceManager.NetApp.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             fileSystemId = property0.Value.GetGuid();
@@ -364,7 +360,6 @@ namespace Azure.ResourceManager.NetApp.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             serviceLevel = new NetAppFileServiceLevel(property0.Value.GetString());
@@ -379,7 +374,6 @@ namespace Azure.ResourceManager.NetApp.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             exportPolicy = VolumePropertiesExportPolicy.DeserializeVolumePropertiesExportPolicy(property0.Value);
@@ -389,7 +383,6 @@ namespace Azure.ResourceManager.NetApp.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<string> array = new List<string>();
@@ -419,7 +412,6 @@ namespace Azure.ResourceManager.NetApp.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             deleteBaseSnapshot = property0.Value.GetBoolean();
@@ -449,7 +441,6 @@ namespace Azure.ResourceManager.NetApp.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             networkFeatures = new NetAppNetworkFeature(property0.Value.GetString());
@@ -459,7 +450,6 @@ namespace Azure.ResourceManager.NetApp.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             networkSiblingSetId = property0.Value.GetGuid();
@@ -469,7 +459,6 @@ namespace Azure.ResourceManager.NetApp.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             storageToNetworkProximity = new NetAppVolumeStorageToNetworkProximity(property0.Value.GetString());
@@ -479,7 +468,6 @@ namespace Azure.ResourceManager.NetApp.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<NetAppVolumeMountTarget> array = new List<NetAppVolumeMountTarget>();
@@ -499,7 +487,6 @@ namespace Azure.ResourceManager.NetApp.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             dataProtection = NetAppVolumeDataProtection.DeserializeNetAppVolumeDataProtection(property0.Value);
@@ -509,7 +496,6 @@ namespace Azure.ResourceManager.NetApp.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             isRestoring = property0.Value.GetBoolean();
@@ -519,7 +505,6 @@ namespace Azure.ResourceManager.NetApp.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             snapshotDirectoryVisible = property0.Value.GetBoolean();
@@ -529,7 +514,6 @@ namespace Azure.ResourceManager.NetApp.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             kerberosEnabled = property0.Value.GetBoolean();
@@ -539,7 +523,6 @@ namespace Azure.ResourceManager.NetApp.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             securityStyle = new NetAppVolumeSecurityStyle(property0.Value.GetString());
@@ -549,7 +532,6 @@ namespace Azure.ResourceManager.NetApp.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             smbEncryption = property0.Value.GetBoolean();
@@ -559,7 +541,6 @@ namespace Azure.ResourceManager.NetApp.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             smbAccessBasedEnumeration = new SmbAccessBasedEnumeration(property0.Value.GetString());
@@ -569,7 +550,6 @@ namespace Azure.ResourceManager.NetApp.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             smbNonBrowsable = new SmbNonBrowsable(property0.Value.GetString());
@@ -579,7 +559,6 @@ namespace Azure.ResourceManager.NetApp.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             smbContinuouslyAvailable = property0.Value.GetBoolean();
@@ -589,7 +568,6 @@ namespace Azure.ResourceManager.NetApp.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             throughputMibps = property0.Value.GetSingle();
@@ -599,7 +577,6 @@ namespace Azure.ResourceManager.NetApp.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             encryptionKeySource = new NetAppEncryptionKeySource(property0.Value.GetString());
@@ -609,7 +586,6 @@ namespace Azure.ResourceManager.NetApp.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             keyVaultPrivateEndpointResourceId = new ResourceIdentifier(property0.Value.GetString());
@@ -619,7 +595,6 @@ namespace Azure.ResourceManager.NetApp.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             ldapEnabled = property0.Value.GetBoolean();
@@ -629,7 +604,6 @@ namespace Azure.ResourceManager.NetApp.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             coolAccess = property0.Value.GetBoolean();
@@ -639,7 +613,6 @@ namespace Azure.ResourceManager.NetApp.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             coolnessPeriod = property0.Value.GetInt32();
@@ -669,7 +642,6 @@ namespace Azure.ResourceManager.NetApp.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             avsDataStore = new NetAppAvsDataStore(property0.Value.GetString());
@@ -679,7 +651,6 @@ namespace Azure.ResourceManager.NetApp.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             isDefaultQuotaEnabled = property0.Value.GetBoolean();
@@ -689,7 +660,6 @@ namespace Azure.ResourceManager.NetApp.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             defaultUserQuotaInKiBs = property0.Value.GetInt64();
@@ -699,7 +669,6 @@ namespace Azure.ResourceManager.NetApp.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             defaultGroupQuotaInKiBs = property0.Value.GetInt64();
@@ -709,7 +678,6 @@ namespace Azure.ResourceManager.NetApp.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             maximumNumberOfFiles = property0.Value.GetInt64();
@@ -724,7 +692,6 @@ namespace Azure.ResourceManager.NetApp.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             capacityPoolResourceId = new ResourceIdentifier(property0.Value.GetString());
@@ -734,7 +701,6 @@ namespace Azure.ResourceManager.NetApp.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             proximityPlacementGroup = new ResourceIdentifier(property0.Value.GetString());
@@ -754,7 +720,6 @@ namespace Azure.ResourceManager.NetApp.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             encrypted = property0.Value.GetBoolean();
@@ -764,7 +729,6 @@ namespace Azure.ResourceManager.NetApp.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<NetAppVolumePlacementRule> array = new List<NetAppVolumePlacementRule>();
@@ -779,7 +743,6 @@ namespace Azure.ResourceManager.NetApp.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             enableSubvolumes = new EnableNetAppSubvolume(property0.Value.GetString());

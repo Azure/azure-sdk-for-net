@@ -21,7 +21,6 @@ namespace Azure.ResourceManager.Media.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     usageDataCollectionPolicy = EdgeUsageDataCollectionPolicy.DeserializeEdgeUsageDataCollectionPolicy(property.Value);

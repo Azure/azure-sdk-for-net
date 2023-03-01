@@ -152,7 +152,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, MachineLearningInstanceTypeSchema> dictionary = new Dictionary<string, MachineLearningInstanceTypeSchema>();

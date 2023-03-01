@@ -24,7 +24,6 @@ namespace Azure.ResourceManager.Monitor.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<MonitorPrivateLinkScopedResourceData> array = new List<MonitorPrivateLinkScopedResourceData>();

@@ -44,7 +44,6 @@ namespace Azure.ResourceManager.Media.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     defaultKey = EncryptionSchemeDefaultKey.DeserializeEncryptionSchemeDefaultKey(property.Value);
@@ -54,7 +53,6 @@ namespace Azure.ResourceManager.Media.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<StreamingPolicyContentKey> array = new List<StreamingPolicyContentKey>();

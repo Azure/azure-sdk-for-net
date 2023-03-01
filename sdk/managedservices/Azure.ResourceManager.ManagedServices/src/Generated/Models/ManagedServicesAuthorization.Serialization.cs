@@ -66,7 +66,6 @@ namespace Azure.ResourceManager.ManagedServices.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<Guid> array = new List<Guid>();

@@ -32,7 +32,6 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     breakOutCategories = O365BreakOutCategoryPolicies.DeserializeO365BreakOutCategoryPolicies(property.Value);

@@ -24,7 +24,6 @@ namespace Azure.ResourceManager.MySql.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     privateEndpoint = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());
@@ -34,7 +33,6 @@ namespace Azure.ResourceManager.MySql.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     privateLinkServiceConnectionState = MySqlServerPrivateLinkServiceConnectionStateProperty.DeserializeMySqlServerPrivateLinkServiceConnectionStateProperty(property.Value);
@@ -44,7 +42,6 @@ namespace Azure.ResourceManager.MySql.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     provisioningState = new MySqlPrivateEndpointProvisioningState(property.Value.GetString());

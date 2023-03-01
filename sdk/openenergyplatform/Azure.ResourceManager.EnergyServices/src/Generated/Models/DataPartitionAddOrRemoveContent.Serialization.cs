@@ -32,7 +32,6 @@ namespace Azure.ResourceManager.EnergyServices.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     name = Models.DataPartitionName.DeserializeDataPartitionName(property.Value);

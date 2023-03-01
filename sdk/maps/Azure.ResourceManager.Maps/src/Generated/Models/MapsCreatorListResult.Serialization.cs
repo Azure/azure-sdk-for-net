@@ -24,7 +24,6 @@ namespace Azure.ResourceManager.Maps.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<MapsCreatorData> array = new List<MapsCreatorData>();

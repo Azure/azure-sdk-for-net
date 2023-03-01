@@ -86,7 +86,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     autoScaleProperties = MachineLearningAutoScaleProperties.DeserializeMachineLearningAutoScaleProperties(property.Value);
@@ -96,7 +95,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     autoPauseProperties = MachineLearningAutoPauseProperties.DeserializeMachineLearningAutoPauseProperties(property.Value);
@@ -111,7 +109,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     nodeCount = property.Value.GetInt32();

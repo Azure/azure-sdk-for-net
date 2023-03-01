@@ -22,7 +22,6 @@ namespace Azure.ResourceManager.Maintenance.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<MaintenanceUpdate> array = new List<MaintenanceUpdate>();

@@ -38,7 +38,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     startupScript = MachineLearningScriptReference.DeserializeMachineLearningScriptReference(property.Value);
@@ -48,7 +47,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     creationScript = MachineLearningScriptReference.DeserializeMachineLearningScriptReference(property.Value);

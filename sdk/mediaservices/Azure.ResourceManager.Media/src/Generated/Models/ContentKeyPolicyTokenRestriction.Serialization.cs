@@ -97,7 +97,6 @@ namespace Azure.ResourceManager.Media.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ContentKeyPolicyRestrictionTokenKey> array = new List<ContentKeyPolicyRestrictionTokenKey>();
@@ -112,7 +111,6 @@ namespace Azure.ResourceManager.Media.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ContentKeyPolicyTokenClaim> array = new List<ContentKeyPolicyTokenClaim>();
