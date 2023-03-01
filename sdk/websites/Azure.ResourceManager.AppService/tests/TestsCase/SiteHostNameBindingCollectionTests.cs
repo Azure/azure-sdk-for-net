@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.AppService.Tests.TestsCase
             var webSiteLro = await webSites.CreateOrUpdateAsync(WaitUntil.Completed, webSitename, webSiteData);
             WebSiteResource webSite = webSiteLro.Value;
 
-            // Construct the value client to get the X509ThumbPrint
+            // Construct the vault client to get the X509ThumbPrint
             var vaultClient = GetCertificateClient();
             var certificate = await vaultClient.GetCertificateAsync("188544910");
             var x509ThumbPrint = certificate.Value.Properties.X509Thumbprint;
