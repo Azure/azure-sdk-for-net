@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.NetApp.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(SnapshotPolicyId))
             {
-                writer.WritePropertyName("snapshotPolicyId");
+                writer.WritePropertyName("snapshotPolicyId"u8);
                 writer.WriteStringValue(SnapshotPolicyId);
             }
             writer.WriteEndObject();
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.NetApp.Models
             Optional<ResourceIdentifier> snapshotPolicyId = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("snapshotPolicyId"))
+                if (property.NameEquals("snapshotPolicyId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

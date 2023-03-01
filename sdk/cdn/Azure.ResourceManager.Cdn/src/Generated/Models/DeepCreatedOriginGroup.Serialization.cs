@@ -17,15 +17,15 @@ namespace Azure.ResourceManager.Cdn.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("name");
+            writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(HealthProbeSettings))
             {
                 if (HealthProbeSettings != null)
                 {
-                    writer.WritePropertyName("healthProbeSettings");
+                    writer.WritePropertyName("healthProbeSettings"u8);
                     writer.WriteObjectValue(HealthProbeSettings);
                 }
                 else
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Cdn.Models
             }
             if (Optional.IsCollectionDefined(Origins))
             {
-                writer.WritePropertyName("origins");
+                writer.WritePropertyName("origins"u8);
                 writer.WriteStartArray();
                 foreach (var item in Origins)
                 {
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 if (TrafficRestorationTimeToHealedOrNewEndpointsInMinutes != null)
                 {
-                    writer.WritePropertyName("trafficRestorationTimeToHealedOrNewEndpointsInMinutes");
+                    writer.WritePropertyName("trafficRestorationTimeToHealedOrNewEndpointsInMinutes"u8);
                     writer.WriteNumberValue(TrafficRestorationTimeToHealedOrNewEndpointsInMinutes.Value);
                 }
                 else
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 if (ResponseBasedOriginErrorDetectionSettings != null)
                 {
-                    writer.WritePropertyName("responseBasedOriginErrorDetectionSettings");
+                    writer.WritePropertyName("responseBasedOriginErrorDetectionSettings"u8);
                     writer.WriteObjectValue(ResponseBasedOriginErrorDetectionSettings);
                 }
                 else
@@ -80,12 +80,12 @@ namespace Azure.ResourceManager.Cdn.Models
             Optional<ResponseBasedOriginErrorDetectionSettings> responseBasedOriginErrorDetectionSettings = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("healthProbeSettings"))
+                        if (property0.NameEquals("healthProbeSettings"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Cdn.Models
                             healthProbeSettings = HealthProbeSettings.DeserializeHealthProbeSettings(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("origins"))
+                        if (property0.NameEquals("origins"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Cdn.Models
                             origins = array;
                             continue;
                         }
-                        if (property0.NameEquals("trafficRestorationTimeToHealedOrNewEndpointsInMinutes"))
+                        if (property0.NameEquals("trafficRestorationTimeToHealedOrNewEndpointsInMinutes"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.Cdn.Models
                             trafficRestorationTimeToHealedOrNewEndpointsInMinutes = property0.Value.GetInt32();
                             continue;
                         }
-                        if (property0.NameEquals("responseBasedOriginErrorDetectionSettings"))
+                        if (property0.NameEquals("responseBasedOriginErrorDetectionSettings"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

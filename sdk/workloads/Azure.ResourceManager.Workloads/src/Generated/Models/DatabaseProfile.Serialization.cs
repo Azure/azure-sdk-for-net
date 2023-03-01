@@ -15,50 +15,50 @@ namespace Azure.ResourceManager.Workloads.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("type");
+            writer.WritePropertyName("type"u8);
             writer.WriteStringValue(DatabaseType.ToString());
             if (Optional.IsDefined(ServerName))
             {
-                writer.WritePropertyName("serverName");
+                writer.WritePropertyName("serverName"u8);
                 writer.WriteStringValue(ServerName);
             }
             if (Optional.IsDefined(Version))
             {
-                writer.WritePropertyName("version");
+                writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version);
             }
-            writer.WritePropertyName("sku");
+            writer.WritePropertyName("sku"u8);
             writer.WriteStringValue(Sku);
-            writer.WritePropertyName("tier");
+            writer.WritePropertyName("tier"u8);
             writer.WriteStringValue(Tier.ToSerialString());
             if (Optional.IsDefined(HAEnabled))
             {
-                writer.WritePropertyName("haEnabled");
+                writer.WritePropertyName("haEnabled"u8);
                 writer.WriteStringValue(HAEnabled.Value.ToString());
             }
             if (Optional.IsDefined(StorageSku))
             {
-                writer.WritePropertyName("storageSku");
+                writer.WritePropertyName("storageSku"u8);
                 writer.WriteStringValue(StorageSku);
             }
             if (Optional.IsDefined(StorageInGB))
             {
-                writer.WritePropertyName("storageInGB");
+                writer.WritePropertyName("storageInGB"u8);
                 writer.WriteNumberValue(StorageInGB.Value);
             }
             if (Optional.IsDefined(StorageIops))
             {
-                writer.WritePropertyName("storageIops");
+                writer.WritePropertyName("storageIops"u8);
                 writer.WriteNumberValue(StorageIops.Value);
             }
             if (Optional.IsDefined(BackupRetentionDays))
             {
-                writer.WritePropertyName("backupRetentionDays");
+                writer.WritePropertyName("backupRetentionDays"u8);
                 writer.WriteNumberValue(BackupRetentionDays.Value);
             }
             if (Optional.IsDefined(SslEnforcementEnabled))
             {
-                writer.WritePropertyName("sslEnforcementEnabled");
+                writer.WritePropertyName("sslEnforcementEnabled"u8);
                 writer.WriteStringValue(SslEnforcementEnabled.Value.ToString());
             }
             writer.WriteEndObject();
@@ -80,32 +80,32 @@ namespace Azure.ResourceManager.Workloads.Models
             Optional<ResourceIdentifier> serverResourceId = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new DatabaseType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("serverName"))
+                if (property.NameEquals("serverName"u8))
                 {
                     serverName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("version"))
+                if (property.NameEquals("version"u8))
                 {
                     version = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("sku"))
+                if (property.NameEquals("sku"u8))
                 {
                     sku = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("tier"))
+                if (property.NameEquals("tier"u8))
                 {
                     tier = property.Value.GetString().ToDatabaseTier();
                     continue;
                 }
-                if (property.NameEquals("haEnabled"))
+                if (property.NameEquals("haEnabled"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -115,12 +115,12 @@ namespace Azure.ResourceManager.Workloads.Models
                     haEnabled = new HAEnabled(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("storageSku"))
+                if (property.NameEquals("storageSku"u8))
                 {
                     storageSku = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("storageInGB"))
+                if (property.NameEquals("storageInGB"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.Workloads.Models
                     storageInGB = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("storageIops"))
+                if (property.NameEquals("storageIops"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.Workloads.Models
                     storageIops = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("backupRetentionDays"))
+                if (property.NameEquals("backupRetentionDays"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.Workloads.Models
                     backupRetentionDays = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("sslEnforcementEnabled"))
+                if (property.NameEquals("sslEnforcementEnabled"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.Workloads.Models
                     sslEnforcementEnabled = new EnableSslEnforcement(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("serverResourceId"))
+                if (property.NameEquals("serverResourceId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

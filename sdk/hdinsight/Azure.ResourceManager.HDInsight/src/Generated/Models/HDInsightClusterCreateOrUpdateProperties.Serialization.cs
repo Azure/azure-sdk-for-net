@@ -17,72 +17,72 @@ namespace Azure.ResourceManager.HDInsight.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(ClusterVersion))
             {
-                writer.WritePropertyName("clusterVersion");
+                writer.WritePropertyName("clusterVersion"u8);
                 writer.WriteStringValue(ClusterVersion);
             }
             if (Optional.IsDefined(OSType))
             {
-                writer.WritePropertyName("osType");
+                writer.WritePropertyName("osType"u8);
                 writer.WriteStringValue(OSType.Value.ToString());
             }
             if (Optional.IsDefined(Tier))
             {
-                writer.WritePropertyName("tier");
+                writer.WritePropertyName("tier"u8);
                 writer.WriteStringValue(Tier.Value.ToString());
             }
             if (Optional.IsDefined(ClusterDefinition))
             {
-                writer.WritePropertyName("clusterDefinition");
+                writer.WritePropertyName("clusterDefinition"u8);
                 writer.WriteObjectValue(ClusterDefinition);
             }
             if (Optional.IsDefined(KafkaRestProperties))
             {
-                writer.WritePropertyName("kafkaRestProperties");
+                writer.WritePropertyName("kafkaRestProperties"u8);
                 writer.WriteObjectValue(KafkaRestProperties);
             }
             if (Optional.IsDefined(SecurityProfile))
             {
-                writer.WritePropertyName("securityProfile");
+                writer.WritePropertyName("securityProfile"u8);
                 writer.WriteObjectValue(SecurityProfile);
             }
             if (Optional.IsDefined(ComputeProfile))
             {
-                writer.WritePropertyName("computeProfile");
+                writer.WritePropertyName("computeProfile"u8);
                 writer.WriteObjectValue(ComputeProfile);
             }
             if (Optional.IsDefined(StorageProfile))
             {
-                writer.WritePropertyName("storageProfile");
+                writer.WritePropertyName("storageProfile"u8);
                 writer.WriteObjectValue(StorageProfile);
             }
             if (Optional.IsDefined(DiskEncryptionProperties))
             {
-                writer.WritePropertyName("diskEncryptionProperties");
+                writer.WritePropertyName("diskEncryptionProperties"u8);
                 writer.WriteObjectValue(DiskEncryptionProperties);
             }
             if (Optional.IsDefined(EncryptionInTransitProperties))
             {
-                writer.WritePropertyName("encryptionInTransitProperties");
+                writer.WritePropertyName("encryptionInTransitProperties"u8);
                 writer.WriteObjectValue(EncryptionInTransitProperties);
             }
             if (Optional.IsDefined(MinSupportedTlsVersion))
             {
-                writer.WritePropertyName("minSupportedTlsVersion");
+                writer.WritePropertyName("minSupportedTlsVersion"u8);
                 writer.WriteStringValue(MinSupportedTlsVersion);
             }
             if (Optional.IsDefined(NetworkProperties))
             {
-                writer.WritePropertyName("networkProperties");
+                writer.WritePropertyName("networkProperties"u8);
                 writer.WriteObjectValue(NetworkProperties);
             }
             if (Optional.IsDefined(ComputeIsolationProperties))
             {
-                writer.WritePropertyName("computeIsolationProperties");
+                writer.WritePropertyName("computeIsolationProperties"u8);
                 writer.WriteObjectValue(ComputeIsolationProperties);
             }
             if (Optional.IsCollectionDefined(PrivateLinkConfigurations))
             {
-                writer.WritePropertyName("privateLinkConfigurations");
+                writer.WritePropertyName("privateLinkConfigurations"u8);
                 writer.WriteStartArray();
                 foreach (var item in PrivateLinkConfigurations)
                 {

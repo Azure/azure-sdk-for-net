@@ -1,10 +1,10 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-#nullable disable // TODO: remove and fix errors
-
 using System;
+using System.Diagnostics;
 using Azure.Core;
+using Azure.Monitor.OpenTelemetry.Exporter.Internals;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using OpenTelemetry;
@@ -27,9 +27,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
         /// <returns>The instance of <see cref="TracerProviderBuilder"/> to chain the calls.</returns>
         public static TracerProviderBuilder AddAzureMonitorTraceExporter(
             this TracerProviderBuilder builder,
-            Action<AzureMonitorExporterOptions> configure = null,
-            TokenCredential credential = null,
-            string name = null)
+            Action<AzureMonitorExporterOptions>? configure = null,
+            TokenCredential? credential = null,
+            string? name = null)
         {
             if (builder == null)
             {
@@ -59,7 +59,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                     configure(exporterOptions);
                 }
 
-                return new BatchActivityExportProcessor(new AzureMonitorTraceExporter(exporterOptions, credential));
+                return new CompositeProcessor<Activity>(new BaseProcessor<Activity>[]
+                {
+                    new StandardMetricsExtractionProcessor(),
+                    new BatchActivityExportProcessor(new AzureMonitorTraceExporter(exporterOptions, exporterOptions.Credential?? credential))
+                });
             });
         }
     }

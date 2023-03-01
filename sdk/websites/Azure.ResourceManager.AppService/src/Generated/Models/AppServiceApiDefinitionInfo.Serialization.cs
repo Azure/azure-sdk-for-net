@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.AppService.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Uri))
             {
-                writer.WritePropertyName("url");
+                writer.WritePropertyName("url"u8);
                 writer.WriteStringValue(Uri.AbsoluteUri);
             }
             writer.WriteEndObject();
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<Uri> url = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("url"))
+                if (property.NameEquals("url"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.DeploymentManager.Models
             string targetSubscriptionId = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("targetLocation"))
+                if (property.NameEquals("targetLocation"u8))
                 {
                     targetLocation = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("targetSubscriptionId"))
+                if (property.NameEquals("targetSubscriptionId"u8))
                 {
                     targetSubscriptionId = property.Value.GetString();
                     continue;

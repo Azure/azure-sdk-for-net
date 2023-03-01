@@ -21,17 +21,17 @@ namespace Azure.Containers.ContainerRegistry
             Optional<string> link = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("registry"))
+                if (property.NameEquals("registry"u8))
                 {
                     registry = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("imageName"))
+                if (property.NameEquals("imageName"u8))
                 {
                     imageName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("manifests"))
+                if (property.NameEquals("manifests"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -46,7 +46,7 @@ namespace Azure.Containers.ContainerRegistry
                     manifests = array;
                     continue;
                 }
-                if (property.NameEquals("link"))
+                if (property.NameEquals("link"u8))
                 {
                     link = property.Value.GetString();
                     continue;

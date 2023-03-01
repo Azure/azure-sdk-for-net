@@ -67,7 +67,7 @@
       "ResponseBody": "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\u003CUserDelegationKey\u003E\u003CSignedOid\u003Ec4f48289-bb84-4086-b250-6f94a8f64cee\u003C/SignedOid\u003E\u003CSignedTid\u003E72f988bf-86f1-41af-91ab-2d7cd011db47\u003C/SignedTid\u003E\u003CSignedStart\u003E2021-08-31T21:19:24Z\u003C/SignedStart\u003E\u003CSignedExpiry\u003E2021-08-31T22:19:25Z\u003C/SignedExpiry\u003E\u003CSignedService\u003Eb\u003C/SignedService\u003E\u003CSignedVersion\u003E2020-12-06\u003C/SignedVersion\u003E\u003CValue\u003EHL59gptWSq2n\u002BLD/t/oo\u002BnxdFViWYrsTXPd5euGYHAA=\u003C/Value\u003E\u003C/UserDelegationKey\u003E"
     },
     {
-      "RequestUri": "https://seanoauthcanary.blob.core.windows.net/test-container-f01df379-bd4f-da8c-4e46-796d139aa95d/test-blob-cee1f449-da99-2861-30af-b906a95aaab7?skoid=c4f48289-bb84-4086-b250-6f94a8f64cee\u0026sktid=72f988bf-86f1-41af-91ab-2d7cd011db47\u0026skt=2021-08-31T21%3A19%3A24Z\u0026ske=2021-08-31T22%3A19%3A25Z\u0026sks=b\u0026skv=2020-12-06\u0026sv=2021-12-02\u0026st=2021-08-31T20%3A19%3A25Z\u0026se=2021-08-31T22%3A19%3A25Z\u0026sr=c\u0026sp=racwdxyltmei\u0026saoid=9fba6e5d-b585-aed5-564c-6aa049a6b9aa\u0026sig=Sanitized",
+      "RequestUri": "https://seanoauthcanary.blob.core.windows.net/test-container-f01df379-bd4f-da8c-4e46-796d139aa95d/test-blob-cee1f449-da99-2861-30af-b906a95aaab7?skoid=c4f48289-bb84-4086-b250-6f94a8f64cee\u0026sktid=72f988bf-86f1-41af-91ab-2d7cd011db47\u0026skt=2021-08-31T21%3A19%3A24Z\u0026ske=2021-08-31T22%3A19%3A25Z\u0026sks=b\u0026skv=2020-12-06\u0026sv=2022-11-02\u0026st=2021-08-31T20%3A19%3A25Z\u0026se=2021-08-31T22%3A19%3A25Z\u0026sr=c\u0026sp=racwdxyltmei\u0026saoid=9fba6e5d-b585-aed5-564c-6aa049a6b9aa\u0026sig=Sanitized",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/xml",
@@ -106,7 +106,7 @@
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://seanoauthcanary.blob.core.windows.net/test-container-f01df379-bd4f-da8c-4e46-796d139aa95d/test-blob-cee1f449-da99-2861-30af-b906a95aaab7?skoid=c4f48289-bb84-4086-b250-6f94a8f64cee\u0026sktid=72f988bf-86f1-41af-91ab-2d7cd011db47\u0026skt=2021-08-31T21%3A19%3A24Z\u0026ske=2021-08-31T22%3A19%3A25Z\u0026sks=b\u0026skv=2020-12-06\u0026sv=2021-12-02\u0026st=2021-08-31T20%3A19%3A25Z\u0026se=2021-08-31T22%3A19%3A25Z\u0026sr=c\u0026sp=racwdxyltmei\u0026saoid=9fba6e5d-b585-aed5-564c-6aa049a6b9aa\u0026sig=Sanitized",
+      "RequestUri": "https://seanoauthcanary.blob.core.windows.net/test-container-f01df379-bd4f-da8c-4e46-796d139aa95d/test-blob-cee1f449-da99-2861-30af-b906a95aaab7?skoid=c4f48289-bb84-4086-b250-6f94a8f64cee\u0026sktid=72f988bf-86f1-41af-91ab-2d7cd011db47\u0026skt=2021-08-31T21%3A19%3A24Z\u0026ske=2021-08-31T22%3A19%3A25Z\u0026sks=b\u0026skv=2020-12-06\u0026sv=2022-11-02\u0026st=2021-08-31T20%3A19%3A25Z\u0026se=2021-08-31T22%3A19%3A25Z\u0026sr=c\u0026sp=racwdxyltmei\u0026saoid=9fba6e5d-b585-aed5-564c-6aa049a6b9aa\u0026sig=Sanitized",
       "RequestMethod": "HEAD",
       "RequestHeaders": {
         "Accept": "application/xml",

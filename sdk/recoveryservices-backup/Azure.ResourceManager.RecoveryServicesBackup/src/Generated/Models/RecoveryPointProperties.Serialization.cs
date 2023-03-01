@@ -16,14 +16,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(ExpiryOn))
+            if (Optional.IsDefined(ExpireOn))
             {
-                writer.WritePropertyName("expiryTime");
-                writer.WriteStringValue(ExpiryOn.Value, "O");
+                writer.WritePropertyName("expiryTime"u8);
+                writer.WriteStringValue(ExpireOn.Value, "O");
             }
             if (Optional.IsDefined(RuleName))
             {
-                writer.WritePropertyName("ruleName");
+                writer.WritePropertyName("ruleName"u8);
                 writer.WriteStringValue(RuleName);
             }
             writer.WriteEndObject();
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             Optional<string> ruleName = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("expiryTime"))
+                if (property.NameEquals("expiryTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     expiryTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("ruleName"))
+                if (property.NameEquals("ruleName"u8))
                 {
                     ruleName = property.Value.GetString();
                     continue;

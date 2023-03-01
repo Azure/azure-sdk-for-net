@@ -19,7 +19,7 @@ namespace Azure.Monitor.Query.Models
             Optional<IReadOnlyList<MetricValue>> data = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("metadatavalues"))
+                if (property.NameEquals("metadatavalues"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -34,7 +34,7 @@ namespace Azure.Monitor.Query.Models
                     metadatavalues = array;
                     continue;
                 }
-                if (property.NameEquals("data"))
+                if (property.NameEquals("data"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

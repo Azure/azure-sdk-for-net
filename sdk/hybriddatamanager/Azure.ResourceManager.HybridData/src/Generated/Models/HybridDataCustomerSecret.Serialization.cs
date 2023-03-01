@@ -15,11 +15,11 @@ namespace Azure.ResourceManager.HybridData.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("keyIdentifier");
+            writer.WritePropertyName("keyIdentifier"u8);
             writer.WriteStringValue(KeyIdentifier);
-            writer.WritePropertyName("keyValue");
+            writer.WritePropertyName("keyValue"u8);
             writer.WriteStringValue(KeyValue);
-            writer.WritePropertyName("algorithm");
+            writer.WritePropertyName("algorithm"u8);
             writer.WriteStringValue(Algorithm.ToSerialString());
             writer.WriteEndObject();
         }
@@ -31,17 +31,17 @@ namespace Azure.ResourceManager.HybridData.Models
             SupportedEncryptionAlgorithm algorithm = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("keyIdentifier"))
+                if (property.NameEquals("keyIdentifier"u8))
                 {
                     keyIdentifier = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("keyValue"))
+                if (property.NameEquals("keyValue"u8))
                 {
                     keyValue = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("algorithm"))
+                if (property.NameEquals("algorithm"u8))
                 {
                     algorithm = property.Value.GetString().ToSupportedEncryptionAlgorithm();
                     continue;

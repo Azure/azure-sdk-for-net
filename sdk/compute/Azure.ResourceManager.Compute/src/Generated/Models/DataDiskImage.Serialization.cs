@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Compute.Models
             Optional<int> lun = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("lun"))
+                if (property.NameEquals("lun"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

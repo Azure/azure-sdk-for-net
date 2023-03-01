@@ -11,7 +11,11 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataLakeAnalytics
 {
-    /// <summary> A class representing the DataLakeAnalyticsStorageContainer data model. </summary>
+    /// <summary>
+    /// A class representing the DataLakeAnalyticsStorageContainer data model.
+    /// Azure Storage blob container information.
+    /// Serialized Name: StorageContainer
+    /// </summary>
     public partial class DataLakeAnalyticsStorageContainerData : ResourceData
     {
         /// <summary> Initializes a new instance of DataLakeAnalyticsStorageContainerData. </summary>

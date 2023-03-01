@@ -1,6 +1,19 @@
 # Release History
 
+## 1.1.0-beta.7 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+- Removed `UploadBlobOptions` type and moved chunk size configuration into ClientOptions.
+
+### Bugs Fixed
+
+### Other Changes
+
 ## 1.1.0-beta.6 (2023-02-07)
+
 ### Features Added
 
 - Added method `DownloadBlobTo()` to `ContainerRegistryBlobClient`.  This method downloads a blob to a provided Stream, using multiple requests if the blob size exceeds the maximum chunk size.

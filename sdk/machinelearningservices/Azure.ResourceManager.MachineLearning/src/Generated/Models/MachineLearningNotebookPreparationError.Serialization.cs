@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Optional<int> statusCode = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("errorMessage"))
+                if (property.NameEquals("errorMessage"u8))
                 {
                     errorMessage = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("statusCode"))
+                if (property.NameEquals("statusCode"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

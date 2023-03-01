@@ -25,13 +25,13 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
 
         public static ContentType1 ToContentType1(this string value)
         {
-            if (string.Equals(value, "application/octet-stream", StringComparison.InvariantCultureIgnoreCase)) return ContentType1.ApplicationOctetStream;
-            if (string.Equals(value, "application/pdf", StringComparison.InvariantCultureIgnoreCase)) return ContentType1.ApplicationPdf;
-            if (string.Equals(value, "image/bmp", StringComparison.InvariantCultureIgnoreCase)) return ContentType1.ImageBmp;
-            if (string.Equals(value, "image/heif", StringComparison.InvariantCultureIgnoreCase)) return ContentType1.ImageHeif;
-            if (string.Equals(value, "image/jpeg", StringComparison.InvariantCultureIgnoreCase)) return ContentType1.ImageJpeg;
-            if (string.Equals(value, "image/png", StringComparison.InvariantCultureIgnoreCase)) return ContentType1.ImagePng;
-            if (string.Equals(value, "image/tiff", StringComparison.InvariantCultureIgnoreCase)) return ContentType1.ImageTiff;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "application/octet-stream")) return ContentType1.ApplicationOctetStream;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "application/pdf")) return ContentType1.ApplicationPdf;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "image/bmp")) return ContentType1.ImageBmp;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "image/heif")) return ContentType1.ImageHeif;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "image/jpeg")) return ContentType1.ImageJpeg;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "image/png")) return ContentType1.ImagePng;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "image/tiff")) return ContentType1.ImageTiff;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ContentType1 value.");
         }
     }

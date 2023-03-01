@@ -17,42 +17,42 @@ namespace Azure.ResourceManager.Network.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Protocol))
             {
-                writer.WritePropertyName("protocol");
+                writer.WritePropertyName("protocol"u8);
                 writer.WriteStringValue(Protocol.Value.ToString());
             }
             if (Optional.IsDefined(Host))
             {
-                writer.WritePropertyName("host");
+                writer.WritePropertyName("host"u8);
                 writer.WriteStringValue(Host);
             }
             if (Optional.IsDefined(Path))
             {
-                writer.WritePropertyName("path");
+                writer.WritePropertyName("path"u8);
                 writer.WriteStringValue(Path);
             }
             if (Optional.IsDefined(Timeout))
             {
-                writer.WritePropertyName("timeout");
+                writer.WritePropertyName("timeout"u8);
                 writer.WriteNumberValue(Timeout.Value);
             }
             if (Optional.IsDefined(PickHostNameFromBackendHttpSettings))
             {
-                writer.WritePropertyName("pickHostNameFromBackendHttpSettings");
+                writer.WritePropertyName("pickHostNameFromBackendHttpSettings"u8);
                 writer.WriteBooleanValue(PickHostNameFromBackendHttpSettings.Value);
             }
             if (Optional.IsDefined(Match))
             {
-                writer.WritePropertyName("match");
+                writer.WritePropertyName("match"u8);
                 writer.WriteObjectValue(Match);
             }
             if (Optional.IsDefined(BackendAddressPool))
             {
-                writer.WritePropertyName("backendAddressPool");
+                writer.WritePropertyName("backendAddressPool"u8);
                 JsonSerializer.Serialize(writer, BackendAddressPool);
             }
             if (Optional.IsDefined(BackendHttpSettings))
             {
-                writer.WritePropertyName("backendHttpSettings");
+                writer.WritePropertyName("backendHttpSettings"u8);
                 JsonSerializer.Serialize(writer, BackendHttpSettings);
             }
             writer.WriteEndObject();

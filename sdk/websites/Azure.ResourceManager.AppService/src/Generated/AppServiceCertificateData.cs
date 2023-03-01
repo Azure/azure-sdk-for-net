@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary> A class representing the AppServiceCertificate data model. </summary>
+    /// <summary>
+    /// A class representing the AppServiceCertificate data model.
+    /// Key Vault container ARM resource for a certificate that is purchased through Azure.
+    /// </summary>
     public partial class AppServiceCertificateData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of AppServiceCertificateData. </summary>

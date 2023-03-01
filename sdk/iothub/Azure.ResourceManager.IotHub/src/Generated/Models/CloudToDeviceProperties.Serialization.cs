@@ -18,17 +18,17 @@ namespace Azure.ResourceManager.IotHub.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(MaxDeliveryCount))
             {
-                writer.WritePropertyName("maxDeliveryCount");
+                writer.WritePropertyName("maxDeliveryCount"u8);
                 writer.WriteNumberValue(MaxDeliveryCount.Value);
             }
             if (Optional.IsDefined(DefaultTtlAsIso8601))
             {
-                writer.WritePropertyName("defaultTtlAsIso8601");
+                writer.WritePropertyName("defaultTtlAsIso8601"u8);
                 writer.WriteStringValue(DefaultTtlAsIso8601.Value, "P");
             }
             if (Optional.IsDefined(Feedback))
             {
-                writer.WritePropertyName("feedback");
+                writer.WritePropertyName("feedback"u8);
                 writer.WriteObjectValue(Feedback);
             }
             writer.WriteEndObject();
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.IotHub.Models
             Optional<CloudToDeviceFeedbackQueueProperties> feedback = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("maxDeliveryCount"))
+                if (property.NameEquals("maxDeliveryCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.IotHub.Models
                     maxDeliveryCount = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("defaultTtlAsIso8601"))
+                if (property.NameEquals("defaultTtlAsIso8601"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.IotHub.Models
                     defaultTtlAsIso8601 = property.Value.GetTimeSpan("P");
                     continue;
                 }
-                if (property.NameEquals("feedback"))
+                if (property.NameEquals("feedback"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

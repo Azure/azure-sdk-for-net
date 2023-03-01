@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(PrivateLinkServiceConnectionState))
             {
-                writer.WritePropertyName("privateLinkServiceConnectionState");
+                writer.WritePropertyName("privateLinkServiceConnectionState"u8);
                 writer.WriteObjectValue(PrivateLinkServiceConnectionState);
             }
             if (Optional.IsDefined(PrivateEndpoint))
             {
-                writer.WritePropertyName("privateEndpoint");
+                writer.WritePropertyName("privateEndpoint"u8);
                 JsonSerializer.Serialize(writer, PrivateEndpoint);
             }
             writer.WriteEndObject();
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<WritableSubResource> privateEndpoint = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("privateLinkServiceConnectionState"))
+                if (property.NameEquals("privateLinkServiceConnectionState"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     privateLinkServiceConnectionState = PrivateLinkConnectionState.DeserializePrivateLinkConnectionState(property.Value);
                     continue;
                 }
-                if (property.NameEquals("privateEndpoint"))
+                if (property.NameEquals("privateEndpoint"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

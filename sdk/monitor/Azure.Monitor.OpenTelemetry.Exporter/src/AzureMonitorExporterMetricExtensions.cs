@@ -1,10 +1,9 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-#nullable disable // TODO: remove and fix errors
-
 using System;
 using Azure.Core;
+using Azure.Monitor.OpenTelemetry.Exporter.Internals;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using OpenTelemetry.Metrics;
@@ -26,9 +25,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
         /// <returns>The instance of <see cref="MeterProviderBuilder"/> to chain the calls.</returns>
         public static MeterProviderBuilder AddAzureMonitorMetricExporter(
             this MeterProviderBuilder builder,
-            Action<AzureMonitorExporterOptions> configure = null,
-            TokenCredential credential = null,
-            string name = null)
+            Action<AzureMonitorExporterOptions>? configure = null,
+            TokenCredential? credential = null,
+            string? name = null)
         {
             if (builder == null)
             {
@@ -44,6 +43,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                 builder.ConfigureServices(services => services.Configure(finalOptionsName, configure));
             }
 
+            builder.AddMeter(StandardMetricConstants.StandardMetricMeterName);
+
             return builder.AddReader(sp =>
             {
                 var exporterOptions = sp.GetRequiredService<IOptionsMonitor<AzureMonitorExporterOptions>>().Get(finalOptionsName);
@@ -58,7 +59,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                     configure(exporterOptions);
                 }
 
-                return new PeriodicExportingMetricReader(new AzureMonitorMetricExporter(exporterOptions, credential))
+                return new PeriodicExportingMetricReader(new AzureMonitorMetricExporter(exporterOptions, exporterOptions.Credential ?? credential))
                            { TemporalityPreference = MetricReaderTemporalityPreference.Delta };
             });
         }

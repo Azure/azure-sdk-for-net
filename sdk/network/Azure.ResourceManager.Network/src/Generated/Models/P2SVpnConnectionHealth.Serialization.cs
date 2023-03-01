@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Network.Models
             Optional<Uri> sasUrl = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("sasUrl"))
+                if (property.NameEquals("sasUrl"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

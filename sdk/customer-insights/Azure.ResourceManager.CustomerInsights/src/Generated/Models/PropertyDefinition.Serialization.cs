@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(ArrayValueSeparator))
             {
-                writer.WritePropertyName("arrayValueSeparator");
+                writer.WritePropertyName("arrayValueSeparator"u8);
                 writer.WriteStringValue(ArrayValueSeparator);
             }
             if (Optional.IsCollectionDefined(EnumValidValues))
             {
-                writer.WritePropertyName("enumValidValues");
+                writer.WritePropertyName("enumValidValues"u8);
                 writer.WriteStartArray();
                 foreach (var item in EnumValidValues)
                 {
@@ -31,63 +31,63 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 }
                 writer.WriteEndArray();
             }
-            writer.WritePropertyName("fieldName");
+            writer.WritePropertyName("fieldName"u8);
             writer.WriteStringValue(FieldName);
-            writer.WritePropertyName("fieldType");
+            writer.WritePropertyName("fieldType"u8);
             writer.WriteStringValue(FieldType);
             if (Optional.IsDefined(IsArray))
             {
-                writer.WritePropertyName("isArray");
+                writer.WritePropertyName("isArray"u8);
                 writer.WriteBooleanValue(IsArray.Value);
             }
             if (Optional.IsDefined(IsEnum))
             {
-                writer.WritePropertyName("isEnum");
+                writer.WritePropertyName("isEnum"u8);
                 writer.WriteBooleanValue(IsEnum.Value);
             }
             if (Optional.IsDefined(IsFlagEnum))
             {
-                writer.WritePropertyName("isFlagEnum");
+                writer.WritePropertyName("isFlagEnum"u8);
                 writer.WriteBooleanValue(IsFlagEnum.Value);
             }
             if (Optional.IsDefined(IsImage))
             {
-                writer.WritePropertyName("isImage");
+                writer.WritePropertyName("isImage"u8);
                 writer.WriteBooleanValue(IsImage.Value);
             }
             if (Optional.IsDefined(IsLocalizedString))
             {
-                writer.WritePropertyName("isLocalizedString");
+                writer.WritePropertyName("isLocalizedString"u8);
                 writer.WriteBooleanValue(IsLocalizedString.Value);
             }
             if (Optional.IsDefined(IsName))
             {
-                writer.WritePropertyName("isName");
+                writer.WritePropertyName("isName"u8);
                 writer.WriteBooleanValue(IsName.Value);
             }
             if (Optional.IsDefined(IsRequired))
             {
-                writer.WritePropertyName("isRequired");
+                writer.WritePropertyName("isRequired"u8);
                 writer.WriteBooleanValue(IsRequired.Value);
             }
             if (Optional.IsDefined(PropertyId))
             {
-                writer.WritePropertyName("propertyId");
+                writer.WritePropertyName("propertyId"u8);
                 writer.WriteStringValue(PropertyId);
             }
             if (Optional.IsDefined(SchemaItemPropLink))
             {
-                writer.WritePropertyName("schemaItemPropLink");
+                writer.WritePropertyName("schemaItemPropLink"u8);
                 writer.WriteStringValue(SchemaItemPropLink);
             }
             if (Optional.IsDefined(MaxLength))
             {
-                writer.WritePropertyName("maxLength");
+                writer.WritePropertyName("maxLength"u8);
                 writer.WriteNumberValue(MaxLength.Value);
             }
             if (Optional.IsDefined(IsAvailableInGraph))
             {
-                writer.WritePropertyName("isAvailableInGraph");
+                writer.WritePropertyName("isAvailableInGraph"u8);
                 writer.WriteBooleanValue(IsAvailableInGraph.Value);
             }
             writer.WriteEndObject();
@@ -113,12 +113,12 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             Optional<IReadOnlyList<DataSourcePrecedence>> dataSourcePrecedenceRules = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("arrayValueSeparator"))
+                if (property.NameEquals("arrayValueSeparator"u8))
                 {
                     arrayValueSeparator = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("enumValidValues"))
+                if (property.NameEquals("enumValidValues"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -133,17 +133,17 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                     enumValidValues = array;
                     continue;
                 }
-                if (property.NameEquals("fieldName"))
+                if (property.NameEquals("fieldName"u8))
                 {
                     fieldName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("fieldType"))
+                if (property.NameEquals("fieldType"u8))
                 {
                     fieldType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("isArray"))
+                if (property.NameEquals("isArray"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                     isArray = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("isEnum"))
+                if (property.NameEquals("isEnum"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                     isEnum = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("isFlagEnum"))
+                if (property.NameEquals("isFlagEnum"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                     isFlagEnum = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("isImage"))
+                if (property.NameEquals("isImage"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                     isImage = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("isLocalizedString"))
+                if (property.NameEquals("isLocalizedString"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                     isLocalizedString = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("isName"))
+                if (property.NameEquals("isName"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                     isName = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("isRequired"))
+                if (property.NameEquals("isRequired"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -213,17 +213,17 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                     isRequired = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("propertyId"))
+                if (property.NameEquals("propertyId"u8))
                 {
                     propertyId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("schemaItemPropLink"))
+                if (property.NameEquals("schemaItemPropLink"u8))
                 {
                     schemaItemPropLink = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("maxLength"))
+                if (property.NameEquals("maxLength"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                     maxLength = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("isAvailableInGraph"))
+                if (property.NameEquals("isAvailableInGraph"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -243,7 +243,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                     isAvailableInGraph = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("dataSourcePrecedenceRules"))
+                if (property.NameEquals("dataSourcePrecedenceRules"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

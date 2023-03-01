@@ -14,7 +14,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DeviceProvisioningServices
 {
-    /// <summary> A class representing the DeviceProvisioningService data model. </summary>
+    /// <summary>
+    /// A class representing the DeviceProvisioningService data model.
+    /// The description of the provisioning service.
+    /// </summary>
     public partial class DeviceProvisioningServiceData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of DeviceProvisioningServiceData. </summary>

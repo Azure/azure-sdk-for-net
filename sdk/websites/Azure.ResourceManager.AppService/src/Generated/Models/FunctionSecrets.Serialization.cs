@@ -19,12 +19,12 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<Uri> triggerUrl = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("key"))
+                if (property.NameEquals("key"u8))
                 {
                     key = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("trigger_url"))
+                if (property.NameEquals("trigger_url"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

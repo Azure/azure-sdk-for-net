@@ -4,6 +4,7 @@ Run `dotnet build /t:GenerateCode` to generate code.
 
 ``` yaml
 azure-arm: true
+generate-model-factory: false
 csharp: true
 library-name: OperationalInsights
 namespace: Azure.ResourceManager.OperationalInsights
@@ -22,7 +23,6 @@ format-by-name-rules:
   '*Uris': 'Uri'
   'clusterId': 'uuid'
   'dataExportId': 'uuid'
-  'lastSkuUpdatedOn': 'datetime'
   '*ResourceId': 'arm-id'
   'queryPackId': 'uuid'
   'customerId': 'uuid'
@@ -99,9 +99,9 @@ rename-mapping:
   WorkspacePatch.properties.modifiedDate: -|date-time
   DataExport.properties.enable: IsEnabled
   AvailableServiceTier.enabled: IsEnabled
-  AvailableServiceTier.lastSkuUpdate: LastSkuUpdatedOn
-  CapacityReservationProperties.lastSkuUpdate: LastSkuUpdatedOn
-  WorkspaceSku.lastSkuUpdate: LastSkuUpdatedOn
+  AvailableServiceTier.lastSkuUpdate: LastSkuUpdatedOn|date-time
+  CapacityReservationProperties.lastSkuUpdate: LastSkuUpdatedOn|date-time
+  WorkspaceSku.lastSkuUpdate: LastSkuUpdatedOn|date-time
   IntelligencePack.enabled: IsEnabled
   WorkspaceFeatures.disableLocalAuth: IsLocalAuthDisabled
   WorkspaceFeatures.enableDataExport: IsDataExportEnabled

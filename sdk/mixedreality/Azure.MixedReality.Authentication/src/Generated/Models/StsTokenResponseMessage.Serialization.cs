@@ -17,7 +17,7 @@ namespace Azure.MixedReality.Authentication
             string accessToken = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("AccessToken"))
+                if (property.NameEquals("AccessToken"u8))
                 {
                     accessToken = property.Value.GetString();
                     continue;

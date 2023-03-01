@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.DataLakeStore.Models
 
         public static DataLakeStoreAccountEncryptionConfigType ToDataLakeStoreAccountEncryptionConfigType(this string value)
         {
-            if (string.Equals(value, "UserManaged", StringComparison.InvariantCultureIgnoreCase)) return DataLakeStoreAccountEncryptionConfigType.UserManaged;
-            if (string.Equals(value, "ServiceManaged", StringComparison.InvariantCultureIgnoreCase)) return DataLakeStoreAccountEncryptionConfigType.ServiceManaged;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "UserManaged")) return DataLakeStoreAccountEncryptionConfigType.UserManaged;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "ServiceManaged")) return DataLakeStoreAccountEncryptionConfigType.ServiceManaged;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown DataLakeStoreAccountEncryptionConfigType value.");
         }
     }

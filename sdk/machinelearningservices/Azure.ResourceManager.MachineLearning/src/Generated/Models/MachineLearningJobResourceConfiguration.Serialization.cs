@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 if (DockerArgs != null)
                 {
-                    writer.WritePropertyName("dockerArgs");
+                    writer.WritePropertyName("dockerArgs"u8);
                     writer.WriteStringValue(DockerArgs);
                 }
                 else
@@ -31,19 +31,19 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             if (Optional.IsDefined(ShmSize))
             {
-                writer.WritePropertyName("shmSize");
+                writer.WritePropertyName("shmSize"u8);
                 writer.WriteStringValue(ShmSize);
             }
             if (Optional.IsDefined(InstanceCount))
             {
-                writer.WritePropertyName("instanceCount");
+                writer.WritePropertyName("instanceCount"u8);
                 writer.WriteNumberValue(InstanceCount.Value);
             }
             if (Optional.IsDefined(InstanceType))
             {
                 if (InstanceType != null)
                 {
-                    writer.WritePropertyName("instanceType");
+                    writer.WritePropertyName("instanceType"u8);
                     writer.WriteStringValue(InstanceType);
                 }
                 else
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 if (Properties != null)
                 {
-                    writer.WritePropertyName("properties");
+                    writer.WritePropertyName("properties"u8);
                     writer.WriteStartObject();
                     foreach (var item in Properties)
                     {
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Optional<IDictionary<string, BinaryData>> properties = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("dockerArgs"))
+                if (property.NameEquals("dockerArgs"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -95,12 +95,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     dockerArgs = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("shmSize"))
+                if (property.NameEquals("shmSize"u8))
                 {
                     shmSize = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("instanceCount"))
+                if (property.NameEquals("instanceCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     instanceCount = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("instanceType"))
+                if (property.NameEquals("instanceType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     instanceType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -16,11 +16,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("groupType");
+            writer.WritePropertyName("groupType"u8);
             writer.WriteStringValue(GroupType.ToString());
             if (Optional.IsCollectionDefined(ReplicationProtectedItems))
             {
-                writer.WritePropertyName("replicationProtectedItems");
+                writer.WritePropertyName("replicationProtectedItems"u8);
                 writer.WriteStartArray();
                 foreach (var item in ReplicationProtectedItems)
                 {
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
             if (Optional.IsCollectionDefined(StartGroupActions))
             {
-                writer.WritePropertyName("startGroupActions");
+                writer.WritePropertyName("startGroupActions"u8);
                 writer.WriteStartArray();
                 foreach (var item in StartGroupActions)
                 {
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
             if (Optional.IsCollectionDefined(EndGroupActions))
             {
-                writer.WritePropertyName("endGroupActions");
+                writer.WritePropertyName("endGroupActions"u8);
                 writer.WriteStartArray();
                 foreach (var item in EndGroupActions)
                 {
@@ -59,12 +59,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<IList<RecoveryPlanAction>> endGroupActions = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("groupType"))
+                if (property.NameEquals("groupType"u8))
                 {
                     groupType = new RecoveryPlanGroupType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("replicationProtectedItems"))
+                if (property.NameEquals("replicationProtectedItems"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     replicationProtectedItems = array;
                     continue;
                 }
-                if (property.NameEquals("startGroupActions"))
+                if (property.NameEquals("startGroupActions"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     startGroupActions = array;
                     continue;
                 }
-                if (property.NameEquals("endGroupActions"))
+                if (property.NameEquals("endGroupActions"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

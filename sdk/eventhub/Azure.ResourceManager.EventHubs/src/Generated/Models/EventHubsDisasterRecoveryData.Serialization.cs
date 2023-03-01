@@ -17,16 +17,16 @@ namespace Azure.ResourceManager.EventHubs
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(PartnerNamespace))
             {
-                writer.WritePropertyName("partnerNamespace");
+                writer.WritePropertyName("partnerNamespace"u8);
                 writer.WriteStringValue(PartnerNamespace);
             }
             if (Optional.IsDefined(AlternateName))
             {
-                writer.WritePropertyName("alternateName");
+                writer.WritePropertyName("alternateName"u8);
                 writer.WriteStringValue(AlternateName);
             }
             writer.WriteEndObject();
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.EventHubs
             Optional<long> pendingReplicationOperationsCount = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("location"))
+                if (property.NameEquals("location"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -57,22 +57,22 @@ namespace Azure.ResourceManager.EventHubs
                     location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.EventHubs
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.EventHubs
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("provisioningState"))
+                        if (property0.NameEquals("provisioningState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -101,17 +101,17 @@ namespace Azure.ResourceManager.EventHubs
                             provisioningState = property0.Value.GetString().ToEventHubsDisasterRecoveryProvisioningState();
                             continue;
                         }
-                        if (property0.NameEquals("partnerNamespace"))
+                        if (property0.NameEquals("partnerNamespace"u8))
                         {
                             partnerNamespace = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("alternateName"))
+                        if (property0.NameEquals("alternateName"u8))
                         {
                             alternateName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("role"))
+                        if (property0.NameEquals("role"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.EventHubs
                             role = property0.Value.GetString().ToEventHubsDisasterRecoveryRole();
                             continue;
                         }
-                        if (property0.NameEquals("pendingReplicationOperationsCount"))
+                        if (property0.NameEquals("pendingReplicationOperationsCount"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

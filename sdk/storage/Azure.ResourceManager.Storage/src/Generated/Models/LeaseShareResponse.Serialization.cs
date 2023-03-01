@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.Storage.Models
             Optional<string> leaseTimeSeconds = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("leaseId"))
+                if (property.NameEquals("leaseId"u8))
                 {
                     leaseId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("leaseTimeSeconds"))
+                if (property.NameEquals("leaseTimeSeconds"u8))
                 {
                     leaseTimeSeconds = property.Value.GetString();
                     continue;

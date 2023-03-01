@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Marketplace.Models
             Optional<IReadOnlyList<StopSellOffersPlansNotificationsResult>> stopSellNotifications = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("stopSellNotifications"))
+                if (property.NameEquals("stopSellNotifications"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

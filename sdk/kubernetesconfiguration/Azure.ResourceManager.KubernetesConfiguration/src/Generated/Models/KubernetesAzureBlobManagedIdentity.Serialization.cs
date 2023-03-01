@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             {
                 if (ClientId != null)
                 {
-                    writer.WritePropertyName("clientId");
+                    writer.WritePropertyName("clientId"u8);
                     writer.WriteStringValue(ClientId.Value);
                 }
                 else
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             Optional<Guid?> clientId = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("clientId"))
+                if (property.NameEquals("clientId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

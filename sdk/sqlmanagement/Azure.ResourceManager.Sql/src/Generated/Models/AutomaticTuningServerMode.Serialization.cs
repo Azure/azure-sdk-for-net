@@ -21,9 +21,9 @@ namespace Azure.ResourceManager.Sql.Models
 
         public static AutomaticTuningServerMode ToAutomaticTuningServerMode(this string value)
         {
-            if (string.Equals(value, "Unspecified", StringComparison.InvariantCultureIgnoreCase)) return AutomaticTuningServerMode.Unspecified;
-            if (string.Equals(value, "Custom", StringComparison.InvariantCultureIgnoreCase)) return AutomaticTuningServerMode.Custom;
-            if (string.Equals(value, "Auto", StringComparison.InvariantCultureIgnoreCase)) return AutomaticTuningServerMode.Auto;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Unspecified")) return AutomaticTuningServerMode.Unspecified;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Custom")) return AutomaticTuningServerMode.Custom;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Auto")) return AutomaticTuningServerMode.Auto;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown AutomaticTuningServerMode value.");
         }
     }

@@ -21,9 +21,9 @@ namespace Azure.ResourceManager.Search.Models
 
         public static SearchServiceProvisioningState ToSearchServiceProvisioningState(this string value)
         {
-            if (string.Equals(value, "succeeded", StringComparison.InvariantCultureIgnoreCase)) return SearchServiceProvisioningState.Succeeded;
-            if (string.Equals(value, "provisioning", StringComparison.InvariantCultureIgnoreCase)) return SearchServiceProvisioningState.Provisioning;
-            if (string.Equals(value, "failed", StringComparison.InvariantCultureIgnoreCase)) return SearchServiceProvisioningState.Failed;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "succeeded")) return SearchServiceProvisioningState.Succeeded;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "provisioning")) return SearchServiceProvisioningState.Provisioning;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "failed")) return SearchServiceProvisioningState.Failed;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown SearchServiceProvisioningState value.");
         }
     }

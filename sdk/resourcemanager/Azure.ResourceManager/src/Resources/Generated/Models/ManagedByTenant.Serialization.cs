@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Resources.Models
             Optional<Guid> tenantId = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("tenantId"))
+                if (property.NameEquals("tenantId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

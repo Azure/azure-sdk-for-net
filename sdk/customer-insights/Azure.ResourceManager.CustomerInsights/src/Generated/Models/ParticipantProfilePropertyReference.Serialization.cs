@@ -15,9 +15,9 @@ namespace Azure.ResourceManager.CustomerInsights.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("interactionPropertyName");
+            writer.WritePropertyName("interactionPropertyName"u8);
             writer.WriteStringValue(InteractionPropertyName);
-            writer.WritePropertyName("profilePropertyName");
+            writer.WritePropertyName("profilePropertyName"u8);
             writer.WriteStringValue(ProfilePropertyName);
             writer.WriteEndObject();
         }
@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             string profilePropertyName = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("interactionPropertyName"))
+                if (property.NameEquals("interactionPropertyName"u8))
                 {
                     interactionPropertyName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("profilePropertyName"))
+                if (property.NameEquals("profilePropertyName"u8))
                 {
                     profilePropertyName = property.Value.GetString();
                     continue;

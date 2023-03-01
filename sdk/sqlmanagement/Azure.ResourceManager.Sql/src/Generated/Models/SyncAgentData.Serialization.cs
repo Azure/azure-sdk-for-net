@@ -18,11 +18,11 @@ namespace Azure.ResourceManager.Sql
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(SyncDatabaseId))
             {
-                writer.WritePropertyName("syncDatabaseId");
+                writer.WritePropertyName("syncDatabaseId"u8);
                 writer.WriteStringValue(SyncDatabaseId);
             }
             writer.WriteEndObject();
@@ -43,22 +43,22 @@ namespace Azure.ResourceManager.Sql
             Optional<string> version = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Sql
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Sql
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("syncDatabaseId"))
+                        if (property0.NameEquals("syncDatabaseId"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Sql
                             syncDatabaseId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("lastAliveTime"))
+                        if (property0.NameEquals("lastAliveTime"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Sql
                             lastAliveTime = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("state"))
+                        if (property0.NameEquals("state"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Sql
                             state = new SyncAgentState(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("isUpToDate"))
+                        if (property0.NameEquals("isUpToDate"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Sql
                             isUpToDate = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("expiryTime"))
+                        if (property0.NameEquals("expiryTime"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Sql
                             expiryTime = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("version"))
+                        if (property0.NameEquals("version"u8))
                         {
                             version = property0.Value.GetString();
                             continue;

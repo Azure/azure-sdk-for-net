@@ -17,42 +17,42 @@ namespace Azure.ResourceManager.ArcScVmm.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Name))
             {
-                writer.WritePropertyName("name");
+                writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
             if (Optional.IsDefined(DiskId))
             {
-                writer.WritePropertyName("diskId");
+                writer.WritePropertyName("diskId"u8);
                 writer.WriteStringValue(DiskId);
             }
             if (Optional.IsDefined(DiskSizeGB))
             {
-                writer.WritePropertyName("diskSizeGB");
+                writer.WritePropertyName("diskSizeGB"u8);
                 writer.WriteNumberValue(DiskSizeGB.Value);
             }
             if (Optional.IsDefined(Bus))
             {
-                writer.WritePropertyName("bus");
+                writer.WritePropertyName("bus"u8);
                 writer.WriteNumberValue(Bus.Value);
             }
             if (Optional.IsDefined(Lun))
             {
-                writer.WritePropertyName("lun");
+                writer.WritePropertyName("lun"u8);
                 writer.WriteNumberValue(Lun.Value);
             }
             if (Optional.IsDefined(BusType))
             {
-                writer.WritePropertyName("busType");
+                writer.WritePropertyName("busType"u8);
                 writer.WriteStringValue(BusType);
             }
             if (Optional.IsDefined(VhdType))
             {
-                writer.WritePropertyName("vhdType");
+                writer.WritePropertyName("vhdType"u8);
                 writer.WriteStringValue(VhdType);
             }
             if (Optional.IsDefined(StorageQoSPolicy))
             {
-                writer.WritePropertyName("storageQoSPolicy");
+                writer.WritePropertyName("storageQoSPolicy"u8);
                 writer.WriteObjectValue(StorageQoSPolicy);
             }
             writer.WriteEndObject();

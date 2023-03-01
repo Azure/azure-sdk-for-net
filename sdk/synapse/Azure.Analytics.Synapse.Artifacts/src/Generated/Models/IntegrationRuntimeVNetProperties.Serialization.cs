@@ -21,17 +21,17 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(VNetId))
             {
-                writer.WritePropertyName("vNetId");
+                writer.WritePropertyName("vNetId"u8);
                 writer.WriteStringValue(VNetId);
             }
             if (Optional.IsDefined(Subnet))
             {
-                writer.WritePropertyName("subnet");
+                writer.WritePropertyName("subnet"u8);
                 writer.WriteStringValue(Subnet);
             }
             if (Optional.IsCollectionDefined(PublicIPs))
             {
-                writer.WritePropertyName("publicIPs");
+                writer.WritePropertyName("publicIPs"u8);
                 writer.WriteStartArray();
                 foreach (var item in PublicIPs)
                 {
@@ -56,17 +56,17 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("vNetId"))
+                if (property.NameEquals("vNetId"u8))
                 {
                     vNetId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("subnet"))
+                if (property.NameEquals("subnet"u8))
                 {
                     subnet = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("publicIPs"))
+                if (property.NameEquals("publicIPs"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

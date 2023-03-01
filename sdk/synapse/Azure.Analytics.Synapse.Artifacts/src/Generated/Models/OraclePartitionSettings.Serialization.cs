@@ -20,22 +20,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(PartitionNames))
             {
-                writer.WritePropertyName("partitionNames");
+                writer.WritePropertyName("partitionNames"u8);
                 writer.WriteObjectValue(PartitionNames);
             }
             if (Optional.IsDefined(PartitionColumnName))
             {
-                writer.WritePropertyName("partitionColumnName");
+                writer.WritePropertyName("partitionColumnName"u8);
                 writer.WriteObjectValue(PartitionColumnName);
             }
             if (Optional.IsDefined(PartitionUpperBound))
             {
-                writer.WritePropertyName("partitionUpperBound");
+                writer.WritePropertyName("partitionUpperBound"u8);
                 writer.WriteObjectValue(PartitionUpperBound);
             }
             if (Optional.IsDefined(PartitionLowerBound))
             {
-                writer.WritePropertyName("partitionLowerBound");
+                writer.WritePropertyName("partitionLowerBound"u8);
                 writer.WriteObjectValue(PartitionLowerBound);
             }
             writer.WriteEndObject();
@@ -49,7 +49,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Optional<object> partitionLowerBound = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("partitionNames"))
+                if (property.NameEquals("partitionNames"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -59,7 +59,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     partitionNames = property.Value.GetObject();
                     continue;
                 }
-                if (property.NameEquals("partitionColumnName"))
+                if (property.NameEquals("partitionColumnName"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -69,7 +69,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     partitionColumnName = property.Value.GetObject();
                     continue;
                 }
-                if (property.NameEquals("partitionUpperBound"))
+                if (property.NameEquals("partitionUpperBound"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -79,7 +79,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     partitionUpperBound = property.Value.GetObject();
                     continue;
                 }
-                if (property.NameEquals("partitionLowerBound"))
+                if (property.NameEquals("partitionLowerBound"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

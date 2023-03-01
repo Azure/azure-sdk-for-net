@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             string instanceType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("keyVaultId"))
+                if (property.NameEquals("keyVaultId"u8))
                 {
                     keyVaultId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("keyVaultUri"))
+                if (property.NameEquals("keyVaultUri"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -41,27 +41,27 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     keyVaultUri = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("storageAccountId"))
+                if (property.NameEquals("storageAccountId"u8))
                 {
                     storageAccountId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("storageAccountSasSecretName"))
+                if (property.NameEquals("storageAccountSasSecretName"u8))
                 {
                     storageAccountSasSecretName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("serviceBusConnectionStringSecretName"))
+                if (property.NameEquals("serviceBusConnectionStringSecretName"u8))
                 {
                     serviceBusConnectionStringSecretName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("targetLocation"))
+                if (property.NameEquals("targetLocation"u8))
                 {
                     targetLocation = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("roleSizeToNicCountMap"))
+                if (property.NameEquals("roleSizeToNicCountMap"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     roleSizeToNicCountMap = dictionary;
                     continue;
                 }
-                if (property.NameEquals("instanceType"))
+                if (property.NameEquals("instanceType"u8))
                 {
                     instanceType = property.Value.GetString();
                     continue;

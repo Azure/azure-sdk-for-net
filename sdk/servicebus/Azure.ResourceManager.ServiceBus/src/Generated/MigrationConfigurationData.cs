@@ -10,7 +10,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ServiceBus
 {
-    /// <summary> A class representing the MigrationConfiguration data model. </summary>
+    /// <summary>
+    /// A class representing the MigrationConfiguration data model.
+    /// Single item in List or Get Migration Config operation
+    /// </summary>
     public partial class MigrationConfigurationData : ResourceData
     {
         /// <summary> Initializes a new instance of MigrationConfigurationData. </summary>

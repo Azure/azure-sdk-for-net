@@ -15,13 +15,13 @@ namespace Azure.ResourceManager.DeploymentManager.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("name");
+            writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            writer.WritePropertyName("request");
+            writer.WritePropertyName("request"u8);
             writer.WriteObjectValue(Request);
             if (Optional.IsDefined(Response))
             {
-                writer.WritePropertyName("response");
+                writer.WritePropertyName("response"u8);
                 writer.WriteObjectValue(Response);
             }
             writer.WriteEndObject();
@@ -34,17 +34,17 @@ namespace Azure.ResourceManager.DeploymentManager.Models
             Optional<RestResponse> response = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("request"))
+                if (property.NameEquals("request"u8))
                 {
                     request = RestRequest.DeserializeRestRequest(property.Value);
                     continue;
                 }
-                if (property.NameEquals("response"))
+                if (property.NameEquals("response"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

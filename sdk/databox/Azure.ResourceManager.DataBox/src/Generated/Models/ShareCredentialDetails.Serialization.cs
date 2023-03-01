@@ -22,12 +22,12 @@ namespace Azure.ResourceManager.DataBox.Models
             Optional<IReadOnlyList<DataBoxAccessProtocol>> supportedAccessProtocols = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("shareName"))
+                if (property.NameEquals("shareName"u8))
                 {
                     shareName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("shareType"))
+                if (property.NameEquals("shareType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -37,17 +37,17 @@ namespace Azure.ResourceManager.DataBox.Models
                     shareType = property.Value.GetString().ToShareDestinationFormatType();
                     continue;
                 }
-                if (property.NameEquals("userName"))
+                if (property.NameEquals("userName"u8))
                 {
                     userName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("password"))
+                if (property.NameEquals("password"u8))
                 {
                     password = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("supportedAccessProtocols"))
+                if (property.NameEquals("supportedAccessProtocols"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

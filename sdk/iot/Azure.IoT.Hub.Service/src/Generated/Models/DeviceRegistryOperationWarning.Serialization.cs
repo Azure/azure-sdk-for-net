@@ -19,17 +19,17 @@ namespace Azure.IoT.Hub.Service.Models
             Optional<string> warningStatus = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("deviceId"))
+                if (property.NameEquals("deviceId"u8))
                 {
                     deviceId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("warningCode"))
+                if (property.NameEquals("warningCode"u8))
                 {
                     warningCode = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("warningStatus"))
+                if (property.NameEquals("warningStatus"u8))
                 {
                     warningStatus = property.Value.GetString();
                     continue;

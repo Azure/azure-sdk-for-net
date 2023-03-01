@@ -15,21 +15,21 @@ namespace Azure.ResourceManager.CosmosDB.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(RoleDefinitionId))
             {
-                writer.WritePropertyName("roleDefinitionId");
+                writer.WritePropertyName("roleDefinitionId"u8);
                 writer.WriteStringValue(RoleDefinitionId);
             }
             if (Optional.IsDefined(Scope))
             {
-                writer.WritePropertyName("scope");
+                writer.WritePropertyName("scope"u8);
                 writer.WriteStringValue(Scope);
             }
             if (Optional.IsDefined(PrincipalId))
             {
-                writer.WritePropertyName("principalId");
+                writer.WritePropertyName("principalId"u8);
                 writer.WriteStringValue(PrincipalId.Value);
             }
             writer.WriteEndObject();

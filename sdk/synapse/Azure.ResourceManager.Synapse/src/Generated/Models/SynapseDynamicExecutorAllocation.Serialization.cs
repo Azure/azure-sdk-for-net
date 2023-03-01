@@ -17,17 +17,17 @@ namespace Azure.ResourceManager.Synapse.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(IsEnabled))
             {
-                writer.WritePropertyName("enabled");
+                writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
             if (Optional.IsDefined(MinExecutors))
             {
-                writer.WritePropertyName("minExecutors");
+                writer.WritePropertyName("minExecutors"u8);
                 writer.WriteNumberValue(MinExecutors.Value);
             }
             if (Optional.IsDefined(MaxExecutors))
             {
-                writer.WritePropertyName("maxExecutors");
+                writer.WritePropertyName("maxExecutors"u8);
                 writer.WriteNumberValue(MaxExecutors.Value);
             }
             writer.WriteEndObject();
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Synapse.Models
             Optional<int> maxExecutors = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("enabled"))
+                if (property.NameEquals("enabled"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Synapse.Models
                     enabled = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("minExecutors"))
+                if (property.NameEquals("minExecutors"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Synapse.Models
                     minExecutors = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("maxExecutors"))
+                if (property.NameEquals("maxExecutors"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

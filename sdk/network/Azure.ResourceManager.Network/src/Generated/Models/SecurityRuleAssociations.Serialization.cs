@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Network.Models
             Optional<IReadOnlyList<EffectiveNetworkSecurityRule>> effectiveSecurityRules = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("networkInterfaceAssociation"))
+                if (property.NameEquals("networkInterfaceAssociation"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Network.Models
                     networkInterfaceAssociation = NetworkInterfaceAssociation.DeserializeNetworkInterfaceAssociation(property.Value);
                     continue;
                 }
-                if (property.NameEquals("subnetAssociation"))
+                if (property.NameEquals("subnetAssociation"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Network.Models
                     subnetAssociation = SubnetAssociation.DeserializeSubnetAssociation(property.Value);
                     continue;
                 }
-                if (property.NameEquals("defaultSecurityRules"))
+                if (property.NameEquals("defaultSecurityRules"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Network.Models
                     defaultSecurityRules = array;
                     continue;
                 }
-                if (property.NameEquals("effectiveSecurityRules"))
+                if (property.NameEquals("effectiveSecurityRules"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

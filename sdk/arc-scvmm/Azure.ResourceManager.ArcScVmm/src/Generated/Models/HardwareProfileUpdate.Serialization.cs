@@ -17,32 +17,32 @@ namespace Azure.ResourceManager.ArcScVmm.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(MemoryMB))
             {
-                writer.WritePropertyName("memoryMB");
+                writer.WritePropertyName("memoryMB"u8);
                 writer.WriteNumberValue(MemoryMB.Value);
             }
             if (Optional.IsDefined(CpuCount))
             {
-                writer.WritePropertyName("cpuCount");
+                writer.WritePropertyName("cpuCount"u8);
                 writer.WriteNumberValue(CpuCount.Value);
             }
             if (Optional.IsDefined(LimitCpuForMigration))
             {
-                writer.WritePropertyName("limitCpuForMigration");
+                writer.WritePropertyName("limitCpuForMigration"u8);
                 writer.WriteStringValue(LimitCpuForMigration.Value.ToString());
             }
             if (Optional.IsDefined(DynamicMemoryEnabled))
             {
-                writer.WritePropertyName("dynamicMemoryEnabled");
+                writer.WritePropertyName("dynamicMemoryEnabled"u8);
                 writer.WriteStringValue(DynamicMemoryEnabled.Value.ToString());
             }
             if (Optional.IsDefined(DynamicMemoryMaxMB))
             {
-                writer.WritePropertyName("dynamicMemoryMaxMB");
+                writer.WritePropertyName("dynamicMemoryMaxMB"u8);
                 writer.WriteNumberValue(DynamicMemoryMaxMB.Value);
             }
             if (Optional.IsDefined(DynamicMemoryMinMB))
             {
-                writer.WritePropertyName("dynamicMemoryMinMB");
+                writer.WritePropertyName("dynamicMemoryMinMB"u8);
                 writer.WriteNumberValue(DynamicMemoryMinMB.Value);
             }
             writer.WriteEndObject();
