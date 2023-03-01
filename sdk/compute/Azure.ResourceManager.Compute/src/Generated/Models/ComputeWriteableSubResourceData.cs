@@ -23,8 +23,5 @@ namespace Azure.ResourceManager.Compute.Models
         {
             Id = id;
         }
-
-        /// <summary> Resource Id. </summary>
-        public ResourceIdentifier Id { get; set; }
     }
 }
