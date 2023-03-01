@@ -30,7 +30,7 @@ namespace Microsoft.Azure.Functions.Worker
         /// <param name="data">String message to return caller.</param>
         /// <param name="dataType">Message <see cref="WebPubSubDataType"/>, default as Text.</param>
         /// <returns>A message response to return caller.</returns>
-        public UserEventResponse CreateResponse(string data, WebPubSubDataType dataType = WebPubSubDataType.Text)
+        public static UserEventResponse CreateResponse(string data, WebPubSubDataType dataType = WebPubSubDataType.Text)
         {
             return new UserEventResponse(data, dataType);
         }
