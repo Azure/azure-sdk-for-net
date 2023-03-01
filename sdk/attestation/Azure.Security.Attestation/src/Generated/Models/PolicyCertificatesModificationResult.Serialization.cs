@@ -46,7 +46,6 @@ namespace Azure.Security.Attestation
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     xMsPolicycertificatesResult = new PolicyCertificateResolution(property.Value.GetString());

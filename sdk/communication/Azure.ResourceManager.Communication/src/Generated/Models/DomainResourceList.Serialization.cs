@@ -24,7 +24,6 @@ namespace Azure.ResourceManager.Communication.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<CommunicationDomainResourceData> array = new List<CommunicationDomainResourceData>();

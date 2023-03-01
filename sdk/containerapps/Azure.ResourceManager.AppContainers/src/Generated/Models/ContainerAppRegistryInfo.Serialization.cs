@@ -45,7 +45,6 @@ namespace Azure.ResourceManager.AppContainers.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        registryUrl = null;
                         continue;
                     }
                     registryUrl = new Uri(property.Value.GetString());

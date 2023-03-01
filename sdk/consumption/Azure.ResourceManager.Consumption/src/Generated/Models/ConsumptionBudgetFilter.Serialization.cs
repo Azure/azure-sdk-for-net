@@ -50,7 +50,6 @@ namespace Azure.ResourceManager.Consumption.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<BudgetFilterProperties> array = new List<BudgetFilterProperties>();
@@ -65,7 +64,6 @@ namespace Azure.ResourceManager.Consumption.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     dimensions = BudgetComparisonExpression.DeserializeBudgetComparisonExpression(property.Value);
@@ -75,7 +73,6 @@ namespace Azure.ResourceManager.Consumption.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     tags = BudgetComparisonExpression.DeserializeBudgetComparisonExpression(property.Value);

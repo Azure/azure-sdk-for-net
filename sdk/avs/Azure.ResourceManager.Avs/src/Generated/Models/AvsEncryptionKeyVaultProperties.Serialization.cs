@@ -63,7 +63,6 @@ namespace Azure.ResourceManager.Avs.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        keyVaultUrl = null;
                         continue;
                     }
                     keyVaultUrl = new Uri(property.Value.GetString());
@@ -73,7 +72,6 @@ namespace Azure.ResourceManager.Avs.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     keyState = new AvsEncryptionKeyStatus(property.Value.GetString());
@@ -83,7 +81,6 @@ namespace Azure.ResourceManager.Avs.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     versionType = new AvsEncryptionVersionType(property.Value.GetString());

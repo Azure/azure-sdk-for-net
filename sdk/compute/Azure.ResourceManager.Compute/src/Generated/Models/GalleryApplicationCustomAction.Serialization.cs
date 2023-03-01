@@ -65,7 +65,6 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<GalleryApplicationCustomActionParameter> array = new List<GalleryApplicationCustomActionParameter>();

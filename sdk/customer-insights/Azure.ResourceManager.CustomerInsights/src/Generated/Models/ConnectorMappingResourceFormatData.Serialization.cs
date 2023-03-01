@@ -96,7 +96,6 @@ namespace Azure.ResourceManager.CustomerInsights
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -120,7 +119,6 @@ namespace Azure.ResourceManager.CustomerInsights
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             connectorType = new ConnectorType(property0.Value.GetString());
@@ -130,7 +128,6 @@ namespace Azure.ResourceManager.CustomerInsights
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             created = property0.Value.GetDateTimeOffset("O");
@@ -140,7 +137,6 @@ namespace Azure.ResourceManager.CustomerInsights
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             lastModified = property0.Value.GetDateTimeOffset("O");
@@ -150,7 +146,6 @@ namespace Azure.ResourceManager.CustomerInsights
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             entityType = property0.Value.GetString().ToEntityType();
@@ -185,7 +180,6 @@ namespace Azure.ResourceManager.CustomerInsights
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             mappingProperties = ConnectorMappingProperties.DeserializeConnectorMappingProperties(property0.Value);
@@ -195,7 +189,6 @@ namespace Azure.ResourceManager.CustomerInsights
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             nextRunTime = property0.Value.GetDateTimeOffset("O");
@@ -210,7 +203,6 @@ namespace Azure.ResourceManager.CustomerInsights
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             state = property0.Value.GetString().ToConnectorMappingState();
@@ -220,7 +212,6 @@ namespace Azure.ResourceManager.CustomerInsights
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             tenantId = property0.Value.GetGuid();

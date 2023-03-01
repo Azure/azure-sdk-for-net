@@ -64,7 +64,6 @@ namespace Azure.ResourceManager.BotService
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -83,7 +82,6 @@ namespace Azure.ResourceManager.BotService
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             privateEndpoint = JsonSerializer.Deserialize<SubResource>(property0.Value.GetRawText());
@@ -93,7 +91,6 @@ namespace Azure.ResourceManager.BotService
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             privateLinkServiceConnectionState = BotServicePrivateLinkServiceConnectionState.DeserializeBotServicePrivateLinkServiceConnectionState(property0.Value);
@@ -103,7 +100,6 @@ namespace Azure.ResourceManager.BotService
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             provisioningState = new BotServicePrivateEndpointConnectionProvisioningState(property0.Value.GetString());

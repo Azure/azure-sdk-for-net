@@ -115,7 +115,6 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     location = new AzureLocation(property.Value.GetString());
@@ -140,7 +139,6 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -164,7 +162,6 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             billingScopeId = new ResourceIdentifier(property0.Value.GetString());
@@ -174,7 +171,6 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             term = new BillingBenefitsTerm(property0.Value.GetString());
@@ -184,7 +180,6 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             billingPlan = new BillingBenefitsBillingPlan(property0.Value.GetString());
@@ -194,7 +189,6 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             appliedScopeType = new BillingBenefitsAppliedScopeType(property0.Value.GetString());
@@ -204,7 +198,6 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             appliedScopeProperties = BillingBenefitsAppliedScopeProperties.DeserializeBillingBenefitsAppliedScopeProperties(property0.Value);
@@ -214,7 +207,6 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             quantity = property0.Value.GetInt32();
@@ -224,7 +216,6 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             renew = property0.Value.GetBoolean();
@@ -234,7 +225,6 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             reservedResourceType = new BillingBenefitsReservedResourceType(property0.Value.GetString());
@@ -244,7 +234,6 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             reviewDateTime = property0.Value.GetDateTimeOffset("O");
@@ -254,7 +243,6 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             reservedResourceProperties = ReservationOrderAliasRequestPropertiesReservedResourceProperties.DeserializeReservationOrderAliasRequestPropertiesReservedResourceProperties(property0.Value);

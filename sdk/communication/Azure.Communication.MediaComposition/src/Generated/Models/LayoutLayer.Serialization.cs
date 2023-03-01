@@ -41,7 +41,6 @@ namespace Azure.Communication.MediaComposition.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     visibility = new LayerVisibility(property.Value.GetString());

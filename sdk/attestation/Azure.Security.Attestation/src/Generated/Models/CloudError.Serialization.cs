@@ -21,7 +21,6 @@ namespace Azure.Security.Attestation.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     error = CloudErrorBody.DeserializeCloudErrorBody(property.Value);

@@ -44,7 +44,6 @@ namespace Azure.ResourceManager.AgFoodPlatform.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     status = new AgFoodPlatformPrivateEndpointServiceConnectionStatus(property.Value.GetString());

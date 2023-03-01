@@ -74,7 +74,6 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        identityUrl = null;
                         continue;
                     }
                     identityUrl = new Uri(property.Value.GetString());

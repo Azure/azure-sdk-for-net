@@ -107,7 +107,6 @@ namespace Azure.Containers.ContainerRegistry.Specialized
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     orgOpencontainersImageCreated = property.Value.GetDateTimeOffset("O");

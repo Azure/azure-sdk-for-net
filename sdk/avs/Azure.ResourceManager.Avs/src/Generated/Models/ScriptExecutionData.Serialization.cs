@@ -126,7 +126,6 @@ namespace Azure.ResourceManager.Avs
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -145,7 +144,6 @@ namespace Azure.ResourceManager.Avs
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             scriptCmdletId = new ResourceIdentifier(property0.Value.GetString());
@@ -155,7 +153,6 @@ namespace Azure.ResourceManager.Avs
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<ScriptExecutionParameterDetails> array = new List<ScriptExecutionParameterDetails>();
@@ -170,7 +167,6 @@ namespace Azure.ResourceManager.Avs
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<ScriptExecutionParameterDetails> array = new List<ScriptExecutionParameterDetails>();
@@ -200,7 +196,6 @@ namespace Azure.ResourceManager.Avs
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             submittedAt = property0.Value.GetDateTimeOffset("O");
@@ -210,7 +205,6 @@ namespace Azure.ResourceManager.Avs
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             startedAt = property0.Value.GetDateTimeOffset("O");
@@ -220,7 +214,6 @@ namespace Azure.ResourceManager.Avs
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             finishedAt = property0.Value.GetDateTimeOffset("O");
@@ -230,7 +223,6 @@ namespace Azure.ResourceManager.Avs
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             provisioningState = new ScriptExecutionProvisioningState(property0.Value.GetString());
@@ -240,7 +232,6 @@ namespace Azure.ResourceManager.Avs
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<string> array = new List<string>();
@@ -255,7 +246,6 @@ namespace Azure.ResourceManager.Avs
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             namedOutputs = BinaryData.FromString(property0.Value.GetRawText());
@@ -265,7 +255,6 @@ namespace Azure.ResourceManager.Avs
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<string> array = new List<string>();
@@ -280,7 +269,6 @@ namespace Azure.ResourceManager.Avs
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<string> array = new List<string>();
@@ -295,7 +283,6 @@ namespace Azure.ResourceManager.Avs
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<string> array = new List<string>();

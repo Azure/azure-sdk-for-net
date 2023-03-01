@@ -106,7 +106,6 @@ namespace Azure.ResourceManager.Blueprint
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -135,7 +134,6 @@ namespace Azure.ResourceManager.Blueprint
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             status = BlueprintStatus.DeserializeBlueprintStatus(property0.Value);
@@ -145,7 +143,6 @@ namespace Azure.ResourceManager.Blueprint
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             targetScope = new BlueprintTargetScope(property0.Value.GetString());
@@ -155,7 +152,6 @@ namespace Azure.ResourceManager.Blueprint
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             Dictionary<string, ParameterDefinition> dictionary = new Dictionary<string, ParameterDefinition>();
@@ -170,7 +166,6 @@ namespace Azure.ResourceManager.Blueprint
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             Dictionary<string, ResourceGroupDefinition> dictionary = new Dictionary<string, ResourceGroupDefinition>();

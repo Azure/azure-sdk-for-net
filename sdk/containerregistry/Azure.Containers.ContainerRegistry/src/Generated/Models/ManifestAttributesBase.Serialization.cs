@@ -39,7 +39,6 @@ namespace Azure.Containers.ContainerRegistry
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     imageSize = property.Value.GetInt64();
@@ -79,7 +78,6 @@ namespace Azure.Containers.ContainerRegistry
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ArtifactManifestPlatform> array = new List<ArtifactManifestPlatform>();
@@ -94,7 +92,6 @@ namespace Azure.Containers.ContainerRegistry
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -118,7 +115,6 @@ namespace Azure.Containers.ContainerRegistry
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             deleteEnabled = property0.Value.GetBoolean();
@@ -128,7 +124,6 @@ namespace Azure.Containers.ContainerRegistry
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             writeEnabled = property0.Value.GetBoolean();
@@ -138,7 +133,6 @@ namespace Azure.Containers.ContainerRegistry
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             listEnabled = property0.Value.GetBoolean();
@@ -148,7 +142,6 @@ namespace Azure.Containers.ContainerRegistry
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             readEnabled = property0.Value.GetBoolean();

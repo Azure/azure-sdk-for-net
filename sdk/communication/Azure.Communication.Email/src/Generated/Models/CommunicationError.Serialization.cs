@@ -41,7 +41,6 @@ namespace Azure.Communication.Email.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<CommunicationError> array = new List<CommunicationError>();
@@ -56,7 +55,6 @@ namespace Azure.Communication.Email.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     innererror = DeserializeCommunicationError(property.Value);

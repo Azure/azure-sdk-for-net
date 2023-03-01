@@ -24,7 +24,6 @@ namespace Azure.ResourceManager.AppConfiguration.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<AppConfigurationPrivateEndpointConnectionData> array = new List<AppConfigurationPrivateEndpointConnectionData>();

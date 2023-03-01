@@ -297,7 +297,6 @@ namespace Azure.ResourceManager.ContainerService
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     sku = ManagedClusterSku.DeserializeManagedClusterSku(property.Value);
@@ -307,7 +306,6 @@ namespace Azure.ResourceManager.ContainerService
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     extendedLocation = JsonSerializer.Deserialize<ExtendedLocation>(property.Value.GetRawText());
@@ -317,7 +315,6 @@ namespace Azure.ResourceManager.ContainerService
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
@@ -327,7 +324,6 @@ namespace Azure.ResourceManager.ContainerService
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -362,7 +358,6 @@ namespace Azure.ResourceManager.ContainerService
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -386,7 +381,6 @@ namespace Azure.ResourceManager.ContainerService
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             powerState = ContainerServicePowerState.DeserializeContainerServicePowerState(property0.Value);
@@ -396,7 +390,6 @@ namespace Azure.ResourceManager.ContainerService
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             creationData = ContainerServiceCreationData.DeserializeContainerServiceCreationData(property0.Value);
@@ -406,7 +399,6 @@ namespace Azure.ResourceManager.ContainerService
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             maxAgentPools = property0.Value.GetInt32();
@@ -451,7 +443,6 @@ namespace Azure.ResourceManager.ContainerService
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<ManagedClusterAgentPoolProfile> array = new List<ManagedClusterAgentPoolProfile>();
@@ -466,7 +457,6 @@ namespace Azure.ResourceManager.ContainerService
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             linuxProfile = ContainerServiceLinuxProfile.DeserializeContainerServiceLinuxProfile(property0.Value);
@@ -476,7 +466,6 @@ namespace Azure.ResourceManager.ContainerService
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             windowsProfile = ManagedClusterWindowsProfile.DeserializeManagedClusterWindowsProfile(property0.Value);
@@ -486,7 +475,6 @@ namespace Azure.ResourceManager.ContainerService
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             servicePrincipalProfile = ManagedClusterServicePrincipalProfile.DeserializeManagedClusterServicePrincipalProfile(property0.Value);
@@ -496,7 +484,6 @@ namespace Azure.ResourceManager.ContainerService
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             Dictionary<string, ManagedClusterAddonProfile> dictionary = new Dictionary<string, ManagedClusterAddonProfile>();
@@ -511,7 +498,6 @@ namespace Azure.ResourceManager.ContainerService
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             podIdentityProfile = ManagedClusterPodIdentityProfile.DeserializeManagedClusterPodIdentityProfile(property0.Value);
@@ -521,7 +507,6 @@ namespace Azure.ResourceManager.ContainerService
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             oidcIssuerProfile = ManagedClusterOidcIssuerProfile.DeserializeManagedClusterOidcIssuerProfile(property0.Value);
@@ -536,7 +521,6 @@ namespace Azure.ResourceManager.ContainerService
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             nodeResourceGroupProfile = ManagedClusterNodeResourceGroupProfile.DeserializeManagedClusterNodeResourceGroupProfile(property0.Value);
@@ -546,7 +530,6 @@ namespace Azure.ResourceManager.ContainerService
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             enableRBAC = property0.Value.GetBoolean();
@@ -556,7 +539,6 @@ namespace Azure.ResourceManager.ContainerService
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             enablePodSecurityPolicy = property0.Value.GetBoolean();
@@ -566,7 +548,6 @@ namespace Azure.ResourceManager.ContainerService
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             enableNamespaceResources = property0.Value.GetBoolean();
@@ -576,7 +557,6 @@ namespace Azure.ResourceManager.ContainerService
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             networkProfile = ContainerServiceNetworkProfile.DeserializeContainerServiceNetworkProfile(property0.Value);
@@ -586,7 +566,6 @@ namespace Azure.ResourceManager.ContainerService
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             aadProfile = ManagedClusterAadProfile.DeserializeManagedClusterAadProfile(property0.Value);
@@ -596,7 +575,6 @@ namespace Azure.ResourceManager.ContainerService
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             autoUpgradeProfile = ManagedClusterAutoUpgradeProfile.DeserializeManagedClusterAutoUpgradeProfile(property0.Value);
@@ -606,7 +584,6 @@ namespace Azure.ResourceManager.ContainerService
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             autoScalerProfile = ManagedClusterAutoScalerProfile.DeserializeManagedClusterAutoScalerProfile(property0.Value);
@@ -616,7 +593,6 @@ namespace Azure.ResourceManager.ContainerService
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             apiServerAccessProfile = ManagedClusterApiServerAccessProfile.DeserializeManagedClusterApiServerAccessProfile(property0.Value);
@@ -626,7 +602,6 @@ namespace Azure.ResourceManager.ContainerService
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             diskEncryptionSetId = new ResourceIdentifier(property0.Value.GetString());
@@ -636,7 +611,6 @@ namespace Azure.ResourceManager.ContainerService
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             Dictionary<string, ContainerServiceUserAssignedIdentity> dictionary = new Dictionary<string, ContainerServiceUserAssignedIdentity>();
@@ -651,7 +625,6 @@ namespace Azure.ResourceManager.ContainerService
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<ContainerServicePrivateLinkResourceData> array = new List<ContainerServicePrivateLinkResourceData>();
@@ -666,7 +639,6 @@ namespace Azure.ResourceManager.ContainerService
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             disableLocalAccounts = property0.Value.GetBoolean();
@@ -676,7 +648,6 @@ namespace Azure.ResourceManager.ContainerService
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             httpProxyConfig = ManagedClusterHttpProxyConfig.DeserializeManagedClusterHttpProxyConfig(property0.Value);
@@ -686,7 +657,6 @@ namespace Azure.ResourceManager.ContainerService
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             securityProfile = ManagedClusterSecurityProfile.DeserializeManagedClusterSecurityProfile(property0.Value);
@@ -696,7 +666,6 @@ namespace Azure.ResourceManager.ContainerService
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             storageProfile = ManagedClusterStorageProfile.DeserializeManagedClusterStorageProfile(property0.Value);
@@ -706,7 +675,6 @@ namespace Azure.ResourceManager.ContainerService
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             ingressProfile = ManagedClusterIngressProfile.DeserializeManagedClusterIngressProfile(property0.Value);
@@ -716,7 +684,6 @@ namespace Azure.ResourceManager.ContainerService
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             publicNetworkAccess = new ContainerServicePublicNetworkAccess(property0.Value.GetString());
@@ -726,7 +693,6 @@ namespace Azure.ResourceManager.ContainerService
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             workloadAutoScalerProfile = ManagedClusterWorkloadAutoScalerProfile.DeserializeManagedClusterWorkloadAutoScalerProfile(property0.Value);
@@ -736,7 +702,6 @@ namespace Azure.ResourceManager.ContainerService
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             azureMonitorProfile = ManagedClusterAzureMonitorProfile.DeserializeManagedClusterAzureMonitorProfile(property0.Value);
@@ -746,7 +711,6 @@ namespace Azure.ResourceManager.ContainerService
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             guardrailsProfile = ManagedClusterGuardrailsProfile.DeserializeManagedClusterGuardrailsProfile(property0.Value);

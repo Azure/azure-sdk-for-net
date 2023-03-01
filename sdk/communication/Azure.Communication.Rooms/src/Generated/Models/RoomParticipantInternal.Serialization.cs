@@ -40,7 +40,6 @@ namespace Azure.Communication.Rooms
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     role = new RoleType(property.Value.GetString());

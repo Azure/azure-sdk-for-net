@@ -26,7 +26,6 @@ namespace Azure.ResourceManager.ChangeAnalysis.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     properties = ChangeProperties.DeserializeChangeProperties(property.Value);
@@ -51,7 +50,6 @@ namespace Azure.ResourceManager.ChangeAnalysis.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());

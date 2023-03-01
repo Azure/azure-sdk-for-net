@@ -55,7 +55,6 @@ namespace Azure.ResourceManager.Consumption.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     eTag = new ETag(property.Value.GetString());
@@ -80,7 +79,6 @@ namespace Azure.ResourceManager.Consumption.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -99,7 +97,6 @@ namespace Azure.ResourceManager.Consumption.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             originalAmount = ConsumptionAmount.DeserializeConsumptionAmount(property0.Value);
@@ -109,7 +106,6 @@ namespace Azure.ResourceManager.Consumption.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             closedBalance = ConsumptionAmount.DeserializeConsumptionAmount(property0.Value);
@@ -119,7 +115,6 @@ namespace Azure.ResourceManager.Consumption.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             source = new ConsumptionLotSource(property0.Value.GetString());
@@ -129,7 +124,6 @@ namespace Azure.ResourceManager.Consumption.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             startDate = property0.Value.GetDateTimeOffset("O");
@@ -139,7 +133,6 @@ namespace Azure.ResourceManager.Consumption.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             expirationDate = property0.Value.GetDateTimeOffset("O");
@@ -154,7 +147,6 @@ namespace Azure.ResourceManager.Consumption.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             purchasedDate = property0.Value.GetDateTimeOffset("O");
@@ -164,7 +156,6 @@ namespace Azure.ResourceManager.Consumption.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             status = new ConsumptionLotStatus(property0.Value.GetString());
@@ -184,7 +175,6 @@ namespace Azure.ResourceManager.Consumption.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             originalAmountInBillingCurrency = ConsumptionAmountWithExchangeRate.DeserializeConsumptionAmountWithExchangeRate(property0.Value);
@@ -194,7 +184,6 @@ namespace Azure.ResourceManager.Consumption.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             closedBalanceInBillingCurrency = ConsumptionAmountWithExchangeRate.DeserializeConsumptionAmountWithExchangeRate(property0.Value);
@@ -204,7 +193,6 @@ namespace Azure.ResourceManager.Consumption.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             reseller = ConsumptionReseller.DeserializeConsumptionReseller(property0.Value);

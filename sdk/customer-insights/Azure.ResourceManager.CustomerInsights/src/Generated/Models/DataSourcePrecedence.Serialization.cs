@@ -26,7 +26,6 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     precedence = property.Value.GetInt32();
@@ -50,7 +49,6 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             dataSourceType = new DataSourceType(property0.Value.GetString());
@@ -60,7 +58,6 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             status = new Status(property0.Value.GetString());
@@ -70,7 +67,6 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             id = property0.Value.GetInt32();

@@ -33,7 +33,6 @@ namespace Azure.ResourceManager.Batch.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        keyIdentifier = null;
                         continue;
                     }
                     keyIdentifier = new Uri(property.Value.GetString());

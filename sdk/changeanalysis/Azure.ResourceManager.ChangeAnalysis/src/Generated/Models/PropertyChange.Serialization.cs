@@ -29,7 +29,6 @@ namespace Azure.ResourceManager.ChangeAnalysis.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     changeType = new ChangeType(property.Value.GetString());
@@ -39,7 +38,6 @@ namespace Azure.ResourceManager.ChangeAnalysis.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     changeCategory = property.Value.GetString().ToChangeCategory();
@@ -59,7 +57,6 @@ namespace Azure.ResourceManager.ChangeAnalysis.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     level = new PropertyChangeLevel(property.Value.GetString());
@@ -84,7 +81,6 @@ namespace Azure.ResourceManager.ChangeAnalysis.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     isDataMasked = property.Value.GetBoolean();

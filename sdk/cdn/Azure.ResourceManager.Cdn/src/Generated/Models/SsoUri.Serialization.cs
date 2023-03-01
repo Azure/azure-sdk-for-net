@@ -22,7 +22,6 @@ namespace Azure.ResourceManager.Cdn.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        ssoUriValue = null;
                         continue;
                     }
                     ssoUriValue = new Uri(property.Value.GetString());

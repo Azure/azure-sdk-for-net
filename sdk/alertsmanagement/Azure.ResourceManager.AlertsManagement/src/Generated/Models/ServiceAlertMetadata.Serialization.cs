@@ -21,7 +21,6 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     properties = ServiceAlertMetadataProperties.DeserializeServiceAlertMetadataProperties(property.Value);

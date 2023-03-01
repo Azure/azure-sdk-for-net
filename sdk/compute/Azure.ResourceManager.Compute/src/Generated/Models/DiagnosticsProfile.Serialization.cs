@@ -32,7 +32,6 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     bootDiagnostics = BootDiagnostics.DeserializeBootDiagnostics(property.Value);

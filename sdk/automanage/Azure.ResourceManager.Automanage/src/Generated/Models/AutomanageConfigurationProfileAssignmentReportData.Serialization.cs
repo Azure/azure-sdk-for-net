@@ -73,7 +73,6 @@ namespace Azure.ResourceManager.Automanage
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -92,7 +91,6 @@ namespace Azure.ResourceManager.Automanage
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             startTime = property0.Value.GetDateTimeOffset("O");
@@ -102,7 +100,6 @@ namespace Azure.ResourceManager.Automanage
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             endTime = property0.Value.GetDateTimeOffset("O");
@@ -112,7 +109,6 @@ namespace Azure.ResourceManager.Automanage
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             lastModifiedTime = property0.Value.GetDateTimeOffset("O");
@@ -122,7 +118,6 @@ namespace Azure.ResourceManager.Automanage
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             duration = property0.Value.GetTimeSpan("P");
@@ -147,7 +142,6 @@ namespace Azure.ResourceManager.Automanage
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<ConfigurationProfileAssignmentReportResourceDetails> array = new List<ConfigurationProfileAssignmentReportResourceDetails>();
@@ -162,7 +156,6 @@ namespace Azure.ResourceManager.Automanage
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             error = JsonSerializer.Deserialize<ResponseError>(property0.Value.GetRawText());

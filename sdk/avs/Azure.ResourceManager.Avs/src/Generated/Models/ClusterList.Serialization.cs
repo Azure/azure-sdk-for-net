@@ -24,7 +24,6 @@ namespace Azure.ResourceManager.Avs.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<AvsPrivateCloudClusterData> array = new List<AvsPrivateCloudClusterData>();

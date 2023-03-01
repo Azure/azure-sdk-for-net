@@ -43,7 +43,6 @@ namespace Azure.ResourceManager.BotService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        devPortalUrl = null;
                         continue;
                     }
                     devPortalUrl = new Uri(property.Value.GetString());
@@ -53,7 +52,6 @@ namespace Azure.ResourceManager.BotService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        iconUrl = null;
                         continue;
                     }
                     iconUrl = new Uri(property.Value.GetString());
@@ -63,7 +61,6 @@ namespace Azure.ResourceManager.BotService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ServiceProviderParameter> array = new List<ServiceProviderParameter>();

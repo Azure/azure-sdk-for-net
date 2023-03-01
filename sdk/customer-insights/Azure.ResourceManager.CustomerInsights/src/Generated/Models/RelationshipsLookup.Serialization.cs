@@ -31,7 +31,6 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ParticipantProfilePropertyReference> array = new List<ParticipantProfilePropertyReference>();
@@ -51,7 +50,6 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ParticipantProfilePropertyReference> array = new List<ParticipantProfilePropertyReference>();

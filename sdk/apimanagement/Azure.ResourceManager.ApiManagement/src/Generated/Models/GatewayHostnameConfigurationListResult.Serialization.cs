@@ -24,7 +24,6 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ApiManagementGatewayHostnameConfigurationData> array = new List<ApiManagementGatewayHostnameConfigurationData>();

@@ -36,7 +36,6 @@ namespace Azure.ResourceManager.Billing.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     quantity = property.Value.GetInt64();
@@ -51,7 +50,6 @@ namespace Azure.ResourceManager.Billing.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     termDuration = property.Value.GetTimeSpan("P");

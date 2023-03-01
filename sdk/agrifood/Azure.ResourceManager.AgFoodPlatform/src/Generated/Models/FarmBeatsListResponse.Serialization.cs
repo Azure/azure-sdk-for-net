@@ -24,7 +24,6 @@ namespace Azure.ResourceManager.AgFoodPlatform.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<FarmBeatData> array = new List<FarmBeatData>();

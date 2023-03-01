@@ -48,7 +48,6 @@ namespace Azure.ResourceManager.BotService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        helpUrl = null;
                         continue;
                     }
                     helpUrl = new Uri(property.Value.GetString());
@@ -63,7 +62,6 @@ namespace Azure.ResourceManager.BotService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     metadata = ServiceProviderParameterMetadata.DeserializeServiceProviderParameterMetadata(property.Value);

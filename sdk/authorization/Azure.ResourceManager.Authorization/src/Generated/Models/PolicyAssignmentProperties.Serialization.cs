@@ -50,7 +50,6 @@ namespace Azure.ResourceManager.Authorization.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -69,7 +68,6 @@ namespace Azure.ResourceManager.Authorization.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             id0 = new ResourceIdentifier(property0.Value.GetString());
@@ -79,7 +77,6 @@ namespace Azure.ResourceManager.Authorization.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             lastModifiedBy = RoleManagementPrincipal.DeserializeRoleManagementPrincipal(property0.Value);
@@ -89,7 +86,6 @@ namespace Azure.ResourceManager.Authorization.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             lastModifiedDateTime = property0.Value.GetDateTimeOffset("O");
@@ -111,7 +107,6 @@ namespace Azure.ResourceManager.Authorization.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             id1 = new ResourceIdentifier(property0.Value.GetString());
@@ -126,7 +121,6 @@ namespace Azure.ResourceManager.Authorization.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             type0 = new AuthorizationRoleType(property0.Value.GetString());
@@ -148,7 +142,6 @@ namespace Azure.ResourceManager.Authorization.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             id2 = new ResourceIdentifier(property0.Value.GetString());
@@ -163,7 +156,6 @@ namespace Azure.ResourceManager.Authorization.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             type1 = new RoleManagementScopeType(property0.Value.GetString());

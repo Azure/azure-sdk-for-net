@@ -73,7 +73,6 @@ namespace Azure.ResourceManager.AgFoodPlatform
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
@@ -83,7 +82,6 @@ namespace Azure.ResourceManager.AgFoodPlatform
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -118,7 +116,6 @@ namespace Azure.ResourceManager.AgFoodPlatform
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -137,7 +134,6 @@ namespace Azure.ResourceManager.AgFoodPlatform
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                instanceUri = null;
                                 continue;
                             }
                             instanceUri = new Uri(property0.Value.GetString());
@@ -147,7 +143,6 @@ namespace Azure.ResourceManager.AgFoodPlatform
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             provisioningState = new ProvisioningState(property0.Value.GetString());
@@ -157,7 +152,6 @@ namespace Azure.ResourceManager.AgFoodPlatform
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             sensorIntegration = SensorIntegration.DeserializeSensorIntegration(property0.Value);
@@ -167,7 +161,6 @@ namespace Azure.ResourceManager.AgFoodPlatform
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             publicNetworkAccess = new PublicNetworkAccess(property0.Value.GetString());
@@ -177,7 +170,6 @@ namespace Azure.ResourceManager.AgFoodPlatform
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             privateEndpointConnections = AgFoodPlatformPrivateEndpointConnectionData.DeserializeAgFoodPlatformPrivateEndpointConnectionData(property0.Value);

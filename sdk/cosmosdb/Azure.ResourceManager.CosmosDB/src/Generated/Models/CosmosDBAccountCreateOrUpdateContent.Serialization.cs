@@ -257,7 +257,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     kind = new CosmosDBAccountKind(property.Value.GetString());
@@ -267,7 +266,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
@@ -278,7 +276,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -313,7 +310,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -332,7 +328,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             consistencyPolicy = ConsistencyPolicy.DeserializeConsistencyPolicy(property0.Value);
@@ -357,7 +352,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<CosmosDBIPAddressOrRange> array = new List<CosmosDBIPAddressOrRange>();
@@ -372,7 +366,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             isVirtualNetworkFilterEnabled = property0.Value.GetBoolean();
@@ -382,7 +375,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             enableAutomaticFailover = property0.Value.GetBoolean();
@@ -392,7 +384,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<CosmosDBAccountCapability> array = new List<CosmosDBAccountCapability>();
@@ -407,7 +398,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<CosmosDBVirtualNetworkRule> array = new List<CosmosDBVirtualNetworkRule>();
@@ -422,7 +412,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             enableMultipleWriteLocations = property0.Value.GetBoolean();
@@ -432,7 +421,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             enableCassandraConnector = property0.Value.GetBoolean();
@@ -442,7 +430,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             connectorOffer = new ConnectorOffer(property0.Value.GetString());
@@ -452,7 +439,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             disableKeyBasedMetadataWriteAccess = property0.Value.GetBoolean();
@@ -462,7 +448,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                keyVaultKeyUri = null;
                                 continue;
                             }
                             keyVaultKeyUri = new Uri(property0.Value.GetString());
@@ -477,7 +462,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             publicNetworkAccess = new CosmosDBPublicNetworkAccess(property0.Value.GetString());
@@ -487,7 +471,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             enableFreeTier = property0.Value.GetBoolean();
@@ -497,7 +480,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             apiProperties = ApiProperties.DeserializeApiProperties(property0.Value);
@@ -507,7 +489,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             enableAnalyticalStorage = property0.Value.GetBoolean();
@@ -517,7 +498,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             analyticalStorageConfiguration = AnalyticalStorageConfiguration.DeserializeAnalyticalStorageConfiguration(property0.Value);
@@ -527,7 +507,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             createMode = new CosmosDBAccountCreateMode(property0.Value.GetString());
@@ -537,7 +516,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             backupPolicy = CosmosDBAccountBackupPolicy.DeserializeCosmosDBAccountBackupPolicy(property0.Value);
@@ -547,7 +525,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<CosmosDBAccountCorsPolicy> array = new List<CosmosDBAccountCorsPolicy>();
@@ -562,7 +539,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             networkAclBypass = property0.Value.GetString().ToNetworkAclBypass();
@@ -572,7 +548,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<ResourceIdentifier> array = new List<ResourceIdentifier>();
@@ -587,7 +562,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             disableLocalAuth = property0.Value.GetBoolean();
@@ -597,7 +571,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             restoreParameters = CosmosDBAccountRestoreParameters.DeserializeCosmosDBAccountRestoreParameters(property0.Value);
@@ -607,7 +580,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             capacity = CosmosDBAccountCapacity.DeserializeCosmosDBAccountCapacity(property0.Value);
@@ -617,7 +589,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             keysMetadata = DatabaseAccountKeysMetadata.DeserializeDatabaseAccountKeysMetadata(property0.Value);
@@ -627,7 +598,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             enablePartitionMerge = property0.Value.GetBoolean();

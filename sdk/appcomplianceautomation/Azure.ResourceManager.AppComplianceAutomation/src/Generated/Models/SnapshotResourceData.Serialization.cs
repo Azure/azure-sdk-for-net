@@ -33,7 +33,6 @@ namespace Azure.ResourceManager.AppComplianceAutomation
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     properties = SnapshotProperties.DeserializeSnapshotProperties(property.Value);
@@ -58,7 +57,6 @@ namespace Azure.ResourceManager.AppComplianceAutomation
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());

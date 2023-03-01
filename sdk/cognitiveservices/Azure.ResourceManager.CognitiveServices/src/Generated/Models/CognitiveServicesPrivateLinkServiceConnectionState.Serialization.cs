@@ -44,7 +44,6 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     status = new CognitiveServicesPrivateEndpointServiceConnectionStatus(property.Value.GetString());

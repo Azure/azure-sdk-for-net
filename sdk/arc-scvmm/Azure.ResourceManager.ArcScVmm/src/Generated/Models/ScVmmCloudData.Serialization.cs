@@ -81,7 +81,6 @@ namespace Azure.ResourceManager.ArcScVmm
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -116,7 +115,6 @@ namespace Azure.ResourceManager.ArcScVmm
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -155,7 +153,6 @@ namespace Azure.ResourceManager.ArcScVmm
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             cloudCapacity = CloudCapacity.DeserializeCloudCapacity(property0.Value);
@@ -165,7 +162,6 @@ namespace Azure.ResourceManager.ArcScVmm
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<StorageQoSPolicy> array = new List<StorageQoSPolicy>();

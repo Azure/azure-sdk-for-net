@@ -334,7 +334,6 @@ namespace Azure.ResourceManager.ContainerService
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -353,7 +352,6 @@ namespace Azure.ResourceManager.ContainerService
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             count = property0.Value.GetInt32();
@@ -368,7 +366,6 @@ namespace Azure.ResourceManager.ContainerService
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             osDiskSizeGB = property0.Value.GetInt32();
@@ -378,7 +375,6 @@ namespace Azure.ResourceManager.ContainerService
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             osDiskType = new ContainerServiceOSDiskType(property0.Value.GetString());
@@ -388,7 +384,6 @@ namespace Azure.ResourceManager.ContainerService
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             kubeletDiskType = new KubeletDiskType(property0.Value.GetString());
@@ -398,7 +393,6 @@ namespace Azure.ResourceManager.ContainerService
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             workloadRuntime = new WorkloadRuntime(property0.Value.GetString());
@@ -413,7 +407,6 @@ namespace Azure.ResourceManager.ContainerService
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             vnetSubnetId = new ResourceIdentifier(property0.Value.GetString());
@@ -423,7 +416,6 @@ namespace Azure.ResourceManager.ContainerService
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             podSubnetId = new ResourceIdentifier(property0.Value.GetString());
@@ -433,7 +425,6 @@ namespace Azure.ResourceManager.ContainerService
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             maxPods = property0.Value.GetInt32();
@@ -443,7 +434,6 @@ namespace Azure.ResourceManager.ContainerService
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             osType = new ContainerServiceOSType(property0.Value.GetString());
@@ -453,7 +443,6 @@ namespace Azure.ResourceManager.ContainerService
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             osSku = new ContainerServiceOSSku(property0.Value.GetString());
@@ -463,7 +452,6 @@ namespace Azure.ResourceManager.ContainerService
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             maxCount = property0.Value.GetInt32();
@@ -473,7 +461,6 @@ namespace Azure.ResourceManager.ContainerService
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             minCount = property0.Value.GetInt32();
@@ -483,7 +470,6 @@ namespace Azure.ResourceManager.ContainerService
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             enableAutoScaling = property0.Value.GetBoolean();
@@ -493,7 +479,6 @@ namespace Azure.ResourceManager.ContainerService
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             scaleDownMode = new ScaleDownMode(property0.Value.GetString());
@@ -503,7 +488,6 @@ namespace Azure.ResourceManager.ContainerService
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             type0 = new AgentPoolType(property0.Value.GetString());
@@ -513,7 +497,6 @@ namespace Azure.ResourceManager.ContainerService
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             mode = new AgentPoolMode(property0.Value.GetString());
@@ -538,7 +521,6 @@ namespace Azure.ResourceManager.ContainerService
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             upgradeSettings = AgentPoolUpgradeSettings.DeserializeAgentPoolUpgradeSettings(property0.Value);
@@ -553,7 +535,6 @@ namespace Azure.ResourceManager.ContainerService
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             powerState = ContainerServicePowerState.DeserializeContainerServicePowerState(property0.Value);
@@ -563,7 +544,6 @@ namespace Azure.ResourceManager.ContainerService
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<string> array = new List<string>();
@@ -578,7 +558,6 @@ namespace Azure.ResourceManager.ContainerService
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             enableNodePublicIP = property0.Value.GetBoolean();
@@ -588,7 +567,6 @@ namespace Azure.ResourceManager.ContainerService
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             enableCustomCATrust = property0.Value.GetBoolean();
@@ -598,7 +576,6 @@ namespace Azure.ResourceManager.ContainerService
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             nodePublicIPPrefixId = new ResourceIdentifier(property0.Value.GetString());
@@ -608,7 +585,6 @@ namespace Azure.ResourceManager.ContainerService
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             scaleSetPriority = new ScaleSetPriority(property0.Value.GetString());
@@ -618,7 +594,6 @@ namespace Azure.ResourceManager.ContainerService
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             scaleSetEvictionPolicy = new ScaleSetEvictionPolicy(property0.Value.GetString());
@@ -628,7 +603,6 @@ namespace Azure.ResourceManager.ContainerService
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             spotMaxPrice = property0.Value.GetSingle();
@@ -638,7 +612,6 @@ namespace Azure.ResourceManager.ContainerService
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -653,7 +626,6 @@ namespace Azure.ResourceManager.ContainerService
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -668,7 +640,6 @@ namespace Azure.ResourceManager.ContainerService
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<string> array = new List<string>();
@@ -683,7 +654,6 @@ namespace Azure.ResourceManager.ContainerService
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             proximityPlacementGroupId = new ResourceIdentifier(property0.Value.GetString());
@@ -693,7 +663,6 @@ namespace Azure.ResourceManager.ContainerService
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             kubeletConfig = KubeletConfig.DeserializeKubeletConfig(property0.Value);
@@ -703,7 +672,6 @@ namespace Azure.ResourceManager.ContainerService
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             linuxOSConfig = LinuxOSConfig.DeserializeLinuxOSConfig(property0.Value);
@@ -713,7 +681,6 @@ namespace Azure.ResourceManager.ContainerService
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             enableEncryptionAtHost = property0.Value.GetBoolean();
@@ -723,7 +690,6 @@ namespace Azure.ResourceManager.ContainerService
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             enableUltraSsd = property0.Value.GetBoolean();
@@ -733,7 +699,6 @@ namespace Azure.ResourceManager.ContainerService
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             enableFIPS = property0.Value.GetBoolean();
@@ -743,7 +708,6 @@ namespace Azure.ResourceManager.ContainerService
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             gpuInstanceProfile = new GpuInstanceProfile(property0.Value.GetString());
@@ -753,7 +717,6 @@ namespace Azure.ResourceManager.ContainerService
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             creationData = ContainerServiceCreationData.DeserializeContainerServiceCreationData(property0.Value);
@@ -763,7 +726,6 @@ namespace Azure.ResourceManager.ContainerService
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             capacityReservationGroupId = new ResourceIdentifier(property0.Value.GetString());
@@ -773,7 +735,6 @@ namespace Azure.ResourceManager.ContainerService
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             hostGroupId = new ResourceIdentifier(property0.Value.GetString());
@@ -783,7 +744,6 @@ namespace Azure.ResourceManager.ContainerService
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             windowsProfile = AgentPoolWindowsProfile.DeserializeAgentPoolWindowsProfile(property0.Value);
@@ -793,7 +753,6 @@ namespace Azure.ResourceManager.ContainerService
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             networkProfile = AgentPoolNetworkProfile.DeserializeAgentPoolNetworkProfile(property0.Value);

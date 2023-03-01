@@ -24,7 +24,6 @@ namespace Azure.ResourceManager.Confluent.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ConfluentOrganizationData> array = new List<ConfluentOrganizationData>();

@@ -43,7 +43,6 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     ledgerRoleName = new ConfidentialLedgerRoleName(property.Value.GetString());

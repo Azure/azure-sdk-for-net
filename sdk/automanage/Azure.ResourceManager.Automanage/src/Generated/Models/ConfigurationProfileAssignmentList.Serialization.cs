@@ -23,7 +23,6 @@ namespace Azure.ResourceManager.Automanage.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<AutomanageConfigurationProfileAssignmentData> array = new List<AutomanageConfigurationProfileAssignmentData>();

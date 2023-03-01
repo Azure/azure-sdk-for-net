@@ -95,7 +95,6 @@ namespace Azure.ResourceManager.BotService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        landingPageUrl = null;
                         continue;
                     }
                     landingPageUrl = new Uri(property.Value.GetString());
@@ -115,7 +114,6 @@ namespace Azure.ResourceManager.BotService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     registerBeforeOAuthFlow = property.Value.GetBoolean();
@@ -125,7 +123,6 @@ namespace Azure.ResourceManager.BotService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     isValidated = property.Value.GetBoolean();

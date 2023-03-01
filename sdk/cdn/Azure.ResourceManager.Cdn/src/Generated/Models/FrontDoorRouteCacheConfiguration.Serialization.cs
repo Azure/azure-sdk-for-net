@@ -44,7 +44,6 @@ namespace Azure.ResourceManager.Cdn.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     queryStringCachingBehavior = new FrontDoorQueryStringCachingBehavior(property.Value.GetString());
@@ -59,7 +58,6 @@ namespace Azure.ResourceManager.Cdn.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     compressionSettings = RouteCacheCompressionSettings.DeserializeRouteCacheCompressionSettings(property.Value);

@@ -75,7 +75,6 @@ namespace Azure.ResourceManager.ContainerRegistry
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -110,7 +109,6 @@ namespace Azure.ResourceManager.ContainerRegistry
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -129,7 +127,6 @@ namespace Azure.ResourceManager.ContainerRegistry
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             status = new ContainerRegistryWebhookStatus(property0.Value.GetString());
@@ -144,7 +141,6 @@ namespace Azure.ResourceManager.ContainerRegistry
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<ContainerRegistryWebhookAction> array = new List<ContainerRegistryWebhookAction>();
@@ -159,7 +155,6 @@ namespace Azure.ResourceManager.ContainerRegistry
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             provisioningState = new ContainerRegistryProvisioningState(property0.Value.GetString());

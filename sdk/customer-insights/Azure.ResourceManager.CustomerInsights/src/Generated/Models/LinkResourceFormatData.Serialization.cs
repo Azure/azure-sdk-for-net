@@ -137,7 +137,6 @@ namespace Azure.ResourceManager.CustomerInsights
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -156,7 +155,6 @@ namespace Azure.ResourceManager.CustomerInsights
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             tenantId = property0.Value.GetGuid();
@@ -171,7 +169,6 @@ namespace Azure.ResourceManager.CustomerInsights
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             sourceEntityType = property0.Value.GetString().ToEntityType();
@@ -181,7 +178,6 @@ namespace Azure.ResourceManager.CustomerInsights
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             targetEntityType = property0.Value.GetString().ToEntityType();
@@ -201,7 +197,6 @@ namespace Azure.ResourceManager.CustomerInsights
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -216,7 +211,6 @@ namespace Azure.ResourceManager.CustomerInsights
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -231,7 +225,6 @@ namespace Azure.ResourceManager.CustomerInsights
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<TypePropertiesMapping> array = new List<TypePropertiesMapping>();
@@ -246,7 +239,6 @@ namespace Azure.ResourceManager.CustomerInsights
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<ParticipantPropertyReference> array = new List<ParticipantPropertyReference>();
@@ -261,7 +253,6 @@ namespace Azure.ResourceManager.CustomerInsights
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             provisioningState = new ProvisioningState(property0.Value.GetString());
@@ -271,7 +262,6 @@ namespace Azure.ResourceManager.CustomerInsights
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             referenceOnly = property0.Value.GetBoolean();
@@ -281,7 +271,6 @@ namespace Azure.ResourceManager.CustomerInsights
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             operationType = property0.Value.GetString().ToInstanceOperationType();

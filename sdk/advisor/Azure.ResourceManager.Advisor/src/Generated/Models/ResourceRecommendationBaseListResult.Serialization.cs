@@ -29,7 +29,6 @@ namespace Azure.ResourceManager.Advisor.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ResourceRecommendationBaseData> array = new List<ResourceRecommendationBaseData>();

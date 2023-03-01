@@ -24,7 +24,6 @@ namespace Azure.ResourceManager.Authorization.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<RoleEligibilityScheduleRequestData> array = new List<RoleEligibilityScheduleRequestData>();

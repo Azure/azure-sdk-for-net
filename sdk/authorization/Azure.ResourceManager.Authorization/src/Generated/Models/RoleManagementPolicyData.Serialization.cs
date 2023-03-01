@@ -91,7 +91,6 @@ namespace Azure.ResourceManager.Authorization
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -125,7 +124,6 @@ namespace Azure.ResourceManager.Authorization
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             isOrganizationDefault = property0.Value.GetBoolean();
@@ -135,7 +133,6 @@ namespace Azure.ResourceManager.Authorization
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             lastModifiedBy = RoleManagementPrincipal.DeserializeRoleManagementPrincipal(property0.Value);
@@ -145,7 +142,6 @@ namespace Azure.ResourceManager.Authorization
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             lastModifiedDateTime = property0.Value.GetDateTimeOffset("O");
@@ -155,7 +151,6 @@ namespace Azure.ResourceManager.Authorization
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<RoleManagementPolicyRule> array = new List<RoleManagementPolicyRule>();
@@ -170,7 +165,6 @@ namespace Azure.ResourceManager.Authorization
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<RoleManagementPolicyRule> array = new List<RoleManagementPolicyRule>();
@@ -185,7 +179,6 @@ namespace Azure.ResourceManager.Authorization
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             policyProperties = RoleManagementPolicyProperties.DeserializeRoleManagementPolicyProperties(property0.Value);

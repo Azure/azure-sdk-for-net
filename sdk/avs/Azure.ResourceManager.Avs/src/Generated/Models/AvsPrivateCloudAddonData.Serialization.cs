@@ -38,7 +38,6 @@ namespace Azure.ResourceManager.Avs
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     properties = AvsPrivateCloudAddonProperties.DeserializeAvsPrivateCloudAddonProperties(property.Value);
@@ -63,7 +62,6 @@ namespace Azure.ResourceManager.Avs
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());

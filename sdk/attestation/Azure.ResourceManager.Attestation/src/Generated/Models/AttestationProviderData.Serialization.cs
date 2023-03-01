@@ -77,7 +77,6 @@ namespace Azure.ResourceManager.Attestation
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -112,7 +111,6 @@ namespace Azure.ResourceManager.Attestation
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -136,7 +134,6 @@ namespace Azure.ResourceManager.Attestation
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             status = new AttestationServiceStatus(property0.Value.GetString());
@@ -146,7 +143,6 @@ namespace Azure.ResourceManager.Attestation
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                attestUri = null;
                                 continue;
                             }
                             attestUri = new Uri(property0.Value.GetString());
@@ -156,7 +152,6 @@ namespace Azure.ResourceManager.Attestation
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             publicNetworkAccess = new PublicNetworkAccessType(property0.Value.GetString());
@@ -166,7 +161,6 @@ namespace Azure.ResourceManager.Attestation
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<AttestationPrivateEndpointConnectionData> array = new List<AttestationPrivateEndpointConnectionData>();

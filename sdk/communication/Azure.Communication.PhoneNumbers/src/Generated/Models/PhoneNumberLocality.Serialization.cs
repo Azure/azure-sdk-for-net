@@ -27,7 +27,6 @@ namespace Azure.Communication.PhoneNumbers
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     administrativeDivision = PhoneNumberAdministrativeDivision.DeserializePhoneNumberAdministrativeDivision(property.Value);

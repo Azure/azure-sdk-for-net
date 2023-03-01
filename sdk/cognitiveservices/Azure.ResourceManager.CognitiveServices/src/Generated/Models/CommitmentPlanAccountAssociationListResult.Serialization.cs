@@ -29,7 +29,6 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<CommitmentPlanAccountAssociationData> array = new List<CommitmentPlanAccountAssociationData>();

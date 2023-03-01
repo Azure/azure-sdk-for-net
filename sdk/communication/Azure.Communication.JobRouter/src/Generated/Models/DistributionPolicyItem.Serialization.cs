@@ -22,7 +22,6 @@ namespace Azure.Communication.JobRouter.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     distributionPolicy = DistributionPolicy.DeserializeDistributionPolicy(property.Value);

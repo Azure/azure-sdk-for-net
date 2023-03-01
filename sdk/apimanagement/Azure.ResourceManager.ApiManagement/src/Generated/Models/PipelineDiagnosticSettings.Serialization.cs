@@ -38,7 +38,6 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     request = HttpMessageDiagnostic.DeserializeHttpMessageDiagnostic(property.Value);
@@ -48,7 +47,6 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     response = HttpMessageDiagnostic.DeserializeHttpMessageDiagnostic(property.Value);

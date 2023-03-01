@@ -85,7 +85,6 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -123,7 +122,6 @@ namespace Azure.ResourceManager.ApiManagement
                                 {
                                     if (property1.Value.ValueKind == JsonValueKind.Null)
                                     {
-                                        property1.ThrowNonNullablePropertyIsNull();
                                         continue;
                                     }
                                     definitions = BinaryData.FromString(property1.Value.GetRawText());
@@ -133,7 +131,6 @@ namespace Azure.ResourceManager.ApiManagement
                                 {
                                     if (property1.Value.ValueKind == JsonValueKind.Null)
                                     {
-                                        property1.ThrowNonNullablePropertyIsNull();
                                         continue;
                                     }
                                     components = BinaryData.FromString(property1.Value.GetRawText());

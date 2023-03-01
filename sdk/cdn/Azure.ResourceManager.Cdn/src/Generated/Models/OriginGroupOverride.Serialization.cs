@@ -39,7 +39,6 @@ namespace Azure.ResourceManager.Cdn.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     originGroup = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());
@@ -49,7 +48,6 @@ namespace Azure.ResourceManager.Cdn.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     forwardingProtocol = new ForwardingProtocol(property.Value.GetString());

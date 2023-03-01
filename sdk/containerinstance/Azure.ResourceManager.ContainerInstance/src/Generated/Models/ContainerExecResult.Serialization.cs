@@ -23,7 +23,6 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        webSocketUri = null;
                         continue;
                     }
                     webSocketUri = new Uri(property.Value.GetString());

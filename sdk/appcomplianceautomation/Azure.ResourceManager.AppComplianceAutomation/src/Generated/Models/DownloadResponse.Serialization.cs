@@ -25,7 +25,6 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ResourceItem> array = new List<ResourceItem>();
@@ -40,7 +39,6 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ComplianceReportItem> array = new List<ComplianceReportItem>();
@@ -55,7 +53,6 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     compliancePdfReport = DownloadResponseCompliancePdfReport.DeserializeDownloadResponseCompliancePdfReport(property.Value);
@@ -65,7 +62,6 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     complianceDetailedPdfReport = DownloadResponseComplianceDetailedPdfReport.DeserializeDownloadResponseComplianceDetailedPdfReport(property.Value);

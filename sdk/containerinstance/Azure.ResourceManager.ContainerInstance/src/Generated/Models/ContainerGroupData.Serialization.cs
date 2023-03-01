@@ -184,7 +184,6 @@ namespace Azure.ResourceManager.ContainerInstance
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -199,7 +198,6 @@ namespace Azure.ResourceManager.ContainerInstance
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
@@ -209,7 +207,6 @@ namespace Azure.ResourceManager.ContainerInstance
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -244,7 +241,6 @@ namespace Azure.ResourceManager.ContainerInstance
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -278,7 +274,6 @@ namespace Azure.ResourceManager.ContainerInstance
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<ContainerGroupImageRegistryCredential> array = new List<ContainerGroupImageRegistryCredential>();
@@ -293,7 +288,6 @@ namespace Azure.ResourceManager.ContainerInstance
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             restartPolicy = new ContainerGroupRestartPolicy(property0.Value.GetString());
@@ -303,7 +297,6 @@ namespace Azure.ResourceManager.ContainerInstance
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             ipAddress = ContainerGroupIPAddress.DeserializeContainerGroupIPAddress(property0.Value);
@@ -318,7 +311,6 @@ namespace Azure.ResourceManager.ContainerInstance
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<ContainerVolume> array = new List<ContainerVolume>();
@@ -333,7 +325,6 @@ namespace Azure.ResourceManager.ContainerInstance
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             instanceView = ContainerGroupInstanceView.DeserializeContainerGroupInstanceView(property0.Value);
@@ -343,7 +334,6 @@ namespace Azure.ResourceManager.ContainerInstance
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             diagnostics = ContainerGroupDiagnostics.DeserializeContainerGroupDiagnostics(property0.Value);
@@ -353,7 +343,6 @@ namespace Azure.ResourceManager.ContainerInstance
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<ContainerGroupSubnetId> array = new List<ContainerGroupSubnetId>();
@@ -368,7 +357,6 @@ namespace Azure.ResourceManager.ContainerInstance
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             dnsConfig = ContainerGroupDnsConfiguration.DeserializeContainerGroupDnsConfiguration(property0.Value);
@@ -378,7 +366,6 @@ namespace Azure.ResourceManager.ContainerInstance
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             sku = new ContainerGroupSku(property0.Value.GetString());
@@ -388,7 +375,6 @@ namespace Azure.ResourceManager.ContainerInstance
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             encryptionProperties = ContainerGroupEncryptionProperties.DeserializeContainerGroupEncryptionProperties(property0.Value);
@@ -398,7 +384,6 @@ namespace Azure.ResourceManager.ContainerInstance
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<InitContainerDefinitionContent> array = new List<InitContainerDefinitionContent>();
@@ -413,7 +398,6 @@ namespace Azure.ResourceManager.ContainerInstance
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<DeploymentExtensionSpec> array = new List<DeploymentExtensionSpec>();
@@ -428,7 +412,6 @@ namespace Azure.ResourceManager.ContainerInstance
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             confidentialComputeProperties = ConfidentialComputeProperties.DeserializeConfidentialComputeProperties(property0.Value);
@@ -438,7 +421,6 @@ namespace Azure.ResourceManager.ContainerInstance
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             priority = new ContainerGroupPriority(property0.Value.GetString());

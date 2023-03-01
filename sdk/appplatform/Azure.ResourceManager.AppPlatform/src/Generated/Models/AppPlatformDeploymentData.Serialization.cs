@@ -44,7 +44,6 @@ namespace Azure.ResourceManager.AppPlatform
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     properties = AppPlatformDeploymentProperties.DeserializeAppPlatformDeploymentProperties(property.Value);
@@ -54,7 +53,6 @@ namespace Azure.ResourceManager.AppPlatform
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     sku = AppPlatformSku.DeserializeAppPlatformSku(property.Value);
@@ -79,7 +77,6 @@ namespace Azure.ResourceManager.AppPlatform
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());

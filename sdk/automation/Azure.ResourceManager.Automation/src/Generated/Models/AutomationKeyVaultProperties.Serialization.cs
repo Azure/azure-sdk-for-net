@@ -45,7 +45,6 @@ namespace Azure.ResourceManager.Automation.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        keyvaultUri = null;
                         continue;
                     }
                     keyvaultUri = new Uri(property.Value.GetString());

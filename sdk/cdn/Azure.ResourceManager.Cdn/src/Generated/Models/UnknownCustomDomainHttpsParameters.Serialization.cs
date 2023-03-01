@@ -48,7 +48,6 @@ namespace Azure.ResourceManager.Cdn.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     minimumTlsVersion = property.Value.GetString().ToCdnMinimumTlsVersion();

@@ -28,7 +28,6 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        uploadUri = null;
                         continue;
                     }
                     uploadUri = new Uri(property.Value.GetString());

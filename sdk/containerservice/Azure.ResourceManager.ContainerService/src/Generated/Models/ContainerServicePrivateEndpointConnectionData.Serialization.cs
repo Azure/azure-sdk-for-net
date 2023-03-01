@@ -64,7 +64,6 @@ namespace Azure.ResourceManager.ContainerService
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -83,7 +82,6 @@ namespace Azure.ResourceManager.ContainerService
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             provisioningState = new ContainerServicePrivateEndpointConnectionProvisioningState(property0.Value.GetString());
@@ -93,7 +91,6 @@ namespace Azure.ResourceManager.ContainerService
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             privateEndpoint = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
@@ -103,7 +100,6 @@ namespace Azure.ResourceManager.ContainerService
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             privateLinkServiceConnectionState = ContainerServicePrivateLinkServiceConnectionState.DeserializeContainerServicePrivateLinkServiceConnectionState(property0.Value);

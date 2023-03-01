@@ -46,7 +46,6 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     value = QuotaCounterValueContractProperties.DeserializeQuotaCounterValueContractProperties(property.Value);

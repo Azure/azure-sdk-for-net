@@ -44,7 +44,6 @@ namespace Azure.Communication.JobRouter
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     credential = FunctionRuleCredential.DeserializeFunctionRuleCredential(property.Value);

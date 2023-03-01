@@ -24,7 +24,6 @@ namespace Azure.ResourceManager.Avs.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<WorkloadNetworkPortMirroringProfileData> array = new List<WorkloadNetworkPortMirroringProfileData>();
