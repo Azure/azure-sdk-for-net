@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.Batch.Models
 
         public static BatchAccountKeyType ToBatchAccountKeyType(this string value)
         {
-            if (string.Equals(value, "Primary", StringComparison.InvariantCultureIgnoreCase)) return BatchAccountKeyType.Primary;
-            if (string.Equals(value, "Secondary", StringComparison.InvariantCultureIgnoreCase)) return BatchAccountKeyType.Secondary;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Primary")) return BatchAccountKeyType.Primary;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Secondary")) return BatchAccountKeyType.Secondary;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown BatchAccountKeyType value.");
         }
     }

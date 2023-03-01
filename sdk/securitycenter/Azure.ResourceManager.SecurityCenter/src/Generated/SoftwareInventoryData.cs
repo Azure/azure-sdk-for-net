@@ -12,7 +12,10 @@ using Azure.ResourceManager.SecurityCenter.Models;
 
 namespace Azure.ResourceManager.SecurityCenter
 {
-    /// <summary> A class representing the SoftwareInventory data model. </summary>
+    /// <summary>
+    /// A class representing the SoftwareInventory data model.
+    /// Represents a software data
+    /// </summary>
     public partial class SoftwareInventoryData : ResourceData
     {
         /// <summary> Initializes a new instance of SoftwareInventoryData. </summary>

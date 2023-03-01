@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using Azure.Core;
+
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary>
     /// IaaS VM workload-specific backup item.
     /// Please note <see cref="IaasVmProtectableItem"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="AzureIaaSClassicComputeVmProtectableItem"/> and <see cref="AzureIaaSComputeVmProtectableItem"/>.
+    /// The available derived classes include <see cref="IaasClassicComputeVmProtectableItem"/> and <see cref="IaasComputeVmProtectableItem"/>.
     /// </summary>
     public partial class IaasVmProtectableItem : WorkloadProtectableItem
     {
@@ -29,7 +31,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="virtualMachineId"> Fully qualified ARM ID of the virtual machine. </param>
         /// <param name="virtualMachineVersion"> Specifies whether the container represents a Classic or an Azure Resource Manager VM. </param>
         /// <param name="resourceGroup"> Resource group name of Recovery Services Vault. </param>
-        internal IaasVmProtectableItem(string backupManagementType, string workloadType, string protectableItemType, string friendlyName, ProtectionStatus? protectionState, string virtualMachineId, string virtualMachineVersion, string resourceGroup) : base(backupManagementType, workloadType, protectableItemType, friendlyName, protectionState)
+        internal IaasVmProtectableItem(string backupManagementType, string workloadType, string protectableItemType, string friendlyName, BackupProtectionStatus? protectionState, ResourceIdentifier virtualMachineId, string virtualMachineVersion, string resourceGroup) : base(backupManagementType, workloadType, protectableItemType, friendlyName, protectionState)
         {
             VirtualMachineId = virtualMachineId;
             VirtualMachineVersion = virtualMachineVersion;
@@ -38,7 +40,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <summary> Fully qualified ARM ID of the virtual machine. </summary>
-        public string VirtualMachineId { get; set; }
+        public ResourceIdentifier VirtualMachineId { get; set; }
         /// <summary> Specifies whether the container represents a Classic or an Azure Resource Manager VM. </summary>
         public string VirtualMachineVersion { get; set; }
         /// <summary> Resource group name of Recovery Services Vault. </summary>

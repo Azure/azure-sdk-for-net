@@ -39,8 +39,8 @@ namespace Azure.Identity.Tests
             var options = new ClientCertificateCredentialOptions
             {
                 Transport = config.Transport,
-                DisableInstanceDiscovery = config.DisableMetadataDiscovery ?? false,
-                AdditionallyAllowedTenantsCore = config.AdditionallyAllowedTenants
+                DisableInstanceDiscovery = config.DisableInstanceDiscovery,
+                AdditionallyAllowedTenants = config.AdditionallyAllowedTenants
             };
             var pipeline = CredentialPipeline.GetInstance(options);
             var certificatePath = Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "cert.pfx");
@@ -225,15 +225,18 @@ namespace Azure.Identity.Tests
             var certificatePath = Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "cert.pfx");
             var certificatePathPem = Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "cert.pem");
             var mockCert = new X509Certificate2(certificatePath);
-            options = new ClientCertificateCredentialOptions();
+            options = new ClientCertificateCredentialOptions
+            {
+                AuthorityHost = new Uri("https://localhost")
+            };
             ((ClientCertificateCredentialOptions)options).SendCertificateChain = sendCertChain;
 
             ClientCertificateCredential credential = InstrumentClient(
                 usePemFile
                     ? new ClientCertificateCredential(TenantId, ClientId, certificatePathPem, default, options,
-                        new CredentialPipeline(new Uri("https://localhost"), _pipeline, new ClientDiagnostics(options)), null)
+                        new CredentialPipeline(_pipeline, new ClientDiagnostics(options)), null)
                     : new ClientCertificateCredential(TenantId, ClientId, mockCert, options,
-                        new CredentialPipeline(new Uri("https://localhost"), _pipeline, new ClientDiagnostics(options)), null)
+                        new CredentialPipeline(_pipeline, new ClientDiagnostics(options)), null)
             );
 
             var token = await credential.GetTokenAsync(context);

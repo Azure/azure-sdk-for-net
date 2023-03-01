@@ -11,7 +11,10 @@ using Azure.ResourceManager.SecurityDevOps.Models;
 
 namespace Azure.ResourceManager.SecurityDevOps
 {
-    /// <summary> A class representing the AzureDevOpsOrg data model. </summary>
+    /// <summary>
+    /// A class representing the AzureDevOpsOrg data model.
+    /// Azure DevOps Org Proxy Resource.
+    /// </summary>
     public partial class AzureDevOpsOrgData : ResourceData
     {
         /// <summary> Initializes a new instance of AzureDevOpsOrgData. </summary>

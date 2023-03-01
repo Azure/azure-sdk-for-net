@@ -12,7 +12,10 @@ using Azure.ResourceManager.Synapse.Models;
 
 namespace Azure.ResourceManager.Synapse
 {
-    /// <summary> A class representing the SynapseMaintenanceWindowOption data model. </summary>
+    /// <summary>
+    /// A class representing the SynapseMaintenanceWindowOption data model.
+    /// Maintenance window options.
+    /// </summary>
     public partial class SynapseMaintenanceWindowOptionData : ResourceData
     {
         /// <summary> Initializes a new instance of SynapseMaintenanceWindowOptionData. </summary>

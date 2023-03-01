@@ -18,7 +18,6 @@ namespace Azure.Identity
         private readonly Func<string> _assertionCallback;
         private readonly Func<CancellationToken, Task<string>> _asyncAssertionCallback;
         private readonly Func<AppTokenProviderParameters, Task<AppTokenProviderResult>> _appTokenProviderCallback;
-        private readonly Uri _authority;
 
         internal string RedirectUrl { get; }
 
@@ -58,7 +57,6 @@ namespace Azure.Identity
             : base(pipeline, tenantId, clientId, options)
         {
             _appTokenProviderCallback = appTokenProviderCallback;
-            _authority = options?.AuthorityHost ?? AzureAuthorityHosts.AzurePublicCloud;
         }
 
         internal string RegionalAuthority { get; } = EnvironmentVariables.AzureRegionalAuthorityName;
@@ -74,12 +72,12 @@ namespace Azure.Identity
             if (_appTokenProviderCallback != null)
             {
                 confClientBuilder.WithAppTokenProvider(_appTokenProviderCallback)
-                    .WithAuthority(_authority.AbsoluteUri, TenantId, false)
+                    .WithAuthority(AuthorityHost.AbsoluteUri, TenantId, false)
                     .WithInstanceDiscovery(false);
             }
             else
             {
-                confClientBuilder.WithAuthority(Pipeline.AuthorityHost.AbsoluteUri, TenantId);
+                confClientBuilder.WithAuthority(AuthorityHost.AbsoluteUri, TenantId);
                 if (DisableInstanceDiscovery)
                 {
                     confClientBuilder.WithInstanceDiscovery(false);
@@ -146,7 +144,7 @@ namespace Azure.Identity
 
             if (!string.IsNullOrEmpty(tenantId))
             {
-                builder.WithAuthority(Pipeline.AuthorityHost.AbsoluteUri, tenantId);
+                builder.WithAuthority(AuthorityHost.AbsoluteUri, tenantId);
             }
             return await builder
                 .ExecuteAsync(async, cancellationToken)
@@ -179,7 +177,7 @@ namespace Azure.Identity
             var builder = client.AcquireTokenSilent(scopes, account);
             if (!string.IsNullOrEmpty(tenantId))
             {
-                builder.WithAuthority(Pipeline.AuthorityHost.AbsoluteUri, tenantId);
+                builder.WithAuthority(AuthorityHost.AbsoluteUri, tenantId);
             }
             return await builder
                 .ExecuteAsync(async, cancellationToken)
@@ -213,7 +211,7 @@ namespace Azure.Identity
 
             if (!string.IsNullOrEmpty(tenantId))
             {
-                builder.WithAuthority(Pipeline.AuthorityHost.AbsoluteUri, tenantId);
+                builder.WithAuthority(AuthorityHost.AbsoluteUri, tenantId);
             }
             return await builder
                 .ExecuteAsync(async, cancellationToken)
@@ -247,7 +245,7 @@ namespace Azure.Identity
 
             if (!string.IsNullOrEmpty(tenantId))
             {
-                builder.WithAuthority(Pipeline.AuthorityHost.AbsoluteUri, tenantId);
+                builder.WithAuthority(AuthorityHost.AbsoluteUri, tenantId);
             }
             return await builder
                 .ExecuteAsync(async, cancellationToken)

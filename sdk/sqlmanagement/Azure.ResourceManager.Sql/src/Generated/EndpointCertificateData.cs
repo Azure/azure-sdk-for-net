@@ -10,7 +10,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Sql
 {
-    /// <summary> A class representing the EndpointCertificate data model. </summary>
+    /// <summary>
+    /// A class representing the EndpointCertificate data model.
+    /// Certificate used on an endpoint on the Managed Instance.
+    /// </summary>
     public partial class EndpointCertificateData : ResourceData
     {
         /// <summary> Initializes a new instance of EndpointCertificateData. </summary>

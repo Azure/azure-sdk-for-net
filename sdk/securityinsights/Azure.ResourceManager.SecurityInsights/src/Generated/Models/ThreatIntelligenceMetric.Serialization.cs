@@ -21,12 +21,12 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             Optional<IReadOnlyList<ThreatIntelligenceMetricEntity>> sourceMetrics = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("lastUpdatedTimeUtc"))
+                if (property.NameEquals("lastUpdatedTimeUtc"u8))
                 {
                     lastUpdatedTimeUtc = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("threatTypeMetrics"))
+                if (property.NameEquals("threatTypeMetrics"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     threatTypeMetrics = array;
                     continue;
                 }
-                if (property.NameEquals("patternTypeMetrics"))
+                if (property.NameEquals("patternTypeMetrics"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     patternTypeMetrics = array;
                     continue;
                 }
-                if (property.NameEquals("sourceMetrics"))
+                if (property.NameEquals("sourceMetrics"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

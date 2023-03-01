@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
 
         public static DataLakeAnalyticsFirewallState ToDataLakeAnalyticsFirewallState(this string value)
         {
-            if (string.Equals(value, "Enabled", StringComparison.InvariantCultureIgnoreCase)) return DataLakeAnalyticsFirewallState.Enabled;
-            if (string.Equals(value, "Disabled", StringComparison.InvariantCultureIgnoreCase)) return DataLakeAnalyticsFirewallState.Disabled;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Enabled")) return DataLakeAnalyticsFirewallState.Enabled;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Disabled")) return DataLakeAnalyticsFirewallState.Disabled;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown DataLakeAnalyticsFirewallState value.");
         }
     }

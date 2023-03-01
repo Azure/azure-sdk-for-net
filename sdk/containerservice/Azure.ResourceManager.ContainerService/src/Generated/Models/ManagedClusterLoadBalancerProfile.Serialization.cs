@@ -57,6 +57,11 @@ namespace Azure.ResourceManager.ContainerService.Models
                 writer.WritePropertyName("enableMultipleStandardLoadBalancers"u8);
                 writer.WriteBooleanValue(EnableMultipleStandardLoadBalancers.Value);
             }
+            if (Optional.IsDefined(BackendPoolType))
+            {
+                writer.WritePropertyName("backendPoolType"u8);
+                writer.WriteStringValue(BackendPoolType.Value.ToString());
+            }
             writer.WriteEndObject();
         }
 
@@ -69,6 +74,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             Optional<int> allocatedOutboundPorts = default;
             Optional<int> idleTimeoutInMinutes = default;
             Optional<bool> enableMultipleStandardLoadBalancers = default;
+            Optional<ManagedClusterLoadBalancerBackendPoolType> backendPoolType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("managedOutboundIPs"u8))
@@ -146,8 +152,18 @@ namespace Azure.ResourceManager.ContainerService.Models
                     enableMultipleStandardLoadBalancers = property.Value.GetBoolean();
                     continue;
                 }
+                if (property.NameEquals("backendPoolType"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    backendPoolType = new ManagedClusterLoadBalancerBackendPoolType(property.Value.GetString());
+                    continue;
+                }
             }
-            return new ManagedClusterLoadBalancerProfile(managedOutboundIPs.Value, outboundIPPrefixes.Value, outboundIPs.Value, Optional.ToList(effectiveOutboundIPs), Optional.ToNullable(allocatedOutboundPorts), Optional.ToNullable(idleTimeoutInMinutes), Optional.ToNullable(enableMultipleStandardLoadBalancers));
+            return new ManagedClusterLoadBalancerProfile(managedOutboundIPs.Value, outboundIPPrefixes.Value, outboundIPs.Value, Optional.ToList(effectiveOutboundIPs), Optional.ToNullable(allocatedOutboundPorts), Optional.ToNullable(idleTimeoutInMinutes), Optional.ToNullable(enableMultipleStandardLoadBalancers), Optional.ToNullable(backendPoolType));
         }
     }
 }

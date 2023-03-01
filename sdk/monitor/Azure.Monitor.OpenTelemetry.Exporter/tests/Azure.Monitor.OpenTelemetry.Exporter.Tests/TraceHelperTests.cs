@@ -1,8 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-#nullable disable // TODO: remove and fix errors
-
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -52,17 +50,19 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
                 parentContext: default,
                 startTime: DateTime.UtcNow);
 
+            Assert.NotNull(activity);
             var monitorTags = TraceHelper.EnumerateActivityTags(activity);
 
             if (telemetryType == "RequestData")
             {
                 var requestData = new RequestData(2, activity, ref monitorTags);
-                Assert.False(requestData.Properties.TryGetValue(msLinks, out var mslinks));
+                Assert.False(requestData.Properties.TryGetValue(msLinks, out _));
             }
             if (telemetryType == "RemoteDependencyData")
             {
                 var remoteDependencyData = new RemoteDependencyData(2, activity, ref monitorTags);
-                Assert.False(remoteDependencyData.Properties.TryGetValue(msLinks, out var mslinks));
+
+                Assert.False(remoteDependencyData.Properties.TryGetValue(msLinks, out _));
             }
         }
 
@@ -88,8 +88,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
                 links,
                 startTime: DateTime.UtcNow);
 
-            string expectedMSlinks = GetExpectedMSlinks(links);
-            string actualMSlinks = null;
+            Assert.NotNull(activity);
+            string? expectedMSlinks = GetExpectedMSlinks(links);
+            string? actualMSlinks = null;
 
             var monitorTags = TraceHelper.EnumerateActivityTags(activity);
 
@@ -127,8 +128,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
                 links.Add(activityLink);
             }
 
-            string expectedMSlinks = GetExpectedMSlinks(links.GetRange(0, MaxLinksAllowed));
-            string actualMSlinks = null;
+            string? expectedMSlinks = GetExpectedMSlinks(links.GetRange(0, MaxLinksAllowed));
+            string? actualMSlinks = null;
 
             using var activity = activitySource.StartActivity(
                 ActivityName,
@@ -138,6 +139,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
                 links,
                 startTime: DateTime.UtcNow);
 
+            Assert.NotNull(activity);
             var monitorTags = TraceHelper.EnumerateActivityTags(activity);
 
             if (telemetryType == "RequestData")
@@ -154,14 +156,14 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             // Check for valid JSON string
             try
             {
-                JsonDocument document = JsonDocument.Parse(actualMSlinks);
+                JsonDocument document = JsonDocument.Parse(actualMSlinks!);
             }
             catch (Exception)
             {
                 Assert.True(false, "_MSlinks should be a JSON formatted string");
             }
 
-            Assert.True(actualMSlinks.Length <= MaxLength);
+            Assert.True(actualMSlinks?.Length <= MaxLength);
             Assert.Equal(actualMSlinks, expectedMSlinks);
         }
 
@@ -176,10 +178,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             for (int i = 0; i < MaxLinksAllowed; i++)
             {
                 ActivityLink activityLink = new ActivityLink(new ActivityContext(
-                ActivityTraceId.CreateRandom(),
-                ActivitySpanId.CreateRandom(),
-                ActivityTraceFlags.None), null);
-                links.Add(activityLink);
+                    ActivityTraceId.CreateRandom(),
+                    ActivitySpanId.CreateRandom(),
+                    ActivityTraceFlags.None), null);
+                    links.Add(activityLink);
             }
 
             using var activity = activitySource.StartActivity(
@@ -190,8 +192,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
                 links,
                 startTime: DateTime.UtcNow);
 
-            string expectedMslinks = GetExpectedMSlinks(links);
-            string actualMSlinks = null;
+            Assert.NotNull(activity);
+            string? expectedMslinks = GetExpectedMSlinks(links);
+            string? actualMSlinks = null;
 
             var monitorTags = TraceHelper.EnumerateActivityTags(activity);
 
@@ -209,14 +212,14 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             // Check for valid JSON string
             try
             {
-                JsonDocument document = JsonDocument.Parse(actualMSlinks);
+                JsonDocument document = JsonDocument.Parse(actualMSlinks!);
             }
             catch (Exception)
             {
                 Assert.True(false, "_MSlinks should be a JSON formatted string");
             }
 
-            Assert.True(actualMSlinks.Length <= MaxLength);
+            Assert.True(actualMSlinks?.Length <= MaxLength);
             Assert.Equal(expectedMslinks, actualMSlinks);
         }
 
@@ -226,9 +229,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             var exceptionMessage = "Exception Message";
             using ActivitySource activitySource = new ActivitySource(ActivitySourceName);
             using var activity = activitySource.StartActivity(
-               ActivityName,
-               ActivityKind.Server);
+                ActivityName,
+                ActivityKind.Server);
 
+            Assert.NotNull(activity);
             activity.RecordException(new Exception(exceptionMessage));
 
             Activity[] activityList = new Activity[1];
@@ -241,9 +245,12 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             Assert.Equal(2, telemetryItems.Count());
             Assert.Equal("Exception", telemetryItems[0].Name);
             Assert.Equal("Request", telemetryItems[1].Name);
-            Assert.Equal(exceptionMessage, (telemetryItems[0].Data.BaseData as TelemetryExceptionData).Exceptions.First().Message);
-            Assert.Equal("System.Exception", (telemetryItems[0].Data.BaseData as TelemetryExceptionData).Exceptions.First().TypeName);
-            Assert.Equal("System.Exception: Exception Message", (telemetryItems[0].Data.BaseData as TelemetryExceptionData).Exceptions.First().Stack);
+
+            var telemetryExceptionData = (telemetryItems[0].Data.BaseData as TelemetryExceptionData);
+            Assert.NotNull(telemetryExceptionData);
+            Assert.Equal(exceptionMessage, telemetryExceptionData.Exceptions.First().Message);
+            Assert.Equal("System.Exception", telemetryExceptionData.Exceptions.First().TypeName);
+            Assert.Equal("System.Exception: Exception Message", telemetryExceptionData.Exceptions.First().Stack);
         }
 
         [Fact]
@@ -252,9 +259,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             var eventName = "Custom Event";
             using ActivitySource activitySource = new ActivitySource(ActivitySourceName);
             using var activity = activitySource.StartActivity(
-               ActivityName,
-               ActivityKind.Server);
+                ActivityName,
+                ActivityKind.Server);
 
+            Assert.NotNull(activity);
             var tagsCollection = new ActivityTagsCollection
             {
                 { "key1", "value1" },
@@ -274,10 +282,12 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             Assert.Equal(2, telemetryItems.Count());
             Assert.Equal("Message", telemetryItems[0].Name);
             Assert.Equal("Request", telemetryItems[1].Name);
-            Assert.Equal(eventName, (telemetryItems[0].Data.BaseData as MessageData).Message);
-            Assert.True((telemetryItems[0].Data.BaseData as MessageData).Properties.TryGetValue("key1", out var value));
+
+            var messageData = (telemetryItems[0].Data.BaseData as MessageData) ?? throw new Exception("Invalid BaseData");
+            Assert.Equal(eventName, messageData.Message);
+            Assert.True(messageData.Properties.TryGetValue("key1", out var value));
             Assert.Equal("value1", value);
-            Assert.Null((telemetryItems[0].Data.BaseData as MessageData).SeverityLevel);
+            Assert.Null(messageData.SeverityLevel);
         }
 
         [Fact]
@@ -285,8 +295,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         {
             using ActivitySource activitySource = new ActivitySource(ActivitySourceName);
             using var activity = activitySource.StartActivity(
-               ActivityName,
-               ActivityKind.Server);
+                ActivityName,
+                ActivityKind.Server);
+
+            Assert.NotNull(activity);
 
             // Checking with empty string here as OTel
             // adds the exception only if it non-null and non-empty.
@@ -310,8 +322,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             var exceptionMessage = "Exception Message";
             using ActivitySource activitySource = new ActivitySource(ActivitySourceName);
             using var activity = activitySource.StartActivity(
-               ActivityName,
-               ActivityKind.Server);
+                ActivityName,
+                ActivityKind.Server);
+
+            Assert.NotNull(activity);
 
             // Type is not null when using RecordException so creating the event manually
             // similar to https://github.com/open-telemetry/opentelemetry-dotnet/blob/872a52f5291804c7af19e90307b5cc097b2da709/src/OpenTelemetry.Api/Trace/ActivityExtensions.cs#L96-L113
@@ -335,7 +349,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             Assert.Equal("Request", telemetryItems[0].Name);
         }
 
-        private string GetExpectedMSlinks(IEnumerable<ActivityLink> links)
+        private string? GetExpectedMSlinks(IEnumerable<ActivityLink> links)
         {
             if (links != null && links.Any())
             {

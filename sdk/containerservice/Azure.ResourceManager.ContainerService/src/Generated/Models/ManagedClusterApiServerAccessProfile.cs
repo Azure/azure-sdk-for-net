@@ -25,13 +25,17 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <param name="privateDnsZone"> The default is System. For more details see [configure private DNS zone](https://docs.microsoft.com/azure/aks/private-clusters#configure-private-dns-zone). Allowed values are &apos;system&apos; and &apos;none&apos;. </param>
         /// <param name="enablePrivateClusterPublicFqdn"> Whether to create additional public FQDN for private cluster or not. </param>
         /// <param name="disableRunCommand"> Whether to disable run command for the cluster or not. </param>
-        internal ManagedClusterApiServerAccessProfile(IList<string> authorizedIPRanges, bool? enablePrivateCluster, string privateDnsZone, bool? enablePrivateClusterPublicFqdn, bool? disableRunCommand)
+        /// <param name="enableVnetIntegration"> Whether to enable apiserver vnet integration for the cluster or not. </param>
+        /// <param name="subnetId"> It is required when: 1. creating a new cluster with BYO Vnet; 2. updating an existing cluster to enable apiserver vnet integration. </param>
+        internal ManagedClusterApiServerAccessProfile(IList<string> authorizedIPRanges, bool? enablePrivateCluster, string privateDnsZone, bool? enablePrivateClusterPublicFqdn, bool? disableRunCommand, bool? enableVnetIntegration, ResourceIdentifier subnetId)
         {
             AuthorizedIPRanges = authorizedIPRanges;
             EnablePrivateCluster = enablePrivateCluster;
             PrivateDnsZone = privateDnsZone;
             EnablePrivateClusterPublicFqdn = enablePrivateClusterPublicFqdn;
             DisableRunCommand = disableRunCommand;
+            EnableVnetIntegration = enableVnetIntegration;
+            SubnetId = subnetId;
         }
 
         /// <summary> IP ranges are specified in CIDR format, e.g. 137.117.106.88/29. This feature is not compatible with clusters that use Public IP Per Node, or clusters that are using a Basic Load Balancer. For more information see [API server authorized IP ranges](https://docs.microsoft.com/azure/aks/api-server-authorized-ip-ranges). </summary>
@@ -44,5 +48,9 @@ namespace Azure.ResourceManager.ContainerService.Models
         public bool? EnablePrivateClusterPublicFqdn { get; set; }
         /// <summary> Whether to disable run command for the cluster or not. </summary>
         public bool? DisableRunCommand { get; set; }
+        /// <summary> Whether to enable apiserver vnet integration for the cluster or not. </summary>
+        public bool? EnableVnetIntegration { get; set; }
+        /// <summary> It is required when: 1. creating a new cluster with BYO Vnet; 2. updating an existing cluster to enable apiserver vnet integration. </summary>
+        public ResourceIdentifier SubnetId { get; set; }
     }
 }

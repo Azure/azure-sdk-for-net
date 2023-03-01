@@ -11,7 +11,10 @@ using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> A class representing the BgpConnection data model. </summary>
+    /// <summary>
+    /// A class representing the BgpConnection data model.
+    /// Virtual Appliance Site resource.
+    /// </summary>
     public partial class BgpConnectionData : NetworkResourceData
     {
         /// <summary> Initializes a new instance of BgpConnectionData. </summary>

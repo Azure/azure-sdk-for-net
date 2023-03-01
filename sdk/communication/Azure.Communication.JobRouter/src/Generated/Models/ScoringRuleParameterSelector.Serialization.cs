@@ -20,8 +20,8 @@ namespace Azure.Communication.JobRouter
 
         public static ScoringRuleParameterSelector ToScoringRuleParameterSelector(this string value)
         {
-            if (string.Equals(value, "jobLabels", StringComparison.InvariantCultureIgnoreCase)) return ScoringRuleParameterSelector.JobLabels;
-            if (string.Equals(value, "workerSelectors", StringComparison.InvariantCultureIgnoreCase)) return ScoringRuleParameterSelector.WorkerSelectors;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "jobLabels")) return ScoringRuleParameterSelector.JobLabels;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "workerSelectors")) return ScoringRuleParameterSelector.WorkerSelectors;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ScoringRuleParameterSelector value.");
         }
     }

@@ -50,6 +50,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
             OperationContext = "operationContext",
             Prompt = new FileSource(new Uri("https://localhost"))
         };
+
         private static CallMediaRecognizeOptions _choiceRecognizeOptions = new CallMediaRecognizeChoiceOptions(new CommunicationUserIdentifier("targetUserId"), s_recognizeChoices)
         {
             InterruptCallMediaOperation = true,
@@ -61,7 +62,8 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
                 SourceLocale = "en-US",
                 VoiceGender = GenderType.Female,
                 VoiceName = "LULU"
-            }
+            },
+            SpeechLanguage = "en-US",
         };
 
         private static readonly CallMediaRecognizeOptions _emptyRecognizeOptions = new CallMediaRecognizeDtmfOptions(new CommunicationUserIdentifier("targetUserId"), maxTonesToCollect: 1);
@@ -141,6 +143,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
                 Assert.AreEqual((int)HttpStatusCode.Accepted, result.GetRawResponse().Status);
             }
         }
+
         [TestCaseSource(nameof(TestData_PlayOperationsAsync))]
         public void PlayOperationsAsync_Return404NotFound(Func<CallMedia, Task<Response<PlayResult>>> operation)
         {

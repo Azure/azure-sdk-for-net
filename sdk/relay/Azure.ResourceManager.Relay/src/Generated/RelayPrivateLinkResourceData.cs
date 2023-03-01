@@ -11,7 +11,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Relay
 {
-    /// <summary> A class representing the RelayPrivateLinkResource data model. </summary>
+    /// <summary>
+    /// A class representing the RelayPrivateLinkResource data model.
+    /// Information of the private link resource.
+    /// </summary>
     public partial class RelayPrivateLinkResourceData : ResourceData
     {
         /// <summary> Initializes a new instance of RelayPrivateLinkResourceData. </summary>

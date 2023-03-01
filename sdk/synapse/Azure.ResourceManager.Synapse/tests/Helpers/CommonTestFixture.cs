@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Net;
 using Azure.Core;
 using Azure.ResourceManager.Synapse.Models;
 
@@ -97,22 +98,27 @@ namespace Azure.ResourceManager.Synapse.Tests.Helpers
         /// <summary>
         /// Gets or sets start ip address.
         /// </summary>
-        public string StartIpAddress { get; set; }
+        public IPAddress StartIpAddress { get; set; }
 
         /// <summary>
         /// Gets or sets end ip address.
         /// </summary>
-        public string EndIpAddress { get; set; }
+        public IPAddress EndIpAddress { get; set; }
+
+        /// <summary>
+        /// Gets or sets resource provisioning state.
+        /// </summary>
+        public SynapseProvisioningState? provisioningState { get; set; }
 
         /// <summary>
         /// Gets or sets updated start ip address.
         /// </summary>
-        public string UpdatedStartIpAddress { get; set; }
+        public IPAddress UpdatedStartIpAddress { get; set; }
 
         /// <summary>
         /// Gets or sets updated end ip address.
         /// </summary>
-        public string UpdatedEndIpAddress { get; set; }
+        public IPAddress UpdatedEndIpAddress { get; set; }
 
         /// <summary>
         /// Gets or sets kusto sku.
