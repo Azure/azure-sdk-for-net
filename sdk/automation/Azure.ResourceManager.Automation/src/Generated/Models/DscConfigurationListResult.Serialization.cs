@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.Automation.Models
     {
         internal static DscConfigurationListResult DeserializeDscConfigurationListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<DscConfigurationData>> value = default;
             Optional<string> nextLink = default;
             Optional<int> totalCount = default;

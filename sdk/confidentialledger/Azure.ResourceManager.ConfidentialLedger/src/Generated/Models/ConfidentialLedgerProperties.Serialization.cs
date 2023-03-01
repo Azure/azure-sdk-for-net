@@ -47,6 +47,10 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
 
         internal static ConfidentialLedgerProperties DeserializeConfidentialLedgerProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> ledgerName = default;
             Optional<Uri> ledgerUri = default;
             Optional<Uri> identityServiceUri = default;

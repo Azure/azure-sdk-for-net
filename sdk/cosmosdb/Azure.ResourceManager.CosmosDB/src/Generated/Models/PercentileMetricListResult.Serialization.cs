@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
     {
         internal static PercentileMetricListResult DeserializePercentileMetricListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<CosmosDBPercentileMetric>> value = default;
             foreach (var property in element.EnumerateObject())
             {

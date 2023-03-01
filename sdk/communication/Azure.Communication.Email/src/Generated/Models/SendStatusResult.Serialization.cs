@@ -14,6 +14,10 @@ namespace Azure.Communication.Email.Models
     {
         internal static SendStatusResult DeserializeSendStatusResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string messageId = default;
             SendStatus status = default;
             foreach (var property in element.EnumerateObject())

@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.ContainerInstance.Models
     {
         internal static ContainerState DeserializeContainerState(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> state = default;
             Optional<DateTimeOffset> startTime = default;
             Optional<int> exitCode = default;

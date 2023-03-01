@@ -29,6 +29,10 @@ namespace Azure.ResourceManager.Avs.Models
 
         internal static DiskPoolVolume DeserializeDiskPoolVolume(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier targetId = default;
             string lunName = default;
             Optional<LunMountMode> mountOption = default;

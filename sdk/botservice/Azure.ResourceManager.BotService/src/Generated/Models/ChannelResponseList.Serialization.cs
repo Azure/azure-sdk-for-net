@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.BotService.Models
     {
         internal static ChannelResponseList DeserializeChannelResponseList(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> nextLink = default;
             Optional<IReadOnlyList<BotChannelData>> value = default;
             foreach (var property in element.EnumerateObject())

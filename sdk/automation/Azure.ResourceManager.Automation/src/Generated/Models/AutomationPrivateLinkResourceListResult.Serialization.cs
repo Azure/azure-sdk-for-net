@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Automation.Models
     {
         internal static AutomationPrivateLinkResourceListResult DeserializeAutomationPrivateLinkResourceListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<AutomationPrivateLinkResource>> value = default;
             foreach (var property in element.EnumerateObject())
             {

@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Automation.Models
     {
         internal static AutomationAccountStatistics DeserializeAutomationAccountStatistics(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> counterProperty = default;
             Optional<long> counterValue = default;
             Optional<DateTimeOffset> startTime = default;

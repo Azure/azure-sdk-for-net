@@ -34,6 +34,10 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
 
         internal static HybridIdentityMetadataData DeserializeHybridIdentityMetadataData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;

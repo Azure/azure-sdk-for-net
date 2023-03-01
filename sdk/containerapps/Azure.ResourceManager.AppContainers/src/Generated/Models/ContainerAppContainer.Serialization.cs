@@ -86,6 +86,10 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         internal static ContainerAppContainer DeserializeContainerAppContainer(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<ContainerAppProbe>> probes = default;
             Optional<string> image = default;
             Optional<string> name = default;

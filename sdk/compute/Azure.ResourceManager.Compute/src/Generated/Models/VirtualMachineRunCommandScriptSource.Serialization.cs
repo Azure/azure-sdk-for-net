@@ -36,6 +36,10 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static VirtualMachineRunCommandScriptSource DeserializeVirtualMachineRunCommandScriptSource(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> script = default;
             Optional<Uri> scriptUri = default;
             Optional<string> commandId = default;

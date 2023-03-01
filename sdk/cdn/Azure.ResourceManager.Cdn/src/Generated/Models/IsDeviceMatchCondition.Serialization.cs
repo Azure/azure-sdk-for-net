@@ -50,6 +50,10 @@ namespace Azure.ResourceManager.Cdn.Models
 
         internal static IsDeviceMatchCondition DeserializeIsDeviceMatchCondition(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IsDeviceMatchConditionType typeName = default;
             IsDeviceOperator @operator = default;
             Optional<bool> negateCondition = default;

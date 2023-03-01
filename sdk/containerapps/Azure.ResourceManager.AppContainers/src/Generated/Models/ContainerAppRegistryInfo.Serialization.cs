@@ -36,6 +36,10 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         internal static ContainerAppRegistryInfo DeserializeContainerAppRegistryInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<Uri> registryUrl = default;
             Optional<string> registryUserName = default;
             Optional<string> registryPassword = default;

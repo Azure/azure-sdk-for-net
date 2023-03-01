@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Compute.Models
     {
         internal static ComputeResourceSkuRestrictions DeserializeComputeResourceSkuRestrictions(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ComputeResourceSkuRestrictionsType> type = default;
             Optional<IReadOnlyList<string>> values = default;
             Optional<ComputeResourceSkuRestrictionInfo> restrictionInfo = default;

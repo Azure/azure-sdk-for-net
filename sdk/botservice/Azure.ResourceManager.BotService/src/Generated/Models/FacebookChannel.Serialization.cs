@@ -45,6 +45,10 @@ namespace Azure.ResourceManager.BotService.Models
 
         internal static FacebookChannel DeserializeFacebookChannel(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<FacebookChannelProperties> properties = default;
             string channelName = default;
             Optional<ETag?> etag = default;

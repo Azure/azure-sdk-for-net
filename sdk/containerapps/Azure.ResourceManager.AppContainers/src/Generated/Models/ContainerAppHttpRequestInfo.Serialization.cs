@@ -48,6 +48,10 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         internal static ContainerAppHttpRequestInfo DeserializeContainerAppHttpRequestInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> host = default;
             Optional<IList<ContainerAppHttpHeaderInfo>> httpHeaders = default;
             Optional<string> path = default;

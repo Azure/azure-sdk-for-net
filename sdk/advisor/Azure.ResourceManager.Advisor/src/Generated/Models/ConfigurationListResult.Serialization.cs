@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Advisor.Models
     {
         internal static ConfigurationListResult DeserializeConfigurationListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<ConfigData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
