@@ -60,7 +60,6 @@ namespace Azure.ResourceManager.ServiceBus
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     location = new AzureLocation(property.Value.GetString());
@@ -85,7 +84,6 @@ namespace Azure.ResourceManager.ServiceBus
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -104,7 +102,6 @@ namespace Azure.ResourceManager.ServiceBus
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             action = ServiceBusFilterAction.DeserializeServiceBusFilterAction(property0.Value);
@@ -114,7 +111,6 @@ namespace Azure.ResourceManager.ServiceBus
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             filterType = property0.Value.GetString().ToServiceBusFilterType();
@@ -124,7 +120,6 @@ namespace Azure.ResourceManager.ServiceBus
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             sqlFilter = ServiceBusSqlFilter.DeserializeServiceBusSqlFilter(property0.Value);
@@ -134,7 +129,6 @@ namespace Azure.ResourceManager.ServiceBus
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             correlationFilter = ServiceBusCorrelationFilter.DeserializeServiceBusCorrelationFilter(property0.Value);

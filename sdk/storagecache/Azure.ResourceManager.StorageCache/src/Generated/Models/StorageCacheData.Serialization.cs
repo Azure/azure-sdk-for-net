@@ -123,7 +123,6 @@ namespace Azure.ResourceManager.StorageCache
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
@@ -133,7 +132,6 @@ namespace Azure.ResourceManager.StorageCache
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     sku = StorageCacheSkuInfo.DeserializeStorageCacheSkuInfo(property.Value);
@@ -143,7 +141,6 @@ namespace Azure.ResourceManager.StorageCache
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -178,7 +175,6 @@ namespace Azure.ResourceManager.StorageCache
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -197,7 +193,6 @@ namespace Azure.ResourceManager.StorageCache
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             cacheSizeGB = property0.Value.GetInt32();
@@ -207,7 +202,6 @@ namespace Azure.ResourceManager.StorageCache
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             health = StorageCacheHealth.DeserializeStorageCacheHealth(property0.Value);
@@ -217,7 +211,6 @@ namespace Azure.ResourceManager.StorageCache
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<IPAddress> array = new List<IPAddress>();
@@ -232,7 +225,6 @@ namespace Azure.ResourceManager.StorageCache
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             provisioningState = new StorageCacheProvisioningStateType(property0.Value.GetString());
@@ -242,7 +234,6 @@ namespace Azure.ResourceManager.StorageCache
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             subnet = new ResourceIdentifier(property0.Value.GetString());
@@ -252,7 +243,6 @@ namespace Azure.ResourceManager.StorageCache
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             upgradeStatus = StorageCacheUpgradeStatus.DeserializeStorageCacheUpgradeStatus(property0.Value);
@@ -262,7 +252,6 @@ namespace Azure.ResourceManager.StorageCache
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             upgradeSettings = StorageCacheUpgradeSettings.DeserializeStorageCacheUpgradeSettings(property0.Value);
@@ -272,7 +261,6 @@ namespace Azure.ResourceManager.StorageCache
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             networkSettings = StorageCacheNetworkSettings.DeserializeStorageCacheNetworkSettings(property0.Value);
@@ -282,7 +270,6 @@ namespace Azure.ResourceManager.StorageCache
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             encryptionSettings = StorageCacheEncryptionSettings.DeserializeStorageCacheEncryptionSettings(property0.Value);
@@ -292,7 +279,6 @@ namespace Azure.ResourceManager.StorageCache
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             securitySettings = StorageCacheSecuritySettings.DeserializeStorageCacheSecuritySettings(property0.Value);
@@ -302,7 +288,6 @@ namespace Azure.ResourceManager.StorageCache
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             directoryServicesSettings = StorageCacheDirectorySettings.DeserializeStorageCacheDirectorySettings(property0.Value);
@@ -312,7 +297,6 @@ namespace Azure.ResourceManager.StorageCache
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<string> array = new List<string>();
@@ -327,7 +311,6 @@ namespace Azure.ResourceManager.StorageCache
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<PrimingJob> array = new List<PrimingJob>();
@@ -342,7 +325,6 @@ namespace Azure.ResourceManager.StorageCache
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<StorageTargetSpaceAllocation> array = new List<StorageTargetSpaceAllocation>();

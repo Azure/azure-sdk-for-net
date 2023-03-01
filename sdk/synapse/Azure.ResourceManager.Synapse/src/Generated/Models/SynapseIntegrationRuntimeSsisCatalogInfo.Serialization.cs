@@ -63,7 +63,6 @@ namespace Azure.ResourceManager.Synapse.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        catalogServerEndpoint = null;
                         continue;
                     }
                     catalogServerEndpoint = new Uri(property.Value.GetString());
@@ -78,7 +77,6 @@ namespace Azure.ResourceManager.Synapse.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     catalogAdminPassword = SynapseSecureString.DeserializeSynapseSecureString(property.Value);
@@ -88,7 +86,6 @@ namespace Azure.ResourceManager.Synapse.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     catalogPricingTier = new SynapseIntegrationRuntimeSsisCatalogPricingTier(property.Value.GetString());

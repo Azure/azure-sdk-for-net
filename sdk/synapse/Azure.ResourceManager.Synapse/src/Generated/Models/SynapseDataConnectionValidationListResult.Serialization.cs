@@ -22,7 +22,6 @@ namespace Azure.ResourceManager.Synapse.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<SynapseDataConnectionValidationResult> array = new List<SynapseDataConnectionValidationResult>();

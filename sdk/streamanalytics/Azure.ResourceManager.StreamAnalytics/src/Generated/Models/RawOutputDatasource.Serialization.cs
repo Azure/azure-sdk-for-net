@@ -53,7 +53,6 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                payloadUri = null;
                                 continue;
                             }
                             payloadUri = new Uri(property0.Value.GetString());

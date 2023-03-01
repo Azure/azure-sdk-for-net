@@ -64,7 +64,6 @@ namespace Azure.ResourceManager.StorageSync
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -99,7 +98,6 @@ namespace Azure.ResourceManager.StorageSync
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -118,7 +116,6 @@ namespace Azure.ResourceManager.StorageSync
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             incomingTrafficPolicy = new IncomingTrafficPolicy(property0.Value.GetString());
@@ -128,7 +125,6 @@ namespace Azure.ResourceManager.StorageSync
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             storageSyncServiceStatus = property0.Value.GetInt32();
@@ -138,7 +134,6 @@ namespace Azure.ResourceManager.StorageSync
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             storageSyncServiceUid = property0.Value.GetGuid();
@@ -163,7 +158,6 @@ namespace Azure.ResourceManager.StorageSync
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<StorageSyncPrivateEndpointConnectionData> array = new List<StorageSyncPrivateEndpointConnectionData>();

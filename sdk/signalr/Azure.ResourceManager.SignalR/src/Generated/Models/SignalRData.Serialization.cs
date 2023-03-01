@@ -143,7 +143,6 @@ namespace Azure.ResourceManager.SignalR
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     sku = SignalRResourceSku.DeserializeSignalRResourceSku(property.Value);
@@ -153,7 +152,6 @@ namespace Azure.ResourceManager.SignalR
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     kind = new SignalRServiceKind(property.Value.GetString());
@@ -163,7 +161,6 @@ namespace Azure.ResourceManager.SignalR
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
@@ -173,7 +170,6 @@ namespace Azure.ResourceManager.SignalR
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -208,7 +204,6 @@ namespace Azure.ResourceManager.SignalR
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -227,7 +222,6 @@ namespace Azure.ResourceManager.SignalR
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             provisioningState = new SignalRProvisioningState(property0.Value.GetString());
@@ -247,7 +241,6 @@ namespace Azure.ResourceManager.SignalR
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             publicPort = property0.Value.GetInt32();
@@ -257,7 +250,6 @@ namespace Azure.ResourceManager.SignalR
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             serverPort = property0.Value.GetInt32();
@@ -272,7 +264,6 @@ namespace Azure.ResourceManager.SignalR
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<SignalRPrivateEndpointConnectionData> array = new List<SignalRPrivateEndpointConnectionData>();
@@ -287,7 +278,6 @@ namespace Azure.ResourceManager.SignalR
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<SignalRSharedPrivateLinkResourceData> array = new List<SignalRSharedPrivateLinkResourceData>();
@@ -302,7 +292,6 @@ namespace Azure.ResourceManager.SignalR
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             tls = SignalRTlsSettings.DeserializeSignalRTlsSettings(property0.Value);
@@ -317,7 +306,6 @@ namespace Azure.ResourceManager.SignalR
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<SignalRFeature> array = new List<SignalRFeature>();
@@ -332,7 +320,6 @@ namespace Azure.ResourceManager.SignalR
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             liveTraceConfiguration = SignalRLiveTraceConfiguration.DeserializeSignalRLiveTraceConfiguration(property0.Value);
@@ -342,7 +329,6 @@ namespace Azure.ResourceManager.SignalR
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             resourceLogConfiguration = SignalRResourceLogCategoryListResult.DeserializeSignalRResourceLogCategoryListResult(property0.Value);
@@ -352,7 +338,6 @@ namespace Azure.ResourceManager.SignalR
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             cors = SignalRCorsSettings.DeserializeSignalRCorsSettings(property0.Value);
@@ -362,7 +347,6 @@ namespace Azure.ResourceManager.SignalR
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             upstream = ServerlessUpstreamSettings.DeserializeServerlessUpstreamSettings(property0.Value);
@@ -372,7 +356,6 @@ namespace Azure.ResourceManager.SignalR
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             networkACLs = SignalRNetworkAcls.DeserializeSignalRNetworkAcls(property0.Value);
@@ -387,7 +370,6 @@ namespace Azure.ResourceManager.SignalR
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             disableLocalAuth = property0.Value.GetBoolean();
@@ -397,7 +379,6 @@ namespace Azure.ResourceManager.SignalR
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             disableAadAuth = property0.Value.GetBoolean();

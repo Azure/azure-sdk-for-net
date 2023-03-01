@@ -32,7 +32,6 @@ namespace Azure.ResourceManager.Sql.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     failoverPolicy = new ReadOnlyEndpointFailoverPolicy(property.Value.GetString());

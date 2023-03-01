@@ -251,7 +251,6 @@ namespace Azure.ResourceManager.ServiceFabric
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     etag = new ETag(property.Value.GetString());
@@ -261,7 +260,6 @@ namespace Azure.ResourceManager.ServiceFabric
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -296,7 +294,6 @@ namespace Azure.ResourceManager.ServiceFabric
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -315,7 +312,6 @@ namespace Azure.ResourceManager.ServiceFabric
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<ClusterAddOnFeature> array = new List<ClusterAddOnFeature>();
@@ -330,7 +326,6 @@ namespace Azure.ResourceManager.ServiceFabric
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<ClusterVersionDetails> array = new List<ClusterVersionDetails>();
@@ -345,7 +340,6 @@ namespace Azure.ResourceManager.ServiceFabric
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             azureActiveDirectory = ClusterAadSetting.DeserializeClusterAadSetting(property0.Value);
@@ -355,7 +349,6 @@ namespace Azure.ResourceManager.ServiceFabric
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             certificate = ClusterCertificateDescription.DeserializeClusterCertificateDescription(property0.Value);
@@ -365,7 +358,6 @@ namespace Azure.ResourceManager.ServiceFabric
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             certificateCommonNames = ClusterServerCertificateCommonNames.DeserializeClusterServerCertificateCommonNames(property0.Value);
@@ -375,7 +367,6 @@ namespace Azure.ResourceManager.ServiceFabric
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<ClusterClientCertificateCommonName> array = new List<ClusterClientCertificateCommonName>();
@@ -390,7 +381,6 @@ namespace Azure.ResourceManager.ServiceFabric
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<ClusterClientCertificateThumbprint> array = new List<ClusterClientCertificateThumbprint>();
@@ -410,7 +400,6 @@ namespace Azure.ResourceManager.ServiceFabric
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                clusterEndpoint = null;
                                 continue;
                             }
                             clusterEndpoint = new Uri(property0.Value.GetString());
@@ -420,7 +409,6 @@ namespace Azure.ResourceManager.ServiceFabric
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             clusterId = property0.Value.GetGuid();
@@ -430,7 +418,6 @@ namespace Azure.ResourceManager.ServiceFabric
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             clusterState = new ServiceFabricClusterState(property0.Value.GetString());
@@ -440,7 +427,6 @@ namespace Azure.ResourceManager.ServiceFabric
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             diagnosticsStorageAccountConfig = DiagnosticsStorageAccountConfig.DeserializeDiagnosticsStorageAccountConfig(property0.Value);
@@ -450,7 +436,6 @@ namespace Azure.ResourceManager.ServiceFabric
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             eventStoreServiceEnabled = property0.Value.GetBoolean();
@@ -460,7 +445,6 @@ namespace Azure.ResourceManager.ServiceFabric
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<SettingsSectionDescription> array = new List<SettingsSectionDescription>();
@@ -475,7 +459,6 @@ namespace Azure.ResourceManager.ServiceFabric
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                managementEndpoint = null;
                                 continue;
                             }
                             managementEndpoint = new Uri(property0.Value.GetString());
@@ -485,7 +468,6 @@ namespace Azure.ResourceManager.ServiceFabric
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<ClusterNodeTypeDescription> array = new List<ClusterNodeTypeDescription>();
@@ -500,7 +482,6 @@ namespace Azure.ResourceManager.ServiceFabric
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             provisioningState = new ServiceFabricProvisioningState(property0.Value.GetString());
@@ -510,7 +491,6 @@ namespace Azure.ResourceManager.ServiceFabric
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             reliabilityLevel = new ClusterReliabilityLevel(property0.Value.GetString());
@@ -520,7 +500,6 @@ namespace Azure.ResourceManager.ServiceFabric
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             reverseProxyCertificate = ClusterCertificateDescription.DeserializeClusterCertificateDescription(property0.Value);
@@ -530,7 +509,6 @@ namespace Azure.ResourceManager.ServiceFabric
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             reverseProxyCertificateCommonNames = ClusterServerCertificateCommonNames.DeserializeClusterServerCertificateCommonNames(property0.Value);
@@ -540,7 +518,6 @@ namespace Azure.ResourceManager.ServiceFabric
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             upgradeDescription = ClusterUpgradePolicy.DeserializeClusterUpgradePolicy(property0.Value);
@@ -550,7 +527,6 @@ namespace Azure.ResourceManager.ServiceFabric
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             upgradeMode = new ClusterUpgradeMode(property0.Value.GetString());
@@ -560,7 +536,6 @@ namespace Azure.ResourceManager.ServiceFabric
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             applicationTypeVersionsCleanupPolicy = ApplicationTypeVersionsCleanupPolicy.DeserializeApplicationTypeVersionsCleanupPolicy(property0.Value);
@@ -575,7 +550,6 @@ namespace Azure.ResourceManager.ServiceFabric
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             sfZonalUpgradeMode = new SfZonalUpgradeMode(property0.Value.GetString());
@@ -585,7 +559,6 @@ namespace Azure.ResourceManager.ServiceFabric
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             vmssZonalUpgradeMode = new VmssZonalUpgradeMode(property0.Value.GetString());
@@ -595,7 +568,6 @@ namespace Azure.ResourceManager.ServiceFabric
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             infrastructureServiceManager = property0.Value.GetBoolean();
@@ -605,7 +577,6 @@ namespace Azure.ResourceManager.ServiceFabric
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             upgradeWave = new ClusterUpgradeCadence(property0.Value.GetString());
@@ -615,7 +586,6 @@ namespace Azure.ResourceManager.ServiceFabric
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             upgradePauseStartTimestampUtc = property0.Value.GetDateTimeOffset("O");
@@ -625,7 +595,6 @@ namespace Azure.ResourceManager.ServiceFabric
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             upgradePauseEndTimestampUtc = property0.Value.GetDateTimeOffset("O");
@@ -635,7 +604,6 @@ namespace Azure.ResourceManager.ServiceFabric
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             waveUpgradePaused = property0.Value.GetBoolean();
@@ -645,7 +613,6 @@ namespace Azure.ResourceManager.ServiceFabric
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<ClusterNotification> array = new List<ClusterNotification>();

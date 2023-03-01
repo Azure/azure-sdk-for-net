@@ -23,7 +23,6 @@ namespace Azure.ResourceManager.Sql.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<SqlSynapseLinkWorkspace> array = new List<SqlSynapseLinkWorkspace>();

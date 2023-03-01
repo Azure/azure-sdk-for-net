@@ -35,7 +35,6 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     organizationalData = AwsOrganizationalInfo.DeserializeAwsOrganizationalInfo(property.Value);

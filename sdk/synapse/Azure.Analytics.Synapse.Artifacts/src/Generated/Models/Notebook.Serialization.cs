@@ -120,7 +120,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     targetSparkConfiguration = SparkConfigurationReference.DeserializeSparkConfigurationReference(property.Value);

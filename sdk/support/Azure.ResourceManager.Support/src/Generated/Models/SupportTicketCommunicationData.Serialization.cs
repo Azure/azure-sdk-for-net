@@ -72,7 +72,6 @@ namespace Azure.ResourceManager.Support
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -91,7 +90,6 @@ namespace Azure.ResourceManager.Support
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             communicationType = new SupportTicketCommunicationType(property0.Value.GetString());
@@ -101,7 +99,6 @@ namespace Azure.ResourceManager.Support
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             communicationDirection = new SupportTicketCommunicationDirection(property0.Value.GetString());
@@ -126,7 +123,6 @@ namespace Azure.ResourceManager.Support
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             createdDate = property0.Value.GetDateTimeOffset("O");

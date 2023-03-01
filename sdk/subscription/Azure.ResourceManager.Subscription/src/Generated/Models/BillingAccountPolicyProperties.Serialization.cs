@@ -23,7 +23,6 @@ namespace Azure.ResourceManager.Subscription.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ServiceTenant> array = new List<ServiceTenant>();
@@ -38,7 +37,6 @@ namespace Azure.ResourceManager.Subscription.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     allowTransfers = property.Value.GetBoolean();

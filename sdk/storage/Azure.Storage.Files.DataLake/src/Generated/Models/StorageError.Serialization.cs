@@ -32,7 +32,6 @@ namespace Azure.Storage.Files.DataLake.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     error = StorageErrorError.DeserializeStorageErrorError(property.Value);

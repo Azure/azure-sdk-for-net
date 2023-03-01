@@ -169,7 +169,6 @@ namespace Azure.ResourceManager.SecurityInsights
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     etag = new ETag(property.Value.GetString());
@@ -194,7 +193,6 @@ namespace Azure.ResourceManager.SecurityInsights
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -213,7 +211,6 @@ namespace Azure.ResourceManager.SecurityInsights
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             watchlistId = property0.Value.GetGuid();
@@ -233,7 +230,6 @@ namespace Azure.ResourceManager.SecurityInsights
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             source = new Source(property0.Value.GetString());
@@ -243,7 +239,6 @@ namespace Azure.ResourceManager.SecurityInsights
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             created = property0.Value.GetDateTimeOffset("O");
@@ -253,7 +248,6 @@ namespace Azure.ResourceManager.SecurityInsights
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             updated = property0.Value.GetDateTimeOffset("O");
@@ -263,7 +257,6 @@ namespace Azure.ResourceManager.SecurityInsights
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             createdBy = SecurityInsightsUserInfo.DeserializeSecurityInsightsUserInfo(property0.Value);
@@ -273,7 +266,6 @@ namespace Azure.ResourceManager.SecurityInsights
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             updatedBy = SecurityInsightsUserInfo.DeserializeSecurityInsightsUserInfo(property0.Value);
@@ -298,7 +290,6 @@ namespace Azure.ResourceManager.SecurityInsights
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             isDeleted = property0.Value.GetBoolean();
@@ -308,7 +299,6 @@ namespace Azure.ResourceManager.SecurityInsights
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<string> array = new List<string>();
@@ -323,7 +313,6 @@ namespace Azure.ResourceManager.SecurityInsights
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             defaultDuration = property0.Value.GetTimeSpan("P");
@@ -333,7 +322,6 @@ namespace Azure.ResourceManager.SecurityInsights
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             tenantId = property0.Value.GetGuid();
@@ -343,7 +331,6 @@ namespace Azure.ResourceManager.SecurityInsights
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             numberOfLinesToSkip = property0.Value.GetInt32();

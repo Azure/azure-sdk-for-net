@@ -115,7 +115,6 @@ namespace Azure.ResourceManager.StorageSync.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -139,7 +138,6 @@ namespace Azure.ResourceManager.StorageSync.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             cloudTiering = new StorageSyncFeatureStatus(property0.Value.GetString());
@@ -149,7 +147,6 @@ namespace Azure.ResourceManager.StorageSync.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             volumeFreeSpacePercent = property0.Value.GetInt32();
@@ -159,7 +156,6 @@ namespace Azure.ResourceManager.StorageSync.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             tierFilesOlderThanDays = property0.Value.GetInt32();
@@ -174,7 +170,6 @@ namespace Azure.ResourceManager.StorageSync.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             serverResourceId = new ResourceIdentifier(property0.Value.GetString());
@@ -184,7 +179,6 @@ namespace Azure.ResourceManager.StorageSync.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             offlineDataTransfer = new StorageSyncFeatureStatus(property0.Value.GetString());
@@ -199,7 +193,6 @@ namespace Azure.ResourceManager.StorageSync.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             initialDownloadPolicy = new InitialDownloadPolicy(property0.Value.GetString());
@@ -209,7 +202,6 @@ namespace Azure.ResourceManager.StorageSync.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             localCacheMode = new LocalCacheMode(property0.Value.GetString());
@@ -219,7 +211,6 @@ namespace Azure.ResourceManager.StorageSync.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             initialUploadPolicy = new InitialUploadPolicy(property0.Value.GetString());

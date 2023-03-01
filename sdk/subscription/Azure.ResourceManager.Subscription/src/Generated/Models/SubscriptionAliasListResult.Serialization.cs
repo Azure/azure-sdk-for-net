@@ -24,7 +24,6 @@ namespace Azure.ResourceManager.Subscription.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<SubscriptionAliasData> array = new List<SubscriptionAliasData>();

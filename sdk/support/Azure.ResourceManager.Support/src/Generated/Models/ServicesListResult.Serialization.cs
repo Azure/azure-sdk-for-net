@@ -23,7 +23,6 @@ namespace Azure.ResourceManager.Support.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<SupportAzureServiceData> array = new List<SupportAzureServiceData>();

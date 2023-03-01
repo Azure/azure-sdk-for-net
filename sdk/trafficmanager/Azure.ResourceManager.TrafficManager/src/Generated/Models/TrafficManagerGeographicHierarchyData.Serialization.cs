@@ -54,7 +54,6 @@ namespace Azure.ResourceManager.TrafficManager
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     id = new ResourceIdentifier(property.Value.GetString());
@@ -69,7 +68,6 @@ namespace Azure.ResourceManager.TrafficManager
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     type = new ResourceType(property.Value.GetString());
@@ -88,7 +86,6 @@ namespace Azure.ResourceManager.TrafficManager
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             geographicHierarchy = TrafficManagerRegion.DeserializeTrafficManagerRegion(property0.Value);

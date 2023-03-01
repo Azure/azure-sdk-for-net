@@ -44,7 +44,6 @@ namespace Azure.ResourceManager.Synapse.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        keyVaultUrl = null;
                         continue;
                     }
                     keyVaultUrl = new Uri(property.Value.GetString());

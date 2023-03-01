@@ -75,7 +75,6 @@ namespace Azure.AI.TextAnalytics
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     modifier = new TemporalModifier(property.Value.GetString());

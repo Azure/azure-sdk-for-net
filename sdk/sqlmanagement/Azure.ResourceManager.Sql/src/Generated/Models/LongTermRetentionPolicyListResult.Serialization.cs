@@ -24,7 +24,6 @@ namespace Azure.ResourceManager.Sql.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<LongTermRetentionPolicyData> array = new List<LongTermRetentionPolicyData>();

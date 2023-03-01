@@ -23,7 +23,6 @@ namespace Azure.Analytics.Synapse.ManagedPrivateEndpoints.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ManagedPrivateEndpoint> array = new List<ManagedPrivateEndpoint>();

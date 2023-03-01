@@ -130,7 +130,6 @@ namespace Azure.ResourceManager.ServiceFabric
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
@@ -140,7 +139,6 @@ namespace Azure.ResourceManager.ServiceFabric
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     etag = new ETag(property.Value.GetString());
@@ -150,7 +148,6 @@ namespace Azure.ResourceManager.ServiceFabric
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -185,7 +182,6 @@ namespace Azure.ResourceManager.ServiceFabric
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -209,7 +205,6 @@ namespace Azure.ResourceManager.ServiceFabric
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -224,7 +219,6 @@ namespace Azure.ResourceManager.ServiceFabric
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             upgradePolicy = ApplicationUpgradePolicy.DeserializeApplicationUpgradePolicy(property0.Value);
@@ -234,7 +228,6 @@ namespace Azure.ResourceManager.ServiceFabric
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             minimumNodes = property0.Value.GetInt64();
@@ -244,7 +237,6 @@ namespace Azure.ResourceManager.ServiceFabric
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             maximumNodes = property0.Value.GetInt64();
@@ -254,7 +246,6 @@ namespace Azure.ResourceManager.ServiceFabric
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             removeApplicationCapacity = property0.Value.GetBoolean();
@@ -264,7 +255,6 @@ namespace Azure.ResourceManager.ServiceFabric
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<ApplicationMetricDescription> array = new List<ApplicationMetricDescription>();
@@ -279,7 +269,6 @@ namespace Azure.ResourceManager.ServiceFabric
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<ApplicationUserAssignedIdentity> array = new List<ApplicationUserAssignedIdentity>();

@@ -31,7 +31,6 @@ namespace Azure.AI.Translation.Document
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     path = new Uri(property.Value.GetString());
@@ -81,7 +80,6 @@ namespace Azure.AI.Translation.Document
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     characterCharged = property.Value.GetInt64();

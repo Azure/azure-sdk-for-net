@@ -44,7 +44,6 @@ namespace Azure.ResourceManager.StorageSync.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     status = new StorageSyncPrivateEndpointServiceConnectionStatus(property.Value.GetString());

@@ -86,7 +86,6 @@ namespace Azure.ResourceManager.StorageCache
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     location = new AzureLocation(property.Value.GetString());
@@ -111,7 +110,6 @@ namespace Azure.ResourceManager.StorageCache
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -130,7 +128,6 @@ namespace Azure.ResourceManager.StorageCache
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<NamespaceJunction> array = new List<NamespaceJunction>();
@@ -145,7 +142,6 @@ namespace Azure.ResourceManager.StorageCache
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             targetType = new StorageTargetType(property0.Value.GetString());
@@ -155,7 +151,6 @@ namespace Azure.ResourceManager.StorageCache
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             provisioningState = new StorageCacheProvisioningStateType(property0.Value.GetString());
@@ -165,7 +160,6 @@ namespace Azure.ResourceManager.StorageCache
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             state = new StorageTargetOperationalStateType(property0.Value.GetString());
@@ -175,7 +169,6 @@ namespace Azure.ResourceManager.StorageCache
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             nfs3 = Nfs3Target.DeserializeNfs3Target(property0.Value);
@@ -185,7 +178,6 @@ namespace Azure.ResourceManager.StorageCache
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             clfs = Models.ClfsTarget.DeserializeClfsTarget(property0.Value);
@@ -195,7 +187,6 @@ namespace Azure.ResourceManager.StorageCache
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             unknown = UnknownTarget.DeserializeUnknownTarget(property0.Value);
@@ -205,7 +196,6 @@ namespace Azure.ResourceManager.StorageCache
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             blobNfs = BlobNfsTarget.DeserializeBlobNfsTarget(property0.Value);
@@ -215,7 +205,6 @@ namespace Azure.ResourceManager.StorageCache
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             allocationPercentage = property0.Value.GetInt32();

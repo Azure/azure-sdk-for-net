@@ -22,7 +22,6 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        azurePortalUri = null;
                         continue;
                     }
                     azurePortalUri = new Uri(property.Value.GetString());
