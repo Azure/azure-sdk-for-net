@@ -26,35 +26,42 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
             foreach (var activity in batchActivity)
             {
-                var monitorTags = EnumerateActivityTags(activity);
-                telemetryItem = new TelemetryItem(activity, ref monitorTags, resource, instrumentationKey);
-
-                // Check for Exceptions events
-                if (activity.Events.Any())
+                try
                 {
-                    AddTelemetryFromActivityEvents(activity, telemetryItem, telemetryItems);
-                }
+                    var monitorTags = EnumerateActivityTags(activity);
+                    telemetryItem = new TelemetryItem(activity, ref monitorTags, resource, instrumentationKey);
 
-                switch (activity.GetTelemetryType())
+                    // Check for Exceptions events
+                    if (activity.Events.Any())
+                    {
+                        AddTelemetryFromActivityEvents(activity, telemetryItem, telemetryItems);
+                    }
+
+                    switch (activity.GetTelemetryType())
+                    {
+                        case TelemetryType.Request:
+                            telemetryItem.Data = new MonitorBase
+                            {
+                                BaseType = "RequestData",
+                                BaseData = new RequestData(Version, activity, ref monitorTags),
+                            };
+                            break;
+                        case TelemetryType.Dependency:
+                            telemetryItem.Data = new MonitorBase
+                            {
+                                BaseType = "RemoteDependencyData",
+                                BaseData = new RemoteDependencyData(Version, activity, ref monitorTags),
+                            };
+                            break;
+                    }
+
+                    monitorTags.Return();
+                    telemetryItems.Add(telemetryItem);
+                }
+                catch (Exception ex)
                 {
-                    case TelemetryType.Request:
-                        telemetryItem.Data = new MonitorBase
-                        {
-                            BaseType = "RequestData",
-                            BaseData = new RequestData(Version, activity, ref monitorTags),
-                        };
-                        break;
-                    case TelemetryType.Dependency:
-                        telemetryItem.Data = new MonitorBase
-                        {
-                            BaseType = "RemoteDependencyData",
-                            BaseData = new RemoteDependencyData(Version, activity, ref monitorTags),
-                        };
-                        break;
+                    AzureMonitorExporterEventSource.Log.WriteError("FailedToConvertActivity", ex);
                 }
-
-                monitorTags.Return();
-                telemetryItems.Add(telemetryItem);
             }
 
             return telemetryItems;

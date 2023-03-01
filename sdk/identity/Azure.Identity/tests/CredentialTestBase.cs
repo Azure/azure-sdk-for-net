@@ -119,7 +119,7 @@ namespace Azure.Identity.Tests
 
             var config = new CommonCredentialTestConfig()
             {
-                DisableMetadataDiscovery = disable,
+                DisableInstanceDiscovery = disable,
                 Transport = mockTransport,
                 TenantId = TenantId,
             };
@@ -173,8 +173,7 @@ namespace Azure.Identity.Tests
                 Transport = mockTransport,
                 TenantId = parameters.TenantId,
                 RequestContext = parameters.TokenRequestContext,
-                AdditionallyAllowedTenants = parameters.AdditionallyAllowedTenants,
-                DisableMetadataDiscovery = null
+                AdditionallyAllowedTenants = parameters.AdditionallyAllowedTenants
             };
             var credential = GetTokenCredential(config);
 
@@ -385,13 +384,12 @@ namespace Azure.Identity.Tests
             }
         }
 
-        public class CommonCredentialTestConfig
+        public class CommonCredentialTestConfig : TokenCredentialOptions, ISupportsAdditionallyAllowedTenants, ISupportsDisableInstanceDiscovery
         {
-            public bool? DisableMetadataDiscovery { get; set; }
-            public HttpPipelineTransport Transport { get; set; }
+            public bool DisableInstanceDiscovery { get; set; }
             public TokenRequestContext RequestContext { get; set; }
             public string TenantId { get; set; }
-            public List<string> AdditionallyAllowedTenants { get; set; }
+            public IList<string> AdditionallyAllowedTenants { get; set; } = new List<string>();
         }
     }
 }

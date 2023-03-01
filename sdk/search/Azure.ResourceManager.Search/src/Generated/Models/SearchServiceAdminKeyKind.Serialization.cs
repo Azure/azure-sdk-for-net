@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.Search.Models
 
         public static SearchServiceAdminKeyKind ToSearchServiceAdminKeyKind(this string value)
         {
-            if (string.Equals(value, "primary", StringComparison.InvariantCultureIgnoreCase)) return SearchServiceAdminKeyKind.Primary;
-            if (string.Equals(value, "secondary", StringComparison.InvariantCultureIgnoreCase)) return SearchServiceAdminKeyKind.Secondary;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "primary")) return SearchServiceAdminKeyKind.Primary;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "secondary")) return SearchServiceAdminKeyKind.Secondary;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown SearchServiceAdminKeyKind value.");
         }
     }

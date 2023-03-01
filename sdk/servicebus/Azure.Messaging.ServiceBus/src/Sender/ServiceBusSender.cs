@@ -11,6 +11,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.Core.Shared;
 using Azure.Messaging.ServiceBus.Core;
 using Azure.Messaging.ServiceBus.Diagnostics;
 using Microsoft.Azure.Amqp;
@@ -97,7 +98,7 @@ namespace Azure.Messaging.ServiceBus
         /// </summary>
         ///
         private readonly TransportSender _innerSender;
-        private readonly EntityScopeFactory _scopeFactory;
+        private readonly MessagingClientDiagnostics _clientDiagnostics;
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="ServiceBusSender"/> class.
@@ -128,7 +129,12 @@ namespace Azure.Messaging.ServiceBus
                     entityPath,
                     _retryPolicy,
                     Identifier);
-                _scopeFactory = new EntityScopeFactory(EntityPath, FullyQualifiedNamespace);
+                _clientDiagnostics = new MessagingClientDiagnostics(
+                    DiagnosticProperty.DiagnosticNamespace,
+                    DiagnosticProperty.ResourceProviderNamespace,
+                    DiagnosticProperty.ServiceBusServiceContext,
+                    FullyQualifiedNamespace,
+                    EntityPath);
             }
             catch (Exception ex)
             {
@@ -236,7 +242,7 @@ namespace Azure.Messaging.ServiceBus
 
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
             Logger.SendMessageStart(Identifier, messageCount: readOnlyCollection.Count);
-            using DiagnosticScope scope = CreateDiagnosticScope(readOnlyCollection, DiagnosticProperty.SendActivityName);
+            using DiagnosticScope scope = CreateDiagnosticScope(readOnlyCollection, DiagnosticProperty.SendActivityName, MessagingDiagnosticOperation.Publish);
             scope.Start();
 
             try
@@ -256,33 +262,35 @@ namespace Azure.Messaging.ServiceBus
             Logger.SendMessageComplete(Identifier);
         }
 
-        private DiagnosticScope CreateDiagnosticScope(IReadOnlyCollection<ServiceBusMessage> messages, string activityName)
+        private DiagnosticScope CreateDiagnosticScope(IReadOnlyCollection<ServiceBusMessage> messages, string activityName, MessagingDiagnosticOperation operation)
         {
             foreach (ServiceBusMessage message in messages)
             {
-                _scopeFactory.InstrumentMessage(message);
+                _clientDiagnostics.InstrumentMessage(message.ApplicationProperties, DiagnosticProperty.MessageActivityName);
             }
 
             // create a new scope for the specified operation
-            DiagnosticScope scope = _scopeFactory.CreateScope(
+            DiagnosticScope scope = _clientDiagnostics.CreateScope(
                 activityName,
-                DiagnosticScope.ActivityKind.Client);
+                DiagnosticScope.ActivityKind.Client,
+                operation);
 
             scope.SetMessageData(messages);
 
             return scope;
         }
 
-        private DiagnosticScope CreateDiagnosticScope(ServiceBusMessageBatch messageBatch, string activityName)
+        private DiagnosticScope CreateDiagnosticScope(ServiceBusMessageBatch messageBatch, string activityName, MessagingDiagnosticOperation operation)
         {
             // Messages in a batch have already been instrumented when
             // they are added to the batch so we don't need to instrument them here.
             var messages = messageBatch.AsReadOnly<AmqpMessage>();
 
             // create a new scope for the specified operation
-            DiagnosticScope scope = _scopeFactory.CreateScope(
+            DiagnosticScope scope = _clientDiagnostics.CreateScope(
                 activityName,
-                DiagnosticScope.ActivityKind.Client);
+                DiagnosticScope.ActivityKind.Client,
+                operation);
 
             scope.SetMessageData(messages);
 
@@ -337,14 +345,14 @@ namespace Azure.Messaging.ServiceBus
             try
             {
                 TransportMessageBatch transportBatch = await _innerSender.CreateMessageBatchAsync(options, cancellationToken).ConfigureAwait(false);
-                batch = new ServiceBusMessageBatch(transportBatch, _scopeFactory);
+                batch = new ServiceBusMessageBatch(transportBatch, _clientDiagnostics);
             }
             catch (Exception ex)
             {
                 Logger.CreateMessageBatchException(Identifier, ex.ToString());
                 throw;
             }
-            cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
+
             Logger.CreateMessageBatchComplete(Identifier);
             return batch;
         }
@@ -376,7 +384,8 @@ namespace Azure.Messaging.ServiceBus
             Logger.SendMessageStart(Identifier, messageBatch.Count);
             using DiagnosticScope scope = CreateDiagnosticScope(
                 messageBatch,
-                DiagnosticProperty.SendActivityName);
+                DiagnosticProperty.SendActivityName,
+                MessagingDiagnosticOperation.Publish);
             scope.Start();
 
             try
@@ -395,7 +404,6 @@ namespace Azure.Messaging.ServiceBus
                 messageBatch.Unlock();
             }
 
-            cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
             Logger.SendMessageComplete(Identifier);
         }
 
@@ -483,7 +491,8 @@ namespace Azure.Messaging.ServiceBus
 
             using DiagnosticScope scope = CreateDiagnosticScope(
                 readOnlyCollection,
-                DiagnosticProperty.ScheduleActivityName);
+                DiagnosticProperty.ScheduleActivityName,
+                MessagingDiagnosticOperation.Publish);
             scope.Start();
 
             IReadOnlyList<long> sequenceNumbers = null;
@@ -502,7 +511,6 @@ namespace Azure.Messaging.ServiceBus
                 throw;
             }
 
-            cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
             Logger.ScheduleMessagesComplete(Identifier);
             return sequenceNumbers;
         }
@@ -548,7 +556,7 @@ namespace Azure.Messaging.ServiceBus
 
             Logger.CancelScheduledMessagesStart(Identifier, sequenceArray);
 
-            using DiagnosticScope scope = _scopeFactory.CreateScope(
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope(
                 DiagnosticProperty.CancelActivityName,
                 DiagnosticScope.ActivityKind.Client);
             scope.Start();
@@ -564,7 +572,6 @@ namespace Azure.Messaging.ServiceBus
                 throw;
             }
 
-            cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
             Logger.CancelScheduledMessagesComplete(Identifier);
         }
 

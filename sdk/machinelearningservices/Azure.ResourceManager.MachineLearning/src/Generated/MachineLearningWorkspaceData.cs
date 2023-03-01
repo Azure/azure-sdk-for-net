@@ -13,7 +13,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.MachineLearning
 {
-    /// <summary> A class representing the MachineLearningWorkspace data model. </summary>
+    /// <summary>
+    /// A class representing the MachineLearningWorkspace data model.
+    /// An object that represents a machine learning workspace.
+    /// </summary>
     public partial class MachineLearningWorkspaceData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of MachineLearningWorkspaceData. </summary>

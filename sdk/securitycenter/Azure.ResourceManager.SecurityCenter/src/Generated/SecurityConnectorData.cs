@@ -14,7 +14,10 @@ using Azure.ResourceManager.SecurityCenter.Models;
 
 namespace Azure.ResourceManager.SecurityCenter
 {
-    /// <summary> A class representing the SecurityConnector data model. </summary>
+    /// <summary>
+    /// A class representing the SecurityConnector data model.
+    /// The security connector resource.
+    /// </summary>
     public partial class SecurityConnectorData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of SecurityConnectorData. </summary>

@@ -767,21 +767,21 @@ namespace Azure.ResourceManager.Synapse
         /// <returns> Returns a <see cref="SynapseWorkspaceAdministratorResource" /> object. </returns>
         public virtual SynapseWorkspaceAdministratorResource GetSynapseWorkspaceAdministratorResource()
         {
-            return new SynapseWorkspaceAdministratorResource(Client, new ResourceIdentifier(Id.ToString() + "/administrators/activeDirectory"));
+            return new SynapseWorkspaceAdministratorResource(Client, Id.AppendChildResource("administrators", "activeDirectory"));
         }
 
         /// <summary> Gets an object representing a SynapseWorkspaceSqlAdministratorResource along with the instance operations that can be performed on it in the SynapseWorkspace. </summary>
         /// <returns> Returns a <see cref="SynapseWorkspaceSqlAdministratorResource" /> object. </returns>
         public virtual SynapseWorkspaceSqlAdministratorResource GetSynapseWorkspaceSqlAdministratorResource()
         {
-            return new SynapseWorkspaceSqlAdministratorResource(Client, new ResourceIdentifier(Id.ToString() + "/sqlAdministrators/activeDirectory"));
+            return new SynapseWorkspaceSqlAdministratorResource(Client, Id.AppendChildResource("sqlAdministrators", "activeDirectory"));
         }
 
         /// <summary> Gets an object representing a SynapseManagedIdentitySqlControlSettingResource along with the instance operations that can be performed on it in the SynapseWorkspace. </summary>
         /// <returns> Returns a <see cref="SynapseManagedIdentitySqlControlSettingResource" /> object. </returns>
         public virtual SynapseManagedIdentitySqlControlSettingResource GetSynapseManagedIdentitySqlControlSetting()
         {
-            return new SynapseManagedIdentitySqlControlSettingResource(Client, new ResourceIdentifier(Id.ToString() + "/managedIdentitySqlControlSettings/default"));
+            return new SynapseManagedIdentitySqlControlSettingResource(Client, Id.AppendChildResource("managedIdentitySqlControlSettings", "default"));
         }
 
         /// <summary> Gets a collection of SynapseRestorableDroppedSqlPoolResources in the SynapseWorkspace. </summary>

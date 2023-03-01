@@ -11,7 +11,10 @@ using Azure.ResourceManager.TrafficManager.Models;
 
 namespace Azure.ResourceManager.TrafficManager
 {
-    /// <summary> A class representing the TrafficManagerProfile data model. </summary>
+    /// <summary>
+    /// A class representing the TrafficManagerProfile data model.
+    /// Class representing a Traffic Manager profile.
+    /// </summary>
     public partial class TrafficManagerProfileData : TrafficManagerTrackedResourceData
     {
         /// <summary> Initializes a new instance of TrafficManagerProfileData. </summary>

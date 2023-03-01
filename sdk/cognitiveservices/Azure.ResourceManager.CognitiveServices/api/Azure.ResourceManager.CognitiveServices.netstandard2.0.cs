@@ -475,6 +475,14 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         public CognitiveServicesIPRule(string value) { }
         public string Value { get { throw null; } set { } }
     }
+    public partial class CognitiveServicesKeyVaultProperties
+    {
+        public CognitiveServicesKeyVaultProperties() { }
+        public System.Guid? IdentityClientId { get { throw null; } set { } }
+        public string KeyName { get { throw null; } set { } }
+        public System.Uri KeyVaultUri { get { throw null; } set { } }
+        public string KeyVersion { get { throw null; } set { } }
+    }
     public partial class CognitiveServicesMultiRegionSettings
     {
         public CognitiveServicesMultiRegionSettings() { }
@@ -846,10 +854,19 @@ namespace Azure.ResourceManager.CognitiveServices.Models
     public partial class ServiceAccountEncryptionProperties
     {
         public ServiceAccountEncryptionProperties() { }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        [System.ObsoleteAttribute("This property is obsolete and will be removed in a future release", false)]
         public System.Guid? IdentityClientId { get { throw null; } set { } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        [System.ObsoleteAttribute("This property is obsolete and will be removed in a future release", false)]
         public string KeyName { get { throw null; } set { } }
         public Azure.ResourceManager.CognitiveServices.Models.ServiceAccountEncryptionKeySource? KeySource { get { throw null; } set { } }
+        public Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesKeyVaultProperties KeyVaultProperties { get { throw null; } set { } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        [System.ObsoleteAttribute("This property is obsolete and will be removed in a future release", false)]
         public System.Uri KeyVaultUri { get { throw null; } set { } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        [System.ObsoleteAttribute("This property is obsolete and will be removed in a future release", false)]
         public string KeyVersion { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]

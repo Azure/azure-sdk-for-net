@@ -23,6 +23,7 @@ namespace Azure.ResourceManager.Hci.Models
             Optional<DateTimeOffset> lastUpdated = default;
             Optional<ImdsAttestationState> imdsAttestation = default;
             Optional<HciClusterDiagnosticLevel> diagnosticLevel = default;
+            Optional<IReadOnlyList<string>> supportedCapabilities = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("clusterName"u8))
@@ -90,8 +91,23 @@ namespace Azure.ResourceManager.Hci.Models
                     diagnosticLevel = new HciClusterDiagnosticLevel(property.Value.GetString());
                     continue;
                 }
+                if (property.NameEquals("supportedCapabilities"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetString());
+                    }
+                    supportedCapabilities = array;
+                    continue;
+                }
             }
-            return new HciClusterReportedProperties(clusterName.Value, Optional.ToNullable(clusterId), clusterVersion.Value, Optional.ToList(nodes), Optional.ToNullable(lastUpdated), Optional.ToNullable(imdsAttestation), Optional.ToNullable(diagnosticLevel));
+            return new HciClusterReportedProperties(clusterName.Value, Optional.ToNullable(clusterId), clusterVersion.Value, Optional.ToList(nodes), Optional.ToNullable(lastUpdated), Optional.ToNullable(imdsAttestation), Optional.ToNullable(diagnosticLevel), Optional.ToList(supportedCapabilities));
         }
     }
 }

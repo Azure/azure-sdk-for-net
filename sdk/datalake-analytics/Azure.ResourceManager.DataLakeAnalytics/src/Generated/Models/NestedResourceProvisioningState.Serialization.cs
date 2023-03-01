@@ -21,9 +21,9 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
 
         public static NestedResourceProvisioningState ToNestedResourceProvisioningState(this string value)
         {
-            if (string.Equals(value, "Succeeded", StringComparison.InvariantCultureIgnoreCase)) return NestedResourceProvisioningState.Succeeded;
-            if (string.Equals(value, "Canceled", StringComparison.InvariantCultureIgnoreCase)) return NestedResourceProvisioningState.Canceled;
-            if (string.Equals(value, "Failed", StringComparison.InvariantCultureIgnoreCase)) return NestedResourceProvisioningState.Failed;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Succeeded")) return NestedResourceProvisioningState.Succeeded;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Canceled")) return NestedResourceProvisioningState.Canceled;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Failed")) return NestedResourceProvisioningState.Failed;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown NestedResourceProvisioningState value.");
         }
     }

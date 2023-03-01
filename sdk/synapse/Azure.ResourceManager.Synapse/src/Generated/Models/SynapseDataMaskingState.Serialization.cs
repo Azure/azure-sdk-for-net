@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.Synapse.Models
 
         public static SynapseDataMaskingState ToSynapseDataMaskingState(this string value)
         {
-            if (string.Equals(value, "Disabled", StringComparison.InvariantCultureIgnoreCase)) return SynapseDataMaskingState.Disabled;
-            if (string.Equals(value, "Enabled", StringComparison.InvariantCultureIgnoreCase)) return SynapseDataMaskingState.Enabled;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Disabled")) return SynapseDataMaskingState.Disabled;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Enabled")) return SynapseDataMaskingState.Enabled;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown SynapseDataMaskingState value.");
         }
     }

@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Marketplace
 {
-    /// <summary> A class representing the MarketplaceApprovalRequest data model. </summary>
+    /// <summary>
+    /// A class representing the MarketplaceApprovalRequest data model.
+    /// Request approval resource.
+    /// </summary>
     public partial class MarketplaceApprovalRequestData : ResourceData
     {
         /// <summary> Initializes a new instance of MarketplaceApprovalRequestData. </summary>

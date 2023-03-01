@@ -10,6 +10,7 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.ConnectionString;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.PersistentStorage;
+using Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat;
 using Azure.Monitor.OpenTelemetry.Exporter.Models;
 
 using OpenTelemetry;
@@ -41,6 +42,33 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             _applicationInsightsRestClient = InitializeRestClient(options, _connectionVars, credential);
 
             _fileBlobProvider = InitializeOfflineStorage(options);
+
+            // TODO: uncomment following line for enablement.
+            // InitializeStatsbeat(options, _connectionVars);
+        }
+
+        private static void InitializeStatsbeat(AzureMonitorExporterOptions options, ConnectionVars connectionVars)
+        {
+            if (options.EnableStatsbeat && connectionVars != null)
+            {
+                try
+                {
+                    var disableStatsbeat = Environment.GetEnvironmentVariable("APPLICATIONINSIGHTS_STATSBEAT_DISABLED");
+                    if (string.Equals(disableStatsbeat, "true", StringComparison.OrdinalIgnoreCase))
+                    {
+                        AzureMonitorExporterEventSource.Log.WriteInformational("StatsbeatInitialization: ", "Statsbeat was disabled via environment variable");
+
+                        return;
+                    }
+
+                    // TODO: Implement IDisposable for transmitter and dispose statsbeat.
+                    _ = new AzureMonitorStatsbeat(connectionVars);
+                }
+                catch (Exception ex)
+                {
+                    AzureMonitorExporterEventSource.Log.WriteWarning($"ErrorInitializingStatsbeatFor:{connectionVars.InstrumentationKey}", ex);
+                }
+            }
         }
 
         public string InstrumentationKey => _connectionVars.InstrumentationKey;

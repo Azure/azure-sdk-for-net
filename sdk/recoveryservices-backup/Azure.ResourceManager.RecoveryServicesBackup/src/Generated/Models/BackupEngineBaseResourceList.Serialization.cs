@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     {
         internal static BackupEngineBaseResourceList DeserializeBackupEngineBaseResourceList(JsonElement element)
         {
-            Optional<IReadOnlyList<BackupEngineBaseResourceData>> value = default;
+            Optional<IReadOnlyList<BackupEngineData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<BackupEngineBaseResourceData> array = new List<BackupEngineBaseResourceData>();
+                    List<BackupEngineData> array = new List<BackupEngineData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(BackupEngineBaseResourceData.DeserializeBackupEngineBaseResourceData(item));
+                        array.Add(BackupEngineData.DeserializeBackupEngineData(item));
                     }
                     value = array;
                     continue;

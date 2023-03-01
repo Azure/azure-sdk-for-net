@@ -44,6 +44,8 @@
     <Compile Include="$(AzureCoreSharedSources)PageResponseEnumerator.cs" LinkBase="SharedSource\Azure.Core" />
     <Compile Include="$(AzureCoreSharedSources)AzureResourceProviderNamespaceAttribute.cs" LinkBase="SharedSource\Azure.Core" />
     <Compile Include="$(AzureCoreSharedSources)GuidUtilities.cs" LinkBase="SharedSource\Azure.Core" />
+    <Compile Include="$(AzureCoreSharedSources)MessagingClientDiagnostics.cs" LinkBase="SharedSource\Azure.Core" />
+    <Compile Include="$(AzureCoreSharedSources)MessagingDiagnosticOperation.cs" LinkBase="SharedSource\Azure.Core" />
     <Compile Include="$(AzureCoreAmqpSharedSources)AmqpAnnotatedMessageConverter.cs" LinkBase="SharedSource\Azure.Core.Amqp" />
     <Compile Include="$(AzureCoreAmqpSharedSources)MessageBody.cs" LinkBase="SharedSource\Azure.Core.Amqp" />
   </ItemGroup>

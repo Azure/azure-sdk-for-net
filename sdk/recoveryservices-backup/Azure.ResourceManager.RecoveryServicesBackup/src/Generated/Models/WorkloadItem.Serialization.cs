@@ -46,13 +46,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "AzureVmWorkloadItem": return AzureVmWorkloadItem.DeserializeAzureVmWorkloadItem(element);
-                    case "SAPAseDatabase": return AzureVmWorkloadSAPAseDatabaseWorkloadItem.DeserializeAzureVmWorkloadSAPAseDatabaseWorkloadItem(element);
-                    case "SAPAseSystem": return AzureVmWorkloadSAPAseSystemWorkloadItem.DeserializeAzureVmWorkloadSAPAseSystemWorkloadItem(element);
-                    case "SAPHanaDatabase": return AzureVmWorkloadSAPHanaDatabaseWorkloadItem.DeserializeAzureVmWorkloadSAPHanaDatabaseWorkloadItem(element);
-                    case "SAPHanaSystem": return AzureVmWorkloadSAPHanaSystemWorkloadItem.DeserializeAzureVmWorkloadSAPHanaSystemWorkloadItem(element);
-                    case "SQLDataBase": return AzureVmWorkloadSQLDatabaseWorkloadItem.DeserializeAzureVmWorkloadSQLDatabaseWorkloadItem(element);
-                    case "SQLInstance": return AzureVmWorkloadSQLInstanceWorkloadItem.DeserializeAzureVmWorkloadSQLInstanceWorkloadItem(element);
+                    case "AzureVmWorkloadItem": return VmWorkloadItem.DeserializeVmWorkloadItem(element);
+                    case "SAPAseDatabase": return VmWorkloadSapAseDatabaseWorkloadItem.DeserializeVmWorkloadSapAseDatabaseWorkloadItem(element);
+                    case "SAPAseSystem": return VmWorkloadSapAseSystemWorkloadItem.DeserializeVmWorkloadSapAseSystemWorkloadItem(element);
+                    case "SAPHanaDatabase": return VmWorkloadSapHanaDatabaseWorkloadItem.DeserializeVmWorkloadSapHanaDatabaseWorkloadItem(element);
+                    case "SAPHanaSystem": return VmWorkloadSapHanaSystemWorkloadItem.DeserializeVmWorkloadSapHanaSystemWorkloadItem(element);
+                    case "SQLDataBase": return VmWorkloadSqlDatabaseWorkloadItem.DeserializeVmWorkloadSqlDatabaseWorkloadItem(element);
+                    case "SQLInstance": return VmWorkloadSqlInstanceWorkloadItem.DeserializeVmWorkloadSqlInstanceWorkloadItem(element);
                 }
             }
             return UnknownWorkloadItem.DeserializeUnknownWorkloadItem(element);

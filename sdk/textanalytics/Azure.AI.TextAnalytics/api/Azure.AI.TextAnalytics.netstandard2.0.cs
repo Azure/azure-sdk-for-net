@@ -154,7 +154,7 @@ namespace Azure.AI.TextAnalytics
         public string ActionName { get { throw null; } set { } }
         public bool? DisableServiceLogs { get { throw null; } set { } }
         public Azure.AI.TextAnalytics.HealthcareDocumentType? DocumentType { get { throw null; } set { } }
-        public Azure.AI.TextAnalytics.WellKnownFhirVersion? FhirVersion { get { throw null; } set { } }
+        public Azure.AI.TextAnalytics.FhirVersion? FhirVersion { get { throw null; } set { } }
         public string ModelVersion { get { throw null; } set { } }
     }
     public partial class AnalyzeHealthcareEntitiesActionResult : Azure.AI.TextAnalytics.TextAnalyticsActionResult
@@ -192,7 +192,7 @@ namespace Azure.AI.TextAnalytics
         public string AutoDetectionDefaultLanguage { get { throw null; } set { } }
         public string DisplayName { get { throw null; } set { } }
         public Azure.AI.TextAnalytics.HealthcareDocumentType? DocumentType { get { throw null; } set { } }
-        public Azure.AI.TextAnalytics.WellKnownFhirVersion? FhirVersion { get { throw null; } set { } }
+        public Azure.AI.TextAnalytics.FhirVersion? FhirVersion { get { throw null; } set { } }
     }
     public partial class AnalyzeHealthcareEntitiesResult : Azure.AI.TextAnalytics.TextAnalyticsResult
     {
@@ -625,6 +625,23 @@ namespace Azure.AI.TextAnalytics
         internal ExtractKeyPhrasesResultCollection() : base (default(System.Collections.Generic.IList<Azure.AI.TextAnalytics.ExtractKeyPhrasesResult>)) { }
         public string ModelVersion { get { throw null; } }
         public Azure.AI.TextAnalytics.TextDocumentBatchStatistics Statistics { get { throw null; } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct FhirVersion : System.IEquatable<Azure.AI.TextAnalytics.FhirVersion>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public FhirVersion(string value) { throw null; }
+        public static Azure.AI.TextAnalytics.FhirVersion V4_0_1 { get { throw null; } }
+        public bool Equals(Azure.AI.TextAnalytics.FhirVersion other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.AI.TextAnalytics.FhirVersion left, Azure.AI.TextAnalytics.FhirVersion right) { throw null; }
+        public static implicit operator Azure.AI.TextAnalytics.FhirVersion (string value) { throw null; }
+        public static bool operator !=(Azure.AI.TextAnalytics.FhirVersion left, Azure.AI.TextAnalytics.FhirVersion right) { throw null; }
+        public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct HealthcareDocumentType : System.IEquatable<Azure.AI.TextAnalytics.HealthcareDocumentType>
@@ -2058,23 +2075,6 @@ namespace Azure.AI.TextAnalytics
         public static bool operator ==(Azure.AI.TextAnalytics.WeightUnit left, Azure.AI.TextAnalytics.WeightUnit right) { throw null; }
         public static implicit operator Azure.AI.TextAnalytics.WeightUnit (string value) { throw null; }
         public static bool operator !=(Azure.AI.TextAnalytics.WeightUnit left, Azure.AI.TextAnalytics.WeightUnit right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct WellKnownFhirVersion : System.IEquatable<Azure.AI.TextAnalytics.WellKnownFhirVersion>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public WellKnownFhirVersion(string value) { throw null; }
-        public static Azure.AI.TextAnalytics.WellKnownFhirVersion V4_0_1 { get { throw null; } }
-        public bool Equals(Azure.AI.TextAnalytics.WellKnownFhirVersion other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.AI.TextAnalytics.WellKnownFhirVersion left, Azure.AI.TextAnalytics.WellKnownFhirVersion right) { throw null; }
-        public static implicit operator Azure.AI.TextAnalytics.WellKnownFhirVersion (string value) { throw null; }
-        public static bool operator !=(Azure.AI.TextAnalytics.WellKnownFhirVersion left, Azure.AI.TextAnalytics.WellKnownFhirVersion right) { throw null; }
         public override string ToString() { throw null; }
     }
 }

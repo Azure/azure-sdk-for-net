@@ -86,6 +86,7 @@ The `DefaultAzureCredential` attempts to authenticate via the following mechanis
 ![DefaultAzureCredential authentication flow][default_azure_credential_authflow_image]
 
 1. **Environment** - The `DefaultAzureCredential` will read account information specified via [environment variables](#environment-variables) and use it to authenticate.
+1. **Workload Identity** - If the application is deployed to an Azure host with Workload Identity enabled, the `DefaultAzureCredential` will authenticate with that account.
 1. **Managed Identity** - If the application is deployed to an Azure host with Managed Identity enabled, the `DefaultAzureCredential` will authenticate with that account.
 1. **Azure Developer CLI** - If the developer has authenticated via the Azure Developer CLI `azd login` command, the `DefaultAzureCredential` will authenticate with that account.
 1. **Visual Studio** - If the developer has authenticated via Visual Studio, the `DefaultAzureCredential` will authenticate with that account.

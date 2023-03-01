@@ -42,6 +42,12 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         public void VerifyEventSource_Informational() => Test(writeAction: AzureMonitorExporterEventSource.Log.WriteInformational, expectedId: 4, expectedName: "WriteInformational");
 
         [Fact]
+        public void VerifyEventSource_Informational_WithException() => TestException(writeAction: AzureMonitorExporterEventSource.Log.WriteInformational, expectedId: 4, expectedName: "WriteInformational");
+
+        [Fact]
+        public void VerifyEventSource_Informational_WithAggregateException() => TestAggregateException(writeAction: AzureMonitorExporterEventSource.Log.WriteInformational, expectedId: 4, expectedName: "WriteInformational");
+
+        [Fact]
         public void VerifyEventSource_Verbose() => Test(writeAction: AzureMonitorExporterEventSource.Log.WriteVerbose, expectedId: 5, expectedName: "WriteVerbose");
 
         private void Test(Action<string, string> writeAction, int expectedId, string expectedName)

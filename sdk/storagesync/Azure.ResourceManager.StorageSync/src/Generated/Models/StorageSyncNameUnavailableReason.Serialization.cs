@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.StorageSync.Models
 
         public static StorageSyncNameUnavailableReason ToStorageSyncNameUnavailableReason(this string value)
         {
-            if (string.Equals(value, "Invalid", StringComparison.InvariantCultureIgnoreCase)) return StorageSyncNameUnavailableReason.Invalid;
-            if (string.Equals(value, "AlreadyExists", StringComparison.InvariantCultureIgnoreCase)) return StorageSyncNameUnavailableReason.AlreadyExists;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Invalid")) return StorageSyncNameUnavailableReason.Invalid;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "AlreadyExists")) return StorageSyncNameUnavailableReason.AlreadyExists;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown StorageSyncNameUnavailableReason value.");
         }
     }

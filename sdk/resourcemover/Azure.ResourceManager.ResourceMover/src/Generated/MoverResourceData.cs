@@ -11,7 +11,10 @@ using Azure.ResourceManager.ResourceMover.Models;
 
 namespace Azure.ResourceManager.ResourceMover
 {
-    /// <summary> A class representing the MoverResource data model. </summary>
+    /// <summary>
+    /// A class representing the MoverResource data model.
+    /// Defines the move resource.
+    /// </summary>
     public partial class MoverResourceData : ResourceData
     {
         /// <summary> Initializes a new instance of MoverResourceData. </summary>

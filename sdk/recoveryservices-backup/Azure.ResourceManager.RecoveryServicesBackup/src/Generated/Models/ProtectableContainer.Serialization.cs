@@ -46,8 +46,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "StorageContainer": return AzureStorageProtectableContainer.DeserializeAzureStorageProtectableContainer(element);
-                    case "VMAppContainer": return AzureVmAppContainerProtectableContainer.DeserializeAzureVmAppContainerProtectableContainer(element);
+                    case "StorageContainer": return StorageProtectableContainer.DeserializeStorageProtectableContainer(element);
+                    case "VMAppContainer": return VmAppContainerProtectableContainer.DeserializeVmAppContainerProtectableContainer(element);
                 }
             }
             return UnknownProtectableContainer.DeserializeUnknownProtectableContainer(element);

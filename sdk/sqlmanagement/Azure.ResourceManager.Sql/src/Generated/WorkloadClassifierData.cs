@@ -10,7 +10,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Sql
 {
-    /// <summary> A class representing the WorkloadClassifier data model. </summary>
+    /// <summary>
+    /// A class representing the WorkloadClassifier data model.
+    /// Workload classifier operations for a data warehouse
+    /// </summary>
     public partial class WorkloadClassifierData : ResourceData
     {
         /// <summary> Initializes a new instance of WorkloadClassifierData. </summary>

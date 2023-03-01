@@ -16,7 +16,6 @@ namespace Azure.Communication.CallAutomation
         public UnmuteParticipantsOptions(IEnumerable<CommunicationIdentifier> targetParticipant)
         {
             TargetParticipants = targetParticipant;
-            RepeatabilityHeaders = new RepeatabilityHeaders();
         }
 
         /// <summary>
@@ -30,10 +29,5 @@ namespace Azure.Communication.CallAutomation
         /// The operation context.
         /// </summary>
         public string OperationContext { get; set; }
-
-        /// <summary>
-        /// Repeatability Headers.
-        /// </summary>
-        public RepeatabilityHeaders RepeatabilityHeaders { get; set; }
     }
 }

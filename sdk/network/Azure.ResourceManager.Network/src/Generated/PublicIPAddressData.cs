@@ -14,7 +14,10 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> A class representing the PublicIPAddress data model. </summary>
+    /// <summary>
+    /// A class representing the PublicIPAddress data model.
+    /// Public IP address resource.
+    /// </summary>
     public partial class PublicIPAddressData : NetworkTrackedResourceData
     {
         /// <summary> Initializes a new instance of PublicIPAddressData. </summary>

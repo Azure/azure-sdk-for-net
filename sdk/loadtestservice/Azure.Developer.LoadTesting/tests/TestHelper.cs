@@ -117,7 +117,7 @@ namespace Azure.Developer.LoadTesting.Tests.Helper
                 ));
         }
 
-        public TestRunOperation SetupTestRun(LoadTestRunClient loadTestRunClient, string testId, WaitUntil waitUntil)
+        public TestRunResultOperation SetupTestRun(LoadTestRunClient loadTestRunClient, string testId, WaitUntil waitUntil)
         {
             return loadTestRunClient.BeginTestRun(waitUntil, testId, RequestContent.Create(
                     new
@@ -128,7 +128,7 @@ namespace Azure.Developer.LoadTesting.Tests.Helper
                 ));
         }
 
-        public async Task<TestRunOperation> SetupTestRunAsync(LoadTestRunClient loadTestRunClient, string testRunId, string testId, WaitUntil waitUntil)
+        public async Task<TestRunResultOperation> SetupTestRunAsync(LoadTestRunClient loadTestRunClient, string testRunId, string testId, WaitUntil waitUntil)
         {
             return await loadTestRunClient.BeginTestRunAsync(waitUntil, testRunId, RequestContent.Create(
                     new

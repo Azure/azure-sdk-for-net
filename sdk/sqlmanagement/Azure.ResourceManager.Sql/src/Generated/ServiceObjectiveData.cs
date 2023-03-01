@@ -10,7 +10,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Sql
 {
-    /// <summary> A class representing the ServiceObjective data model. </summary>
+    /// <summary>
+    /// A class representing the ServiceObjective data model.
+    /// Represents a database service objective.
+    /// </summary>
     public partial class ServiceObjectiveData : ResourceData
     {
         /// <summary> Initializes a new instance of ServiceObjectiveData. </summary>

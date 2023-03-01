@@ -10,7 +10,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers
 {
-    /// <summary> A class representing the PostgreSqlFlexibleServerDatabase data model. </summary>
+    /// <summary>
+    /// A class representing the PostgreSqlFlexibleServerDatabase data model.
+    /// Represents a Database.
+    /// </summary>
     public partial class PostgreSqlFlexibleServerDatabaseData : ResourceData
     {
         /// <summary> Initializes a new instance of PostgreSqlFlexibleServerDatabaseData. </summary>

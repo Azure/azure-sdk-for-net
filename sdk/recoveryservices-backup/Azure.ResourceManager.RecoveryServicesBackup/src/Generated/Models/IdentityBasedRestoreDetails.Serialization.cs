@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         internal static IdentityBasedRestoreDetails DeserializeIdentityBasedRestoreDetails(JsonElement element)
         {
             Optional<string> objectType = default;
-            Optional<string> targetStorageAccountId = default;
+            Optional<ResourceIdentifier> targetStorageAccountId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("objectType"u8))
@@ -41,7 +41,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
                 if (property.NameEquals("targetStorageAccountId"u8))
                 {
-                    targetStorageAccountId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    targetStorageAccountId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
             }
