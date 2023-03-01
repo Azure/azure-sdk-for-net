@@ -56,6 +56,10 @@ namespace Azure.ResourceManager.ProviderHub.Models
 
         internal static ExtendedErrorInfo DeserializeExtendedErrorInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> code = default;
             Optional<string> target = default;
             Optional<string> message = default;

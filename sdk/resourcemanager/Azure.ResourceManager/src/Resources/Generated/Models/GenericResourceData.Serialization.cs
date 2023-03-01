@@ -76,6 +76,10 @@ namespace Azure.ResourceManager.Resources
 
         internal static GenericResourceData DeserializeGenericResourceData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ArmPlan> plan = default;
             Optional<BinaryData> properties = default;
             Optional<string> kind = default;

@@ -17,6 +17,10 @@ namespace Azure.ResourceManager.PolicyInsights.Models
     {
         internal static ComponentEventDetails DeserializeComponentEventDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DateTimeOffset> timestamp = default;
             Optional<Guid> tenantId = default;
             Optional<string> principalOid = default;

@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 
         internal static PostgreSqlFlexibleServerHighAvailability DeserializePostgreSqlFlexibleServerHighAvailability(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<PostgreSqlFlexibleServerHighAvailabilityMode> mode = default;
             Optional<PostgreSqlFlexibleServerHAState> state = default;
             Optional<string> standbyAvailabilityZone = default;

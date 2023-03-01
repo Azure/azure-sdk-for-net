@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     {
         internal static VMwareCbtMigrationDetails DeserializeVMwareCbtMigrationDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> vmwareMachineId = default;
             Optional<string> osType = default;
             Optional<string> firmwareType = default;

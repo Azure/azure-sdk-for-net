@@ -40,6 +40,10 @@ namespace Azure.ResourceManager.PostgreSql.Models
 
         internal static PostgreSqlStorageProfile DeserializePostgreSqlStorageProfile(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> backupRetentionDays = default;
             Optional<PostgreSqlGeoRedundantBackup> geoRedundantBackup = default;
             Optional<int> storageMB = default;

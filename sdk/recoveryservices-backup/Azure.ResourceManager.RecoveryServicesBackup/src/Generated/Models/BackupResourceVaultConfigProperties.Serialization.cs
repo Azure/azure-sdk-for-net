@@ -61,6 +61,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         internal static BackupResourceVaultConfigProperties DeserializeBackupResourceVaultConfigProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<BackupStorageType> storageModelType = default;
             Optional<BackupStorageType> storageType = default;
             Optional<BackupStorageTypeState> storageTypeState = default;

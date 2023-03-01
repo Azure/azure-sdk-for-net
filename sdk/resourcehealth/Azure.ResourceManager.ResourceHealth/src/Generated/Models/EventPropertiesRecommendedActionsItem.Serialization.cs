@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.ResourceHealth.Models
     {
         internal static EventPropertiesRecommendedActionsItem DeserializeEventPropertiesRecommendedActionsItem(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> groupId = default;
             Optional<string> actionText = default;
             foreach (var property in element.EnumerateObject())

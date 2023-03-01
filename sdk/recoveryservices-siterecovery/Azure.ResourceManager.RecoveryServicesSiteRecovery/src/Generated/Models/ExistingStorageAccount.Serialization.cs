@@ -24,6 +24,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 
         internal static ExistingStorageAccount DeserializeExistingStorageAccount(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string azureStorageAccountId = default;
             string resourceType = default;
             foreach (var property in element.EnumerateObject())

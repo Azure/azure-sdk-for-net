@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     {
         internal static A2AReplicationIntentDetails DeserializeA2AReplicationIntentDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> fabricObjectId = default;
             Optional<string> primaryLocation = default;
             Optional<string> recoveryLocation = default;

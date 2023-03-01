@@ -145,6 +145,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         internal static FileshareProtectedItem DeserializeFileshareProtectedItem(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> friendlyName = default;
             Optional<string> protectionStatus = default;
             Optional<BackupProtectionState> protectionState = default;

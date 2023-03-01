@@ -119,6 +119,10 @@ namespace Azure.ResourceManager.Redis
 
         internal static RedisData DeserializeRedisData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<string>> zones = default;
             Optional<ManagedServiceIdentity> identity = default;
             Optional<IDictionary<string, string>> tags = default;

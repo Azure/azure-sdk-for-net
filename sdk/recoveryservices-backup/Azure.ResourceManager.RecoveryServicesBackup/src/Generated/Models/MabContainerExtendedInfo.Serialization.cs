@@ -52,6 +52,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         internal static MabContainerExtendedInfo DeserializeMabContainerExtendedInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DateTimeOffset> lastRefreshedAt = default;
             Optional<BackupItemType> backupItemType = default;
             Optional<IList<string>> backupItems = default;

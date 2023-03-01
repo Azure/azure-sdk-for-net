@@ -40,6 +40,10 @@ namespace Azure.ResourceManager.Redis
 
         internal static RedisLinkedServerWithPropertyData DeserializeRedisLinkedServerWithPropertyData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
