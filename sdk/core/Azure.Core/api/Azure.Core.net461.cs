@@ -149,8 +149,10 @@ namespace Azure
         protected Operation() { }
         public abstract bool HasValue { get; }
         public abstract T Value { get; }
+        public virtual Azure.Response<T> WaitForCompletion(Azure.Core.DelayStrategy delayStrategy, System.Threading.CancellationToken cancellationToken) { throw null; }
         public virtual Azure.Response<T> WaitForCompletion(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<T> WaitForCompletion(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken) { throw null; }
+        public virtual System.Threading.Tasks.ValueTask<Azure.Response<T>> WaitForCompletionAsync(Azure.Core.DelayStrategy delayStrategy, System.Threading.CancellationToken cancellationToken) { throw null; }
         public virtual System.Threading.Tasks.ValueTask<Azure.Response<T>> WaitForCompletionAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.ValueTask<Azure.Response<T>> WaitForCompletionAsync(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
@@ -398,6 +400,13 @@ namespace Azure.Core
         public static bool operator !=(Azure.Core.ContentType left, Azure.Core.ContentType right) { throw null; }
         public override string ToString() { throw null; }
     }
+    public abstract partial class DelayStrategy
+    {
+        protected DelayStrategy() { }
+        public abstract System.TimeSpan GetNextDelay(Azure.Response? response, int attempt, System.TimeSpan? delayHint);
+        protected static System.TimeSpan GetServerDelay(Azure.Response? response) { throw null; }
+        protected static System.TimeSpan Max(System.TimeSpan t1, System.TimeSpan t2) { throw null; }
+    }
     public static partial class DelegatedTokenCredential
     {
         public static Azure.Core.TokenCredential Create(System.Func<Azure.Core.TokenRequestContext, System.Threading.CancellationToken, Azure.Core.AccessToken> getToken) { throw null; }
@@ -415,6 +424,16 @@ namespace Azure.Core
         public int LoggedContentSizeLimit { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> LoggedHeaderNames { get { throw null; } }
         public System.Collections.Generic.IList<string> LoggedQueryParameters { get { throw null; } }
+    }
+    public partial class ExponentialDelayStrategy : Azure.Core.DelayStrategy
+    {
+        public ExponentialDelayStrategy(System.TimeSpan? delay = default(System.TimeSpan?), System.TimeSpan? maxDelay = default(System.TimeSpan?)) { }
+        public override System.TimeSpan GetNextDelay(Azure.Response? response, int attempt, System.TimeSpan? delayHint) { throw null; }
+    }
+    public partial class FixedDelayStrategy : Azure.Core.DelayStrategy
+    {
+        public FixedDelayStrategy(System.TimeSpan? delay = default(System.TimeSpan?)) { }
+        public override System.TimeSpan GetNextDelay(Azure.Response? response, int attempt, System.TimeSpan? delayHint) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct HttpHeader : System.IEquatable<Azure.Core.HttpHeader>
@@ -690,6 +709,11 @@ namespace Azure.Core
         public int MaxRetries { get { throw null; } set { } }
         public Azure.Core.RetryMode Mode { get { throw null; } set { } }
         public System.TimeSpan NetworkTimeout { get { throw null; } set { } }
+    }
+    public partial class SequentialDelayStrategy : Azure.Core.DelayStrategy
+    {
+        public SequentialDelayStrategy(System.Collections.Generic.IEnumerable<System.TimeSpan>? sequence = null) { }
+        public override System.TimeSpan GetNextDelay(Azure.Response? response, int attempt, System.TimeSpan? delayHint) { throw null; }
     }
     public partial class StatusCodeClassifier : Azure.Core.ResponseClassifier
     {

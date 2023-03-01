@@ -27,4 +27,8 @@
     <EmbeddedResource Include="Assets\Profile\2020-09-01-hybrid.json" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\core\Azure.Core\src\Azure.Core.csproj" />
+  </ItemGroup>
+
 </Project>
