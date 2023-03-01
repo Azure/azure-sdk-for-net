@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Workloads.Models
         internal static SapDiskConfiguration DeserializeSapDiskConfiguration(JsonElement element)
         {
             Optional<DiskVolumeConfiguration> recommendedConfiguration = default;
-            Optional<IReadOnlyList<DiskDetails>> supportedConfigurations = default;
+            Optional<IReadOnlyList<SupportedConfigurationsDiskDetails>> supportedConfigurations = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("recommendedConfiguration"u8))
@@ -36,10 +36,10 @@ namespace Azure.ResourceManager.Workloads.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<DiskDetails> array = new List<DiskDetails>();
+                    List<SupportedConfigurationsDiskDetails> array = new List<SupportedConfigurationsDiskDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DiskDetails.DeserializeDiskDetails(item));
+                        array.Add(SupportedConfigurationsDiskDetails.DeserializeSupportedConfigurationsDiskDetails(item));
                     }
                     supportedConfigurations = array;
                     continue;

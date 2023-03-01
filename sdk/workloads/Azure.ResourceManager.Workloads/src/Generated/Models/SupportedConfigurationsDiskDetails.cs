@@ -8,14 +8,14 @@
 namespace Azure.ResourceManager.Workloads.Models
 {
     /// <summary> The supported disk size details for a disk type. </summary>
-    public partial class DiskDetails
+    public partial class SupportedConfigurationsDiskDetails
     {
-        /// <summary> Initializes a new instance of DiskDetails. </summary>
-        internal DiskDetails()
+        /// <summary> Initializes a new instance of SupportedConfigurationsDiskDetails. </summary>
+        internal SupportedConfigurationsDiskDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of DiskDetails. </summary>
+        /// <summary> Initializes a new instance of SupportedConfigurationsDiskDetails. </summary>
         /// <param name="sku"> The disk sku. </param>
         /// <param name="sizeGB"> The disk size in GB. </param>
         /// <param name="minimumSupportedDiskCount"> The minimum supported disk count. </param>
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Workloads.Models
         /// <param name="iopsReadWrite"> The disk Iops. </param>
         /// <param name="mbpsReadWrite"> The disk provisioned throughput in MBps. </param>
         /// <param name="diskTier"> The disk tier, e.g. P10, E10. </param>
-        internal DiskDetails(DiskSku sku, long? sizeGB, long? minimumSupportedDiskCount, long? maximumSupportedDiskCount, long? iopsReadWrite, long? mbpsReadWrite, string diskTier)
+        internal SupportedConfigurationsDiskDetails(DiskSku sku, long? sizeGB, long? minimumSupportedDiskCount, long? maximumSupportedDiskCount, long? iopsReadWrite, long? mbpsReadWrite, string diskTier)
         {
             Sku = sku;
             SizeGB = sizeGB;
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Workloads.Models
         /// <summary> The disk sku. </summary>
         internal DiskSku Sku { get; }
         /// <summary> Defines the disk sku name. </summary>
-        public DiskSkuName? SkuName
+        public DiskDetailsDiskSkuName? SkuName
         {
             get => Sku?.Name;
         }

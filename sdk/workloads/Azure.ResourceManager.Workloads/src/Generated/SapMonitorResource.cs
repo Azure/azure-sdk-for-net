@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.Workloads
         /// <returns> Returns a <see cref="SapLandscapeMonitorResource" /> object. </returns>
         public virtual SapLandscapeMonitorResource GetSapLandscapeMonitor()
         {
-            return new SapLandscapeMonitorResource(Client, new ResourceIdentifier(Id.ToString() + "/sapLandscapeMonitor/default"));
+            return new SapLandscapeMonitorResource(Client, Id.AppendChildResource("sapLandscapeMonitor", "default"));
         }
 
         /// <summary>

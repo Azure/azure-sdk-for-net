@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.Workloads.Models
 
         /// <summary> Initializes a new instance of DiskSku. </summary>
         /// <param name="name"> Defines the disk sku name. </param>
-        internal DiskSku(DiskSkuName? name)
+        internal DiskSku(DiskDetailsDiskSkuName? name)
         {
             Name = name;
         }
 
         /// <summary> Defines the disk sku name. </summary>
-        public DiskSkuName? Name { get; set; }
+        public DiskDetailsDiskSkuName? Name { get; set; }
     }
 }

@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Workloads.Models
 
         internal static DiskSku DeserializeDiskSku(JsonElement element)
         {
-            Optional<DiskSkuName> name = default;
+            Optional<DiskDetailsDiskSkuName> name = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Workloads.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    name = new DiskSkuName(property.Value.GetString());
+                    name = new DiskDetailsDiskSkuName(property.Value.GetString());
                     continue;
                 }
             }

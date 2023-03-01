@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Workloads.Models
         /// <summary> The disk SKU details. </summary>
         internal DiskSku Sku { get; set; }
         /// <summary> Defines the disk sku name. </summary>
-        public DiskSkuName? SkuName
+        public DiskDetailsDiskSkuName? SkuName
         {
             get => Sku is null ? default : Sku.Name;
             set

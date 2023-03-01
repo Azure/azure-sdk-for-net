@@ -527,38 +527,27 @@ namespace Azure.ResourceManager.Workloads.Models
         public string CentralServerVmId { get { throw null; } set { } }
         public string ManagedRgStorageAccountName { get { throw null; } set { } }
     }
-    public partial class DiskDetails
-    {
-        internal DiskDetails() { }
-        public string DiskTier { get { throw null; } }
-        public long? IopsReadWrite { get { throw null; } }
-        public long? MaximumSupportedDiskCount { get { throw null; } }
-        public long? MbpsReadWrite { get { throw null; } }
-        public long? MinimumSupportedDiskCount { get { throw null; } }
-        public long? SizeGB { get { throw null; } }
-        public Azure.ResourceManager.Workloads.Models.DiskSkuName? SkuName { get { throw null; } }
-    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct DiskSkuName : System.IEquatable<Azure.ResourceManager.Workloads.Models.DiskSkuName>
+    public readonly partial struct DiskDetailsDiskSkuName : System.IEquatable<Azure.ResourceManager.Workloads.Models.DiskDetailsDiskSkuName>
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
-        public DiskSkuName(string value) { throw null; }
-        public static Azure.ResourceManager.Workloads.Models.DiskSkuName PremiumLrs { get { throw null; } }
-        public static Azure.ResourceManager.Workloads.Models.DiskSkuName PremiumV2Lrs { get { throw null; } }
-        public static Azure.ResourceManager.Workloads.Models.DiskSkuName PremiumZrs { get { throw null; } }
-        public static Azure.ResourceManager.Workloads.Models.DiskSkuName StandardLrs { get { throw null; } }
-        public static Azure.ResourceManager.Workloads.Models.DiskSkuName StandardSsdLrs { get { throw null; } }
-        public static Azure.ResourceManager.Workloads.Models.DiskSkuName StandardSsdZrs { get { throw null; } }
-        public static Azure.ResourceManager.Workloads.Models.DiskSkuName UltraSsdLrs { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Workloads.Models.DiskSkuName other) { throw null; }
+        public DiskDetailsDiskSkuName(string value) { throw null; }
+        public static Azure.ResourceManager.Workloads.Models.DiskDetailsDiskSkuName PremiumLrs { get { throw null; } }
+        public static Azure.ResourceManager.Workloads.Models.DiskDetailsDiskSkuName PremiumV2Lrs { get { throw null; } }
+        public static Azure.ResourceManager.Workloads.Models.DiskDetailsDiskSkuName PremiumZrs { get { throw null; } }
+        public static Azure.ResourceManager.Workloads.Models.DiskDetailsDiskSkuName StandardLrs { get { throw null; } }
+        public static Azure.ResourceManager.Workloads.Models.DiskDetailsDiskSkuName StandardSsdLrs { get { throw null; } }
+        public static Azure.ResourceManager.Workloads.Models.DiskDetailsDiskSkuName StandardSsdZrs { get { throw null; } }
+        public static Azure.ResourceManager.Workloads.Models.DiskDetailsDiskSkuName UltraSsdLrs { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Workloads.Models.DiskDetailsDiskSkuName other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Workloads.Models.DiskSkuName left, Azure.ResourceManager.Workloads.Models.DiskSkuName right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Workloads.Models.DiskSkuName (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Workloads.Models.DiskSkuName left, Azure.ResourceManager.Workloads.Models.DiskSkuName right) { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Workloads.Models.DiskDetailsDiskSkuName left, Azure.ResourceManager.Workloads.Models.DiskDetailsDiskSkuName right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Workloads.Models.DiskDetailsDiskSkuName (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Workloads.Models.DiskDetailsDiskSkuName left, Azure.ResourceManager.Workloads.Models.DiskDetailsDiskSkuName right) { throw null; }
         public override string ToString() { throw null; }
     }
     public partial class DiskVolumeConfiguration
@@ -566,7 +555,7 @@ namespace Azure.ResourceManager.Workloads.Models
         public DiskVolumeConfiguration() { }
         public long? Count { get { throw null; } set { } }
         public long? SizeGB { get { throw null; } set { } }
-        public Azure.ResourceManager.Workloads.Models.DiskSkuName? SkuName { get { throw null; } set { } }
+        public Azure.ResourceManager.Workloads.Models.DiskDetailsDiskSkuName? SkuName { get { throw null; } set { } }
     }
     public partial class EnqueueReplicationServerProperties
     {
@@ -874,7 +863,7 @@ namespace Azure.ResourceManager.Workloads.Models
     {
         internal SapDiskConfiguration() { }
         public Azure.ResourceManager.Workloads.Models.DiskVolumeConfiguration RecommendedConfiguration { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Workloads.Models.DiskDetails> SupportedConfigurations { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Workloads.Models.SupportedConfigurationsDiskDetails> SupportedConfigurations { get { throw null; } }
     }
     public partial class SapDiskConfigurationsContent
     {
@@ -1242,6 +1231,17 @@ namespace Azure.ResourceManager.Workloads.Models
     {
         public StopRequest() { }
         public long? SoftStopTimeoutSeconds { get { throw null; } set { } }
+    }
+    public partial class SupportedConfigurationsDiskDetails
+    {
+        internal SupportedConfigurationsDiskDetails() { }
+        public string DiskTier { get { throw null; } }
+        public long? IopsReadWrite { get { throw null; } }
+        public long? MaximumSupportedDiskCount { get { throw null; } }
+        public long? MbpsReadWrite { get { throw null; } }
+        public long? MinimumSupportedDiskCount { get { throw null; } }
+        public long? SizeGB { get { throw null; } }
+        public Azure.ResourceManager.Workloads.Models.DiskDetailsDiskSkuName? SkuName { get { throw null; } }
     }
     public partial class ThreeTierConfiguration : Azure.ResourceManager.Workloads.Models.InfrastructureConfiguration
     {

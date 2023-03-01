@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Workloads.Models
 {
-    public partial class DiskDetails
+    public partial class SupportedConfigurationsDiskDetails
     {
-        internal static DiskDetails DeserializeDiskDetails(JsonElement element)
+        internal static SupportedConfigurationsDiskDetails DeserializeSupportedConfigurationsDiskDetails(JsonElement element)
         {
             Optional<DiskSku> sku = default;
             Optional<long> sizeGB = default;
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Workloads.Models
                     continue;
                 }
             }
-            return new DiskDetails(sku.Value, Optional.ToNullable(sizeGB), Optional.ToNullable(minimumSupportedDiskCount), Optional.ToNullable(maximumSupportedDiskCount), Optional.ToNullable(iopsReadWrite), Optional.ToNullable(mbpsReadWrite), diskTier.Value);
+            return new SupportedConfigurationsDiskDetails(sku.Value, Optional.ToNullable(sizeGB), Optional.ToNullable(minimumSupportedDiskCount), Optional.ToNullable(maximumSupportedDiskCount), Optional.ToNullable(iopsReadWrite), Optional.ToNullable(mbpsReadWrite), diskTier.Value);
         }
     }
 }

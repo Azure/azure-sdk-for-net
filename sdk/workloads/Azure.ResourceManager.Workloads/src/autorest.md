@@ -58,6 +58,10 @@ rename-rules:
   Ha: HA|ha
   ECC: Ecc
 
+rename-mapping:
+  DiskDetails: SupportedConfigurationsDiskDetails
+  DiskSkuName: DiskDetailsDiskSkuName
+
 directive:
   - from: swagger-document
     where: $.definitions..subnetId
