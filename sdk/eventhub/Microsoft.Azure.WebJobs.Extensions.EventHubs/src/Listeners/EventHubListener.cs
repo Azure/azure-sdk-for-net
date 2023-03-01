@@ -21,6 +21,9 @@ using Newtonsoft.Json;
 using Azure.Core.Diagnostics;
 using Microsoft.Extensions.Azure;
 using System.Text;
+using Azure.Identity;
+using Azure.Core;
+using System.Diagnostics.Tracing;
 
 namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
 {
@@ -108,6 +111,83 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
             return _scaleMonitor.Value;
         }
 
+        internal class EventProcessorStoredEventsManager : IDisposable
+        {
+            private ConcurrentDictionary<string, List<EventData>> _storedEvents;
+            private SemaphoreSlim _storedEventsGuard;
+            private int _maxBatchSize;
+            private int _minBatchSize;
+
+            public bool HasStoredEvents
+            {
+                get
+                {
+                    try
+                    {
+                        _storedEventsGuard.Wait();
+                        return !_storedEvents.IsEmpty;
+                    }
+                    finally
+                    {
+                        _storedEventsGuard.Release();
+                    }
+                }
+            }
+
+            public EventProcessorStoredEventsManager(int maxBatchSize, int minBatchSize)
+            {
+                _storedEvents = new ConcurrentDictionary<string, List<EventData>>();
+                _storedEventsGuard = new SemaphoreSlim(1, 1);
+                _maxBatchSize = maxBatchSize;
+                _minBatchSize = minBatchSize;
+            }
+
+            public EventData[] ProcessWithStoredEvents(EventProcessorHostPartition partitionContext, List<EventData> events = null, bool timerTrigger = false, CancellationToken cancellationToken = default)
+            {
+                Argument.AssertNotNull(partitionContext, nameof(partitionContext));
+                try
+                {
+                    _storedEventsGuard.Wait(cancellationToken);
+                    events ??= new List<EventData>();
+
+                    var partitionId = partitionContext.PartitionId;
+
+                    var numEventsToProcess = events.Count;
+                    var storedEventsForPartition = _storedEvents.GetOrAdd(partitionId, new List<EventData>());
+                    var storedEvents = storedEventsForPartition.Count;
+                    var totalEvents = storedEvents + numEventsToProcess;
+                    storedEventsForPartition.AddRange(events);
+
+                    if (totalEvents < _minBatchSize && !timerTrigger)
+                    {
+                        return Array.Empty<EventData>();
+                    }
+                    else if (totalEvents > _maxBatchSize)
+                    {
+                        var eventsToAdd = storedEventsForPartition.Take(_maxBatchSize).ToArray();
+                        storedEventsForPartition.RemoveRange(0, _maxBatchSize - 1);
+
+                        return eventsToAdd;
+                    }
+                    else
+                    {
+                        var eventArray = storedEventsForPartition.ToArray();
+                        _storedEvents.Clear();
+                        return eventArray;
+                    }
+                }
+                finally
+                {
+                    _storedEventsGuard.Release();
+                }
+            }
+
+            public void Dispose()
+            {
+                _storedEventsGuard?.Dispose();
+            }
+        }
+
         // We get a new instance each time Start() is called.
         // We'll get a listener per partition - so they can potentially run in parallel even on a single machine.
         internal class EventProcessor : IEventProcessor, IDisposable
@@ -118,14 +198,13 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
             private readonly CancellationTokenSource _cts = new CancellationTokenSource();
             private readonly int _batchCheckpointFrequency;
             private int _batchCounter;
+            private bool _minimumBatchesEnabled;
             private bool _disposed;
-            private readonly int _minBatchSize;
-            private readonly int _maxBatchSize;
-            private readonly TimeSpan _maxWaitTime;
-            private ConcurrentDictionary<string, List<EventData>> _storedEvents;
-            private int _numStoredEvents;
-            private ValueStopwatch _cycleWaitTime;
-            private Task _backgroundWaitForEvents;
+            private EventProcessorStoredEventsManager _storedEventsManager;
+            private Task _storedEventsBackgroundTask;
+            private TimeSpan _maxWaitTime;
+            private ValueStopwatch _currentCycle;
+            private EventProcessorHostPartition _mostRecentPartitionContext;
 
             public EventProcessor(EventHubOptions options, ITriggeredFunctionExecutor executor, ILogger logger, bool singleDispatch)
             {
@@ -133,10 +212,8 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
                 _singleDispatch = singleDispatch;
                 _batchCheckpointFrequency = options.BatchCheckpointFrequency;
                 _logger = logger;
-                _minBatchSize = options.MinEventBatchSize;
-                _maxBatchSize = options.MaxEventBatchSize;
-                _storedEvents = new ConcurrentDictionary<string, List<EventData>>();
-                _numStoredEvents = 0;
+                _minimumBatchesEnabled = options.MinEventBatchSize > 0;
+                _storedEventsManager = new EventProcessorStoredEventsManager(options.MaxEventBatchSize, options.MinEventBatchSize);
                 _maxWaitTime = TimeSpan.FromSeconds(options.MaxWaitTime);
             }
 
@@ -169,6 +246,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
                 using (CancellationTokenSource linkedCts =
                         CancellationTokenSource.CreateLinkedTokenSource(_cts.Token, processingCancellationToken))
                 {
+                    _mostRecentPartitionContext = context;
                     var events = messages == null ? Array.Empty<EventData>() : messages.ToArray();
                     EventData eventToCheckpoint = null;
 
@@ -207,66 +285,34 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
                     {
                         // Batch dispatch
 
-                        var partitionID = context.PartitionId;
+                        var partitionId = context.PartitionId;
 
-                        // If the total events is less than the minimum batch size, put all events in the stored events list and
-                        // update numStoredEvents. Check on the timer and start one if it hasn't been started.
-
-                        if (_numStoredEvents + eventCount < _minBatchSize)
+                        if (_minimumBatchesEnabled)
                         {
-                            _storedEvents.AddOrUpdate(partitionID, messages.ToList(),
-                            (k, v) =>
-                            {
-                                v.AddRange(messages);
-                                return v;
-                            });
-                            Interlocked.Add(ref _numStoredEvents, eventCount);
+                            var triggerEvents = _storedEventsManager.ProcessWithStoredEvents(context, messages.ToList(), false, _cts.Token);
 
-                            if (_backgroundWaitForEvents == null)
+                            if (triggerEvents.Length > 0)
                             {
-                                _backgroundWaitForEvents = WaitForMoreEventsOrTimer(processingCancellationToken);
+                                await TriggerExecute(triggerEvents, context, _cts.Token).ConfigureAwait(false);
+                                eventToCheckpoint = triggerEvents.LastOrDefault();
+
+                                if (_storedEventsManager.HasStoredEvents)
+                                {
+                                    _storedEventsBackgroundTask = MonitorStoredEvents(_cts.Token);
+                                }
+                            }
+                            else
+                            {
+                                if (_storedEventsManager.HasStoredEvents && _storedEventsBackgroundTask == null)
+                                {
+                                    _storedEventsBackgroundTask = MonitorStoredEvents(_cts.Token);
+                                }
                             }
                         }
-
-                        if (_numStoredEvents > _minBatchSize && _numStoredEvents <= _maxBatchSize)
+                        else
                         {
-                            // If there are between minBatchSize and maxBatchSize events available, trigger the function
-                            // with all events. Clear the stored events for this partition.
-
-                            _storedEvents.TryRemove(partitionID, out var storedEvents);
-                            storedEvents ??= new List<EventData>();
-                            storedEvents.AddRange(messages);
-
-                            Interlocked.Exchange(ref _numStoredEvents, 0);
-                            await TriggerExecute(storedEvents.ToArray(), context, linkedCts).ConfigureAwait(false);
-
-                            eventToCheckpoint = storedEvents.LastOrDefault();
-                            // Cancel background event
-                        }
-                        else if (_numStoredEvents > _maxBatchSize)
-                        {
-                            // If there are more than maxBatchSize events available, trigger the function with maxBatchSize
-                            // events and save the rest in storage.
-                            _storedEvents.TryRemove(partitionID, out var triggerEvents);
-                            Interlocked.Exchange(ref _numStoredEvents, 0);
-
-                            var fullBatch = triggerEvents.Take(_maxBatchSize);
-                            await TriggerExecute(fullBatch.ToArray(), context, linkedCts).ConfigureAwait(false);
-                            eventToCheckpoint = fullBatch.LastOrDefault();
-
-                            // cancel background event
-
-                            // Store the overflow events. Update numStoredEvents.
-
-                            triggerEvents.RemoveRange(0, _maxBatchSize - 1);
-                            var numOverflow = triggerEvents.Count;
-                            _storedEvents.TryAdd(partitionID, triggerEvents);
-                            Interlocked.Exchange(ref _numStoredEvents, numOverflow);
-
-                            if (_backgroundWaitForEvents == null)
-                            {
-                                _backgroundWaitForEvents = WaitForMoreEventsOrTimer(processingCancellationToken);
-                            }
+                            await TriggerExecute(events, context, _cts.Token).ConfigureAwait(false);
+                            eventToCheckpoint = events.LastOrDefault();
                         }
 
                         // If total events is less than the batch size, leave them in the stored events list
@@ -287,49 +333,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
                 }
             }
 
-            private async Task WaitForMoreEventsOrTimer(CancellationToken cancellationToken)
-            {
-                _cycleWaitTime = ValueStopwatch.StartNew();
-
-                while (!cancellationToken.IsCancellationRequested)
-                {
-                    var remaining = RemainingTime(_maxWaitTime, _cycleWaitTime.GetElapsedTime());
-                    await Task.Delay(remaining, cancellationToken).ConfigureAwait(false);
-                }
-            }
-
-            private static TimeSpan RemainingTime(TimeSpan waitTime, TimeSpan elapsed)
-            {
-                if ((waitTime == Timeout.InfiniteTimeSpan) || (waitTime == TimeSpan.Zero) || (elapsed == TimeSpan.Zero))
-                {
-                    return waitTime;
-                }
-
-                if (elapsed >= waitTime)
-                {
-                    return TimeSpan.Zero;
-                }
-
-                return TimeSpan.FromMilliseconds(waitTime.TotalMilliseconds - elapsed.TotalMilliseconds);
-            }
-
-            private async Task<EventData> ProcessStoredEventsOnly(EventProcessorHostPartition context, CancellationTokenSource cts)
-            {
-                EventData eventToCheckpoint = null;
-
-                var hasStoredEventsPartition = _storedEvents.TryGetValue(context.PartitionId, out var storedEvents);
-                if (hasStoredEventsPartition && storedEvents.Any())
-                {
-                    await TriggerExecute(storedEvents.ToArray(), context, cts).ConfigureAwait(false);
-                    eventToCheckpoint = storedEvents.Last();
-                }
-                _numStoredEvents -= storedEvents.Count;
-                storedEvents.Clear();
-
-                return eventToCheckpoint;
-            }
-
-            private async Task TriggerExecute(EventData[] events, EventProcessorHostPartition context, CancellationTokenSource linkedCts)
+            private async Task TriggerExecute(EventData[] events, EventProcessorHostPartition context, CancellationToken cancellationToken)
             {
                 var triggerInput = new EventHubTriggerInput
                 {
@@ -344,7 +348,39 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
                     TriggerDetails = triggerInput.GetTriggerDetails(context)
                 };
 
-                await _executor.TryExecuteAsync(input, linkedCts.Token).ConfigureAwait(false);
+                await _executor.TryExecuteAsync(input, cancellationToken).ConfigureAwait(false);
+
+                // The timer should reset upon invocation of the function
+                _storedEventsBackgroundTask = null;
+            }
+
+            public async Task MonitorStoredEvents(CancellationToken cancellationToken)
+            {
+                _currentCycle = ValueStopwatch.StartNew();
+                var timeElapsed = _currentCycle.GetElapsedTime();
+                //var remainingTime = _maxWaitTime - timeElapsed;
+                var remainingTime = RemainingTime(timeElapsed);
+
+                await Task.Delay(remainingTime, cancellationToken).ConfigureAwait(false);
+                var triggerEvents = _storedEventsManager.ProcessWithStoredEvents(_mostRecentPartitionContext, timerTrigger: true, cancellationToken: cancellationToken);
+
+                await TriggerExecute(triggerEvents, _mostRecentPartitionContext, cancellationToken).ConfigureAwait(false);
+                await CheckpointAsync(triggerEvents.Last(), _mostRecentPartitionContext).ConfigureAwait(false);
+            }
+
+            private TimeSpan RemainingTime(TimeSpan elapsed)
+            {
+                if ((_maxWaitTime == Timeout.InfiniteTimeSpan) || (_maxWaitTime == TimeSpan.Zero) || (elapsed == TimeSpan.Zero))
+                {
+                    return _maxWaitTime;
+                }
+
+                if (elapsed >= _maxWaitTime)
+                {
+                    return TimeSpan.Zero;
+                }
+
+                return TimeSpan.FromMilliseconds(_maxWaitTime.TotalMilliseconds - elapsed.TotalMilliseconds);
             }
 
             private void UpdateCheckpointContext(EventData[] events, EventProcessorHostPartition context)
@@ -391,6 +427,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
                     if (disposing)
                     {
                         _cts.Dispose();
+                        _storedEventsManager.Dispose();
                     }
 
                     _disposed = true;

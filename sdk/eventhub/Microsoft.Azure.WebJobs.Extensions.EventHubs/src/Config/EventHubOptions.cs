@@ -19,8 +19,8 @@ namespace Microsoft.Azure.WebJobs.EventHubs
         public EventHubOptions()
         {
             MaxEventBatchSize = 10;
-            MinEventBatchSize = 1,
-            MaxWaitTime = TimeSpan.FromMinutes(1);
+            MinEventBatchSize = 1;
+            MaxWaitTime = 60;
             ConnectionOptions = new EventHubConnectionOptions()
             {
                 TransportType = EventHubsTransportType.AmqpTcp
@@ -168,14 +168,6 @@ namespace Microsoft.Azure.WebJobs.EventHubs
 
             set
             {
-                if (value < 0)
-                {
-                    throw new ArgumentException("Batch size must be larger than or equal to 0.");
-                }
-                if (value > MaxEventBatchSize)
-                {
-                    throw new ArgumentException("Maximum batch size must be larger than minimum batch size.");
-                }
                 _maxWaitTime = value;
             }
         }
