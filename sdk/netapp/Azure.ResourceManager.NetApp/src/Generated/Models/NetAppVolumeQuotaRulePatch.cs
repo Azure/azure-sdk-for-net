@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System.Collections.Generic;
+using Azure.Core;
+
 namespace Azure.ResourceManager.NetApp.Models
 {
     /// <summary> Patchable Quota Rule of a Volume. </summary>
@@ -13,8 +16,11 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <summary> Initializes a new instance of NetAppVolumeQuotaRulePatch. </summary>
         public NetAppVolumeQuotaRulePatch()
         {
+            Tags = new ChangeTrackingDictionary<string, string>();
         }
 
+        /// <summary> Resource tags. </summary>
+        public IDictionary<string, string> Tags { get; }
         /// <summary> Gets the status of the VolumeQuotaRule at the time the operation was called. </summary>
         public NetAppProvisioningState? ProvisioningState { get; }
         /// <summary> Size of quota. </summary>

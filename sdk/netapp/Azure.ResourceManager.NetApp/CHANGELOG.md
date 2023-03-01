@@ -3,9 +3,19 @@
 ## 1.1.0-beta.1 (Unreleased)
 
 ### Features Added
+- Added BackupRestoreFiles to NetAppVolumeResource NetAppVolumeBackupResource to rstore the specified files from the specified backup to the active filesystem
+- Added BreakFileLocks to NetAppVolumeResource to allow clients to break file locks on a volume
+- Added FileAccessLog to NetAppVolumeData, a lag indicating whether file access logs are enabled for the volume, based on active diagnostic settings present on the volume.
+- Added propperty PreferredServersForLdapClient to NetAppAccountActiveDirectory, a comma separated list of IPv4 addresses of preferred servers for LDAP client
+- VolumeRelocation to NetAppVolumeDataProtection
+- DataStoreResourceId to NetAppVolumeGroupVolume
+- Added Tags to NetAppVolumeQuotaRulePatch and AddTag to NetAppVolumeQuotaResource
+- Added RestoreFiles for NetAppVolumeBackupResource
+
 
 ### Breaking Changes
-
+- NetAppVault is no longer needed scheduled for deprication
+- Plan to depricate vaultId from NetAppVolumeBackupConfiguration
 ### Bugs Fixed
 
 ### Other Changes

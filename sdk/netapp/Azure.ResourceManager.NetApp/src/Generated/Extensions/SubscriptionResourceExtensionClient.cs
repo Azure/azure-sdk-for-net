@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.NetApp
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.NetApp/locations/{location}/checkNameAvailability
         /// Operation Id: NetAppResource_CheckNameAvailability
         /// </summary>
-        /// <param name="location"> The location. </param>
+        /// <param name="location"> The name of Azure region. </param>
         /// <param name="content"> Name availability request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<NetAppCheckAvailabilityResult>> CheckNetAppNameAvailabilityAsync(AzureLocation location, NetAppNameAvailabilityContent content, CancellationToken cancellationToken = default)
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.NetApp
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.NetApp/locations/{location}/checkNameAvailability
         /// Operation Id: NetAppResource_CheckNameAvailability
         /// </summary>
-        /// <param name="location"> The location. </param>
+        /// <param name="location"> The name of Azure region. </param>
         /// <param name="content"> Name availability request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<NetAppCheckAvailabilityResult> CheckNetAppNameAvailability(AzureLocation location, NetAppNameAvailabilityContent content, CancellationToken cancellationToken = default)
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.NetApp
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.NetApp/locations/{location}/checkFilePathAvailability
         /// Operation Id: NetAppResource_CheckFilePathAvailability
         /// </summary>
-        /// <param name="location"> The location. </param>
+        /// <param name="location"> The name of Azure region. </param>
         /// <param name="content"> File path availability request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<NetAppCheckAvailabilityResult>> CheckNetAppFilePathAvailabilityAsync(AzureLocation location, NetAppFilePathAvailabilityContent content, CancellationToken cancellationToken = default)
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.NetApp
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.NetApp/locations/{location}/checkFilePathAvailability
         /// Operation Id: NetAppResource_CheckFilePathAvailability
         /// </summary>
-        /// <param name="location"> The location. </param>
+        /// <param name="location"> The name of Azure region. </param>
         /// <param name="content"> File path availability request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<NetAppCheckAvailabilityResult> CheckNetAppFilePathAvailability(AzureLocation location, NetAppFilePathAvailabilityContent content, CancellationToken cancellationToken = default)
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.NetApp
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.NetApp/locations/{location}/checkQuotaAvailability
         /// Operation Id: NetAppResource_CheckQuotaAvailability
         /// </summary>
-        /// <param name="location"> The location. </param>
+        /// <param name="location"> The name of Azure region. </param>
         /// <param name="content"> Quota availability request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<NetAppCheckAvailabilityResult>> CheckNetAppQuotaAvailabilityAsync(AzureLocation location, NetAppQuotaAvailabilityContent content, CancellationToken cancellationToken = default)
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.NetApp
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.NetApp/locations/{location}/checkQuotaAvailability
         /// Operation Id: NetAppResource_CheckQuotaAvailability
         /// </summary>
-        /// <param name="location"> The location. </param>
+        /// <param name="location"> The name of Azure region. </param>
         /// <param name="content"> Quota availability request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<NetAppCheckAvailabilityResult> CheckNetAppQuotaAvailability(AzureLocation location, NetAppQuotaAvailabilityContent content, CancellationToken cancellationToken = default)
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.NetApp
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.NetApp/locations/{location}/regionInfo
         /// Operation Id: NetAppResource_QueryRegionInfo
         /// </summary>
-        /// <param name="location"> The location. </param>
+        /// <param name="location"> The name of Azure region. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<NetAppRegionInfo>> QueryRegionInfoNetAppResourceAsync(AzureLocation location, CancellationToken cancellationToken = default)
         {
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.NetApp
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.NetApp/locations/{location}/regionInfo
         /// Operation Id: NetAppResource_QueryRegionInfo
         /// </summary>
-        /// <param name="location"> The location. </param>
+        /// <param name="location"> The name of Azure region. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<NetAppRegionInfo> QueryRegionInfoNetAppResource(AzureLocation location, CancellationToken cancellationToken = default)
         {
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.NetApp
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.NetApp/locations/{location}/quotaLimits
         /// Operation Id: NetAppResourceQuotaLimits_List
         /// </summary>
-        /// <param name="location"> The location. </param>
+        /// <param name="location"> The name of Azure region. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="NetAppSubscriptionQuotaItem" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<NetAppSubscriptionQuotaItem> GetNetAppQuotaLimitsAsync(AzureLocation location, CancellationToken cancellationToken = default)
@@ -275,7 +275,7 @@ namespace Azure.ResourceManager.NetApp
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.NetApp/locations/{location}/quotaLimits
         /// Operation Id: NetAppResourceQuotaLimits_List
         /// </summary>
-        /// <param name="location"> The location. </param>
+        /// <param name="location"> The name of Azure region. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="NetAppSubscriptionQuotaItem" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<NetAppSubscriptionQuotaItem> GetNetAppQuotaLimits(AzureLocation location, CancellationToken cancellationToken = default)
@@ -303,7 +303,7 @@ namespace Azure.ResourceManager.NetApp
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.NetApp/locations/{location}/quotaLimits/{quotaLimitName}
         /// Operation Id: NetAppResourceQuotaLimits_Get
         /// </summary>
-        /// <param name="location"> The location. </param>
+        /// <param name="location"> The name of Azure region. </param>
         /// <param name="quotaLimitName"> The name of the Quota Limit. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<NetAppSubscriptionQuotaItem>> GetNetAppQuotaLimitAsync(AzureLocation location, string quotaLimitName, CancellationToken cancellationToken = default)
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.NetApp
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.NetApp/locations/{location}/quotaLimits/{quotaLimitName}
         /// Operation Id: NetAppResourceQuotaLimits_Get
         /// </summary>
-        /// <param name="location"> The location. </param>
+        /// <param name="location"> The name of Azure region. </param>
         /// <param name="quotaLimitName"> The name of the Quota Limit. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<NetAppSubscriptionQuotaItem> GetNetAppQuotaLimit(AzureLocation location, string quotaLimitName, CancellationToken cancellationToken = default)

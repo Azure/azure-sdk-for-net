@@ -139,6 +139,11 @@ namespace Azure.ResourceManager.NetApp.Models
                 writer.WritePropertyName("ldapSearchScope");
                 writer.WriteObjectValue(LdapSearchScope);
             }
+            if (Optional.IsDefined(PreferredServersForLdapClient))
+            {
+                writer.WritePropertyName("preferredServersForLdapClient");
+                writer.WriteStringValue(PreferredServersForLdapClient);
+            }
             writer.WriteEndObject();
         }
 
@@ -166,6 +171,7 @@ namespace Azure.ResourceManager.NetApp.Models
             Optional<bool> allowLocalNfsUsersWithLdap = default;
             Optional<bool> encryptDCConnections = default;
             Optional<NetAppLdapSearchScopeConfiguration> ldapSearchScope = default;
+            Optional<string> preferredServersForLdapClient = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("activeDirectoryId"))
@@ -353,8 +359,13 @@ namespace Azure.ResourceManager.NetApp.Models
                     ldapSearchScope = NetAppLdapSearchScopeConfiguration.DeserializeNetAppLdapSearchScopeConfiguration(property.Value);
                     continue;
                 }
+                if (property.NameEquals("preferredServersForLdapClient"))
+                {
+                    preferredServersForLdapClient = property.Value.GetString();
+                    continue;
+                }
             }
-            return new NetAppAccountActiveDirectory(activeDirectoryId.Value, username.Value, password.Value, domain.Value, dns.Value, Optional.ToNullable(status), statusDetails.Value, smbServerName.Value, organizationalUnit.Value, site.Value, Optional.ToList(backupOperators), Optional.ToList(administrators), kdcIP.Value, adName.Value, serverRootCACertificate.Value, Optional.ToNullable(aesEncryption), Optional.ToNullable(ldapSigning), Optional.ToList(securityOperators), Optional.ToNullable(ldapOverTls), Optional.ToNullable(allowLocalNfsUsersWithLdap), Optional.ToNullable(encryptDCConnections), ldapSearchScope.Value);
+            return new NetAppAccountActiveDirectory(activeDirectoryId.Value, username.Value, password.Value, domain.Value, dns.Value, Optional.ToNullable(status), statusDetails.Value, smbServerName.Value, organizationalUnit.Value, site.Value, Optional.ToList(backupOperators), Optional.ToList(administrators), kdcIP.Value, adName.Value, serverRootCACertificate.Value, Optional.ToNullable(aesEncryption), Optional.ToNullable(ldapSigning), Optional.ToList(securityOperators), Optional.ToNullable(ldapOverTls), Optional.ToNullable(allowLocalNfsUsersWithLdap), Optional.ToNullable(encryptDCConnections), ldapSearchScope.Value, preferredServersForLdapClient.Value);
         }
     }
 }

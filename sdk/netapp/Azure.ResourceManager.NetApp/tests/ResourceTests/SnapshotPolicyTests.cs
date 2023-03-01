@@ -228,6 +228,7 @@ namespace Azure.ResourceManager.NetApp.Tests
             DefaultVirtualNetwork = await CreateVirtualNetwork(DefaultLocationString);
             VolumeSnapshotProperties snapshotPolicyProperties = new(snapshotPolicyResource1.Id);
             NetAppVolumeDataProtection dataProtectionProperties = new NetAppVolumeDataProtection(null, null, snapshot: snapshotPolicyProperties);
+
             NetAppVolumeResource volumeResource1 = await CreateVolume(DefaultLocationString, NetAppFileServiceLevel.Premium, _defaultUsageThreshold, subnetId: DefaultSubnetId, dataProtection: dataProtectionProperties);
 
             //Validate if created properly

@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <param name="identity"> The identity of the resource. </param>
+        /// <param name="identity"> The identity used for the resource. </param>
         /// <param name="provisioningState"> Azure lifecycle management. </param>
         /// <param name="activeDirectories"> Active Directories. </param>
         /// <param name="encryption"> Encryption settings. </param>
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.NetApp
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
         public ETag? ETag { get; }
-        /// <summary> The identity of the resource. </summary>
+        /// <summary> The identity used for the resource. </summary>
         public ManagedServiceIdentity Identity { get; set; }
         /// <summary> Azure lifecycle management. </summary>
         public string ProvisioningState { get; }

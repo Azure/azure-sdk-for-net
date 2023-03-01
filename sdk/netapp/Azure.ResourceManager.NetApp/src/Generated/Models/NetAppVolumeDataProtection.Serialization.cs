@@ -30,6 +30,11 @@ namespace Azure.ResourceManager.NetApp.Models
                 writer.WritePropertyName("snapshot");
                 writer.WriteObjectValue(Snapshot);
             }
+            if (Optional.IsDefined(VolumeRelocation))
+            {
+                writer.WritePropertyName("volumeRelocation");
+                writer.WriteObjectValue(VolumeRelocation);
+            }
             writer.WriteEndObject();
         }
 
@@ -38,6 +43,7 @@ namespace Azure.ResourceManager.NetApp.Models
             Optional<NetAppVolumeBackupConfiguration> backup = default;
             Optional<NetAppReplicationObject> replication = default;
             Optional<VolumeSnapshotProperties> snapshot = default;
+            Optional<VolumeRelocationProperties> volumeRelocation = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("backup"))
@@ -70,8 +76,18 @@ namespace Azure.ResourceManager.NetApp.Models
                     snapshot = VolumeSnapshotProperties.DeserializeVolumeSnapshotProperties(property.Value);
                     continue;
                 }
+                if (property.NameEquals("volumeRelocation"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    volumeRelocation = VolumeRelocationProperties.DeserializeVolumeRelocationProperties(property.Value);
+                    continue;
+                }
             }
-            return new NetAppVolumeDataProtection(backup.Value, replication.Value, snapshot.Value);
+            return new NetAppVolumeDataProtection(backup.Value, replication.Value, snapshot.Value, volumeRelocation.Value);
         }
     }
 }

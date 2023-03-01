@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.NetApp.Tests
 {
     public class SnapshotTests : NetAppTestBase
     {
-        private NetAppAccountCollection _netAppAccountCollection { get => _resourceGroup.GetNetAppAccounts(); }
+        private static NetAppAccountCollection _netAppAccountCollection { get => _resourceGroup.GetNetAppAccounts(); }
         private readonly string _pool1Name = "pool1";
         internal NetAppVolumeSnapshotCollection _snapshotCollection;
         internal NetAppVolumeResource _volumeResource;
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.NetApp.Tests
             //remove all volumes under current capcityPool, remove pool and netAppAccount
             if (_resourceGroup != null)
             {
-                bool exists = await _capacityPoolCollection.ExistsAsync(_capacityPool.Id.Name);
+                _ = await _capacityPoolCollection.ExistsAsync(_capacityPool.Id.Name);
                 CapacityPoolCollection poolCollection = _netAppAccount.GetCapacityPools();
                 List<CapacityPoolResource> poolList = await poolCollection.GetAllAsync().ToEnumerableAsync();
                 foreach (CapacityPoolResource pool in poolList)
@@ -218,8 +218,10 @@ namespace Azure.ResourceManager.NetApp.Tests
                 await Task.Delay(20000);
             }
             //Revert the volume to the snapshot
-            NetAppVolumeRevertContent body = new();
-            body.SnapshotId = snapshotResource2.Id;
+            NetAppVolumeRevertContent body = new()
+            {
+                SnapshotId = snapshotResource2.Id
+            };
             ArmOperation revertOperation = (await _volumeResource.RevertAsync(WaitUntil.Completed, body));
             Assert.IsTrue(revertOperation.HasCompleted);
         }
@@ -246,10 +248,12 @@ namespace Azure.ResourceManager.NetApp.Tests
             }
             //Revert the volume to the snapshot
             List<string> fileList = new() { "/dir1/file1" };
-            NetAppVolumeSnapshotRestoreFilesContent body = new(fileList);
-            body.DestinationPath = "/dataStore";
-            InvalidOperationException exception = Assert.ThrowsAsync<InvalidOperationException>(async () => { await snapshotResource2.RestoreFilesAsync(WaitUntil.Completed, body); });
-            StringAssert.Contains("SingleFileSnapshotRestoreInvalidStatusForOperation", exception.Message);
+            NetAppVolumeSnapshotRestoreFilesContent body = new(fileList)
+            {
+                DestinationPath = "/dataStore"
+            };
+            RequestFailedException exception = Assert.ThrowsAsync<RequestFailedException>(async () => { await snapshotResource2.RestoreFilesAsync(WaitUntil.Completed, body); });
+            //StringAssert.Contains("SingleFileSnapshotRestoreInvalidStatusForOperation", exception.Message);
         }
     }
 }

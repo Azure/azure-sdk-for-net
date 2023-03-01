@@ -162,11 +162,6 @@ namespace Azure.ResourceManager.NetApp.Tests
             NetAppBackupPolicyResource backupPolicyResource1 = await CreateBackupPolicy(DefaultLocation, backupPolicyName);
             Assert.AreEqual(backupPolicyName, backupPolicyResource1.Id.Name);
 
-            //getVault id
-            var vaults = await _netAppAccount.GetVaultsAsync().ToEnumerableAsync();
-            vaults.Should().HaveCount(1);
-            NetAppVault vault = vaults.FirstOrDefault();
-            Assert.IsNotNull(vault);
             //create capacity pool
             _capacityPool = await CreateCapacityPool(DefaultLocation, NetAppFileServiceLevel.Premium, _poolSize);
             _volumeCollection = _capacityPool.GetNetAppVolumes();
@@ -176,7 +171,7 @@ namespace Azure.ResourceManager.NetApp.Tests
             {
                 DefaultVirtualNetwork = await CreateVirtualNetwork();
             }
-            NetAppVolumeBackupConfiguration backupPolicyProperties = new(backupPolicyResource1.Id, false, vault.Id, true);
+            NetAppVolumeBackupConfiguration backupPolicyProperties = new(backupPolicyResource1.Id, false, true);
             NetAppVolumeDataProtection dataProtectionProperties = new NetAppVolumeDataProtection(backup: backupPolicyProperties, null,null);
             NetAppVolumeResource volumeResource1 = await CreateVolume(DefaultLocation, NetAppFileServiceLevel.Premium, _defaultUsageThreshold, subnetId:DefaultSubnetId, dataProtection: dataProtectionProperties);
 
