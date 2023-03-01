@@ -44,7 +44,7 @@ namespace Azure.Monitor.OpenTelemetry
             {
                 AzureMonitorOpenTelemetryOptions logExporterOptions = new();
 
-                // Workaround to copy the AzureMonitorOpenTelemetryOptions from DI
+                // Copy AzureMonitorOpenTelemetryOptions from DI to logExporterOptions.
                 logging.AddAzureMonitorOpenTelemetryLogger(o =>
                 {
                     logExporterOptions = o;

@@ -51,12 +51,16 @@ namespace Azure.Monitor.OpenTelemetry
             return AzureMonitorOpenTelemetryImplementations.AddAzureMonitorOpenTelemetryWithAction(services, configureAzureMonitorOpenTelemetry);
         }
 
+        /// <summary>
+        /// Adds NullLogger to the <see cref="ILoggerFactory"/>.
+        /// </summary>
+        /// <remarks>This method is added to support dependency injection for logging configuration.</remarks>
+        /// <param name="builder">The <see cref="ILoggingBuilder"/> to use.</param>
+        /// <param name="configure">Configuration action.</param>
+        /// <returns>The supplied <see cref="ILoggingBuilder"/> for call chaining.</returns>
         internal static ILoggingBuilder AddAzureMonitorOpenTelemetryLogger(this ILoggingBuilder builder, Action<AzureMonitorOpenTelemetryOptions> configure)
         {
             builder.AddConfiguration();
-
-            // builder.Services.TryAddEnumerable(
-            //    ServiceDescriptor.Singleton<ILoggerProvider, AzureMonitorOpenTelemetryLoggerProvider>());
 
             builder.Services.TryAddEnumerable(
                 ServiceDescriptor.Singleton<ILoggerProvider, AzureMonitorOpenTelemetryLoggerProvider>(
