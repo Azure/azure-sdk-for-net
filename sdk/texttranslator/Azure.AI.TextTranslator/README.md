@@ -103,26 +103,6 @@ AzureKeyCredential credential = new("<apiKey>");
 TranslatorClient client = new(endpoint, credential);
 ```
 
-#### Create a `TranslatorClient` with an Azure Active Directory credential
-
-Client API key authentication is used in most of the examples in this getting started guide, but you can also authenticate with Azure Active Directory using the [Azure Identity library][azure_identity].  Note that [custom subdomain][custom_subdomain] is supported to use this type of authentication.
-
-To use the [DefaultAzureCredential][DefaultAzureCredential] provider shown below,
-or other credential providers provided with the Azure SDK, please install the Azure.Identity package:
-
-```dotnetcli
-dotnet add package Azure.Identity
-```
-
-You will also need to [register a new AAD application][register_aad_app] and [grant access][aad_grant_access] to the Translator service by assigning the `"Cognitive Services User"` role to your service principal.
-
-Set the values of the client ID, tenant ID, and client secret of the AAD application as environment variables: AZURE_CLIENT_ID, AZURE_TENANT_ID, AZURE_CLIENT_SECRET.
-
-```C# Snippet:CreateTextAnalyticsClientTokenCredential
-Uri endpoint = new("<endpoint>");
-TranslatorClient client = new(endpoint, new DefaultAzureCredential());
-```
-
 ## Key concepts
 
 ### `TranslatorClient`
