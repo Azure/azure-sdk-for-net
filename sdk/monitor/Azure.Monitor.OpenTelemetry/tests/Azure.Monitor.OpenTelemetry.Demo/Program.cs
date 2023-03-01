@@ -13,11 +13,6 @@ using OpenTelemetry.Trace;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddAzureMonitorOpenTelemetry();
-builder.Services.Configure<AzureMonitorOpenTelemetryOptions>(o =>
-{
-    o.ConnectionString = "InstrumentationKey=00000000-0000-0000-0000-000000000111";
-});
-
 /*
 builder.Services.AddAzureMonitorOpenTelemetry(o =>
 {

@@ -9,22 +9,22 @@ namespace Azure.Monitor.OpenTelemetry
     internal class DefaultAzureMonitorOpenTelemetryOptions : IConfigureOptions<AzureMonitorOpenTelemetryOptions>
     {
         private const string AzureMonitorOpenTelemetrySectionFromConfig = "AzureMonitorOpenTelemetry";
-        private readonly IConfiguration? configuration;
+        private readonly IConfiguration? _configuration;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="DefaultAzureMonitorOpenTelemetryOptions"/> class.
         /// </summary>
-        /// <param name="configuration"><see cref="IConfiguration"/> from which configuration for ApplicationInsights can be retrieved.</param>
+        /// <param name="configuration"><see cref="IConfiguration"/> from which configuration for AzureMonitorOpenTelemetry can be retrieved.</param>
         public DefaultAzureMonitorOpenTelemetryOptions(IConfiguration? configuration = null)
         {
-            this.configuration = configuration;
+            _configuration = configuration;
         }
 
         public void Configure(AzureMonitorOpenTelemetryOptions options)
         {
-            if (this.configuration != null)
+            if (_configuration != null)
             {
-                this.configuration.GetSection(AzureMonitorOpenTelemetrySectionFromConfig).Bind(options);
+                _configuration.GetSection(AzureMonitorOpenTelemetrySectionFromConfig).Bind(options);
             }
         }
     }

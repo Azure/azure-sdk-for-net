@@ -24,7 +24,7 @@ namespace Azure.Monitor.OpenTelemetry
         public static IServiceCollection AddAzureMonitorOpenTelemetry(this IServiceCollection services)
         {
             services.TryAddSingleton<IConfigureOptions<AzureMonitorOpenTelemetryOptions>,
-                            DefaultAzureMonitorOpenTelemetryOptions>();
+                                    DefaultAzureMonitorOpenTelemetryOptions>();
             return services.AddAzureMonitorOpenTelemetry(o => o = new AzureMonitorOpenTelemetryOptions());
         }
 
