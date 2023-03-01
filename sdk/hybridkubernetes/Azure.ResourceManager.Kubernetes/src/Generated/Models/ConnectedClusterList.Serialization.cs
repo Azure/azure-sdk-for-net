@@ -24,7 +24,6 @@ namespace Azure.ResourceManager.Kubernetes.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ConnectedClusterData> array = new List<ConnectedClusterData>();

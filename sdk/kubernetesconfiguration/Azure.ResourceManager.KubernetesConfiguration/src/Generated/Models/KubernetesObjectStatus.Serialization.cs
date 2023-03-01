@@ -43,7 +43,6 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     complianceState = new KubernetesFluxComplianceState(property.Value.GetString());

@@ -23,7 +23,6 @@ namespace Azure.ResourceManager.Logic.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<IntegrationServiceEnvironmentSkuDefinition> array = new List<IntegrationServiceEnvironmentSkuDefinition>();

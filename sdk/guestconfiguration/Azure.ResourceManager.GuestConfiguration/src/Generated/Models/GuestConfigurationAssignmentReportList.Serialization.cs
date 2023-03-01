@@ -22,7 +22,6 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<GuestConfigurationAssignmentReport> array = new List<GuestConfigurationAssignmentReport>();

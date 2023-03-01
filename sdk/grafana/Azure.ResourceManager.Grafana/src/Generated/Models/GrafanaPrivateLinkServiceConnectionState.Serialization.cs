@@ -44,7 +44,6 @@ namespace Azure.ResourceManager.Grafana.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     status = new GrafanaPrivateEndpointServiceConnectionStatus(property.Value.GetString());

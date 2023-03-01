@@ -22,7 +22,6 @@ namespace Azure.ResourceManager.Logic.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        serviceUrl = null;
                         continue;
                     }
                     serviceUrl = new Uri(property.Value.GetString());

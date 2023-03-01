@@ -66,7 +66,6 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     level = new KubernetesClusterExtensionStatusLevel(property.Value.GetString());

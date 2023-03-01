@@ -28,7 +28,6 @@ namespace Azure.ResourceManager.LoadTesting.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<LoadTestingEndpointDependency> array = new List<LoadTestingEndpointDependency>();

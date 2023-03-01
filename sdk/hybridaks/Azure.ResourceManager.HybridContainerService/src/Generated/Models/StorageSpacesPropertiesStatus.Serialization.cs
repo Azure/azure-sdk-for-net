@@ -32,7 +32,6 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     provisioningStatus = StorageSpacesPropertiesStatusProvisioningStatus.DeserializeStorageSpacesPropertiesStatusProvisioningStatus(property.Value);

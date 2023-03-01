@@ -33,7 +33,6 @@ namespace Azure.Security.KeyVault.Administration
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     type = new SettingType(property.Value.GetString());

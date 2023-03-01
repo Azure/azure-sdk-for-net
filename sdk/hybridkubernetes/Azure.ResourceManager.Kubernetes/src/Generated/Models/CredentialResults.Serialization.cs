@@ -23,7 +23,6 @@ namespace Azure.ResourceManager.Kubernetes.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     hybridConnectionConfig = HybridConnectionConfig.DeserializeHybridConnectionConfig(property.Value);
@@ -33,7 +32,6 @@ namespace Azure.ResourceManager.Kubernetes.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<CredentialResult> array = new List<CredentialResult>();

@@ -71,7 +71,6 @@ namespace Azure.ResourceManager.LabServices.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     osType = property.Value.GetString().ToLabVirtualMachineImageOSType();
@@ -86,7 +85,6 @@ namespace Azure.ResourceManager.LabServices.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     additionalCapabilities = LabVirtualMachineAdditionalCapability.DeserializeLabVirtualMachineAdditionalCapability(property.Value);
@@ -101,7 +99,6 @@ namespace Azure.ResourceManager.LabServices.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     useSharedPassword = property.Value.GetString().ToLabServicesEnableState();
@@ -116,7 +113,6 @@ namespace Azure.ResourceManager.LabServices.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     nonAdminUser = LabVirtualMachineCredential.DeserializeLabVirtualMachineCredential(property.Value);

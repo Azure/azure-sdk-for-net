@@ -66,7 +66,6 @@ namespace Azure.ResourceManager.HybridContainerService
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
@@ -76,7 +75,6 @@ namespace Azure.ResourceManager.HybridContainerService
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     properties = ProvisionedClustersResponseProperties.DeserializeProvisionedClustersResponseProperties(property.Value);
@@ -86,7 +84,6 @@ namespace Azure.ResourceManager.HybridContainerService
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     extendedLocation = ProvisionedClustersResponseExtendedLocation.DeserializeProvisionedClustersResponseExtendedLocation(property.Value);
@@ -96,7 +93,6 @@ namespace Azure.ResourceManager.HybridContainerService
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -131,7 +127,6 @@ namespace Azure.ResourceManager.HybridContainerService
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());

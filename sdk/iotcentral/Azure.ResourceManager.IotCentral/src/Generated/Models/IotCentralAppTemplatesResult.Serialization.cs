@@ -28,7 +28,6 @@ namespace Azure.ResourceManager.IotCentral.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<IotCentralAppTemplate> array = new List<IotCentralAppTemplate>();

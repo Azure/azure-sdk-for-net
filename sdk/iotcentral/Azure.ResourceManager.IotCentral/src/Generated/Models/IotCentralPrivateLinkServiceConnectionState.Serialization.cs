@@ -44,7 +44,6 @@ namespace Azure.ResourceManager.IotCentral.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     status = new IotCentralPrivateEndpointServiceConnectionStatus(property.Value.GetString());

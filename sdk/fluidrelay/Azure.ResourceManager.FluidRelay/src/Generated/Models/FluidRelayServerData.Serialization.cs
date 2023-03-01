@@ -78,7 +78,6 @@ namespace Azure.ResourceManager.FluidRelay
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
@@ -88,7 +87,6 @@ namespace Azure.ResourceManager.FluidRelay
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -123,7 +121,6 @@ namespace Azure.ResourceManager.FluidRelay
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -142,7 +139,6 @@ namespace Azure.ResourceManager.FluidRelay
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             frsTenantId = property0.Value.GetGuid();
@@ -152,7 +148,6 @@ namespace Azure.ResourceManager.FluidRelay
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             fluidRelayEndpoints = FluidRelayEndpoints.DeserializeFluidRelayEndpoints(property0.Value);
@@ -162,7 +157,6 @@ namespace Azure.ResourceManager.FluidRelay
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             provisioningState = new FluidRelayProvisioningState(property0.Value.GetString());
@@ -172,7 +166,6 @@ namespace Azure.ResourceManager.FluidRelay
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             encryption = Models.EncryptionProperties.DeserializeEncryptionProperties(property0.Value);
@@ -182,7 +175,6 @@ namespace Azure.ResourceManager.FluidRelay
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             storagesku = new FluidRelayStorageSku(property0.Value.GetString());

@@ -127,7 +127,6 @@ namespace Azure.ResourceManager.HealthcareApis
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     kind = new FhirServiceKind(property.Value.GetString());
@@ -137,7 +136,6 @@ namespace Azure.ResourceManager.HealthcareApis
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
@@ -148,7 +146,6 @@ namespace Azure.ResourceManager.HealthcareApis
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     etag = new ETag(property.Value.GetString());
@@ -158,7 +155,6 @@ namespace Azure.ResourceManager.HealthcareApis
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -193,7 +189,6 @@ namespace Azure.ResourceManager.HealthcareApis
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -212,7 +207,6 @@ namespace Azure.ResourceManager.HealthcareApis
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             provisioningState = new HealthcareApisProvisioningState(property0.Value.GetString());
@@ -222,7 +216,6 @@ namespace Azure.ResourceManager.HealthcareApis
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<FhirServiceAccessPolicyEntry> array = new List<FhirServiceAccessPolicyEntry>();
@@ -237,7 +230,6 @@ namespace Azure.ResourceManager.HealthcareApis
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             acrConfiguration = FhirServiceAcrConfiguration.DeserializeFhirServiceAcrConfiguration(property0.Value);
@@ -247,7 +239,6 @@ namespace Azure.ResourceManager.HealthcareApis
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             authenticationConfiguration = FhirServiceAuthenticationConfiguration.DeserializeFhirServiceAuthenticationConfiguration(property0.Value);
@@ -257,7 +248,6 @@ namespace Azure.ResourceManager.HealthcareApis
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             corsConfiguration = FhirServiceCorsConfiguration.DeserializeFhirServiceCorsConfiguration(property0.Value);
@@ -267,7 +257,6 @@ namespace Azure.ResourceManager.HealthcareApis
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             exportConfiguration = FhirServiceExportConfiguration.DeserializeFhirServiceExportConfiguration(property0.Value);
@@ -277,7 +266,6 @@ namespace Azure.ResourceManager.HealthcareApis
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<HealthcareApisPrivateEndpointConnectionData> array = new List<HealthcareApisPrivateEndpointConnectionData>();
@@ -292,7 +280,6 @@ namespace Azure.ResourceManager.HealthcareApis
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             publicNetworkAccess = new HealthcareApisPublicNetworkAccess(property0.Value.GetString());
@@ -302,7 +289,6 @@ namespace Azure.ResourceManager.HealthcareApis
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             eventState = new FhirServiceEventState(property0.Value.GetString());
@@ -312,7 +298,6 @@ namespace Azure.ResourceManager.HealthcareApis
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             resourceVersionPolicyConfiguration = FhirServiceResourceVersionPolicyConfiguration.DeserializeFhirServiceResourceVersionPolicyConfiguration(property0.Value);
@@ -322,7 +307,6 @@ namespace Azure.ResourceManager.HealthcareApis
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             importConfiguration = FhirServiceImportConfiguration.DeserializeFhirServiceImportConfiguration(property0.Value);

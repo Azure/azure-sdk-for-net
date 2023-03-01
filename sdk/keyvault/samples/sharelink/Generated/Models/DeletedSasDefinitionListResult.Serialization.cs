@@ -23,7 +23,6 @@ namespace Azure.Security.KeyVault.Storage.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<DeletedSasDefinitionItem> array = new List<DeletedSasDefinitionItem>();

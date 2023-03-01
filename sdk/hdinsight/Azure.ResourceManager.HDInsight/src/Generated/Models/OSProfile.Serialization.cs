@@ -32,7 +32,6 @@ namespace Azure.ResourceManager.HDInsight.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     linuxOperatingSystemProfile = HDInsightLinuxOSProfile.DeserializeHDInsightLinuxOSProfile(property.Value);

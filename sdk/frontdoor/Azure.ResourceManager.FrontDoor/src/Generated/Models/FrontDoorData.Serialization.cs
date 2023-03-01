@@ -130,7 +130,6 @@ namespace Azure.ResourceManager.FrontDoor
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -165,7 +164,6 @@ namespace Azure.ResourceManager.FrontDoor
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -189,7 +187,6 @@ namespace Azure.ResourceManager.FrontDoor
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<RoutingRuleData> array = new List<RoutingRuleData>();
@@ -204,7 +201,6 @@ namespace Azure.ResourceManager.FrontDoor
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<FrontDoorLoadBalancingSettingsData> array = new List<FrontDoorLoadBalancingSettingsData>();
@@ -219,7 +215,6 @@ namespace Azure.ResourceManager.FrontDoor
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<FrontDoorHealthProbeSettingsData> array = new List<FrontDoorHealthProbeSettingsData>();
@@ -234,7 +229,6 @@ namespace Azure.ResourceManager.FrontDoor
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<FrontDoorBackendPool> array = new List<FrontDoorBackendPool>();
@@ -249,7 +243,6 @@ namespace Azure.ResourceManager.FrontDoor
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<FrontendEndpointData> array = new List<FrontendEndpointData>();
@@ -264,7 +257,6 @@ namespace Azure.ResourceManager.FrontDoor
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             backendPoolsSettings = BackendPoolsSettings.DeserializeBackendPoolsSettings(property0.Value);
@@ -274,7 +266,6 @@ namespace Azure.ResourceManager.FrontDoor
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             enabledState = new FrontDoorEnabledState(property0.Value.GetString());
@@ -284,7 +275,6 @@ namespace Azure.ResourceManager.FrontDoor
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             resourceState = new FrontDoorResourceState(property0.Value.GetString());
@@ -309,7 +299,6 @@ namespace Azure.ResourceManager.FrontDoor
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<FrontDoorRulesEngineData> array = new List<FrontDoorRulesEngineData>();
@@ -324,7 +313,6 @@ namespace Azure.ResourceManager.FrontDoor
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             Dictionary<string, string> dictionary = new Dictionary<string, string>();

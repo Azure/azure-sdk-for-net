@@ -100,7 +100,6 @@ namespace Azure.ResourceManager.IotCentral
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
@@ -110,7 +109,6 @@ namespace Azure.ResourceManager.IotCentral
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -145,7 +143,6 @@ namespace Azure.ResourceManager.IotCentral
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -164,7 +161,6 @@ namespace Azure.ResourceManager.IotCentral
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             provisioningState = new IotCentralProvisioningState(property0.Value.GetString());
@@ -174,7 +170,6 @@ namespace Azure.ResourceManager.IotCentral
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             applicationId = property0.Value.GetGuid();
@@ -199,7 +194,6 @@ namespace Azure.ResourceManager.IotCentral
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             state = new IotCentralAppState(property0.Value.GetString());
@@ -209,7 +203,6 @@ namespace Azure.ResourceManager.IotCentral
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             publicNetworkAccess = new IotCentralPublicNetworkAccess(property0.Value.GetString());
@@ -219,7 +212,6 @@ namespace Azure.ResourceManager.IotCentral
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             networkRuleSets = IotCentralNetworkRuleSets.DeserializeIotCentralNetworkRuleSets(property0.Value);
@@ -229,7 +221,6 @@ namespace Azure.ResourceManager.IotCentral
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<IotCentralPrivateEndpointConnectionData> array = new List<IotCentralPrivateEndpointConnectionData>();

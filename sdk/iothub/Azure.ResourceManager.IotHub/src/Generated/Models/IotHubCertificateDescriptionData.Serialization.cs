@@ -40,7 +40,6 @@ namespace Azure.ResourceManager.IotHub
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     properties = IotHubCertificateProperties.DeserializeIotHubCertificateProperties(property.Value);
@@ -50,7 +49,6 @@ namespace Azure.ResourceManager.IotHub
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     etag = new ETag(property.Value.GetString());
@@ -75,7 +73,6 @@ namespace Azure.ResourceManager.IotHub
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());

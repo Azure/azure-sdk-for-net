@@ -24,7 +24,6 @@ namespace Azure.ResourceManager.HybridData.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<HybridDataServiceData> array = new List<HybridDataServiceData>();

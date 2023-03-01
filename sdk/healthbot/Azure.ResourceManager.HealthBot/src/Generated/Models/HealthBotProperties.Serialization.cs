@@ -40,7 +40,6 @@ namespace Azure.ResourceManager.HealthBot.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        botManagementPortalLink = null;
                         continue;
                     }
                     botManagementPortalLink = new Uri(property.Value.GetString());
@@ -50,7 +49,6 @@ namespace Azure.ResourceManager.HealthBot.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     keyVaultProperties = HealthBotKeyVaultProperties.DeserializeHealthBotKeyVaultProperties(property.Value);

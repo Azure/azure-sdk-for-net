@@ -38,7 +38,6 @@ namespace Azure.ResourceManager.Kusto.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     languageExtensionName = new KustoLanguageExtensionName(property.Value.GetString());
@@ -48,7 +47,6 @@ namespace Azure.ResourceManager.Kusto.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     languageExtensionImageName = new KustoLanguageExtensionImageName(property.Value.GetString());

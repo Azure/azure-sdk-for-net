@@ -72,7 +72,6 @@ namespace Azure.ResourceManager.FrontDoor
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     id = new ResourceIdentifier(property.Value.GetString());
@@ -87,7 +86,6 @@ namespace Azure.ResourceManager.FrontDoor
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     type = new ResourceType(property.Value.GetString());
@@ -111,7 +109,6 @@ namespace Azure.ResourceManager.FrontDoor
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             sessionAffinityEnabledState = new SessionAffinityEnabledState(property0.Value.GetString());
@@ -121,7 +118,6 @@ namespace Azure.ResourceManager.FrontDoor
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             sessionAffinityTtlSeconds = property0.Value.GetInt32();
@@ -131,7 +127,6 @@ namespace Azure.ResourceManager.FrontDoor
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             webApplicationFirewallPolicyLink = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
@@ -141,7 +136,6 @@ namespace Azure.ResourceManager.FrontDoor
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             resourceState = new FrontDoorResourceState(property0.Value.GetString());

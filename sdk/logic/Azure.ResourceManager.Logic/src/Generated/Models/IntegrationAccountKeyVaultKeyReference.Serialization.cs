@@ -65,7 +65,6 @@ namespace Azure.ResourceManager.Logic.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             id = new ResourceIdentifier(property0.Value.GetString());
@@ -80,7 +79,6 @@ namespace Azure.ResourceManager.Logic.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             type = new ResourceType(property0.Value.GetString());

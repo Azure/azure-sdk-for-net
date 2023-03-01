@@ -44,7 +44,6 @@ namespace Azure.ResourceManager.KeyVault.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     status = new ManagedHsmPrivateEndpointServiceConnectionStatus(property.Value.GetString());
@@ -59,7 +58,6 @@ namespace Azure.ResourceManager.KeyVault.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     actionsRequired = new ManagedHsmActionsRequiredMessage(property.Value.GetString());

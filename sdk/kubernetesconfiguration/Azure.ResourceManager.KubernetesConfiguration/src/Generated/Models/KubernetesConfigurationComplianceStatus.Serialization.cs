@@ -25,7 +25,6 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     complianceState = new KubernetesConfigurationComplianceStateType(property.Value.GetString());
@@ -35,7 +34,6 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     lastConfigApplied = property.Value.GetDateTimeOffset("O");
@@ -50,7 +48,6 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     messageLevel = new KubernetesConfigurationMesageLevel(property.Value.GetString());

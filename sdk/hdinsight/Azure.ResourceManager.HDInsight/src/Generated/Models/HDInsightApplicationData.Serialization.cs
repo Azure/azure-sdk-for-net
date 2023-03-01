@@ -58,7 +58,6 @@ namespace Azure.ResourceManager.HDInsight
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     etag = new ETag(property.Value.GetString());
@@ -68,7 +67,6 @@ namespace Azure.ResourceManager.HDInsight
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -83,7 +81,6 @@ namespace Azure.ResourceManager.HDInsight
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     properties = HDInsightApplicationProperties.DeserializeHDInsightApplicationProperties(property.Value);
@@ -108,7 +105,6 @@ namespace Azure.ResourceManager.HDInsight
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());

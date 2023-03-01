@@ -21,7 +21,6 @@ namespace Azure.ResourceManager.IotHub.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     properties = RoutingRuleProperties.DeserializeRoutingRuleProperties(property.Value);

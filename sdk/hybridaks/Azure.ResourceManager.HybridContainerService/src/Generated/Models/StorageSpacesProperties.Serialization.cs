@@ -45,7 +45,6 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     hciStorageProfile = StorageSpacesPropertiesHciStorageProfile.DeserializeStorageSpacesPropertiesHciStorageProfile(property.Value);
@@ -55,7 +54,6 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     vmwareStorageProfile = StorageSpacesPropertiesVmwareStorageProfile.DeserializeStorageSpacesPropertiesVmwareStorageProfile(property.Value);
@@ -65,7 +63,6 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     provisioningState = new ProvisioningState(property.Value.GetString());
@@ -75,7 +72,6 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     status = StorageSpacesPropertiesStatus.DeserializeStorageSpacesPropertiesStatus(property.Value);

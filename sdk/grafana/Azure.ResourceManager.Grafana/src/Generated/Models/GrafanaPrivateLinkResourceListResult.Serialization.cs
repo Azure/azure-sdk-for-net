@@ -24,7 +24,6 @@ namespace Azure.ResourceManager.Grafana.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<GrafanaPrivateLinkResourceData> array = new List<GrafanaPrivateLinkResourceData>();

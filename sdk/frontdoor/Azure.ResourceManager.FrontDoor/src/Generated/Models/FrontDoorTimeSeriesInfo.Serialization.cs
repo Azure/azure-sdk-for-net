@@ -98,7 +98,6 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -133,7 +132,6 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -152,7 +150,6 @@ namespace Azure.ResourceManager.FrontDoor.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                endpoint = null;
                                 continue;
                             }
                             endpoint = new Uri(property0.Value.GetString());
@@ -162,7 +159,6 @@ namespace Azure.ResourceManager.FrontDoor.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             startDateTimeUtc = property0.Value.GetDateTimeOffset("O");
@@ -172,7 +168,6 @@ namespace Azure.ResourceManager.FrontDoor.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             endDateTimeUtc = property0.Value.GetDateTimeOffset("O");
@@ -182,7 +177,6 @@ namespace Azure.ResourceManager.FrontDoor.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             aggregationInterval = new FrontDoorTimeSeriesInfoAggregationInterval(property0.Value.GetString());
@@ -192,7 +186,6 @@ namespace Azure.ResourceManager.FrontDoor.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             timeSeriesType = new FrontDoorTimeSeriesType(property0.Value.GetString());
@@ -207,7 +200,6 @@ namespace Azure.ResourceManager.FrontDoor.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<FrontDoorTimeSeriesDataPoint> array = new List<FrontDoorTimeSeriesDataPoint>();

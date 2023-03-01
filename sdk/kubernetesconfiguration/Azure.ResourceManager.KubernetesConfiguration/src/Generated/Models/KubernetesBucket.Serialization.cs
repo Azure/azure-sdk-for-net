@@ -97,7 +97,6 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        url = null;
                         continue;
                     }
                     url = new Uri(property.Value.GetString());
@@ -112,7 +111,6 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     insecure = property.Value.GetBoolean();

@@ -43,7 +43,6 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     ssh = LinuxProfilePropertiesSsh.DeserializeLinuxProfilePropertiesSsh(property.Value);

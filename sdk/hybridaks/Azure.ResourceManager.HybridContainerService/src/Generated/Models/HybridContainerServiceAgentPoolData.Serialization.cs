@@ -152,7 +152,6 @@ namespace Azure.ResourceManager.HybridContainerService
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     extendedLocation = AgentPoolExtendedLocation.DeserializeAgentPoolExtendedLocation(property.Value);
@@ -162,7 +161,6 @@ namespace Azure.ResourceManager.HybridContainerService
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -197,7 +195,6 @@ namespace Azure.ResourceManager.HybridContainerService
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -216,7 +213,6 @@ namespace Azure.ResourceManager.HybridContainerService
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             count = property0.Value.GetInt32();
@@ -226,7 +222,6 @@ namespace Azure.ResourceManager.HybridContainerService
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<string> array = new List<string>();
@@ -241,7 +236,6 @@ namespace Azure.ResourceManager.HybridContainerService
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             maxCount = property0.Value.GetInt32();
@@ -251,7 +245,6 @@ namespace Azure.ResourceManager.HybridContainerService
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             maxPods = property0.Value.GetInt32();
@@ -261,7 +254,6 @@ namespace Azure.ResourceManager.HybridContainerService
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             minCount = property0.Value.GetInt32();
@@ -271,7 +263,6 @@ namespace Azure.ResourceManager.HybridContainerService
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             mode = new Mode(property0.Value.GetString());
@@ -281,7 +272,6 @@ namespace Azure.ResourceManager.HybridContainerService
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -296,7 +286,6 @@ namespace Azure.ResourceManager.HybridContainerService
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<string> array = new List<string>();
@@ -311,7 +300,6 @@ namespace Azure.ResourceManager.HybridContainerService
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             osType = new OSType(property0.Value.GetString());
@@ -331,7 +319,6 @@ namespace Azure.ResourceManager.HybridContainerService
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             cloudProviderProfile = CloudProviderProfile.DeserializeCloudProviderProfile(property0.Value);
@@ -341,7 +328,6 @@ namespace Azure.ResourceManager.HybridContainerService
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             provisioningState = new AgentPoolProvisioningState(property0.Value.GetString());
@@ -351,7 +337,6 @@ namespace Azure.ResourceManager.HybridContainerService
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             status = AgentPoolProvisioningStatusStatus.DeserializeAgentPoolProvisioningStatusStatus(property0.Value);

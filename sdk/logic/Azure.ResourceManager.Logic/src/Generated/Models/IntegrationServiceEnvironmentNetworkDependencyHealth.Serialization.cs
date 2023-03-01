@@ -22,7 +22,6 @@ namespace Azure.ResourceManager.Logic.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     error = IntegrationServiceErrorInfo.DeserializeIntegrationServiceErrorInfo(property.Value);
@@ -32,7 +31,6 @@ namespace Azure.ResourceManager.Logic.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     state = new IntegrationServiceEnvironmentNetworkDependencyHealthState(property.Value.GetString());

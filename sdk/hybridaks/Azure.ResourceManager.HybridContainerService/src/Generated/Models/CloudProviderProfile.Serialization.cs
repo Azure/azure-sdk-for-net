@@ -38,7 +38,6 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     infraNetworkProfile = CloudProviderProfileInfraNetworkProfile.DeserializeCloudProviderProfileInfraNetworkProfile(property.Value);
@@ -48,7 +47,6 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     infraStorageProfile = CloudProviderProfileInfraStorageProfile.DeserializeCloudProviderProfileInfraStorageProfile(property.Value);

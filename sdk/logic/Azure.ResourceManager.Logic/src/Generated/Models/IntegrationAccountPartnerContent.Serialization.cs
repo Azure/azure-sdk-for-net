@@ -32,7 +32,6 @@ namespace Azure.ResourceManager.Logic.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     b2b = B2BPartnerContent.DeserializeB2BPartnerContent(property.Value);

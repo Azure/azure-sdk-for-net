@@ -27,7 +27,6 @@ namespace Azure.ResourceManager.Logic.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        iconUrl = null;
                         continue;
                     }
                     iconUrl = new Uri(property.Value.GetString());
@@ -47,7 +46,6 @@ namespace Azure.ResourceManager.Logic.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        termsOfUseUrl = null;
                         continue;
                     }
                     termsOfUseUrl = new Uri(property.Value.GetString());
@@ -62,7 +60,6 @@ namespace Azure.ResourceManager.Logic.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     tier = new LogicApiTier(property.Value.GetString());

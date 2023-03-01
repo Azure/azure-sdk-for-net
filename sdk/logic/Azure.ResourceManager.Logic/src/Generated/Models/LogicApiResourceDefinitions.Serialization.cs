@@ -23,7 +23,6 @@ namespace Azure.ResourceManager.Logic.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        originalSwaggerUrl = null;
                         continue;
                     }
                     originalSwaggerUrl = new Uri(property.Value.GetString());
@@ -33,7 +32,6 @@ namespace Azure.ResourceManager.Logic.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        modifiedSwaggerUrl = null;
                         continue;
                     }
                     modifiedSwaggerUrl = new Uri(property.Value.GetString());

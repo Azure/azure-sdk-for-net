@@ -38,7 +38,6 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     extensionService = HybridComputeServiceStatus.DeserializeHybridComputeServiceStatus(property.Value);
@@ -48,7 +47,6 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     guestConfigurationService = HybridComputeServiceStatus.DeserializeHybridComputeServiceStatus(property.Value);
