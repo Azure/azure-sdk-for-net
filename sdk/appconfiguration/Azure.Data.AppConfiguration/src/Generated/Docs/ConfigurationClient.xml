@@ -1525,7 +1525,7 @@ Schema for <c>KeyValueListResultItems</c>:
 
 </remarks>
     </member>
-    <member name="GetSnapshotsAsync(String,String,IEnumerable,String,RequestContext)">
+    <member name="GetSnapshotsAsync(String,String,IEnumerable,IEnumerable,RequestContext)">
 <example>
 This sample shows how to call GetSnapshotsAsync and parse the result.
 <code><![CDATA[
@@ -1543,7 +1543,7 @@ This sample shows how to call GetSnapshotsAsync with all parameters, and how to 
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new ConfigurationClient(endpoint);
 
-await foreach (var data in client.GetSnapshotsAsync("<name>", "<after>", new String[]{"<select>"}, "<status>"))
+await foreach (var data in client.GetSnapshotsAsync("<name>", "<after>", new String[]{"<select>"}, new String[]{"<status>"}))
 {
     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("name").ToString());
@@ -1591,7 +1591,7 @@ Schema for <c>SnapshotListResultItems</c>:
 
 </remarks>
     </member>
-    <member name="GetSnapshots(String,String,IEnumerable,String,RequestContext)">
+    <member name="GetSnapshots(String,String,IEnumerable,IEnumerable,RequestContext)">
 <example>
 This sample shows how to call GetSnapshots and parse the result.
 <code><![CDATA[
@@ -1609,7 +1609,7 @@ This sample shows how to call GetSnapshots with all parameters, and how to parse
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new ConfigurationClient(endpoint);
 
-foreach (var data in client.GetSnapshots("<name>", "<after>", new String[]{"<select>"}, "<status>"))
+foreach (var data in client.GetSnapshots("<name>", "<after>", new String[]{"<select>"}, new String[]{"<status>"}))
 {
     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("name").ToString());

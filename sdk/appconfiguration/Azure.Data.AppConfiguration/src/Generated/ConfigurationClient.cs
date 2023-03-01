@@ -29,6 +29,38 @@ namespace Azure.Data.AppConfiguration
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public virtual HttpPipeline Pipeline => _pipeline;
 
+        /// <summary> Gets a list of key-value snapshots. </summary>
+        /// <param name="name"> A filter for the name of the returned snapshots. </param>
+        /// <param name="after"> Instructs the server to return elements that appear after the element referred to by the specified token. </param>
+        /// <param name="select"> Used to select what fields are present in the returned resource(s). </param>
+        /// <param name="status"> Used to filter returned snapshots by their status property. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
+        /// <include file="Docs/ConfigurationClient.xml" path="doc/members/member[@name='GetSnapshotsAsync(String,String,IEnumerable,IEnumerable,RequestContext)']/*" />
+        public virtual AsyncPageable<BinaryData> GetSnapshotsAsync(string name = null, string after = null, IEnumerable<string> select = null, IEnumerable<string> status = null, RequestContext context = null)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetSnapshotsRequest(name, after, select, status, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetSnapshotsNextPageRequest(nextLink, name, after, select, status, context);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ConfigurationClient.GetSnapshots", "items", "@nextLink", context);
+        }
+
+        /// <summary> Gets a list of key-value snapshots. </summary>
+        /// <param name="name"> A filter for the name of the returned snapshots. </param>
+        /// <param name="after"> Instructs the server to return elements that appear after the element referred to by the specified token. </param>
+        /// <param name="select"> Used to select what fields are present in the returned resource(s). </param>
+        /// <param name="status"> Used to filter returned snapshots by their status property. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
+        /// <include file="Docs/ConfigurationClient.xml" path="doc/members/member[@name='GetSnapshots(String,String,IEnumerable,IEnumerable,RequestContext)']/*" />
+        public virtual Pageable<BinaryData> GetSnapshots(string name = null, string after = null, IEnumerable<string> select = null, IEnumerable<string> status = null, RequestContext context = null)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetSnapshotsRequest(name, after, select, status, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetSnapshotsNextPageRequest(nextLink, name, after, select, status, context);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ConfigurationClient.GetSnapshots", "items", "@nextLink", context);
+        }
+
         internal HttpMessage CreateGetKeysRequest(string name, string after, string acceptDatetime, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
@@ -296,7 +328,7 @@ namespace Azure.Data.AppConfiguration
             return message;
         }
 
-        internal HttpMessage CreateGetSnapshotsRequest(string name, string after, IEnumerable<string> select, string status, RequestContext context)
+        internal HttpMessage CreateGetSnapshotsRequest(string name, string after, IEnumerable<string> select, IEnumerable<string> status, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -319,7 +351,7 @@ namespace Azure.Data.AppConfiguration
             }
             if (status != null)
             {
-                uri.AppendQuery("Status", status, true);
+                uri.AppendQueryDelimited("Status", status, ",", true);
             }
             request.Uri = uri;
             if (_syncToken != null)
@@ -684,7 +716,7 @@ namespace Azure.Data.AppConfiguration
             return message;
         }
 
-        internal HttpMessage CreateGetSnapshotsNextPageRequest(string nextLink, string name, string after, IEnumerable<string> select, string status, RequestContext context)
+        internal HttpMessage CreateGetSnapshotsNextPageRequest(string nextLink, string name, string after, IEnumerable<string> select, IEnumerable<string> status, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
