@@ -25,13 +25,13 @@ namespace Azure.ResourceManager.Logic.Models
 
         public static LogicWorkflowDayOfWeek ToLogicWorkflowDayOfWeek(this string value)
         {
-            if (string.Equals(value, "Sunday", StringComparison.InvariantCultureIgnoreCase)) return LogicWorkflowDayOfWeek.Sunday;
-            if (string.Equals(value, "Monday", StringComparison.InvariantCultureIgnoreCase)) return LogicWorkflowDayOfWeek.Monday;
-            if (string.Equals(value, "Tuesday", StringComparison.InvariantCultureIgnoreCase)) return LogicWorkflowDayOfWeek.Tuesday;
-            if (string.Equals(value, "Wednesday", StringComparison.InvariantCultureIgnoreCase)) return LogicWorkflowDayOfWeek.Wednesday;
-            if (string.Equals(value, "Thursday", StringComparison.InvariantCultureIgnoreCase)) return LogicWorkflowDayOfWeek.Thursday;
-            if (string.Equals(value, "Friday", StringComparison.InvariantCultureIgnoreCase)) return LogicWorkflowDayOfWeek.Friday;
-            if (string.Equals(value, "Saturday", StringComparison.InvariantCultureIgnoreCase)) return LogicWorkflowDayOfWeek.Saturday;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Sunday")) return LogicWorkflowDayOfWeek.Sunday;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Monday")) return LogicWorkflowDayOfWeek.Monday;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Tuesday")) return LogicWorkflowDayOfWeek.Tuesday;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Wednesday")) return LogicWorkflowDayOfWeek.Wednesday;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Thursday")) return LogicWorkflowDayOfWeek.Thursday;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Friday")) return LogicWorkflowDayOfWeek.Friday;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Saturday")) return LogicWorkflowDayOfWeek.Saturday;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown LogicWorkflowDayOfWeek value.");
         }
     }

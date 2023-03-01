@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ApiManagement
 {
-    /// <summary> A class representing the ApiOperation data model. </summary>
+    /// <summary>
+    /// A class representing the ApiOperation data model.
+    /// API Operation details.
+    /// </summary>
     public partial class ApiOperationData : ResourceData
     {
         /// <summary> Initializes a new instance of ApiOperationData. </summary>

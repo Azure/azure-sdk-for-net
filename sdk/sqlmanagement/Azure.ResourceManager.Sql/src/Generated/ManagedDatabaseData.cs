@@ -13,7 +13,10 @@ using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
-    /// <summary> A class representing the ManagedDatabase data model. </summary>
+    /// <summary>
+    /// A class representing the ManagedDatabase data model.
+    /// A managed database resource.
+    /// </summary>
     public partial class ManagedDatabaseData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of ManagedDatabaseData. </summary>

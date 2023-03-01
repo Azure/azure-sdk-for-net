@@ -613,7 +613,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="SqlAgentConfigurationResource" /> object. </returns>
         public virtual SqlAgentConfigurationResource GetSqlAgentConfiguration()
         {
-            return new SqlAgentConfigurationResource(Client, new ResourceIdentifier(Id.ToString() + "/sqlAgent/current"));
+            return new SqlAgentConfigurationResource(Client, Id.AppendChildResource("sqlAgent", "current"));
         }
 
         /// <summary> Gets a collection of RestorableDroppedManagedDatabaseResources in the ManagedInstance. </summary>

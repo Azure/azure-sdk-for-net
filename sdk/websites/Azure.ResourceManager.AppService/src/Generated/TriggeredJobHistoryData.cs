@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary> A class representing the TriggeredJobHistory data model. </summary>
+    /// <summary>
+    /// A class representing the TriggeredJobHistory data model.
+    /// Triggered Web Job History. List of Triggered Web Job Run Information elements.
+    /// </summary>
     public partial class TriggeredJobHistoryData : ResourceData
     {
         /// <summary> Initializes a new instance of TriggeredJobHistoryData. </summary>

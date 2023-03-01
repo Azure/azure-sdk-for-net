@@ -102,6 +102,7 @@ rename-mapping:
   Remediation: PolicyRemediation
   Attestation.properties.expiresOn: ExpireOn
   Attestation.properties.policyAssignmentId: -|arm-id
+  Attestation.properties.assessmentDate: AssessOn
   Remediation.properties.policyAssignmentId: -|arm-id
   CheckRestrictionsResult: CheckPolicyRestrictionsResult
   CheckRestrictionsRequest: CheckPolicyRestrictionsContent

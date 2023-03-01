@@ -11,7 +11,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary> A class representing the SiteLogsConfig data model. </summary>
+    /// <summary>
+    /// A class representing the SiteLogsConfig data model.
+    /// Configuration of App Service site logs.
+    /// </summary>
     public partial class SiteLogsConfigData : ResourceData
     {
         /// <summary> Initializes a new instance of SiteLogsConfigData. </summary>

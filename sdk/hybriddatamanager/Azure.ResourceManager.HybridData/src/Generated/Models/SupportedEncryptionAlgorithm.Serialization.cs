@@ -22,10 +22,10 @@ namespace Azure.ResourceManager.HybridData.Models
 
         public static SupportedEncryptionAlgorithm ToSupportedEncryptionAlgorithm(this string value)
         {
-            if (string.Equals(value, "None", StringComparison.InvariantCultureIgnoreCase)) return SupportedEncryptionAlgorithm.None;
-            if (string.Equals(value, "RSA1_5", StringComparison.InvariantCultureIgnoreCase)) return SupportedEncryptionAlgorithm.Rsa1_5;
-            if (string.Equals(value, "RSA_OAEP", StringComparison.InvariantCultureIgnoreCase)) return SupportedEncryptionAlgorithm.Rsa_Oaep;
-            if (string.Equals(value, "PlainText", StringComparison.InvariantCultureIgnoreCase)) return SupportedEncryptionAlgorithm.PlainText;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "None")) return SupportedEncryptionAlgorithm.None;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "RSA1_5")) return SupportedEncryptionAlgorithm.Rsa1_5;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "RSA_OAEP")) return SupportedEncryptionAlgorithm.Rsa_Oaep;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "PlainText")) return SupportedEncryptionAlgorithm.PlainText;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown SupportedEncryptionAlgorithm value.");
         }
     }

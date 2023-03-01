@@ -13,7 +13,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ApiManagement
 {
-    /// <summary> A class representing the UserContract data model. </summary>
+    /// <summary>
+    /// A class representing the UserContract data model.
+    /// User details.
+    /// </summary>
     public partial class UserContractData : ResourceData
     {
         /// <summary> Initializes a new instance of UserContractData. </summary>

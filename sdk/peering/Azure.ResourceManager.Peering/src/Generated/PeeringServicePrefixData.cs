@@ -12,7 +12,10 @@ using Azure.ResourceManager.Peering.Models;
 
 namespace Azure.ResourceManager.Peering
 {
-    /// <summary> A class representing the PeeringServicePrefix data model. </summary>
+    /// <summary>
+    /// A class representing the PeeringServicePrefix data model.
+    /// The peering service prefix class.
+    /// </summary>
     public partial class PeeringServicePrefixData : ResourceData
     {
         /// <summary> Initializes a new instance of PeeringServicePrefixData. </summary>

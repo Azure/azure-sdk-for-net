@@ -13,7 +13,10 @@ using Azure.ResourceManager.Peering.Models;
 
 namespace Azure.ResourceManager.Peering
 {
-    /// <summary> A class representing the Peering data model. </summary>
+    /// <summary>
+    /// A class representing the Peering data model.
+    /// Peering is a logical representation of a set of connections to the Microsoft Cloud Edge at a location.
+    /// </summary>
     public partial class PeeringData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of PeeringData. </summary>
