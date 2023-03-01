@@ -21,9 +21,9 @@ namespace Azure.ResourceManager.Search.Models
 
         public static SearchEncryptionWithCmk ToSearchEncryptionWithCmk(this string value)
         {
-            if (string.Equals(value, "Unspecified", StringComparison.InvariantCultureIgnoreCase)) return SearchEncryptionWithCmk.Unspecified;
-            if (string.Equals(value, "Disabled", StringComparison.InvariantCultureIgnoreCase)) return SearchEncryptionWithCmk.Disabled;
-            if (string.Equals(value, "Enabled", StringComparison.InvariantCultureIgnoreCase)) return SearchEncryptionWithCmk.Enabled;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Unspecified")) return SearchEncryptionWithCmk.Unspecified;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Disabled")) return SearchEncryptionWithCmk.Disabled;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Enabled")) return SearchEncryptionWithCmk.Enabled;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown SearchEncryptionWithCmk value.");
         }
     }

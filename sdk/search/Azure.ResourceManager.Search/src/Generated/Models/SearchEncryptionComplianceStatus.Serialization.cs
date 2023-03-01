@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.Search.Models
 
         public static SearchEncryptionComplianceStatus ToSearchEncryptionComplianceStatus(this string value)
         {
-            if (string.Equals(value, "Compliant", StringComparison.InvariantCultureIgnoreCase)) return SearchEncryptionComplianceStatus.Compliant;
-            if (string.Equals(value, "NonCompliant", StringComparison.InvariantCultureIgnoreCase)) return SearchEncryptionComplianceStatus.NonCompliant;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Compliant")) return SearchEncryptionComplianceStatus.Compliant;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "NonCompliant")) return SearchEncryptionComplianceStatus.NonCompliant;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown SearchEncryptionComplianceStatus value.");
         }
     }

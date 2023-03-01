@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.Search.Models
 
         public static AadAuthFailureMode ToAadAuthFailureMode(this string value)
         {
-            if (string.Equals(value, "http403", StringComparison.InvariantCultureIgnoreCase)) return AadAuthFailureMode.Http403;
-            if (string.Equals(value, "http401WithBearerChallenge", StringComparison.InvariantCultureIgnoreCase)) return AadAuthFailureMode.Http401WithBearerChallenge;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "http403")) return AadAuthFailureMode.Http403;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "http401WithBearerChallenge")) return AadAuthFailureMode.Http401WithBearerChallenge;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown AadAuthFailureMode value.");
         }
     }
