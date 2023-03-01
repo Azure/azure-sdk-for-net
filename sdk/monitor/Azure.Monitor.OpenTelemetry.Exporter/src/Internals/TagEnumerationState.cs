@@ -3,7 +3,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 {
@@ -69,9 +68,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         private OperationType _tempActivityType;
         public OperationType activityType;
 
-        public void ForEach(IEnumerable<KeyValuePair<string, object>> activityTags)
+        public void ForEach(IEnumerable<KeyValuePair<string, object?>> activityTags)
         {
-            foreach (KeyValuePair<string, object> activityTag in activityTags)
+            foreach (KeyValuePair<string, object?> activityTag in activityTags)
             {
                 if (activityTag.Value == null)
                 {
@@ -80,23 +79,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
                 if (activityTag.Value is Array array)
                 {
-                    StringBuilder sw = new StringBuilder();
-                    foreach (var item in array)
-                    {
-                        // TODO: Consider changing it to JSon array.
-                        if (item != null)
-                        {
-                            sw.Append(item);
-                            sw.Append(',');
-                        }
-                    }
-
-                    if (sw.Length > 0)
-                    {
-                        sw.Length--;
-                    }
-
-                    AzMonList.Add(ref UnMappedTags, new KeyValuePair<string, object>(activityTag.Key, sw.ToString()));
+                    AzMonList.Add(ref UnMappedTags, new KeyValuePair<string, object>(activityTag.Key, array.ToCommaDelimitedString()));
                     continue;
                 }
 

@@ -85,6 +85,7 @@ namespace Azure.Storage.DataMovement
         /// The current status of each job part.
         /// </summary>
         public StorageTransferStatus JobPartStatus { get; set; }
+        private object _statusLock = new object();
 
         /// <summary>
         /// Optional. If the length is known, we log it instead of doing a GetProperties call on the
@@ -206,10 +207,18 @@ namespace Azure.Storage.DataMovement
         /// <param name="transferStatus"></param>
         internal async Task OnTransferStatusChanged(StorageTransferStatus transferStatus)
         {
-            if (transferStatus != StorageTransferStatus.None
-                && JobPartStatus != transferStatus)
+            bool statusChanged = false;
+            lock (_statusLock)
             {
-                JobPartStatus = transferStatus;
+                if (transferStatus != StorageTransferStatus.None
+                    && JobPartStatus != transferStatus)
+                {
+                    statusChanged = true;
+                    JobPartStatus = transferStatus;
+                }
+            }
+            if (statusChanged)
+            {
                 if (JobPartStatus == StorageTransferStatus.Completed)
                 {
                     await InvokeSingleCompletedArg().ConfigureAwait(false);
@@ -281,11 +290,7 @@ namespace Azure.Storage.DataMovement
                     _cancellationTokenSource.Token)).ConfigureAwait(false);
             }
             // Trigger job cancellation if the failed handler is enabled
-            if (_errorHandling == ErrorHandlingOptions.StopOnAllFailures ||
-                _createMode == StorageResourceCreateMode.Fail)
-            {
-                await TriggerCancellation(StorageTransferStatus.CompletedWithFailedTransfers).ConfigureAwait(false);
-            }
+            await TriggerCancellation(StorageTransferStatus.CompletedWithFailedTransfers).ConfigureAwait(false);
         }
 
         internal long CalculateBlockSize(long length)
@@ -320,7 +325,7 @@ namespace Azure.Storage.DataMovement
             return long.Parse(range.Substring(lengthSeparator + 1), CultureInfo.InvariantCulture);
         }
 
-        internal static List<(long Offset, long Size)> GetCommitBlockList(long blockSize, long fileLength)
+        internal static List<(long Offset, long Size)> GetRangeList(long blockSize, long fileLength)
         {
             // The list tracking blocks IDs we're going to commit
             List<(long Offset, long Size)> partitions = new List<(long, long)>();

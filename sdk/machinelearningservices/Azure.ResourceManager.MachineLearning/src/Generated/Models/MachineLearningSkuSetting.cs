@@ -10,17 +10,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary>
-    /// SkuSetting fulfills the need for stripped down SKU info in ARM contract.
-    /// Serialized Name: SkuSetting
-    /// </summary>
+    /// <summary> SkuSetting fulfills the need for stripped down SKU info in ARM contract. </summary>
     public partial class MachineLearningSkuSetting
     {
         /// <summary> Initializes a new instance of MachineLearningSkuSetting. </summary>
-        /// <param name="name">
-        /// [Required] The name of the SKU. Ex - P3. It is typically a letter+number code.
-        /// Serialized Name: SkuSetting.name
-        /// </param>
+        /// <param name="name"> [Required] The name of the SKU. Ex - P3. It is typically a letter+number code. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         internal MachineLearningSkuSetting(string name)
         {
@@ -30,29 +24,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of MachineLearningSkuSetting. </summary>
-        /// <param name="name">
-        /// [Required] The name of the SKU. Ex - P3. It is typically a letter+number code.
-        /// Serialized Name: SkuSetting.name
-        /// </param>
-        /// <param name="tier">
-        /// This field is required to be implemented by the Resource Provider if the service has more than one tier, but is not required on a PUT.
-        /// Serialized Name: SkuSetting.tier
-        /// </param>
+        /// <param name="name"> [Required] The name of the SKU. Ex - P3. It is typically a letter+number code. </param>
+        /// <param name="tier"> This field is required to be implemented by the Resource Provider if the service has more than one tier, but is not required on a PUT. </param>
         internal MachineLearningSkuSetting(string name, MachineLearningSkuTier? tier)
         {
             Name = name;
             Tier = tier;
         }
 
-        /// <summary>
-        /// [Required] The name of the SKU. Ex - P3. It is typically a letter+number code.
-        /// Serialized Name: SkuSetting.name
-        /// </summary>
+        /// <summary> [Required] The name of the SKU. Ex - P3. It is typically a letter+number code. </summary>
         public string Name { get; }
-        /// <summary>
-        /// This field is required to be implemented by the Resource Provider if the service has more than one tier, but is not required on a PUT.
-        /// Serialized Name: SkuSetting.tier
-        /// </summary>
+        /// <summary> This field is required to be implemented by the Resource Provider if the service has more than one tier, but is not required on a PUT. </summary>
         public MachineLearningSkuTier? Tier { get; }
     }
 }

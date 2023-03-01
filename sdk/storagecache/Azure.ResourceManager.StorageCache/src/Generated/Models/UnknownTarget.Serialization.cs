@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.StorageCache.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Attributes))
             {
-                writer.WritePropertyName("attributes");
+                writer.WritePropertyName("attributes"u8);
                 writer.WriteStartObject();
                 foreach (var item in Attributes)
                 {
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.StorageCache.Models
             Optional<IDictionary<string, string>> attributes = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("attributes"))
+                if (property.NameEquals("attributes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

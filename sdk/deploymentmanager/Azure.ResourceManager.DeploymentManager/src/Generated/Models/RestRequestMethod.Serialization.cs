@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.DeploymentManager.Models
 
         public static RestRequestMethod ToRestRequestMethod(this string value)
         {
-            if (string.Equals(value, "GET", StringComparison.InvariantCultureIgnoreCase)) return RestRequestMethod.GET;
-            if (string.Equals(value, "POST", StringComparison.InvariantCultureIgnoreCase)) return RestRequestMethod.Post;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "GET")) return RestRequestMethod.GET;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "POST")) return RestRequestMethod.Post;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown RestRequestMethod value.");
         }
     }

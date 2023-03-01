@@ -18,17 +18,17 @@ namespace Azure.ResourceManager.EventGrid.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Description))
             {
-                writer.WritePropertyName("description");
+                writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
             if (Optional.IsDefined(LongDescription))
             {
-                writer.WritePropertyName("longDescription");
+                writer.WritePropertyName("longDescription"u8);
                 writer.WriteStringValue(LongDescription);
             }
             if (Optional.IsDefined(SetupUri))
             {
-                writer.WritePropertyName("setupUri");
+                writer.WritePropertyName("setupUri"u8);
                 writer.WriteStringValue(SetupUri.AbsoluteUri);
             }
             writer.WriteEndObject();
@@ -41,17 +41,17 @@ namespace Azure.ResourceManager.EventGrid.Models
             Optional<Uri> setupUri = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("description"))
+                if (property.NameEquals("description"u8))
                 {
                     description = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("longDescription"))
+                if (property.NameEquals("longDescription"u8))
                 {
                     longDescription = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("setupUri"))
+                if (property.NameEquals("setupUri"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -11,7 +11,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Sql
 {
-    /// <summary> A class representing the VirtualCluster data model. </summary>
+    /// <summary>
+    /// A class representing the VirtualCluster data model.
+    /// An Azure SQL virtual cluster.
+    /// </summary>
     public partial class VirtualClusterData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of VirtualClusterData. </summary>
@@ -29,24 +32,20 @@ namespace Azure.ResourceManager.Sql
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
         /// <param name="subnetId"> Subnet resource ID for the virtual cluster. </param>
-        /// <param name="family"> If the service has different generations of hardware, for the same SKU, then that can be captured here. </param>
+        /// <param name="version"> Virtual cluster version. </param>
         /// <param name="childResources"> List of resources in this virtual cluster. </param>
-        /// <param name="maintenanceConfigurationId"> Specifies maintenance configuration id to apply to this virtual cluster. </param>
-        internal VirtualClusterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ResourceIdentifier subnetId, string family, IReadOnlyList<string> childResources, ResourceIdentifier maintenanceConfigurationId) : base(id, name, resourceType, systemData, tags, location)
+        internal VirtualClusterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ResourceIdentifier subnetId, string version, IReadOnlyList<string> childResources) : base(id, name, resourceType, systemData, tags, location)
         {
             SubnetId = subnetId;
-            Family = family;
+            Version = version;
             ChildResources = childResources;
-            MaintenanceConfigurationId = maintenanceConfigurationId;
         }
 
         /// <summary> Subnet resource ID for the virtual cluster. </summary>
         public ResourceIdentifier SubnetId { get; }
-        /// <summary> If the service has different generations of hardware, for the same SKU, then that can be captured here. </summary>
-        public string Family { get; set; }
+        /// <summary> Virtual cluster version. </summary>
+        public string Version { get; set; }
         /// <summary> List of resources in this virtual cluster. </summary>
         public IReadOnlyList<string> ChildResources { get; }
-        /// <summary> Specifies maintenance configuration id to apply to this virtual cluster. </summary>
-        public ResourceIdentifier MaintenanceConfigurationId { get; set; }
     }
 }

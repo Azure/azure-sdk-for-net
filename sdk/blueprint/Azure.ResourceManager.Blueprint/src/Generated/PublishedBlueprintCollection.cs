@@ -52,8 +52,16 @@ namespace Azure.ResourceManager.Blueprint
 
         /// <summary>
         /// Publish a new version of the blueprint definition with the latest artifacts. Published blueprint definitions are immutable.
-        /// Request Path: /{resourceScope}/providers/Microsoft.Blueprint/blueprints/{blueprintName}/versions/{versionId}
-        /// Operation Id: PublishedBlueprints_Create
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{resourceScope}/providers/Microsoft.Blueprint/blueprints/{blueprintName}/versions/{versionId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PublishedBlueprints_Create</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="versionId"> Version of the published blueprint definition. </param>
@@ -85,8 +93,16 @@ namespace Azure.ResourceManager.Blueprint
 
         /// <summary>
         /// Publish a new version of the blueprint definition with the latest artifacts. Published blueprint definitions are immutable.
-        /// Request Path: /{resourceScope}/providers/Microsoft.Blueprint/blueprints/{blueprintName}/versions/{versionId}
-        /// Operation Id: PublishedBlueprints_Create
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{resourceScope}/providers/Microsoft.Blueprint/blueprints/{blueprintName}/versions/{versionId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PublishedBlueprints_Create</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="versionId"> Version of the published blueprint definition. </param>
@@ -118,8 +134,16 @@ namespace Azure.ResourceManager.Blueprint
 
         /// <summary>
         /// Get a published version of a blueprint definition.
-        /// Request Path: /{resourceScope}/providers/Microsoft.Blueprint/blueprints/{blueprintName}/versions/{versionId}
-        /// Operation Id: PublishedBlueprints_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{resourceScope}/providers/Microsoft.Blueprint/blueprints/{blueprintName}/versions/{versionId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PublishedBlueprints_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="versionId"> Version of the published blueprint definition. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -147,8 +171,16 @@ namespace Azure.ResourceManager.Blueprint
 
         /// <summary>
         /// Get a published version of a blueprint definition.
-        /// Request Path: /{resourceScope}/providers/Microsoft.Blueprint/blueprints/{blueprintName}/versions/{versionId}
-        /// Operation Id: PublishedBlueprints_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{resourceScope}/providers/Microsoft.Blueprint/blueprints/{blueprintName}/versions/{versionId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PublishedBlueprints_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="versionId"> Version of the published blueprint definition. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -176,8 +208,16 @@ namespace Azure.ResourceManager.Blueprint
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /{resourceScope}/providers/Microsoft.Blueprint/blueprints/{blueprintName}/versions/{versionId}
-        /// Operation Id: PublishedBlueprints_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{resourceScope}/providers/Microsoft.Blueprint/blueprints/{blueprintName}/versions/{versionId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PublishedBlueprints_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="versionId"> Version of the published blueprint definition. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -203,8 +243,16 @@ namespace Azure.ResourceManager.Blueprint
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /{resourceScope}/providers/Microsoft.Blueprint/blueprints/{blueprintName}/versions/{versionId}
-        /// Operation Id: PublishedBlueprints_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{resourceScope}/providers/Microsoft.Blueprint/blueprints/{blueprintName}/versions/{versionId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PublishedBlueprints_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="versionId"> Version of the published blueprint definition. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

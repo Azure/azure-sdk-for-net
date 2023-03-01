@@ -15,16 +15,16 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("name");
+            writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
             if (Optional.IsDefined(Value))
             {
-                writer.WritePropertyName("value");
+                writer.WritePropertyName("value"u8);
                 writer.WriteStringValue(Value);
             }
             if (Optional.IsDefined(SecureValue))
             {
-                writer.WritePropertyName("secureValue");
+                writer.WritePropertyName("secureValue"u8);
                 writer.WriteStringValue(SecureValue);
             }
             writer.WriteEndObject();
@@ -37,17 +37,17 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             Optional<string> secureValue = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     value = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("secureValue"))
+                if (property.NameEquals("secureValue"u8))
                 {
                     secureValue = property.Value.GetString();
                     continue;

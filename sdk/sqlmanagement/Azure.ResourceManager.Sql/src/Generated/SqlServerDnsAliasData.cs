@@ -10,7 +10,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Sql
 {
-    /// <summary> A class representing the SqlServerDnsAlias data model. </summary>
+    /// <summary>
+    /// A class representing the SqlServerDnsAlias data model.
+    /// A server DNS alias.
+    /// </summary>
     public partial class SqlServerDnsAliasData : ResourceData
     {
         /// <summary> Initializes a new instance of SqlServerDnsAliasData. </summary>

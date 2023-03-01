@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.DataBox.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(PreferredDataCenterRegion))
             {
-                writer.WritePropertyName("preferredDataCenterRegion");
+                writer.WritePropertyName("preferredDataCenterRegion"u8);
                 writer.WriteStartArray();
                 foreach (var item in PreferredDataCenterRegion)
                 {
@@ -28,17 +28,17 @@ namespace Azure.ResourceManager.DataBox.Models
             }
             if (Optional.IsDefined(TransportPreferences))
             {
-                writer.WritePropertyName("transportPreferences");
+                writer.WritePropertyName("transportPreferences"u8);
                 writer.WriteObjectValue(TransportPreferences);
             }
             if (Optional.IsDefined(EncryptionPreferences))
             {
-                writer.WritePropertyName("encryptionPreferences");
+                writer.WritePropertyName("encryptionPreferences"u8);
                 writer.WriteObjectValue(EncryptionPreferences);
             }
             if (Optional.IsCollectionDefined(StorageAccountAccessTierPreferences))
             {
-                writer.WritePropertyName("storageAccountAccessTierPreferences");
+                writer.WritePropertyName("storageAccountAccessTierPreferences"u8);
                 writer.WriteStartArray();
                 foreach (var item in StorageAccountAccessTierPreferences)
                 {
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.DataBox.Models
             Optional<IList<string>> storageAccountAccessTierPreferences = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("preferredDataCenterRegion"))
+                if (property.NameEquals("preferredDataCenterRegion"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     preferredDataCenterRegion = array;
                     continue;
                 }
-                if (property.NameEquals("transportPreferences"))
+                if (property.NameEquals("transportPreferences"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     transportPreferences = TransportPreferences.DeserializeTransportPreferences(property.Value);
                     continue;
                 }
-                if (property.NameEquals("encryptionPreferences"))
+                if (property.NameEquals("encryptionPreferences"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     encryptionPreferences = DataBoxEncryptionPreferences.DeserializeDataBoxEncryptionPreferences(property.Value);
                     continue;
                 }
-                if (property.NameEquals("storageAccountAccessTierPreferences"))
+                if (property.NameEquals("storageAccountAccessTierPreferences"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

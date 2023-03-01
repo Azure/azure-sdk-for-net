@@ -294,8 +294,9 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                     CopyMethod = TransferCopyMethod.AsyncCopy
                 });
 
-            // Act;
-            await destinationResource.CopyFromUriAsync(sourceResource, false);
+            // Act
+            await destinationResource.CopyFromUriAsync(sourceResource, false, length);
+            ;
 
             // Assert
             await destinationClient.ExistsAsync();
@@ -341,6 +342,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             await destinationResource.CopyFromUriAsync(
                 sourceResource: sourceResource,
                 overwrite: false,
+                completeLength: length,
                 options: options);
 
             // Assert
@@ -357,13 +359,14 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             await using DisposingBlobContainer testContainer = await GetTestContainerAsync(publicAccessType: PublicAccessType.BlobContainer);
             PageBlobClient sourceClient = testContainer.Container.GetPageBlobClient(GetNewBlobName());
             PageBlobClient destinationClient = testContainer.Container.GetPageBlobClient(GetNewBlobName());
+            long length = Constants.KB;
 
             PageBlobStorageResource sourceResource = new PageBlobStorageResource(sourceClient);
             PageBlobStorageResource destinationResource = new PageBlobStorageResource(destinationClient);
 
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
-                destinationResource.CopyFromUriAsync(sourceResource: sourceResource, overwrite: false),
+                destinationResource.CopyFromUriAsync(sourceResource: sourceResource, overwrite: false, completeLength: length),
                 e =>
                 {
                     Assert.IsTrue(e.Message.StartsWith("The specified blob does not exist."));

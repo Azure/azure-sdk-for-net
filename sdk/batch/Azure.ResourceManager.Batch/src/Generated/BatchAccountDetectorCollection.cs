@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -55,8 +54,16 @@ namespace Azure.ResourceManager.Batch
 
         /// <summary>
         /// Gets information about the given detector for a given Batch account.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Batch/batchAccounts/{accountName}/detectors/{detectorId}
-        /// Operation Id: BatchAccount_GetDetector
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Batch/batchAccounts/{accountName}/detectors/{detectorId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>BatchAccount_GetDetector</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="detectorId"> The name of the detector. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -84,8 +91,16 @@ namespace Azure.ResourceManager.Batch
 
         /// <summary>
         /// Gets information about the given detector for a given Batch account.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Batch/batchAccounts/{accountName}/detectors/{detectorId}
-        /// Operation Id: BatchAccount_GetDetector
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Batch/batchAccounts/{accountName}/detectors/{detectorId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>BatchAccount_GetDetector</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="detectorId"> The name of the detector. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -113,92 +128,60 @@ namespace Azure.ResourceManager.Batch
 
         /// <summary>
         /// Gets information about the detectors available for a given Batch account.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Batch/batchAccounts/{accountName}/detectors
-        /// Operation Id: BatchAccount_ListDetectors
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Batch/batchAccounts/{accountName}/detectors</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>BatchAccount_ListDetectors</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="BatchAccountDetectorResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<BatchAccountDetectorResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<BatchAccountDetectorResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _batchAccountDetectorBatchAccountClientDiagnostics.CreateScope("BatchAccountDetectorCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _batchAccountDetectorBatchAccountRestClient.ListDetectorsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new BatchAccountDetectorResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<BatchAccountDetectorResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _batchAccountDetectorBatchAccountClientDiagnostics.CreateScope("BatchAccountDetectorCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _batchAccountDetectorBatchAccountRestClient.ListDetectorsNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new BatchAccountDetectorResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _batchAccountDetectorBatchAccountRestClient.CreateListDetectorsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _batchAccountDetectorBatchAccountRestClient.CreateListDetectorsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new BatchAccountDetectorResource(Client, BatchAccountDetectorData.DeserializeBatchAccountDetectorData(e)), _batchAccountDetectorBatchAccountClientDiagnostics, Pipeline, "BatchAccountDetectorCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Gets information about the detectors available for a given Batch account.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Batch/batchAccounts/{accountName}/detectors
-        /// Operation Id: BatchAccount_ListDetectors
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Batch/batchAccounts/{accountName}/detectors</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>BatchAccount_ListDetectors</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="BatchAccountDetectorResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<BatchAccountDetectorResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<BatchAccountDetectorResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _batchAccountDetectorBatchAccountClientDiagnostics.CreateScope("BatchAccountDetectorCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _batchAccountDetectorBatchAccountRestClient.ListDetectors(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new BatchAccountDetectorResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<BatchAccountDetectorResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _batchAccountDetectorBatchAccountClientDiagnostics.CreateScope("BatchAccountDetectorCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _batchAccountDetectorBatchAccountRestClient.ListDetectorsNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new BatchAccountDetectorResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _batchAccountDetectorBatchAccountRestClient.CreateListDetectorsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _batchAccountDetectorBatchAccountRestClient.CreateListDetectorsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new BatchAccountDetectorResource(Client, BatchAccountDetectorData.DeserializeBatchAccountDetectorData(e)), _batchAccountDetectorBatchAccountClientDiagnostics, Pipeline, "BatchAccountDetectorCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Batch/batchAccounts/{accountName}/detectors/{detectorId}
-        /// Operation Id: BatchAccount_GetDetector
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Batch/batchAccounts/{accountName}/detectors/{detectorId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>BatchAccount_GetDetector</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="detectorId"> The name of the detector. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -224,8 +207,16 @@ namespace Azure.ResourceManager.Batch
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Batch/batchAccounts/{accountName}/detectors/{detectorId}
-        /// Operation Id: BatchAccount_GetDetector
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Batch/batchAccounts/{accountName}/detectors/{detectorId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>BatchAccount_GetDetector</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="detectorId"> The name of the detector. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

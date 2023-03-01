@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Core.Pipeline;
 
 namespace Azure.Storage.DataMovement
 {
@@ -67,41 +68,19 @@ namespace Azure.Storage.DataMovement
         /// </summary>
         public void EnsureCompleted(CancellationToken cancellationToken = default)
         {
-#if DEBUG
-            VerifyTaskCompleted(HasCompleted);
-#endif
 #pragma warning disable AZC0102 // Do not use GetAwaiter().GetResult(). Use the TaskExtensions.EnsureCompleted() extension method instead.
-            AwaitCompletion(cancellationToken);
+            AwaitCompletion(cancellationToken).GetAwaiter().GetResult();
 #pragma warning restore AZC0102 // Do not use GetAwaiter().GetResult(). Use the TaskExtensions.EnsureCompleted() extension method instead.
-        }
-
-        [Conditional("DEBUG")]
-        private static void VerifyTaskCompleted(bool isCompleted)
-        {
-            if (!isCompleted)
-            {
-                if (Debugger.IsAttached)
-                {
-                    Debugger.Break();
-                }
-            }
         }
 
         /// <summary>
         /// Waits until the data transfer itself has completed
         /// </summary>
         /// <param name="cancellationToken"></param>
-        public Task AwaitCompletion(CancellationToken cancellationToken = default)
+        public async Task AwaitCompletion(CancellationToken cancellationToken = default)
         {
-            while (!HasCompleted)
-            {
-#if DEBUG
-                VerifyTaskCompleted(HasCompleted);
-#endif
-                CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
-            }
-
-            return Task.CompletedTask;
+            cancellationToken.Register(() => _state._completionSource.TrySetCanceled(cancellationToken), useSynchronizationContext: false);
+            await _state._completionSource.Task.ConfigureAwait(false);
         }
     }
 }

@@ -13,7 +13,10 @@ using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
-    /// <summary> A class representing the ManagedDatabase data model. </summary>
+    /// <summary>
+    /// A class representing the ManagedDatabase data model.
+    /// A managed database resource.
+    /// </summary>
     public partial class ManagedDatabaseData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of ManagedDatabaseData. </summary>
@@ -40,13 +43,14 @@ namespace Azure.ResourceManager.Sql
         /// <param name="storageContainerUri"> Conditional. If createMode is RestoreExternalBackup, this value is required. Specifies the uri of the storage container where backups for this restore are stored. </param>
         /// <param name="sourceDatabaseId"> The resource identifier of the source database associated with create operation of this database. </param>
         /// <param name="restorableDroppedDatabaseId"> The restorable dropped database resource id to restore when creating this database. </param>
-        /// <param name="storageContainerSasToken"> Conditional. If createMode is RestoreExternalBackup, this value is required. Specifies the storage container sas token. </param>
+        /// <param name="storageContainerIdentity"> Conditional. If createMode is RestoreExternalBackup, this value is used. Specifies the identity used for storage container authentication. Can be &apos;SharedAccessSignature&apos; or &apos;ManagedIdentity&apos;; if not specified &apos;SharedAccessSignature&apos; is assumed. </param>
+        /// <param name="storageContainerSasToken"> Conditional. If createMode is RestoreExternalBackup and storageContainerIdentity is not ManagedIdentity, this value is required. Specifies the storage container sas token. </param>
         /// <param name="failoverGroupId"> Instance Failover Group resource identifier that this managed database belongs to. </param>
         /// <param name="recoverableDatabaseId"> The resource identifier of the recoverable database associated with create operation of this database. </param>
         /// <param name="longTermRetentionBackupResourceId"> The name of the Long Term Retention backup to be used for restore of this managed database. </param>
         /// <param name="allowAutoCompleteRestore"> Whether to auto complete restore of this managed database. </param>
         /// <param name="lastBackupName"> Last backup file name for restore of this managed database. </param>
-        internal ManagedDatabaseData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string collation, ManagedDatabaseStatus? status, DateTimeOffset? createdOn, DateTimeOffset? earliestRestorePoint, DateTimeOffset? restorePointInTime, AzureLocation? defaultSecondaryLocation, CatalogCollationType? catalogCollation, ManagedDatabaseCreateMode? createMode, Uri storageContainerUri, ResourceIdentifier sourceDatabaseId, ResourceIdentifier restorableDroppedDatabaseId, string storageContainerSasToken, ResourceIdentifier failoverGroupId, ResourceIdentifier recoverableDatabaseId, ResourceIdentifier longTermRetentionBackupResourceId, bool? allowAutoCompleteRestore, string lastBackupName) : base(id, name, resourceType, systemData, tags, location)
+        internal ManagedDatabaseData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string collation, ManagedDatabaseStatus? status, DateTimeOffset? createdOn, DateTimeOffset? earliestRestorePoint, DateTimeOffset? restorePointInTime, AzureLocation? defaultSecondaryLocation, CatalogCollationType? catalogCollation, ManagedDatabaseCreateMode? createMode, Uri storageContainerUri, ResourceIdentifier sourceDatabaseId, ResourceIdentifier restorableDroppedDatabaseId, string storageContainerIdentity, string storageContainerSasToken, ResourceIdentifier failoverGroupId, ResourceIdentifier recoverableDatabaseId, ResourceIdentifier longTermRetentionBackupResourceId, bool? allowAutoCompleteRestore, string lastBackupName) : base(id, name, resourceType, systemData, tags, location)
         {
             Collation = collation;
             Status = status;
@@ -59,6 +63,7 @@ namespace Azure.ResourceManager.Sql
             StorageContainerUri = storageContainerUri;
             SourceDatabaseId = sourceDatabaseId;
             RestorableDroppedDatabaseId = restorableDroppedDatabaseId;
+            StorageContainerIdentity = storageContainerIdentity;
             StorageContainerSasToken = storageContainerSasToken;
             FailoverGroupId = failoverGroupId;
             RecoverableDatabaseId = recoverableDatabaseId;
@@ -89,7 +94,9 @@ namespace Azure.ResourceManager.Sql
         public ResourceIdentifier SourceDatabaseId { get; set; }
         /// <summary> The restorable dropped database resource id to restore when creating this database. </summary>
         public ResourceIdentifier RestorableDroppedDatabaseId { get; set; }
-        /// <summary> Conditional. If createMode is RestoreExternalBackup, this value is required. Specifies the storage container sas token. </summary>
+        /// <summary> Conditional. If createMode is RestoreExternalBackup, this value is used. Specifies the identity used for storage container authentication. Can be &apos;SharedAccessSignature&apos; or &apos;ManagedIdentity&apos;; if not specified &apos;SharedAccessSignature&apos; is assumed. </summary>
+        public string StorageContainerIdentity { get; set; }
+        /// <summary> Conditional. If createMode is RestoreExternalBackup and storageContainerIdentity is not ManagedIdentity, this value is required. Specifies the storage container sas token. </summary>
         public string StorageContainerSasToken { get; set; }
         /// <summary> Instance Failover Group resource identifier that this managed database belongs to. </summary>
         public ResourceIdentifier FailoverGroupId { get; }

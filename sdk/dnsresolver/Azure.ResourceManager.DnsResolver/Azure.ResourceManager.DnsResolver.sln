@@ -9,6 +9,8 @@ Project("{6DDC611C-0DBD-497F-8854-19B000044FC3}") = "Azure.ResourceManager.DnsRe
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Core.TestFramework", "..\..\core\Azure.Core.TestFramework\src\Azure.Core.TestFramework.csproj", "{CFD82F5B-3E15-48A1-9125-1C1E5A92573D}"
 EndProject
+Project("{6DDC611C-0DBD-497F-8854-19B000044FC3}") = "Azure.ResourceManager.DnsResolver.Samples", "samples\Azure.ResourceManager.DnsResolver.Samples.csproj", "{80F70190-4DD2-469B-A9C3-C33050467E28}"
+EndProject
 Global
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

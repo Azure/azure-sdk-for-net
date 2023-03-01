@@ -36,7 +36,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// <param name="keyId">
         /// The key identifier of the <see cref="KeyVaultKey"/> which will be used for cryptographic operations.
         /// If you have a key <see cref="Uri"/>, use <see cref="KeyVaultKeyIdentifier"/> to parse the <see cref="KeyVaultKeyIdentifier.VaultUri"/> and other information.
-        /// You should validate that this URI references a valid Key Vault or Managed HSM resource. See https://aka.ms/azsdk/blog/vault-uri for details.
+        /// You should validate that this URI references a valid Key Vault or Managed HSM resource. See <see href="https://aka.ms/azsdk/blog/vault-uri"/> for details.
         /// </param>
         /// <param name="credential">A <see cref="TokenCredential"/> used to authenticate requests to the vault, like DefaultAzureCredential.</param>
         /// <exception cref="ArgumentNullException"><paramref name="keyId"/> or <paramref name="credential"/> is null.</exception>
@@ -51,7 +51,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// <param name="keyId">
         /// The key identifier of the <see cref="KeyVaultKey"/> which will be used for cryptographic operations.
         /// If you have a key <see cref="Uri"/>, use <see cref="KeyVaultKeyIdentifier"/> to parse the <see cref="KeyVaultKeyIdentifier.VaultUri"/> and other information.
-        /// You should validate that this URI references a valid Key Vault or Managed HSM resource. See https://aka.ms/azsdk/blog/vault-uri for details.
+        /// You should validate that this URI references a valid Key Vault or Managed HSM resource. See <see href="https://aka.ms/azsdk/blog/vault-uri"/> for details.
         /// </param>
         /// <param name="credential">A <see cref="TokenCredential"/> used to authenticate requests to the vault, like DefaultAzureCredential.</param>
         /// <param name="options"><see cref="CryptographyClientOptions"/> the <see cref="CryptographyClient"/> for local or remote operations on Key Vault.</param>
@@ -972,7 +972,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// <list type="bullet">
         ///   <item>
         ///     <term><see cref="SHA256"/></term>
-        ///     <description><see cref="SignatureAlgorithm.EdDsa"/>, <see cref="SignatureAlgorithm.ES256"/>, <see cref="SignatureAlgorithm.ES256K"/>, <see cref="SignatureAlgorithm.PS256"/>, <see cref="SignatureAlgorithm.RS256"/></description>
+        ///     <description><see cref="SignatureAlgorithm.ES256"/>, <see cref="SignatureAlgorithm.ES256K"/>, <see cref="SignatureAlgorithm.PS256"/>, <see cref="SignatureAlgorithm.RS256"/></description>
         ///   </item>
         ///   <item>
         ///     <term><see cref="SHA384"/></term>
@@ -1051,7 +1051,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// <list type="bullet">
         ///   <item>
         ///     <term><see cref="SHA256"/></term>
-        ///     <description><see cref="SignatureAlgorithm.EdDsa"/>, <see cref="SignatureAlgorithm.ES256"/>, <see cref="SignatureAlgorithm.ES256K"/>, <see cref="SignatureAlgorithm.PS256"/>, <see cref="SignatureAlgorithm.RS256"/></description>
+        ///     <description><see cref="SignatureAlgorithm.ES256"/>, <see cref="SignatureAlgorithm.ES256K"/>, <see cref="SignatureAlgorithm.PS256"/>, <see cref="SignatureAlgorithm.RS256"/></description>
         ///   </item>
         ///   <item>
         ///     <term><see cref="SHA384"/></term>
@@ -1130,7 +1130,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// <list type="bullet">
         ///   <item>
         ///     <term><see cref="SHA256"/></term>
-        ///     <description><see cref="SignatureAlgorithm.EdDsa"/>, <see cref="SignatureAlgorithm.ES256"/>, <see cref="SignatureAlgorithm.ES256K"/>, <see cref="SignatureAlgorithm.PS256"/>, <see cref="SignatureAlgorithm.RS256"/></description>
+        ///     <description><see cref="SignatureAlgorithm.ES256"/>, <see cref="SignatureAlgorithm.ES256K"/>, <see cref="SignatureAlgorithm.PS256"/>, <see cref="SignatureAlgorithm.RS256"/></description>
         ///   </item>
         ///   <item>
         ///     <term><see cref="SHA384"/></term>
@@ -1210,7 +1210,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// <list type="bullet">
         ///   <item>
         ///     <term><see cref="SHA256"/></term>
-        ///     <description><see cref="SignatureAlgorithm.EdDsa"/>, <see cref="SignatureAlgorithm.ES256"/>, <see cref="SignatureAlgorithm.ES256K"/>, <see cref="SignatureAlgorithm.PS256"/>, <see cref="SignatureAlgorithm.RS256"/></description>
+        ///     <description><see cref="SignatureAlgorithm.ES256"/>, <see cref="SignatureAlgorithm.ES256K"/>, <see cref="SignatureAlgorithm.PS256"/>, <see cref="SignatureAlgorithm.RS256"/></description>
         ///   </item>
         ///   <item>
         ///     <term><see cref="SHA384"/></term>
@@ -1289,7 +1289,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// <list type="bullet">
         ///   <item>
         ///     <term><see cref="SHA256"/></term>
-        ///     <description><see cref="SignatureAlgorithm.EdDsa"/>, <see cref="SignatureAlgorithm.ES256"/>, <see cref="SignatureAlgorithm.ES256K"/>, <see cref="SignatureAlgorithm.PS256"/>, <see cref="SignatureAlgorithm.RS256"/></description>
+        ///     <description><see cref="SignatureAlgorithm.ES256"/>, <see cref="SignatureAlgorithm.ES256K"/>, <see cref="SignatureAlgorithm.PS256"/>, <see cref="SignatureAlgorithm.RS256"/></description>
         ///   </item>
         ///   <item>
         ///     <term><see cref="SHA384"/></term>
@@ -1369,7 +1369,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// <list type="bullet">
         ///   <item>
         ///     <term><see cref="SHA256"/></term>
-        ///     <description><see cref="SignatureAlgorithm.EdDsa"/>, <see cref="SignatureAlgorithm.ES256"/>, <see cref="SignatureAlgorithm.ES256K"/>, <see cref="SignatureAlgorithm.PS256"/>, <see cref="SignatureAlgorithm.RS256"/></description>
+        ///     <description><see cref="SignatureAlgorithm.ES256"/>, <see cref="SignatureAlgorithm.ES256K"/>, <see cref="SignatureAlgorithm.PS256"/>, <see cref="SignatureAlgorithm.RS256"/></description>
         ///   </item>
         ///   <item>
         ///     <term><see cref="SHA384"/></term>
@@ -1448,7 +1448,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// <list type="bullet">
         ///   <item>
         ///     <term><see cref="SHA256"/></term>
-        ///     <description><see cref="SignatureAlgorithm.EdDsa"/>, <see cref="SignatureAlgorithm.ES256"/>, <see cref="SignatureAlgorithm.ES256K"/>, <see cref="SignatureAlgorithm.PS256"/>, <see cref="SignatureAlgorithm.RS256"/></description>
+        ///     <description><see cref="SignatureAlgorithm.ES256"/>, <see cref="SignatureAlgorithm.ES256K"/>, <see cref="SignatureAlgorithm.PS256"/>, <see cref="SignatureAlgorithm.RS256"/></description>
         ///   </item>
         ///   <item>
         ///     <term><see cref="SHA384"/></term>
@@ -1528,7 +1528,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// <list type="bullet">
         ///   <item>
         ///     <term><see cref="SHA256"/></term>
-        ///     <description><see cref="SignatureAlgorithm.EdDsa"/>, <see cref="SignatureAlgorithm.ES256"/>, <see cref="SignatureAlgorithm.ES256K"/>, <see cref="SignatureAlgorithm.PS256"/>, <see cref="SignatureAlgorithm.RS256"/></description>
+        ///     <description><see cref="SignatureAlgorithm.ES256"/>, <see cref="SignatureAlgorithm.ES256K"/>, <see cref="SignatureAlgorithm.PS256"/>, <see cref="SignatureAlgorithm.RS256"/></description>
         ///   </item>
         ///   <item>
         ///     <term><see cref="SHA384"/></term>

@@ -12,14 +12,14 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.MachineLearning
 {
-    /// <summary> A class representing the MachineLearningSchedule data model. </summary>
+    /// <summary>
+    /// A class representing the MachineLearningSchedule data model.
+    /// Azure Resource Manager resource envelope.
+    /// </summary>
     public partial class MachineLearningScheduleData : ResourceData
     {
         /// <summary> Initializes a new instance of MachineLearningScheduleData. </summary>
-        /// <param name="properties">
-        /// [Required] Additional attributes of the entity.
-        /// Serialized Name: Schedule.properties
-        /// </param>
+        /// <param name="properties"> [Required] Additional attributes of the entity. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
         public MachineLearningScheduleData(MachineLearningScheduleProperties properties)
         {
@@ -33,19 +33,13 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties">
-        /// [Required] Additional attributes of the entity.
-        /// Serialized Name: Schedule.properties
-        /// </param>
+        /// <param name="properties"> [Required] Additional attributes of the entity. </param>
         internal MachineLearningScheduleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, MachineLearningScheduleProperties properties) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
         }
 
-        /// <summary>
-        /// [Required] Additional attributes of the entity.
-        /// Serialized Name: Schedule.properties
-        /// </summary>
+        /// <summary> [Required] Additional attributes of the entity. </summary>
         public MachineLearningScheduleProperties Properties { get; set; }
     }
 }

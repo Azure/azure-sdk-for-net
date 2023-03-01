@@ -17,10 +17,10 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Frequency))
             {
-                writer.WritePropertyName("frequency");
+                writer.WritePropertyName("frequency"u8);
                 writer.WriteStringValue(Frequency.Value.ToSerialString());
             }
-            writer.WritePropertyName("interval");
+            writer.WritePropertyName("interval"u8);
             writer.WriteNumberValue(Interval);
             writer.WriteEndObject();
         }
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             int interval = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("frequency"))
+                if (property.NameEquals("frequency"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                     frequency = property.Value.GetString().ToFrequencyType();
                     continue;
                 }
-                if (property.NameEquals("interval"))
+                if (property.NameEquals("interval"u8))
                 {
                     interval = property.Value.GetInt32();
                     continue;

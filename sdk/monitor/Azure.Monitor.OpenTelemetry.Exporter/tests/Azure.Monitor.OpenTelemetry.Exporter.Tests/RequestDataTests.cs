@@ -42,6 +42,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
                 ActivityKind.Server,
                 parentContext: new ActivityContext(ActivityTraceId.CreateRandom(), ActivitySpanId.CreateRandom(), ActivityTraceFlags.Recorded),
                 startTime: DateTime.UtcNow);
+            Assert.NotNull(activity);
             activity.Stop();
 
             var httpUrl = "https://www.foo.bar/search";
@@ -60,7 +61,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             Assert.Equal(httpUrl, requestData.Url);
             Assert.Equal("0", requestData.ResponseCode);
             Assert.Equal(activity.Duration.ToString("c", CultureInfo.InvariantCulture), requestData.Duration);
-            Assert.Equal(activity.GetStatus() != Status.Error, requestData.Success);
+            Assert.False(requestData.Success);
             Assert.Null(requestData.Source);
             Assert.True(requestData.Properties.Count == 0);
             Assert.True(requestData.Measurements.Count == 0);
@@ -77,6 +78,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
                 ActivityKind.Server,
                 parentContext: new ActivityContext(ActivityTraceId.CreateRandom(), ActivitySpanId.CreateRandom(), ActivityTraceFlags.Recorded),
                 startTime: DateTime.UtcNow);
+            Assert.NotNull(activity);
 
             var httpResponseCode = httpStatusCode ?? "0";
             activity.SetTag(SemanticConventions.AttributeHttpUrl, "https://www.foo.bar/search");
@@ -87,6 +89,33 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             var requestData = new RequestData(2, activity, ref monitorTags);
 
             Assert.Equal(httpResponseCode, requestData.ResponseCode);
+        }
+
+        [Theory]
+        [InlineData("200", true)]
+        [InlineData("400", false)]
+        [InlineData("500", false)]
+        [InlineData("0", false)]
+        public void ValidateHttpRequestSuccess(string httpStatusCode, bool isSuccess)
+        {
+            using ActivitySource activitySource = new ActivitySource(ActivitySourceName);
+            using var activity = activitySource.StartActivity(
+                ActivityName,
+                ActivityKind.Server,
+                parentContext: new ActivityContext(ActivityTraceId.CreateRandom(), ActivitySpanId.CreateRandom(), ActivityTraceFlags.Recorded),
+                startTime: DateTime.UtcNow);
+            Assert.NotNull(activity);
+
+            var httpResponseCode = httpStatusCode ?? "0";
+            activity.SetTag(SemanticConventions.AttributeHttpUrl, "https://www.foo.bar/search");
+            activity.SetTag(SemanticConventions.AttributeHttpStatusCode, httpStatusCode);
+
+            var monitorTags = TraceHelper.EnumerateActivityTags(activity);
+
+            var requestData = new RequestData(2, activity, ref monitorTags);
+
+            Assert.Equal(httpResponseCode, requestData.ResponseCode);
+            Assert.Equal(isSuccess, requestData.Success);
         }
     }
 }

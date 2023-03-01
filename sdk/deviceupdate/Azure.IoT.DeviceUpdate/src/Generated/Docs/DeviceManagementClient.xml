@@ -4273,8 +4273,7 @@ var data = "Devices";
 
 var operation = await client.ImportDevicesAsync(WaitUntil.Completed, RequestContent.Create(data));
 
-var response = await operation.WaitForCompletionResponseAsync();
-Console.WriteLine(response.Status)
+Console.WriteLine(operation.GetRawResponse().Status)
 ]]></code>
 </example>
     </member>
@@ -4290,8 +4289,7 @@ var data = "Devices";
 
 var operation = client.ImportDevices(WaitUntil.Completed, RequestContent.Create(data));
 
-var response = operation.WaitForCompletionResponse();
-Console.WriteLine(response.Status)
+Console.WriteLine(operation.GetRawResponse().Status)
 ]]></code>
 </example>
     </member>

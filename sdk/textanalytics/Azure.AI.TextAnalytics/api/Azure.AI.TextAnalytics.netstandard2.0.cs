@@ -147,7 +147,7 @@ namespace Azure.AI.TextAnalytics
         public string ActionName { get { throw null; } set { } }
         public bool? DisableServiceLogs { get { throw null; } set { } }
         public Azure.AI.TextAnalytics.HealthcareDocumentType? DocumentType { get { throw null; } set { } }
-        public Azure.AI.TextAnalytics.WellKnownFhirVersion? FhirVersion { get { throw null; } set { } }
+        public Azure.AI.TextAnalytics.FhirVersion? FhirVersion { get { throw null; } set { } }
         public string ModelVersion { get { throw null; } set { } }
     }
     public partial class AnalyzeHealthcareEntitiesActionResult : Azure.AI.TextAnalytics.TextAnalyticsActionResult
@@ -185,7 +185,7 @@ namespace Azure.AI.TextAnalytics
         public string AutoDetectionDefaultLanguage { get { throw null; } set { } }
         public string DisplayName { get { throw null; } set { } }
         public Azure.AI.TextAnalytics.HealthcareDocumentType? DocumentType { get { throw null; } set { } }
-        public Azure.AI.TextAnalytics.WellKnownFhirVersion? FhirVersion { get { throw null; } set { } }
+        public Azure.AI.TextAnalytics.FhirVersion? FhirVersion { get { throw null; } set { } }
     }
     public partial class AnalyzeHealthcareEntitiesResult : Azure.AI.TextAnalytics.TextAnalyticsResult
     {
@@ -193,7 +193,7 @@ namespace Azure.AI.TextAnalytics
         public string DetectedLanguage { get { throw null; } }
         public System.Collections.Generic.IReadOnlyCollection<Azure.AI.TextAnalytics.HealthcareEntity> Entities { get { throw null; } }
         public System.Collections.Generic.IReadOnlyCollection<Azure.AI.TextAnalytics.HealthcareEntityRelation> EntityRelations { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyDictionary<string, object> FhirBundle { get { throw null; } }
+        public System.BinaryData FhirBundle { get { throw null; } }
         public System.Collections.Generic.IReadOnlyCollection<Azure.AI.TextAnalytics.TextAnalyticsWarning> Warnings { get { throw null; } }
     }
     public partial class AnalyzeHealthcareEntitiesResultCollection : System.Collections.ObjectModel.ReadOnlyCollection<Azure.AI.TextAnalytics.AnalyzeHealthcareEntitiesResult>
@@ -454,11 +454,6 @@ namespace Azure.AI.TextAnalytics
         public string ModelVersion { get { throw null; } }
         public Azure.AI.TextAnalytics.TextDocumentBatchStatistics Statistics { get { throw null; } }
     }
-    public partial class DynamicClassifyOptions : Azure.AI.TextAnalytics.TextAnalyticsRequestOptions
-    {
-        public DynamicClassifyOptions() { }
-        public Azure.AI.TextAnalytics.ClassificationType? ClassificationType { get { throw null; } set { } }
-    }
     public enum EntityAssociation
     {
         Subject = 0,
@@ -595,6 +590,23 @@ namespace Azure.AI.TextAnalytics
         internal ExtractSummaryResultCollection() : base (default(System.Collections.Generic.IList<Azure.AI.TextAnalytics.ExtractSummaryResult>)) { }
         public string ModelVersion { get { throw null; } }
         public Azure.AI.TextAnalytics.TextDocumentBatchStatistics Statistics { get { throw null; } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct FhirVersion : System.IEquatable<Azure.AI.TextAnalytics.FhirVersion>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public FhirVersion(string value) { throw null; }
+        public static Azure.AI.TextAnalytics.FhirVersion V4_0_1 { get { throw null; } }
+        public bool Equals(Azure.AI.TextAnalytics.FhirVersion other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.AI.TextAnalytics.FhirVersion left, Azure.AI.TextAnalytics.FhirVersion right) { throw null; }
+        public static implicit operator Azure.AI.TextAnalytics.FhirVersion (string value) { throw null; }
+        public static bool operator !=(Azure.AI.TextAnalytics.FhirVersion left, Azure.AI.TextAnalytics.FhirVersion right) { throw null; }
+        public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct HealthcareDocumentType : System.IEquatable<Azure.AI.TextAnalytics.HealthcareDocumentType>
@@ -1593,12 +1605,12 @@ namespace Azure.AI.TextAnalytics
         public virtual Azure.Response<Azure.AI.TextAnalytics.DetectLanguageResultCollection> DetectLanguageBatch(System.Collections.Generic.IEnumerable<string> documents, string countryHint = null, Azure.AI.TextAnalytics.TextAnalyticsRequestOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.TextAnalytics.DetectLanguageResultCollection>> DetectLanguageBatchAsync(System.Collections.Generic.IEnumerable<Azure.AI.TextAnalytics.DetectLanguageInput> documents, Azure.AI.TextAnalytics.TextAnalyticsRequestOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.TextAnalytics.DetectLanguageResultCollection>> DetectLanguageBatchAsync(System.Collections.Generic.IEnumerable<string> documents, string countryHint = null, Azure.AI.TextAnalytics.TextAnalyticsRequestOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.AI.TextAnalytics.ClassificationCategoryCollection> DynamicClassify(string document, System.Collections.Generic.IEnumerable<string> categories, string language = null, Azure.AI.TextAnalytics.DynamicClassifyOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.TextAnalytics.ClassificationCategoryCollection>> DynamicClassifyAsync(string document, System.Collections.Generic.IEnumerable<string> categories, string language = null, Azure.AI.TextAnalytics.DynamicClassifyOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.AI.TextAnalytics.DynamicClassifyDocumentResultCollection> DynamicClassifyBatch(System.Collections.Generic.IEnumerable<Azure.AI.TextAnalytics.TextDocumentInput> documents, System.Collections.Generic.IEnumerable<string> categories, Azure.AI.TextAnalytics.DynamicClassifyOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.AI.TextAnalytics.DynamicClassifyDocumentResultCollection> DynamicClassifyBatch(System.Collections.Generic.IEnumerable<string> documents, System.Collections.Generic.IEnumerable<string> categories, string language = null, Azure.AI.TextAnalytics.DynamicClassifyOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.TextAnalytics.DynamicClassifyDocumentResultCollection>> DynamicClassifyBatchAsync(System.Collections.Generic.IEnumerable<Azure.AI.TextAnalytics.TextDocumentInput> documents, System.Collections.Generic.IEnumerable<string> categories, Azure.AI.TextAnalytics.DynamicClassifyOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.TextAnalytics.DynamicClassifyDocumentResultCollection>> DynamicClassifyBatchAsync(System.Collections.Generic.IEnumerable<string> documents, System.Collections.Generic.IEnumerable<string> categories, string language = null, Azure.AI.TextAnalytics.DynamicClassifyOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.AI.TextAnalytics.ClassificationCategoryCollection> DynamicClassify(string document, System.Collections.Generic.IEnumerable<string> categories, Azure.AI.TextAnalytics.ClassificationType? classificationType = default(Azure.AI.TextAnalytics.ClassificationType?), string language = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.TextAnalytics.ClassificationCategoryCollection>> DynamicClassifyAsync(string document, System.Collections.Generic.IEnumerable<string> categories, Azure.AI.TextAnalytics.ClassificationType? classificationType = default(Azure.AI.TextAnalytics.ClassificationType?), string language = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.AI.TextAnalytics.DynamicClassifyDocumentResultCollection> DynamicClassifyBatch(System.Collections.Generic.IEnumerable<Azure.AI.TextAnalytics.TextDocumentInput> documents, System.Collections.Generic.IEnumerable<string> categories, Azure.AI.TextAnalytics.ClassificationType? classificationType = default(Azure.AI.TextAnalytics.ClassificationType?), Azure.AI.TextAnalytics.TextAnalyticsRequestOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.AI.TextAnalytics.DynamicClassifyDocumentResultCollection> DynamicClassifyBatch(System.Collections.Generic.IEnumerable<string> documents, System.Collections.Generic.IEnumerable<string> categories, Azure.AI.TextAnalytics.ClassificationType? classificationType = default(Azure.AI.TextAnalytics.ClassificationType?), string language = null, Azure.AI.TextAnalytics.TextAnalyticsRequestOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.TextAnalytics.DynamicClassifyDocumentResultCollection>> DynamicClassifyBatchAsync(System.Collections.Generic.IEnumerable<Azure.AI.TextAnalytics.TextDocumentInput> documents, System.Collections.Generic.IEnumerable<string> categories, Azure.AI.TextAnalytics.ClassificationType? classificationType = default(Azure.AI.TextAnalytics.ClassificationType?), Azure.AI.TextAnalytics.TextAnalyticsRequestOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.TextAnalytics.DynamicClassifyDocumentResultCollection>> DynamicClassifyBatchAsync(System.Collections.Generic.IEnumerable<string> documents, System.Collections.Generic.IEnumerable<string> categories, Azure.AI.TextAnalytics.ClassificationType? classificationType = default(Azure.AI.TextAnalytics.ClassificationType?), string language = null, Azure.AI.TextAnalytics.TextAnalyticsRequestOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
         public virtual Azure.Response<Azure.AI.TextAnalytics.KeyPhraseCollection> ExtractKeyPhrases(string document, string language = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -1735,7 +1747,7 @@ namespace Azure.AI.TextAnalytics
         public static Azure.AI.TextAnalytics.AnalyzeActionsResult AnalyzeActionsResult(System.Collections.Generic.IEnumerable<Azure.AI.TextAnalytics.ExtractKeyPhrasesActionResult> extractKeyPhrasesActionResults, System.Collections.Generic.IEnumerable<Azure.AI.TextAnalytics.RecognizeEntitiesActionResult> recognizeEntitiesActionResults, System.Collections.Generic.IEnumerable<Azure.AI.TextAnalytics.RecognizePiiEntitiesActionResult> recognizePiiEntitiesActionResults, System.Collections.Generic.IEnumerable<Azure.AI.TextAnalytics.RecognizeLinkedEntitiesActionResult> recognizeLinkedEntitiesActionResults, System.Collections.Generic.IEnumerable<Azure.AI.TextAnalytics.AnalyzeSentimentActionResult> analyzeSentimentActionResults, System.Collections.Generic.IEnumerable<Azure.AI.TextAnalytics.RecognizeCustomEntitiesActionResult> recognizeCustomEntitiesActionResults, System.Collections.Generic.IEnumerable<Azure.AI.TextAnalytics.SingleLabelClassifyActionResult> singleLabelClassifyActionResults, System.Collections.Generic.IEnumerable<Azure.AI.TextAnalytics.MultiLabelClassifyActionResult> multiLabelClassifyActionResults, System.Collections.Generic.IEnumerable<Azure.AI.TextAnalytics.AnalyzeHealthcareEntitiesActionResult> analyzeHealthcareEntitiesActionResults, System.Collections.Generic.IEnumerable<Azure.AI.TextAnalytics.ExtractSummaryActionResult> extractSummaryActionResults, System.Collections.Generic.IEnumerable<Azure.AI.TextAnalytics.AbstractSummaryActionResult> abstractSummaryActionResults) { throw null; }
         public static Azure.AI.TextAnalytics.AnalyzeHealthcareEntitiesActionResult AnalyzeHealthcareEntitiesActionResult(Azure.AI.TextAnalytics.AnalyzeHealthcareEntitiesResultCollection result, string actionName, System.DateTimeOffset completedOn) { throw null; }
         public static Azure.AI.TextAnalytics.AnalyzeHealthcareEntitiesActionResult AnalyzeHealthcareEntitiesActionResult(string actionName, System.DateTimeOffset completedOn, string code, string message) { throw null; }
-        public static Azure.AI.TextAnalytics.AnalyzeHealthcareEntitiesResult AnalyzeHealthcareEntitiesResult(string id, Azure.AI.TextAnalytics.TextDocumentStatistics statistics, System.Collections.Generic.IEnumerable<Azure.AI.TextAnalytics.HealthcareEntity> healthcareEntities, System.Collections.Generic.IEnumerable<Azure.AI.TextAnalytics.HealthcareEntityRelation> entityRelations, System.Collections.Generic.IDictionary<string, object> fhirBundle, string detectedLanguage, System.Collections.Generic.IEnumerable<Azure.AI.TextAnalytics.TextAnalyticsWarning> warnings) { throw null; }
+        public static Azure.AI.TextAnalytics.AnalyzeHealthcareEntitiesResult AnalyzeHealthcareEntitiesResult(string id, Azure.AI.TextAnalytics.TextDocumentStatistics statistics, System.Collections.Generic.IEnumerable<Azure.AI.TextAnalytics.HealthcareEntity> healthcareEntities, System.Collections.Generic.IEnumerable<Azure.AI.TextAnalytics.HealthcareEntityRelation> entityRelations, System.BinaryData fhirBundle, string detectedLanguage, System.Collections.Generic.IEnumerable<Azure.AI.TextAnalytics.TextAnalyticsWarning> warnings) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.AI.TextAnalytics.AnalyzeHealthcareEntitiesResult AnalyzeHealthcareEntitiesResult(string id, Azure.AI.TextAnalytics.TextDocumentStatistics statistics, System.Collections.Generic.IEnumerable<Azure.AI.TextAnalytics.HealthcareEntity> healthcareEntities, System.Collections.Generic.IEnumerable<Azure.AI.TextAnalytics.HealthcareEntityRelation> entityRelations, System.Collections.Generic.IEnumerable<Azure.AI.TextAnalytics.TextAnalyticsWarning> warnings) { throw null; }
         public static Azure.AI.TextAnalytics.AnalyzeHealthcareEntitiesResult AnalyzeHealthcareEntitiesResult(string id, string code, string message) { throw null; }
@@ -2063,23 +2075,6 @@ namespace Azure.AI.TextAnalytics
         public static bool operator ==(Azure.AI.TextAnalytics.WeightUnit left, Azure.AI.TextAnalytics.WeightUnit right) { throw null; }
         public static implicit operator Azure.AI.TextAnalytics.WeightUnit (string value) { throw null; }
         public static bool operator !=(Azure.AI.TextAnalytics.WeightUnit left, Azure.AI.TextAnalytics.WeightUnit right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct WellKnownFhirVersion : System.IEquatable<Azure.AI.TextAnalytics.WellKnownFhirVersion>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public WellKnownFhirVersion(string value) { throw null; }
-        public static Azure.AI.TextAnalytics.WellKnownFhirVersion V4_0_1 { get { throw null; } }
-        public bool Equals(Azure.AI.TextAnalytics.WellKnownFhirVersion other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.AI.TextAnalytics.WellKnownFhirVersion left, Azure.AI.TextAnalytics.WellKnownFhirVersion right) { throw null; }
-        public static implicit operator Azure.AI.TextAnalytics.WellKnownFhirVersion (string value) { throw null; }
-        public static bool operator !=(Azure.AI.TextAnalytics.WellKnownFhirVersion left, Azure.AI.TextAnalytics.WellKnownFhirVersion right) { throw null; }
         public override string ToString() { throw null; }
     }
 }

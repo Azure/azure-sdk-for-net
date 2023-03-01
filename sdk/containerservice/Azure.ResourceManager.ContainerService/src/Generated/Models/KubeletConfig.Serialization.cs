@@ -18,37 +18,37 @@ namespace Azure.ResourceManager.ContainerService.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(CpuManagerPolicy))
             {
-                writer.WritePropertyName("cpuManagerPolicy");
+                writer.WritePropertyName("cpuManagerPolicy"u8);
                 writer.WriteStringValue(CpuManagerPolicy);
             }
             if (Optional.IsDefined(IsCpuCfsQuotaEnabled))
             {
-                writer.WritePropertyName("cpuCfsQuota");
+                writer.WritePropertyName("cpuCfsQuota"u8);
                 writer.WriteBooleanValue(IsCpuCfsQuotaEnabled.Value);
             }
             if (Optional.IsDefined(CpuCfsQuotaPeriod))
             {
-                writer.WritePropertyName("cpuCfsQuotaPeriod");
+                writer.WritePropertyName("cpuCfsQuotaPeriod"u8);
                 writer.WriteStringValue(CpuCfsQuotaPeriod);
             }
             if (Optional.IsDefined(ImageGcHighThreshold))
             {
-                writer.WritePropertyName("imageGcHighThreshold");
+                writer.WritePropertyName("imageGcHighThreshold"u8);
                 writer.WriteNumberValue(ImageGcHighThreshold.Value);
             }
             if (Optional.IsDefined(ImageGcLowThreshold))
             {
-                writer.WritePropertyName("imageGcLowThreshold");
+                writer.WritePropertyName("imageGcLowThreshold"u8);
                 writer.WriteNumberValue(ImageGcLowThreshold.Value);
             }
             if (Optional.IsDefined(TopologyManagerPolicy))
             {
-                writer.WritePropertyName("topologyManagerPolicy");
+                writer.WritePropertyName("topologyManagerPolicy"u8);
                 writer.WriteStringValue(TopologyManagerPolicy);
             }
             if (Optional.IsCollectionDefined(AllowedUnsafeSysctls))
             {
-                writer.WritePropertyName("allowedUnsafeSysctls");
+                writer.WritePropertyName("allowedUnsafeSysctls"u8);
                 writer.WriteStartArray();
                 foreach (var item in AllowedUnsafeSysctls)
                 {
@@ -58,22 +58,22 @@ namespace Azure.ResourceManager.ContainerService.Models
             }
             if (Optional.IsDefined(FailStartWithSwapOn))
             {
-                writer.WritePropertyName("failSwapOn");
+                writer.WritePropertyName("failSwapOn"u8);
                 writer.WriteBooleanValue(FailStartWithSwapOn.Value);
             }
             if (Optional.IsDefined(ContainerLogMaxSizeInMB))
             {
-                writer.WritePropertyName("containerLogMaxSizeMB");
+                writer.WritePropertyName("containerLogMaxSizeMB"u8);
                 writer.WriteNumberValue(ContainerLogMaxSizeInMB.Value);
             }
             if (Optional.IsDefined(ContainerLogMaxFiles))
             {
-                writer.WritePropertyName("containerLogMaxFiles");
+                writer.WritePropertyName("containerLogMaxFiles"u8);
                 writer.WriteNumberValue(ContainerLogMaxFiles.Value);
             }
             if (Optional.IsDefined(PodMaxPids))
             {
-                writer.WritePropertyName("podMaxPids");
+                writer.WritePropertyName("podMaxPids"u8);
                 writer.WriteNumberValue(PodMaxPids.Value);
             }
             writer.WriteEndObject();
@@ -94,12 +94,12 @@ namespace Azure.ResourceManager.ContainerService.Models
             Optional<int> podMaxPids = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("cpuManagerPolicy"))
+                if (property.NameEquals("cpuManagerPolicy"u8))
                 {
                     cpuManagerPolicy = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("cpuCfsQuota"))
+                if (property.NameEquals("cpuCfsQuota"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -109,12 +109,12 @@ namespace Azure.ResourceManager.ContainerService.Models
                     cpuCfsQuota = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("cpuCfsQuotaPeriod"))
+                if (property.NameEquals("cpuCfsQuotaPeriod"u8))
                 {
                     cpuCfsQuotaPeriod = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("imageGcHighThreshold"))
+                if (property.NameEquals("imageGcHighThreshold"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     imageGcHighThreshold = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("imageGcLowThreshold"))
+                if (property.NameEquals("imageGcLowThreshold"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -134,12 +134,12 @@ namespace Azure.ResourceManager.ContainerService.Models
                     imageGcLowThreshold = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("topologyManagerPolicy"))
+                if (property.NameEquals("topologyManagerPolicy"u8))
                 {
                     topologyManagerPolicy = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("allowedUnsafeSysctls"))
+                if (property.NameEquals("allowedUnsafeSysctls"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     allowedUnsafeSysctls = array;
                     continue;
                 }
-                if (property.NameEquals("failSwapOn"))
+                if (property.NameEquals("failSwapOn"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     failSwapOn = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("containerLogMaxSizeMB"))
+                if (property.NameEquals("containerLogMaxSizeMB"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     containerLogMaxSizeMB = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("containerLogMaxFiles"))
+                if (property.NameEquals("containerLogMaxFiles"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     containerLogMaxFiles = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("podMaxPids"))
+                if (property.NameEquals("podMaxPids"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -97,6 +97,7 @@ namespace Azure.Storage.DataMovement
         {
             if (overwrite || !File.Exists(_path))
             {
+                Directory.CreateDirectory(System.IO.Path.GetDirectoryName(_path));
                 File.Create(_path).Close();
                 FileAttributes attributes = File.GetAttributes(_path);
                 File.SetAttributes(_path, attributes | FileAttributes.Temporary);
@@ -165,12 +166,16 @@ namespace Azure.Storage.DataMovement
         /// <param name="overwrite">
         /// If set to true, will overwrite the blob if exists.
         /// </param>
+        /// <param name="completeLength">
+        /// The expected complete length of the blob.
+        /// </param>
         /// <param name="options"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         public override Task CopyFromUriAsync(
             StorageResource sourceResource,
             bool overwrite,
+            long completeLength,
             StorageResourceCopyFromUriOptions options = default,
             CancellationToken cancellationToken = default)
         {

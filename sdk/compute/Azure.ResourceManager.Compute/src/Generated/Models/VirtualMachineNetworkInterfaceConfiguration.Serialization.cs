@@ -17,48 +17,53 @@ namespace Azure.ResourceManager.Compute.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("name");
+            writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(Primary))
             {
-                writer.WritePropertyName("primary");
+                writer.WritePropertyName("primary"u8);
                 writer.WriteBooleanValue(Primary.Value);
             }
             if (Optional.IsDefined(DeleteOption))
             {
-                writer.WritePropertyName("deleteOption");
+                writer.WritePropertyName("deleteOption"u8);
                 writer.WriteStringValue(DeleteOption.Value.ToString());
             }
             if (Optional.IsDefined(EnableAcceleratedNetworking))
             {
-                writer.WritePropertyName("enableAcceleratedNetworking");
+                writer.WritePropertyName("enableAcceleratedNetworking"u8);
                 writer.WriteBooleanValue(EnableAcceleratedNetworking.Value);
+            }
+            if (Optional.IsDefined(IsTcpStateTrackingDisabled))
+            {
+                writer.WritePropertyName("disableTcpStateTracking"u8);
+                writer.WriteBooleanValue(IsTcpStateTrackingDisabled.Value);
             }
             if (Optional.IsDefined(EnableFpga))
             {
-                writer.WritePropertyName("enableFpga");
+                writer.WritePropertyName("enableFpga"u8);
                 writer.WriteBooleanValue(EnableFpga.Value);
             }
             if (Optional.IsDefined(EnableIPForwarding))
             {
-                writer.WritePropertyName("enableIPForwarding");
+                writer.WritePropertyName("enableIPForwarding"u8);
                 writer.WriteBooleanValue(EnableIPForwarding.Value);
             }
             if (Optional.IsDefined(NetworkSecurityGroup))
             {
-                writer.WritePropertyName("networkSecurityGroup");
+                writer.WritePropertyName("networkSecurityGroup"u8);
                 JsonSerializer.Serialize(writer, NetworkSecurityGroup);
             }
             if (Optional.IsDefined(DnsSettings))
             {
-                writer.WritePropertyName("dnsSettings");
+                writer.WritePropertyName("dnsSettings"u8);
                 writer.WriteObjectValue(DnsSettings);
             }
             if (Optional.IsCollectionDefined(IPConfigurations))
             {
-                writer.WritePropertyName("ipConfigurations");
+                writer.WritePropertyName("ipConfigurations"u8);
                 writer.WriteStartArray();
                 foreach (var item in IPConfigurations)
                 {
@@ -68,7 +73,7 @@ namespace Azure.ResourceManager.Compute.Models
             }
             if (Optional.IsDefined(DscpConfiguration))
             {
-                writer.WritePropertyName("dscpConfiguration");
+                writer.WritePropertyName("dscpConfiguration"u8);
                 JsonSerializer.Serialize(writer, DscpConfiguration);
             }
             writer.WriteEndObject();
@@ -81,6 +86,7 @@ namespace Azure.ResourceManager.Compute.Models
             Optional<bool> primary = default;
             Optional<ComputeDeleteOption> deleteOption = default;
             Optional<bool> enableAcceleratedNetworking = default;
+            Optional<bool> disableTcpStateTracking = default;
             Optional<bool> enableFpga = default;
             Optional<bool> enableIPForwarding = default;
             Optional<WritableSubResource> networkSecurityGroup = default;
@@ -89,12 +95,12 @@ namespace Azure.ResourceManager.Compute.Models
             Optional<WritableSubResource> dscpConfiguration = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -103,7 +109,7 @@ namespace Azure.ResourceManager.Compute.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("primary"))
+                        if (property0.NameEquals("primary"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -113,7 +119,7 @@ namespace Azure.ResourceManager.Compute.Models
                             primary = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("deleteOption"))
+                        if (property0.NameEquals("deleteOption"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -123,7 +129,7 @@ namespace Azure.ResourceManager.Compute.Models
                             deleteOption = new ComputeDeleteOption(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("enableAcceleratedNetworking"))
+                        if (property0.NameEquals("enableAcceleratedNetworking"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -133,7 +139,17 @@ namespace Azure.ResourceManager.Compute.Models
                             enableAcceleratedNetworking = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("enableFpga"))
+                        if (property0.NameEquals("disableTcpStateTracking"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            disableTcpStateTracking = property0.Value.GetBoolean();
+                            continue;
+                        }
+                        if (property0.NameEquals("enableFpga"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -143,7 +159,7 @@ namespace Azure.ResourceManager.Compute.Models
                             enableFpga = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("enableIPForwarding"))
+                        if (property0.NameEquals("enableIPForwarding"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -153,7 +169,7 @@ namespace Azure.ResourceManager.Compute.Models
                             enableIPForwarding = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("networkSecurityGroup"))
+                        if (property0.NameEquals("networkSecurityGroup"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -163,7 +179,7 @@ namespace Azure.ResourceManager.Compute.Models
                             networkSecurityGroup = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
                             continue;
                         }
-                        if (property0.NameEquals("dnsSettings"))
+                        if (property0.NameEquals("dnsSettings"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -173,7 +189,7 @@ namespace Azure.ResourceManager.Compute.Models
                             dnsSettings = VirtualMachineNetworkInterfaceDnsSettingsConfiguration.DeserializeVirtualMachineNetworkInterfaceDnsSettingsConfiguration(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("ipConfigurations"))
+                        if (property0.NameEquals("ipConfigurations"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -188,7 +204,7 @@ namespace Azure.ResourceManager.Compute.Models
                             ipConfigurations = array;
                             continue;
                         }
-                        if (property0.NameEquals("dscpConfiguration"))
+                        if (property0.NameEquals("dscpConfiguration"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -202,7 +218,7 @@ namespace Azure.ResourceManager.Compute.Models
                     continue;
                 }
             }
-            return new VirtualMachineNetworkInterfaceConfiguration(name, Optional.ToNullable(primary), Optional.ToNullable(deleteOption), Optional.ToNullable(enableAcceleratedNetworking), Optional.ToNullable(enableFpga), Optional.ToNullable(enableIPForwarding), networkSecurityGroup, dnsSettings.Value, Optional.ToList(ipConfigurations), dscpConfiguration);
+            return new VirtualMachineNetworkInterfaceConfiguration(name, Optional.ToNullable(primary), Optional.ToNullable(deleteOption), Optional.ToNullable(enableAcceleratedNetworking), Optional.ToNullable(disableTcpStateTracking), Optional.ToNullable(enableFpga), Optional.ToNullable(enableIPForwarding), networkSecurityGroup, dnsSettings.Value, Optional.ToList(ipConfigurations), dscpConfiguration);
         }
     }
 }

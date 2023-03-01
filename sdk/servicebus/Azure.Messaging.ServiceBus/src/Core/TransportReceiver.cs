@@ -33,6 +33,11 @@ namespace Azure.Messaging.ServiceBus.Core
         public abstract DateTimeOffset SessionLockedUntil { get; protected set; }
 
         /// <summary>
+        /// The prefetch count associated with the receiver.
+        /// </summary>
+        public abstract int PrefetchCount { get; set; }
+
+        /// <summary>
         /// Receives a set of <see cref="ServiceBusReceivedMessage" /> from the entity using <see cref="ServiceBusReceiveMode"/> mode.
         /// </summary>
         /// <param name="maximumMessageCount">The maximum number of messages that will be received.</param>

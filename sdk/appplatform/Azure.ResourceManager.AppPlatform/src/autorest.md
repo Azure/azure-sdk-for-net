@@ -5,11 +5,11 @@ Run `dotnet build /t:GenerateCode` to generate code.
 ``` yaml
 
 azure-arm: true
+generate-model-factory: false
 csharp: true
 library-name: AppPlatform
 namespace: Azure.ResourceManager.AppPlatform
-require: https://github.com/Azure/azure-rest-api-specs/blob/688cfd36391115f70ea9276a8e526caea6a5c8ad/specification/appplatform/resource-manager/readme.md
-tag: package-preview-2022-03
+require: https://github.com/Azure/azure-rest-api-specs/blob/e99a45d498a1c7fadc18229ecba5d84a471a8771/specification/appplatform/resource-manager/readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true
@@ -49,31 +49,53 @@ rename-rules:
   NETCore: NetCore
   Url: Uri
   Urls: Uris
+  VNet: Vnet
 
 override-operation-name:
-  Services_CheckNameAvailability: CheckServiceNameAvailability
-
-prepend-rp-prefix:
-- ResourceSkuCapabilities
-- ResourceSkuZoneDetails
-- ResourceSkuRestrictionsReasonCode
-- ResourceSkuRestrictionsType
+  Services_CheckNameAvailability: CheckAppPlatformNameAvailability
+  Apps_SetActiveDeployments: ActivateDeployments
+  Deployments_ListForCluster: GetDeployments
+  RuntimeVersions_ListRuntimeVersions: GetRuntimeVersions
 
 rename-mapping:
+  ResourceSkuCapabilities: AppPlatformSkuCapabilities
+  ResourceSkuZoneDetails: AppPlatformSkuZoneDetails
+  ResourceSkuRestrictionsReasonCode: AppPlatformSkuRestrictionsReasonCode
+  ResourceSkuRestrictionsType: AppPlatformSkuRestrictionsType
+  ResourceSkuRestrictionInfo: AppPlatformSkuRestrictionInfo
   Type: UnderlyingResourceType
+  DiagnosticParameters: ApplicationDiagnosticContent
   DiagnosticParameters.duration: DurationValue
-  DeploymentResource: AppDeploymentResource
-  Build: AppBuild
-  BuildProperties: AppBuildProperties
-  BuildProvisioningState: AppBuildProvisioningState
-  BuildResult: AppBuildResult
-  BuildService: AppBuildService
-  BuildServiceAgentPoolResource: AppBuildServiceAgentPoolResource
-  BuilderResource: AppBuilderResource
-  BuilderProperties: AppBuilderProperties
-  BuilderProvisioningState: AppBuilderProvisioningState
-  NameAvailabilityParameters: ServiceNameAvailabilityParameters
-  NameAvailability: ServiceNameAvailabilityResult
+  DeploymentResource: AppPlatformDeployment
+  DeploymentResourceProperties: AppPlatformDeploymentProperties
+  DeploymentResourceProperties.active: IsActive
+  DeploymentInstance: AppPlatformDeploymentInstance
+  DeploymentInstance.startTime: StartedOn|date-time
+  DeploymentSettings: AppPlatformDeploymentSettings
+  DeploymentSettings.terminationGracePeriodSeconds: TerminationGracePeriodInSeconds
+  DeploymentResourceProvisioningState: AppPlatformDeploymentProvisioningState
+  DeploymentResourceStatus: AppPlatformDeploymentStatus
+  Build: AppPlatformBuild
+  BuildProperties: AppPlatformBuildProperties
+  BuildProvisioningState: AppPlatformBuildProvisioningState
+  BuildResourceRequests: AppPlatformBuildResourceRequirements
+  BuildResult: AppPlatformBuildResult
+  BuildResultProperties: AppPlatformBuildResultProperties
+  BuildStageProperties: AppPlatformBuildStageProperties
+  BuildResultProvisioningState: AppPlatformBuildResultProvisioningState
+  BuildService: AppPlatformBuildService
+  BuildServiceProperties: AppPlatformBuildServiceProperties
+  BuildServiceProvisioningState: AppPlatformBuildServiceProvisioningState
+  BuildServiceAgentPoolResource: AppPlatformBuildServiceAgentPool
+  BuildServiceAgentPoolProperties: AppPlatformBuildServiceAgentPoolProperties
+  BuildServicePropertiesResourceRequests: AppPlatformBuildServiceResourceRequirements
+  BuilderResource: AppPlatformBuilder
+  BuilderProperties: AppPlatformBuilderProperties
+  BuilderProvisioningState: AppPlatformBuilderProvisioningState
+  NameAvailabilityParameters: AppPlatformNameAvailabilityContent
+  NameAvailabilityParameters.type: -|resource-type
+  NameAvailability: AppPlatformNameAvailabilityResult
+  NameAvailability.nameAvailable: IsNameAvailable
   GatewayRouteConfigResourceCollection: GatewayRouteConfigResourceList
   GatewayCustomDomainResourceCollection: GatewayCustomDomainResourceList
   ApiPortalResourceCollection: ApiPortalResourceList
@@ -89,7 +111,7 @@ rename-mapping:
   ServiceRegistryResourceCollection: ServiceRegistryResourceList
   LoadedCertificateCollection: LoadedCertificateList
   AppResourceCollection: AppResourceList
-  ActiveDeploymentCollection: ActiveDeploymentList
+  ActiveDeploymentCollection: ActiveAppPlatformDeploymentsContent
   BindingResourceCollection: BindingResourceList
   CertificateResourceCollection: CertificateResourceList
   StorageResourceCollection: StorageResourceList
@@ -101,35 +123,184 @@ rename-mapping:
   BuildpackBindingResourceCollection: BuildpackBindingResourceList
   GatewayResourceCollection: GatewayResourceList
   ResourceSku: AvailableAppPlatformSku
-  CustomDomainResource: AppPlatformCustomDomainResource
-  ServiceResource: AppPlatformServiceResource
-  AppResource: AppPlatformAppResource
-  ResourceUploadDefinition: ResourceUploadResult
-  DiagnosticParameters: DiagnosticContent
-  LogFileUrlResponse: LogFileUriResult
-  CustomPersistentDiskResource: CustomPersistentDiskData
+  SkuCapacity: AppPlatformSkuCapacity
+  ResourceSkuLocationInfo: AppPlatformSkuLocationInfo
+  ResourceSkuRestrictions: AppPlatformSkuRestrictions
+  CustomDomainResource: AppPlatformCustomDomain
+  CustomDomainProperties: AppPlatformCustomDomainProperties
+  CustomDomainResourceProvisioningState: AppPlatformCustomDomainProvisioningState
+  ServiceResource: AppPlatformService
+  ClusterResourceProperties: AppPlatformServiceProperties
+  ClusterResourceProperties.serviceId: -|uuid
+  ClusterResourceProperties.zoneRedundant: IsZoneRedundant
+  NetworkProfile: AppPlatformServiceNetworkProfile
+  PowerState: AppPlatformServicePowerState
+  ProvisioningState: AppPlatformServiceProvisioningState
+  ServiceVNetAddons.logStreamPublicEndpoint: IsLogStreamPublicEndpoint
+  AppResource: AppPlatformApp
+  AppResourceProperties: AppPlatformAppProperties
+  AppResourceProperties.public: IsPublic
+  AppResourceProperties.httpsOnly: IsHttpsOnly
+  AppResourceProperties.enableEndToEndTLS: IsEndToEndTlsEnabled
+  AppResourceProvisioningState: AppPlatformAppProvisioningState
+  TemporaryDisk: AppTemporaryDisk
+  IngressSettings: AppIngressSettings
+  ResourceUploadDefinition: AppPlatformResourceUploadResult
+  LogFileUrlResponse: AppPlatformLogFileUriResult
+  CustomPersistentDiskResource: AppCustomPersistentDisk
+  CustomPersistentDiskProperties: AppCustomPersistentDiskProperties
+  CustomPersistentDiskProperties.readOnly: IsReadOnly
+  PersistentDisk: AppPersistentDisk
   Error: AppPlatformErrorInfo
+  ApiPortalCustomDomainResource: AppPlatformApiPortalCustomDomain
+  ApiPortalResource: AppPlatformApiPortal
+  ApiPortalProperties: AppPlatformApiPortalProperties
+  ApiPortalProperties.gatewayIds: -|arm-id
+  ApiPortalProperties.public: IsPublic
+  ApiPortalProperties.httpsOnly: IsHttpsOnly
+  ApiPortalInstance: AppPlatformApiPortalInstance
+  ApiPortalProvisioningState: AppPlatformApiPortalProvisioningState
+  ApiPortalResourceRequests: AppPlatformApiPortalResourceRequirements
+  CustomDomainValidatePayload: AppPlatformCustomDomainValidateContent
+  CustomDomainValidateResult: AppPlatformCustomDomainValidateResult
+  DeploymentList.deployments: -|arm-id
+  RemoteDebugging: ApplicationRemoteDebuggingConfig
+  RemoteDebugging.enabled: IsEnabled
+  RemoteDebuggingPayload: ApplicationRemoteDebuggingContent
+  TestKeys: AppPlatformServiceTestKeys
+  TestKeys.enabled: IsEnabled
+  RegenerateTestKeyRequestPayload: RegenerateAppPlatformServiceTestKeyContent
+  BindingResource: AppPlatformBinding
+  BindingResourceProperties: AppPlatformBindingProperties
+  BindingResourceProperties.createdAt: CreatedOn|date-time
+  BindingResourceProperties.updatedAt: UpdatedOn|date-time
+  BuildpackBindingResource: AppPlatformBuildpackBinding
+  BuildpackBindingProperties: AppPlatformBuildpackBindingProperties
+  CertificateResource: AppPlatformCertificate
+  CertificateProperties: AppPlatformCertificateProperties
+  CertificateProperties.activateDate: ActivateOn|date-time
+  CertificateProperties.expirationDate: ExpireOn|date-time
+  CertificateProperties.issuedDate: IssuedOn|date-time
+  ContentCertificateProperties: AppPlatformContentCertificateProperties
+  CertificateResourceProvisioningState: AppPlatformCertificateProvisioningState
+  ConfigServerResource: AppPlatformConfigServer
+  ConfigServerProperties: AppPlatformConfigServerProperties
+  ConfigServerState: AppPlatformConfigServerState
+  ConfigServerGitProperty: AppPlatformConfigServerGitProperty
+  ConfigServerGitProperty.strictHostKeyChecking: IsHostKeyCheckingStrict
+  GitPatternRepository: ConfigServerGitPatternRepository
+  GitPatternRepository.strictHostKeyChecking: IsHostKeyCheckingStrict
+  ConfigurationServiceResource: AppPlatformConfigurationService
+  ConfigurationServiceProperties: AppPlatformConfigurationServiceProperties
+  ConfigurationServiceGitRepository: AppPlatformConfigurationServiceGitRepository
+  ConfigurationServiceInstance: AppPlatformConfigurationServiceInstance
+  ConfigurationServiceProvisioningState: AppPlatformConfigurationServiceProvisioningState
+  ConfigurationServiceResourceRequests: AppPlatformConfigurationServiceRequirements
+  GatewayCustomDomainResource: AppPlatformGatewayCustomDomain
+  GatewayResource: AppPlatformGateway
+  GatewayProperties: AppPlatformGatewayProperties
+  GatewayProperties.public: IsPublic
+  GatewayProperties.httpsOnly: IsHttpsOnly
+  GatewayProvisioningState: AppPlatformGatewayProvisioningState
+  GatewayResourceRequests: AppPlatformGatewayResourceRequirements
+  GatewayApiMetadataProperties: AppPlatformGatewayApiMetadataProperties
+  GatewayRouteConfigResource: AppPlatformGatewayRouteConfig
+  GatewayRouteConfigProperties: AppPlatformGatewayRouteConfigProperties
+  GatewayRouteConfigProperties.appResourceId: -|arm-id
+  GatewayRouteConfigProtocol: AppPlatformGatewayRouteConfigProtocol
+  GatewayApiRoute: AppPlatformGatewayApiRoute
+  GatewayApiRoute.ssoEnabled: IsSsoEnabled
+  GatewayApiRoute.tokenRelay: IsTokenRelayed
+  GatewayCorsProperties: AppPlatformGatewayCorsProperties
+  GatewayCorsProperties.allowCredentials: AreCredentialsAllowed
+  GatewayInstance: AppPlatformGatewayInstance
+  GatewayOperatorProperties: AppPlatformGatewayOperatorProperties
+  GatewayOperatorResourceRequests: AppPlatformGatewayOperatorResourceRequirements
+  MonitoringSettingResource: AppPlatformMonitoringSetting
+  MonitoringSettingProperties: AppPlatformMonitoringSettingProperties
+  MonitoringSettingProperties.traceEnabled: IsTraceEnabled
+  MonitoringSettingState: AppPlatformMonitoringSettingState
+  ServiceRegistryResource: AppPlatformServiceRegistry
+  ServiceRegistryProperties: AppPlatformServiceRegistryProperties
+  StorageResource: AppPlatformStorage
+  StorageProperties: AppPlatformStorageProperties
+  SupportedBuildpackResource: AppPlatformSupportedBuildpack
+  SupportedStackResource: AppPlatformSupportedStack
+  SupportedStackResourceProperties: AppPlatformSupportedStackProperties
+  SupportedRuntimeVersion: AppPlatformSupportedRuntimeVersion
+  SupportedRuntimePlatform: AppPlatformSupportedRuntimePlatform
+  SupportedRuntimeValue: AppPlatformSupportedRuntimeValue
+  SsoProperties: AppPlatformSsoProperties
+  StackProperties: AppPlatformClusterStackProperties
+  LoadedCertificate: AppLoadedCertificate
+  AppVNetAddons.publicEndpoint: IsPublicEndpoint
+  AzureFileVolume: AppPlatformAzureFileVolume
+  BackendProtocol: AppBackendProtocol
+  BindingType: BuildpackBindingType
+  BuildResultLog: AppPlatformBuildResultLog
+  BuildResultUserSourceInfo: AppPlatformBuildResultUserSourceInfo
+  CustomContainer: AppPlatformCustomContainer
+  CustomContainerUserSourceInfo: AppPlatformCustomContainerUserSourceInfo
+  UploadedUserSourceInfo: AppPlatformUploadedUserSourceInfo
+  UserSourceInfo: AppPlatformUserSourceInfo
+  ValidationMessages: AppPlatformConfigurationServiceGitReposValidationMessages
+  ConfigurationServiceGitRepository.strictHostKeyChecking: IsHostKeyCheckingStrict
+  ConfigurationServiceSettings: AppPlatformConfigurationServiceSettings
+  ConfigurationServiceSettingsValidateResult: AppPlatformConfigurationServiceSettingsValidateResult
+  ConfigurationServiceGitProperty.repositories: ConfigurationServiceGitRepositories
+  ConfigurationServiceGitPropertyValidateResult: AppPlatformConfigurationServiceGitValidateResult
+  ImageRegistryCredential: AppPlatformImageRegistryCredential
+  ContainerProbeSettings.disableProbe: IsProbeDisabled
+  Probe: AppInstanceProbe
+  Probe.disableProbe: IsProbeDisabled
+  Probe.initialDelaySeconds: InitialDelayInSeconds
+  Probe.periodSeconds: PeriodInSeconds
+  Probe.timeoutSeconds: TimeoutInSeconds
+  ProbeAction: AppInstanceProbeAction
+  TCPSocketAction: AppInstanceTcpSocketAction
+  ExecAction: AppInstanceExecAction
+  HttpGetAction: AppInstanceHttpGetAction
+  HttpSchemeType: AppInstanceHttpSchemeType
+  ResourceRequests: AppPlatformDeploymentResourceRequirements
+  SessionAffinity: AppSessionAffinity
+  KeyVaultCertificateProperties: AppPlatformKeyVaultCertificateProperties
+  KeyVaultCertificateProperties.excludePrivateKey: IsPrivateKeyExcluded
+  ApplicationInsightsAgentVersions.java: AppInsightsJavaAgentVersion
+  NetworkProfileOutboundIPs.publicIPs: -|ip-address
+  RequiredTraffic: AppPlatformServiceRequiredTraffic
+  RequiredTraffic.ips: -|ip-address
+  TrafficDirection: AppPlatformServiceTrafficDirection
+  TestKeyType: AppPlatformServiceTestKeyType
+  ServiceRegistryInstance: AppPlatformServiceRegistryInstance
+  ServiceRegistryProvisioningState: AppPlatformServiceRegistryProvisioningState
+  ServiceRegistryResourceRequests: AppPlatformServiceRegistryResourceRequirements
+  SkuScaleType: AppPlatformSkuScaleType
+  StorageAccount: AppPlatformStorageAccount
+  LoadedCertificate.resourceId: -|arm-id
+  BindingResourceProperties.resourceId: -|arm-id
+  NetworkProfile.serviceRuntimeSubnetId: -|arm-id
+  NetworkProfile.appSubnetId: -|arm-id
+  ResourceSku.locations: -|azure-location
+  ResourceSkuRestrictionInfo.locations: -|azure-location
+
+parameter-rename-mapping:
+  ConfigServers_Validate:
+    configServerSettings: settings
 
 directive:
-  - from: swagger-document
-    where: $.definitions..location
-    transform: >
-      $['x-ms-format'] = 'azure-location';
   - from: swagger-document
     where: $.definitions..resourceType
     transform: >
       $['x-ms-format'] = 'resource-type';
   - from: swagger-document
-    where: $.paths..parameters[?(@.name === 'location')]
-    transform: >
-      $['x-ms-format'] = 'azure-location';
-  - from: swagger-document
     where: $.definitions
     transform: >
-      $.LoadedCertificate.properties.resourceId['x-ms-format'] = 'arm-id';
-      $.BindingResourceProperties.properties.resourceId['x-ms-format'] = 'arm-id';
-      $.NetworkProfile.properties.serviceRuntimeSubnetId['x-ms-format'] = 'arm-id';
-      $.NetworkProfile.properties.appSubnetId['x-ms-format'] = 'arm-id';
-      $.ResourceSku.properties.locations.items['x-ms-format'] = 'azure-location';
-      $.ResourceSkuRestrictionInfo.properties.locations.items['x-ms-format'] = 'azure-location';
+      delete $.BindingResourceProperties.properties.resourceType['x-ms-format'];
+  - from: swagger-document
+    where: $.paths
+    transform: >
+      $['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/buildServices/{buildServiceName}/builders/{builderName}/listUsingDeployments'].post['x-ms-pageable'] = {
+          'nextLinkName': null,
+          'itemName': 'deployments'
+      };
 ```

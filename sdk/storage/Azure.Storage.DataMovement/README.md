@@ -1,4 +1,4 @@
-# Azure Storage Common client library for .NET
+# Azure Storage Data Movement Common client library for .NET
 
 > Server Version: 2021-02-12, 2020-12-06, 2020-10-02, 2020-08-04, 2020-06-12, 2020-04-08, 2020-02-10, 2019-12-12, 2019-07-07, and 2020-02-02
 
@@ -20,7 +20,7 @@ Install the Azure Storage client library for .NET you'd like to use with
 [NuGet][nuget] and the `Azure.Storage.DataMovement` client library will be included:
 
 ```dotnetcli
-dotnet add package Azure.Storage.DataMovement
+dotnet add package Azure.Storage.DataMovement --prerelease
 ```
 
 ### Prerequisites
@@ -39,7 +39,22 @@ az storage account create --name MyStorageAccount --resource-group MyResourceGro
 ### Authenticate the client
 In order to interact with the Data Movement library you have to create an instance with the TransferManager class.
 
-TODO: Insert code snippet here.
+### Create Instance of TransferManager
+```C# Snippet:CreateTransferManagerSimple
+TransferManager transferManager = new TransferManager(new TransferManagerOptions());
+```
+
+### Create Instance of TransferManager with Options
+```C# Snippet:CreateTransferManagerWithOptions
+// Create BlobTransferManager with event handler in Options bag
+TransferManagerOptions transferManagerOptions = new TransferManagerOptions();
+ContainerTransferOptions options = new ContainerTransferOptions()
+{
+    MaximumTransferChunkSize = 4 * Constants.MB,
+    CreateMode = StorageResourceCreateMode.Overwrite,
+};
+TransferManager transferManager = new TransferManager(transferManagerOptions);
+```
 
 ## Key concepts
 
@@ -62,7 +77,7 @@ We guarantee that all client instance methods are thread-safe and independent of
 
 ## Examples
 
-Please see the examples for [Blobs][blobs_examples], [Queues][queues_examples], and [Files][files_examples].
+Please see the examples for [Blobs DataMovement][blobs_examples].
 
 ## Troubleshooting
 
@@ -71,7 +86,7 @@ with helpful [`ErrorCode`s][error_codes].
 
 ## Next steps
 
-Get started with our [Common samples][samples] and then continue on with our [Blobs][blobs_samples], [Queues][queues_samples], and [Files][files_samples] samples.
+Get started with our [Blob DataMovement samples][samples].
 
 ## Contributing
 
@@ -103,15 +118,10 @@ additional questions or comments.
 [azure_cli]: https://docs.microsoft.com/cli/azure
 [azure_sub]: https://azure.microsoft.com/free/dotnet/
 [auth_credentials]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/storage/Azure.Storage.Common/src/StorageSharedKeyCredential.cs
-[blobs_examples]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/storage/Azure.Storage.Blobs/README.md#Examples
-[files_examples]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/storage/Azure.Storage.Files.Shares/README.md#Examples
-[queues_examples]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/storage/Azure.Storage.Queues/README.md#Examples
+[blobs_examples]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/storage/Azure.Storage.DataMovement.Blobs#examples
 [RequestFailedException]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/core/Azure.Core/src/RequestFailedException.cs
 [error_codes]: https://docs.microsoft.com/rest/api/storageservices/common-rest-api-error-codes
-[samples]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/storage/Azure.Storage.Common/samples/
-[blobs_samples]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/storage/Azure.Storage.Blobs/README.md#next-steps
-[files_samples]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/storage/Azure.Storage.Files.Shares/README.md#next-steps
-[queues_samples]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/storage/Azure.Storage.Queues/README.md#next-steps
+[samples]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/storage/Azure.Storage.DataMovement.Blobs/samples
 [storage_contrib]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/storage/CONTRIBUTING.md
 [cla]: https://cla.microsoft.com
 [coc]: https://opensource.microsoft.com/codeofconduct/

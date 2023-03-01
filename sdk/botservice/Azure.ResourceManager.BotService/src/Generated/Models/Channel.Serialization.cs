@@ -15,13 +15,13 @@ namespace Azure.ResourceManager.BotService.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("channelName");
+            writer.WritePropertyName("channelName"u8);
             writer.WriteStringValue(ChannelName);
             if (Optional.IsDefined(ETag))
             {
                 if (ETag != null)
                 {
-                    writer.WritePropertyName("etag");
+                    writer.WritePropertyName("etag"u8);
                     writer.WriteStringValue(ETag.ToString());
                 }
                 else
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.BotService.Models
             }
             if (Optional.IsDefined(Location))
             {
-                writer.WritePropertyName("location");
+                writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
             writer.WriteEndObject();

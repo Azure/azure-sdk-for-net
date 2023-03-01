@@ -7,6 +7,8 @@ Project("{65D4B47A-B717-491B-8539-7002738F4BB9}") = "Azure.ResourceManager.LoadT
 EndProject
 Project("{65D4B47A-B717-491B-8539-7002738F4BB9}") = "Azure.ResourceManager.LoadTesting.Tests", "tests\Azure.ResourceManager.LoadTesting.Tests.csproj", "{6C77A7BF-0FFB-4CBB-8B0E-7822C0874CE8}"
 EndProject
+Project("{65D4B47A-B717-491B-8539-7002738F4BB9}") = "Azure.ResourceManager.LoadTesting.Samples", "samples\Azure.ResourceManager.LoadTesting.Samples.csproj", "{BEEED57D-0C08-4BDC-A31E-97B7C3964E0A}"
+EndProject
 Global
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

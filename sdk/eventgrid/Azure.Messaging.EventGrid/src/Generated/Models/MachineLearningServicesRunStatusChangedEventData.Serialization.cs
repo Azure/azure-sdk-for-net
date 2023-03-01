@@ -26,27 +26,27 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             Optional<string> runStatus = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("experimentId"))
+                if (property.NameEquals("experimentId"u8))
                 {
                     experimentId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("experimentName"))
+                if (property.NameEquals("experimentName"u8))
                 {
                     experimentName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("runId"))
+                if (property.NameEquals("runId"u8))
                 {
                     runId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("runType"))
+                if (property.NameEquals("runType"u8))
                 {
                     runType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("runTags"))
+                if (property.NameEquals("runTags"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -56,7 +56,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     runTags = property.Value.GetObject();
                     continue;
                 }
-                if (property.NameEquals("runProperties"))
+                if (property.NameEquals("runProperties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -66,7 +66,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     runProperties = property.Value.GetObject();
                     continue;
                 }
-                if (property.NameEquals("runStatus"))
+                if (property.NameEquals("runStatus"u8))
                 {
                     runStatus = property.Value.GetString();
                     continue;

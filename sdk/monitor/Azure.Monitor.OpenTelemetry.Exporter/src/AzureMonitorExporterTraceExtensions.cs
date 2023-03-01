@@ -2,7 +2,11 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Diagnostics;
 using Azure.Core;
+using Azure.Monitor.OpenTelemetry.Exporter.Internals;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
 using OpenTelemetry;
 using OpenTelemetry.Trace;
 
@@ -14,27 +18,53 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
     public static class AzureMonitorExporterTraceExtensions
     {
         /// <summary>
-        /// Registers an Azure Monitor trace exporter that will receive <see cref="System.Diagnostics.Activity"/> instances.
+        /// Adds Azure Monitor Trace exporter to the TracerProvider.
         /// </summary>
         /// <param name="builder"><see cref="TracerProviderBuilder"/> builder to use.</param>
-        /// <param name="configure">Exporter configuration options.</param>
+        /// <param name="configure">Callback action for configuring <see cref="AzureMonitorExporterOptions"/>.</param>
         /// <param name="credential"><see cref="TokenCredential" /></param>
+        /// <param name="name">Name which is used when retrieving options.</param>
         /// <returns>The instance of <see cref="TracerProviderBuilder"/> to chain the calls.</returns>
-        public static TracerProviderBuilder AddAzureMonitorTraceExporter(this TracerProviderBuilder builder, Action<AzureMonitorExporterOptions> configure = null, TokenCredential credential = null)
+        public static TracerProviderBuilder AddAzureMonitorTraceExporter(
+            this TracerProviderBuilder builder,
+            Action<AzureMonitorExporterOptions>? configure = null,
+            TokenCredential? credential = null,
+            string? name = null)
         {
             if (builder == null)
             {
                 throw new ArgumentNullException(nameof(builder));
             }
 
-            var options = new AzureMonitorExporterOptions();
-            configure?.Invoke(options);
+            var finalOptionsName = name ?? Options.DefaultName;
 
-            // TODO: provide a way to turn off statsbeat
-            // Statsbeat.InitializeAttachStatsbeat(options.ConnectionString);
+            if (name != null && configure != null)
+            {
+                // If we are using named options we register the
+                // configuration delegate into options pipeline.
+                builder.ConfigureServices(services => services.Configure(finalOptionsName, configure));
+            }
 
-            // TODO: Pick Simple vs Batching based on AzureMonitorExporterOptions
-            return builder.AddProcessor(new BatchActivityExportProcessor(new AzureMonitorTraceExporter(options, credential)));
+            return builder.AddProcessor(sp =>
+            {
+                var exporterOptions = sp.GetRequiredService<IOptionsMonitor<AzureMonitorExporterOptions>>().Get(finalOptionsName);
+
+                if (name == null && configure != null)
+                {
+                    // If we are NOT using named options, we execute the
+                    // configuration delegate inline. The reason for this is
+                    // AzureMonitorExporterOptions is shared by all signals. Without a
+                    // name, delegates for all signals will mix together. See:
+                    // https://github.com/open-telemetry/opentelemetry-dotnet/issues/4043
+                    configure(exporterOptions);
+                }
+
+                return new CompositeProcessor<Activity>(new BaseProcessor<Activity>[]
+                {
+                    new StandardMetricsExtractionProcessor(),
+                    new BatchActivityExportProcessor(new AzureMonitorTraceExporter(exporterOptions, exporterOptions.Credential?? credential))
+                });
+            });
         }
     }
 }

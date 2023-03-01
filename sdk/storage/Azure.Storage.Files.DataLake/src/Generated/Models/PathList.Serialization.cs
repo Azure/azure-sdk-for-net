@@ -18,7 +18,7 @@ namespace Azure.Storage.Files.DataLake.Models
             Optional<IReadOnlyList<Path>> paths = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("paths"))
+                if (property.NameEquals("paths"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -14,7 +14,10 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute
 {
-    /// <summary> A class representing the ManagedDisk data model. </summary>
+    /// <summary>
+    /// A class representing the ManagedDisk data model.
+    /// Disk resource.
+    /// </summary>
     public partial class ManagedDiskData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of ManagedDiskData. </summary>
@@ -59,6 +62,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="shareInfo"> Details of the list of all VMs that have the disk attached. maxShares should be set to a value greater than one for disks to allow attaching them to multiple VMs. </param>
         /// <param name="networkAccessPolicy"> Policy for accessing the disk via network. </param>
         /// <param name="diskAccessId"> ARM id of the DiskAccess resource for using private endpoints on disks. </param>
+        /// <param name="burstingEnabledOn"> Latest time when bursting was last enabled on a disk. </param>
         /// <param name="tier"> Performance tier of the disk (e.g, P4, S10) as described here: https://azure.microsoft.com/en-us/pricing/details/managed-disks/. Does not apply to Ultra disks. </param>
         /// <param name="burstingEnabled"> Set to true to enable bursting beyond the provisioned performance target of the disk. Bursting is disabled by default. Does not apply to Ultra disks. </param>
         /// <param name="propertyUpdatesInProgress"> Properties of the disk for which update is pending. </param>
@@ -67,7 +71,8 @@ namespace Azure.ResourceManager.Compute
         /// <param name="completionPercent"> Percentage complete for the background copy when a resource is created via the CopyStart operation. </param>
         /// <param name="publicNetworkAccess"> Policy for controlling export on the disk. </param>
         /// <param name="dataAccessAuthMode"> Additional authentication requirements when exporting or uploading to a disk or snapshot. </param>
-        internal ManagedDiskData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ResourceIdentifier managedBy, IReadOnlyList<ResourceIdentifier> managedByExtended, DiskSku sku, IList<string> zones, ExtendedLocation extendedLocation, DateTimeOffset? timeCreated, SupportedOperatingSystemType? osType, HyperVGeneration? hyperVGeneration, DiskPurchasePlan purchasePlan, SupportedCapabilities supportedCapabilities, DiskCreationData creationData, int? diskSizeGB, long? diskSizeBytes, string uniqueId, EncryptionSettingsGroup encryptionSettingsGroup, string provisioningState, long? diskIopsReadWrite, long? diskMBpsReadWrite, long? diskIopsReadOnly, long? diskMBpsReadOnly, DiskState? diskState, DiskEncryption encryption, int? maxShares, IReadOnlyList<ShareInfoElement> shareInfo, NetworkAccessPolicy? networkAccessPolicy, ResourceIdentifier diskAccessId, string tier, bool? burstingEnabled, PropertyUpdatesInProgress propertyUpdatesInProgress, bool? supportsHibernation, DiskSecurityProfile securityProfile, float? completionPercent, DiskPublicNetworkAccess? publicNetworkAccess, DataAccessAuthMode? dataAccessAuthMode) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="isOptimizedForFrequentAttach"> Setting this property to true improves reliability and performance of data disks that are frequently (more than 5 times a day) by detached from one virtual machine and attached to another. This property should not be set for disks that are not detached and attached frequently as it causes the disks to not align with the fault domain of the virtual machine. </param>
+        internal ManagedDiskData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ResourceIdentifier managedBy, IReadOnlyList<ResourceIdentifier> managedByExtended, DiskSku sku, IList<string> zones, ExtendedLocation extendedLocation, DateTimeOffset? timeCreated, SupportedOperatingSystemType? osType, HyperVGeneration? hyperVGeneration, DiskPurchasePlan purchasePlan, SupportedCapabilities supportedCapabilities, DiskCreationData creationData, int? diskSizeGB, long? diskSizeBytes, string uniqueId, EncryptionSettingsGroup encryptionSettingsGroup, string provisioningState, long? diskIopsReadWrite, long? diskMBpsReadWrite, long? diskIopsReadOnly, long? diskMBpsReadOnly, DiskState? diskState, DiskEncryption encryption, int? maxShares, IReadOnlyList<ShareInfoElement> shareInfo, NetworkAccessPolicy? networkAccessPolicy, ResourceIdentifier diskAccessId, DateTimeOffset? burstingEnabledOn, string tier, bool? burstingEnabled, PropertyUpdatesInProgress propertyUpdatesInProgress, bool? supportsHibernation, DiskSecurityProfile securityProfile, float? completionPercent, DiskPublicNetworkAccess? publicNetworkAccess, DataAccessAuthMode? dataAccessAuthMode, bool? isOptimizedForFrequentAttach) : base(id, name, resourceType, systemData, tags, location)
         {
             ManagedBy = managedBy;
             ManagedByExtended = managedByExtended;
@@ -95,6 +100,7 @@ namespace Azure.ResourceManager.Compute
             ShareInfo = shareInfo;
             NetworkAccessPolicy = networkAccessPolicy;
             DiskAccessId = diskAccessId;
+            BurstingEnabledOn = burstingEnabledOn;
             Tier = tier;
             BurstingEnabled = burstingEnabled;
             PropertyUpdatesInProgress = propertyUpdatesInProgress;
@@ -103,6 +109,7 @@ namespace Azure.ResourceManager.Compute
             CompletionPercent = completionPercent;
             PublicNetworkAccess = publicNetworkAccess;
             DataAccessAuthMode = dataAccessAuthMode;
+            IsOptimizedForFrequentAttach = isOptimizedForFrequentAttach;
         }
 
         /// <summary> A relative URI containing the ID of the VM that has the disk attached. </summary>
@@ -157,6 +164,8 @@ namespace Azure.ResourceManager.Compute
         public NetworkAccessPolicy? NetworkAccessPolicy { get; set; }
         /// <summary> ARM id of the DiskAccess resource for using private endpoints on disks. </summary>
         public ResourceIdentifier DiskAccessId { get; set; }
+        /// <summary> Latest time when bursting was last enabled on a disk. </summary>
+        public DateTimeOffset? BurstingEnabledOn { get; }
         /// <summary> Performance tier of the disk (e.g, P4, S10) as described here: https://azure.microsoft.com/en-us/pricing/details/managed-disks/. Does not apply to Ultra disks. </summary>
         public string Tier { get; set; }
         /// <summary> Set to true to enable bursting beyond the provisioned performance target of the disk. Bursting is disabled by default. Does not apply to Ultra disks. </summary>
@@ -179,5 +188,7 @@ namespace Azure.ResourceManager.Compute
         public DiskPublicNetworkAccess? PublicNetworkAccess { get; set; }
         /// <summary> Additional authentication requirements when exporting or uploading to a disk or snapshot. </summary>
         public DataAccessAuthMode? DataAccessAuthMode { get; set; }
+        /// <summary> Setting this property to true improves reliability and performance of data disks that are frequently (more than 5 times a day) by detached from one virtual machine and attached to another. This property should not be set for disks that are not detached and attached frequently as it causes the disks to not align with the fault domain of the virtual machine. </summary>
+        public bool? IsOptimizedForFrequentAttach { get; set; }
     }
 }

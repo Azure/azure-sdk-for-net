@@ -17,7 +17,6 @@ namespace Azure.Communication.CallAutomation
         public RejectCallOptions(string incomingCallContext)
         {
             IncomingCallContext = incomingCallContext;
-            RepeatabilityHeaders = new RepeatabilityHeaders();
         }
 
         /// <summary>
@@ -29,10 +28,5 @@ namespace Azure.Communication.CallAutomation
         /// The reason for rejecting call.
         /// </summary>
         public CallRejectReason CallRejectReason { get; set; } = CallRejectReason.None;
-
-        /// <summary>
-        /// Repeatability Headers.
-        /// </summary>
-        public RepeatabilityHeaders RepeatabilityHeaders { get; set; }
     }
 }

@@ -29,8 +29,16 @@ namespace Azure.ResourceManager.HybridContainerService
 
         /// <summary>
         /// Gets the Hybrid AKS provisioned cluster in a subscription
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.HybridContainerService/provisionedClusters
-        /// Operation Id: ProvisionedClusters_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.HybridContainerService/provisionedClusters</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ProvisionedClusters_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -42,8 +50,16 @@ namespace Azure.ResourceManager.HybridContainerService
 
         /// <summary>
         /// Gets the Hybrid AKS provisioned cluster in a subscription
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.HybridContainerService/provisionedClusters
-        /// Operation Id: ProvisionedClusters_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.HybridContainerService/provisionedClusters</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ProvisionedClusters_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -55,8 +71,16 @@ namespace Azure.ResourceManager.HybridContainerService
 
         /// <summary>
         /// Lists the Hybrid AKS virtual networks by subscription
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.HybridContainerService/virtualNetworks
-        /// Operation Id: virtualNetworks_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.HybridContainerService/virtualNetworks</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>virtualNetworks_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -68,8 +92,16 @@ namespace Azure.ResourceManager.HybridContainerService
 
         /// <summary>
         /// Lists the Hybrid AKS virtual networks by subscription
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.HybridContainerService/virtualNetworks
-        /// Operation Id: virtualNetworks_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.HybridContainerService/virtualNetworks</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>virtualNetworks_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -81,8 +113,16 @@ namespace Azure.ResourceManager.HybridContainerService
 
         /// <summary>
         /// List the Hybrid AKS storage object by subscription
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.HybridContainerService/storageSpaces
-        /// Operation Id: storageSpaces_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.HybridContainerService/storageSpaces</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>storageSpaces_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -94,8 +134,16 @@ namespace Azure.ResourceManager.HybridContainerService
 
         /// <summary>
         /// List the Hybrid AKS storage object by subscription
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.HybridContainerService/storageSpaces
-        /// Operation Id: storageSpaces_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.HybridContainerService/storageSpaces</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>storageSpaces_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -124,8 +172,16 @@ namespace Azure.ResourceManager.HybridContainerService
 
         /// <summary>
         /// Gets the Hybrid AKS provisioned cluster
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridContainerService/provisionedClusters/{provisionedClustersName}
-        /// Operation Id: ProvisionedClusters_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridContainerService/provisionedClusters/{provisionedClustersName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ProvisionedClusters_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="provisionedClustersName"> Parameter for the name of the provisioned cluster. </param>
@@ -140,8 +196,16 @@ namespace Azure.ResourceManager.HybridContainerService
 
         /// <summary>
         /// Gets the Hybrid AKS provisioned cluster
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridContainerService/provisionedClusters/{provisionedClustersName}
-        /// Operation Id: ProvisionedClusters_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridContainerService/provisionedClusters/{provisionedClustersName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ProvisionedClusters_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="provisionedClustersName"> Parameter for the name of the provisioned cluster. </param>
@@ -164,8 +228,16 @@ namespace Azure.ResourceManager.HybridContainerService
 
         /// <summary>
         /// Gets the Hybrid AKS virtual network
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridContainerService/virtualNetworks/{virtualNetworksName}
-        /// Operation Id: virtualNetworks_Retrieve
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridContainerService/virtualNetworks/{virtualNetworksName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>virtualNetworks_Retrieve</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="virtualNetworksName"> Parameter for the name of the virtual network. </param>
@@ -180,8 +252,16 @@ namespace Azure.ResourceManager.HybridContainerService
 
         /// <summary>
         /// Gets the Hybrid AKS virtual network
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridContainerService/virtualNetworks/{virtualNetworksName}
-        /// Operation Id: virtualNetworks_Retrieve
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridContainerService/virtualNetworks/{virtualNetworksName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>virtualNetworks_Retrieve</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="virtualNetworksName"> Parameter for the name of the virtual network. </param>
@@ -204,8 +284,16 @@ namespace Azure.ResourceManager.HybridContainerService
 
         /// <summary>
         /// Gets the Hybrid AKS storage space object
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridContainerService/storageSpaces/{storageSpacesName}
-        /// Operation Id: storageSpaces_Retrieve
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridContainerService/storageSpaces/{storageSpacesName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>storageSpaces_Retrieve</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="storageSpacesName"> Parameter for the name of the storage object. </param>
@@ -220,8 +308,16 @@ namespace Azure.ResourceManager.HybridContainerService
 
         /// <summary>
         /// Gets the Hybrid AKS storage space object
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridContainerService/storageSpaces/{storageSpacesName}
-        /// Operation Id: storageSpaces_Retrieve
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridContainerService/storageSpaces/{storageSpacesName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>storageSpaces_Retrieve</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="storageSpacesName"> Parameter for the name of the storage object. </param>

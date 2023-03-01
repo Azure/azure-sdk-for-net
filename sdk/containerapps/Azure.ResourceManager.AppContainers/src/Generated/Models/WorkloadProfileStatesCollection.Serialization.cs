@@ -15,21 +15,21 @@ namespace Azure.ResourceManager.AppContainers.Models
     {
         internal static WorkloadProfileStatesCollection DeserializeWorkloadProfileStatesCollection(JsonElement element)
         {
-            IReadOnlyList<WorkloadProfileStates> value = default;
+            IReadOnlyList<ContainerAppWorkloadProfileState> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
-                    List<WorkloadProfileStates> array = new List<WorkloadProfileStates>();
+                    List<ContainerAppWorkloadProfileState> array = new List<ContainerAppWorkloadProfileState>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(WorkloadProfileStates.DeserializeWorkloadProfileStates(item));
+                        array.Add(ContainerAppWorkloadProfileState.DeserializeContainerAppWorkloadProfileState(item));
                     }
                     value = array;
                     continue;
                 }
-                if (property.NameEquals("nextLink"))
+                if (property.NameEquals("nextLink"u8))
                 {
                     nextLink = property.Value.GetString();
                     continue;

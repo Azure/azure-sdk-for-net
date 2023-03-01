@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Compute.Models
             Optional<IReadOnlyList<RestorePointSourceVmDataDisk>> dataDisks = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("osDisk"))
+                if (property.NameEquals("osDisk"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Compute.Models
                     osDisk = RestorePointSourceVmOSDisk.DeserializeRestorePointSourceVmOSDisk(property.Value);
                     continue;
                 }
-                if (property.NameEquals("dataDisks"))
+                if (property.NameEquals("dataDisks"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

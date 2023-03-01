@@ -9,10 +9,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary>
-    /// Environment version details.
-    /// Serialized Name: EnvironmentVersion
-    /// </summary>
+    /// <summary> Environment version details. </summary>
     public partial class MachineLearningEnvironmentVersionProperties : MachineLearningAssetBase
     {
         /// <summary> Initializes a new instance of MachineLearningEnvironmentVersionProperties. </summary>
@@ -21,57 +18,27 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of MachineLearningEnvironmentVersionProperties. </summary>
-        /// <param name="description">
-        /// The asset description text.
-        /// Serialized Name: ResourceBase.description
-        /// </param>
-        /// <param name="properties">
-        /// The asset property dictionary.
-        /// Serialized Name: ResourceBase.properties
-        /// </param>
-        /// <param name="tags">
-        /// Tag dictionary. Tags can be added, removed, and updated.
-        /// Serialized Name: ResourceBase.tags
-        /// </param>
-        /// <param name="isAnonymous">
-        /// If the name version are system generated (anonymous registration).
-        /// Serialized Name: AssetBase.isAnonymous
-        /// </param>
-        /// <param name="isArchived">
-        /// Is the asset archived?
-        /// Serialized Name: AssetBase.isArchived
-        /// </param>
-        /// <param name="autoRebuild">
-        /// Defines if image needs to be rebuilt based on base image changes.
-        /// Serialized Name: EnvironmentVersion.autoRebuild
-        /// </param>
-        /// <param name="build">
-        /// Configuration settings for Docker build context.
-        /// Serialized Name: EnvironmentVersion.build
-        /// </param>
+        /// <param name="description"> The asset description text. </param>
+        /// <param name="properties"> The asset property dictionary. </param>
+        /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
+        /// <param name="isAnonymous"> If the name version are system generated (anonymous registration). </param>
+        /// <param name="isArchived"> Is the asset archived?. </param>
+        /// <param name="autoRebuild"> Defines if image needs to be rebuilt based on base image changes. </param>
+        /// <param name="build"> Configuration settings for Docker build context. </param>
         /// <param name="condaFile">
         /// Standard configuration file used by Conda that lets you install any kind of package, including Python, R, and C/C++ packages.
         /// &lt;see href=&quot;https://repo2docker.readthedocs.io/en/latest/config_files.html#environment-yml-install-a-conda-environment&quot; /&gt;
-        /// Serialized Name: EnvironmentVersion.condaFile
         /// </param>
         /// <param name="environmentType">
         /// Environment type is either user managed or curated by the Azure ML service
         /// &lt;see href=&quot;https://docs.microsoft.com/en-us/azure/machine-learning/resource-curated-environments&quot; /&gt;
-        /// Serialized Name: EnvironmentVersion.environmentType
         /// </param>
         /// <param name="image">
         /// Name of the image that will be used for the environment.
         /// &lt;seealso href=&quot;https://docs.microsoft.com/en-us/azure/machine-learning/how-to-deploy-custom-docker-image#use-a-custom-base-image&quot; /&gt;
-        /// Serialized Name: EnvironmentVersion.image
         /// </param>
-        /// <param name="inferenceConfig">
-        /// Defines configuration specific to inference.
-        /// Serialized Name: EnvironmentVersion.inferenceConfig
-        /// </param>
-        /// <param name="osType">
-        /// The OS type of the environment.
-        /// Serialized Name: EnvironmentVersion.osType
-        /// </param>
+        /// <param name="inferenceConfig"> Defines configuration specific to inference. </param>
+        /// <param name="osType"> The OS type of the environment. </param>
         internal MachineLearningEnvironmentVersionProperties(string description, IDictionary<string, string> properties, IDictionary<string, string> tags, bool? isAnonymous, bool? isArchived, AutoRebuildSetting? autoRebuild, MachineLearningBuildContext build, string condaFile, MachineLearningEnvironmentType? environmentType, string image, MachineLearningInferenceContainerProperties inferenceConfig, MachineLearningOperatingSystemType? osType) : base(description, properties, tags, isAnonymous, isArchived)
         {
             AutoRebuild = autoRebuild;
@@ -83,43 +50,28 @@ namespace Azure.ResourceManager.MachineLearning.Models
             OSType = osType;
         }
 
-        /// <summary>
-        /// Defines if image needs to be rebuilt based on base image changes.
-        /// Serialized Name: EnvironmentVersion.autoRebuild
-        /// </summary>
+        /// <summary> Defines if image needs to be rebuilt based on base image changes. </summary>
         public AutoRebuildSetting? AutoRebuild { get; set; }
-        /// <summary>
-        /// Configuration settings for Docker build context.
-        /// Serialized Name: EnvironmentVersion.build
-        /// </summary>
+        /// <summary> Configuration settings for Docker build context. </summary>
         public MachineLearningBuildContext Build { get; set; }
         /// <summary>
         /// Standard configuration file used by Conda that lets you install any kind of package, including Python, R, and C/C++ packages.
         /// &lt;see href=&quot;https://repo2docker.readthedocs.io/en/latest/config_files.html#environment-yml-install-a-conda-environment&quot; /&gt;
-        /// Serialized Name: EnvironmentVersion.condaFile
         /// </summary>
         public string CondaFile { get; set; }
         /// <summary>
         /// Environment type is either user managed or curated by the Azure ML service
         /// &lt;see href=&quot;https://docs.microsoft.com/en-us/azure/machine-learning/resource-curated-environments&quot; /&gt;
-        /// Serialized Name: EnvironmentVersion.environmentType
         /// </summary>
         public MachineLearningEnvironmentType? EnvironmentType { get; }
         /// <summary>
         /// Name of the image that will be used for the environment.
         /// &lt;seealso href=&quot;https://docs.microsoft.com/en-us/azure/machine-learning/how-to-deploy-custom-docker-image#use-a-custom-base-image&quot; /&gt;
-        /// Serialized Name: EnvironmentVersion.image
         /// </summary>
         public string Image { get; set; }
-        /// <summary>
-        /// Defines configuration specific to inference.
-        /// Serialized Name: EnvironmentVersion.inferenceConfig
-        /// </summary>
+        /// <summary> Defines configuration specific to inference. </summary>
         public MachineLearningInferenceContainerProperties InferenceConfig { get; set; }
-        /// <summary>
-        /// The OS type of the environment.
-        /// Serialized Name: EnvironmentVersion.osType
-        /// </summary>
+        /// <summary> The OS type of the environment. </summary>
         public MachineLearningOperatingSystemType? OSType { get; set; }
     }
 }

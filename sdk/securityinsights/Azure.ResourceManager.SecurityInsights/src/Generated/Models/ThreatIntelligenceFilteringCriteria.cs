@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -31,11 +32,11 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <summary> Maximum confidence. </summary>
         public int? MaxConfidence { get; set; }
         /// <summary> Start time for ValidUntil filter. </summary>
-        public string MinValidUntil { get; set; }
+        public DateTimeOffset? MinValidUntil { get; set; }
         /// <summary> End time for ValidUntil filter. </summary>
-        public string MaxValidUntil { get; set; }
+        public DateTimeOffset? MaxValidUntil { get; set; }
         /// <summary> Parameter to include/exclude disabled indicators. </summary>
-        public bool? IncludeDisabled { get; set; }
+        public bool? IsIncludeDisabled { get; set; }
         /// <summary> Columns to sort by and sorting order. </summary>
         public IList<ThreatIntelligenceSortingCriteria> SortBy { get; }
         /// <summary> Sources of threat intelligence indicators. </summary>

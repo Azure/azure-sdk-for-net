@@ -20,12 +20,12 @@ namespace Azure.ResourceManager.Network.Models
             Optional<IReadOnlyList<AzureReachabilityReportLatencyInfo>> latencies = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("provider"))
+                if (property.NameEquals("provider"u8))
                 {
                     provider = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("azureLocation"))
+                if (property.NameEquals("azureLocation"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Network.Models
                     azureLocation = new AzureLocation(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("latencies"))
+                if (property.NameEquals("latencies"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

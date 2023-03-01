@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Operation))
             {
-                writer.WritePropertyName("operation");
+                writer.WritePropertyName("operation"u8);
                 writer.WriteStringValue(Operation.Value.ToString());
             }
             if (Optional.IsDefined(MigrationPath))
             {
-                writer.WritePropertyName("migrationPath");
+                writer.WritePropertyName("migrationPath"u8);
                 writer.WriteStringValue(MigrationPath);
             }
             writer.WriteEndObject();
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             Optional<string> migrationPath = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("operation"))
+                if (property.NameEquals("operation"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     operation = new MigrationOperation(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("migrationPath"))
+                if (property.NameEquals("migrationPath"u8))
                 {
                     migrationPath = property.Value.GetString();
                     continue;

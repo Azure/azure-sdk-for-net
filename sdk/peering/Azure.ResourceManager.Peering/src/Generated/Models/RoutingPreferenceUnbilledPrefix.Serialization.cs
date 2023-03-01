@@ -19,12 +19,12 @@ namespace Azure.ResourceManager.Peering.Models
             Optional<int> peerAsn = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("prefix"))
+                if (property.NameEquals("prefix"u8))
                 {
                     prefix = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("azureRegion"))
+                if (property.NameEquals("azureRegion"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Peering.Models
                     azureRegion = new AzureLocation(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("peerAsn"))
+                if (property.NameEquals("peerAsn"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

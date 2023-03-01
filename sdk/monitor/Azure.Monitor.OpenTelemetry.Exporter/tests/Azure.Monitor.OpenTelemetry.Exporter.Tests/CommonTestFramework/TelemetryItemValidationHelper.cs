@@ -12,13 +12,13 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.CommonTestFramework
 {
     internal static class TelemetryItemValidationHelper
     {
-        public static void AssertLog_As_MessageTelemetry(
+        public static void AssertMessageTelemetry(
             TelemetryItem telemetryItem,
-            string expectedSeverityLevel,
+            string? expectedSeverityLevel,
             string expectedMessage,
-            IDictionary<string, string> expectedMeessageProperties,
-            string expectedSpanId,
-            string expectedTraceId)
+            IDictionary<string, string> expectedMessageProperties,
+            string? expectedSpanId,
+            string? expectedTraceId)
         {
             Assert.Equal("Message", telemetryItem.Name); // telemetry type
             Assert.Equal("MessageData", telemetryItem.Data.BaseType); // telemetry data type
@@ -41,10 +41,19 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.CommonTestFramework
             Assert.Contains("ai.internal.sdkVersion", telemetryItem.Tags.Keys);
 
             var messageData = (MessageData)telemetryItem.Data.BaseData;
-            Assert.Equal(expectedSeverityLevel, messageData.SeverityLevel);
+
+            if (expectedSeverityLevel == null)
+            {
+                Assert.Null(messageData.SeverityLevel);
+            }
+            else
+            {
+                Assert.Equal(expectedSeverityLevel, messageData.SeverityLevel);
+            }
+
             Assert.Equal(expectedMessage, messageData.Message);
 
-            foreach (var prop in expectedMeessageProperties)
+            foreach (var prop in expectedMessageProperties)
             {
                 Assert.Equal(prop.Value, messageData.Properties[prop.Key]);
             }
@@ -81,9 +90,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.CommonTestFramework
         public static void AssertActivity_As_DependencyTelemetry(
             TelemetryItem telemetryItem,
             string expectedName,
-            string expectedTraceId,
-            string expectedSpanId,
-            IDictionary<string, string> expectedProperties,
+            string? expectedTraceId,
+            string? expectedSpanId,
+            IDictionary<string, string>? expectedProperties,
             bool expectedSuccess = true)
         {
             Assert.Equal("RemoteDependency", telemetryItem.Name); // telemetry type
@@ -119,9 +128,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.CommonTestFramework
             TelemetryItem telemetryItem,
             ActivityKind activityKind,
             string expectedName,
-            string expectedTraceId,
+            string? expectedTraceId,
             IDictionary<string, string> expectedProperties,
-            string expectedSpanId,
+            string? expectedSpanId,
             bool expectedSuccess = true)
         {
             Assert.Equal("Request", telemetryItem.Name); // telemetry type
@@ -167,8 +176,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.CommonTestFramework
             TelemetryItem telemetryItem,
             string expectedExceptionMessage,
             string expectedExceptionTypeName,
-            string expectedTraceId,
-            string expectedSpanId)
+            string? expectedTraceId,
+            string? expectedSpanId)
         {
             Assert.Equal("Exception", telemetryItem.Name); // telemetry type
             Assert.Equal("ExceptionData", telemetryItem.Data.BaseType); // telemetry data type
@@ -205,7 +214,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.CommonTestFramework
             double? expectedMetricDataPointMax = null,
             double? expectedMetricDataPointMin = null,
             double? expectedMetricDataPointStdDev = null,
-            Dictionary<string, string> expectedMetricsProperties = null)
+            Dictionary<string, string>? expectedMetricsProperties = null)
         {
             Assert.Equal("Metric", telemetryItem.Name); // telemetry type
             Assert.Equal("MetricData", telemetryItem.Data.BaseType); // telemetry data type

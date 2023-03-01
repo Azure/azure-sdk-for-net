@@ -12,7 +12,7 @@ namespace Azure.Storage.DataMovement
         internal const int InitialDownloadFileThreads = 32; // Max is 3000
         internal const int CpuTuningMultiplier = 16;
         internal const int MaxJobPartReaders = 64;
-        internal const int MaxJobChunkTasks = 300;
+        internal const int MaxJobChunkTasks = 3000;
         internal const int StatusCheckInSec = 10;
 
         internal static class ConcurrencyTuner

@@ -18,17 +18,17 @@ namespace Azure.ResourceManager.Network.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(DdosCustomPolicy))
             {
-                writer.WritePropertyName("ddosCustomPolicy");
+                writer.WritePropertyName("ddosCustomPolicy"u8);
                 JsonSerializer.Serialize(writer, DdosCustomPolicy);
             }
             if (Optional.IsDefined(ProtectionCoverage))
             {
-                writer.WritePropertyName("protectionCoverage");
+                writer.WritePropertyName("protectionCoverage"u8);
                 writer.WriteStringValue(ProtectionCoverage.Value.ToString());
             }
             if (Optional.IsDefined(ProtectedIP))
             {
-                writer.WritePropertyName("protectedIP");
+                writer.WritePropertyName("protectedIP"u8);
                 writer.WriteBooleanValue(ProtectedIP.Value);
             }
             writer.WriteEndObject();
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Network.Models
             Optional<bool> protectedIP = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("ddosCustomPolicy"))
+                if (property.NameEquals("ddosCustomPolicy"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Network.Models
                     ddosCustomPolicy = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("protectionCoverage"))
+                if (property.NameEquals("protectionCoverage"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Network.Models
                     protectionCoverage = new DdosSettingsProtectionCoverage(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("protectedIP"))
+                if (property.NameEquals("protectedIP"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

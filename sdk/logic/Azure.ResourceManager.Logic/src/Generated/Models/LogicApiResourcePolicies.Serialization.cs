@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Logic.Models
             Optional<string> contentLink = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("content"))
+                if (property.NameEquals("content"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Logic.Models
                     content = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("contentLink"))
+                if (property.NameEquals("contentLink"u8))
                 {
                     contentLink = property.Value.GetString();
                     continue;

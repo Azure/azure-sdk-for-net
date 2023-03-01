@@ -29,7 +29,7 @@ namespace Azure.Search.Documents.Tests.Samples
         [SyncOnly]
         public async Task CreateClient()
         {
-            await using SearchResources resources = await SearchResources.GetSharedHotelsIndexAsync(this);
+            await using SearchResources resources = await SearchResources.GetSharedHotelsIndexAsync(this, true);
             Environment.SetEnvironmentVariable("SEARCH_ENDPOINT", resources.Endpoint.ToString());
             Environment.SetEnvironmentVariable("SEARCH_API_KEY", resources.PrimaryApiKey);
 
@@ -50,14 +50,14 @@ namespace Azure.Search.Documents.Tests.Samples
             Console.WriteLine($"You are using {stats.Value.Counters.IndexCounter.Usage} indexes.");
             #endregion Snippet:Azure_Search_Tests_Samples_CreateClient
 
-            Assert.AreEqual(1, stats.Value.Counters.IndexCounter.Usage);
+            Assert.GreaterOrEqual(stats.Value.Counters.IndexCounter.Usage, 1);
         }
 
         [Test]
         [AsyncOnly]
         public async Task CreateClientAsync()
         {
-            await using SearchResources resources = await SearchResources.GetSharedHotelsIndexAsync(this);
+            await using SearchResources resources = await SearchResources.GetSharedHotelsIndexAsync(this, true);
             Environment.SetEnvironmentVariable("SEARCH_ENDPOINT", resources.Endpoint.ToString());
             Environment.SetEnvironmentVariable("SEARCH_API_KEY", resources.PrimaryApiKey);
 
@@ -78,14 +78,14 @@ namespace Azure.Search.Documents.Tests.Samples
             Console.WriteLine($"You are using {stats.Value.Counters.IndexCounter.Usage} indexes.");
             #endregion Snippet:Azure_Search_Tests_Samples_CreateClientAsync
 
-            Assert.AreEqual(1, stats.Value.Counters.IndexCounter.Usage);
+            Assert.GreaterOrEqual(stats.Value.Counters.IndexCounter.Usage, 1);
         }
 
         [Test]
         [SyncOnly]
         public async Task HandleErrors()
         {
-            await using SearchResources resources = await SearchResources.GetSharedHotelsIndexAsync(this);
+            await using SearchResources resources = await SearchResources.GetSharedHotelsIndexAsync(this, true);
             Environment.SetEnvironmentVariable("SEARCH_ENDPOINT", resources.Endpoint.ToString());
             Environment.SetEnvironmentVariable("SEARCH_API_KEY", resources.PrimaryApiKey);
 
@@ -115,7 +115,7 @@ namespace Azure.Search.Documents.Tests.Samples
         [AsyncOnly]
         public async Task HandleErrorsAsync()
         {
-            await using SearchResources resources = await SearchResources.GetSharedHotelsIndexAsync(this);
+            await using SearchResources resources = await SearchResources.GetSharedHotelsIndexAsync(this, true);
             Environment.SetEnvironmentVariable("SEARCH_ENDPOINT", resources.Endpoint.ToString());
             Environment.SetEnvironmentVariable("SEARCH_API_KEY", resources.PrimaryApiKey);
 
@@ -144,7 +144,7 @@ namespace Azure.Search.Documents.Tests.Samples
         [Test]
         public async Task GetStatisticsAsync()
         {
-            await using SearchResources resources = await SearchResources.GetSharedHotelsIndexAsync(this);
+            await using SearchResources resources = await SearchResources.GetSharedHotelsIndexAsync(this, true);
             Environment.SetEnvironmentVariable("SEARCH_ENDPOINT", resources.Endpoint.ToString());
             Environment.SetEnvironmentVariable("SEARCH_API_KEY", resources.PrimaryApiKey);
 
@@ -168,7 +168,7 @@ namespace Azure.Search.Documents.Tests.Samples
         [AsyncOnly]
         public async Task CreateIndexerAsync()
         {
-            await using SearchResources resources = await SearchResources.CreateWithBlobStorageAsync(this, populate: true);
+            await using SearchResources resources = await SearchResources.CreateWithBlobStorageAsync(this, populate: true, true);
             Environment.SetEnvironmentVariable("SEARCH_ENDPOINT", resources.Endpoint.ToString());
             Environment.SetEnvironmentVariable("SEARCH_API_KEY", resources.PrimaryApiKey);
             Environment.SetEnvironmentVariable("STORAGE_CONNECTION_STRING", resources.StorageAccountConnectionString);
@@ -228,20 +228,20 @@ namespace Azure.Search.Documents.Tests.Samples
                 {
                     Fields =
                     {
-                        new SimpleField("hotelId", SearchFieldDataType.String) { IsKey = true, IsFilterable = true, IsSortable = true },
-                        new SearchableField("hotelName") { IsFilterable = true, IsSortable = true },
-                        new SearchableField("description") { AnalyzerName = LexicalAnalyzerName.EnLucene },
-                        new SearchableField("descriptionFr") { AnalyzerName = LexicalAnalyzerName.FrLucene },
-                        new SearchableField("tags", collection: true) { IsFilterable = true, IsFacetable = true },
-                        new ComplexField("address")
+                        new SimpleField("HotelId", SearchFieldDataType.String) { IsKey = true, IsFilterable = true, IsSortable = true },
+                        new SearchableField("HotelName") { IsFilterable = true, IsSortable = true },
+                        new SearchableField("Description") { AnalyzerName = LexicalAnalyzerName.EnLucene },
+                        new SearchableField("DescriptionFr") { AnalyzerName = LexicalAnalyzerName.FrLucene },
+                        new SearchableField("Tags", collection: true) { IsFilterable = true, IsFacetable = true },
+                        new ComplexField("Address")
                         {
                             Fields =
                             {
-                                new SearchableField("streetAddress"),
-                                new SearchableField("city") { IsFilterable = true, IsSortable = true, IsFacetable = true },
-                                new SearchableField("stateProvince") { IsFilterable = true, IsSortable = true, IsFacetable = true },
-                                new SearchableField("country") { SynonymMapNames = new[] { synonymMapName }, IsFilterable = true, IsSortable = true, IsFacetable = true },
-                                new SearchableField("postalCode") { IsFilterable = true, IsSortable = true, IsFacetable = true }
+                                new SearchableField("StreetAddress"),
+                                new SearchableField("City") { IsFilterable = true, IsSortable = true, IsFacetable = true },
+                                new SearchableField("StateProvince") { IsFilterable = true, IsSortable = true, IsFacetable = true },
+                                new SearchableField("Country") { SynonymMapNames = new[] { synonymMapName }, IsFilterable = true, IsSortable = true, IsFacetable = true },
+                                new SearchableField("PostalCode") { IsFilterable = true, IsSortable = true, IsFacetable = true }
                             }
                         }
                     }
@@ -304,7 +304,7 @@ namespace Azure.Search.Documents.Tests.Samples
                 TextTranslationSkill translationSkill = new TextTranslationSkill(
                     inputs: new[]
                     {
-                        new InputFieldMappingEntry("text") { Source = "/document/description" }
+                        new InputFieldMappingEntry("text") { Source = "/document/Description" }
                     },
                     outputs: new[]
                     {
@@ -322,9 +322,9 @@ namespace Azure.Search.Documents.Tests.Samples
                 ConditionalSkill conditionalSkill = new ConditionalSkill(
                     inputs: new[]
                     {
-                        new InputFieldMappingEntry("condition") { Source = "= $(/document/descriptionFr) == null" },
+                        new InputFieldMappingEntry("condition") { Source = "= $(/document/DescriptionFr) == null" },
                         new InputFieldMappingEntry("whenTrue") { Source = "/document/descriptionFrTranslated" },
-                        new InputFieldMappingEntry("whenFalse") { Source = "/document/descriptionFr" }
+                        new InputFieldMappingEntry("whenFalse") { Source = "/document/DescriptionFr" }
                     },
                     outputs: new[]
                     {
@@ -371,15 +371,15 @@ namespace Azure.Search.Documents.Tests.Samples
                     // We only want to index fields defined in our index, excluding descriptionFr if defined.
                     FieldMappings =
                     {
-                        new FieldMapping("hotelId"),
-                        new FieldMapping("hotelName"),
-                        new FieldMapping("description"),
-                        new FieldMapping("tags"),
-                        new FieldMapping("address")
+                        new FieldMapping("HotelId"),
+                        new FieldMapping("HotelName"),
+                        new FieldMapping("Description"),
+                        new FieldMapping("Tags"),
+                        new FieldMapping("Address")
                     },
                     OutputFieldMappings =
                     {
-                        new FieldMapping("/document/descriptionFrFinal") { TargetFieldName = "descriptionFr" }
+                        new FieldMapping("/document/descriptionFrFinal") { TargetFieldName = "DescriptionFr" }
                     },
                     Parameters = new IndexingParameters
                     {
@@ -444,7 +444,7 @@ namespace Azure.Search.Documents.Tests.Samples
         [Test]
         public async Task GetCountAsync()
         {
-            await using SearchResources resources = await SearchResources.GetSharedHotelsIndexAsync(this);
+            await using SearchResources resources = await SearchResources.GetSharedHotelsIndexAsync(this, true);
             Environment.SetEnvironmentVariable("SEARCH_ENDPOINT", resources.Endpoint.ToString());
             Environment.SetEnvironmentVariable("SEARCH_API_KEY", resources.PrimaryApiKey);
             Environment.SetEnvironmentVariable("SEARCH_INDEX", resources.IndexName);

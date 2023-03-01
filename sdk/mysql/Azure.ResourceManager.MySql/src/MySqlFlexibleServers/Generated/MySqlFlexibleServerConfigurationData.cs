@@ -11,7 +11,10 @@ using Azure.ResourceManager.MySql.FlexibleServers.Models;
 
 namespace Azure.ResourceManager.MySql.FlexibleServers
 {
-    /// <summary> A class representing the MySqlFlexibleServerConfiguration data model. </summary>
+    /// <summary>
+    /// A class representing the MySqlFlexibleServerConfiguration data model.
+    /// Represents a Configuration.
+    /// </summary>
     public partial class MySqlFlexibleServerConfigurationData : ResourceData
     {
         /// <summary> Initializes a new instance of MySqlFlexibleServerConfigurationData. </summary>

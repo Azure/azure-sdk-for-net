@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary>
-    /// The MachineLearningJobResourceConfiguration.
-    /// Serialized Name: JobResourceConfiguration
-    /// </summary>
+    /// <summary> The MachineLearningJobResourceConfiguration. </summary>
     public partial class MachineLearningJobResourceConfiguration : MachineLearningResourceConfiguration
     {
         /// <summary> Initializes a new instance of MachineLearningJobResourceConfiguration. </summary>
@@ -22,41 +19,20 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of MachineLearningJobResourceConfiguration. </summary>
-        /// <param name="instanceCount">
-        /// Optional number of instances or nodes used by the compute target.
-        /// Serialized Name: ResourceConfiguration.instanceCount
-        /// </param>
-        /// <param name="instanceType">
-        /// Optional type of VM used as supported by the compute target.
-        /// Serialized Name: ResourceConfiguration.instanceType
-        /// </param>
-        /// <param name="properties">
-        /// Additional properties bag.
-        /// Serialized Name: ResourceConfiguration.properties
-        /// </param>
-        /// <param name="dockerArgs">
-        /// Extra arguments to pass to the Docker run command. This would override any parameters that have already been set by the system, or in this section. This parameter is only supported for Azure ML compute types.
-        /// Serialized Name: JobResourceConfiguration.dockerArgs
-        /// </param>
-        /// <param name="shmSize">
-        /// Size of the docker container&apos;s shared memory block. This should be in the format of (number)(unit) where number as to be greater than 0 and the unit can be one of b(bytes), k(kilobytes), m(megabytes), or g(gigabytes).
-        /// Serialized Name: JobResourceConfiguration.shmSize
-        /// </param>
+        /// <param name="instanceCount"> Optional number of instances or nodes used by the compute target. </param>
+        /// <param name="instanceType"> Optional type of VM used as supported by the compute target. </param>
+        /// <param name="properties"> Additional properties bag. </param>
+        /// <param name="dockerArgs"> Extra arguments to pass to the Docker run command. This would override any parameters that have already been set by the system, or in this section. This parameter is only supported for Azure ML compute types. </param>
+        /// <param name="shmSize"> Size of the docker container&apos;s shared memory block. This should be in the format of (number)(unit) where number as to be greater than 0 and the unit can be one of b(bytes), k(kilobytes), m(megabytes), or g(gigabytes). </param>
         internal MachineLearningJobResourceConfiguration(int? instanceCount, string instanceType, IDictionary<string, BinaryData> properties, string dockerArgs, string shmSize) : base(instanceCount, instanceType, properties)
         {
             DockerArgs = dockerArgs;
             ShmSize = shmSize;
         }
 
-        /// <summary>
-        /// Extra arguments to pass to the Docker run command. This would override any parameters that have already been set by the system, or in this section. This parameter is only supported for Azure ML compute types.
-        /// Serialized Name: JobResourceConfiguration.dockerArgs
-        /// </summary>
+        /// <summary> Extra arguments to pass to the Docker run command. This would override any parameters that have already been set by the system, or in this section. This parameter is only supported for Azure ML compute types. </summary>
         public string DockerArgs { get; set; }
-        /// <summary>
-        /// Size of the docker container&apos;s shared memory block. This should be in the format of (number)(unit) where number as to be greater than 0 and the unit can be one of b(bytes), k(kilobytes), m(megabytes), or g(gigabytes).
-        /// Serialized Name: JobResourceConfiguration.shmSize
-        /// </summary>
+        /// <summary> Size of the docker container&apos;s shared memory block. This should be in the format of (number)(unit) where number as to be greater than 0 and the unit can be one of b(bytes), k(kilobytes), m(megabytes), or g(gigabytes). </summary>
         public string ShmSize { get; set; }
     }
 }

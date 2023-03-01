@@ -17,17 +17,17 @@ namespace Azure.ResourceManager.Nginx.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(PrivateIPAddress))
             {
-                writer.WritePropertyName("privateIPAddress");
+                writer.WritePropertyName("privateIPAddress"u8);
                 writer.WriteStringValue(PrivateIPAddress);
             }
             if (Optional.IsDefined(PrivateIPAllocationMethod))
             {
-                writer.WritePropertyName("privateIPAllocationMethod");
+                writer.WritePropertyName("privateIPAllocationMethod"u8);
                 writer.WriteStringValue(PrivateIPAllocationMethod.Value.ToString());
             }
             if (Optional.IsDefined(SubnetId))
             {
-                writer.WritePropertyName("subnetId");
+                writer.WritePropertyName("subnetId"u8);
                 writer.WriteStringValue(SubnetId);
             }
             writer.WriteEndObject();
@@ -40,12 +40,12 @@ namespace Azure.ResourceManager.Nginx.Models
             Optional<string> subnetId = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("privateIPAddress"))
+                if (property.NameEquals("privateIPAddress"u8))
                 {
                     privateIPAddress = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("privateIPAllocationMethod"))
+                if (property.NameEquals("privateIPAllocationMethod"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Nginx.Models
                     privateIPAllocationMethod = new NginxPrivateIPAllocationMethod(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("subnetId"))
+                if (property.NameEquals("subnetId"u8))
                 {
                     subnetId = property.Value.GetString();
                     continue;

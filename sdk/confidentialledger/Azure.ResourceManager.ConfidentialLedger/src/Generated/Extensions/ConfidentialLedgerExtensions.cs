@@ -30,8 +30,16 @@ namespace Azure.ResourceManager.ConfidentialLedger
 
         /// <summary>
         /// To check whether a resource name is available.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ConfidentialLedger/checkNameAvailability
-        /// Operation Id: CheckNameAvailability
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ConfidentialLedger/checkNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CheckNameAvailability</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="content"> Name availability request payload. </param>
@@ -46,8 +54,16 @@ namespace Azure.ResourceManager.ConfidentialLedger
 
         /// <summary>
         /// To check whether a resource name is available.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ConfidentialLedger/checkNameAvailability
-        /// Operation Id: CheckNameAvailability
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ConfidentialLedger/checkNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CheckNameAvailability</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="content"> Name availability request payload. </param>
@@ -62,8 +78,16 @@ namespace Azure.ResourceManager.ConfidentialLedger
 
         /// <summary>
         /// Retrieves the properties of all Confidential Ledgers.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ConfidentialLedger/ledgers
-        /// Operation Id: Ledger_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ConfidentialLedger/ledgers</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Ledger_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="filter"> The filter to apply on the list operation. eg. $filter=ledgerType eq &apos;Public&apos;. </param>
@@ -76,8 +100,16 @@ namespace Azure.ResourceManager.ConfidentialLedger
 
         /// <summary>
         /// Retrieves the properties of all Confidential Ledgers.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ConfidentialLedger/ledgers
-        /// Operation Id: Ledger_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ConfidentialLedger/ledgers</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Ledger_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="filter"> The filter to apply on the list operation. eg. $filter=ledgerType eq &apos;Public&apos;. </param>
@@ -107,8 +139,16 @@ namespace Azure.ResourceManager.ConfidentialLedger
 
         /// <summary>
         /// Retrieves the properties of a Confidential Ledger.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConfidentialLedger/ledgers/{ledgerName}
-        /// Operation Id: Ledger_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConfidentialLedger/ledgers/{ledgerName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Ledger_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="ledgerName"> Name of the Confidential Ledger. </param>
@@ -123,8 +163,16 @@ namespace Azure.ResourceManager.ConfidentialLedger
 
         /// <summary>
         /// Retrieves the properties of a Confidential Ledger.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConfidentialLedger/ledgers/{ledgerName}
-        /// Operation Id: Ledger_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConfidentialLedger/ledgers/{ledgerName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Ledger_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="ledgerName"> Name of the Confidential Ledger. </param>

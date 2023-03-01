@@ -11,7 +11,10 @@ using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> A class representing the NetworkInterfaceTapConfiguration data model. </summary>
+    /// <summary>
+    /// A class representing the NetworkInterfaceTapConfiguration data model.
+    /// Tap configuration in a Network Interface.
+    /// </summary>
     public partial class NetworkInterfaceTapConfigurationData : NetworkResourceData
     {
         /// <summary> Initializes a new instance of NetworkInterfaceTapConfigurationData. </summary>

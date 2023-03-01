@@ -11,8 +11,13 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     internal partial class TIDataConnectorDataTypesIndicators : DataConnectorDataTypeCommon
     {
         /// <summary> Initializes a new instance of TIDataConnectorDataTypesIndicators. </summary>
+        public TIDataConnectorDataTypesIndicators()
+        {
+        }
+
+        /// <summary> Initializes a new instance of TIDataConnectorDataTypesIndicators. </summary>
         /// <param name="state"> Describe whether this data type connection is enabled or not. </param>
-        public TIDataConnectorDataTypesIndicators(DataTypeState state) : base(state)
+        internal TIDataConnectorDataTypesIndicators(SecurityInsightsDataTypeConnectionState? state) : base(state)
         {
         }
     }

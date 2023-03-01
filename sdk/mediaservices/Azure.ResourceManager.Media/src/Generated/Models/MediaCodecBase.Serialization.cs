@@ -15,11 +15,11 @@ namespace Azure.ResourceManager.Media.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("@odata.type");
+            writer.WritePropertyName("@odata.type"u8);
             writer.WriteStringValue(OdataType);
             if (Optional.IsDefined(Label))
             {
-                writer.WritePropertyName("label");
+                writer.WritePropertyName("label"u8);
                 writer.WriteStringValue(Label);
             }
             writer.WriteEndObject();
@@ -35,6 +35,7 @@ namespace Azure.ResourceManager.Media.Models
                     case "#Microsoft.Media.Audio": return MediaAudioBase.DeserializeMediaAudioBase(element);
                     case "#Microsoft.Media.CopyAudio": return CodecCopyAudio.DeserializeCodecCopyAudio(element);
                     case "#Microsoft.Media.CopyVideo": return CodecCopyVideo.DeserializeCodecCopyVideo(element);
+                    case "#Microsoft.Media.DDAudio": return DDAudio.DeserializeDDAudio(element);
                     case "#Microsoft.Media.H264Video": return H264Video.DeserializeH264Video(element);
                     case "#Microsoft.Media.H265Video": return H265Video.DeserializeH265Video(element);
                     case "#Microsoft.Media.Image": return MediaImageBase.DeserializeMediaImageBase(element);

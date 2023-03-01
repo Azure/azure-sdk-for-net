@@ -11,8 +11,13 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     internal partial class OfficeDataConnectorDataTypesSharePoint : DataConnectorDataTypeCommon
     {
         /// <summary> Initializes a new instance of OfficeDataConnectorDataTypesSharePoint. </summary>
+        public OfficeDataConnectorDataTypesSharePoint()
+        {
+        }
+
+        /// <summary> Initializes a new instance of OfficeDataConnectorDataTypesSharePoint. </summary>
         /// <param name="state"> Describe whether this data type connection is enabled or not. </param>
-        public OfficeDataConnectorDataTypesSharePoint(DataTypeState state) : base(state)
+        internal OfficeDataConnectorDataTypesSharePoint(SecurityInsightsDataTypeConnectionState? state) : base(state)
         {
         }
     }

@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary>
-    /// The MachineLearningOrderString.
-    /// Serialized Name: OrderString
-    /// </summary>
+    /// <summary> The MachineLearningOrderString. </summary>
     public readonly partial struct MachineLearningOrderString : IEquatable<MachineLearningOrderString>
     {
         private readonly string _value;
@@ -30,25 +27,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
         private const string UpdatedAtDescValue = "UpdatedAtDesc";
         private const string UpdatedAtAscValue = "UpdatedAtAsc";
 
-        /// <summary>
-        /// CreatedAtDesc
-        /// Serialized Name: OrderString.CreatedAtDesc
-        /// </summary>
+        /// <summary> CreatedAtDesc. </summary>
         public static MachineLearningOrderString CreatedAtDesc { get; } = new MachineLearningOrderString(CreatedAtDescValue);
-        /// <summary>
-        /// CreatedAtAsc
-        /// Serialized Name: OrderString.CreatedAtAsc
-        /// </summary>
+        /// <summary> CreatedAtAsc. </summary>
         public static MachineLearningOrderString CreatedAtAsc { get; } = new MachineLearningOrderString(CreatedAtAscValue);
-        /// <summary>
-        /// UpdatedAtDesc
-        /// Serialized Name: OrderString.UpdatedAtDesc
-        /// </summary>
+        /// <summary> UpdatedAtDesc. </summary>
         public static MachineLearningOrderString UpdatedAtDesc { get; } = new MachineLearningOrderString(UpdatedAtDescValue);
-        /// <summary>
-        /// UpdatedAtAsc
-        /// Serialized Name: OrderString.UpdatedAtAsc
-        /// </summary>
+        /// <summary> UpdatedAtAsc. </summary>
         public static MachineLearningOrderString UpdatedAtAsc { get; } = new MachineLearningOrderString(UpdatedAtAscValue);
         /// <summary> Determines if two <see cref="MachineLearningOrderString"/> values are the same. </summary>
         public static bool operator ==(MachineLearningOrderString left, MachineLearningOrderString right) => left.Equals(right);

@@ -1,0 +1,24 @@
+# NOTE: Please refer to https://aka.ms/azsdk/engsys/ci-yaml before editing this file.
+
+trigger: none
+pr:
+  branches:
+    include:
+    - main
+    - feature/*
+    - hotfix/*
+    - release/*
+  paths:
+    include:
+    - sdk/resourcehealth/ci.mgmt.yml
+    - sdk/resourcehealth/Azure.ResourceManager.ResourceHealth/
+
+extends:
+  template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
+  parameters:
+    SdkType: mgmtclient
+    ServiceDirectory: resourcehealth
+    LimitForPullRequest: true
+    Artifacts:
+    - name: Azure.ResourceManager.ResourceHealth
+      safeName: AzureResourceManagerResourceHealth

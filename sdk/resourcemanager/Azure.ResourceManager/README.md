@@ -134,7 +134,7 @@ await foreach (VirtualMachineResource virtualMachine in virtualMachines)
 ```
 
 ## Structured Resource Identifier
-Resource IDs contain useful information about the resource itself, but they're plain strings that have to be parsed. Instead of implementing your own parsing logic, you can use a `ResourceIdentifier` object that will do the parsing for you: `new ResourceIdentifer("myid");`.
+Resource IDs contain useful information about the resource itself, but they're plain strings that have to be parsed. Instead of implementing your own parsing logic, you can use a `ResourceIdentifier` object that will do the parsing for you: `new ResourceIdentifier("myid");`.
 
 ### Example: Parsing an ID using a ResourceIdentifier object 
 ```C# Snippet:Readme_CastToSpecificType
@@ -145,10 +145,10 @@ Console.WriteLine($"Vnet: {id.Parent.Name}");
 Console.WriteLine($"Subnet: {id.Name}");
 ```
 
-## Managing Existing Resources by Resouce Identifier
+## Managing Existing Resources by Resource Identifier
 Performing operations on resources that already exist is a common use case when using the management client libraries. In this scenario, you usually have the identifier of the resource you want to work on as a string. Although the new object hierarchy is great for provisioning, and working within the scope of a given parent, it isn't the most efficient when it comes to this specific scenario.  
 
-Here's an example how you can access an `AvailabilitySet` object and manage it directly with its id: 
+Here's an example how you can access an `AvailabilitySet` object and manage it directly with its ID: 
 ```C# Snippet:Readme_ManageAvailabilitySetOld
 ResourceIdentifier id = new ResourceIdentifier("/subscriptions/aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee/resourceGroups/workshop2021-rg/providers/Microsoft.Compute/availabilitySets/ws2021availSet");
 // We construct a new client to work with

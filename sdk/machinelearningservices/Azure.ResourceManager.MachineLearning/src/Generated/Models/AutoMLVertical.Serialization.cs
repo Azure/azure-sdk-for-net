@@ -17,14 +17,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(LogVerbosity))
             {
-                writer.WritePropertyName("logVerbosity");
+                writer.WritePropertyName("logVerbosity"u8);
                 writer.WriteStringValue(LogVerbosity.Value.ToString());
             }
             if (Optional.IsDefined(TargetColumnName))
             {
                 if (TargetColumnName != null)
                 {
-                    writer.WritePropertyName("targetColumnName");
+                    writer.WritePropertyName("targetColumnName"u8);
                     writer.WriteStringValue(TargetColumnName);
                 }
                 else
@@ -32,9 +32,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("targetColumnName");
                 }
             }
-            writer.WritePropertyName("taskType");
+            writer.WritePropertyName("taskType"u8);
             writer.WriteStringValue(TaskType.ToString());
-            writer.WritePropertyName("trainingData");
+            writer.WritePropertyName("trainingData"u8);
             writer.WriteObjectValue(TrainingData);
             writer.WriteEndObject();
         }
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 switch (discriminator.GetString())
                 {
                     case "Classification": return ClassificationTask.DeserializeClassificationTask(element);
-                    case "Forecasting": return Forecasting.DeserializeForecasting(element);
+                    case "Forecasting": return MachineLearningForecasting.DeserializeMachineLearningForecasting(element);
                     case "ImageClassification": return ImageClassification.DeserializeImageClassification(element);
                     case "ImageClassificationMultilabel": return ImageClassificationMultilabel.DeserializeImageClassificationMultilabel(element);
                     case "ImageInstanceSegmentation": return ImageInstanceSegmentation.DeserializeImageInstanceSegmentation(element);

@@ -16,26 +16,26 @@ namespace Azure.ResourceManager.AppPlatform.Models
     {
         internal static BuildpackBindingResourceList DeserializeBuildpackBindingResourceList(JsonElement element)
         {
-            Optional<IReadOnlyList<BuildpackBindingResourceData>> value = default;
+            Optional<IReadOnlyList<AppPlatformBuildpackBindingData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<BuildpackBindingResourceData> array = new List<BuildpackBindingResourceData>();
+                    List<AppPlatformBuildpackBindingData> array = new List<AppPlatformBuildpackBindingData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(BuildpackBindingResourceData.DeserializeBuildpackBindingResourceData(item));
+                        array.Add(AppPlatformBuildpackBindingData.DeserializeAppPlatformBuildpackBindingData(item));
                     }
                     value = array;
                     continue;
                 }
-                if (property.NameEquals("nextLink"))
+                if (property.NameEquals("nextLink"u8))
                 {
                     nextLink = property.Value.GetString();
                     continue;

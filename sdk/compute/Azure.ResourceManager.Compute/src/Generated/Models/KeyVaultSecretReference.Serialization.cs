@@ -7,19 +7,21 @@
 
 using System;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute.Models
 {
+    [JsonConverter(typeof(KeyVaultSecretReferenceConverter))]
     public partial class KeyVaultSecretReference : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("secretUrl");
+            writer.WritePropertyName("secretUrl"u8);
             writer.WriteStringValue(SecretUri.AbsoluteUri);
-            writer.WritePropertyName("sourceVault");
+            writer.WritePropertyName("sourceVault"u8);
             JsonSerializer.Serialize(writer, SourceVault); writer.WriteEndObject();
         }
 
@@ -29,18 +31,31 @@ namespace Azure.ResourceManager.Compute.Models
             WritableSubResource sourceVault = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("secretUrl"))
+                if (property.NameEquals("secretUrl"u8))
                 {
                     secretUrl = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("sourceVault"))
+                if (property.NameEquals("sourceVault"u8))
                 {
                     sourceVault = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());
                     continue;
                 }
             }
             return new KeyVaultSecretReference(secretUrl, sourceVault);
+        }
+
+        internal partial class KeyVaultSecretReferenceConverter : JsonConverter<KeyVaultSecretReference>
+        {
+            public override void Write(Utf8JsonWriter writer, KeyVaultSecretReference model, JsonSerializerOptions options)
+            {
+                writer.WriteObjectValue(model);
+            }
+            public override KeyVaultSecretReference Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeKeyVaultSecretReference(document.RootElement);
+            }
         }
     }
 }

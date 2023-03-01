@@ -264,7 +264,8 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             BlockBlobClient sourceClient = testContainer.Container.GetBlockBlobClient(GetNewBlobName());
             BlockBlobClient destinationClient = testContainer.Container.GetBlockBlobClient(GetNewBlobName());
 
-            var data = GetRandomBuffer(Constants.KB);
+            long length = Constants.KB;
+            var data = GetRandomBuffer(length);
             using (var stream = new MemoryStream(data))
             {
                 await sourceClient.UploadAsync(
@@ -275,7 +276,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             BlockBlobStorageResource destinationResource = new BlockBlobStorageResource(destinationClient);
 
             // Act
-            await destinationResource.CopyFromUriAsync(sourceResource, false);
+            await destinationResource.CopyFromUriAsync(sourceResource, false, length);
 
             // Assert
             await destinationClient.ExistsAsync();
@@ -297,7 +298,8 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             BlockBlobClient sourceClient = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
             BlockBlobClient destinationClient = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
 
-            var data = GetRandomBuffer(Constants.KB);
+            long length = Constants.KB;
+            var data = GetRandomBuffer(length);
             using (var stream = new MemoryStream(data))
             {
                 await sourceClient.UploadAsync(
@@ -318,6 +320,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             await destinationResource.CopyFromUriAsync(
                 sourceResource: sourceResource,
                 overwrite: false,
+                completeLength: length,
                 options: options);
 
             // Assert
@@ -335,12 +338,13 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             BlockBlobClient sourceClient = testContainer.Container.GetBlockBlobClient(GetNewBlobName());
             BlockBlobClient destinationClient = testContainer.Container.GetBlockBlobClient(GetNewBlobName());
 
+            long length = Constants.KB;
             BlockBlobStorageResource sourceResource = new BlockBlobStorageResource(sourceClient);
             BlockBlobStorageResource destinationResource = new BlockBlobStorageResource(destinationClient);
 
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
-                destinationResource.CopyFromUriAsync(sourceResource: sourceResource, overwrite: false),
+                destinationResource.CopyFromUriAsync(sourceResource: sourceResource, overwrite: false, completeLength: length),
                 e =>
                 {
                     Assert.IsTrue(e.Message.StartsWith("The specified blob does not exist."));

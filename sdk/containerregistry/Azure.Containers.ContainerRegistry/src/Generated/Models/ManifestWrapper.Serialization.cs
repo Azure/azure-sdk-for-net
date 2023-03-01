@@ -12,128 +12,30 @@ using Azure.Core;
 
 namespace Azure.Containers.ContainerRegistry
 {
-    internal partial class ManifestWrapper : IUtf8JsonSerializable
+    internal partial class ManifestWrapper
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            if (Optional.IsDefined(MediaType))
-            {
-                writer.WritePropertyName("mediaType");
-                writer.WriteStringValue(MediaType);
-            }
-            if (Optional.IsCollectionDefined(Manifests))
-            {
-                writer.WritePropertyName("manifests");
-                writer.WriteStartArray();
-                foreach (var item in Manifests)
-                {
-                    writer.WriteObjectValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsDefined(Config))
-            {
-                writer.WritePropertyName("config");
-                writer.WriteObjectValue(Config);
-            }
-            if (Optional.IsCollectionDefined(Layers))
-            {
-                writer.WritePropertyName("layers");
-                writer.WriteStartArray();
-                foreach (var item in Layers)
-                {
-                    writer.WriteObjectValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsDefined(Annotations))
-            {
-                if (Annotations != null)
-                {
-                    writer.WritePropertyName("annotations");
-                    writer.WriteObjectValue(Annotations);
-                }
-                else
-                {
-                    writer.WriteNull("annotations");
-                }
-            }
-            if (Optional.IsDefined(Architecture))
-            {
-                writer.WritePropertyName("architecture");
-                writer.WriteStringValue(Architecture);
-            }
-            if (Optional.IsDefined(Name))
-            {
-                writer.WritePropertyName("name");
-                writer.WriteStringValue(Name);
-            }
-            if (Optional.IsDefined(Tag))
-            {
-                writer.WritePropertyName("tag");
-                writer.WriteStringValue(Tag);
-            }
-            if (Optional.IsCollectionDefined(FsLayers))
-            {
-                writer.WritePropertyName("fsLayers");
-                writer.WriteStartArray();
-                foreach (var item in FsLayers)
-                {
-                    writer.WriteObjectValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsCollectionDefined(History))
-            {
-                writer.WritePropertyName("history");
-                writer.WriteStartArray();
-                foreach (var item in History)
-                {
-                    writer.WriteObjectValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsCollectionDefined(Signatures))
-            {
-                writer.WritePropertyName("signatures");
-                writer.WriteStartArray();
-                foreach (var item in Signatures)
-                {
-                    writer.WriteObjectValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsDefined(SchemaVersion))
-            {
-                writer.WritePropertyName("schemaVersion");
-                writer.WriteNumberValue(SchemaVersion.Value);
-            }
-            writer.WriteEndObject();
-        }
-
         internal static ManifestWrapper DeserializeManifestWrapper(JsonElement element)
         {
             Optional<string> mediaType = default;
-            Optional<IList<ManifestListAttributes>> manifests = default;
+            Optional<IReadOnlyList<ManifestListAttributes>> manifests = default;
             Optional<OciBlobDescriptor> config = default;
-            Optional<IList<OciBlobDescriptor>> layers = default;
+            Optional<IReadOnlyList<OciBlobDescriptor>> layers = default;
             Optional<OciAnnotations> annotations = default;
             Optional<string> architecture = default;
             Optional<string> name = default;
             Optional<string> tag = default;
-            Optional<IList<FsLayer>> fsLayers = default;
-            Optional<IList<History>> history = default;
-            Optional<IList<ImageSignature>> signatures = default;
+            Optional<IReadOnlyList<FsLayer>> fsLayers = default;
+            Optional<IReadOnlyList<History>> history = default;
+            Optional<IReadOnlyList<ImageSignature>> signatures = default;
             Optional<int> schemaVersion = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("mediaType"))
+                if (property.NameEquals("mediaType"u8))
                 {
                     mediaType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("manifests"))
+                if (property.NameEquals("manifests"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -148,7 +50,7 @@ namespace Azure.Containers.ContainerRegistry
                     manifests = array;
                     continue;
                 }
-                if (property.NameEquals("config"))
+                if (property.NameEquals("config"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -158,7 +60,7 @@ namespace Azure.Containers.ContainerRegistry
                     config = OciBlobDescriptor.DeserializeOciBlobDescriptor(property.Value);
                     continue;
                 }
-                if (property.NameEquals("layers"))
+                if (property.NameEquals("layers"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -173,7 +75,7 @@ namespace Azure.Containers.ContainerRegistry
                     layers = array;
                     continue;
                 }
-                if (property.NameEquals("annotations"))
+                if (property.NameEquals("annotations"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -183,22 +85,22 @@ namespace Azure.Containers.ContainerRegistry
                     annotations = OciAnnotations.DeserializeOciAnnotations(property.Value);
                     continue;
                 }
-                if (property.NameEquals("architecture"))
+                if (property.NameEquals("architecture"u8))
                 {
                     architecture = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("tag"))
+                if (property.NameEquals("tag"u8))
                 {
                     tag = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("fsLayers"))
+                if (property.NameEquals("fsLayers"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -213,7 +115,7 @@ namespace Azure.Containers.ContainerRegistry
                     fsLayers = array;
                     continue;
                 }
-                if (property.NameEquals("history"))
+                if (property.NameEquals("history"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -228,7 +130,7 @@ namespace Azure.Containers.ContainerRegistry
                     history = array;
                     continue;
                 }
-                if (property.NameEquals("signatures"))
+                if (property.NameEquals("signatures"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -243,7 +145,7 @@ namespace Azure.Containers.ContainerRegistry
                     signatures = array;
                     continue;
                 }
-                if (property.NameEquals("schemaVersion"))
+                if (property.NameEquals("schemaVersion"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

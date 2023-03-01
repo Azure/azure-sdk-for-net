@@ -15,15 +15,15 @@ namespace Azure.ResourceManager.Cdn.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("typeName");
+            writer.WritePropertyName("typeName"u8);
             writer.WriteStringValue(ActionType.ToString());
-            writer.WritePropertyName("queryStringBehavior");
+            writer.WritePropertyName("queryStringBehavior"u8);
             writer.WriteStringValue(QueryStringBehavior.ToString());
             if (Optional.IsDefined(QueryParameters))
             {
                 if (QueryParameters != null)
                 {
-                    writer.WritePropertyName("queryParameters");
+                    writer.WritePropertyName("queryParameters"u8);
                     writer.WriteStringValue(QueryParameters);
                 }
                 else
@@ -41,17 +41,17 @@ namespace Azure.ResourceManager.Cdn.Models
             Optional<string> queryParameters = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("typeName"))
+                if (property.NameEquals("typeName"u8))
                 {
                     typeName = new CacheKeyQueryStringActionType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("queryStringBehavior"))
+                if (property.NameEquals("queryStringBehavior"u8))
                 {
                     queryStringBehavior = new QueryStringBehavior(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("queryParameters"))
+                if (property.NameEquals("queryParameters"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

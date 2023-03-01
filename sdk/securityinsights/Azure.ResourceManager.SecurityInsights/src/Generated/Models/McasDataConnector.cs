@@ -14,7 +14,7 @@ using Azure.ResourceManager.SecurityInsights;
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
     /// <summary> Represents MCAS (Microsoft Cloud App Security) data connector. </summary>
-    public partial class McasDataConnector : DataConnectorData
+    public partial class McasDataConnector : SecurityInsightsDataConnectorData
     {
         /// <summary> Initializes a new instance of McasDataConnector. </summary>
         public McasDataConnector()
@@ -30,40 +30,17 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="kind"> The data connector kind. </param>
         /// <param name="etag"> Etag of the azure resource. </param>
         /// <param name="tenantId"> The tenant id to connect to, and get the data from. </param>
-        /// <param name="alerts"> Alerts data type connection. </param>
-        /// <param name="discoveryLogs"> Discovery log data type connection. </param>
-        internal McasDataConnector(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DataConnectorKind kind, ETag? etag, Guid? tenantId, DataConnectorDataTypeCommon alerts, DataConnectorDataTypeCommon discoveryLogs) : base(id, name, resourceType, systemData, kind, etag)
+        /// <param name="dataTypes"> The available data types for the connector. </param>
+        internal McasDataConnector(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DataConnectorKind kind, ETag? etag, Guid? tenantId, McasDataConnectorDataTypes dataTypes) : base(id, name, resourceType, systemData, kind, etag)
         {
             TenantId = tenantId;
-            Alerts = alerts;
-            DiscoveryLogs = discoveryLogs;
+            DataTypes = dataTypes;
             Kind = kind;
         }
 
         /// <summary> The tenant id to connect to, and get the data from. </summary>
         public Guid? TenantId { get; set; }
-        /// <summary> Alerts data type connection. </summary>
-        internal DataConnectorDataTypeCommon Alerts { get; set; }
-        /// <summary> Describe whether this data type connection is enabled or not. </summary>
-        public DataTypeState? AlertsState
-        {
-            get => Alerts is null ? default(DataTypeState?) : Alerts.State;
-            set
-            {
-                Alerts = value.HasValue ? new DataConnectorDataTypeCommon(value.Value) : null;
-            }
-        }
-
-        /// <summary> Discovery log data type connection. </summary>
-        internal DataConnectorDataTypeCommon DiscoveryLogs { get; set; }
-        /// <summary> Describe whether this data type connection is enabled or not. </summary>
-        public DataTypeState? DiscoveryLogsState
-        {
-            get => DiscoveryLogs is null ? default(DataTypeState?) : DiscoveryLogs.State;
-            set
-            {
-                DiscoveryLogs = value.HasValue ? new DataConnectorDataTypeCommon(value.Value) : null;
-            }
-        }
+        /// <summary> The available data types for the connector. </summary>
+        public McasDataConnectorDataTypes DataTypes { get; set; }
     }
 }

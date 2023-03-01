@@ -22,6 +22,20 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> The publishing profile of a gallery image version. </summary>
         public GalleryApplicationVersionPublishingProfile PublishingProfile { get; set; }
+        /// <summary> The safety profile of the Gallery Application Version. </summary>
+        internal GalleryApplicationVersionSafetyProfile SafetyProfile { get; set; }
+        /// <summary> Indicates whether or not removing this Gallery Image Version from replicated regions is allowed. </summary>
+        public bool? AllowDeletionOfReplicatedLocations
+        {
+            get => SafetyProfile is null ? default : SafetyProfile.AllowDeletionOfReplicatedLocations;
+            set
+            {
+                if (SafetyProfile is null)
+                    SafetyProfile = new GalleryApplicationVersionSafetyProfile();
+                SafetyProfile.AllowDeletionOfReplicatedLocations = value;
+            }
+        }
+
         /// <summary> The provisioning state, which only appears in the response. </summary>
         public GalleryProvisioningState? ProvisioningState { get; }
         /// <summary> This is the replication status of the gallery image version. </summary>

@@ -13,7 +13,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary> A class representing the TriggeredWebJob data model. </summary>
+    /// <summary>
+    /// A class representing the TriggeredWebJob data model.
+    /// Triggered Web Job Information.
+    /// </summary>
     public partial class TriggeredWebJobData : ResourceData
     {
         /// <summary> Initializes a new instance of TriggeredWebJobData. </summary>

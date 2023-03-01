@@ -176,6 +176,12 @@
       ]
     },
     {
+      "filename": "**/sdk/billingbenefits/**/*.cs",
+      "words": [
+        "Hana"
+      ]
+    },
+    {
       "filename": "**/sdk/botservice/**/*.cs",
       "words": [
         "Alexa",
@@ -256,7 +262,13 @@
         "sysctls",
         "tcpkeepalive",
         "wasi",
-        "wmem"
+        "wmem",
+        "Oidc",
+        "Ebpf",
+        "Ipvs",
+        "Keda",
+        "Kata",
+        "Mshv"
       ]
     },
     {
@@ -495,6 +507,17 @@
       ]
     },
     {
+      "filename": "**/sdk/mobilenetwork/**/*.cs",
+      "words": [
+        "Napt",
+        "Plmn",
+        "Ambr",
+        "Rfsp",
+        "Snssai",
+        "AKSHCI"
+      ]
+    },
+    {
       "filename": "**/sdk/netapp/**/*.cs",
       "words": [
         "mibps",
@@ -708,6 +731,12 @@
       "filename": "**/sdk/resources/Azure.ResourceManager.Resources/api/*.cs",
       "words": [
         "Puid"
+      ]
+    },
+    {
+      "filename": "**/sdk/resourcehealth/**/*.cs",
+      "words": [
+        "occured"
       ]
     },
     {
@@ -963,12 +992,28 @@
       ]
     },
     {
+      "filename": "**/sdk/voiceservices/**/*.cs",
+      "words": [
+        "Esrp",
+        "Pcma",
+        "Pcmu"
+      ]
+    },
+    {
       "filename": "**/sdk/webpubsub/**/*.cs",
       "words": [
         "protobuf",
         "Ackable",
         "awps"
         ]
+    },
+    {
+      "filename": "**/sdk/openai/**/*.cs",
+      "words": [
+        "Probs",
+        "Logprobs",
+        "Logit"
+      ]
     }
   ],
   "allowCompoundWords": true

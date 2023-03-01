@@ -19,12 +19,12 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             Optional<IReadOnlyList<RelationshipsLookup>> suggestedRelationships = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("interactionName"))
+                if (property.NameEquals("interactionName"u8))
                 {
                     interactionName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("suggestedRelationships"))
+                if (property.NameEquals("suggestedRelationships"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

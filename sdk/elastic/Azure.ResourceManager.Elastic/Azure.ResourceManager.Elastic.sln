@@ -7,6 +7,8 @@ Project("{CF15992E-0B89-4C12-9866-84C16E81B1D9}") = "Azure.ResourceManager.Elast
 EndProject
 Project("{CF15992E-0B89-4C12-9866-84C16E81B1D9}") = "Azure.ResourceManager.Elastic.Tests", "tests\Azure.ResourceManager.Elastic.Tests.csproj", "{03BA0CB5-79DE-4A8F-83F3-70DC902FBFCA}"
 EndProject
+Project("{CF15992E-0B89-4C12-9866-84C16E81B1D9}") = "Azure.ResourceManager.Elastic.Samples", "samples\Azure.ResourceManager.Elastic.Samples.csproj", "{E65DD774-6C98-482A-8808-1EC19199225A}"
+EndProject
 Global
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

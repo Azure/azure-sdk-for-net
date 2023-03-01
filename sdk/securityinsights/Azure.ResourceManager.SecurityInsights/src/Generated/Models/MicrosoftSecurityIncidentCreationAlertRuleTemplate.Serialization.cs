@@ -18,28 +18,28 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("kind");
+            writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(AlertRulesCreatedByTemplateCount))
             {
-                writer.WritePropertyName("alertRulesCreatedByTemplateCount");
+                writer.WritePropertyName("alertRulesCreatedByTemplateCount"u8);
                 writer.WriteNumberValue(AlertRulesCreatedByTemplateCount.Value);
             }
             if (Optional.IsDefined(Description))
             {
-                writer.WritePropertyName("description");
+                writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
             if (Optional.IsDefined(DisplayName))
             {
-                writer.WritePropertyName("displayName");
+                writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
             if (Optional.IsCollectionDefined(RequiredDataConnectors))
             {
-                writer.WritePropertyName("requiredDataConnectors");
+                writer.WritePropertyName("requiredDataConnectors"u8);
                 writer.WriteStartArray();
                 foreach (var item in RequiredDataConnectors)
                 {
@@ -49,12 +49,12 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             }
             if (Optional.IsDefined(Status))
             {
-                writer.WritePropertyName("status");
+                writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
             if (Optional.IsCollectionDefined(DisplayNamesFilter))
             {
-                writer.WritePropertyName("displayNamesFilter");
+                writer.WritePropertyName("displayNamesFilter"u8);
                 writer.WriteStartArray();
                 foreach (var item in DisplayNamesFilter)
                 {
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             }
             if (Optional.IsCollectionDefined(DisplayNamesExcludeFilter))
             {
-                writer.WritePropertyName("displayNamesExcludeFilter");
+                writer.WritePropertyName("displayNamesExcludeFilter"u8);
                 writer.WriteStartArray();
                 foreach (var item in DisplayNamesExcludeFilter)
                 {
@@ -74,12 +74,12 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             }
             if (Optional.IsDefined(ProductFilter))
             {
-                writer.WritePropertyName("productFilter");
+                writer.WritePropertyName("productFilter"u8);
                 writer.WriteStringValue(ProductFilter.Value.ToString());
             }
             if (Optional.IsCollectionDefined(SeveritiesFilter))
             {
-                writer.WritePropertyName("severitiesFilter");
+                writer.WritePropertyName("severitiesFilter"u8);
                 writer.WriteStartArray();
                 foreach (var item in SeveritiesFilter)
                 {
@@ -99,49 +99,49 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             ResourceType type = default;
             Optional<SystemData> systemData = default;
             Optional<int> alertRulesCreatedByTemplateCount = default;
-            Optional<DateTimeOffset> lastUpdatedDateUTC = default;
             Optional<DateTimeOffset> createdDateUTC = default;
+            Optional<DateTimeOffset> lastUpdatedDateUTC = default;
             Optional<string> description = default;
             Optional<string> displayName = default;
             Optional<IList<AlertRuleTemplateDataSource>> requiredDataConnectors = default;
-            Optional<TemplateStatus> status = default;
+            Optional<SecurityInsightsAlertRuleTemplateStatus> status = default;
             Optional<IList<string>> displayNamesFilter = default;
             Optional<IList<string>> displayNamesExcludeFilter = default;
             Optional<MicrosoftSecurityProductName> productFilter = default;
-            Optional<IList<AlertSeverity>> severitiesFilter = default;
+            Optional<IList<SecurityInsightsAlertSeverity>> severitiesFilter = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("kind"))
+                if (property.NameEquals("kind"u8))
                 {
                     kind = new AlertRuleKind(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("alertRulesCreatedByTemplateCount"))
+                        if (property0.NameEquals("alertRulesCreatedByTemplateCount"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -160,17 +160,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                             alertRulesCreatedByTemplateCount = property0.Value.GetInt32();
                             continue;
                         }
-                        if (property0.NameEquals("lastUpdatedDateUTC"))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                property0.ThrowNonNullablePropertyIsNull();
-                                continue;
-                            }
-                            lastUpdatedDateUTC = property0.Value.GetDateTimeOffset("O");
-                            continue;
-                        }
-                        if (property0.NameEquals("createdDateUTC"))
+                        if (property0.NameEquals("createdDateUTC"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -180,17 +170,27 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                             createdDateUTC = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("description"))
+                        if (property0.NameEquals("lastUpdatedDateUTC"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            lastUpdatedDateUTC = property0.Value.GetDateTimeOffset("O");
+                            continue;
+                        }
+                        if (property0.NameEquals("description"u8))
                         {
                             description = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("displayName"))
+                        if (property0.NameEquals("displayName"u8))
                         {
                             displayName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("requiredDataConnectors"))
+                        if (property0.NameEquals("requiredDataConnectors"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -205,17 +205,17 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                             requiredDataConnectors = array;
                             continue;
                         }
-                        if (property0.NameEquals("status"))
+                        if (property0.NameEquals("status"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            status = new TemplateStatus(property0.Value.GetString());
+                            status = new SecurityInsightsAlertRuleTemplateStatus(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("displayNamesFilter"))
+                        if (property0.NameEquals("displayNamesFilter"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                             displayNamesFilter = array;
                             continue;
                         }
-                        if (property0.NameEquals("displayNamesExcludeFilter"))
+                        if (property0.NameEquals("displayNamesExcludeFilter"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                             displayNamesExcludeFilter = array;
                             continue;
                         }
-                        if (property0.NameEquals("productFilter"))
+                        if (property0.NameEquals("productFilter"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -255,17 +255,17 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                             productFilter = new MicrosoftSecurityProductName(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("severitiesFilter"))
+                        if (property0.NameEquals("severitiesFilter"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<AlertSeverity> array = new List<AlertSeverity>();
+                            List<SecurityInsightsAlertSeverity> array = new List<SecurityInsightsAlertSeverity>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(new AlertSeverity(item.GetString()));
+                                array.Add(new SecurityInsightsAlertSeverity(item.GetString()));
                             }
                             severitiesFilter = array;
                             continue;
@@ -274,7 +274,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     continue;
                 }
             }
-            return new MicrosoftSecurityIncidentCreationAlertRuleTemplate(id, name, type, systemData.Value, kind, Optional.ToNullable(alertRulesCreatedByTemplateCount), Optional.ToNullable(lastUpdatedDateUTC), Optional.ToNullable(createdDateUTC), description.Value, displayName.Value, Optional.ToList(requiredDataConnectors), Optional.ToNullable(status), Optional.ToList(displayNamesFilter), Optional.ToList(displayNamesExcludeFilter), Optional.ToNullable(productFilter), Optional.ToList(severitiesFilter));
+            return new MicrosoftSecurityIncidentCreationAlertRuleTemplate(id, name, type, systemData.Value, kind, Optional.ToNullable(alertRulesCreatedByTemplateCount), Optional.ToNullable(createdDateUTC), Optional.ToNullable(lastUpdatedDateUTC), description.Value, displayName.Value, Optional.ToList(requiredDataConnectors), Optional.ToNullable(status), Optional.ToList(displayNamesFilter), Optional.ToList(displayNamesExcludeFilter), Optional.ToNullable(productFilter), Optional.ToList(severitiesFilter));
         }
     }
 }

@@ -43,7 +43,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/d0efb362-cb15-4021-9b3b-8c107b937d4c/resourcegroups/SDKAutomanage-7056?api-version=2021-04-01",
+      "RequestUri": "https://management.azure.com/subscriptions/d0efb362-cb15-4021-9b3b-8c107b937d4c/resourcegroups/SDKAutomanage-7056?api-version=**",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -170,7 +170,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/d0efb362-cb15-4021-9b3b-8c107b937d4c/resourceGroups/SDKAutomanage-7056/providers/Microsoft.Resources/deployments/deployVM?api-version=2021-04-01",
+      "RequestUri": "https://management.azure.com/subscriptions/d0efb362-cb15-4021-9b3b-8c107b937d4c/resourceGroups/SDKAutomanage-7056/providers/Microsoft.Resources/deployments/deployVM?api-version=**",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -302,7 +302,7 @@
       },
       "StatusCode": 201,
       "ResponseHeaders": {
-        "Azure-AsyncOperation": "https://management.azure.com/subscriptions/d0efb362-cb15-4021-9b3b-8c107b937d4c/resourcegroups/SDKAutomanage-7056/providers/Microsoft.Resources/deployments/deployVM/operationStatuses/08585371326268626370?api-version=2021-04-01",
+        "Azure-AsyncOperation": "https://management.azure.com/subscriptions/d0efb362-cb15-4021-9b3b-8c107b937d4c/resourcegroups/SDKAutomanage-7056/providers/Microsoft.Resources/deployments/deployVM/operationStatuses/08585371326268626370?api-version=**",
         "Cache-Control": "no-cache",
         "Content-Length": "1864",
         "Content-Type": "application/json; charset=utf-8",
@@ -393,7 +393,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/d0efb362-cb15-4021-9b3b-8c107b937d4c/resourcegroups/SDKAutomanage-7056/providers/Microsoft.Resources/deployments/deployVM/operationStatuses/08585371326268626370?api-version=2021-04-01",
+      "RequestUri": "https://management.azure.com/subscriptions/d0efb362-cb15-4021-9b3b-8c107b937d4c/resourcegroups/SDKAutomanage-7056/providers/Microsoft.Resources/deployments/deployVM/operationStatuses/08585371326268626370?api-version=**",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -423,7 +423,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/d0efb362-cb15-4021-9b3b-8c107b937d4c/resourcegroups/SDKAutomanage-7056/providers/Microsoft.Resources/deployments/deployVM/operationStatuses/08585371326268626370?api-version=2021-04-01",
+      "RequestUri": "https://management.azure.com/subscriptions/d0efb362-cb15-4021-9b3b-8c107b937d4c/resourcegroups/SDKAutomanage-7056/providers/Microsoft.Resources/deployments/deployVM/operationStatuses/08585371326268626370?api-version=**",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -453,7 +453,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/d0efb362-cb15-4021-9b3b-8c107b937d4c/resourcegroups/SDKAutomanage-7056/providers/Microsoft.Resources/deployments/deployVM/operationStatuses/08585371326268626370?api-version=2021-04-01",
+      "RequestUri": "https://management.azure.com/subscriptions/d0efb362-cb15-4021-9b3b-8c107b937d4c/resourcegroups/SDKAutomanage-7056/providers/Microsoft.Resources/deployments/deployVM/operationStatuses/08585371326268626370?api-version=**",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -483,7 +483,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/d0efb362-cb15-4021-9b3b-8c107b937d4c/resourcegroups/SDKAutomanage-7056/providers/Microsoft.Resources/deployments/deployVM/operationStatuses/08585371326268626370?api-version=2021-04-01",
+      "RequestUri": "https://management.azure.com/subscriptions/d0efb362-cb15-4021-9b3b-8c107b937d4c/resourcegroups/SDKAutomanage-7056/providers/Microsoft.Resources/deployments/deployVM/operationStatuses/08585371326268626370?api-version=**",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -513,7 +513,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/d0efb362-cb15-4021-9b3b-8c107b937d4c/resourcegroups/SDKAutomanage-7056/providers/Microsoft.Resources/deployments/deployVM/operationStatuses/08585371326268626370?api-version=2021-04-01",
+      "RequestUri": "https://management.azure.com/subscriptions/d0efb362-cb15-4021-9b3b-8c107b937d4c/resourcegroups/SDKAutomanage-7056/providers/Microsoft.Resources/deployments/deployVM/operationStatuses/08585371326268626370?api-version=**",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -543,7 +543,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/d0efb362-cb15-4021-9b3b-8c107b937d4c/resourcegroups/SDKAutomanage-7056/providers/Microsoft.Resources/deployments/deployVM/operationStatuses/08585371326268626370?api-version=2021-04-01",
+      "RequestUri": "https://management.azure.com/subscriptions/d0efb362-cb15-4021-9b3b-8c107b937d4c/resourcegroups/SDKAutomanage-7056/providers/Microsoft.Resources/deployments/deployVM/operationStatuses/08585371326268626370?api-version=**",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -573,7 +573,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/d0efb362-cb15-4021-9b3b-8c107b937d4c/resourcegroups/SDKAutomanage-7056/providers/Microsoft.Resources/deployments/deployVM/operationStatuses/08585371326268626370?api-version=2021-04-01",
+      "RequestUri": "https://management.azure.com/subscriptions/d0efb362-cb15-4021-9b3b-8c107b937d4c/resourcegroups/SDKAutomanage-7056/providers/Microsoft.Resources/deployments/deployVM/operationStatuses/08585371326268626370?api-version=**",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -603,7 +603,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/d0efb362-cb15-4021-9b3b-8c107b937d4c/resourcegroups/SDKAutomanage-7056/providers/Microsoft.Resources/deployments/deployVM/operationStatuses/08585371326268626370?api-version=2021-04-01",
+      "RequestUri": "https://management.azure.com/subscriptions/d0efb362-cb15-4021-9b3b-8c107b937d4c/resourcegroups/SDKAutomanage-7056/providers/Microsoft.Resources/deployments/deployVM/operationStatuses/08585371326268626370?api-version=**",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -633,7 +633,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/d0efb362-cb15-4021-9b3b-8c107b937d4c/resourcegroups/SDKAutomanage-7056/providers/Microsoft.Resources/deployments/deployVM/operationStatuses/08585371326268626370?api-version=2021-04-01",
+      "RequestUri": "https://management.azure.com/subscriptions/d0efb362-cb15-4021-9b3b-8c107b937d4c/resourcegroups/SDKAutomanage-7056/providers/Microsoft.Resources/deployments/deployVM/operationStatuses/08585371326268626370?api-version=**",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -663,7 +663,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/d0efb362-cb15-4021-9b3b-8c107b937d4c/resourcegroups/SDKAutomanage-7056/providers/Microsoft.Resources/deployments/deployVM/operationStatuses/08585371326268626370?api-version=2021-04-01",
+      "RequestUri": "https://management.azure.com/subscriptions/d0efb362-cb15-4021-9b3b-8c107b937d4c/resourcegroups/SDKAutomanage-7056/providers/Microsoft.Resources/deployments/deployVM/operationStatuses/08585371326268626370?api-version=**",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -693,7 +693,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/d0efb362-cb15-4021-9b3b-8c107b937d4c/resourcegroups/SDKAutomanage-7056/providers/Microsoft.Resources/deployments/deployVM/operationStatuses/08585371326268626370?api-version=2021-04-01",
+      "RequestUri": "https://management.azure.com/subscriptions/d0efb362-cb15-4021-9b3b-8c107b937d4c/resourcegroups/SDKAutomanage-7056/providers/Microsoft.Resources/deployments/deployVM/operationStatuses/08585371326268626370?api-version=**",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -723,7 +723,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/d0efb362-cb15-4021-9b3b-8c107b937d4c/resourcegroups/SDKAutomanage-7056/providers/Microsoft.Resources/deployments/deployVM/operationStatuses/08585371326268626370?api-version=2021-04-01",
+      "RequestUri": "https://management.azure.com/subscriptions/d0efb362-cb15-4021-9b3b-8c107b937d4c/resourcegroups/SDKAutomanage-7056/providers/Microsoft.Resources/deployments/deployVM/operationStatuses/08585371326268626370?api-version=**",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -753,7 +753,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/d0efb362-cb15-4021-9b3b-8c107b937d4c/resourcegroups/SDKAutomanage-7056/providers/Microsoft.Resources/deployments/deployVM/operationStatuses/08585371326268626370?api-version=2021-04-01",
+      "RequestUri": "https://management.azure.com/subscriptions/d0efb362-cb15-4021-9b3b-8c107b937d4c/resourcegroups/SDKAutomanage-7056/providers/Microsoft.Resources/deployments/deployVM/operationStatuses/08585371326268626370?api-version=**",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -783,7 +783,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/d0efb362-cb15-4021-9b3b-8c107b937d4c/resourcegroups/SDKAutomanage-7056/providers/Microsoft.Resources/deployments/deployVM/operationStatuses/08585371326268626370?api-version=2021-04-01",
+      "RequestUri": "https://management.azure.com/subscriptions/d0efb362-cb15-4021-9b3b-8c107b937d4c/resourcegroups/SDKAutomanage-7056/providers/Microsoft.Resources/deployments/deployVM/operationStatuses/08585371326268626370?api-version=**",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -813,7 +813,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/d0efb362-cb15-4021-9b3b-8c107b937d4c/resourcegroups/SDKAutomanage-7056/providers/Microsoft.Resources/deployments/deployVM/operationStatuses/08585371326268626370?api-version=2021-04-01",
+      "RequestUri": "https://management.azure.com/subscriptions/d0efb362-cb15-4021-9b3b-8c107b937d4c/resourcegroups/SDKAutomanage-7056/providers/Microsoft.Resources/deployments/deployVM/operationStatuses/08585371326268626370?api-version=**",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -843,7 +843,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/d0efb362-cb15-4021-9b3b-8c107b937d4c/resourceGroups/SDKAutomanage-7056/providers/Microsoft.Resources/deployments/deployVM?api-version=2021-04-01",
+      "RequestUri": "https://management.azure.com/subscriptions/d0efb362-cb15-4021-9b3b-8c107b937d4c/resourceGroups/SDKAutomanage-7056/providers/Microsoft.Resources/deployments/deployVM?api-version=**",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -952,104 +952,6 @@
               "id": "/subscriptions/d0efb362-cb15-4021-9b3b-8c107b937d4c/resourceGroups/SDKAutomanage-7056/providers/Microsoft.Network/virtualNetworks/sdk-test-vm-VirtualNetwork"
             }
           ]
-        }
-      }
-    },
-    {
-      "RequestUri": "https://management.azure.com/subscriptions/d0efb362-cb15-4021-9b3b-8c107b937d4c/resourceGroups/SDKAutomanage-7056/providers/Microsoft.Compute/virtualMachines/sdk-test-vm?api-version=2022-03-01",
-      "RequestMethod": "GET",
-      "RequestHeaders": {
-        "Accept": "application/json",
-        "Authorization": "Sanitized",
-        "traceparent": "00-e18db86f041d067a0de8a077ab55ee4b-05e93ed0ec46dd83-00",
-        "User-Agent": "azsdk-net-ResourceManager.Compute/1.0.0 (.NET 6.0.9; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "6c9862968afeff46764fcadc9d5c57fd",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": null,
-      "StatusCode": 200,
-      "ResponseHeaders": {
-        "Cache-Control": "no-cache",
-        "Content-Length": "2144",
-        "Content-Type": "application/json; charset=utf-8",
-        "Date": "Thu, 29 Sep 2022 18:02:00 GMT",
-        "Expires": "-1",
-        "Pragma": "no-cache",
-        "Server": [
-          "Microsoft-HTTPAPI/2.0",
-          "Microsoft-HTTPAPI/2.0"
-        ],
-        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
-        "X-Content-Type-Options": "nosniff",
-        "x-ms-client-request-id": "6c9862968afeff46764fcadc9d5c57fd",
-        "x-ms-correlation-request-id": "caa1f2e9-ea3a-4f56-8cbb-9523e56316b3",
-        "x-ms-ratelimit-remaining-resource": "Microsoft.Compute/LowCostGet3Min;3992,Microsoft.Compute/LowCostGet30Min;31946",
-        "x-ms-ratelimit-remaining-subscription-reads": "11942",
-        "x-ms-request-id": "08d8fde5-89a2-45fa-9ddb-b12c962f3838",
-        "x-ms-routing-request-id": "WESTUS2:20220929T180200Z:caa1f2e9-ea3a-4f56-8cbb-9523e56316b3"
-      },
-      "ResponseBody": {
-        "name": "sdk-test-vm",
-        "id": "/subscriptions/d0efb362-cb15-4021-9b3b-8c107b937d4c/resourceGroups/SDKAutomanage-7056/providers/Microsoft.Compute/virtualMachines/sdk-test-vm",
-        "type": "Microsoft.Compute/virtualMachines",
-        "location": "eastus",
-        "tags": {
-          "azsecpack": "nonprod",
-          "platformsettings.host_environment.service.platform_optedin_for_rootcerts": "true"
-        },
-        "properties": {
-          "vmId": "791deca5-4b47-40c7-bb16-5b3aa64f7135",
-          "hardwareProfile": {
-            "vmSize": "Standard_B1s"
-          },
-          "storageProfile": {
-            "imageReference": {
-              "publisher": "MicrosoftWindowsDesktop",
-              "offer": "Windows-10",
-              "sku": "win10-21h2-pro",
-              "version": "latest",
-              "exactVersion": "19044.2006.220909"
-            },
-            "osDisk": {
-              "osType": "Windows",
-              "name": "sdk-test-vmOSDisk",
-              "createOption": "FromImage",
-              "caching": "ReadWrite",
-              "managedDisk": {
-                "storageAccountType": "Premium_LRS",
-                "id": "/subscriptions/d0efb362-cb15-4021-9b3b-8c107b937d4c/resourceGroups/SDKAutomanage-7056/providers/Microsoft.Compute/disks/sdk-test-vmOSDisk"
-              },
-              "deleteOption": "Detach",
-              "diskSizeGB": 127
-            },
-            "dataDisks": []
-          },
-          "osProfile": {
-            "computerName": "sdk-test-vm",
-            "adminUsername": "adminUser",
-            "windowsConfiguration": {
-              "provisionVMAgent": true,
-              "enableAutomaticUpdates": true,
-              "patchSettings": {
-                "patchMode": "AutomaticByOS",
-                "assessmentMode": "ImageDefault",
-                "enableHotpatching": false
-              },
-              "enableVMAgentPlatformUpdates": false
-            },
-            "secrets": [],
-            "allowExtensionOperations": true,
-            "requireGuestProvisionSignal": true
-          },
-          "networkProfile": {
-            "networkInterfaces": [
-              {
-                "id": "/subscriptions/d0efb362-cb15-4021-9b3b-8c107b937d4c/resourceGroups/SDKAutomanage-7056/providers/Microsoft.Network/networkInterfaces/sdk-test-vm-NetworkInterface"
-              }
-            ]
-          },
-          "provisioningState": "Succeeded",
-          "timeCreated": "2022-09-29T17:57:53.5875767\u002B00:00"
         }
       }
     },

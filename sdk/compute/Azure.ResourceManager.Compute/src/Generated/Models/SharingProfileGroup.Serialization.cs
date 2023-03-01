@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.Compute.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(GroupType))
             {
-                writer.WritePropertyName("type");
+                writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(GroupType.Value.ToString());
             }
             if (Optional.IsCollectionDefined(Ids))
             {
-                writer.WritePropertyName("ids");
+                writer.WritePropertyName("ids"u8);
                 writer.WriteStartArray();
                 foreach (var item in Ids)
                 {
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Compute.Models
             Optional<IList<string>> ids = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Compute.Models
                     type = new SharingProfileGroupType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("ids"))
+                if (property.NameEquals("ids"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

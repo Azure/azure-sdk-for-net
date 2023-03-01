@@ -3,7 +3,9 @@
 
 using System;
 using System.Collections.Generic;
+using System.Runtime.InteropServices.ComTypes;
 using System.Threading;
+using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Storage.DataMovement.Models;
 
@@ -14,9 +16,14 @@ namespace Azure.Storage.DataMovement
     /// </summary>
     internal class DataTransferState
     {
+        private readonly object _statusLock = new object();
         private string _id;
         private StorageTransferStatus _status;
+
         private long _currentTransferredBytes;
+        private object _lockCurrentBytes = new object();
+
+        public TaskCompletionSource<StorageTransferStatus> _completionSource;
 
         public StorageTransferStatus Status => _status;
 
@@ -24,10 +31,8 @@ namespace Azure.Storage.DataMovement
         /// constructor
         /// </summary>
         public DataTransferState()
+            : this(StorageTransferStatus.Queued)
         {
-            _id = Guid.NewGuid().ToString();
-            _status = StorageTransferStatus.Queued;
-            _currentTransferredBytes = 0;
         }
 
         /// <summary>
@@ -38,6 +43,15 @@ namespace Azure.Storage.DataMovement
             _id = Guid.NewGuid().ToString();
             _status = status;
             _currentTransferredBytes = 0;
+            _completionSource = new TaskCompletionSource<StorageTransferStatus>(
+                _status,
+                TaskCreationOptions.RunContinuationsAsynchronously);
+            if (StorageTransferStatus.Completed == status ||
+                        StorageTransferStatus.CompletedWithSkippedTransfers == status ||
+                        StorageTransferStatus.CompletedWithFailedTransfers == status)
+            {
+                _completionSource.TrySetResult(status);
+            }
         }
 
         /// <summary>
@@ -48,6 +62,9 @@ namespace Azure.Storage.DataMovement
             _id = id;
             _status = StorageTransferStatus.Queued;
             _currentTransferredBytes = bytesTransferred;
+            _completionSource = new TaskCompletionSource<StorageTransferStatus>(
+                _status,
+                TaskCreationOptions.RunContinuationsAsynchronously);
         }
 
         /// <summary>
@@ -92,9 +109,21 @@ namespace Azure.Storage.DataMovement
         /// <param name="status"></param>
         public void SetTransferStatus(StorageTransferStatus status)
         {
-            if (_status != status)
+            lock (_statusLock)
             {
-                _status = status;
+                if (_status != status)
+                {
+                    _status = status;
+                    if (StorageTransferStatus.Completed == status ||
+                        StorageTransferStatus.CompletedWithSkippedTransfers == status ||
+                        StorageTransferStatus.CompletedWithFailedTransfers == status)
+                    {
+                        // If the _completionSource has been cancelled or the exception
+                        // has been set, we don't need to check if TrySetResult returns false
+                        // because it's acceptable to cancel or have an error occur before then.
+                        _completionSource.TrySetResult(status);
+                    }
+                }
             }
         }
 
@@ -103,7 +132,10 @@ namespace Azure.Storage.DataMovement
         /// </summary>
         public void ResetTransferredBytes()
         {
-            Volatile.Write(ref _currentTransferredBytes, 0);
+            lock (_lockCurrentBytes)
+            {
+                Volatile.Write(ref _currentTransferredBytes, 0);
+            }
         }
 
         /// <summary>
@@ -112,7 +144,10 @@ namespace Azure.Storage.DataMovement
         /// <param name="transferredBytes"></param>
         public void UpdateTransferBytes(long transferredBytes)
         {
-            Interlocked.Add(ref _currentTransferredBytes, transferredBytes);
+            lock (_lockCurrentBytes)
+            {
+                Interlocked.Add(ref _currentTransferredBytes, transferredBytes);
+            }
         }
     }
 }

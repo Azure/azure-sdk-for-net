@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             Optional<DateTimeOffset> lastChangeDate = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("countOfDowngrades"))
+                if (property.NameEquals("countOfDowngrades"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     countOfDowngrades = property.Value.GetSingle();
                     continue;
                 }
-                if (property.NameEquals("countOfUpgradesAfterDowngrades"))
+                if (property.NameEquals("countOfUpgradesAfterDowngrades"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     countOfUpgradesAfterDowngrades = property.Value.GetSingle();
                     continue;
                 }
-                if (property.NameEquals("lastChangeDate"))
+                if (property.NameEquals("lastChangeDate"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

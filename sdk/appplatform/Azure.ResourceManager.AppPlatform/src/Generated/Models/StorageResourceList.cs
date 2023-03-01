@@ -17,20 +17,20 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// <summary> Initializes a new instance of StorageResourceList. </summary>
         internal StorageResourceList()
         {
-            Value = new ChangeTrackingList<StorageResourceData>();
+            Value = new ChangeTrackingList<AppPlatformStorageData>();
         }
 
         /// <summary> Initializes a new instance of StorageResourceList. </summary>
         /// <param name="value"> The storage resources list. </param>
         /// <param name="nextLink"> The link to next page of storage list. </param>
-        internal StorageResourceList(IReadOnlyList<StorageResourceData> value, string nextLink)
+        internal StorageResourceList(IReadOnlyList<AppPlatformStorageData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> The storage resources list. </summary>
-        public IReadOnlyList<StorageResourceData> Value { get; }
+        public IReadOnlyList<AppPlatformStorageData> Value { get; }
         /// <summary> The link to next page of storage list. </summary>
         public string NextLink { get; }
     }

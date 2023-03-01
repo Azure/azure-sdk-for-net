@@ -18,44 +18,44 @@ namespace Azure.ResourceManager.Compute.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Name))
             {
-                writer.WritePropertyName("name");
+                writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
             if (Optional.IsDefined(Caching))
             {
-                writer.WritePropertyName("caching");
+                writer.WritePropertyName("caching"u8);
                 writer.WriteStringValue(Caching.Value.ToSerialString());
             }
             if (Optional.IsDefined(WriteAcceleratorEnabled))
             {
-                writer.WritePropertyName("writeAcceleratorEnabled");
+                writer.WritePropertyName("writeAcceleratorEnabled"u8);
                 writer.WriteBooleanValue(WriteAcceleratorEnabled.Value);
             }
-            writer.WritePropertyName("createOption");
+            writer.WritePropertyName("createOption"u8);
             writer.WriteStringValue(CreateOption.ToString());
             if (Optional.IsDefined(DiffDiskSettings))
             {
-                writer.WritePropertyName("diffDiskSettings");
+                writer.WritePropertyName("diffDiskSettings"u8);
                 writer.WriteObjectValue(DiffDiskSettings);
             }
             if (Optional.IsDefined(DiskSizeGB))
             {
-                writer.WritePropertyName("diskSizeGB");
+                writer.WritePropertyName("diskSizeGB"u8);
                 writer.WriteNumberValue(DiskSizeGB.Value);
             }
             if (Optional.IsDefined(OSType))
             {
-                writer.WritePropertyName("osType");
+                writer.WritePropertyName("osType"u8);
                 writer.WriteStringValue(OSType.Value.ToSerialString());
             }
             if (Optional.IsDefined(Image))
             {
-                writer.WritePropertyName("image");
+                writer.WritePropertyName("image"u8);
                 writer.WriteObjectValue(Image);
             }
             if (Optional.IsCollectionDefined(VhdContainers))
             {
-                writer.WritePropertyName("vhdContainers");
+                writer.WritePropertyName("vhdContainers"u8);
                 writer.WriteStartArray();
                 foreach (var item in VhdContainers)
                 {
@@ -65,12 +65,12 @@ namespace Azure.ResourceManager.Compute.Models
             }
             if (Optional.IsDefined(ManagedDisk))
             {
-                writer.WritePropertyName("managedDisk");
+                writer.WritePropertyName("managedDisk"u8);
                 writer.WriteObjectValue(ManagedDisk);
             }
             if (Optional.IsDefined(DeleteOption))
             {
-                writer.WritePropertyName("deleteOption");
+                writer.WritePropertyName("deleteOption"u8);
                 writer.WriteStringValue(DeleteOption.Value.ToString());
             }
             writer.WriteEndObject();
@@ -91,12 +91,12 @@ namespace Azure.ResourceManager.Compute.Models
             Optional<DiskDeleteOptionType> deleteOption = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("caching"))
+                if (property.NameEquals("caching"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Compute.Models
                     caching = property.Value.GetString().ToCachingType();
                     continue;
                 }
-                if (property.NameEquals("writeAcceleratorEnabled"))
+                if (property.NameEquals("writeAcceleratorEnabled"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -116,12 +116,12 @@ namespace Azure.ResourceManager.Compute.Models
                     writeAcceleratorEnabled = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("createOption"))
+                if (property.NameEquals("createOption"u8))
                 {
                     createOption = new DiskCreateOptionType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("diffDiskSettings"))
+                if (property.NameEquals("diffDiskSettings"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Compute.Models
                     diffDiskSettings = DiffDiskSettings.DeserializeDiffDiskSettings(property.Value);
                     continue;
                 }
-                if (property.NameEquals("diskSizeGB"))
+                if (property.NameEquals("diskSizeGB"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.Compute.Models
                     diskSizeGB = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("osType"))
+                if (property.NameEquals("osType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.Compute.Models
                     osType = property.Value.GetString().ToSupportedOperatingSystemType();
                     continue;
                 }
-                if (property.NameEquals("image"))
+                if (property.NameEquals("image"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.Compute.Models
                     image = VirtualHardDisk.DeserializeVirtualHardDisk(property.Value);
                     continue;
                 }
-                if (property.NameEquals("vhdContainers"))
+                if (property.NameEquals("vhdContainers"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.Compute.Models
                     vhdContainers = array;
                     continue;
                 }
-                if (property.NameEquals("managedDisk"))
+                if (property.NameEquals("managedDisk"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.Compute.Models
                     managedDisk = VirtualMachineScaleSetManagedDisk.DeserializeVirtualMachineScaleSetManagedDisk(property.Value);
                     continue;
                 }
-                if (property.NameEquals("deleteOption"))
+                if (property.NameEquals("deleteOption"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

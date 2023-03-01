@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -61,8 +60,16 @@ namespace Azure.ResourceManager.Billing
 
         /// <summary>
         /// Creates or updates a billing subscription by its alias ID.  The operation is supported for seat based billing subscriptions.
-        /// Request Path: /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingSubscriptionAliases/{aliasName}
-        /// Operation Id: BillingSubscriptionsAliases_CreateOrUpdate
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingSubscriptionAliases/{aliasName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>BillingSubscriptionsAliases_CreateOrUpdate</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="aliasName"> The ID that uniquely identifies a subscription alias. </param>
@@ -94,8 +101,16 @@ namespace Azure.ResourceManager.Billing
 
         /// <summary>
         /// Creates or updates a billing subscription by its alias ID.  The operation is supported for seat based billing subscriptions.
-        /// Request Path: /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingSubscriptionAliases/{aliasName}
-        /// Operation Id: BillingSubscriptionsAliases_CreateOrUpdate
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingSubscriptionAliases/{aliasName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>BillingSubscriptionsAliases_CreateOrUpdate</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="aliasName"> The ID that uniquely identifies a subscription alias. </param>
@@ -127,8 +142,16 @@ namespace Azure.ResourceManager.Billing
 
         /// <summary>
         /// Gets a subscription by its alias ID.  The operation is supported for seat based billing subscriptions.
-        /// Request Path: /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingSubscriptionAliases/{aliasName}
-        /// Operation Id: BillingSubscriptionsAliases_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingSubscriptionAliases/{aliasName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>BillingSubscriptionsAliases_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="aliasName"> The ID that uniquely identifies a subscription alias. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -156,8 +179,16 @@ namespace Azure.ResourceManager.Billing
 
         /// <summary>
         /// Gets a subscription by its alias ID.  The operation is supported for seat based billing subscriptions.
-        /// Request Path: /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingSubscriptionAliases/{aliasName}
-        /// Operation Id: BillingSubscriptionsAliases_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingSubscriptionAliases/{aliasName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>BillingSubscriptionsAliases_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="aliasName"> The ID that uniquely identifies a subscription alias. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -185,92 +216,60 @@ namespace Azure.ResourceManager.Billing
 
         /// <summary>
         /// Lists the subscription aliases for a billing account. The operation is supported for seat based billing subscriptions.
-        /// Request Path: /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingSubscriptionAliases
-        /// Operation Id: BillingSubscriptionsAliases_ListByBillingAccount
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingSubscriptionAliases</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>BillingSubscriptionsAliases_ListByBillingAccount</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="BillingSubscriptionAliasResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<BillingSubscriptionAliasResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<BillingSubscriptionAliasResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _billingSubscriptionAliasBillingSubscriptionsAliasesClientDiagnostics.CreateScope("BillingSubscriptionAliasCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _billingSubscriptionAliasBillingSubscriptionsAliasesRestClient.ListByBillingAccountAsync(_billingAccountName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new BillingSubscriptionAliasResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<BillingSubscriptionAliasResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _billingSubscriptionAliasBillingSubscriptionsAliasesClientDiagnostics.CreateScope("BillingSubscriptionAliasCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _billingSubscriptionAliasBillingSubscriptionsAliasesRestClient.ListByBillingAccountNextPageAsync(nextLink, _billingAccountName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new BillingSubscriptionAliasResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _billingSubscriptionAliasBillingSubscriptionsAliasesRestClient.CreateListByBillingAccountRequest(_billingAccountName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _billingSubscriptionAliasBillingSubscriptionsAliasesRestClient.CreateListByBillingAccountNextPageRequest(nextLink, _billingAccountName);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new BillingSubscriptionAliasResource(Client, BillingSubscriptionAliasData.DeserializeBillingSubscriptionAliasData(e)), _billingSubscriptionAliasBillingSubscriptionsAliasesClientDiagnostics, Pipeline, "BillingSubscriptionAliasCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Lists the subscription aliases for a billing account. The operation is supported for seat based billing subscriptions.
-        /// Request Path: /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingSubscriptionAliases
-        /// Operation Id: BillingSubscriptionsAliases_ListByBillingAccount
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingSubscriptionAliases</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>BillingSubscriptionsAliases_ListByBillingAccount</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="BillingSubscriptionAliasResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<BillingSubscriptionAliasResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<BillingSubscriptionAliasResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _billingSubscriptionAliasBillingSubscriptionsAliasesClientDiagnostics.CreateScope("BillingSubscriptionAliasCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _billingSubscriptionAliasBillingSubscriptionsAliasesRestClient.ListByBillingAccount(_billingAccountName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new BillingSubscriptionAliasResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<BillingSubscriptionAliasResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _billingSubscriptionAliasBillingSubscriptionsAliasesClientDiagnostics.CreateScope("BillingSubscriptionAliasCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _billingSubscriptionAliasBillingSubscriptionsAliasesRestClient.ListByBillingAccountNextPage(nextLink, _billingAccountName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new BillingSubscriptionAliasResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _billingSubscriptionAliasBillingSubscriptionsAliasesRestClient.CreateListByBillingAccountRequest(_billingAccountName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _billingSubscriptionAliasBillingSubscriptionsAliasesRestClient.CreateListByBillingAccountNextPageRequest(nextLink, _billingAccountName);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new BillingSubscriptionAliasResource(Client, BillingSubscriptionAliasData.DeserializeBillingSubscriptionAliasData(e)), _billingSubscriptionAliasBillingSubscriptionsAliasesClientDiagnostics, Pipeline, "BillingSubscriptionAliasCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingSubscriptionAliases/{aliasName}
-        /// Operation Id: BillingSubscriptionsAliases_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingSubscriptionAliases/{aliasName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>BillingSubscriptionsAliases_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="aliasName"> The ID that uniquely identifies a subscription alias. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -296,8 +295,16 @@ namespace Azure.ResourceManager.Billing
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingSubscriptionAliases/{aliasName}
-        /// Operation Id: BillingSubscriptionsAliases_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingSubscriptionAliases/{aliasName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>BillingSubscriptionsAliases_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="aliasName"> The ID that uniquely identifies a subscription alias. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

@@ -17,7 +17,7 @@ namespace Azure.IoT.TimeSeriesInsights
             Optional<Availability> availability = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("availability"))
+                if (property.NameEquals("availability"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -11,10 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary>
-    /// Column transformer parameters.
-    /// Serialized Name: ColumnTransformer
-    /// </summary>
+    /// <summary> Column transformer parameters. </summary>
     public partial class ColumnTransformer
     {
         /// <summary> Initializes a new instance of ColumnTransformer. </summary>
@@ -24,14 +21,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of ColumnTransformer. </summary>
-        /// <param name="fields">
-        /// Fields to apply transformer logic on.
-        /// Serialized Name: ColumnTransformer.fields
-        /// </param>
+        /// <param name="fields"> Fields to apply transformer logic on. </param>
         /// <param name="parameters">
         /// Different properties to be passed to transformer.
         /// Input expected is dictionary of key,value pairs in JSON format.
-        /// Serialized Name: ColumnTransformer.parameters
         /// </param>
         internal ColumnTransformer(IList<string> fields, BinaryData parameters)
         {
@@ -39,15 +32,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Parameters = parameters;
         }
 
-        /// <summary>
-        /// Fields to apply transformer logic on.
-        /// Serialized Name: ColumnTransformer.fields
-        /// </summary>
+        /// <summary> Fields to apply transformer logic on. </summary>
         public IList<string> Fields { get; set; }
         /// <summary>
         /// Different properties to be passed to transformer.
         /// Input expected is dictionary of key,value pairs in JSON format.
-        /// Serialized Name: ColumnTransformer.parameters
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Sql.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Metrics))
             {
-                writer.WritePropertyName("metrics");
+                writer.WritePropertyName("metrics"u8);
                 writer.WriteStartArray();
                 foreach (var item in Metrics)
                 {
@@ -37,12 +37,12 @@ namespace Azure.ResourceManager.Sql.Models
             Optional<IList<QueryMetricProperties>> metrics = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("intervalStartTime"))
+                if (property.NameEquals("intervalStartTime"u8))
                 {
                     intervalStartTime = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("intervalType"))
+                if (property.NameEquals("intervalType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Sql.Models
                     intervalType = new QueryTimeGrainType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("executionCount"))
+                if (property.NameEquals("executionCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Sql.Models
                     executionCount = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("metrics"))
+                if (property.NameEquals("metrics"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

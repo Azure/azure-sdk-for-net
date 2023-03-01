@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.Automation.Models
             Optional<string> secondary = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("primary"))
+                if (property.NameEquals("primary"u8))
                 {
                     primary = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("secondary"))
+                if (property.NameEquals("secondary"u8))
                 {
                     secondary = property.Value.GetString();
                     continue;

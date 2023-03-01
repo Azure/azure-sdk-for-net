@@ -26,12 +26,12 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             Optional<IReadOnlyList<DocumentLine>> lines = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("pageNumber"))
+                if (property.NameEquals("pageNumber"u8))
                 {
                     pageNumber = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("angle"))
+                if (property.NameEquals("angle"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -41,7 +41,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                     angle = property.Value.GetSingle();
                     continue;
                 }
-                if (property.NameEquals("width"))
+                if (property.NameEquals("width"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -51,7 +51,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                     width = property.Value.GetSingle();
                     continue;
                 }
-                if (property.NameEquals("height"))
+                if (property.NameEquals("height"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -61,7 +61,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                     height = property.Value.GetSingle();
                     continue;
                 }
-                if (property.NameEquals("unit"))
+                if (property.NameEquals("unit"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -71,7 +71,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                     unit = new V3LengthUnit(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("spans"))
+                if (property.NameEquals("spans"u8))
                 {
                     List<DocumentSpan> array = new List<DocumentSpan>();
                     foreach (var item in property.Value.EnumerateArray())
@@ -81,7 +81,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                     spans = array;
                     continue;
                 }
-                if (property.NameEquals("words"))
+                if (property.NameEquals("words"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -96,7 +96,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                     words = array;
                     continue;
                 }
-                if (property.NameEquals("selectionMarks"))
+                if (property.NameEquals("selectionMarks"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -111,7 +111,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                     selectionMarks = array;
                     continue;
                 }
-                if (property.NameEquals("lines"))
+                if (property.NameEquals("lines"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

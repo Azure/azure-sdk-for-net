@@ -29,8 +29,16 @@ namespace Azure.ResourceManager.Hci
 
         /// <summary>
         /// List all HCI clusters in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.AzureStackHCI/clusters
-        /// Operation Id: Clusters_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.AzureStackHCI/clusters</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Clusters_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -42,8 +50,16 @@ namespace Azure.ResourceManager.Hci
 
         /// <summary>
         /// List all HCI clusters in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.AzureStackHCI/clusters
-        /// Operation Id: Clusters_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.AzureStackHCI/clusters</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Clusters_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -72,8 +88,16 @@ namespace Azure.ResourceManager.Hci
 
         /// <summary>
         /// Get HCI cluster.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/clusters/{clusterName}
-        /// Operation Id: Clusters_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/clusters/{clusterName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Clusters_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="clusterName"> The name of the cluster. </param>
@@ -88,8 +112,16 @@ namespace Azure.ResourceManager.Hci
 
         /// <summary>
         /// Get HCI cluster.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/clusters/{clusterName}
-        /// Operation Id: Clusters_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/clusters/{clusterName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Clusters_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="clusterName"> The name of the cluster. </param>
@@ -154,6 +186,120 @@ namespace Azure.ResourceManager.Hci
             {
                 ArcExtensionResource.ValidateResourceId(id);
                 return new ArcExtensionResource(client, id);
+            }
+            );
+        }
+        #endregion
+
+        #region OfferResource
+        /// <summary>
+        /// Gets an object representing an <see cref="OfferResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="OfferResource.CreateResourceIdentifier" /> to create an <see cref="OfferResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="OfferResource" /> object. </returns>
+        public static OfferResource GetOfferResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                OfferResource.ValidateResourceId(id);
+                return new OfferResource(client, id);
+            }
+            );
+        }
+        #endregion
+
+        #region PublisherResource
+        /// <summary>
+        /// Gets an object representing a <see cref="PublisherResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="PublisherResource.CreateResourceIdentifier" /> to create a <see cref="PublisherResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="PublisherResource" /> object. </returns>
+        public static PublisherResource GetPublisherResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                PublisherResource.ValidateResourceId(id);
+                return new PublisherResource(client, id);
+            }
+            );
+        }
+        #endregion
+
+        #region HciSkuResource
+        /// <summary>
+        /// Gets an object representing a <see cref="HciSkuResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="HciSkuResource.CreateResourceIdentifier" /> to create a <see cref="HciSkuResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="HciSkuResource" /> object. </returns>
+        public static HciSkuResource GetHciSkuResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                HciSkuResource.ValidateResourceId(id);
+                return new HciSkuResource(client, id);
+            }
+            );
+        }
+        #endregion
+
+        #region UpdateRunResource
+        /// <summary>
+        /// Gets an object representing an <see cref="UpdateRunResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="UpdateRunResource.CreateResourceIdentifier" /> to create an <see cref="UpdateRunResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="UpdateRunResource" /> object. </returns>
+        public static UpdateRunResource GetUpdateRunResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                UpdateRunResource.ValidateResourceId(id);
+                return new UpdateRunResource(client, id);
+            }
+            );
+        }
+        #endregion
+
+        #region UpdateSummaryResource
+        /// <summary>
+        /// Gets an object representing an <see cref="UpdateSummaryResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="UpdateSummaryResource.CreateResourceIdentifier" /> to create an <see cref="UpdateSummaryResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="UpdateSummaryResource" /> object. </returns>
+        public static UpdateSummaryResource GetUpdateSummaryResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                UpdateSummaryResource.ValidateResourceId(id);
+                return new UpdateSummaryResource(client, id);
+            }
+            );
+        }
+        #endregion
+
+        #region UpdateResource
+        /// <summary>
+        /// Gets an object representing an <see cref="UpdateResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="UpdateResource.CreateResourceIdentifier" /> to create an <see cref="UpdateResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="UpdateResource" /> object. </returns>
+        public static UpdateResource GetUpdateResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                UpdateResource.ValidateResourceId(id);
+                return new UpdateResource(client, id);
             }
             );
         }

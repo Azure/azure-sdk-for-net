@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Dns.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(IPv4Address))
             {
-                writer.WritePropertyName("ipv4Address");
+                writer.WritePropertyName("ipv4Address"u8);
                 writer.WriteStringValue(IPv4Address.ToString());
             }
             writer.WriteEndObject();
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Dns.Models
             Optional<IPAddress> ipv4Address = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("ipv4Address"))
+                if (property.NameEquals("ipv4Address"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

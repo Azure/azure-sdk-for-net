@@ -5,10 +5,7 @@
 
 #nullable disable
 
-using System;
-using System.Linq;
 using System.Threading;
-using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -45,86 +42,46 @@ namespace Azure.ResourceManager.Grafana
 
         /// <summary>
         /// List all resources of workspaces for Grafana under the specified subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Dashboard/grafana
-        /// Operation Id: Grafana_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Dashboard/grafana</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Grafana_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ManagedGrafanaResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ManagedGrafanaResource> GetManagedGrafanasAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<ManagedGrafanaResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = ManagedGrafanaGrafanaClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetManagedGrafanas");
-                scope.Start();
-                try
-                {
-                    var response = await ManagedGrafanaGrafanaRestClient.ListAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ManagedGrafanaResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<ManagedGrafanaResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = ManagedGrafanaGrafanaClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetManagedGrafanas");
-                scope.Start();
-                try
-                {
-                    var response = await ManagedGrafanaGrafanaRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ManagedGrafanaResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => ManagedGrafanaGrafanaRestClient.CreateListRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ManagedGrafanaGrafanaRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ManagedGrafanaResource(Client, ManagedGrafanaData.DeserializeManagedGrafanaData(e)), ManagedGrafanaGrafanaClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetManagedGrafanas", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// List all resources of workspaces for Grafana under the specified subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Dashboard/grafana
-        /// Operation Id: Grafana_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Dashboard/grafana</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Grafana_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ManagedGrafanaResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ManagedGrafanaResource> GetManagedGrafanas(CancellationToken cancellationToken = default)
         {
-            Page<ManagedGrafanaResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = ManagedGrafanaGrafanaClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetManagedGrafanas");
-                scope.Start();
-                try
-                {
-                    var response = ManagedGrafanaGrafanaRestClient.List(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ManagedGrafanaResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<ManagedGrafanaResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = ManagedGrafanaGrafanaClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetManagedGrafanas");
-                scope.Start();
-                try
-                {
-                    var response = ManagedGrafanaGrafanaRestClient.ListNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ManagedGrafanaResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => ManagedGrafanaGrafanaRestClient.CreateListRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ManagedGrafanaGrafanaRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ManagedGrafanaResource(Client, ManagedGrafanaData.DeserializeManagedGrafanaData(e)), ManagedGrafanaGrafanaClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetManagedGrafanas", "value", "nextLink", cancellationToken);
         }
     }
 }

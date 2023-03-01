@@ -11,7 +11,10 @@ using Azure.ResourceManager.Reservations.Models;
 
 namespace Azure.ResourceManager.Reservations
 {
-    /// <summary> A class representing the ReservationDetail data model. </summary>
+    /// <summary>
+    /// A class representing the ReservationDetail data model.
+    /// The definition of the reservation.
+    /// </summary>
     public partial class ReservationDetailData : ResourceData
     {
         /// <summary> Initializes a new instance of ReservationDetailData. </summary>
@@ -44,7 +47,7 @@ namespace Azure.ResourceManager.Reservations
         public int? Version { get; }
         /// <summary> The sku information associated to this reservation. </summary>
         internal ReservationsSkuName Sku { get; }
-        /// <summary> Gets or sets the name. </summary>
+        /// <summary> Gets the sku name. </summary>
         public string SkuName
         {
             get => Sku?.Name;

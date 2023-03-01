@@ -1,6 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+#nullable disable // TODO: remove and fix errors
+
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
@@ -43,7 +45,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
             {
                 case OperationType.Http:
                     Data = httpUrl.Truncate(SchemaConstants.RemoteDependencyData_Data_MaxLength);
-                    Target = monitorTags.MappedTags.GetDependencyTarget(OperationType.Http).Truncate(SchemaConstants.RemoteDependencyData_Target_MaxLength);
+                    Target = monitorTags.MappedTags.GetHttpDependencyTarget().Truncate(SchemaConstants.RemoteDependencyData_Target_MaxLength);
                     Type = "Http";
                     ResultCode = AzMonList.GetTagValue(ref monitorTags.MappedTags, SemanticConventions.AttributeHttpStatusCode)
                         ?.ToString().Truncate(SchemaConstants.RemoteDependencyData_ResultCode_MaxLength)
@@ -76,7 +78,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
             Properties = new ChangeTrackingDictionary<string, string>();
             Measurements = new ChangeTrackingDictionary<string, double>();
 
-            TraceHelper.AddActivityLinksToProperties(activity.Links, ref monitorTags.UnMappedTags);
+            TraceHelper.AddActivityLinksToProperties(activity, ref monitorTags.UnMappedTags);
             TraceHelper.AddPropertiesToTelemetry(Properties, ref monitorTags.UnMappedTags);
         }
     }

@@ -21,9 +21,9 @@ namespace Azure.Storage.Blobs.Models
 
         public static BlobGeoReplicationStatus ToBlobGeoReplicationStatus(this string value)
         {
-            if (string.Equals(value, "live", StringComparison.InvariantCultureIgnoreCase)) return BlobGeoReplicationStatus.Live;
-            if (string.Equals(value, "bootstrap", StringComparison.InvariantCultureIgnoreCase)) return BlobGeoReplicationStatus.Bootstrap;
-            if (string.Equals(value, "unavailable", StringComparison.InvariantCultureIgnoreCase)) return BlobGeoReplicationStatus.Unavailable;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "live")) return BlobGeoReplicationStatus.Live;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "bootstrap")) return BlobGeoReplicationStatus.Bootstrap;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "unavailable")) return BlobGeoReplicationStatus.Unavailable;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown BlobGeoReplicationStatus value.");
         }
     }

@@ -47,13 +47,21 @@ namespace Azure.ResourceManager.TrafficManager
         /// <returns> Returns a <see cref="TrafficManagerGeographicHierarchyResource" /> object. </returns>
         public virtual TrafficManagerGeographicHierarchyResource GetTrafficManagerGeographicHierarchy()
         {
-            return new TrafficManagerGeographicHierarchyResource(Client, new ResourceIdentifier(Id.ToString() + "/providers/Microsoft.Network/trafficManagerGeographicHierarchies/default"));
+            return new TrafficManagerGeographicHierarchyResource(Client, Id.AppendProviderResource("Microsoft.Network", "trafficManagerGeographicHierarchies", "default"));
         }
 
         /// <summary>
         /// Checks the availability of a Traffic Manager Relative DNS name.
-        /// Request Path: /providers/Microsoft.Network/checkTrafficManagerNameAvailability
-        /// Operation Id: Profiles_CheckTrafficManagerRelativeDnsNameAvailability
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Network/checkTrafficManagerNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Profiles_CheckTrafficManagerRelativeDnsNameAvailability</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="content"> The Traffic Manager name parameters supplied to the CheckTrafficManagerNameAvailability operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -75,8 +83,16 @@ namespace Azure.ResourceManager.TrafficManager
 
         /// <summary>
         /// Checks the availability of a Traffic Manager Relative DNS name.
-        /// Request Path: /providers/Microsoft.Network/checkTrafficManagerNameAvailability
-        /// Operation Id: Profiles_CheckTrafficManagerRelativeDnsNameAvailability
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Network/checkTrafficManagerNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Profiles_CheckTrafficManagerRelativeDnsNameAvailability</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="content"> The Traffic Manager name parameters supplied to the CheckTrafficManagerNameAvailability operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

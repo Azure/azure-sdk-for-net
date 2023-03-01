@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.FluidRelay.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(CustomerManagedKeyEncryption))
             {
-                writer.WritePropertyName("customerManagedKeyEncryption");
+                writer.WritePropertyName("customerManagedKeyEncryption"u8);
                 writer.WriteObjectValue(CustomerManagedKeyEncryption);
             }
             writer.WriteEndObject();
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.FluidRelay.Models
             Optional<CmkEncryptionProperties> customerManagedKeyEncryption = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("customerManagedKeyEncryption"))
+                if (property.NameEquals("customerManagedKeyEncryption"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

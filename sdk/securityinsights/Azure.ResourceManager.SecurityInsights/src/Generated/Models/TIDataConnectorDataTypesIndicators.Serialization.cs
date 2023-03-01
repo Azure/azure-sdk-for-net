@@ -15,23 +15,31 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("state");
-            writer.WriteStringValue(State.ToString());
+            if (Optional.IsDefined(State))
+            {
+                writer.WritePropertyName("state"u8);
+                writer.WriteStringValue(State.Value.ToString());
+            }
             writer.WriteEndObject();
         }
 
         internal static TIDataConnectorDataTypesIndicators DeserializeTIDataConnectorDataTypesIndicators(JsonElement element)
         {
-            DataTypeState state = default;
+            Optional<SecurityInsightsDataTypeConnectionState> state = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("state"))
+                if (property.NameEquals("state"u8))
                 {
-                    state = new DataTypeState(property.Value.GetString());
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    state = new SecurityInsightsDataTypeConnectionState(property.Value.GetString());
                     continue;
                 }
             }
-            return new TIDataConnectorDataTypesIndicators(state);
+            return new TIDataConnectorDataTypesIndicators(Optional.ToNullable(state));
         }
     }
 }

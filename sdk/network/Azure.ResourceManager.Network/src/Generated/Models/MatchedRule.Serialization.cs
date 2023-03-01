@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.Network.Models
             Optional<string> action = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("ruleName"))
+                if (property.NameEquals("ruleName"u8))
                 {
                     ruleName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("action"))
+                if (property.NameEquals("action"u8))
                 {
                     action = property.Value.GetString();
                     continue;

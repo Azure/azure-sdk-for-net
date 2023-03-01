@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -56,8 +55,16 @@ namespace Azure.ResourceManager.Orbital
 
         /// <summary>
         /// Creates or updates a spacecraft resource.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Orbital/spacecrafts/{spacecraftName}
-        /// Operation Id: Spacecrafts_CreateOrUpdate
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Orbital/spacecrafts/{spacecraftName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Spacecrafts_CreateOrUpdate</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="spacecraftName"> Spacecraft ID. </param>
@@ -89,8 +96,16 @@ namespace Azure.ResourceManager.Orbital
 
         /// <summary>
         /// Creates or updates a spacecraft resource.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Orbital/spacecrafts/{spacecraftName}
-        /// Operation Id: Spacecrafts_CreateOrUpdate
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Orbital/spacecrafts/{spacecraftName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Spacecrafts_CreateOrUpdate</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="spacecraftName"> Spacecraft ID. </param>
@@ -122,8 +137,16 @@ namespace Azure.ResourceManager.Orbital
 
         /// <summary>
         /// Gets the specified spacecraft in a specified resource group.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Orbital/spacecrafts/{spacecraftName}
-        /// Operation Id: Spacecrafts_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Orbital/spacecrafts/{spacecraftName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Spacecrafts_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="spacecraftName"> Spacecraft ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -151,8 +174,16 @@ namespace Azure.ResourceManager.Orbital
 
         /// <summary>
         /// Gets the specified spacecraft in a specified resource group.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Orbital/spacecrafts/{spacecraftName}
-        /// Operation Id: Spacecrafts_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Orbital/spacecrafts/{spacecraftName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Spacecrafts_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="spacecraftName"> Spacecraft ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -180,94 +211,62 @@ namespace Azure.ResourceManager.Orbital
 
         /// <summary>
         /// Returns list of spacecrafts by resource group.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Orbital/spacecrafts
-        /// Operation Id: Spacecrafts_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Orbital/spacecrafts</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Spacecrafts_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="skiptoken"> An opaque string that the resource provider uses to skip over previously-returned results. This is used when a previous list operation call returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skiptoken parameter that specifies a starting point to use for subsequent calls. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="OrbitalSpacecraftResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<OrbitalSpacecraftResource> GetAllAsync(string skiptoken = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<OrbitalSpacecraftResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _orbitalSpacecraftSpacecraftsClientDiagnostics.CreateScope("OrbitalSpacecraftCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _orbitalSpacecraftSpacecraftsRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, skiptoken, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new OrbitalSpacecraftResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<OrbitalSpacecraftResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _orbitalSpacecraftSpacecraftsClientDiagnostics.CreateScope("OrbitalSpacecraftCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _orbitalSpacecraftSpacecraftsRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, skiptoken, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new OrbitalSpacecraftResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _orbitalSpacecraftSpacecraftsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, skiptoken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _orbitalSpacecraftSpacecraftsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, skiptoken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new OrbitalSpacecraftResource(Client, OrbitalSpacecraftData.DeserializeOrbitalSpacecraftData(e)), _orbitalSpacecraftSpacecraftsClientDiagnostics, Pipeline, "OrbitalSpacecraftCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Returns list of spacecrafts by resource group.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Orbital/spacecrafts
-        /// Operation Id: Spacecrafts_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Orbital/spacecrafts</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Spacecrafts_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="skiptoken"> An opaque string that the resource provider uses to skip over previously-returned results. This is used when a previous list operation call returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skiptoken parameter that specifies a starting point to use for subsequent calls. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="OrbitalSpacecraftResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<OrbitalSpacecraftResource> GetAll(string skiptoken = null, CancellationToken cancellationToken = default)
         {
-            Page<OrbitalSpacecraftResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _orbitalSpacecraftSpacecraftsClientDiagnostics.CreateScope("OrbitalSpacecraftCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _orbitalSpacecraftSpacecraftsRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, skiptoken, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new OrbitalSpacecraftResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<OrbitalSpacecraftResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _orbitalSpacecraftSpacecraftsClientDiagnostics.CreateScope("OrbitalSpacecraftCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _orbitalSpacecraftSpacecraftsRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, skiptoken, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new OrbitalSpacecraftResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _orbitalSpacecraftSpacecraftsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, skiptoken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _orbitalSpacecraftSpacecraftsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, skiptoken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new OrbitalSpacecraftResource(Client, OrbitalSpacecraftData.DeserializeOrbitalSpacecraftData(e)), _orbitalSpacecraftSpacecraftsClientDiagnostics, Pipeline, "OrbitalSpacecraftCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Orbital/spacecrafts/{spacecraftName}
-        /// Operation Id: Spacecrafts_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Orbital/spacecrafts/{spacecraftName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Spacecrafts_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="spacecraftName"> Spacecraft ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -293,8 +292,16 @@ namespace Azure.ResourceManager.Orbital
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Orbital/spacecrafts/{spacecraftName}
-        /// Operation Id: Spacecrafts_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Orbital/spacecrafts/{spacecraftName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Spacecrafts_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="spacecraftName"> Spacecraft ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

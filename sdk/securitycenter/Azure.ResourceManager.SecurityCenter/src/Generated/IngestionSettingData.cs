@@ -11,7 +11,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.SecurityCenter
 {
-    /// <summary> A class representing the IngestionSetting data model. </summary>
+    /// <summary>
+    /// A class representing the IngestionSetting data model.
+    /// Configures how to correlate scan data and logs with resources associated with the subscription.
+    /// </summary>
     public partial class IngestionSettingData : ResourceData
     {
         /// <summary> Initializes a new instance of IngestionSettingData. </summary>

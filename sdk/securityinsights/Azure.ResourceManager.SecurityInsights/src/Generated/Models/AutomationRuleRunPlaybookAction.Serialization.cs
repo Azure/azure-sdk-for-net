@@ -17,39 +17,39 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(ActionConfiguration))
             {
-                writer.WritePropertyName("actionConfiguration");
+                writer.WritePropertyName("actionConfiguration"u8);
                 writer.WriteObjectValue(ActionConfiguration);
             }
-            writer.WritePropertyName("order");
+            writer.WritePropertyName("order"u8);
             writer.WriteNumberValue(Order);
-            writer.WritePropertyName("actionType");
+            writer.WritePropertyName("actionType"u8);
             writer.WriteStringValue(ActionType.ToString());
             writer.WriteEndObject();
         }
 
         internal static AutomationRuleRunPlaybookAction DeserializeAutomationRuleRunPlaybookAction(JsonElement element)
         {
-            Optional<PlaybookActionProperties> actionConfiguration = default;
+            Optional<AutomationRuleRunPlaybookActionProperties> actionConfiguration = default;
             int order = default;
             ActionType actionType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("actionConfiguration"))
+                if (property.NameEquals("actionConfiguration"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    actionConfiguration = PlaybookActionProperties.DeserializePlaybookActionProperties(property.Value);
+                    actionConfiguration = AutomationRuleRunPlaybookActionProperties.DeserializeAutomationRuleRunPlaybookActionProperties(property.Value);
                     continue;
                 }
-                if (property.NameEquals("order"))
+                if (property.NameEquals("order"u8))
                 {
                     order = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("actionType"))
+                if (property.NameEquals("actionType"u8))
                 {
                     actionType = new ActionType(property.Value.GetString());
                     continue;

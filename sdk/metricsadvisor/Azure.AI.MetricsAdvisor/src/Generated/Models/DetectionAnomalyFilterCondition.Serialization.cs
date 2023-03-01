@@ -17,7 +17,7 @@ namespace Azure.AI.MetricsAdvisor.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(DimensionFilter))
             {
-                writer.WritePropertyName("dimensionFilter");
+                writer.WritePropertyName("dimensionFilter"u8);
                 writer.WriteStartArray();
                 foreach (var item in DimensionFilter)
                 {
@@ -27,7 +27,7 @@ namespace Azure.AI.MetricsAdvisor.Models
             }
             if (Optional.IsDefined(SeverityFilter))
             {
-                writer.WritePropertyName("severityFilter");
+                writer.WritePropertyName("severityFilter"u8);
                 writer.WriteObjectValue(SeverityFilter);
             }
             writer.WriteEndObject();

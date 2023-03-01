@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Sql.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Operations))
             {
-                writer.WritePropertyName("operations");
+                writer.WritePropertyName("operations"u8);
                 writer.WriteStartArray();
                 foreach (var item in Operations)
                 {

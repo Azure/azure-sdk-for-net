@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -58,260 +57,148 @@ namespace Azure.ResourceManager.DataMigration
 
         /// <summary>
         /// Retrieve all SQL migration services in the subscriptions.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DataMigration/sqlMigrationServices
-        /// Operation Id: SqlMigrationServices_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DataMigration/sqlMigrationServices</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SqlMigrationServices_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="SqlMigrationServiceResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SqlMigrationServiceResource> GetSqlMigrationServicesAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<SqlMigrationServiceResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = SqlMigrationServiceClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetSqlMigrationServices");
-                scope.Start();
-                try
-                {
-                    var response = await SqlMigrationServiceRestClient.ListBySubscriptionAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SqlMigrationServiceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<SqlMigrationServiceResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = SqlMigrationServiceClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetSqlMigrationServices");
-                scope.Start();
-                try
-                {
-                    var response = await SqlMigrationServiceRestClient.ListBySubscriptionNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SqlMigrationServiceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => SqlMigrationServiceRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => SqlMigrationServiceRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SqlMigrationServiceResource(Client, SqlMigrationServiceData.DeserializeSqlMigrationServiceData(e)), SqlMigrationServiceClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetSqlMigrationServices", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Retrieve all SQL migration services in the subscriptions.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DataMigration/sqlMigrationServices
-        /// Operation Id: SqlMigrationServices_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DataMigration/sqlMigrationServices</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SqlMigrationServices_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="SqlMigrationServiceResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SqlMigrationServiceResource> GetSqlMigrationServices(CancellationToken cancellationToken = default)
         {
-            Page<SqlMigrationServiceResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = SqlMigrationServiceClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetSqlMigrationServices");
-                scope.Start();
-                try
-                {
-                    var response = SqlMigrationServiceRestClient.ListBySubscription(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SqlMigrationServiceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<SqlMigrationServiceResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = SqlMigrationServiceClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetSqlMigrationServices");
-                scope.Start();
-                try
-                {
-                    var response = SqlMigrationServiceRestClient.ListBySubscriptionNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SqlMigrationServiceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => SqlMigrationServiceRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => SqlMigrationServiceRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SqlMigrationServiceResource(Client, SqlMigrationServiceData.DeserializeSqlMigrationServiceData(e)), SqlMigrationServiceClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetSqlMigrationServices", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// The skus action returns the list of SKUs that DMS supports.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DataMigration/skus
-        /// Operation Id: ResourceSkus_ListSkus
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DataMigration/skus</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ResourceSkus_ListSkus</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ResourceSku" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ResourceSku> GetSkusResourceSkusAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<ResourceSku>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = ResourceSkusClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetSkusResourceSkus");
-                scope.Start();
-                try
-                {
-                    var response = await ResourceSkusRestClient.ListSkusAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<ResourceSku>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = ResourceSkusClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetSkusResourceSkus");
-                scope.Start();
-                try
-                {
-                    var response = await ResourceSkusRestClient.ListSkusNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => ResourceSkusRestClient.CreateListSkusRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ResourceSkusRestClient.CreateListSkusNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ResourceSku.DeserializeResourceSku, ResourceSkusClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetSkusResourceSkus", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// The skus action returns the list of SKUs that DMS supports.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DataMigration/skus
-        /// Operation Id: ResourceSkus_ListSkus
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DataMigration/skus</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ResourceSkus_ListSkus</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ResourceSku" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ResourceSku> GetSkusResourceSkus(CancellationToken cancellationToken = default)
         {
-            Page<ResourceSku> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = ResourceSkusClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetSkusResourceSkus");
-                scope.Start();
-                try
-                {
-                    var response = ResourceSkusRestClient.ListSkus(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<ResourceSku> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = ResourceSkusClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetSkusResourceSkus");
-                scope.Start();
-                try
-                {
-                    var response = ResourceSkusRestClient.ListSkusNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => ResourceSkusRestClient.CreateListSkusRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ResourceSkusRestClient.CreateListSkusNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ResourceSku.DeserializeResourceSku, ResourceSkusClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetSkusResourceSkus", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// The services resource is the top-level resource that represents the Database Migration Service. This method returns a list of service resources in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DataMigration/services
-        /// Operation Id: Services_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DataMigration/services</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Services_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="DataMigrationServiceResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DataMigrationServiceResource> GetDataMigrationServicesAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<DataMigrationServiceResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = DataMigrationServiceServicesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetDataMigrationServices");
-                scope.Start();
-                try
-                {
-                    var response = await DataMigrationServiceServicesRestClient.ListAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new DataMigrationServiceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<DataMigrationServiceResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = DataMigrationServiceServicesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetDataMigrationServices");
-                scope.Start();
-                try
-                {
-                    var response = await DataMigrationServiceServicesRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new DataMigrationServiceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => DataMigrationServiceServicesRestClient.CreateListRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DataMigrationServiceServicesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DataMigrationServiceResource(Client, DataMigrationServiceData.DeserializeDataMigrationServiceData(e)), DataMigrationServiceServicesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetDataMigrationServices", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// The services resource is the top-level resource that represents the Database Migration Service. This method returns a list of service resources in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DataMigration/services
-        /// Operation Id: Services_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DataMigration/services</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Services_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DataMigrationServiceResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DataMigrationServiceResource> GetDataMigrationServices(CancellationToken cancellationToken = default)
         {
-            Page<DataMigrationServiceResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = DataMigrationServiceServicesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetDataMigrationServices");
-                scope.Start();
-                try
-                {
-                    var response = DataMigrationServiceServicesRestClient.List(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new DataMigrationServiceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<DataMigrationServiceResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = DataMigrationServiceServicesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetDataMigrationServices");
-                scope.Start();
-                try
-                {
-                    var response = DataMigrationServiceServicesRestClient.ListNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new DataMigrationServiceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => DataMigrationServiceServicesRestClient.CreateListRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DataMigrationServiceServicesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DataMigrationServiceResource(Client, DataMigrationServiceData.DeserializeDataMigrationServiceData(e)), DataMigrationServiceServicesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetDataMigrationServices", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// This method checks whether a proposed top-level resource name is valid and available.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DataMigration/locations/{location}/checkNameAvailability
-        /// Operation Id: Services_CheckNameAvailability
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DataMigration/locations/{location}/checkNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Services_CheckNameAvailability</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="location"> The Azure region of the operation. </param>
         /// <param name="nameAvailabilityRequest"> Requested name to validate. </param>
@@ -334,8 +221,16 @@ namespace Azure.ResourceManager.DataMigration
 
         /// <summary>
         /// This method checks whether a proposed top-level resource name is valid and available.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DataMigration/locations/{location}/checkNameAvailability
-        /// Operation Id: Services_CheckNameAvailability
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DataMigration/locations/{location}/checkNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Services_CheckNameAvailability</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="location"> The Azure region of the operation. </param>
         /// <param name="nameAvailabilityRequest"> Requested name to validate. </param>
@@ -358,88 +253,48 @@ namespace Azure.ResourceManager.DataMigration
 
         /// <summary>
         /// This method returns region-specific quotas and resource usage information for the Database Migration Service.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DataMigration/locations/{location}/usages
-        /// Operation Id: Usages_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DataMigration/locations/{location}/usages</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Usages_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="location"> The Azure region of the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="Quota" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<Quota> GetUsagesAsync(AzureLocation location, CancellationToken cancellationToken = default)
         {
-            async Task<Page<Quota>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = UsagesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetUsages");
-                scope.Start();
-                try
-                {
-                    var response = await UsagesRestClient.ListAsync(Id.SubscriptionId, location, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<Quota>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = UsagesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetUsages");
-                scope.Start();
-                try
-                {
-                    var response = await UsagesRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, location, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => UsagesRestClient.CreateListRequest(Id.SubscriptionId, location);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => UsagesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, location);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, Quota.DeserializeQuota, UsagesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetUsages", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// This method returns region-specific quotas and resource usage information for the Database Migration Service.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DataMigration/locations/{location}/usages
-        /// Operation Id: Usages_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DataMigration/locations/{location}/usages</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Usages_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="location"> The Azure region of the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="Quota" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<Quota> GetUsages(AzureLocation location, CancellationToken cancellationToken = default)
         {
-            Page<Quota> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = UsagesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetUsages");
-                scope.Start();
-                try
-                {
-                    var response = UsagesRestClient.List(Id.SubscriptionId, location, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<Quota> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = UsagesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetUsages");
-                scope.Start();
-                try
-                {
-                    var response = UsagesRestClient.ListNextPage(nextLink, Id.SubscriptionId, location, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => UsagesRestClient.CreateListRequest(Id.SubscriptionId, location);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => UsagesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, location);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, Quota.DeserializeQuota, UsagesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetUsages", "value", "nextLink", cancellationToken);
         }
     }
 }

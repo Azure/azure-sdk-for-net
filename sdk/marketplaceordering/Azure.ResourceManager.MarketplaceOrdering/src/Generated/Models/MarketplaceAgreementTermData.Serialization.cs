@@ -17,51 +17,51 @@ namespace Azure.ResourceManager.MarketplaceOrdering
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(Publisher))
             {
-                writer.WritePropertyName("publisher");
+                writer.WritePropertyName("publisher"u8);
                 writer.WriteStringValue(Publisher);
             }
             if (Optional.IsDefined(Product))
             {
-                writer.WritePropertyName("product");
+                writer.WritePropertyName("product"u8);
                 writer.WriteStringValue(Product);
             }
             if (Optional.IsDefined(Plan))
             {
-                writer.WritePropertyName("plan");
+                writer.WritePropertyName("plan"u8);
                 writer.WriteStringValue(Plan);
             }
             if (Optional.IsDefined(LicenseTextLink))
             {
-                writer.WritePropertyName("licenseTextLink");
+                writer.WritePropertyName("licenseTextLink"u8);
                 writer.WriteStringValue(LicenseTextLink.AbsoluteUri);
             }
             if (Optional.IsDefined(PrivacyPolicyLink))
             {
-                writer.WritePropertyName("privacyPolicyLink");
+                writer.WritePropertyName("privacyPolicyLink"u8);
                 writer.WriteStringValue(PrivacyPolicyLink.AbsoluteUri);
             }
             if (Optional.IsDefined(MarketplaceTermsLink))
             {
-                writer.WritePropertyName("marketplaceTermsLink");
+                writer.WritePropertyName("marketplaceTermsLink"u8);
                 writer.WriteStringValue(MarketplaceTermsLink.AbsoluteUri);
             }
             if (Optional.IsDefined(RetrievedOn))
             {
-                writer.WritePropertyName("retrieveDatetime");
+                writer.WritePropertyName("retrieveDatetime"u8);
                 writer.WriteStringValue(RetrievedOn.Value, "O");
             }
             if (Optional.IsDefined(Signature))
             {
-                writer.WritePropertyName("signature");
+                writer.WritePropertyName("signature"u8);
                 writer.WriteStringValue(Signature);
             }
             if (Optional.IsDefined(IsAccepted))
             {
-                writer.WritePropertyName("accepted");
+                writer.WritePropertyName("accepted"u8);
                 writer.WriteBooleanValue(IsAccepted.Value);
             }
             writer.WriteEndObject();
@@ -85,22 +85,22 @@ namespace Azure.ResourceManager.MarketplaceOrdering
             Optional<bool> accepted = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.MarketplaceOrdering
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -119,22 +119,22 @@ namespace Azure.ResourceManager.MarketplaceOrdering
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("publisher"))
+                        if (property0.NameEquals("publisher"u8))
                         {
                             publisher = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("product"))
+                        if (property0.NameEquals("product"u8))
                         {
                             product = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("plan"))
+                        if (property0.NameEquals("plan"u8))
                         {
                             plan = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("licenseTextLink"))
+                        if (property0.NameEquals("licenseTextLink"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.MarketplaceOrdering
                             licenseTextLink = new Uri(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("privacyPolicyLink"))
+                        if (property0.NameEquals("privacyPolicyLink"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.MarketplaceOrdering
                             privacyPolicyLink = new Uri(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("marketplaceTermsLink"))
+                        if (property0.NameEquals("marketplaceTermsLink"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.MarketplaceOrdering
                             marketplaceTermsLink = new Uri(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("retrieveDatetime"))
+                        if (property0.NameEquals("retrieveDatetime"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -174,12 +174,12 @@ namespace Azure.ResourceManager.MarketplaceOrdering
                             retrieveDatetime = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("signature"))
+                        if (property0.NameEquals("signature"u8))
                         {
                             signature = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("accepted"))
+                        if (property0.NameEquals("accepted"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

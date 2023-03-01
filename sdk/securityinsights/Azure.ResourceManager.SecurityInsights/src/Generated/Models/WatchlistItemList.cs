@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <summary> Initializes a new instance of WatchlistItemList. </summary>
         /// <param name="value"> Array of watchlist items. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal WatchlistItemList(IEnumerable<WatchlistItemData> value)
+        internal WatchlistItemList(IEnumerable<SecurityInsightsWatchlistItemData> value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -27,17 +27,17 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Initializes a new instance of WatchlistItemList. </summary>
-        /// <param name="nextLink"> URL to fetch the next set of watchlist item. </param>
+        /// <param name="nextLink"> URL to fetch the next set of watchlist items. </param>
         /// <param name="value"> Array of watchlist items. </param>
-        internal WatchlistItemList(string nextLink, IReadOnlyList<WatchlistItemData> value)
+        internal WatchlistItemList(string nextLink, IReadOnlyList<SecurityInsightsWatchlistItemData> value)
         {
             NextLink = nextLink;
             Value = value;
         }
 
-        /// <summary> URL to fetch the next set of watchlist item. </summary>
+        /// <summary> URL to fetch the next set of watchlist items. </summary>
         public string NextLink { get; }
         /// <summary> Array of watchlist items. </summary>
-        public IReadOnlyList<WatchlistItemData> Value { get; }
+        public IReadOnlyList<SecurityInsightsWatchlistItemData> Value { get; }
     }
 }

@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary>
-    /// Strictly used in update requests.
-    /// Serialized Name: PartialMinimalTrackedResourceWithIdentity
-    /// </summary>
+    /// <summary> Strictly used in update requests. </summary>
     public partial class MachineLearningResourcePatchWithIdentity : MachineLearningResourcePatch
     {
         /// <summary> Initializes a new instance of MachineLearningResourcePatchWithIdentity. </summary>
@@ -18,10 +15,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         {
         }
 
-        /// <summary>
-        /// Managed service identity (system assigned and/or user assigned identities)
-        /// Serialized Name: PartialMinimalTrackedResourceWithIdentity.identity
-        /// </summary>
+        /// <summary> Managed service identity (system assigned and/or user assigned identities). </summary>
         public MachineLearningPartialManagedServiceIdentity Identity { get; set; }
     }
 }

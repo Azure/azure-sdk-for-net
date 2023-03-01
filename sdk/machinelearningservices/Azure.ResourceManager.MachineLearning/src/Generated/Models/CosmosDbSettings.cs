@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary>
-    /// The CosmosDbSettings.
-    /// Serialized Name: CosmosDbSettings
-    /// </summary>
+    /// <summary> The CosmosDbSettings. </summary>
     internal partial class CosmosDbSettings
     {
         /// <summary> Initializes a new instance of CosmosDbSettings. </summary>
@@ -19,19 +16,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of CosmosDbSettings. </summary>
-        /// <param name="collectionsThroughput">
-        /// The throughput of the collections in cosmosdb database
-        /// Serialized Name: CosmosDbSettings.collectionsThroughput
-        /// </param>
+        /// <param name="collectionsThroughput"> The throughput of the collections in cosmosdb database. </param>
         internal CosmosDbSettings(int? collectionsThroughput)
         {
             CollectionsThroughput = collectionsThroughput;
         }
 
-        /// <summary>
-        /// The throughput of the collections in cosmosdb database
-        /// Serialized Name: CosmosDbSettings.collectionsThroughput
-        /// </summary>
+        /// <summary> The throughput of the collections in cosmosdb database. </summary>
         public int? CollectionsThroughput { get; set; }
     }
 }

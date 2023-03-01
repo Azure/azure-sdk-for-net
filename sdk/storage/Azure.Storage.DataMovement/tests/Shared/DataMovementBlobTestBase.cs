@@ -664,5 +664,33 @@ namespace Azure.Storage.DataMovement.Tests
             }
             return blobClient;
         }
+
+        /// <summary>
+        /// Creates a block blob.
+        /// </summary>
+        /// <param name="containerClient">The parent container which the blob will be uploaded to</param>
+        /// <param name="sourceBlobDirectoryPath">Source Directory name. The source path will be appended to this to create the full path name</param>
+        /// <param name="sourceFilePath">The blob name (full path to the blob) and the source file path</param>
+        /// <param name="size">Size of the blob</param>
+        /// <returns>The local source file path which contains the contents of the source blob.</returns>
+        internal async Task CreateBlockBlobAndSourceFile(
+            BlobContainerClient containerClient,
+            string sourceBlobDirectoryPath,
+            string fullBlobPathName,
+            long size)
+        {
+            using Stream originalStream = await CreateLimitedMemoryStream(size);
+            BlobClient originalBlob = InstrumentClient(containerClient.GetBlobClient(fullBlobPathName));
+            // create a new file and copy contents of stream into it, and then close the FileStream
+            // so the StagedUploadAsync call is not prevented from reading using its FileStream.
+            using (FileStream fileStream = File.Create(Path.Combine(sourceBlobDirectoryPath, fullBlobPathName)))
+            {
+                // Copy source to a file, so we can verify the source against downloaded blob later
+                await originalStream.CopyToAsync(fileStream);
+                // Upload blob to storage account
+                originalStream.Position = 0;
+                await originalBlob.UploadAsync(originalStream);
+            }
+        }
     }
 }

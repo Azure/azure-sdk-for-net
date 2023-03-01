@@ -20,17 +20,17 @@ namespace Azure.ResourceManager.Batch.Models
             Optional<IReadOnlyList<BatchSkuCapability>> capabilities = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("familyName"))
+                if (property.NameEquals("familyName"u8))
                 {
                     familyName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("capabilities"))
+                if (property.NameEquals("capabilities"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

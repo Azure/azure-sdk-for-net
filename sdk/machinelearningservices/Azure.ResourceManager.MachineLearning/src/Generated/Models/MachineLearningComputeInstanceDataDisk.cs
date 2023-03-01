@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary>
-    /// Defines an Aml Instance DataDisk.
-    /// Serialized Name: ComputeInstanceDataDisk
-    /// </summary>
+    /// <summary> Defines an Aml Instance DataDisk. </summary>
     public partial class MachineLearningComputeInstanceDataDisk
     {
         /// <summary> Initializes a new instance of MachineLearningComputeInstanceDataDisk. </summary>
@@ -19,22 +16,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of MachineLearningComputeInstanceDataDisk. </summary>
-        /// <param name="caching">
-        /// Caching type of Data Disk.
-        /// Serialized Name: ComputeInstanceDataDisk.caching
-        /// </param>
-        /// <param name="diskSizeGB">
-        /// The initial disk size in gigabytes.
-        /// Serialized Name: ComputeInstanceDataDisk.diskSizeGB
-        /// </param>
-        /// <param name="lun">
-        /// The lun is used to uniquely identify each data disk. If attaching multiple disks, each should have a distinct lun.
-        /// Serialized Name: ComputeInstanceDataDisk.lun
-        /// </param>
-        /// <param name="storageAccountType">
-        /// type of this storage account.
-        /// Serialized Name: ComputeInstanceDataDisk.storageAccountType
-        /// </param>
+        /// <param name="caching"> Caching type of Data Disk. </param>
+        /// <param name="diskSizeGB"> The initial disk size in gigabytes. </param>
+        /// <param name="lun"> The lun is used to uniquely identify each data disk. If attaching multiple disks, each should have a distinct lun. </param>
+        /// <param name="storageAccountType"> type of this storage account. </param>
         internal MachineLearningComputeInstanceDataDisk(MachineLearningCachingType? caching, int? diskSizeGB, int? lun, MachineLearningStorageAccountType? storageAccountType)
         {
             Caching = caching;
@@ -43,25 +28,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
             StorageAccountType = storageAccountType;
         }
 
-        /// <summary>
-        /// Caching type of Data Disk.
-        /// Serialized Name: ComputeInstanceDataDisk.caching
-        /// </summary>
+        /// <summary> Caching type of Data Disk. </summary>
         public MachineLearningCachingType? Caching { get; }
-        /// <summary>
-        /// The initial disk size in gigabytes.
-        /// Serialized Name: ComputeInstanceDataDisk.diskSizeGB
-        /// </summary>
+        /// <summary> The initial disk size in gigabytes. </summary>
         public int? DiskSizeGB { get; }
-        /// <summary>
-        /// The lun is used to uniquely identify each data disk. If attaching multiple disks, each should have a distinct lun.
-        /// Serialized Name: ComputeInstanceDataDisk.lun
-        /// </summary>
+        /// <summary> The lun is used to uniquely identify each data disk. If attaching multiple disks, each should have a distinct lun. </summary>
         public int? Lun { get; }
-        /// <summary>
-        /// type of this storage account.
-        /// Serialized Name: ComputeInstanceDataDisk.storageAccountType
-        /// </summary>
+        /// <summary> type of this storage account. </summary>
         public MachineLearningStorageAccountType? StorageAccountType { get; }
     }
 }

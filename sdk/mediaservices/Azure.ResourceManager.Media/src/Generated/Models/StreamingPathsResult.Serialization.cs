@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Media.Models
             Optional<IReadOnlyList<string>> downloadPaths = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("streamingPaths"))
+                if (property.NameEquals("streamingPaths"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Media.Models
                     streamingPaths = array;
                     continue;
                 }
-                if (property.NameEquals("downloadPaths"))
+                if (property.NameEquals("downloadPaths"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

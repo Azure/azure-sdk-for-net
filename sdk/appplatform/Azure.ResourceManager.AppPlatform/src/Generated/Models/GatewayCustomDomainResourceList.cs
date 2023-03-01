@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// <summary> Initializes a new instance of GatewayCustomDomainResourceList. </summary>
         internal GatewayCustomDomainResourceList()
         {
-            Value = new ChangeTrackingList<GatewayCustomDomainResourceData>();
+            Value = new ChangeTrackingList<AppPlatformGatewayCustomDomainData>();
         }
 
         /// <summary> Initializes a new instance of GatewayCustomDomainResourceList. </summary>
@@ -26,14 +26,14 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// URL client should use to fetch the next page (per server side paging).
         /// It&apos;s null for now, added for future use.
         /// </param>
-        internal GatewayCustomDomainResourceList(IReadOnlyList<GatewayCustomDomainResourceData> value, string nextLink)
+        internal GatewayCustomDomainResourceList(IReadOnlyList<AppPlatformGatewayCustomDomainData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> Collection of Spring Cloud Gateway custom domain resources. </summary>
-        public IReadOnlyList<GatewayCustomDomainResourceData> Value { get; }
+        public IReadOnlyList<AppPlatformGatewayCustomDomainData> Value { get; }
         /// <summary>
         /// URL client should use to fetch the next page (per server side paging).
         /// It&apos;s null for now, added for future use.

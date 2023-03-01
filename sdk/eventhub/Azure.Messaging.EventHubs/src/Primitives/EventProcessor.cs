@@ -14,6 +14,7 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Diagnostics;
 using Azure.Core.Pipeline;
+using Azure.Core.Shared;
 using Azure.Messaging.EventHubs.Consumer;
 using Azure.Messaging.EventHubs.Core;
 using Azure.Messaging.EventHubs.Diagnostics;
@@ -31,6 +32,10 @@ namespace Azure.Messaging.EventHubs.Primitives
     /// <typeparam name="TPartition">The context of the partition for which an operation is being performed.</typeparam>
     ///
     /// <remarks>
+    ///   To enable coordination for sharing of partitions between <see cref="EventProcessor{TPartition}"/> instances, they will assert exclusive read access to partitions
+    ///   for the consumer group.  No other readers should be active in the consumer group other than processors intending to collaborate.  Non-exclusive readers will
+    ///   be denied access; exclusive readers, including processors using a different storage locations, will interfere with the processor's operation and performance.
+    ///
     ///   The <see cref="EventProcessor{TPartition}" /> is safe to cache and use for the lifetime of an application, which is the recommended approach.
     ///   The processor is responsible for ensuring efficient network, CPU, and memory use.  Calling either <see cref="StopProcessingAsync" /> or <see cref="StopProcessing" />
     ///   when all processing is complete or as the application is shutting down will ensure that network resources and other unmanaged objects are properly cleaned up.
@@ -222,11 +227,17 @@ namespace Azure.Messaging.EventHubs.Primitives
         private int EventBatchMaximumCount { get; }
 
         /// <summary>
+        ///   The client diagnostics for this processor.
+        /// </summary>
+        ///
+        private MessagingClientDiagnostics ClientDiagnostics { get; }
+
+        /// <summary>
         ///   Initializes a new instance of the <see cref="EventProcessor{TPartition}"/> class.
         /// </summary>
         ///
         /// <param name="eventBatchMaximumCount">The desired number of events to include in a batch to be processed.  This size is the maximum count in a batch; the actual count may be smaller, depending on whether events are available in the Event Hub.</param>
-        /// <param name="consumerGroup">The name of the consumer group the processor is associated with.  Events are read in the context of this group.</param>
+        /// <param name="consumerGroup">The name of the consumer group this processor is associated with.  The processor will assert exclusive read access to partitions for this group.</param>
         /// <param name="fullyQualifiedNamespace">The fully qualified Event Hubs namespace to connect to.  This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
         /// <param name="eventHubName">The name of the specific Event Hub to associate the processor with.</param>
         /// <param name="credential">The Azure managed identity credential to use for authorization.  Access controls may be specified by the Event Hubs namespace or the requested Event Hub, depending on Azure configuration.</param>
@@ -250,7 +261,7 @@ namespace Azure.Messaging.EventHubs.Primitives
         /// </summary>
         ///
         /// <param name="eventBatchMaximumCount">The desired number of events to include in a batch to be processed.  This size is the maximum count in a batch; the actual count may be smaller, depending on whether events are available in the Event Hub.</param>
-        /// <param name="consumerGroup">The name of the consumer group the processor is associated with.  Events are read in the context of this group.</param>
+        /// <param name="consumerGroup">The name of the consumer group this processor is associated with.  The processor will assert exclusive read access to partitions for this group.</param>
         /// <param name="connectionString">The connection string to use for connecting to the Event Hubs namespace; it is expected that the Event Hub name and the shared key properties are contained in this connection string.</param>
         /// <param name="options">The set of options to use for the processor.</param>
         ///
@@ -279,7 +290,7 @@ namespace Azure.Messaging.EventHubs.Primitives
         /// </summary>
         ///
         /// <param name="eventBatchMaximumCount">The desired number of events to include in a batch to be processed.  This size is the maximum count in a batch; the actual count may be smaller, depending on whether events are available in the Event Hub.</param>
-        /// <param name="consumerGroup">The name of the consumer group the processor is associated with.  Events are read in the context of this group.</param>
+        /// <param name="consumerGroup">The name of the consumer group this processor is associated with.  The processor will assert exclusive read access to partitions for this group.</param>
         /// <param name="connectionString">The connection string to use for connecting to the Event Hubs namespace; it is expected that the shared key properties are contained in this connection string, but not the Event Hub name.</param>
         /// <param name="eventHubName">The name of the specific Event Hub to associate the processor with.</param>
         /// <param name="options">The set of options to use for the processor.</param>
@@ -321,6 +332,12 @@ namespace Azure.Messaging.EventHubs.Primitives
 
             ConnectionFactory = () => new EventHubConnection(connectionString, eventHubName, options.ConnectionOptions);
             LoadBalancer = new PartitionLoadBalancer(CreateCheckpointStore(this), Identifier, ConsumerGroup, FullyQualifiedNamespace, EventHubName, options.PartitionOwnershipExpirationInterval, options.LoadBalancingUpdateInterval);
+            ClientDiagnostics = new MessagingClientDiagnostics(
+                DiagnosticProperty.DiagnosticNamespace,
+                DiagnosticProperty.ResourceProviderNamespace,
+                DiagnosticProperty.EventHubsServiceContext,
+                FullyQualifiedNamespace,
+                EventHubName);
         }
 
         /// <summary>
@@ -328,7 +345,7 @@ namespace Azure.Messaging.EventHubs.Primitives
         /// </summary>
         ///
         /// <param name="eventBatchMaximumCount">The desired number of events to include in a batch to be processed.  This size is the maximum count in a batch; the actual count may be smaller, depending on whether events are available in the Event Hub.</param>
-        /// <param name="consumerGroup">The name of the consumer group the processor is associated with.  Events are read in the context of this group.</param>
+        /// <param name="consumerGroup">The name of the consumer group this processor is associated with.  The processor will assert exclusive read access to partitions for this group.</param>
         /// <param name="fullyQualifiedNamespace">The fully qualified Event Hubs namespace to connect to.  This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
         /// <param name="eventHubName">The name of the specific Event Hub to associate the processor with.</param>
         /// <param name="credential">The shared access key credential to use for authorization.  Access controls may be specified by the Event Hubs namespace or the requested Event Hub, depending on Azure configuration.</param>
@@ -350,7 +367,7 @@ namespace Azure.Messaging.EventHubs.Primitives
         /// </summary>
         ///
         /// <param name="eventBatchMaximumCount">The desired number of events to include in a batch to be processed.  This size is the maximum count in a batch; the actual count may be smaller, depending on whether events are available in the Event Hub.</param>
-        /// <param name="consumerGroup">The name of the consumer group the processor is associated with.  Events are read in the context of this group.</param>
+        /// <param name="consumerGroup">The name of the consumer group this processor is associated with.  The processor will assert exclusive read access to partitions for this group.</param>
         /// <param name="fullyQualifiedNamespace">The fully qualified Event Hubs namespace to connect to.  This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
         /// <param name="eventHubName">The name of the specific Event Hub to associate the processor with.</param>
         /// <param name="credential">The shared signature credential to use for authorization.  Access controls may be specified by the Event Hubs namespace or the requested Event Hub, depending on Azure configuration.</param>
@@ -372,7 +389,7 @@ namespace Azure.Messaging.EventHubs.Primitives
         /// </summary>
         ///
         /// <param name="eventBatchMaximumCount">The desired number of events to include in a batch to be processed.  This size is the maximum count in a batch; the actual count may be smaller, depending on whether events are available in the Event Hub.</param>
-        /// <param name="consumerGroup">The name of the consumer group the processor is associated with.  Events are read in the context of this group.</param>
+        /// <param name="consumerGroup">The name of the consumer group this processor is associated with.  The processor will assert exclusive read access to partitions for this group.</param>
         /// <param name="fullyQualifiedNamespace">The fully qualified Event Hubs namespace to connect to.  This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
         /// <param name="eventHubName">The name of the specific Event Hub to associate the processor with.</param>
         /// <param name="credential">The Azure managed identity credential to use for authorization.  Access controls may be specified by the Event Hubs namespace or the requested Event Hub, depending on Azure configuration.</param>
@@ -402,7 +419,7 @@ namespace Azure.Messaging.EventHubs.Primitives
         /// </summary>
         ///
         /// <param name="eventBatchMaximumCount">The desired number of events to include in a batch to be processed.  This size is the maximum count in a batch; the actual count may be smaller, depending on whether events are available in the Event Hub.</param>
-        /// <param name="consumerGroup">The name of the consumer group the processor is associated with.  Events are read in the context of this group.</param>
+        /// <param name="consumerGroup">The name of the consumer group this processor is associated with.  The processor will assert exclusive read access to partitions for this group.</param>
         /// <param name="fullyQualifiedNamespace">The fully qualified Event Hubs namespace to connect to.  This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
         /// <param name="eventHubName">The name of the specific Event Hub to associate the processor with.</param>
         /// <param name="credential">The credential to use for authorization.  This may be of any type supported by the protected constructors.</param>
@@ -439,6 +456,12 @@ namespace Azure.Messaging.EventHubs.Primitives
 
             ConnectionFactory = () => EventHubConnection.CreateWithCredential(fullyQualifiedNamespace, eventHubName, credential, options.ConnectionOptions);
             LoadBalancer = loadBalancer ?? new PartitionLoadBalancer(CreateCheckpointStore(this), Identifier, ConsumerGroup, FullyQualifiedNamespace, EventHubName, Options.PartitionOwnershipExpirationInterval, Options.LoadBalancingUpdateInterval);
+            ClientDiagnostics = new MessagingClientDiagnostics(
+                DiagnosticProperty.DiagnosticNamespace,
+                DiagnosticProperty.ResourceProviderNamespace,
+                DiagnosticProperty.EventHubsServiceContext,
+                FullyQualifiedNamespace,
+                EventHubName);
         }
 
         /// <summary>
@@ -587,17 +610,18 @@ namespace Azure.Messaging.EventHubs.Primitives
 
             // Create the diagnostics scope used for distributed tracing and instrument the events in the batch.
 
-            using var diagnosticScope = EventDataInstrumentation.ScopeFactory.CreateScope(DiagnosticProperty.EventProcessorProcessingActivityName, DiagnosticScope.ActivityKind.Consumer);
-            diagnosticScope.AddAttribute(DiagnosticProperty.EventHubAttribute, EventHubName);
-            diagnosticScope.AddAttribute(DiagnosticProperty.EndpointAttribute, FullyQualifiedNamespace);
+            using var diagnosticScope = ClientDiagnostics.CreateScope(DiagnosticProperty.EventProcessorProcessingActivityName, DiagnosticScope.ActivityKind.Consumer, MessagingDiagnosticOperation.Process);
 
             if ((diagnosticScope.IsEnabled) && (eventBatch.Any()))
             {
                 var isBatch = (EventBatchMaximumCount > 1);
 
+                if (isBatch && ActivityExtensions.SupportsActivitySource())
+                    diagnosticScope.AddIntegerAttribute(MessagingClientDiagnostics.BatchCount, eventBatch.Count);
+
                 foreach (var eventData in eventBatch)
                 {
-                    if (EventDataInstrumentation.TryExtractDiagnosticId(eventData, out string diagnosticId))
+                    if (MessagingClientDiagnostics.TryExtractTraceContext(eventData.Properties, out var traceparent, out var tracestate))
                     {
                         if (isBatch)
                         {
@@ -608,11 +632,11 @@ namespace Azure.Messaging.EventHubs.Primitives
 
                             // Use links only when the batch size is not set to a single event.
 
-                            diagnosticScope.AddLink(diagnosticId, null, attributes);
+                            diagnosticScope.AddLink(traceparent, tracestate, attributes);
                         }
                         else
                         {
-                            diagnosticScope.SetTraceparent(diagnosticId);
+                            diagnosticScope.SetTraceContext(traceparent, tracestate);
                             diagnosticScope.AddAttribute(
                                 DiagnosticProperty.EnqueuedTimeAttribute,
                                 eventData.EnqueuedTime.ToUnixTimeMilliseconds().ToString(CultureInfo.InvariantCulture));

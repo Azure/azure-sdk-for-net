@@ -11,22 +11,27 @@ using Azure.Core;
 namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> Managed application locking policy. </summary>
-    internal partial class ArmApplicationPackageLockingPolicy
+    public partial class ArmApplicationPackageLockingPolicy
     {
         /// <summary> Initializes a new instance of ArmApplicationPackageLockingPolicy. </summary>
         public ArmApplicationPackageLockingPolicy()
         {
             AllowedActions = new ChangeTrackingList<string>();
+            AllowedDataActions = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of ArmApplicationPackageLockingPolicy. </summary>
         /// <param name="allowedActions"> The deny assignment excluded actions. </param>
-        internal ArmApplicationPackageLockingPolicy(IList<string> allowedActions)
+        /// <param name="allowedDataActions"> The deny assignment excluded data actions. </param>
+        internal ArmApplicationPackageLockingPolicy(IList<string> allowedActions, IList<string> allowedDataActions)
         {
             AllowedActions = allowedActions;
+            AllowedDataActions = allowedDataActions;
         }
 
         /// <summary> The deny assignment excluded actions. </summary>
         public IList<string> AllowedActions { get; }
+        /// <summary> The deny assignment excluded data actions. </summary>
+        public IList<string> AllowedDataActions { get; }
     }
 }

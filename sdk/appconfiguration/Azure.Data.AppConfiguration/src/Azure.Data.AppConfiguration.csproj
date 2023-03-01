@@ -13,8 +13,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <!-- <PackageReference Include="Azure.Core" /> -->
-    <ProjectReference Include="..\..\..\core\Azure.Core\src\Azure.Core.csproj" />
+    <PackageReference Include="Azure.Core" />
     <PackageReference Include="Microsoft.Bcl.AsyncInterfaces" />
     <PackageReference Include="System.Text.Json" />
   </ItemGroup>

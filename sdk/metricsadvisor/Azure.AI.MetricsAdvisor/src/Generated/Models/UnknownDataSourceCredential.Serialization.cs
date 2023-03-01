@@ -15,13 +15,13 @@ namespace Azure.AI.MetricsAdvisor.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("dataSourceCredentialType");
+            writer.WritePropertyName("dataSourceCredentialType"u8);
             writer.WriteStringValue(CredentialKind.ToString());
-            writer.WritePropertyName("dataSourceCredentialName");
+            writer.WritePropertyName("dataSourceCredentialName"u8);
             writer.WriteStringValue(Name);
             if (Optional.IsDefined(Description))
             {
-                writer.WritePropertyName("dataSourceCredentialDescription");
+                writer.WritePropertyName("dataSourceCredentialDescription"u8);
                 writer.WriteStringValue(Description);
             }
             writer.WriteEndObject();
@@ -35,22 +35,22 @@ namespace Azure.AI.MetricsAdvisor.Models
             Optional<string> dataSourceCredentialDescription = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("dataSourceCredentialType"))
+                if (property.NameEquals("dataSourceCredentialType"u8))
                 {
                     dataSourceCredentialType = new DataSourceCredentialKind(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("dataSourceCredentialId"))
+                if (property.NameEquals("dataSourceCredentialId"u8))
                 {
                     dataSourceCredentialId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("dataSourceCredentialName"))
+                if (property.NameEquals("dataSourceCredentialName"u8))
                 {
                     dataSourceCredentialName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("dataSourceCredentialDescription"))
+                if (property.NameEquals("dataSourceCredentialDescription"u8))
                 {
                     dataSourceCredentialDescription = property.Value.GetString();
                     continue;

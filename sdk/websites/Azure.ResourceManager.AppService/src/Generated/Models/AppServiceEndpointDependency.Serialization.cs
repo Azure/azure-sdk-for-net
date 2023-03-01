@@ -19,12 +19,12 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<IReadOnlyList<AppServiceEndpointDetail>> endpointDetails = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("domainName"))
+                if (property.NameEquals("domainName"u8))
                 {
                     domainName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("endpointDetails"))
+                if (property.NameEquals("endpointDetails"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

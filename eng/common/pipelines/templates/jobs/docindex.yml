@@ -1,7 +1,7 @@
 jobs:
   - job: CreateDocIndex
     pool:
-      vmImage: windows-2019
+      vmImage: windows-2022
     steps:
       - task: UsePythonVersion@0
         displayName: 'Use Python 3.9'

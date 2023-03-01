@@ -2,6 +2,8 @@
 // Licensed under the MIT License.
 
 using Azure.Core;
+using System;
+using System.ComponentModel;
 
 #nullable disable
 
@@ -12,6 +14,8 @@ namespace Azure.ResourceManager.ContainerService.Models
     public partial class ManagedClusterStorageProfile
     {
         /// <summary> Whether to enable AzureDisk CSI Driver. The default value is true. </summary>
+        [Obsolete("This property is obsolete and will be removed in a future release", false)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public bool? IsDiskCsiDriverEnabled
         {
             get => DiskCsiDriver is null ? default : DiskCsiDriver.IsEnabled;
@@ -44,6 +48,18 @@ namespace Azure.ResourceManager.ContainerService.Models
                 if (SnapshotController is null)
                     SnapshotController = new ManagedClusterStorageProfileSnapshotController();
                 SnapshotController.IsEnabled = value;
+            }
+        }
+
+        /// <summary> Whether to enable AzureBlob CSI Driver. The default value is false. </summary>
+        public bool? IsBlobCsiDriverEnabled
+        {
+            get => BlobCsiDriver is null ? default : BlobCsiDriver.IsEnabled;
+            set
+            {
+                if (BlobCsiDriver is null)
+                    BlobCsiDriver = new ManagedClusterStorageProfileBlobCsiDriver();
+                BlobCsiDriver.IsEnabled = value;
             }
         }
     }

@@ -14,7 +14,7 @@ namespace Azure.Core.Pipeline
     /// <summary>
     /// Represents a policy that can be overriden to customize whether or not a request will be retried and how long to wait before retrying.
     /// </summary>
-    public abstract class RetryPolicy : HttpPipelinePolicy
+    internal abstract class RetryPolicy : HttpPipelinePolicy
     {
         private readonly RetryMode _mode;
         private readonly int _maxRetries;

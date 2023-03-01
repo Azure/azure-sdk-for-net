@@ -57,6 +57,9 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
 
             Assert.That(response.Status, Is.EqualTo(200));
             Assert.That(new Uri(resultUrl).Host, Is.EqualTo(client.Endpoint.Host));
+
+            // Prevent compiler errors when building with SNIPPET.
+            await Task.Yield();
         }
 
         [AsyncOnly]

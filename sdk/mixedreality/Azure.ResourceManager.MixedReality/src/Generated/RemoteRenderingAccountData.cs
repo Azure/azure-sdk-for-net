@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.MixedReality.Models;
@@ -12,7 +13,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.MixedReality
 {
-    /// <summary> A class representing the RemoteRenderingAccount data model. </summary>
+    /// <summary>
+    /// A class representing the RemoteRenderingAccount data model.
+    /// RemoteRenderingAccount Response.
+    /// </summary>
     public partial class RemoteRenderingAccountData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of RemoteRenderingAccountData. </summary>
@@ -28,35 +32,14 @@ namespace Azure.ResourceManager.MixedReality
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="identity">
-        /// The identity associated with this account
-        /// Serialized Name: RemoteRenderingAccount.identity. Current supported identity types: SystemAssigned
-        /// </param>
-        /// <param name="plan">
-        /// The plan associated with this account
-        /// Serialized Name: RemoteRenderingAccount.plan. Current supported identity types: SystemAssigned
-        /// </param>
-        /// <param name="sku">
-        /// The sku associated with this account
-        /// Serialized Name: RemoteRenderingAccount.sku
-        /// </param>
-        /// <param name="kind">
-        /// The kind of account, if supported
-        /// Serialized Name: RemoteRenderingAccount.kind
-        /// </param>
-        /// <param name="storageAccountName">
-        /// The name of the storage account associated with this accountId
-        /// Serialized Name: RemoteRenderingAccount.properties.storageAccountName
-        /// </param>
-        /// <param name="accountId">
-        /// unique id of certain account.
-        /// Serialized Name: RemoteRenderingAccount.properties.accountId
-        /// </param>
-        /// <param name="accountDomain">
-        /// Correspond domain name of certain Spatial Anchors Account
-        /// Serialized Name: RemoteRenderingAccount.properties.accountDomain
-        /// </param>
-        internal RemoteRenderingAccountData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, ManagedServiceIdentity plan, MixedRealitySku sku, MixedRealitySku kind, string storageAccountName, string accountId, string accountDomain) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="identity"> The identity associated with this account. Current supported identity types: SystemAssigned. </param>
+        /// <param name="plan"> The plan associated with this account. Current supported identity types: SystemAssigned. </param>
+        /// <param name="sku"> The sku associated with this account. </param>
+        /// <param name="kind"> The kind of account, if supported. </param>
+        /// <param name="storageAccountName"> The name of the storage account associated with this accountId. </param>
+        /// <param name="accountId"> unique id of certain account. </param>
+        /// <param name="accountDomain"> Correspond domain name of certain Spatial Anchors Account. </param>
+        internal RemoteRenderingAccountData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, ManagedServiceIdentity plan, MixedRealitySku sku, MixedRealitySku kind, string storageAccountName, Guid? accountId, string accountDomain) : base(id, name, resourceType, systemData, tags, location)
         {
             Identity = identity;
             Plan = plan;
@@ -67,40 +50,19 @@ namespace Azure.ResourceManager.MixedReality
             AccountDomain = accountDomain;
         }
 
-        /// <summary>
-        /// The identity associated with this account
-        /// Serialized Name: RemoteRenderingAccount.identity. Current supported identity types: SystemAssigned
-        /// </summary>
+        /// <summary> The identity associated with this account. Current supported identity types: SystemAssigned. </summary>
         public ManagedServiceIdentity Identity { get; set; }
-        /// <summary>
-        /// The plan associated with this account
-        /// Serialized Name: RemoteRenderingAccount.plan. Current supported identity types: SystemAssigned
-        /// </summary>
+        /// <summary> The plan associated with this account. Current supported identity types: SystemAssigned. </summary>
         public ManagedServiceIdentity Plan { get; set; }
-        /// <summary>
-        /// The sku associated with this account
-        /// Serialized Name: RemoteRenderingAccount.sku
-        /// </summary>
+        /// <summary> The sku associated with this account. </summary>
         public MixedRealitySku Sku { get; set; }
-        /// <summary>
-        /// The kind of account, if supported
-        /// Serialized Name: RemoteRenderingAccount.kind
-        /// </summary>
+        /// <summary> The kind of account, if supported. </summary>
         public MixedRealitySku Kind { get; set; }
-        /// <summary>
-        /// The name of the storage account associated with this accountId
-        /// Serialized Name: RemoteRenderingAccount.properties.storageAccountName
-        /// </summary>
+        /// <summary> The name of the storage account associated with this accountId. </summary>
         public string StorageAccountName { get; set; }
-        /// <summary>
-        /// unique id of certain account.
-        /// Serialized Name: RemoteRenderingAccount.properties.accountId
-        /// </summary>
-        public string AccountId { get; }
-        /// <summary>
-        /// Correspond domain name of certain Spatial Anchors Account
-        /// Serialized Name: RemoteRenderingAccount.properties.accountDomain
-        /// </summary>
+        /// <summary> unique id of certain account. </summary>
+        public Guid? AccountId { get; }
+        /// <summary> Correspond domain name of certain Spatial Anchors Account. </summary>
         public string AccountDomain { get; }
     }
 }

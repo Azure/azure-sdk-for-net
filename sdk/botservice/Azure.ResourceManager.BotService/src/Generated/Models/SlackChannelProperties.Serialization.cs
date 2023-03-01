@@ -18,40 +18,40 @@ namespace Azure.ResourceManager.BotService.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(ClientId))
             {
-                writer.WritePropertyName("clientId");
+                writer.WritePropertyName("clientId"u8);
                 writer.WriteStringValue(ClientId);
             }
             if (Optional.IsDefined(ClientSecret))
             {
-                writer.WritePropertyName("clientSecret");
+                writer.WritePropertyName("clientSecret"u8);
                 writer.WriteStringValue(ClientSecret);
             }
             if (Optional.IsDefined(VerificationToken))
             {
-                writer.WritePropertyName("verificationToken");
+                writer.WritePropertyName("verificationToken"u8);
                 writer.WriteStringValue(VerificationToken);
             }
             if (Optional.IsDefined(Scopes))
             {
-                writer.WritePropertyName("scopes");
+                writer.WritePropertyName("scopes"u8);
                 writer.WriteStringValue(Scopes);
             }
             if (Optional.IsDefined(LandingPageUri))
             {
-                writer.WritePropertyName("landingPageUrl");
+                writer.WritePropertyName("landingPageUrl"u8);
                 writer.WriteStringValue(LandingPageUri.AbsoluteUri);
             }
             if (Optional.IsDefined(RegisterBeforeOAuthFlow))
             {
-                writer.WritePropertyName("registerBeforeOAuthFlow");
+                writer.WritePropertyName("registerBeforeOAuthFlow"u8);
                 writer.WriteBooleanValue(RegisterBeforeOAuthFlow.Value);
             }
             if (Optional.IsDefined(SigningSecret))
             {
-                writer.WritePropertyName("signingSecret");
+                writer.WritePropertyName("signingSecret"u8);
                 writer.WriteStringValue(SigningSecret);
             }
-            writer.WritePropertyName("isEnabled");
+            writer.WritePropertyName("isEnabled"u8);
             writer.WriteBooleanValue(IsEnabled);
             writer.WriteEndObject();
         }
@@ -71,27 +71,27 @@ namespace Azure.ResourceManager.BotService.Models
             bool isEnabled = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("clientId"))
+                if (property.NameEquals("clientId"u8))
                 {
                     clientId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("clientSecret"))
+                if (property.NameEquals("clientSecret"u8))
                 {
                     clientSecret = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("verificationToken"))
+                if (property.NameEquals("verificationToken"u8))
                 {
                     verificationToken = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("scopes"))
+                if (property.NameEquals("scopes"u8))
                 {
                     scopes = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("landingPageUrl"))
+                if (property.NameEquals("landingPageUrl"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -101,17 +101,17 @@ namespace Azure.ResourceManager.BotService.Models
                     landingPageUrl = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("redirectAction"))
+                if (property.NameEquals("redirectAction"u8))
                 {
                     redirectAction = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("lastSubmissionId"))
+                if (property.NameEquals("lastSubmissionId"u8))
                 {
                     lastSubmissionId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("registerBeforeOAuthFlow"))
+                if (property.NameEquals("registerBeforeOAuthFlow"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.BotService.Models
                     registerBeforeOAuthFlow = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("IsValidated"))
+                if (property.NameEquals("IsValidated"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -131,12 +131,12 @@ namespace Azure.ResourceManager.BotService.Models
                     isValidated = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("signingSecret"))
+                if (property.NameEquals("signingSecret"u8))
                 {
                     signingSecret = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("isEnabled"))
+                if (property.NameEquals("isEnabled"u8))
                 {
                     isEnabled = property.Value.GetBoolean();
                     continue;

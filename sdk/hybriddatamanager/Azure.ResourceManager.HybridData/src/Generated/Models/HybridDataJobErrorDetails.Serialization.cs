@@ -17,22 +17,22 @@ namespace Azure.ResourceManager.HybridData.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(ErrorMessage))
             {
-                writer.WritePropertyName("errorMessage");
+                writer.WritePropertyName("errorMessage"u8);
                 writer.WriteStringValue(ErrorMessage);
             }
             if (Optional.IsDefined(ErrorCode))
             {
-                writer.WritePropertyName("errorCode");
+                writer.WritePropertyName("errorCode"u8);
                 writer.WriteNumberValue(ErrorCode.Value);
             }
             if (Optional.IsDefined(RecommendedAction))
             {
-                writer.WritePropertyName("recommendedAction");
+                writer.WritePropertyName("recommendedAction"u8);
                 writer.WriteStringValue(RecommendedAction);
             }
             if (Optional.IsDefined(ExceptionMessage))
             {
-                writer.WritePropertyName("exceptionMessage");
+                writer.WritePropertyName("exceptionMessage"u8);
                 writer.WriteStringValue(ExceptionMessage);
             }
             writer.WriteEndObject();
@@ -46,12 +46,12 @@ namespace Azure.ResourceManager.HybridData.Models
             Optional<string> exceptionMessage = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("errorMessage"))
+                if (property.NameEquals("errorMessage"u8))
                 {
                     errorMessage = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("errorCode"))
+                if (property.NameEquals("errorCode"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -61,12 +61,12 @@ namespace Azure.ResourceManager.HybridData.Models
                     errorCode = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("recommendedAction"))
+                if (property.NameEquals("recommendedAction"u8))
                 {
                     recommendedAction = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("exceptionMessage"))
+                if (property.NameEquals("exceptionMessage"u8))
                 {
                     exceptionMessage = property.Value.GetString();
                     continue;

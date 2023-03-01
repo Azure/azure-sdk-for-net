@@ -1,6 +1,6 @@
 # Release History
 
-## 1.1.0-beta.1 (Unreleased)
+## 1.2.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,26 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.1.1 (2023-02-17)
+
+### Other Changes
+
+- Upgraded dependent `Azure.Core` to `1.28.0`.
+- Upgraded dependent `Azure.ResourceManager` to `1.4.0`.
+
+## 1.1.0 (2023-02-03)
+
+### Features Added
+
+- Added support for Immutable vaults.
+- Added support for Cross Subscription Restore.
+- Added support for AKS workload.
+- Added support for Soft Delete.
+
+### Other Changes
+
+- Upgraded API version to 2023-01-01.
 
 ## 1.0.0 (2022-11-04)
 

@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -55,8 +54,16 @@ namespace Azure.ResourceManager.StorageSync
 
         /// <summary>
         /// Get Workflows resource
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageSync/storageSyncServices/{storageSyncServiceName}/workflows/{workflowId}
-        /// Operation Id: Workflows_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageSync/storageSyncServices/{storageSyncServiceName}/workflows/{workflowId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Workflows_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="workflowId"> workflow Id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -84,8 +91,16 @@ namespace Azure.ResourceManager.StorageSync
 
         /// <summary>
         /// Get Workflows resource
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageSync/storageSyncServices/{storageSyncServiceName}/workflows/{workflowId}
-        /// Operation Id: Workflows_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageSync/storageSyncServices/{storageSyncServiceName}/workflows/{workflowId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Workflows_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="workflowId"> workflow Id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -113,62 +128,58 @@ namespace Azure.ResourceManager.StorageSync
 
         /// <summary>
         /// Get a Workflow List
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageSync/storageSyncServices/{storageSyncServiceName}/workflows
-        /// Operation Id: Workflows_ListByStorageSyncService
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageSync/storageSyncServices/{storageSyncServiceName}/workflows</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Workflows_ListByStorageSyncService</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="StorageSyncWorkflowResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<StorageSyncWorkflowResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<StorageSyncWorkflowResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _storageSyncWorkflowWorkflowsClientDiagnostics.CreateScope("StorageSyncWorkflowCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _storageSyncWorkflowWorkflowsRestClient.ListByStorageSyncServiceAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new StorageSyncWorkflowResource(Client, value)), null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _storageSyncWorkflowWorkflowsRestClient.CreateListByStorageSyncServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new StorageSyncWorkflowResource(Client, StorageSyncWorkflowData.DeserializeStorageSyncWorkflowData(e)), _storageSyncWorkflowWorkflowsClientDiagnostics, Pipeline, "StorageSyncWorkflowCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
         /// Get a Workflow List
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageSync/storageSyncServices/{storageSyncServiceName}/workflows
-        /// Operation Id: Workflows_ListByStorageSyncService
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageSync/storageSyncServices/{storageSyncServiceName}/workflows</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Workflows_ListByStorageSyncService</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="StorageSyncWorkflowResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<StorageSyncWorkflowResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<StorageSyncWorkflowResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _storageSyncWorkflowWorkflowsClientDiagnostics.CreateScope("StorageSyncWorkflowCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _storageSyncWorkflowWorkflowsRestClient.ListByStorageSyncService(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new StorageSyncWorkflowResource(Client, value)), null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _storageSyncWorkflowWorkflowsRestClient.CreateListByStorageSyncServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new StorageSyncWorkflowResource(Client, StorageSyncWorkflowData.DeserializeStorageSyncWorkflowData(e)), _storageSyncWorkflowWorkflowsClientDiagnostics, Pipeline, "StorageSyncWorkflowCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageSync/storageSyncServices/{storageSyncServiceName}/workflows/{workflowId}
-        /// Operation Id: Workflows_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageSync/storageSyncServices/{storageSyncServiceName}/workflows/{workflowId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Workflows_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="workflowId"> workflow Id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -194,8 +205,16 @@ namespace Azure.ResourceManager.StorageSync
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageSync/storageSyncServices/{storageSyncServiceName}/workflows/{workflowId}
-        /// Operation Id: Workflows_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageSync/storageSyncServices/{storageSyncServiceName}/workflows/{workflowId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Workflows_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="workflowId"> workflow Id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.WebPubSub.Models
 
         /// <summary> Initializes a new instance of WebPubSubSku. </summary>
         /// <param name="resourceType"> The resource type that this object applies to. </param>
-        /// <param name="sku"> The exact set of keys that define this sku. </param>
-        /// <param name="capacity"> Specifies the unit of the resource. </param>
+        /// <param name="sku"> The billing information of the resource. </param>
+        /// <param name="capacity"> Describes scaling information of a sku. </param>
         internal WebPubSubSku(ResourceType? resourceType, BillingInfoSku sku, WebPubSubSkuCapacity capacity)
         {
             ResourceType = resourceType;
@@ -30,9 +30,9 @@ namespace Azure.ResourceManager.WebPubSub.Models
 
         /// <summary> The resource type that this object applies to. </summary>
         public ResourceType? ResourceType { get; }
-        /// <summary> The exact set of keys that define this sku. </summary>
+        /// <summary> The billing information of the resource. </summary>
         public BillingInfoSku Sku { get; }
-        /// <summary> Specifies the unit of the resource. </summary>
+        /// <summary> Describes scaling information of a sku. </summary>
         public WebPubSubSkuCapacity Capacity { get; }
     }
 }

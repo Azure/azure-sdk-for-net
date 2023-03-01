@@ -5,10 +5,7 @@
 
 #nullable disable
 
-using System;
-using System.Linq;
 using System.Threading;
-using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -56,174 +53,94 @@ namespace Azure.ResourceManager.Orbital
 
         /// <summary>
         /// Returns list of spacecrafts by subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Orbital/spacecrafts
-        /// Operation Id: Spacecrafts_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Orbital/spacecrafts</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Spacecrafts_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="skiptoken"> An opaque string that the resource provider uses to skip over previously-returned results. This is used when a previous list operation call returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skiptoken parameter that specifies a starting point to use for subsequent calls. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="OrbitalSpacecraftResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<OrbitalSpacecraftResource> GetOrbitalSpacecraftsAsync(string skiptoken = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<OrbitalSpacecraftResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = OrbitalSpacecraftSpacecraftsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetOrbitalSpacecrafts");
-                scope.Start();
-                try
-                {
-                    var response = await OrbitalSpacecraftSpacecraftsRestClient.ListBySubscriptionAsync(Id.SubscriptionId, skiptoken, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new OrbitalSpacecraftResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<OrbitalSpacecraftResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = OrbitalSpacecraftSpacecraftsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetOrbitalSpacecrafts");
-                scope.Start();
-                try
-                {
-                    var response = await OrbitalSpacecraftSpacecraftsRestClient.ListBySubscriptionNextPageAsync(nextLink, Id.SubscriptionId, skiptoken, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new OrbitalSpacecraftResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => OrbitalSpacecraftSpacecraftsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, skiptoken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => OrbitalSpacecraftSpacecraftsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, skiptoken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new OrbitalSpacecraftResource(Client, OrbitalSpacecraftData.DeserializeOrbitalSpacecraftData(e)), OrbitalSpacecraftSpacecraftsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetOrbitalSpacecrafts", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Returns list of spacecrafts by subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Orbital/spacecrafts
-        /// Operation Id: Spacecrafts_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Orbital/spacecrafts</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Spacecrafts_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="skiptoken"> An opaque string that the resource provider uses to skip over previously-returned results. This is used when a previous list operation call returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skiptoken parameter that specifies a starting point to use for subsequent calls. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="OrbitalSpacecraftResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<OrbitalSpacecraftResource> GetOrbitalSpacecrafts(string skiptoken = null, CancellationToken cancellationToken = default)
         {
-            Page<OrbitalSpacecraftResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = OrbitalSpacecraftSpacecraftsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetOrbitalSpacecrafts");
-                scope.Start();
-                try
-                {
-                    var response = OrbitalSpacecraftSpacecraftsRestClient.ListBySubscription(Id.SubscriptionId, skiptoken, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new OrbitalSpacecraftResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<OrbitalSpacecraftResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = OrbitalSpacecraftSpacecraftsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetOrbitalSpacecrafts");
-                scope.Start();
-                try
-                {
-                    var response = OrbitalSpacecraftSpacecraftsRestClient.ListBySubscriptionNextPage(nextLink, Id.SubscriptionId, skiptoken, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new OrbitalSpacecraftResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => OrbitalSpacecraftSpacecraftsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, skiptoken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => OrbitalSpacecraftSpacecraftsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, skiptoken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new OrbitalSpacecraftResource(Client, OrbitalSpacecraftData.DeserializeOrbitalSpacecraftData(e)), OrbitalSpacecraftSpacecraftsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetOrbitalSpacecrafts", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Returns list of contact profiles by Subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Orbital/contactProfiles
-        /// Operation Id: ContactProfiles_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Orbital/contactProfiles</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ContactProfiles_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="skiptoken"> An opaque string that the resource provider uses to skip over previously-returned results. This is used when a previous list operation call returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skiptoken parameter that specifies a starting point to use for subsequent calls. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="OrbitalContactProfileResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<OrbitalContactProfileResource> GetOrbitalContactProfilesAsync(string skiptoken = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<OrbitalContactProfileResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = OrbitalContactProfileContactProfilesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetOrbitalContactProfiles");
-                scope.Start();
-                try
-                {
-                    var response = await OrbitalContactProfileContactProfilesRestClient.ListBySubscriptionAsync(Id.SubscriptionId, skiptoken, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new OrbitalContactProfileResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<OrbitalContactProfileResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = OrbitalContactProfileContactProfilesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetOrbitalContactProfiles");
-                scope.Start();
-                try
-                {
-                    var response = await OrbitalContactProfileContactProfilesRestClient.ListBySubscriptionNextPageAsync(nextLink, Id.SubscriptionId, skiptoken, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new OrbitalContactProfileResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => OrbitalContactProfileContactProfilesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, skiptoken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => OrbitalContactProfileContactProfilesRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, skiptoken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new OrbitalContactProfileResource(Client, OrbitalContactProfileData.DeserializeOrbitalContactProfileData(e)), OrbitalContactProfileContactProfilesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetOrbitalContactProfiles", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Returns list of contact profiles by Subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Orbital/contactProfiles
-        /// Operation Id: ContactProfiles_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Orbital/contactProfiles</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ContactProfiles_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="skiptoken"> An opaque string that the resource provider uses to skip over previously-returned results. This is used when a previous list operation call returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skiptoken parameter that specifies a starting point to use for subsequent calls. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="OrbitalContactProfileResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<OrbitalContactProfileResource> GetOrbitalContactProfiles(string skiptoken = null, CancellationToken cancellationToken = default)
         {
-            Page<OrbitalContactProfileResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = OrbitalContactProfileContactProfilesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetOrbitalContactProfiles");
-                scope.Start();
-                try
-                {
-                    var response = OrbitalContactProfileContactProfilesRestClient.ListBySubscription(Id.SubscriptionId, skiptoken, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new OrbitalContactProfileResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<OrbitalContactProfileResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = OrbitalContactProfileContactProfilesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetOrbitalContactProfiles");
-                scope.Start();
-                try
-                {
-                    var response = OrbitalContactProfileContactProfilesRestClient.ListBySubscriptionNextPage(nextLink, Id.SubscriptionId, skiptoken, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new OrbitalContactProfileResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => OrbitalContactProfileContactProfilesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, skiptoken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => OrbitalContactProfileContactProfilesRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, skiptoken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new OrbitalContactProfileResource(Client, OrbitalContactProfileData.DeserializeOrbitalContactProfileData(e)), OrbitalContactProfileContactProfilesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetOrbitalContactProfiles", "value", "nextLink", cancellationToken);
         }
     }
 }

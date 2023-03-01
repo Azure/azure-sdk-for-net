@@ -22,32 +22,32 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<string> osMinorVersion = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("osType"))
+                if (property.NameEquals("osType"u8))
                 {
                     osType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("productType"))
+                if (property.NameEquals("productType"u8))
                 {
                     productType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("osEdition"))
+                if (property.NameEquals("osEdition"u8))
                 {
                     osEdition = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("oSVersion"))
+                if (property.NameEquals("oSVersion"u8))
                 {
                     osVersion = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("oSMajorVersion"))
+                if (property.NameEquals("oSMajorVersion"u8))
                 {
                     osMajorVersion = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("oSMinorVersion"))
+                if (property.NameEquals("oSMinorVersion"u8))
                 {
                     osMinorVersion = property.Value.GetString();
                     continue;

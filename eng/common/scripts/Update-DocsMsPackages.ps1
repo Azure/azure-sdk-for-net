@@ -80,7 +80,7 @@ function GetDocsMetadataForMoniker($moniker) {
 }
 function GetDocsMetadata() {
   # Read metadata from CSV
-  $csvMetadata = (Get-CSVMetadata).Where({ $_.New -eq 'true' -and $_.Hide -ne 'true' })
+  $csvMetadata = (Get-CSVMetadata).Where({ ($_.New -eq 'true' -or $_.MSDocService -ne '') -and $_.Hide -ne 'true'})
 
   # Read metadata from docs repo
   $metadataByPackage = @{}

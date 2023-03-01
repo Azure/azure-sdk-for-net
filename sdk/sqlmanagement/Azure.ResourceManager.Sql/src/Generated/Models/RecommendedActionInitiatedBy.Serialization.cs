@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.Sql.Models
 
         public static RecommendedActionInitiatedBy ToRecommendedActionInitiatedBy(this string value)
         {
-            if (string.Equals(value, "User", StringComparison.InvariantCultureIgnoreCase)) return RecommendedActionInitiatedBy.User;
-            if (string.Equals(value, "System", StringComparison.InvariantCultureIgnoreCase)) return RecommendedActionInitiatedBy.System;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "User")) return RecommendedActionInitiatedBy.User;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "System")) return RecommendedActionInitiatedBy.System;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown RecommendedActionInitiatedBy value.");
         }
     }

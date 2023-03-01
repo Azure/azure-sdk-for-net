@@ -8,6 +8,11 @@ namespace Azure.Core.Tests.Public
 {
     public class JsonDataTestHelpers
     {
+        public static dynamic CreateEmpty()
+        {
+            return BinaryData.FromString("{}").ToDynamic();
+        }
+
         public static dynamic CreateFromJson(string json)
         {
             return BinaryData.FromString(json).ToDynamic();

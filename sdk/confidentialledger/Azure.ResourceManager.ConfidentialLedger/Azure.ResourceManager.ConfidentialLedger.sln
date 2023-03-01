@@ -1,19 +1,15 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.30309.148
+# Visual Studio Version 17
+VisualStudioVersion = 17.4.33205.214
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{832596A1-F25E-4052-8C45-B38BF2644F44}") = "Azure.ResourceManager.ConfidentialLedger", "src\Azure.ResourceManager.ConfidentialLedger.csproj", "{869B788F-11C7-4C9B-9E0D-36BD9CC7CD91}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.ResourceManager.ConfidentialLedger", "src\Azure.ResourceManager.ConfidentialLedger.csproj", "{869B788F-11C7-4C9B-9E0D-36BD9CC7CD91}"
 EndProject
-Project("{832596A1-F25E-4052-8C45-B38BF2644F44}") = "Azure.ResourceManager.ConfidentialLedger.Tests", "tests\Azure.ResourceManager.ConfidentialLedger.Tests.csproj", "{3388DC44-29FC-46C1-8511-290407806AEB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.ResourceManager.ConfidentialLedger.Tests", "tests\Azure.ResourceManager.ConfidentialLedger.Tests.csproj", "{3388DC44-29FC-46C1-8511-290407806AEB}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.ResourceManager.ConfidentialLedger.Samples", "samples\Azure.ResourceManager.ConfidentialLedger.Samples.csproj", "{A457952B-285F-4584-83AD-958A7E808E65}"
 EndProject
 Global
-	GlobalSection(SolutionProperties) = preSolution
-		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {97904975-2CA4-4819-93BD-E4B11A5068D0}
-	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Debug|x64 = Debug|x64
@@ -47,5 +43,23 @@ Global
 		{3388DC44-29FC-46C1-8511-290407806AEB}.Release|x64.Build.0 = Release|Any CPU
 		{3388DC44-29FC-46C1-8511-290407806AEB}.Release|x86.ActiveCfg = Release|Any CPU
 		{3388DC44-29FC-46C1-8511-290407806AEB}.Release|x86.Build.0 = Release|Any CPU
+		{A457952B-285F-4584-83AD-958A7E808E65}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A457952B-285F-4584-83AD-958A7E808E65}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A457952B-285F-4584-83AD-958A7E808E65}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{A457952B-285F-4584-83AD-958A7E808E65}.Debug|x64.Build.0 = Debug|Any CPU
+		{A457952B-285F-4584-83AD-958A7E808E65}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{A457952B-285F-4584-83AD-958A7E808E65}.Debug|x86.Build.0 = Debug|Any CPU
+		{A457952B-285F-4584-83AD-958A7E808E65}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A457952B-285F-4584-83AD-958A7E808E65}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A457952B-285F-4584-83AD-958A7E808E65}.Release|x64.ActiveCfg = Release|Any CPU
+		{A457952B-285F-4584-83AD-958A7E808E65}.Release|x64.Build.0 = Release|Any CPU
+		{A457952B-285F-4584-83AD-958A7E808E65}.Release|x86.ActiveCfg = Release|Any CPU
+		{A457952B-285F-4584-83AD-958A7E808E65}.Release|x86.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {97904975-2CA4-4819-93BD-E4B11A5068D0}
 	EndGlobalSection
 EndGlobal

@@ -201,7 +201,17 @@ namespace Azure.Messaging.EventHubs
         /// <returns>A <see cref="System.String" /> that represents this instance.</returns>
         ///
         public override string ToString() =>
-            $"{ typeof(EventHubsException).FullName }({ Reason }): { Message }{ Environment.NewLine }{ StackTrace }";
+            $"{ typeof(EventHubsException).FullName }({ Reason }): { Message }{ Environment.NewLine }{ StackTrace }{ FormatInnerException() }";
+
+        /// <summary>
+        ///   Formats the <see cref="Exception.InnerException"/> for inclusion in the <see cref="ToString" />
+        ///   details.
+        /// </summary>
+        ///
+        /// <returns>The text to include for the inner exception, if any.</returns>
+        ///
+        private string FormatInnerException() =>
+            (InnerException == null) ? string.Empty : $"{ Environment.NewLine }{ InnerException }";
 
         /// <summary>
         ///   The set of well-known reasons for an Event Hubs operation failure that

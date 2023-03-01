@@ -19,22 +19,22 @@ namespace Azure.ResourceManager.Resources.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(DisplayName))
             {
-                writer.WritePropertyName("displayName");
+                writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
             if (Optional.IsDefined(Description))
             {
-                writer.WritePropertyName("description");
+                writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
             if (Optional.IsDefined(StrongType))
             {
-                writer.WritePropertyName("strongType");
+                writer.WritePropertyName("strongType"u8);
                 writer.WriteStringValue(StrongType);
             }
             if (Optional.IsDefined(AssignPermissions))
             {
-                writer.WritePropertyName("assignPermissions");
+                writer.WritePropertyName("assignPermissions"u8);
                 writer.WriteBooleanValue(AssignPermissions.Value);
             }
             foreach (var item in AdditionalProperties)
@@ -59,22 +59,22 @@ namespace Azure.ResourceManager.Resources.Models
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("displayName"))
+                if (property.NameEquals("displayName"u8))
                 {
                     displayName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("description"))
+                if (property.NameEquals("description"u8))
                 {
                     description = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("strongType"))
+                if (property.NameEquals("strongType"u8))
                 {
                     strongType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("assignPermissions"))
+                if (property.NameEquals("assignPermissions"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

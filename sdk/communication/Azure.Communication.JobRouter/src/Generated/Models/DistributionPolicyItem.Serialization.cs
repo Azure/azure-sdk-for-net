@@ -18,7 +18,7 @@ namespace Azure.Communication.JobRouter.Models
             Optional<string> etag = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("distributionPolicy"))
+                if (property.NameEquals("distributionPolicy"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -28,7 +28,7 @@ namespace Azure.Communication.JobRouter.Models
                     distributionPolicy = DistributionPolicy.DeserializeDistributionPolicy(property.Value);
                     continue;
                 }
-                if (property.NameEquals("etag"))
+                if (property.NameEquals("etag"u8))
                 {
                     etag = property.Value.GetString();
                     continue;

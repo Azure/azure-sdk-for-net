@@ -14,44 +14,43 @@ namespace Azure.AI.TextAnalytics.Samples
         [Test]
         public async Task AnalyzeSentimentWithOpinionMiningAsync()
         {
-            string endpoint = TestEnvironment.Endpoint;
-            string apiKey = TestEnvironment.ApiKey;
+            Uri endpoint = new(TestEnvironment.Endpoint);
+            AzureKeyCredential credential = new(TestEnvironment.ApiKey);
+            TextAnalyticsClient client = new(endpoint, credential, CreateSampleOptions());
 
-            // Instantiate a client that will be used to call the service.
-            var client = new TextAnalyticsClient(new Uri(endpoint), new AzureKeyCredential(apiKey), CreateSampleOptions());
+            string reviewA =
+                "The food and service were unacceptable, but the concierge were nice. After talking to them about the"
+                + " quality of the food and the process to get room service they refunded the money we spent at the"
+                + " restaurant and gave us a voucher for nearby restaurants.";
 
-            string reviewA = @"The food and service were unacceptable, but the concierge were nice.
-                             After talking to them about the quality of the food and the process
-                             to get room service they refunded the money we spent at the restaurant
-                             and gave us a voucher for nearby restaurants.";
+            string reviewB =
+                "The rooms were beautiful. The AC was good and quiet, which was key for us as outside it was 100F and"
+                + "our baby was getting uncomfortable because of the heat. The breakfast was good too with good"
+                + " options and good servicing times. The thing we didn't like was that the toilet in our bathroom was"
+                + "smelly. It could have been that the toilet was not cleaned before we arrived. Either way it was"
+                + "very uncomfortable. Once we notified the staff, they came and cleaned it and left candles.";
 
-            string reviewB = @"The rooms were beautiful. The AC was good and quiet, which was key for
-                            us as outside it was 100F and our baby was getting uncomfortable because of the heat.
-                            The breakfast was good too with good options and good servicing times.
-                            The thing we didn't like was that the toilet in our bathroom was smelly.
-                            It could have been that the toilet was not cleaned before we arrived.
-                            Either way it was very uncomfortable.
-                            Once we notified the staff, they came and cleaned it and left candles.";
+            string reviewC =
+                "Nice rooms! I had a great unobstructed view of the Microsoft campus but bathrooms were old and the"
+                + "toilet was dirty when we arrived. It was close to bus stops and groceries stores. If you want to"
+                + "be close to campus I will recommend it, otherwise, might be better to stay in a cleaner one.";
 
-            string reviewC = @"Nice rooms! I had a great unobstructed view of the Microsoft campus
-                            but bathrooms were old and the toilet was dirty when we arrived. 
-                            It was close to bus stops and groceries stores. If you want to be close to
-                            campus I will recommend it, otherwise, might be better to stay in a cleaner one.";
-
-            var documents = new List<string>
+            // Prepare the input of the text analysis operation. You can add multiple documents to this list and
+            // perform the same operation on all of them simultaneously.
+            List<string> batchedDocuments = new()
             {
                 reviewA,
                 reviewB,
                 reviewC
             };
 
-            var options = new AnalyzeSentimentOptions() { IncludeOpinionMining = true };
-            Response<AnalyzeSentimentResultCollection> response = await client.AnalyzeSentimentBatchAsync(documents, options: options);
+            AnalyzeSentimentOptions options = new() { IncludeOpinionMining = true };
+            Response<AnalyzeSentimentResultCollection> response = await client.AnalyzeSentimentBatchAsync(batchedDocuments, options: options);
             AnalyzeSentimentResultCollection reviews = response.Value;
 
             Dictionary<string, int> complaints = GetComplaint(reviews);
 
-            var negativeAspect = complaints.Aggregate((l, r) => l.Value > r.Value ? l : r).Key;
+            string negativeAspect = complaints.Aggregate((l, r) => l.Value > r.Value ? l : r).Key;
             Console.WriteLine($"Alert! major complaint is *{negativeAspect}*");
             Console.WriteLine();
             Console.WriteLine("---All complaints:");
@@ -63,7 +62,7 @@ namespace Azure.AI.TextAnalytics.Samples
 
         private Dictionary<string, int> GetComplaint(AnalyzeSentimentResultCollection reviews)
         {
-            var complaints = new Dictionary<string, int>();
+            Dictionary<string, int> complaints = new();
             foreach (AnalyzeSentimentResult review in reviews)
             {
                 foreach (SentenceSentiment sentence in review.DocumentSentiment.Sentences)
@@ -72,7 +71,7 @@ namespace Azure.AI.TextAnalytics.Samples
                     {
                         if (opinion.Target.Sentiment == TextSentiment.Negative)
                         {
-                            complaints.TryGetValue(opinion.Target.Text, out var value);
+                            complaints.TryGetValue(opinion.Target.Text, out int value);
                             complaints[opinion.Target.Text] = value + 1;
                         }
                     }

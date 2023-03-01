@@ -15,38 +15,38 @@ namespace Azure.AI.MetricsAdvisor.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("anomalyDetectionConfigurationId");
+            writer.WritePropertyName("anomalyDetectionConfigurationId"u8);
             writer.WriteStringValue(DetectionConfigurationId);
-            writer.WritePropertyName("anomalyScopeType");
+            writer.WritePropertyName("anomalyScopeType"u8);
             writer.WriteStringValue(AnomalyScopeType.ToString());
             if (Optional.IsDefined(UseDetectionResultToFilterAnomalies))
             {
-                writer.WritePropertyName("negationOperation");
+                writer.WritePropertyName("negationOperation"u8);
                 writer.WriteBooleanValue(UseDetectionResultToFilterAnomalies.Value);
             }
             if (Optional.IsDefined(DimensionAnomalyScope))
             {
-                writer.WritePropertyName("dimensionAnomalyScope");
+                writer.WritePropertyName("dimensionAnomalyScope"u8);
                 writer.WriteObjectValue(DimensionAnomalyScope);
             }
             if (Optional.IsDefined(TopNAnomalyScope))
             {
-                writer.WritePropertyName("topNAnomalyScope");
+                writer.WritePropertyName("topNAnomalyScope"u8);
                 writer.WriteObjectValue(TopNAnomalyScope);
             }
             if (Optional.IsDefined(SeverityFilter))
             {
-                writer.WritePropertyName("severityFilter");
+                writer.WritePropertyName("severityFilter"u8);
                 writer.WriteObjectValue(SeverityFilter);
             }
             if (Optional.IsDefined(AlertSnoozeCondition))
             {
-                writer.WritePropertyName("snoozeFilter");
+                writer.WritePropertyName("snoozeFilter"u8);
                 writer.WriteObjectValue(AlertSnoozeCondition);
             }
             if (Optional.IsDefined(ValueFilter))
             {
-                writer.WritePropertyName("valueFilter");
+                writer.WritePropertyName("valueFilter"u8);
                 writer.WriteObjectValue(ValueFilter);
             }
             writer.WriteEndObject();
@@ -64,17 +64,17 @@ namespace Azure.AI.MetricsAdvisor.Models
             Optional<MetricBoundaryCondition> valueFilter = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("anomalyDetectionConfigurationId"))
+                if (property.NameEquals("anomalyDetectionConfigurationId"u8))
                 {
                     anomalyDetectionConfigurationId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("anomalyScopeType"))
+                if (property.NameEquals("anomalyScopeType"u8))
                 {
                     anomalyScopeType = new MetricAnomalyAlertScopeType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("negationOperation"))
+                if (property.NameEquals("negationOperation"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -84,7 +84,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                     negationOperation = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("dimensionAnomalyScope"))
+                if (property.NameEquals("dimensionAnomalyScope"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -94,7 +94,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                     dimensionAnomalyScope = DimensionKey.DeserializeDimensionKey(property.Value);
                     continue;
                 }
-                if (property.NameEquals("topNAnomalyScope"))
+                if (property.NameEquals("topNAnomalyScope"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -104,7 +104,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                     topNAnomalyScope = TopNGroupScope.DeserializeTopNGroupScope(property.Value);
                     continue;
                 }
-                if (property.NameEquals("severityFilter"))
+                if (property.NameEquals("severityFilter"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -114,7 +114,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                     severityFilter = SeverityCondition.DeserializeSeverityCondition(property.Value);
                     continue;
                 }
-                if (property.NameEquals("snoozeFilter"))
+                if (property.NameEquals("snoozeFilter"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -124,7 +124,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                     snoozeFilter = MetricAnomalyAlertSnoozeCondition.DeserializeMetricAnomalyAlertSnoozeCondition(property.Value);
                     continue;
                 }
-                if (property.NameEquals("valueFilter"))
+                if (property.NameEquals("valueFilter"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

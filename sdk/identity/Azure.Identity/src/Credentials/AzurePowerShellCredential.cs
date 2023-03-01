@@ -26,7 +26,7 @@ namespace Azure.Identity
         internal bool UseLegacyPowerShell { get; set; }
 
         private const string Troubleshooting = "See the troubleshooting guide for more information. https://aka.ms/azsdk/net/identity/powershellcredential/troubleshoot";
-        private const string AzurePowerShellFailedError = "Azure PowerShell authentication failed due to an unknown error. " + Troubleshooting;
+        internal const string AzurePowerShellFailedError = "Azure PowerShell authentication failed due to an unknown error. " + Troubleshooting;
         private const string RunConnectAzAccountToLogin = "Run Connect-AzAccount to login";
         private const string NoAccountsWereFoundInTheCache = "No accounts were found in the cache";
         private const string CannotRetrieveAccessToken = "cannot retrieve access token";
@@ -65,7 +65,7 @@ namespace Azure.Identity
             TenantId = options?.TenantId;
             _pipeline = pipeline ?? CredentialPipeline.GetInstance(options);
             _processService = processService ?? ProcessService.Default;
-            AdditionallyAllowedTenantIds = TenantIdResolver.ResolveAddionallyAllowedTenantIds(options?.AdditionallyAllowedTenantsCore);
+            AdditionallyAllowedTenantIds = TenantIdResolver.ResolveAddionallyAllowedTenantIds((options as ISupportsAdditionallyAllowedTenants)?.AdditionallyAllowedTenants);
             PowerShellProcessTimeout = options?.PowerShellProcessTimeout ?? TimeSpan.FromSeconds(10);
         }
 
@@ -169,8 +169,10 @@ namespace Azure.Identity
 
         private static void CheckForErrors(string output)
         {
-            bool noPowerShell = output.IndexOf("not found", StringComparison.OrdinalIgnoreCase) != -1 ||
-                                output.IndexOf("is not recognized", StringComparison.OrdinalIgnoreCase) != -1;
+            bool noPowerShell = (output.IndexOf("not found", StringComparison.OrdinalIgnoreCase) != -1 ||
+                                output.IndexOf("is not recognized", StringComparison.OrdinalIgnoreCase) != -1) &&
+                                // If the error contains AADSTS, this should be treated as a general error to be bubbled to the user
+                                output.IndexOf("AADSTS", StringComparison.OrdinalIgnoreCase) == -1;
             if (noPowerShell)
             {
                 throw new CredentialUnavailableException(PowerShellNotInstalledError);

@@ -120,5 +120,7 @@ namespace Azure.ResourceManager.Sql.Models
         public bool? IsInfraEncryptionEnabled { get; }
         /// <summary> The Client id used for cross tenant per database CMK scenario. </summary>
         public Guid? FederatedClientId { get; set; }
+        /// <summary> Type of enclave requested on the database i.e. Default or VBS enclaves. </summary>
+        public SqlAlwaysEncryptedEnclaveType? PreferredEnclaveType { get; set; }
     }
 }

@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Peering.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(PeeringFacilities))
             {
-                writer.WritePropertyName("peeringFacilities");
+                writer.WritePropertyName("peeringFacilities"u8);
                 writer.WriteStartArray();
                 foreach (var item in PeeringFacilities)
                 {
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Peering.Models
             Optional<IList<ExchangePeeringFacility>> peeringFacilities = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("peeringFacilities"))
+                if (property.NameEquals("peeringFacilities"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

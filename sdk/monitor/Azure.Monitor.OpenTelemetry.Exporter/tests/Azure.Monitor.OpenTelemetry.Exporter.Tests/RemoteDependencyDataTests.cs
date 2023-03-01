@@ -45,6 +45,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
                 parentContext: new ActivityContext(ActivityTraceId.CreateRandom(), ActivitySpanId.CreateRandom(), ActivityTraceFlags.Recorded),
                 startTime: DateTime.UtcNow);
 
+            Assert.NotNull(activity);
             activity.SetTag(SemanticConventions.AttributeDbSystem, dbSystem);
 
             var monitorTags = TraceHelper.EnumerateActivityTags(activity);
@@ -62,12 +63,14 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             using var parentActivity = activitySource.StartActivity("ParentActivity", ActivityKind.Internal);
             using var childActivity = activitySource.StartActivity("ChildActivity", ActivityKind.Internal);
 
+            Assert.NotNull(parentActivity);
             var monitorTagsParent = TraceHelper.EnumerateActivityTags(parentActivity);
 
             var remoteDependencyDataTypeForParent = new RemoteDependencyData(2, parentActivity, ref monitorTagsParent).Type;
 
             Assert.Null(remoteDependencyDataTypeForParent);
 
+            Assert.NotNull(childActivity);
             var monitorTagsChild = TraceHelper.EnumerateActivityTags(childActivity);
 
             var remoteDependencyDataTypeForChild = new RemoteDependencyData(2, childActivity, ref monitorTagsChild).Type;
@@ -84,6 +87,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
                 ActivityKind.Client,
                 parentContext: new ActivityContext(ActivityTraceId.CreateRandom(), ActivitySpanId.CreateRandom(), ActivityTraceFlags.Recorded),
                 startTime: DateTime.UtcNow);
+            Assert.NotNull(activity);
             activity.Stop();
 
             var httpUrl = "https://www.foo.bar/search";
@@ -115,6 +119,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
                 ActivityKind.Client,
                 parentContext: new ActivityContext(ActivityTraceId.CreateRandom(), ActivitySpanId.CreateRandom(), ActivityTraceFlags.Recorded),
                 startTime: DateTime.UtcNow);
+            Assert.NotNull(activity);
             activity.Stop();
 
             activity.SetStatus(Status.Ok);
@@ -146,6 +151,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
                 parentContext: new ActivityContext(ActivityTraceId.CreateRandom(), ActivitySpanId.CreateRandom(), ActivityTraceFlags.Recorded),
                 startTime: DateTime.UtcNow);
 
+            Assert.NotNull(activity);
             activity.SetTag(SemanticConventions.AttributeHttpMethod, "GET");
 
             activity.DisplayName = "HTTP GET";

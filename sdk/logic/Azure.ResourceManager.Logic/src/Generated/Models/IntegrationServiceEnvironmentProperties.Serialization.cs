@@ -17,32 +17,32 @@ namespace Azure.ResourceManager.Logic.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(ProvisioningState))
             {
-                writer.WritePropertyName("provisioningState");
+                writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
             if (Optional.IsDefined(State))
             {
-                writer.WritePropertyName("state");
+                writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
             if (Optional.IsDefined(IntegrationServiceEnvironmentId))
             {
-                writer.WritePropertyName("integrationServiceEnvironmentId");
+                writer.WritePropertyName("integrationServiceEnvironmentId"u8);
                 writer.WriteStringValue(IntegrationServiceEnvironmentId);
             }
             if (Optional.IsDefined(EndpointsConfiguration))
             {
-                writer.WritePropertyName("endpointsConfiguration");
+                writer.WritePropertyName("endpointsConfiguration"u8);
                 writer.WriteObjectValue(EndpointsConfiguration);
             }
             if (Optional.IsDefined(NetworkConfiguration))
             {
-                writer.WritePropertyName("networkConfiguration");
+                writer.WritePropertyName("networkConfiguration"u8);
                 writer.WriteObjectValue(NetworkConfiguration);
             }
             if (Optional.IsDefined(EncryptionConfiguration))
             {
-                writer.WritePropertyName("encryptionConfiguration");
+                writer.WritePropertyName("encryptionConfiguration"u8);
                 writer.WriteObjectValue(EncryptionConfiguration);
             }
             writer.WriteEndObject();
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Logic.Models
             Optional<IntegrationServiceEnvironmenEncryptionConfiguration> encryptionConfiguration = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("provisioningState"))
+                if (property.NameEquals("provisioningState"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Logic.Models
                     provisioningState = new LogicWorkflowProvisioningState(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("state"))
+                if (property.NameEquals("state"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -78,12 +78,12 @@ namespace Azure.ResourceManager.Logic.Models
                     state = new LogicWorkflowState(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("integrationServiceEnvironmentId"))
+                if (property.NameEquals("integrationServiceEnvironmentId"u8))
                 {
                     integrationServiceEnvironmentId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("endpointsConfiguration"))
+                if (property.NameEquals("endpointsConfiguration"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Logic.Models
                     endpointsConfiguration = FlowEndpointsConfiguration.DeserializeFlowEndpointsConfiguration(property.Value);
                     continue;
                 }
-                if (property.NameEquals("networkConfiguration"))
+                if (property.NameEquals("networkConfiguration"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Logic.Models
                     networkConfiguration = IntegrationServiceNetworkConfiguration.DeserializeIntegrationServiceNetworkConfiguration(property.Value);
                     continue;
                 }
-                if (property.NameEquals("encryptionConfiguration"))
+                if (property.NameEquals("encryptionConfiguration"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

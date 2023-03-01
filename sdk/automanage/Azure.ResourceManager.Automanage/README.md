@@ -1,15 +1,25 @@
-# Azure Automanage Management client library for .NET
+# Microsoft Azure Automanage management client library for .NET
 
-This package follows the [new Azure SDK guidelines](https://azure.github.io/azure-sdk/general_introduction.html) which provide a number of core capabilities that are shared amongst all Azure SDKs, including the intuitive Azure Identity library, an HTTP Pipeline with custom policies, error-handling, distributed tracing, and much more.
+The Microsoft Azure Automanage offers a unified solution to simplify IT management. With point-and-click simplicity, automate operations and apply consistent best practices across the entire lifecycle of Windows Server and Linux servers in Azure or in hybrid environments enabled by Azure Arc.
+
+This library supports managing Microsoft Azure Automanage resources.
+
+This library follows the [new Azure SDK guidelines](https://azure.github.io/azure-sdk/general_introduction.html), and provides many core capabilities:
+
+    - Support MSAL.NET, Azure.Identity is out of box for supporting MSAL.NET.
+    - Support [OpenTelemetry](https://opentelemetry.io/) for distributed tracing.
+    - HTTP pipeline with custom policies.
+    - Better error-handling.
+    - Support uniform telemetry across all languages.
 
 ## Getting started 
 
 ### Install the package
 
-Install the Azure Automanage management library for .NET with [NuGet](https://www.nuget.org/):
+Install the Microsoft Azure Automanage management library for .NET with [NuGet](https://www.nuget.org/):
 
 ```dotnetcli
-dotnet add package Azure.ResourceManager.Automanage --prerelease
+dotnet add package Azure.ResourceManager.Automanage
 ```
 
 ### Prerequisites
@@ -22,7 +32,7 @@ To create an authenticated client and start interacting with Azure resources, pl
 
 ## Key concepts
 
-Key concepts of the Azure .NET SDK can be found [here](https://azure.github.io/azure-sdk/dotnet_introduction.html)
+Key concepts of the Azure .NET SDK can be found [here](https://azure.github.io/azure-sdk/dotnet_introduction.html).
 
 ## Documentation
 

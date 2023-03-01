@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Compute.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(MaxPrice))
             {
-                writer.WritePropertyName("maxPrice");
+                writer.WritePropertyName("maxPrice"u8);
                 writer.WriteNumberValue(MaxPrice.Value);
             }
             writer.WriteEndObject();
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Compute.Models
             Optional<double> maxPrice = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("maxPrice"))
+                if (property.NameEquals("maxPrice"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

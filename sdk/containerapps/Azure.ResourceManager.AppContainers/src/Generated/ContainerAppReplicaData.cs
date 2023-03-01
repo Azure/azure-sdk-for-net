@@ -13,13 +13,16 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppContainers
 {
-    /// <summary> A class representing the ContainerAppReplica data model. </summary>
+    /// <summary>
+    /// A class representing the ContainerAppReplica data model.
+    /// Container App Revision Replica.
+    /// </summary>
     public partial class ContainerAppReplicaData : ResourceData
     {
         /// <summary> Initializes a new instance of ContainerAppReplicaData. </summary>
         public ContainerAppReplicaData()
         {
-            Containers = new ChangeTrackingList<ReplicaContainer>();
+            Containers = new ChangeTrackingList<ContainerAppReplicaContainer>();
         }
 
         /// <summary> Initializes a new instance of ContainerAppReplicaData. </summary>
@@ -29,7 +32,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="systemData"> The systemData. </param>
         /// <param name="createdOn"> Timestamp describing when the pod was created by controller. </param>
         /// <param name="containers"> The containers collection under a replica. </param>
-        internal ContainerAppReplicaData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? createdOn, IList<ReplicaContainer> containers) : base(id, name, resourceType, systemData)
+        internal ContainerAppReplicaData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? createdOn, IList<ContainerAppReplicaContainer> containers) : base(id, name, resourceType, systemData)
         {
             CreatedOn = createdOn;
             Containers = containers;
@@ -38,6 +41,6 @@ namespace Azure.ResourceManager.AppContainers
         /// <summary> Timestamp describing when the pod was created by controller. </summary>
         public DateTimeOffset? CreatedOn { get; }
         /// <summary> The containers collection under a replica. </summary>
-        public IList<ReplicaContainer> Containers { get; }
+        public IList<ContainerAppReplicaContainer> Containers { get; }
     }
 }

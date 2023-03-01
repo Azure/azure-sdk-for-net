@@ -17,23 +17,23 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             var storageTransmissionEvaluator = new StorageTransmissionEvaluator(SampleSize);
             var sampleSize = typeof(StorageTransmissionEvaluator)
                 .GetField("_sampleSize", BindingFlags.Instance | BindingFlags.NonPublic)
-                .GetValue(storageTransmissionEvaluator);
+                ?.GetValue(storageTransmissionEvaluator);
             var previousExportStartTimeInMilliseconds = typeof(StorageTransmissionEvaluator)
                 .GetField("_previousExportStartTimeInMilliseconds", BindingFlags.Instance | BindingFlags.NonPublic)
-                .GetValue(storageTransmissionEvaluator);
+                ?.GetValue(storageTransmissionEvaluator);
             var exportDurationInSeconds = typeof(StorageTransmissionEvaluator)
                 .GetField("_exportDurationsInMilliseconds", BindingFlags.Instance | BindingFlags.NonPublic)
-                .GetValue(storageTransmissionEvaluator) as long[];
+                ?.GetValue(storageTransmissionEvaluator) as long[];
             var exportIntervalsInSeconds = typeof(StorageTransmissionEvaluator)
                 .GetField("_exportIntervalsInMilliseconds", BindingFlags.Instance | BindingFlags.NonPublic)
-                .GetValue(storageTransmissionEvaluator) as long[];
+                ?.GetValue(storageTransmissionEvaluator) as long[];
 
-            Assert.Equal(SampleSize, (int)sampleSize);
+            Assert.Equal(SampleSize, (int)sampleSize!);
             Assert.NotNull(exportIntervalsInSeconds);
             Assert.NotNull(exportDurationInSeconds);
-            Assert.Equal(SampleSize, exportIntervalsInSeconds.Length);
-            Assert.Equal(SampleSize, exportDurationInSeconds.Length);
-            Assert.Equal(0, (long)previousExportStartTimeInMilliseconds);
+            Assert.Equal(SampleSize, exportIntervalsInSeconds!.Length);
+            Assert.Equal(SampleSize, exportDurationInSeconds!.Length);
+            Assert.Equal(0, (long)previousExportStartTimeInMilliseconds!);
         }
 
         [Fact]
@@ -79,7 +79,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             // than avg export interval.
             typeof(StorageTransmissionEvaluator)
                 .GetField("_currentBatchExportDurationInMilliseconds", BindingFlags.Instance | BindingFlags.NonPublic)
-                .SetValue(storageTransmissionEvaluator, 10000);
+                ?.SetValue(storageTransmissionEvaluator, 10000);
             var maxFiles = storageTransmissionEvaluator.GetMaxFilesToTransmitFromStorage();
 
             Assert.Equal(0, maxFiles);
@@ -117,17 +117,17 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 
             var exportIntervalsInSecondsBefore = typeof(StorageTransmissionEvaluator)
                 .GetField("_exportIntervalsInMilliseconds", BindingFlags.Instance | BindingFlags.NonPublic)
-                .GetValue(storageTransmissionEvaluator) as long[];
+                ?.GetValue(storageTransmissionEvaluator) as long[];
 
             var exportDurationInSecondsBefore = typeof(StorageTransmissionEvaluator)
                 .GetField("_exportDurationsInMilliseconds", BindingFlags.Instance | BindingFlags.NonPublic)
-                .GetValue(storageTransmissionEvaluator) as long[];
+                ?.GetValue(storageTransmissionEvaluator) as long[];
 
             // Add data points equal to sample size
             for (int i = 0; i < SampleSize; i++)
             {
-                Assert.Equal(2000, exportIntervalsInSecondsBefore[i]);
-                Assert.Equal(2000, exportDurationInSecondsBefore[i]);
+                Assert.Equal(2000, exportIntervalsInSecondsBefore![i]);
+                Assert.Equal(2000, exportDurationInSecondsBefore![i]);
             }
 
             // Add 3 more data points with different time values
@@ -141,15 +141,15 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             // First 3 elements should be updated
             for (int i = 0; i < 3; i++)
             {
-                Assert.Equal(1000, exportIntervalsInSecondsBefore[i]);
-                Assert.Equal(1000, exportDurationInSecondsBefore[i]);
+                Assert.Equal(1000, exportIntervalsInSecondsBefore![i]);
+                Assert.Equal(1000, exportDurationInSecondsBefore![i]);
             }
 
             // Last two should remain the same
             for (int i = 3; i < SampleSize; i++)
             {
-                Assert.Equal(2000, exportIntervalsInSecondsBefore[i]);
-                Assert.Equal(2000, exportDurationInSecondsBefore[i]);
+                Assert.Equal(2000, exportIntervalsInSecondsBefore![i]);
+                Assert.Equal(2000, exportDurationInSecondsBefore![i]);
             }
 
             // Adding samples more than sample szie should not throw any exception

@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 if (Data != null)
                 {
-                    writer.WritePropertyName("data");
+                    writer.WritePropertyName("data"u8);
                     writer.WriteStartObject();
                     foreach (var item in Data)
                     {
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Optional<IDictionary<string, string>> data = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("data"))
+                if (property.NameEquals("data"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
