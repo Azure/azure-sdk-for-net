@@ -43,10 +43,12 @@ namespace Azure.Monitor.OpenTelemetry
             services.AddLogging(logging =>
             {
                 AzureMonitorOpenTelemetryOptions logExporterOptions = new();
-                if (configureAzureMonitorOpenTelemetry != null)
+
+                // Workaround to copy the AzureMonitorOpenTelemetryOptions from DI
+                logging.AddAzureMonitorOpenTelemetryLogger(o =>
                 {
-                    configureAzureMonitorOpenTelemetry(logExporterOptions);
-                }
+                    logExporterOptions = o;
+                });
 
                 if (logExporterOptions.EnableLogs)
                 {

@@ -59,7 +59,7 @@ namespace Azure.Monitor.OpenTelemetry
         /// </summary>
         public string StorageDirectory { get; set; }
 
-        internal AzureMonitorOpenTelemetryOptions Clone(AzureMonitorOpenTelemetryOptions options)
+        internal void Clone(AzureMonitorOpenTelemetryOptions options)
         {
             if (options != null)
             {
@@ -70,8 +70,6 @@ namespace Azure.Monitor.OpenTelemetry
                 EnableTraces = options.EnableTraces;
                 StorageDirectory = options.StorageDirectory;
             }
-
-            return this;
         }
 
         internal void SetValueToExporterOptions(IServiceProvider sp)

@@ -3,6 +3,11 @@
 
 using System;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging.Configuration;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.DependencyInjection.Extensions;
+using Microsoft.Extensions.Options;
+using OpenTelemetry.Logs;
 
 namespace Azure.Monitor.OpenTelemetry
 {
@@ -18,6 +23,8 @@ namespace Azure.Monitor.OpenTelemetry
         /// <returns>The <see cref="IServiceCollection"/> so that additional calls can be chained.</returns>
         public static IServiceCollection AddAzureMonitorOpenTelemetry(this IServiceCollection services)
         {
+            services.TryAddSingleton<IConfigureOptions<AzureMonitorOpenTelemetryOptions>,
+                            DefaultAzureMonitorOpenTelemetryOptions>();
             return services.AddAzureMonitorOpenTelemetry(o => o = new AzureMonitorOpenTelemetryOptions());
         }
 
@@ -42,6 +49,28 @@ namespace Azure.Monitor.OpenTelemetry
         public static IServiceCollection AddAzureMonitorOpenTelemetry(this IServiceCollection services, Action<AzureMonitorOpenTelemetryOptions> configureAzureMonitorOpenTelemetry)
         {
             return AzureMonitorOpenTelemetryImplementations.AddAzureMonitorOpenTelemetryWithAction(services, configureAzureMonitorOpenTelemetry);
+        }
+
+        internal static ILoggingBuilder AddAzureMonitorOpenTelemetryLogger(this ILoggingBuilder builder, Action<AzureMonitorOpenTelemetryOptions> configure)
+        {
+            builder.AddConfiguration();
+
+            // builder.Services.TryAddEnumerable(
+            //    ServiceDescriptor.Singleton<ILoggerProvider, AzureMonitorOpenTelemetryLoggerProvider>());
+
+            builder.Services.TryAddEnumerable(
+                ServiceDescriptor.Singleton<ILoggerProvider, AzureMonitorOpenTelemetryLoggerProvider>(
+                    sp => new AzureMonitorOpenTelemetryLoggerProvider(sp)));
+
+            LoggerProviderOptions.RegisterProviderOptions
+                <AzureMonitorOpenTelemetryOptions, AzureMonitorOpenTelemetryLoggerProvider>(builder.Services);
+
+            if (configure != null)
+            {
+                builder.Services.Configure(configure);
+            }
+
+            return builder;
         }
     }
 }
