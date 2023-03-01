@@ -18,7 +18,7 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
     /// <summary>
     /// Content type contract details.
     /// </summary>
-    public partial class ContentItemContract : Resource
+    public partial class ContentItemContract : ProxyResource
     {
         /// <summary>
         /// Initializes a new instance of the ContentItemContract class.

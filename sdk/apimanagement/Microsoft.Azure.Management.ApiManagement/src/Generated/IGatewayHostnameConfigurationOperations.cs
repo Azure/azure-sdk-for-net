@@ -29,7 +29,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// gateway.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='serviceName'>
         /// The name of the API Management service.
@@ -62,7 +62,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// exists for specified Gateway entity.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='serviceName'>
         /// The name of the API Management service.
@@ -92,7 +92,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// Get details of a hostname configuration
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='serviceName'>
         /// The name of the API Management service.
@@ -125,7 +125,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// Creates of updates hostname configuration for a Gateway.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='serviceName'>
         /// The name of the API Management service.
@@ -165,7 +165,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// Gateway.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='serviceName'>
         /// The name of the API Management service.

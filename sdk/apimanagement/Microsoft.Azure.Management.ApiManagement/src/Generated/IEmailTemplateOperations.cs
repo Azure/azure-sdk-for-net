@@ -27,7 +27,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// Gets all email templates
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='serviceName'>
         /// The name of the API Management service.
@@ -66,7 +66,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// specified by its identifier.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='serviceName'>
         /// The name of the API Management service.
@@ -101,7 +101,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// Gets the details of the email template specified by its identifier.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='serviceName'>
         /// The name of the API Management service.
@@ -139,7 +139,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// Updates an Email Template.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='serviceName'>
         /// The name of the API Management service.
@@ -184,7 +184,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// Updates API Management email template
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='serviceName'>
         /// The name of the API Management service.
@@ -231,7 +231,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// Management service instance.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='serviceName'>
         /// The name of the API Management service.

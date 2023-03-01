@@ -30,7 +30,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// complete.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='serviceName'>
         /// The name of the API Management service.
@@ -54,14 +54,14 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<ApiManagementServiceResource>> RestoreWithHttpMessagesAsync(string resourceGroupName, string serviceName, ApiManagementServiceBackupRestoreParameters parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<ApiManagementServiceResource,ApiManagementServiceRestoreHeaders>> RestoreWithHttpMessagesAsync(string resourceGroupName, string serviceName, ApiManagementServiceBackupRestoreParameters parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Creates a backup of the API Management service to the given Azure
         /// Storage Account. This is long running operation and could take
         /// several minutes to complete.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='serviceName'>
         /// The name of the API Management service.
@@ -84,13 +84,13 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<ApiManagementServiceResource>> BackupWithHttpMessagesAsync(string resourceGroupName, string serviceName, ApiManagementServiceBackupRestoreParameters parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<ApiManagementServiceResource,ApiManagementServiceBackupHeaders>> BackupWithHttpMessagesAsync(string resourceGroupName, string serviceName, ApiManagementServiceBackupRestoreParameters parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Creates or updates an API Management service. This is long running
         /// operation and could take several minutes to complete.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='serviceName'>
         /// The name of the API Management service.
@@ -119,7 +119,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// Updates an existing API Management service.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='serviceName'>
         /// The name of the API Management service.
@@ -148,7 +148,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// Gets an API Management service resource description.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='serviceName'>
         /// The name of the API Management service.
@@ -173,7 +173,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// Deletes an existing API Management service.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='serviceName'>
         /// The name of the API Management service.
@@ -195,10 +195,38 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// </exception>
         Task<AzureOperationResponse<ApiManagementServiceResource>> DeleteWithHttpMessagesAsync(string resourceGroupName, string serviceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
+        /// Upgrades an API Management service to the Stv2 platform. For
+        /// details refer to https://aka.ms/apim-migrate-stv2. This change is
+        /// not reversible. This is long running operation and could take
+        /// several minutes to complete.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group. The name is case insensitive.
+        /// </param>
+        /// <param name='serviceName'>
+        /// The name of the API Management service.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="ErrorResponseException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<ApiManagementServiceResource,ApiManagementServiceMigrateToStv2Headers>> MigrateToStv2WithHttpMessagesAsync(string resourceGroupName, string serviceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
         /// List all API Management services within a resource group.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -240,7 +268,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// is valid for 5 Minutes.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='serviceName'>
         /// The name of the API Management service.
@@ -309,7 +337,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// network to pick the updated DNS changes.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='serviceName'>
         /// The name of the API Management service.
@@ -335,7 +363,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<ApiManagementServiceResource>> ApplyNetworkConfigurationUpdatesWithHttpMessagesAsync(string resourceGroupName, string serviceName, ApiManagementServiceApplyNetworkConfigurationParameters parameters = default(ApiManagementServiceApplyNetworkConfigurationParameters), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<ApiManagementServiceResource,ApiManagementServiceApplyNetworkConfigurationUpdatesHeaders>> ApplyNetworkConfigurationUpdatesWithHttpMessagesAsync(string resourceGroupName, string serviceName, ApiManagementServiceApplyNetworkConfigurationParameters parameters = default(ApiManagementServiceApplyNetworkConfigurationParameters), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Restores a backup of an API Management service created using the
         /// ApiManagementService_Backup operation on the current service. This
@@ -343,7 +371,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// complete.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='serviceName'>
         /// The name of the API Management service.
@@ -367,14 +395,14 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<ApiManagementServiceResource>> BeginRestoreWithHttpMessagesAsync(string resourceGroupName, string serviceName, ApiManagementServiceBackupRestoreParameters parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<ApiManagementServiceResource,ApiManagementServiceRestoreHeaders>> BeginRestoreWithHttpMessagesAsync(string resourceGroupName, string serviceName, ApiManagementServiceBackupRestoreParameters parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Creates a backup of the API Management service to the given Azure
         /// Storage Account. This is long running operation and could take
         /// several minutes to complete.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='serviceName'>
         /// The name of the API Management service.
@@ -397,13 +425,13 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<ApiManagementServiceResource>> BeginBackupWithHttpMessagesAsync(string resourceGroupName, string serviceName, ApiManagementServiceBackupRestoreParameters parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<ApiManagementServiceResource,ApiManagementServiceBackupHeaders>> BeginBackupWithHttpMessagesAsync(string resourceGroupName, string serviceName, ApiManagementServiceBackupRestoreParameters parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Creates or updates an API Management service. This is long running
         /// operation and could take several minutes to complete.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='serviceName'>
         /// The name of the API Management service.
@@ -432,7 +460,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// Updates an existing API Management service.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='serviceName'>
         /// The name of the API Management service.
@@ -461,7 +489,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// Deletes an existing API Management service.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='serviceName'>
         /// The name of the API Management service.
@@ -483,11 +511,39 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// </exception>
         Task<AzureOperationResponse<ApiManagementServiceResource>> BeginDeleteWithHttpMessagesAsync(string resourceGroupName, string serviceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
+        /// Upgrades an API Management service to the Stv2 platform. For
+        /// details refer to https://aka.ms/apim-migrate-stv2. This change is
+        /// not reversible. This is long running operation and could take
+        /// several minutes to complete.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group. The name is case insensitive.
+        /// </param>
+        /// <param name='serviceName'>
+        /// The name of the API Management service.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="ErrorResponseException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<ApiManagementServiceResource,ApiManagementServiceMigrateToStv2Headers>> BeginMigrateToStv2WithHttpMessagesAsync(string resourceGroupName, string serviceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
         /// Updates the Microsoft.ApiManagement resource running in the Virtual
         /// network to pick the updated DNS changes.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='serviceName'>
         /// The name of the API Management service.
@@ -513,7 +569,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<ApiManagementServiceResource>> BeginApplyNetworkConfigurationUpdatesWithHttpMessagesAsync(string resourceGroupName, string serviceName, ApiManagementServiceApplyNetworkConfigurationParameters parameters = default(ApiManagementServiceApplyNetworkConfigurationParameters), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<ApiManagementServiceResource,ApiManagementServiceApplyNetworkConfigurationUpdatesHeaders>> BeginApplyNetworkConfigurationUpdatesWithHttpMessagesAsync(string resourceGroupName, string serviceName, ApiManagementServiceApplyNetworkConfigurationParameters parameters = default(ApiManagementServiceApplyNetworkConfigurationParameters), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// List all API Management services within a resource group.
         /// </summary>

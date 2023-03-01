@@ -29,7 +29,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// Gateway entity.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='serviceName'>
         /// The name of the API Management service.
@@ -62,7 +62,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// Certificate Authority.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='serviceName'>
         /// The name of the API Management service.
@@ -92,7 +92,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// Get assigned Gateway Certificate Authority details.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='serviceName'>
         /// The name of the API Management service.
@@ -126,7 +126,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// Authority.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='serviceName'>
         /// The name of the API Management service.
@@ -166,7 +166,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// entity.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='serviceName'>
         /// The name of the API Management service.

@@ -19,7 +19,7 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
     /// Recipient User details.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
-    public partial class RecipientUserContract : Resource
+    public partial class RecipientUserContract : ProxyResource
     {
         /// <summary>
         /// Initializes a new instance of the RecipientUserContract class.

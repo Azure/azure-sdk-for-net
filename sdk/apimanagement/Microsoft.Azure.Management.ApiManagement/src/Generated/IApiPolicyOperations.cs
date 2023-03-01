@@ -27,7 +27,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// Get the policy configuration at the API level.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='serviceName'>
         /// The name of the API Management service.
@@ -58,7 +58,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// its identifier.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='serviceName'>
         /// The name of the API Management service.
@@ -85,7 +85,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// Get the policy configuration at the API level.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='serviceName'>
         /// The name of the API Management service.
@@ -118,7 +118,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// Creates or updates policy configuration for the API.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='serviceName'>
         /// The name of the API Management service.
@@ -155,7 +155,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// Deletes the policy configuration at the Api.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='serviceName'>
         /// The name of the API Management service.

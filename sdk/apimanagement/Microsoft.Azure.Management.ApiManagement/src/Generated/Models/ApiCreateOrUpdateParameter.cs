@@ -90,7 +90,11 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// * `websocket` creates websocket API
         /// * `graphql` creates GraphQL API. Possible values include:
         /// 'SoapToRest', 'SoapPassThrough', 'WebSocket', 'GraphQL'</param>
-        public ApiCreateOrUpdateParameter(string path, string description = default(string), AuthenticationSettingsContract authenticationSettings = default(AuthenticationSettingsContract), SubscriptionKeyParameterNamesContract subscriptionKeyParameterNames = default(SubscriptionKeyParameterNamesContract), string apiType = default(string), string apiRevision = default(string), string apiVersion = default(string), bool? isCurrent = default(bool?), bool? isOnline = default(bool?), string apiRevisionDescription = default(string), string apiVersionDescription = default(string), string apiVersionSetId = default(string), bool? subscriptionRequired = default(bool?), string termsOfServiceUrl = default(string), ApiContactInformation contact = default(ApiContactInformation), ApiLicenseInformation license = default(ApiLicenseInformation), string sourceApiId = default(string), string displayName = default(string), string serviceUrl = default(string), IList<string> protocols = default(IList<string>), ApiVersionSetContractDetails apiVersionSet = default(ApiVersionSetContractDetails), string value = default(string), string format = default(string), ApiCreateOrUpdatePropertiesWsdlSelector wsdlSelector = default(ApiCreateOrUpdatePropertiesWsdlSelector), string soapApiType = default(string))
+        /// <param name="translateRequiredQueryParametersConduct">Strategy of
+        /// translating required query parameters to template ones. By default
+        /// has value 'template'. Possible values: 'template', 'query'.
+        /// Possible values include: 'Template', 'Query'</param>
+        public ApiCreateOrUpdateParameter(string path, string description = default(string), AuthenticationSettingsContract authenticationSettings = default(AuthenticationSettingsContract), SubscriptionKeyParameterNamesContract subscriptionKeyParameterNames = default(SubscriptionKeyParameterNamesContract), string apiType = default(string), string apiRevision = default(string), string apiVersion = default(string), bool? isCurrent = default(bool?), bool? isOnline = default(bool?), string apiRevisionDescription = default(string), string apiVersionDescription = default(string), string apiVersionSetId = default(string), bool? subscriptionRequired = default(bool?), string termsOfServiceUrl = default(string), ApiContactInformation contact = default(ApiContactInformation), ApiLicenseInformation license = default(ApiLicenseInformation), string sourceApiId = default(string), string displayName = default(string), string serviceUrl = default(string), IList<string> protocols = default(IList<string>), ApiVersionSetContractDetails apiVersionSet = default(ApiVersionSetContractDetails), string value = default(string), string format = default(string), ApiCreateOrUpdatePropertiesWsdlSelector wsdlSelector = default(ApiCreateOrUpdatePropertiesWsdlSelector), string soapApiType = default(string), string translateRequiredQueryParametersConduct = default(string))
         {
             Description = description;
             AuthenticationSettings = authenticationSettings;
@@ -117,6 +121,7 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
             Format = format;
             WsdlSelector = wsdlSelector;
             SoapApiType = soapApiType;
+            TranslateRequiredQueryParametersConduct = translateRequiredQueryParametersConduct;
             CustomInit();
         }
 
@@ -296,6 +301,14 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.apiType")]
         public string SoapApiType { get; set; }
+
+        /// <summary>
+        /// Gets or sets strategy of translating required query parameters to
+        /// template ones. By default has value 'template'. Possible values:
+        /// 'template', 'query'. Possible values include: 'Template', 'Query'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.translateRequiredQueryParameters")]
+        public string TranslateRequiredQueryParametersConduct { get; set; }
 
         /// <summary>
         /// Validate the object.

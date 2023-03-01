@@ -66,16 +66,13 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// </exception>
         public virtual void Validate()
         {
-            if (Percentage != null)
+            if (Percentage > 100)
             {
-                if (Percentage > 100)
-                {
-                    throw new ValidationException(ValidationRules.InclusiveMaximum, "Percentage", 100);
-                }
-                if (Percentage < 0)
-                {
-                    throw new ValidationException(ValidationRules.InclusiveMinimum, "Percentage", 0);
-                }
+                throw new ValidationException(ValidationRules.InclusiveMaximum, "Percentage", 100);
+            }
+            if (Percentage < 0)
+            {
+                throw new ValidationException(ValidationRules.InclusiveMinimum, "Percentage", 0);
             }
         }
     }

@@ -19,7 +19,7 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
     /// Issue Contract details.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
-    public partial class IssueContract : Resource
+    public partial class IssueContract : ProxyResource
     {
         /// <summary>
         /// Initializes a new instance of the IssueContract class.

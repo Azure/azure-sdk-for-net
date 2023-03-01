@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
     using System.Linq;
 
     /// <summary>
-    /// Descriptions of APIM policies.
+    /// Descriptions of API Management policies.
     /// </summary>
     public partial class PolicyDescriptionCollection
     {
@@ -33,7 +33,8 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// Initializes a new instance of the PolicyDescriptionCollection
         /// class.
         /// </summary>
-        /// <param name="value">Descriptions of APIM policies.</param>
+        /// <param name="value">Descriptions of API Management
+        /// policies.</param>
         /// <param name="count">Total record count number.</param>
         public PolicyDescriptionCollection(IList<PolicyDescriptionContract> value = default(IList<PolicyDescriptionContract>), long? count = default(long?))
         {
@@ -48,7 +49,7 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets descriptions of APIM policies.
+        /// Gets or sets descriptions of API Management policies.
         /// </summary>
         [JsonProperty(PropertyName = "value")]
         public IList<PolicyDescriptionContract> Value { get; set; }

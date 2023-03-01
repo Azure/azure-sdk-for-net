@@ -29,7 +29,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='serviceName'>
             /// The name of the API Management service.
@@ -47,7 +47,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='serviceName'>
             /// The name of the API Management service.
@@ -71,7 +71,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='serviceName'>
             /// The name of the API Management service.
@@ -92,7 +92,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='serviceName'>
             /// The name of the API Management service.
@@ -121,7 +121,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='serviceName'>
             /// The name of the API Management service.
@@ -129,13 +129,16 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// <param name='contentTypeId'>
             /// Content type identifier.
             /// </param>
+            /// <param name='parameters'>
+            /// Create or update parameters.
+            /// </param>
             /// <param name='ifMatch'>
             /// ETag of the Entity. Not required when creating an entity, but required when
             /// updating an entity.
             /// </param>
-            public static ContentTypeContract CreateOrUpdate(this IContentTypeOperations operations, string resourceGroupName, string serviceName, string contentTypeId, string ifMatch = default(string))
+            public static ContentTypeContract CreateOrUpdate(this IContentTypeOperations operations, string resourceGroupName, string serviceName, string contentTypeId, ContentTypeContract parameters, string ifMatch = default(string))
             {
-                return operations.CreateOrUpdateAsync(resourceGroupName, serviceName, contentTypeId, ifMatch).GetAwaiter().GetResult();
+                return operations.CreateOrUpdateAsync(resourceGroupName, serviceName, contentTypeId, parameters, ifMatch).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -148,13 +151,16 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='serviceName'>
             /// The name of the API Management service.
             /// </param>
             /// <param name='contentTypeId'>
             /// Content type identifier.
+            /// </param>
+            /// <param name='parameters'>
+            /// Create or update parameters.
             /// </param>
             /// <param name='ifMatch'>
             /// ETag of the Entity. Not required when creating an entity, but required when
@@ -163,9 +169,9 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ContentTypeContract> CreateOrUpdateAsync(this IContentTypeOperations operations, string resourceGroupName, string serviceName, string contentTypeId, string ifMatch = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<ContentTypeContract> CreateOrUpdateAsync(this IContentTypeOperations operations, string resourceGroupName, string serviceName, string contentTypeId, ContentTypeContract parameters, string ifMatch = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, serviceName, contentTypeId, ifMatch, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, serviceName, contentTypeId, parameters, ifMatch, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -181,7 +187,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='serviceName'>
             /// The name of the API Management service.
@@ -209,7 +215,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='serviceName'>
             /// The name of the API Management service.

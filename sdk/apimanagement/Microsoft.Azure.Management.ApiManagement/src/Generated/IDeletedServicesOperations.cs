@@ -93,7 +93,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<DeletedServiceContract>> PurgeWithHttpMessagesAsync(string serviceName, string location, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<DeletedServiceContract,DeletedServicesPurgeHeaders>> PurgeWithHttpMessagesAsync(string serviceName, string location, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Purges Api Management Service (deletes it with no option to
         /// undelete).
@@ -119,7 +119,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<DeletedServiceContract>> BeginPurgeWithHttpMessagesAsync(string serviceName, string location, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<DeletedServiceContract,DeletedServicesPurgeHeaders>> BeginPurgeWithHttpMessagesAsync(string serviceName, string location, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Lists all soft-deleted services available for undelete for the
         /// given subscription.

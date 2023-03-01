@@ -21,7 +21,7 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
     /// API details.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
-    public partial class ApiContract : Resource
+    public partial class ApiContract : ProxyResource
     {
         /// <summary>
         /// Initializes a new instance of the ApiContract class.
