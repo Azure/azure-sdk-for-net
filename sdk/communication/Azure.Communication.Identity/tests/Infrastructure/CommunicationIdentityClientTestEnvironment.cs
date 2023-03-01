@@ -1,7 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Communication.Tests;
+using Azure.Communication.Identity.Tests.Infrastructure;
 
 namespace Azure.Communication.Identity.Tests
 {

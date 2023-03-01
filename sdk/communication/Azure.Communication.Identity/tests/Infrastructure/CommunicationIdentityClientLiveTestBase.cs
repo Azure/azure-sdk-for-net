@@ -9,7 +9,7 @@ using System.Security;
 using System.Threading;
 using Azure.Core.TestFramework.Models;
 using System;
-using Azure.Communication.Tests;
+using Azure.Communication.Identity.Tests.Infrastructure;
 
 namespace Azure.Communication.Identity.Tests
 {

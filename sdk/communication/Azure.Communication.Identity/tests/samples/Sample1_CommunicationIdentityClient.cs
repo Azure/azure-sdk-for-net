@@ -3,9 +3,8 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure.Communication.Identity.Models;
 using Azure.Communication.Identity.Tests;
-using Azure.Communication.Tests;
+using Azure.Communication.Identity.Tests.Infrastructure;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.Identity;
