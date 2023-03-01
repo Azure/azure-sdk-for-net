@@ -116,11 +116,11 @@ namespace Azure.Data.AppConfiguration.Samples
 
             // #region Snippet:Sample_GetSnapshots
             var count = 0;
-            foreach (ConfigurationSettingsSnapshot item in client.GetSnapshots())
-            {
-                count++;
-                Console.WriteLine($"Name {item.Name} status {item.Status}");
-            }
+            //foreach (ConfigurationSettingsSnapshot item in client.GetSnapshots())
+            //{
+            //    count++;
+            //    Console.WriteLine($"Name {item.Name} status {item.Status}");
+            //}
             // #endregion
 
             Assert.AreEqual(2, count);
