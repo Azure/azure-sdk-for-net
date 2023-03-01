@@ -393,6 +393,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                 {
                     AzureMonitorExporterEventSource.Log.WriteVerbose(name: nameof(AzureMonitorTransmitter), message: $"{nameof(AzureMonitorTransmitter)} has been disposed.");
                     _statsbeat?.Dispose();
+                    var fileBlobProvider = _fileBlobProvider as FileBlobProvider;
+                    if ( fileBlobProvider != null )
+                    {
+                        fileBlobProvider.Dispose();
+                    }
                 }
 
                 _disposed = true;

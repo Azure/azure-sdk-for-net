@@ -69,7 +69,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
         {
             if (!_disposed)
             {
-                _transmitter?.Dispose();
+                if (disposing)
+                {
+                    _transmitter?.Dispose();
+                }
+
                 _disposed = true;
             }
 
