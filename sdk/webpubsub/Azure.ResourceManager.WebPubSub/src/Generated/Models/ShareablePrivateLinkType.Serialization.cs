@@ -43,7 +43,6 @@ namespace Azure.ResourceManager.WebPubSub.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     properties = ShareablePrivateLinkProperties.DeserializeShareablePrivateLinkProperties(property.Value);

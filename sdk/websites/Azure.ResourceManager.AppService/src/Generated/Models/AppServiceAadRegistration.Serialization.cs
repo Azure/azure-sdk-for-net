@@ -82,7 +82,6 @@ namespace Azure.ResourceManager.AppService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     clientSecretCertificateThumbprint = BinaryData.FromString(property.Value.GetRawText());

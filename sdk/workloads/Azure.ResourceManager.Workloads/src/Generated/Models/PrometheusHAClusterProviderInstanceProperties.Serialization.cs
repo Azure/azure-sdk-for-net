@@ -54,7 +54,6 @@ namespace Azure.ResourceManager.Workloads.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        prometheusUrl = null;
                         continue;
                     }
                     prometheusUrl = new Uri(property.Value.GetString());

@@ -53,7 +53,6 @@ namespace Azure.ResourceManager.WorkloadMonitor
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -92,7 +91,6 @@ namespace Azure.ResourceManager.WorkloadMonitor
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             previousMonitorState = new HealthState(property0.Value.GetString());
@@ -102,7 +100,6 @@ namespace Azure.ResourceManager.WorkloadMonitor
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             currentMonitorState = new HealthState(property0.Value.GetString());
@@ -127,7 +124,6 @@ namespace Azure.ResourceManager.WorkloadMonitor
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             evidence = BinaryData.FromString(property0.Value.GetRawText());
@@ -137,7 +133,6 @@ namespace Azure.ResourceManager.WorkloadMonitor
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             monitorConfiguration = BinaryData.FromString(property0.Value.GetRawText());

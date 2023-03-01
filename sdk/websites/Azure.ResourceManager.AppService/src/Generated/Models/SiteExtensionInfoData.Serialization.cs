@@ -188,7 +188,6 @@ namespace Azure.ResourceManager.AppService
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -217,7 +216,6 @@ namespace Azure.ResourceManager.AppService
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             extensionType = property0.Value.GetString().ToSiteExtensionType();
@@ -242,7 +240,6 @@ namespace Azure.ResourceManager.AppService
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                extensionUrl = null;
                                 continue;
                             }
                             extensionUrl = new Uri(property0.Value.GetString());
@@ -252,7 +249,6 @@ namespace Azure.ResourceManager.AppService
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                projectUrl = null;
                                 continue;
                             }
                             projectUrl = new Uri(property0.Value.GetString());
@@ -262,7 +258,6 @@ namespace Azure.ResourceManager.AppService
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                iconUrl = null;
                                 continue;
                             }
                             iconUrl = new Uri(property0.Value.GetString());
@@ -272,7 +267,6 @@ namespace Azure.ResourceManager.AppService
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                licenseUrl = null;
                                 continue;
                             }
                             licenseUrl = new Uri(property0.Value.GetString());
@@ -282,7 +276,6 @@ namespace Azure.ResourceManager.AppService
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                feedUrl = null;
                                 continue;
                             }
                             feedUrl = new Uri(property0.Value.GetString());
@@ -292,7 +285,6 @@ namespace Azure.ResourceManager.AppService
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<string> array = new List<string>();
@@ -312,7 +304,6 @@ namespace Azure.ResourceManager.AppService
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             publishedDateTime = property0.Value.GetDateTimeOffset("O");
@@ -322,7 +313,6 @@ namespace Azure.ResourceManager.AppService
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             downloadCount = property0.Value.GetInt32();
@@ -332,7 +322,6 @@ namespace Azure.ResourceManager.AppService
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             localIsLatestVersion = property0.Value.GetBoolean();
@@ -347,7 +336,6 @@ namespace Azure.ResourceManager.AppService
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             installedDateTime = property0.Value.GetDateTimeOffset("O");

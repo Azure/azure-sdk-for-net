@@ -28,7 +28,6 @@ namespace Azure.ResourceManager.AppService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        triggerUrl = null;
                         continue;
                     }
                     triggerUrl = new Uri(property.Value.GetString());

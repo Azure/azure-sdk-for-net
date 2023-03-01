@@ -59,7 +59,6 @@ namespace Azure.ResourceManager.Workloads
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -78,7 +77,6 @@ namespace Azure.ResourceManager.Workloads
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             provisioningState = new WorkloadMonitorProvisioningState(property0.Value.GetString());
@@ -88,7 +86,6 @@ namespace Azure.ResourceManager.Workloads
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             errors = JsonSerializer.Deserialize<ResponseError>(property0.Value.GetRawText());
@@ -98,7 +95,6 @@ namespace Azure.ResourceManager.Workloads
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             providerSettings = ProviderSpecificProperties.DeserializeProviderSpecificProperties(property0.Value);

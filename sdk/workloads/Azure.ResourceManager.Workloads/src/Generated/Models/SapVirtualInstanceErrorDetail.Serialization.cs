@@ -34,7 +34,6 @@ namespace Azure.ResourceManager.Workloads.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<SapVirtualInstanceErrorDetail> array = new List<SapVirtualInstanceErrorDetail>();

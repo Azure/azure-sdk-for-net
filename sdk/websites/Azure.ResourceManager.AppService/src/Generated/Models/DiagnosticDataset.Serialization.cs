@@ -38,7 +38,6 @@ namespace Azure.ResourceManager.AppService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     table = DataTableResponseObject.DeserializeDataTableResponseObject(property.Value);
@@ -48,7 +47,6 @@ namespace Azure.ResourceManager.AppService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     renderingProperties = DiagnosticDataRendering.DeserializeDiagnosticDataRendering(property.Value);

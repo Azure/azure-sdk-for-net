@@ -97,7 +97,6 @@ namespace Azure.ResourceManager.Workloads.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        dbPasswordUri = null;
                         continue;
                     }
                     dbPasswordUri = new Uri(property.Value.GetString());

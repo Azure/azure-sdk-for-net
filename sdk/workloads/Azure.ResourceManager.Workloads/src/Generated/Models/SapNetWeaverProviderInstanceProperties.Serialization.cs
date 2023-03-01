@@ -111,7 +111,6 @@ namespace Azure.ResourceManager.Workloads.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -136,7 +135,6 @@ namespace Azure.ResourceManager.Workloads.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        sapPasswordUri = null;
                         continue;
                     }
                     sapPasswordUri = new Uri(property.Value.GetString());
@@ -156,7 +154,6 @@ namespace Azure.ResourceManager.Workloads.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        sapSslCertificateUri = null;
                         continue;
                     }
                     sapSslCertificateUri = new Uri(property.Value.GetString());

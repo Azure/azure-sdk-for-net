@@ -150,7 +150,6 @@ namespace Azure.ResourceManager.Workloads
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     sku = WorkloadsSku.DeserializeWorkloadsSku(property.Value);
@@ -160,7 +159,6 @@ namespace Azure.ResourceManager.Workloads
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     identity = PhpWorkloadResourceIdentity.DeserializePhpWorkloadResourceIdentity(property.Value);
@@ -170,7 +168,6 @@ namespace Azure.ResourceManager.Workloads
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -205,7 +202,6 @@ namespace Azure.ResourceManager.Workloads
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -224,7 +220,6 @@ namespace Azure.ResourceManager.Workloads
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             appLocation = new AzureLocation(property0.Value.GetString());
@@ -234,7 +229,6 @@ namespace Azure.ResourceManager.Workloads
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             managedResourceGroupConfiguration = ManagedRGConfiguration.DeserializeManagedRGConfiguration(property0.Value);
@@ -244,7 +238,6 @@ namespace Azure.ResourceManager.Workloads
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             adminUserProfile = UserProfile.DeserializeUserProfile(property0.Value);
@@ -254,7 +247,6 @@ namespace Azure.ResourceManager.Workloads
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             webNodesProfile = VmssNodesProfile.DeserializeVmssNodesProfile(property0.Value);
@@ -264,7 +256,6 @@ namespace Azure.ResourceManager.Workloads
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             controllerProfile = NodeProfile.DeserializeNodeProfile(property0.Value);
@@ -274,7 +265,6 @@ namespace Azure.ResourceManager.Workloads
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             networkProfile = NetworkProfile.DeserializeNetworkProfile(property0.Value);
@@ -284,7 +274,6 @@ namespace Azure.ResourceManager.Workloads
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             databaseProfile = DatabaseProfile.DeserializeDatabaseProfile(property0.Value);
@@ -294,7 +283,6 @@ namespace Azure.ResourceManager.Workloads
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             siteProfile = SiteProfile.DeserializeSiteProfile(property0.Value);
@@ -304,7 +292,6 @@ namespace Azure.ResourceManager.Workloads
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             fileshareProfile = FileshareProfile.DeserializeFileshareProfile(property0.Value);
@@ -314,7 +301,6 @@ namespace Azure.ResourceManager.Workloads
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             phpProfile = PhpProfile.DeserializePhpProfile(property0.Value);
@@ -324,7 +310,6 @@ namespace Azure.ResourceManager.Workloads
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             searchProfile = SearchProfile.DeserializeSearchProfile(property0.Value);
@@ -334,7 +319,6 @@ namespace Azure.ResourceManager.Workloads
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             cacheProfile = CacheProfile.DeserializeCacheProfile(property0.Value);
@@ -344,7 +328,6 @@ namespace Azure.ResourceManager.Workloads
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             backupProfile = BackupProfile.DeserializeBackupProfile(property0.Value);
@@ -354,7 +337,6 @@ namespace Azure.ResourceManager.Workloads
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             provisioningState = new PhpWorkloadProvisioningState(property0.Value.GetString());

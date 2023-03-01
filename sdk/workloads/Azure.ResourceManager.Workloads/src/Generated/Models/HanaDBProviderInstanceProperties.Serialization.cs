@@ -114,7 +114,6 @@ namespace Azure.ResourceManager.Workloads.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        dbPasswordUri = null;
                         continue;
                     }
                     dbPasswordUri = new Uri(property.Value.GetString());
@@ -124,7 +123,6 @@ namespace Azure.ResourceManager.Workloads.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        dbSslCertificateUri = null;
                         continue;
                     }
                     dbSslCertificateUri = new Uri(property.Value.GetString());

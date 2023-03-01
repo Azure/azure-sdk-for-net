@@ -51,7 +51,6 @@ namespace Azure.ResourceManager.AppService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        serverUrl = null;
                         continue;
                     }
                     serverUrl = new Uri(property.Value.GetString());

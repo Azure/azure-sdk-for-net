@@ -44,7 +44,6 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                 {
                     if (property0.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property0.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     property = new OutputSelectorProperty(property0.Value.GetString());
@@ -54,7 +53,6 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                 {
                     if (property0.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property0.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     @operator = new OutputSelectorOperator(property0.Value.GetString());
