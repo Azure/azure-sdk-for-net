@@ -48,7 +48,6 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     imageRepository = ImageRepositoryCredential.DeserializeImageRepositoryCredential(property.Value);

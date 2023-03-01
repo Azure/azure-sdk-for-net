@@ -39,7 +39,6 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<EdgeKubernetesRoleStorageClassInfo> array = new List<EdgeKubernetesRoleStorageClassInfo>();
@@ -54,7 +53,6 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<DataBoxEdgeMountPointMap> array = new List<DataBoxEdgeMountPointMap>();

@@ -38,7 +38,6 @@ namespace Azure.ResourceManager.Datadog
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     properties = DatadogSingleSignOnProperties.DeserializeDatadogSingleSignOnProperties(property.Value);
@@ -63,7 +62,6 @@ namespace Azure.ResourceManager.Datadog
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());

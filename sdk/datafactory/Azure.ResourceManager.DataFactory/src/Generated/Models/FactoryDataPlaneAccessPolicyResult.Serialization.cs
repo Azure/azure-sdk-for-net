@@ -24,7 +24,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     policy = FactoryDataPlaneUserAccessPolicy.DeserializeFactoryDataPlaneUserAccessPolicy(property.Value);
@@ -39,7 +38,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        dataPlaneUrl = null;
                         continue;
                     }
                     dataPlaneUrl = new Uri(property.Value.GetString());

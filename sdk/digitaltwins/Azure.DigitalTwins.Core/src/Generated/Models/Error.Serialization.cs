@@ -35,7 +35,6 @@ namespace Azure.DigitalTwins.Core
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<Error> array = new List<Error>();
@@ -50,7 +49,6 @@ namespace Azure.DigitalTwins.Core
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     innererror = InnerError.DeserializeInnerError(property.Value);

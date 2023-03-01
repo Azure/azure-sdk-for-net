@@ -77,7 +77,6 @@ namespace Azure.ResourceManager.ElasticSan
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -112,7 +111,6 @@ namespace Azure.ResourceManager.ElasticSan
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -136,7 +134,6 @@ namespace Azure.ResourceManager.ElasticSan
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<string> array = new List<string>();
@@ -151,7 +148,6 @@ namespace Azure.ResourceManager.ElasticSan
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             provisioningState = new ElasticSanProvisioningState(property0.Value.GetString());
@@ -171,7 +167,6 @@ namespace Azure.ResourceManager.ElasticSan
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             totalVolumeSizeGiB = property0.Value.GetInt64();
@@ -181,7 +176,6 @@ namespace Azure.ResourceManager.ElasticSan
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             volumeGroupCount = property0.Value.GetInt64();
@@ -191,7 +185,6 @@ namespace Azure.ResourceManager.ElasticSan
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             totalIops = property0.Value.GetInt64();
@@ -201,7 +194,6 @@ namespace Azure.ResourceManager.ElasticSan
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             totalMbps = property0.Value.GetInt64();
@@ -211,7 +203,6 @@ namespace Azure.ResourceManager.ElasticSan
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             totalSizeTiB = property0.Value.GetInt64();

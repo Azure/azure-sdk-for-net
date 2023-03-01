@@ -47,7 +47,6 @@ namespace Azure.ResourceManager.DnsResolver.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     privateIPAddress = IPAddress.Parse(property.Value.GetString());
@@ -57,7 +56,6 @@ namespace Azure.ResourceManager.DnsResolver.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     privateIPAllocationMethod = new InboundEndpointIPAllocationMethod(property.Value.GetString());

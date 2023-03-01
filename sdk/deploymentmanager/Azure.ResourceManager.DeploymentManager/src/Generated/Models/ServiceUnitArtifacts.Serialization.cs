@@ -51,7 +51,6 @@ namespace Azure.ResourceManager.DeploymentManager.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        templateUri = null;
                         continue;
                     }
                     templateUri = new Uri(property.Value.GetString());
@@ -61,7 +60,6 @@ namespace Azure.ResourceManager.DeploymentManager.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        parametersUri = null;
                         continue;
                     }
                     parametersUri = new Uri(property.Value.GetString());

@@ -79,7 +79,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     catalogAdminPassword = FactorySecretString.DeserializeFactorySecretString(property.Value);
@@ -89,7 +88,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     catalogPricingTier = new IntegrationRuntimeSsisCatalogPricingTier(property.Value.GetString());

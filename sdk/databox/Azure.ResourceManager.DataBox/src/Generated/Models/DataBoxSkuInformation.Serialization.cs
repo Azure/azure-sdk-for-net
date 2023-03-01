@@ -30,7 +30,6 @@ namespace Azure.ResourceManager.DataBox.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     sku = DataBoxSku.DeserializeDataBoxSku(property.Value);
@@ -40,7 +39,6 @@ namespace Azure.ResourceManager.DataBox.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     enabled = property.Value.GetBoolean();
@@ -59,7 +57,6 @@ namespace Azure.ResourceManager.DataBox.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<DataLocationToServiceLocationMap> array = new List<DataLocationToServiceLocationMap>();
@@ -74,7 +71,6 @@ namespace Azure.ResourceManager.DataBox.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             capacity = DataBoxSkuCapacity.DeserializeDataBoxSkuCapacity(property0.Value);
@@ -84,7 +80,6 @@ namespace Azure.ResourceManager.DataBox.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<DataBoxSkuCost> array = new List<DataBoxSkuCost>();
@@ -99,7 +94,6 @@ namespace Azure.ResourceManager.DataBox.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<string> array = new List<string>();
@@ -114,7 +108,6 @@ namespace Azure.ResourceManager.DataBox.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             disabledReason = property0.Value.GetString().ToSkuDisabledReason();

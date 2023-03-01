@@ -74,7 +74,6 @@ namespace Azure.ResourceManager.EventGrid.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -103,7 +102,6 @@ namespace Azure.ResourceManager.EventGrid.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                schemaUri = null;
                                 continue;
                             }
                             schemaUri = new Uri(property0.Value.GetString());
@@ -113,7 +111,6 @@ namespace Azure.ResourceManager.EventGrid.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             isInDefaultSet = property0.Value.GetBoolean();

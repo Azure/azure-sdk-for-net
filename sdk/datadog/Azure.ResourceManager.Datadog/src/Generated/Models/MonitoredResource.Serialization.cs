@@ -30,7 +30,6 @@ namespace Azure.ResourceManager.Datadog.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     sendingMetrics = property.Value.GetBoolean();
@@ -45,7 +44,6 @@ namespace Azure.ResourceManager.Datadog.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     sendingLogs = property.Value.GetBoolean();

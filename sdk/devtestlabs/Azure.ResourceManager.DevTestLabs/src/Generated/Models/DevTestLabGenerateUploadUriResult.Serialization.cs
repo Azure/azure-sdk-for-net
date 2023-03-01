@@ -22,7 +22,6 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        uploadUri = null;
                         continue;
                     }
                     uploadUri = new Uri(property.Value.GetString());

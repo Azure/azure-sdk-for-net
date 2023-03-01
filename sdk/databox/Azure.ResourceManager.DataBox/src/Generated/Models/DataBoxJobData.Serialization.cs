@@ -97,7 +97,6 @@ namespace Azure.ResourceManager.DataBox
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
@@ -107,7 +106,6 @@ namespace Azure.ResourceManager.DataBox
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -142,7 +140,6 @@ namespace Azure.ResourceManager.DataBox
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -166,7 +163,6 @@ namespace Azure.ResourceManager.DataBox
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             isCancellable = property0.Value.GetBoolean();
@@ -176,7 +172,6 @@ namespace Azure.ResourceManager.DataBox
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             isDeletable = property0.Value.GetBoolean();
@@ -186,7 +181,6 @@ namespace Azure.ResourceManager.DataBox
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             isShippingAddressEditable = property0.Value.GetBoolean();
@@ -196,7 +190,6 @@ namespace Azure.ResourceManager.DataBox
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             isPrepareToShipEnabled = property0.Value.GetBoolean();
@@ -206,7 +199,6 @@ namespace Azure.ResourceManager.DataBox
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             status = new DataBoxStageName(property0.Value.GetString());
@@ -216,7 +208,6 @@ namespace Azure.ResourceManager.DataBox
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             startTime = property0.Value.GetDateTimeOffset("O");
@@ -226,7 +217,6 @@ namespace Azure.ResourceManager.DataBox
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             error = JsonSerializer.Deserialize<ResponseError>(property0.Value.GetRawText());
@@ -236,7 +226,6 @@ namespace Azure.ResourceManager.DataBox
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             details = DataBoxBasicJobDetails.DeserializeDataBoxBasicJobDetails(property0.Value);
@@ -251,7 +240,6 @@ namespace Azure.ResourceManager.DataBox
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             deliveryType = property0.Value.GetString().ToJobDeliveryType();
@@ -261,7 +249,6 @@ namespace Azure.ResourceManager.DataBox
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             deliveryInfo = JobDeliveryInfo.DeserializeJobDeliveryInfo(property0.Value);
@@ -271,7 +258,6 @@ namespace Azure.ResourceManager.DataBox
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             isCancellableWithoutFee = property0.Value.GetBoolean();

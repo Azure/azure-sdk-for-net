@@ -33,7 +33,6 @@ namespace Azure.ResourceManager.Dynatrace.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     planData = DynatraceBillingPlanInfo.DeserializeDynatraceBillingPlanInfo(property.Value);

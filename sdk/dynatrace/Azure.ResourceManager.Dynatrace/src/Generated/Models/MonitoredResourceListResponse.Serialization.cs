@@ -23,7 +23,6 @@ namespace Azure.ResourceManager.Dynatrace.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<DynatraceMonitoredResourceDetails> array = new List<DynatraceMonitoredResourceDetails>();

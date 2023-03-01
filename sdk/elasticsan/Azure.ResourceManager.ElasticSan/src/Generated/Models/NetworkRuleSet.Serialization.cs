@@ -38,7 +38,6 @@ namespace Azure.ResourceManager.ElasticSan.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ElasticSanVirtualNetworkRule> array = new List<ElasticSanVirtualNetworkRule>();

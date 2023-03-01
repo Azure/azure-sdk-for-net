@@ -28,7 +28,6 @@ namespace Azure.ResourceManager.ExtendedLocations.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<CustomLocationEnabledResourceType> array = new List<CustomLocationEnabledResourceType>();

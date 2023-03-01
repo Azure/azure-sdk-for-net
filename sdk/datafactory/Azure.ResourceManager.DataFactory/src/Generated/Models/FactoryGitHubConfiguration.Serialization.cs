@@ -75,7 +75,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     clientSecret = GitHubClientSecret.DeserializeGitHubClientSecret(property.Value);

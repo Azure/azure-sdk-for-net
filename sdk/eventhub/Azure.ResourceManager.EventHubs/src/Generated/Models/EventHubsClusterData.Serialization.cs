@@ -68,7 +68,6 @@ namespace Azure.ResourceManager.EventHubs
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     sku = EventHubsClusterSku.DeserializeEventHubsClusterSku(property.Value);
@@ -78,7 +77,6 @@ namespace Azure.ResourceManager.EventHubs
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -113,7 +111,6 @@ namespace Azure.ResourceManager.EventHubs
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -132,7 +129,6 @@ namespace Azure.ResourceManager.EventHubs
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             createdAt = property0.Value.GetDateTimeOffset("O");
@@ -142,7 +138,6 @@ namespace Azure.ResourceManager.EventHubs
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             updatedAt = property0.Value.GetDateTimeOffset("O");
@@ -162,7 +157,6 @@ namespace Azure.ResourceManager.EventHubs
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             supportsScaling = property0.Value.GetBoolean();

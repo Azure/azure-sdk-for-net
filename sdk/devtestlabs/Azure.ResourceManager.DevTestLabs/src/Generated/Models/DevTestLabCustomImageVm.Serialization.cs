@@ -49,7 +49,6 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     windowsOSInfo = WindowsOSInfo.DeserializeWindowsOSInfo(property.Value);
@@ -59,7 +58,6 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     linuxOSInfo = LinuxOSInfo.DeserializeLinuxOSInfo(property.Value);

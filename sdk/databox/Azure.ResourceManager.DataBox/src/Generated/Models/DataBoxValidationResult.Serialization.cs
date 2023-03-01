@@ -32,7 +32,6 @@ namespace Azure.ResourceManager.DataBox.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             status = property0.Value.GetString().ToOverallValidationStatus();
@@ -42,7 +41,6 @@ namespace Azure.ResourceManager.DataBox.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<DataBoxValidationInputResult> array = new List<DataBoxValidationInputResult>();

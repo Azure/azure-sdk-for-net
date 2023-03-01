@@ -64,7 +64,6 @@ namespace Azure.ResourceManager.EventGrid.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             resourceId = new ResourceIdentifier(property0.Value.GetString());
@@ -74,7 +73,6 @@ namespace Azure.ResourceManager.EventGrid.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<DeliveryAttributeMapping> array = new List<DeliveryAttributeMapping>();

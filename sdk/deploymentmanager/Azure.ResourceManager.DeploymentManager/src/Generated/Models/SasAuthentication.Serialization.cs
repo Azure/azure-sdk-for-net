@@ -53,7 +53,6 @@ namespace Azure.ResourceManager.DeploymentManager.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                sasUri = null;
                                 continue;
                             }
                             sasUri = new Uri(property0.Value.GetString());

@@ -52,7 +52,6 @@ namespace Azure.ResourceManager.DataMigration.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     shardKey = MongoDBShardKeyInfo.DeserializeMongoDBShardKeyInfo(property.Value);

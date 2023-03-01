@@ -24,7 +24,6 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<EdgeOrderProductBillingMeterDetails> array = new List<EdgeOrderProductBillingMeterDetails>();
@@ -39,7 +38,6 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        billingInfoUrl = null;
                         continue;
                     }
                     billingInfoUrl = new Uri(property.Value.GetString());

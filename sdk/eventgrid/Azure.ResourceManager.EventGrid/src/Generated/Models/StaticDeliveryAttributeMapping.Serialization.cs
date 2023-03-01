@@ -74,7 +74,6 @@ namespace Azure.ResourceManager.EventGrid.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             isSecret = property0.Value.GetBoolean();

@@ -31,7 +31,6 @@ namespace Azure.Messaging.EventGrid.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     error = MediaJobError.DeserializeMediaJobError(property.Value);

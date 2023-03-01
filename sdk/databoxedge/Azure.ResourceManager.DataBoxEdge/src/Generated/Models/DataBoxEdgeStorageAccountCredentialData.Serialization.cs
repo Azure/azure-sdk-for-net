@@ -89,7 +89,6 @@ namespace Azure.ResourceManager.DataBoxEdge
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -118,7 +117,6 @@ namespace Azure.ResourceManager.DataBoxEdge
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             accountKey = AsymmetricEncryptedSecret.DeserializeAsymmetricEncryptedSecret(property0.Value);
@@ -148,7 +146,6 @@ namespace Azure.ResourceManager.DataBoxEdge
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             storageAccountId = new ResourceIdentifier(property0.Value.GetString());

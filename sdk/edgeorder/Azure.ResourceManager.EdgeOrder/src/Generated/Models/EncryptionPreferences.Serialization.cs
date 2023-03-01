@@ -32,7 +32,6 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     doubleEncryptionStatus = new DoubleEncryptionStatus(property.Value.GetString());

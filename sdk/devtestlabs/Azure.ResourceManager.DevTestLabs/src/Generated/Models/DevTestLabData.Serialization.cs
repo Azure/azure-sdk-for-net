@@ -128,7 +128,6 @@ namespace Azure.ResourceManager.DevTestLabs
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -163,7 +162,6 @@ namespace Azure.ResourceManager.DevTestLabs
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -207,7 +205,6 @@ namespace Azure.ResourceManager.DevTestLabs
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             labStorageType = new DevTestLabStorageType(property0.Value.GetString());
@@ -217,7 +214,6 @@ namespace Azure.ResourceManager.DevTestLabs
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<string> array = new List<string>();
@@ -232,7 +228,6 @@ namespace Azure.ResourceManager.DevTestLabs
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<string> array = new List<string>();
@@ -247,7 +242,6 @@ namespace Azure.ResourceManager.DevTestLabs
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             createdDate = property0.Value.GetDateTimeOffset("O");
@@ -257,7 +251,6 @@ namespace Azure.ResourceManager.DevTestLabs
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             premiumDataDisks = new DevTestLabPremiumDataDisk(property0.Value.GetString());
@@ -267,7 +260,6 @@ namespace Azure.ResourceManager.DevTestLabs
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             environmentPermission = new DevTestLabEnvironmentPermission(property0.Value.GetString());
@@ -277,7 +269,6 @@ namespace Azure.ResourceManager.DevTestLabs
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             announcement = DevTestLabAnnouncement.DeserializeDevTestLabAnnouncement(property0.Value);
@@ -287,7 +278,6 @@ namespace Azure.ResourceManager.DevTestLabs
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             support = DevTestLabSupport.DeserializeDevTestLabSupport(property0.Value);
@@ -317,7 +307,6 @@ namespace Azure.ResourceManager.DevTestLabs
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -337,7 +326,6 @@ namespace Azure.ResourceManager.DevTestLabs
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             uniqueIdentifier = property0.Value.GetGuid();

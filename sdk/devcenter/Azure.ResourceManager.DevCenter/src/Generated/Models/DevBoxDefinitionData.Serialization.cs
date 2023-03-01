@@ -73,7 +73,6 @@ namespace Azure.ResourceManager.DevCenter
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -108,7 +107,6 @@ namespace Azure.ResourceManager.DevCenter
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -127,7 +125,6 @@ namespace Azure.ResourceManager.DevCenter
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             imageReference = ImageReference.DeserializeImageReference(property0.Value);
@@ -137,7 +134,6 @@ namespace Azure.ResourceManager.DevCenter
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             sku = DevCenterSku.DeserializeDevCenterSku(property0.Value);
@@ -157,7 +153,6 @@ namespace Azure.ResourceManager.DevCenter
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             imageValidationStatus = new ImageValidationStatus(property0.Value.GetString());
@@ -167,7 +162,6 @@ namespace Azure.ResourceManager.DevCenter
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             imageValidationErrorDetails = ImageValidationErrorDetails.DeserializeImageValidationErrorDetails(property0.Value);
@@ -177,7 +171,6 @@ namespace Azure.ResourceManager.DevCenter
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             activeImageReference = ImageReference.DeserializeImageReference(property0.Value);

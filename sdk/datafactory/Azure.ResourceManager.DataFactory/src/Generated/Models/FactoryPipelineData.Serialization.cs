@@ -140,7 +140,6 @@ namespace Azure.ResourceManager.DataFactory
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     etag = new ETag(property.Value.GetString());
@@ -165,7 +164,6 @@ namespace Azure.ResourceManager.DataFactory
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -189,7 +187,6 @@ namespace Azure.ResourceManager.DataFactory
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<PipelineActivity> array = new List<PipelineActivity>();
@@ -204,7 +201,6 @@ namespace Azure.ResourceManager.DataFactory
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             Dictionary<string, EntityParameterSpecification> dictionary = new Dictionary<string, EntityParameterSpecification>();
@@ -219,7 +215,6 @@ namespace Azure.ResourceManager.DataFactory
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             Dictionary<string, PipelineVariableSpecification> dictionary = new Dictionary<string, PipelineVariableSpecification>();
@@ -234,7 +229,6 @@ namespace Azure.ResourceManager.DataFactory
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             concurrency = property0.Value.GetInt32();
@@ -244,7 +238,6 @@ namespace Azure.ResourceManager.DataFactory
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<BinaryData> array = new List<BinaryData>();
@@ -259,7 +252,6 @@ namespace Azure.ResourceManager.DataFactory
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             Dictionary<string, BinaryData> dictionary = new Dictionary<string, BinaryData>();
@@ -274,7 +266,6 @@ namespace Azure.ResourceManager.DataFactory
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             folder = PipelineFolder.DeserializePipelineFolder(property0.Value);
@@ -284,7 +275,6 @@ namespace Azure.ResourceManager.DataFactory
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             policy = FactoryPipelinePolicy.DeserializeFactoryPipelinePolicy(property0.Value);

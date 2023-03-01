@@ -40,7 +40,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        hostServiceUri = null;
                         continue;
                     }
                     hostServiceUri = new Uri(property.Value.GetString());
@@ -60,7 +59,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     isIdentityCertExprired = property.Value.GetBoolean();

@@ -86,7 +86,6 @@ namespace Azure.ResourceManager.EventHubs.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             storageAccountResourceId = new ResourceIdentifier(property0.Value.GetString());
@@ -106,7 +105,6 @@ namespace Azure.ResourceManager.EventHubs.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             dataLakeSubscriptionId = property0.Value.GetGuid();

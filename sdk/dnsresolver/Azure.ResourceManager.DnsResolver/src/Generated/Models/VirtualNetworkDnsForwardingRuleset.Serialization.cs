@@ -23,7 +23,6 @@ namespace Azure.ResourceManager.DnsResolver.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     id = new ResourceIdentifier(property.Value.GetString());
@@ -42,7 +41,6 @@ namespace Azure.ResourceManager.DnsResolver.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             virtualNetworkLink = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());

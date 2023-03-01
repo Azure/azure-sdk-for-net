@@ -68,7 +68,6 @@ namespace Azure.ResourceManager.DataShare
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -87,7 +86,6 @@ namespace Azure.ResourceManager.DataShare
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             dataSetCount = property0.Value.GetInt32();
@@ -102,7 +100,6 @@ namespace Azure.ResourceManager.DataShare
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             expirationDate = property0.Value.GetDateTimeOffset("O");
@@ -117,7 +114,6 @@ namespace Azure.ResourceManager.DataShare
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             invitationStatus = new DataShareInvitationStatus(property0.Value.GetString());
@@ -127,7 +123,6 @@ namespace Azure.ResourceManager.DataShare
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             location = new AzureLocation(property0.Value.GetString());
@@ -152,7 +147,6 @@ namespace Azure.ResourceManager.DataShare
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             respondedAt = property0.Value.GetDateTimeOffset("O");
@@ -162,7 +156,6 @@ namespace Azure.ResourceManager.DataShare
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             sentAt = property0.Value.GetDateTimeOffset("O");

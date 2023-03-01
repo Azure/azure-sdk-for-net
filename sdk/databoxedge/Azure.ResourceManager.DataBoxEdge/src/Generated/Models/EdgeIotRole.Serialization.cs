@@ -106,7 +106,6 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -125,7 +124,6 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             hostPlatform = new DataBoxEdgeOSPlatformType(property0.Value.GetString());
@@ -135,7 +133,6 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             iotDeviceDetails = EdgeIotDeviceInfo.DeserializeEdgeIotDeviceInfo(property0.Value);
@@ -145,7 +142,6 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             iotEdgeDeviceDetails = EdgeIotDeviceInfo.DeserializeEdgeIotDeviceInfo(property0.Value);
@@ -155,7 +151,6 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<DataBoxEdgeMountPointMap> array = new List<DataBoxEdgeMountPointMap>();
@@ -170,7 +165,6 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             iotEdgeAgentInfo = IotEdgeAgentInfo.DeserializeIotEdgeAgentInfo(property0.Value);
@@ -180,7 +174,6 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             hostPlatformType = new HostPlatformType(property0.Value.GetString());
@@ -190,7 +183,6 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             computeResource = EdgeComputeResourceInfo.DeserializeEdgeComputeResourceInfo(property0.Value);
@@ -200,7 +192,6 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             roleStatus = new DataBoxEdgeRoleStatus(property0.Value.GetString());

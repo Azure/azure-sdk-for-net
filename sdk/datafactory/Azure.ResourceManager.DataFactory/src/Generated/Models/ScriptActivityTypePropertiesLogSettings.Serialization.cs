@@ -40,7 +40,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     logLocationSettings = LogLocationSettings.DeserializeLogLocationSettings(property.Value);

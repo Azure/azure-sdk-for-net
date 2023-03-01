@@ -28,7 +28,6 @@ namespace Azure.ResourceManager.Datadog.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     installMethod = DatadogInstallMethod.DeserializeDatadogInstallMethod(property.Value);
@@ -38,7 +37,6 @@ namespace Azure.ResourceManager.Datadog.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     logsAgent = DatadogLogsAgent.DeserializeDatadogLogsAgent(property.Value);

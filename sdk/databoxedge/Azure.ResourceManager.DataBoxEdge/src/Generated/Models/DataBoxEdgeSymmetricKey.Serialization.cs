@@ -32,7 +32,6 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     connectionString = AsymmetricEncryptedSecret.DeserializeAsymmetricEncryptedSecret(property.Value);

@@ -81,7 +81,6 @@ namespace Azure.ResourceManager.DataBoxEdge
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -105,7 +104,6 @@ namespace Azure.ResourceManager.DataBoxEdge
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             contactInformation = DataBoxEdgeContactDetails.DeserializeDataBoxEdgeContactDetails(property0.Value);
@@ -115,7 +113,6 @@ namespace Azure.ResourceManager.DataBoxEdge
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             shippingAddress = DataBoxEdgeShippingAddress.DeserializeDataBoxEdgeShippingAddress(property0.Value);
@@ -125,7 +122,6 @@ namespace Azure.ResourceManager.DataBoxEdge
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             currentStatus = DataBoxEdgeOrderStatus.DeserializeDataBoxEdgeOrderStatus(property0.Value);
@@ -135,7 +131,6 @@ namespace Azure.ResourceManager.DataBoxEdge
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<DataBoxEdgeOrderStatus> array = new List<DataBoxEdgeOrderStatus>();
@@ -155,7 +150,6 @@ namespace Azure.ResourceManager.DataBoxEdge
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<DataBoxEdgeTrackingInfo> array = new List<DataBoxEdgeTrackingInfo>();
@@ -170,7 +164,6 @@ namespace Azure.ResourceManager.DataBoxEdge
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<DataBoxEdgeTrackingInfo> array = new List<DataBoxEdgeTrackingInfo>();
@@ -185,7 +178,6 @@ namespace Azure.ResourceManager.DataBoxEdge
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             shipmentType = new DataBoxEdgeShipmentType(property0.Value.GetString());

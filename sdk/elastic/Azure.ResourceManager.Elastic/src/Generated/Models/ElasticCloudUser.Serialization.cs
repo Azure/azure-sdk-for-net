@@ -40,7 +40,6 @@ namespace Azure.ResourceManager.Elastic.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        elasticCloudSsoDefaultUrl = null;
                         continue;
                     }
                     elasticCloudSsoDefaultUrl = new Uri(property.Value.GetString());

@@ -90,7 +90,6 @@ namespace Azure.ResourceManager.DevTestLabs
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -125,7 +124,6 @@ namespace Azure.ResourceManager.DevTestLabs
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -144,7 +142,6 @@ namespace Azure.ResourceManager.DevTestLabs
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                webHookUrl = null;
                                 continue;
                             }
                             webHookUrl = new Uri(property0.Value.GetString());
@@ -169,7 +166,6 @@ namespace Azure.ResourceManager.DevTestLabs
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<DevTestLabNotificationChannelEvent> array = new List<DevTestLabNotificationChannelEvent>();
@@ -184,7 +180,6 @@ namespace Azure.ResourceManager.DevTestLabs
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             createdDate = property0.Value.GetDateTimeOffset("O");
@@ -199,7 +194,6 @@ namespace Azure.ResourceManager.DevTestLabs
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             uniqueIdentifier = property0.Value.GetGuid();

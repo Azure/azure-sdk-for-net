@@ -87,7 +87,6 @@ namespace Azure.ResourceManager.EventGrid
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -106,7 +105,6 @@ namespace Azure.ResourceManager.EventGrid
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             channelType = new PartnerNamespaceChannelType(property0.Value.GetString());
@@ -116,7 +114,6 @@ namespace Azure.ResourceManager.EventGrid
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             partnerTopicInfo = PartnerTopicInfo.DeserializePartnerTopicInfo(property0.Value);
@@ -131,7 +128,6 @@ namespace Azure.ResourceManager.EventGrid
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             provisioningState = new PartnerNamespaceChannelProvisioningState(property0.Value.GetString());
@@ -141,7 +137,6 @@ namespace Azure.ResourceManager.EventGrid
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             readinessState = new PartnerTopicReadinessState(property0.Value.GetString());
@@ -151,7 +146,6 @@ namespace Azure.ResourceManager.EventGrid
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             expirationTimeIfNotActivatedUtc = property0.Value.GetDateTimeOffset("O");

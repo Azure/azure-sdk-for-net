@@ -22,7 +22,6 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     cniConfig = CniConfig.DeserializeCniConfig(property.Value);
@@ -32,7 +31,6 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     loadBalancerConfig = DataBoxEdgeLoadBalancerConfig.DeserializeDataBoxEdgeLoadBalancerConfig(property.Value);

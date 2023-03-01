@@ -28,7 +28,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<IntegrationRuntimeOutboundNetworkDependenciesEndpointDetails> array = new List<IntegrationRuntimeOutboundNetworkDependenciesEndpointDetails>();

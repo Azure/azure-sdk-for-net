@@ -57,7 +57,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     servicePrincipalId = BinaryData.FromString(property.Value.GetRawText());
@@ -67,7 +66,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     servicePrincipalKey = FactorySecretBaseDefinition.DeserializeFactorySecretBaseDefinition(property.Value);
@@ -77,7 +75,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     credential = FactoryCredentialReference.DeserializeFactoryCredentialReference(property.Value);

@@ -28,7 +28,6 @@ namespace Azure.ResourceManager.DataMigration.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        reportUrl = null;
                         continue;
                     }
                     reportUrl = new Uri(property.Value.GetString());

@@ -90,7 +90,6 @@ namespace Azure.ResourceManager.EventGrid.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                endpointUri = null;
                                 continue;
                             }
                             endpointUri = new Uri(property0.Value.GetString());
@@ -100,7 +99,6 @@ namespace Azure.ResourceManager.EventGrid.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                endpointBaseUri = null;
                                 continue;
                             }
                             endpointBaseUri = new Uri(property0.Value.GetString());
@@ -110,7 +108,6 @@ namespace Azure.ResourceManager.EventGrid.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             maxEventsPerBatch = property0.Value.GetInt32();
@@ -120,7 +117,6 @@ namespace Azure.ResourceManager.EventGrid.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             preferredBatchSizeInKilobytes = property0.Value.GetInt32();
@@ -130,7 +126,6 @@ namespace Azure.ResourceManager.EventGrid.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             azureActiveDirectoryTenantId = property0.Value.GetGuid();
@@ -145,7 +140,6 @@ namespace Azure.ResourceManager.EventGrid.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<DeliveryAttributeMapping> array = new List<DeliveryAttributeMapping>();

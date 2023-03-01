@@ -61,7 +61,6 @@ namespace Azure.ResourceManager.EventGrid.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        documentationUri = null;
                         continue;
                     }
                     documentationUri = new Uri(property.Value.GetString());
@@ -71,7 +70,6 @@ namespace Azure.ResourceManager.EventGrid.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        dataSchemaUri = null;
                         continue;
                     }
                     dataSchemaUri = new Uri(property.Value.GetString());

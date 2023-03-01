@@ -21,7 +21,6 @@ namespace Azure.ResourceManager.DevSpaces.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     orchestratorSpecificConnectionDetails = OrchestratorSpecificConnectionDetails.DeserializeOrchestratorSpecificConnectionDetails(property.Value);

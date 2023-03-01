@@ -61,7 +61,6 @@ namespace Azure.ResourceManager.Dynatrace.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        logsIngestionEndpoint = null;
                         continue;
                     }
                     logsIngestionEndpoint = new Uri(property.Value.GetString());
@@ -71,7 +70,6 @@ namespace Azure.ResourceManager.Dynatrace.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        landingUri = null;
                         continue;
                     }
                     landingUri = new Uri(property.Value.GetString());
