@@ -8,7 +8,9 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Core.Pipeline;
 using Azure.Core.Shared;
+using Azure.Core.TestFramework;
 using Azure.Core.Tests;
 using Azure.Messaging.EventHubs.Authorization;
 using Azure.Messaging.EventHubs.Core;
@@ -20,9 +22,10 @@ using NUnit.Framework;
 
 namespace Azure.Messaging.EventHubs.Tests
 {
+#if NET5_0_OR_GREATER
     /// <summary>
     ///   The suite of tests for validating the diagnostics instrumentation
-    ///   of the client library.  These tests are not constrained to a specific
+    ///   of the client library when ActivitySource is enabled.  These tests are not constrained to a specific
     ///   class or functional area.
     /// </summary>
     ///
@@ -35,8 +38,19 @@ namespace Azure.Messaging.EventHubs.Tests
     ///
     [NonParallelizable]
     [TestFixture]
-    public class DiagnosticsTests
+    public class DiagnosticsActivitySourceTests
     {
+        /// <summary>
+        ///   Resets the activity source feature switch after each test.
+        /// </summary>
+        ///
+        [SetUp]
+        [TearDown]
+        public void ResetFeatureSwitch()
+        {
+            ActivityExtensions.ResetFeatureSwitch();
+        }
+
         /// <summary>
         ///   Verifies diagnostics functionality of the <see cref="EventHubProducerClient" />
         ///   class.
@@ -45,7 +59,9 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public async Task EventHubProducerCreatesDiagnosticScopeOnSend()
         {
-            using var testListener = new ClientDiagnosticListener(DiagnosticProperty.DiagnosticNamespace);
+            using var _ = SetAppConfigSwitch();
+            using var testListener = new TestActivitySourceListener(DiagnosticProperty.DiagnosticNamespace);
+
             var activity = new Activity("SomeActivity").Start();
 
             var eventHubName = "SomeName";
@@ -64,21 +80,18 @@ namespace Azure.Messaging.EventHubs.Tests
 
             activity.Stop();
 
-            ClientDiagnosticListener.ProducedDiagnosticScope sendScope = testListener.AssertScope(DiagnosticProperty.ProducerActivityName,
-                new KeyValuePair<string, string>(DiagnosticProperty.KindAttribute, DiagnosticProperty.ClientKind),
-                new KeyValuePair<string, string>(MessagingClientDiagnostics.Component, DiagnosticProperty.EventHubsServiceContext),
-                new KeyValuePair<string, string>(MessagingClientDiagnostics.MessageBusDestination, eventHubName),
-                new KeyValuePair<string, string>(MessagingClientDiagnostics.PeerAddress, endpoint));
+            Activity messageActivity = testListener.AssertAndRemoveActivity(DiagnosticProperty.EventActivityName);
+            AssertCommonTags(messageActivity, eventHubName, endpoint, default, 1);
 
-            ClientDiagnosticListener.ProducedDiagnosticScope messageScope = testListener.AssertScope(DiagnosticProperty.EventActivityName,
-                new KeyValuePair<string, string>(MessagingClientDiagnostics.MessageBusDestination, eventHubName),
-                new KeyValuePair<string, string>(MessagingClientDiagnostics.PeerAddress, endpoint));
+            Activity sendActivity = testListener.AssertAndRemoveActivity(DiagnosticProperty.ProducerActivityName);
+            AssertCommonTags(sendActivity, eventHubName, endpoint, MessagingDiagnosticOperation.Publish, 1);
 
-            Assert.That(eventData.Properties[MessagingClientDiagnostics.DiagnosticIdAttribute], Is.EqualTo(messageScope.Activity.Id), "The diagnostics identifier should match.");
-            Assert.That(messageScope.Activity.Tags, Has.One.EqualTo(new KeyValuePair<string, string>(DiagnosticProperty.KindAttribute, DiagnosticProperty.ProducerKind)), "The activities tag should be internal.");
-            Assert.That(messageScope.Activity, Is.Not.SameAs(sendScope.Activity), "The activities should not be the same instance.");
-            Assert.That(sendScope.Activity.ParentId, Is.EqualTo(activity.Id), "The send scope's parent identifier should match the activity in the active scope.");
-            Assert.That(messageScope.Activity.ParentId, Is.EqualTo(activity.Id), "The message scope's parent identifier should match the activity in the active scope.");
+            Assert.That(eventData.Properties[MessagingClientDiagnostics.DiagnosticIdAttribute], Is.EqualTo(messageActivity.Id), "The diagnostics identifier should match.");
+            // Kind attribute is not set for the OTel path as this is handled by the OTel exporter SDK
+            Assert.That(messageActivity.Tags, Does.Not.Contain(new KeyValuePair<string, string>(DiagnosticProperty.KindAttribute, DiagnosticProperty.ProducerKind)), "The activities tag should be internal.");
+            Assert.That(messageActivity, Is.Not.SameAs(sendActivity), "The activities should not be the same instance.");
+            Assert.That(sendActivity.ParentId, Is.EqualTo(activity.Id), "The send scope's parent identifier should match the activity in the active scope.");
+            Assert.That(messageActivity.ParentId, Is.EqualTo(activity.Id), "The message scope's parent identifier should match the activity in the active scope.");
         }
 
         /// <summary>
@@ -89,7 +102,9 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public async Task EventHubProducerCreatesDiagnosticScopeOnBatchSend()
         {
-            using var testListener = new ClientDiagnosticListener(DiagnosticProperty.DiagnosticNamespace);
+            using var _ = SetAppConfigSwitch();
+            using var testListener = new TestActivitySourceListener(DiagnosticProperty.DiagnosticNamespace);
+
             var activity = new Activity("SomeActivity").Start();
 
             var eventCount = 0;
@@ -131,20 +146,16 @@ namespace Azure.Messaging.EventHubs.Tests
             await producer.SendAsync(batch);
             activity.Stop();
 
-            ClientDiagnosticListener.ProducedDiagnosticScope sendScope = testListener.AssertScope(DiagnosticProperty.ProducerActivityName,
-                new KeyValuePair<string, string>(DiagnosticProperty.KindAttribute, DiagnosticProperty.ClientKind),
-                new KeyValuePair<string, string>(MessagingClientDiagnostics.Component, DiagnosticProperty.EventHubsServiceContext),
-                new KeyValuePair<string, string>(MessagingClientDiagnostics.MessageBusDestination, eventHubName),
-                new KeyValuePair<string, string>(MessagingClientDiagnostics.PeerAddress, endpoint));
+            Activity messageActivity = testListener.AssertAndRemoveActivity(DiagnosticProperty.EventActivityName);
+            AssertCommonTags(messageActivity, eventHubName, endpoint, default, 1);
 
-            ClientDiagnosticListener.ProducedDiagnosticScope messageScope = testListener.AssertScope(DiagnosticProperty.EventActivityName,
-                new KeyValuePair<string, string>(MessagingClientDiagnostics.MessageBusDestination, eventHubName),
-                new KeyValuePair<string, string>(MessagingClientDiagnostics.PeerAddress, endpoint));
+            Activity sendActivity = testListener.AssertAndRemoveActivity(DiagnosticProperty.ProducerActivityName);
+            AssertCommonTags(sendActivity, eventHubName, endpoint, MessagingDiagnosticOperation.Publish, 1);
 
-            Assert.That(batchEvent.Properties[MessagingClientDiagnostics.DiagnosticIdAttribute], Is.EqualTo(messageScope.Activity.Id), "The diagnostics identifier should match.");
-            Assert.That(messageScope.Activity, Is.Not.SameAs(sendScope.Activity), "The activities should not be the same instance.");
-            Assert.That(sendScope.Activity.ParentId, Is.EqualTo(activity.Id), "The send scope's parent identifier should match the activity in the active scope.");
-            Assert.That(messageScope.Activity.ParentId, Is.EqualTo(activity.Id), "The message scope's parent identifier should match the activity in the active scope.");
+            Assert.That(batchEvent.Properties[MessagingClientDiagnostics.DiagnosticIdAttribute], Is.EqualTo(messageActivity.Id), "The diagnostics identifier should match.");
+            Assert.That(messageActivity, Is.Not.SameAs(sendActivity), "The activities should not be the same instance.");
+            Assert.That(messageActivity.ParentId, Is.EqualTo(activity.Id), "The send scope's parent identifier should match the activity in the active scope.");
+            Assert.That(messageActivity.ParentId, Is.EqualTo(activity.Id), "The message scope's parent identifier should match the activity in the active scope.");
         }
 
         /// <summary>
@@ -155,6 +166,8 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public async Task EventHubProducerAppliesDiagnosticIdToEventsOnSend()
         {
+            using var _ = SetAppConfigSwitch();
+
             Activity activity = new Activity("SomeActivity").Start();
 
             var eventHubName = "SomeName";
@@ -195,6 +208,8 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public async Task EventHubProducerAppliesDiagnosticIdToEventsOnBatchSend()
         {
+            using var _ = SetAppConfigSwitch();
+
             Activity activity = new Activity("SomeActivity").Start();
 
             var eventHubName = "SomeName";
@@ -258,7 +273,11 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public async Task EventHubProducerLinksSendScopeToMessageScopesOnSend()
         {
-            using var testListener = new ClientDiagnosticListener(DiagnosticProperty.DiagnosticNamespace);
+            using var _ = SetAppConfigSwitch();
+
+            using var testListener = new TestActivitySourceListener(DiagnosticProperty.DiagnosticNamespace);
+            var diagnosticId1 = "00-0af7651916cd43dd8448eb211c80319c-b9c7c989f97918e1-01";
+            var diagnosticId2 = "00-0af7651916cd43dd8448eb211c80319c-c9c7c989f97918e1-01";
 
             var fakeConnection = new MockConnection("some.endpoint.com", "SomeName");
             var transportMock = new Mock<TransportProducer>();
@@ -271,17 +290,21 @@ namespace Azure.Messaging.EventHubs.Tests
 
             await producer.SendAsync(new[]
             {
-                new EventData(new BinaryData(ReadOnlyMemory<byte>.Empty), new Dictionary<string, object> { { MessagingClientDiagnostics.DiagnosticIdAttribute, "id" } }),
-                new EventData(new BinaryData(ReadOnlyMemory<byte>.Empty), new Dictionary<string, object> { { MessagingClientDiagnostics.DiagnosticIdAttribute, "id2" } })
+                new EventData(new BinaryData(ReadOnlyMemory<byte>.Empty), new Dictionary<string, object> { { MessagingClientDiagnostics.DiagnosticIdAttribute, diagnosticId1 } }),
+                new EventData(new BinaryData(ReadOnlyMemory<byte>.Empty), new Dictionary<string, object> { { MessagingClientDiagnostics.DiagnosticIdAttribute, diagnosticId2 } })
             });
 
-            ClientDiagnosticListener.ProducedDiagnosticScope sendScope = testListener.Scopes.Single(s => s.Name == DiagnosticProperty.ProducerActivityName);
+            Activity sendActivity = testListener.AssertAndRemoveActivity(DiagnosticProperty.ProducerActivityName);
 
-            var expectedLinks = new[] { new ClientDiagnosticListener.ProducedLink("id"), new ClientDiagnosticListener.ProducedLink("id2") };
-            var links = sendScope.Links.ToList();
+            var expectedLinks = new[] { new ActivityLink(ActivityContext.Parse(diagnosticId1, null)), new ActivityLink(ActivityContext.Parse(diagnosticId2, null)) };
+            var links = sendActivity.Links.ToList();
 
             Assert.That(links.Count, Is.EqualTo(expectedLinks.Length), "The amount of links should be the same as the amount of events that were sent.");
-            Assert.That(links, Is.EquivalentTo(expectedLinks), "The links should be identical to the diagnostic ids in the events that were sent.");
+            for (int i = 0; i < links.Count; i++)
+            {
+                Assert.That(links[i].Context.TraceId, Is.EqualTo(expectedLinks[i].Context.TraceId), "The trace ids should be the same.");
+                Assert.That(links[i].Context.SpanId, Is.EqualTo(expectedLinks[i].Context.SpanId), "The span ids should be the same.");
+            }
         }
 
         /// <summary>
@@ -292,8 +315,11 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public async Task EventHubProducerLinksSendScopeToMessageScopesOnBatchSend()
         {
-            using var testListener = new ClientDiagnosticListener(DiagnosticProperty.DiagnosticNamespace);
+            using var _ = SetAppConfigSwitch();
+            using var testListener = new TestActivitySourceListener(DiagnosticProperty.DiagnosticNamespace);
 
+            var diagnosticId1 = "00-0af7651916cd43dd8448eb211c80319c-b9c7c989f97918e1-01";
+            var diagnosticId2 = "00-0af7651916cd43dd8448eb211c80319c-c9c7c989f97918e1-01";
             var writtenEventsData = new List<EventData>();
             var batchTransportMock = new Mock<TransportEventBatch>();
             var fakeConnection = new MockConnection("some.endpoint.com", "SomeName");
@@ -321,8 +347,8 @@ namespace Azure.Messaging.EventHubs.Tests
 
             var producer = new EventHubProducerClient(fakeConnection, transportMock.Object);
 
-            var eventData1 = new EventData(new BinaryData(ReadOnlyMemory<byte>.Empty), new Dictionary<string, object> { { MessagingClientDiagnostics.DiagnosticIdAttribute, "id" } });
-            var eventData2 = new EventData(new BinaryData(ReadOnlyMemory<byte>.Empty), new Dictionary<string, object> { { MessagingClientDiagnostics.DiagnosticIdAttribute, "id2" } });
+            var eventData1 = new EventData(new BinaryData(ReadOnlyMemory<byte>.Empty), new Dictionary<string, object> { { MessagingClientDiagnostics.DiagnosticIdAttribute, diagnosticId1 } });
+            var eventData2 = new EventData(new BinaryData(ReadOnlyMemory<byte>.Empty), new Dictionary<string, object> { { MessagingClientDiagnostics.DiagnosticIdAttribute, diagnosticId2 } });
             var eventData3 = new EventData(new BinaryData(ReadOnlyMemory<byte>.Empty), new Dictionary<string, object> { { MessagingClientDiagnostics.DiagnosticIdAttribute, "id3" } });
             var batch = await producer.CreateBatchAsync();
 
@@ -332,13 +358,18 @@ namespace Azure.Messaging.EventHubs.Tests
 
             await producer.SendAsync(batch);
 
-            ClientDiagnosticListener.ProducedDiagnosticScope sendScope = testListener.Scopes.Single(s => s.Name == DiagnosticProperty.ProducerActivityName);
+            Activity sendActivity = testListener.AssertAndRemoveActivity(DiagnosticProperty.ProducerActivityName);
+            AssertCommonTags(sendActivity, "SomeName", "some.endpoint.com", MessagingDiagnosticOperation.Publish, 2);
 
-            var expectedLinks = new[] { new ClientDiagnosticListener.ProducedLink("id"), new ClientDiagnosticListener.ProducedLink("id2") };
-            var links = sendScope.Links.ToList();
+            var expectedLinks = new[] { new ActivityLink(ActivityContext.Parse(diagnosticId1, null)), new ActivityLink(ActivityContext.Parse(diagnosticId2, null)) };
+            var links = sendActivity.Links.ToList();
 
             Assert.That(links.Count, Is.EqualTo(expectedLinks.Length), "The amount of links should be the same as the amount of events that were sent.");
-            Assert.That(links, Is.EquivalentTo(expectedLinks), "The links should be identical to the diagnostic ids in the events that were sent.");
+            for (int i = 0; i < links.Count; i++)
+            {
+                Assert.That(links[i].Context.TraceId, Is.EqualTo(expectedLinks[i].Context.TraceId), "The trace ids should be the same.");
+                Assert.That(links[i].Context.SpanId, Is.EqualTo(expectedLinks[i].Context.SpanId), "The span ids should be the same.");
+            }
         }
 
         /// <summary>
@@ -352,10 +383,12 @@ namespace Azure.Messaging.EventHubs.Tests
             using var cancellationSource = new CancellationTokenSource();
             cancellationSource.CancelAfter(TimeSpan.FromSeconds(30));
 
-            using var listener = new ClientDiagnosticListener(DiagnosticProperty.DiagnosticNamespace);
+            using var _ = SetAppConfigSwitch();
+            using var listener = new TestActivitySourceListener(DiagnosticProperty.DiagnosticNamespace);
 
+            var diagnosticId1 = "00-0af7651916cd43dd8448eb211c80319c-b9c7c989f97918e1-01";
+            var diagnosticId2 = "00-0af7651916cd43dd8448eb211c80319c-c9c7c989f97918e1-01";
             var enqueuedTime = DateTimeOffset.UtcNow;
-            var diagnosticId = 12;
             var partition = new EventProcessorPartition { PartitionId = "123" };
             var fullyQualifiedNamespace = "namespace";
             var eventHubName = "eventHub";
@@ -367,34 +400,28 @@ namespace Azure.Messaging.EventHubs.Tests
                 new EventData(new BinaryData(Array.Empty<byte>()), enqueuedTime: enqueuedTime)
             };
 
-            eventBatch.ForEach(evt => evt.Properties.Add(MessagingClientDiagnostics.DiagnosticIdAttribute, (++diagnosticId).ToString()));
+            eventBatch[0].Properties[MessagingClientDiagnostics.DiagnosticIdAttribute] = diagnosticId1;
+            eventBatch[1].Properties[MessagingClientDiagnostics.DiagnosticIdAttribute] = diagnosticId2;
+
             await mockProcessor.Object.ProcessEventBatchAsync(partition, eventBatch, false, cancellationSource.Token);
 
             // Validate the diagnostics.
 
-            diagnosticId -= eventBatch.Count;
-
-            var expectedTags = new List<KeyValuePair<string, string>>()
-            {
-                new KeyValuePair<string, string>(DiagnosticProperty.KindAttribute, DiagnosticProperty.ConsumerKind),
-                new KeyValuePair<string, string>(MessagingClientDiagnostics.MessageBusDestination, eventHubName),
-                new KeyValuePair<string, string>(MessagingClientDiagnostics.PeerAddress, fullyQualifiedNamespace)
-            };
-
-            var scopes = listener.Scopes.ToList();
+            var activities = listener.Activities.ToList();
 
             Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
-            Assert.That(scopes.Select(scope => scope.Name), Has.All.EqualTo(DiagnosticProperty.EventProcessorProcessingActivityName), "The processing scopes should have the correct name.");
+            Assert.That(activities.Select(scope => scope.OperationName), Has.All.EqualTo(DiagnosticProperty.EventProcessorProcessingActivityName), "The processing scopes should have the correct name.");
 
             for (var index = 0; index < eventBatch.Count; ++index)
             {
-                var targetId = new ClientDiagnosticListener.ProducedLink((++diagnosticId).ToString());
-                Assert.That(scopes.SelectMany(scope => scope.Links), Has.One.EqualTo(targetId), $"There should have been a link for the diagnostic identifier: { targetId }");
+                Assert.IsTrue(MessagingClientDiagnostics.TryExtractTraceContext(eventBatch[index].Properties, out var targetId, out var _));
+                var targetSpanId = ActivityContext.Parse(targetId, null).SpanId;
+                Assert.That(activities.SelectMany(scope => scope.Links.Select(l => l.Context.SpanId)), Has.One.EqualTo(targetSpanId), $"There should have been a link for the diagnostic identifier: { targetId }");
             }
 
-            foreach (var scope in scopes)
+            foreach (var activity in activities)
             {
-                Assert.That(expectedTags, Is.SubsetOf(scope.Activity.Tags.ToList()));
+                AssertCommonTags(activity, eventHubName, fullyQualifiedNamespace, MessagingDiagnosticOperation.Process, 1);
             }
         }
 
@@ -409,10 +436,11 @@ namespace Azure.Messaging.EventHubs.Tests
             using var cancellationSource = new CancellationTokenSource();
             cancellationSource.CancelAfter(TimeSpan.FromSeconds(30));
 
-            using var listener = new ClientDiagnosticListener(DiagnosticProperty.DiagnosticNamespace);
+            using var _ = SetAppConfigSwitch();
+            using var listener = new TestActivitySourceListener(DiagnosticProperty.DiagnosticNamespace);
 
             var enqueuedTime = DateTimeOffset.UtcNow;
-            var diagnosticId = "OMGHAI2U!";
+            var diagnosticId = "00-0af7651916cd43dd8448eb211c80319c-b9c7c989f97918e1-01";
             var eventBatch = new List<EventData>
             {
                 new EventData(new BinaryData(Array.Empty<byte>()), enqueuedTime: enqueuedTime)
@@ -429,16 +457,17 @@ namespace Azure.Messaging.EventHubs.Tests
 
             Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
 
-            var processingScope = listener.Scopes.SingleOrDefault(scope => scope.Name == DiagnosticProperty.EventProcessorProcessingActivityName);
-            Assert.That(processingScope, Is.Not.Null, "There should have been a single scope present for the processing activity.");
+            var processingActivity = listener.AssertAndRemoveActivity(DiagnosticProperty.EventProcessorProcessingActivityName);
+            Assert.That(processingActivity, Is.Not.Null, "There should have been a single scope present for the processing activity.");
 
-            Assert.That(processingScope.Activity.ParentId, Is.EqualTo(diagnosticId), "The parent of the processing scope should have been equal to the diagnosticId.");
+            Assert.That(processingActivity.ParentId, Is.EqualTo(diagnosticId), "The parent of the processing scope should have been equal to the diagnosticId.");
+            AssertCommonTags(processingActivity, eventHubName, fullyQualifiedNamespace, MessagingDiagnosticOperation.Process, 1);
 
             var expectedTag =
                 new KeyValuePair<string, string>(DiagnosticProperty.EnqueuedTimeAttribute,
                     enqueuedTime.ToUnixTimeMilliseconds().ToString());
 
-            var tags = processingScope.Activity.Tags;
+            var tags = processingActivity.Tags;
             Assert.That(tags.Contains(expectedTag), Is.True, "The processing scope should have contained the enqueued time tag.");
         }
 
@@ -453,10 +482,11 @@ namespace Azure.Messaging.EventHubs.Tests
             using var cancellationSource = new CancellationTokenSource();
             cancellationSource.CancelAfter(TimeSpan.FromSeconds(30));
 
-            using var listener = new ClientDiagnosticListener(DiagnosticProperty.DiagnosticNamespace);
+            using var _ = SetAppConfigSwitch();
+            using var listener = new TestActivitySourceListener(DiagnosticProperty.DiagnosticNamespace);
 
             var enqueuedTime = DateTimeOffset.UtcNow;
-            var diagnosticId = "OMGHAI2U!";
+            var diagnosticId = "00-0af7651916cd43dd8448eb211c80319c-b9c7c989f97918e1-01";
             var eventBatch = new List<EventData>
             {
                 new EventData(new BinaryData(Array.Empty<byte>()), enqueuedTime: enqueuedTime),
@@ -474,10 +504,10 @@ namespace Azure.Messaging.EventHubs.Tests
 
             Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
 
-            var processingScope = listener.Scopes.SingleOrDefault(scope => scope.Name == DiagnosticProperty.EventProcessorProcessingActivityName);
+            var processingScope = listener.AssertAndRemoveActivity(DiagnosticProperty.EventProcessorProcessingActivityName);
             Assert.That(processingScope, Is.Not.Null, "There should have been a single scope present for the processing activity.");
 
-            var linkedActivities = processingScope.LinkedActivities.Where(a => a.ParentId == diagnosticId).ToList();
+            var linkedActivities = processingScope.Links.Where(a => a.Context.TraceId == ActivityContext.Parse(diagnosticId, null).TraceId).ToList();
             Assert.That(linkedActivities.Count, Is.EqualTo(2), "There should have been a two activities linked to the diagnostic identifier.");
 
             var expectedTags = new List<KeyValuePair<string, string>>()
@@ -490,6 +520,46 @@ namespace Azure.Messaging.EventHubs.Tests
 
             tags = linkedActivities[1].Tags.ToList();
             Assert.That(tags, Is.EquivalentTo(expectedTags), "The second activity should have been tagged appropriately.");
+        }
+
+        /// <summary>
+        /// Asserts that the common tags are present in the activity.
+        /// </summary>
+        private void AssertCommonTags(Activity activity, string eventHubName, string endpoint, MessagingDiagnosticOperation operation, int eventCount)
+        {
+            var tags = activity.TagObjects.ToList();
+            CollectionAssert.Contains(tags, new KeyValuePair<string, string>(MessagingClientDiagnostics.NetPeerName, endpoint));
+
+            CollectionAssert.Contains(tags, new KeyValuePair<string, string>(MessagingClientDiagnostics.MessagingSystem, DiagnosticProperty.EventHubsServiceContext));
+            if (operation != default)
+            {
+                CollectionAssert.Contains(tags,
+                    new KeyValuePair<string, string>(MessagingClientDiagnostics.MessagingOperation, operation.ToString()));
+                var entityKey = operation == MessagingDiagnosticOperation.Receive || operation == MessagingDiagnosticOperation.Process
+                    ? MessagingClientDiagnostics.SourceName
+                    : MessagingClientDiagnostics.DestinationName;
+                CollectionAssert.Contains(tags, new KeyValuePair<string, string>(entityKey, eventHubName));
+            }
+            else
+            {
+                CollectionAssert.Contains(tags, new KeyValuePair<string, string>(MessagingClientDiagnostics.DestinationName, eventHubName));
+            }
+
+            if (eventCount > 1)
+                CollectionAssert.Contains(tags, new KeyValuePair<string, int>(MessagingClientDiagnostics.BatchCount, eventCount));
+            else
+                CollectionAssert.DoesNotContain(tags, new KeyValuePair<string, int>(MessagingClientDiagnostics.BatchCount, eventCount));
+        }
+
+        /// <summary>
+        ///   Sets and returns the app config switch to enable Activity Source. The switch must be disposed at the end of the test.
+        /// </summary>
+        ///
+        private static TestAppContextSwitch SetAppConfigSwitch()
+        {
+            var s = new TestAppContextSwitch("Azure.Experimental.EnableActivitySource", "true");
+            ActivityExtensions.ResetFeatureSwitch();
+            return s;
         }
 
         /// <summary>
@@ -513,4 +583,5 @@ namespace Azure.Messaging.EventHubs.Tests
                                                                     EventHubConnectionOptions options) => Mock.Of<TransportClient>();
         }
     }
+#endif
 }
