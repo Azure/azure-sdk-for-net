@@ -20,7 +20,7 @@ namespace Azure.Communication.Email
     {
         private readonly ClientDiagnostics _clientDiagnostics;
 
-        private readonly EmailRestClient RestClient;
+        private readonly EmailRestClient _restClient;
 
         /// <summary> Initializes a new instance of EmailClient for mocking. </summary>
         protected EmailClient()
@@ -78,7 +78,7 @@ namespace Azure.Communication.Email
         private EmailClient(Uri endpoint, HttpPipeline httpPipeline, EmailClientOptions options)
         {
             _clientDiagnostics = new ClientDiagnostics(options);
-            RestClient = new EmailRestClient(_clientDiagnostics, httpPipeline, endpoint, options.ApiVersion);
+            _restClient = new EmailRestClient(_clientDiagnostics, httpPipeline, endpoint, options.ApiVersion);
         }
 
         private EmailClient(string endpoint, AzureKeyCredential credential, EmailClientOptions options)
@@ -243,7 +243,7 @@ namespace Azure.Communication.Email
             scope.Start();
             try
             {
-                var originalResponse = await RestClient.GetSendResultAsync(id, cancellationToken).ConfigureAwait(false);
+                var originalResponse = await _restClient.GetSendResultAsync(id, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(originalResponse.Value, originalResponse.GetRawResponse());
             }
             catch (Exception e)
@@ -268,7 +268,7 @@ namespace Azure.Communication.Email
             scope.Start();
             try
             {
-                var originalResponse = RestClient.GetSendResult(id, cancellationToken);
+                var originalResponse = _restClient.GetSendResult(id, cancellationToken);
                 return Response.FromValue(originalResponse.Value, originalResponse.GetRawResponse());
             }
             catch (Exception e)
@@ -286,7 +286,7 @@ namespace Azure.Communication.Email
             ValidateEmailMessage(message);
 
             var operationId = Guid.NewGuid();
-            ResponseWithHeaders<EmailSendHeaders> originalResponse = await RestClient.SendAsync(message, operationId, cancellationToken).ConfigureAwait(false);
+            ResponseWithHeaders<EmailSendHeaders> originalResponse = await _restClient.SendAsync(message, operationId, cancellationToken).ConfigureAwait(false);
 
             Response rawResponse = originalResponse.GetRawResponse();
             using JsonDocument document = await JsonDocument.ParseAsync(rawResponse.ContentStream, default, cancellationToken).ConfigureAwait(false);
@@ -309,7 +309,7 @@ namespace Azure.Communication.Email
             ValidateEmailMessage(message);
 
             var operationId = Guid.NewGuid();
-            var originalResponse = RestClient.Send(message, operationId, cancellationToken);
+            var originalResponse = _restClient.Send(message, operationId, cancellationToken);
 
             Response rawResponse = originalResponse.GetRawResponse();
             using JsonDocument document = JsonDocument.Parse(rawResponse.ContentStream, default);

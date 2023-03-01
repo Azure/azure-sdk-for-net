@@ -39,5 +39,14 @@ namespace Microsoft.Extensions.Azure
         {
             return builder.RegisterClientFactory<EmailClient, EmailClientOptions>((options, cred) => new EmailClient(serviceUri, cred, options));
         }
+
+        /// <summary>
+        /// Registers a <see cref="EmailClient"/> instance with the provided <paramref name="configuration"/>
+        /// </summary>
+        public static IAzureClientBuilder<EmailClient, EmailClientOptions> AddEmailClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration)
+            where TBuilder : IAzureClientFactoryBuilderWithConfiguration<TConfiguration>
+        {
+            return builder.RegisterClientFactory<EmailClient, EmailClientOptions>(configuration);
+        }
     }
 }
