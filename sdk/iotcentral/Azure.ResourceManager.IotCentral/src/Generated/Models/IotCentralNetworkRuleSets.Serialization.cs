@@ -46,6 +46,10 @@ namespace Azure.ResourceManager.IotCentral.Models
 
         internal static IotCentralNetworkRuleSets DeserializeIotCentralNetworkRuleSets(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> applyToDevices = default;
             Optional<bool> applyToIoTCentral = default;
             Optional<IotCentralNetworkAction> defaultAction = default;

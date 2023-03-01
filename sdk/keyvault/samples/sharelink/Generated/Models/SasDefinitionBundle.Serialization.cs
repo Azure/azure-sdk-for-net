@@ -15,6 +15,10 @@ namespace Azure.Security.KeyVault.Storage.Models
     {
         internal static SasDefinitionBundle DeserializeSasDefinitionBundle(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> id = default;
             Optional<string> sid = default;
             Optional<string> templateUri = default;

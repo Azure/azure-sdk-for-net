@@ -46,6 +46,10 @@ namespace Azure.ResourceManager.HybridCompute.Models
 
         internal static MachineExtensionInstanceViewStatus DeserializeMachineExtensionInstanceViewStatus(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> code = default;
             Optional<HybridComputeStatusLevelType> level = default;
             Optional<string> displayStatus = default;
