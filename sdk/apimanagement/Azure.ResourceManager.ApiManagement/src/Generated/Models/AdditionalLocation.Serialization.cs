@@ -42,6 +42,11 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 writer.WritePropertyName("virtualNetworkConfiguration"u8);
                 writer.WriteObjectValue(VirtualNetworkConfiguration);
             }
+            if (Optional.IsDefined(NatGatewayState))
+            {
+                writer.WritePropertyName("natGatewayState"u8);
+                writer.WriteStringValue(NatGatewayState.Value.ToString());
+            }
             if (Optional.IsDefined(DisableGateway))
             {
                 writer.WritePropertyName("disableGateway"u8);
@@ -64,6 +69,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
             Optional<ResourceIdentifier> publicIPAddressId = default;
             Optional<VirtualNetworkConfiguration> virtualNetworkConfiguration = default;
             Optional<Uri> gatewayRegionalUri = default;
+            Optional<NatGatewayState> natGatewayState = default;
+            Optional<IReadOnlyList<string>> outboundPublicIPAddresses = default;
             Optional<bool> disableGateway = default;
             Optional<PlatformVersion> platformVersion = default;
             foreach (var property in element.EnumerateObject())
@@ -167,6 +174,31 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     gatewayRegionalUri = new Uri(property.Value.GetString());
                     continue;
                 }
+                if (property.NameEquals("natGatewayState"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    natGatewayState = new NatGatewayState(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("outboundPublicIPAddresses"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetString());
+                    }
+                    outboundPublicIPAddresses = array;
+                    continue;
+                }
                 if (property.NameEquals("disableGateway"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -188,7 +220,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     continue;
                 }
             }
-            return new AdditionalLocation(location, sku, Optional.ToList(zones), Optional.ToList(publicIPAddresses), Optional.ToList(privateIPAddresses), publicIPAddressId.Value, virtualNetworkConfiguration.Value, gatewayRegionalUri.Value, Optional.ToNullable(disableGateway), Optional.ToNullable(platformVersion));
+            return new AdditionalLocation(location, sku, Optional.ToList(zones), Optional.ToList(publicIPAddresses), Optional.ToList(privateIPAddresses), publicIPAddressId.Value, virtualNetworkConfiguration.Value, gatewayRegionalUri.Value, Optional.ToNullable(natGatewayState), Optional.ToList(outboundPublicIPAddresses), Optional.ToNullable(disableGateway), Optional.ToNullable(platformVersion));
         }
     }
 }

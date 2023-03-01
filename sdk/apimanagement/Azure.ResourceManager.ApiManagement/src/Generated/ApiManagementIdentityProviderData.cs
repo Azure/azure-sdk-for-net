@@ -37,9 +37,10 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="signInPolicyName"> Signin Policy Name. Only applies to AAD B2C Identity Provider. </param>
         /// <param name="profileEditingPolicyName"> Profile Editing Policy Name. Only applies to AAD B2C Identity Provider. </param>
         /// <param name="passwordResetPolicyName"> Password Reset Policy Name. Only applies to AAD B2C Identity Provider. </param>
+        /// <param name="clientLibrary"> The client library to be used in the developer portal. Only applies to AAD and AAD B2C Identity Provider. </param>
         /// <param name="clientId"> Client Id of the Application in the external Identity Provider. It is App ID for Facebook login, Client ID for Google login, App ID for Microsoft. </param>
         /// <param name="clientSecret"> Client secret of the Application in external Identity Provider, used to authenticate login request. For example, it is App Secret for Facebook login, API Key for Google login, Public Key for Microsoft. This property will not be filled on &apos;GET&apos; operations! Use &apos;/listSecrets&apos; POST request to get the value. </param>
-        internal ApiManagementIdentityProviderData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IdentityProviderType? identityProviderType, string signInTenant, IList<string> allowedTenants, string authority, string signUpPolicyName, string signInPolicyName, string profileEditingPolicyName, string passwordResetPolicyName, string clientId, string clientSecret) : base(id, name, resourceType, systemData)
+        internal ApiManagementIdentityProviderData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IdentityProviderType? identityProviderType, string signInTenant, IList<string> allowedTenants, string authority, string signUpPolicyName, string signInPolicyName, string profileEditingPolicyName, string passwordResetPolicyName, string clientLibrary, string clientId, string clientSecret) : base(id, name, resourceType, systemData)
         {
             IdentityProviderType = identityProviderType;
             SignInTenant = signInTenant;
@@ -49,6 +50,7 @@ namespace Azure.ResourceManager.ApiManagement
             SignInPolicyName = signInPolicyName;
             ProfileEditingPolicyName = profileEditingPolicyName;
             PasswordResetPolicyName = passwordResetPolicyName;
+            ClientLibrary = clientLibrary;
             ClientId = clientId;
             ClientSecret = clientSecret;
         }
@@ -69,6 +71,8 @@ namespace Azure.ResourceManager.ApiManagement
         public string ProfileEditingPolicyName { get; set; }
         /// <summary> Password Reset Policy Name. Only applies to AAD B2C Identity Provider. </summary>
         public string PasswordResetPolicyName { get; set; }
+        /// <summary> The client library to be used in the developer portal. Only applies to AAD and AAD B2C Identity Provider. </summary>
+        public string ClientLibrary { get; set; }
         /// <summary> Client Id of the Application in the external Identity Provider. It is App ID for Facebook login, Client ID for Google login, App ID for Microsoft. </summary>
         public string ClientId { get; set; }
         /// <summary> Client secret of the Application in external Identity Provider, used to authenticate login request. For example, it is App Secret for Facebook login, API Key for Google login, Public Key for Microsoft. This property will not be filled on &apos;GET&apos; operations! Use &apos;/listSecrets&apos; POST request to get the value. </summary>

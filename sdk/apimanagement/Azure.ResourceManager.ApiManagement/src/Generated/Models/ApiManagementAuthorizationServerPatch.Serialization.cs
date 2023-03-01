@@ -94,6 +94,16 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
+            if (Optional.IsDefined(UseInTestConsole))
+            {
+                writer.WritePropertyName("useInTestConsole"u8);
+                writer.WriteBooleanValue(UseInTestConsole.Value);
+            }
+            if (Optional.IsDefined(UseInApiDocumentation))
+            {
+                writer.WritePropertyName("useInApiDocumentation"u8);
+                writer.WriteBooleanValue(UseInApiDocumentation.Value);
+            }
             if (Optional.IsDefined(ClientRegistrationEndpoint))
             {
                 writer.WritePropertyName("clientRegistrationEndpoint"u8);
@@ -149,6 +159,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
             Optional<string> resourceOwnerUsername = default;
             Optional<string> resourceOwnerPassword = default;
             Optional<string> displayName = default;
+            Optional<bool> useInTestConsole = default;
+            Optional<bool> useInApiDocumentation = default;
             Optional<string> clientRegistrationEndpoint = default;
             Optional<string> authorizationEndpoint = default;
             Optional<IList<GrantType>> grantTypes = default;
@@ -290,6 +302,26 @@ namespace Azure.ResourceManager.ApiManagement.Models
                             displayName = property0.Value.GetString();
                             continue;
                         }
+                        if (property0.NameEquals("useInTestConsole"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            useInTestConsole = property0.Value.GetBoolean();
+                            continue;
+                        }
+                        if (property0.NameEquals("useInApiDocumentation"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            useInApiDocumentation = property0.Value.GetBoolean();
+                            continue;
+                        }
                         if (property0.NameEquals("clientRegistrationEndpoint"u8))
                         {
                             clientRegistrationEndpoint = property0.Value.GetString();
@@ -329,7 +361,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     continue;
                 }
             }
-            return new ApiManagementAuthorizationServerPatch(id, name, type, systemData.Value, description.Value, Optional.ToList(authorizationMethods), Optional.ToList(clientAuthenticationMethod), Optional.ToList(tokenBodyParameters), tokenEndpoint.Value, Optional.ToNullable(supportState), defaultScope.Value, Optional.ToList(bearerTokenSendingMethods), resourceOwnerUsername.Value, resourceOwnerPassword.Value, displayName.Value, clientRegistrationEndpoint.Value, authorizationEndpoint.Value, Optional.ToList(grantTypes), clientId.Value, clientSecret.Value);
+            return new ApiManagementAuthorizationServerPatch(id, name, type, systemData.Value, description.Value, Optional.ToList(authorizationMethods), Optional.ToList(clientAuthenticationMethod), Optional.ToList(tokenBodyParameters), tokenEndpoint.Value, Optional.ToNullable(supportState), defaultScope.Value, Optional.ToList(bearerTokenSendingMethods), resourceOwnerUsername.Value, resourceOwnerPassword.Value, displayName.Value, Optional.ToNullable(useInTestConsole), Optional.ToNullable(useInApiDocumentation), clientRegistrationEndpoint.Value, authorizationEndpoint.Value, Optional.ToList(grantTypes), clientId.Value, clientSecret.Value);
         }
     }
 }

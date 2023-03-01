@@ -25,5 +25,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public string ClientId { get; set; }
         /// <summary> Client Secret of developer console which is the client application. </summary>
         public string ClientSecret { get; set; }
+        /// <summary> If true, the Open ID Connect provider may be used in the developer portal test console. True by default if no value is provided. </summary>
+        public bool? UseInTestConsole { get; set; }
+        /// <summary> If true, the Open ID Connect provider will be used in the API documentation in the developer portal. False by default if no value is provided. </summary>
+        public bool? UseInApiDocumentation { get; set; }
     }
 }

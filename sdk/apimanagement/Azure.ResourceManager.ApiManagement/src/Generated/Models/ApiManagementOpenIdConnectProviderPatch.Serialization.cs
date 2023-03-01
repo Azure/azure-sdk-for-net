@@ -42,6 +42,16 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 writer.WritePropertyName("clientSecret"u8);
                 writer.WriteStringValue(ClientSecret);
             }
+            if (Optional.IsDefined(UseInTestConsole))
+            {
+                writer.WritePropertyName("useInTestConsole"u8);
+                writer.WriteBooleanValue(UseInTestConsole.Value);
+            }
+            if (Optional.IsDefined(UseInApiDocumentation))
+            {
+                writer.WritePropertyName("useInApiDocumentation"u8);
+                writer.WriteBooleanValue(UseInApiDocumentation.Value);
+            }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }

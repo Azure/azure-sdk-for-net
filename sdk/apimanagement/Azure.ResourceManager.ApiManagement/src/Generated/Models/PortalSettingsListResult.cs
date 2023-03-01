@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary> Descriptions of APIM policies. </summary>
+    /// <summary> Descriptions of API Management policies. </summary>
     internal partial class PortalSettingsListResult
     {
         /// <summary> Initializes a new instance of PortalSettingsListResult. </summary>
@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Initializes a new instance of PortalSettingsListResult. </summary>
-        /// <param name="value"> Descriptions of APIM policies. </param>
+        /// <param name="value"> Descriptions of API Management policies. </param>
         /// <param name="count"> Total record count number. </param>
         internal PortalSettingsListResult(IReadOnlyList<PortalSettingsContractData> value, long? count)
         {
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             Count = count;
         }
 
-        /// <summary> Descriptions of APIM policies. </summary>
+        /// <summary> Descriptions of API Management policies. </summary>
         public IReadOnlyList<PortalSettingsContractData> Value { get; }
         /// <summary> Total record count number. </summary>
         public long? Count { get; }

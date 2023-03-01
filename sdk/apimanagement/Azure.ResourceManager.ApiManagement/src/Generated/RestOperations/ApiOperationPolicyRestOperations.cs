@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2021-08-01";
+            _apiVersion = apiVersion ?? "2022-08-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -63,8 +63,8 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Get the list of policy configuration at the API Operation level. </summary>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="serviceName"> The name of the API Management service. </param>
         /// <param name="apiId"> API revision identifier. Must be unique in the current API Management service instance. Non-current revision has ;rev=n as a suffix where n is the revision number. </param>
         /// <param name="operationId"> Operation identifier within an API. Must be unique in the current API Management service instance. </param>
@@ -96,8 +96,8 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Get the list of policy configuration at the API Operation level. </summary>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="serviceName"> The name of the API Management service. </param>
         /// <param name="apiId"> API revision identifier. Must be unique in the current API Management service instance. Non-current revision has ;rev=n as a suffix where n is the revision number. </param>
         /// <param name="operationId"> Operation identifier within an API. Must be unique in the current API Management service instance. </param>
@@ -155,8 +155,8 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Gets the entity state (Etag) version of the API operation policy specified by its identifier. </summary>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="serviceName"> The name of the API Management service. </param>
         /// <param name="apiId"> API revision identifier. Must be unique in the current API Management service instance. Non-current revision has ;rev=n as a suffix where n is the revision number. </param>
         /// <param name="operationId"> Operation identifier within an API. Must be unique in the current API Management service instance. </param>
@@ -192,8 +192,8 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Gets the entity state (Etag) version of the API operation policy specified by its identifier. </summary>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="serviceName"> The name of the API Management service. </param>
         /// <param name="apiId"> API revision identifier. Must be unique in the current API Management service instance. Non-current revision has ;rev=n as a suffix where n is the revision number. </param>
         /// <param name="operationId"> Operation identifier within an API. Must be unique in the current API Management service instance. </param>
@@ -259,8 +259,8 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Get the policy configuration at the API Operation level. </summary>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="serviceName"> The name of the API Management service. </param>
         /// <param name="apiId"> API revision identifier. Must be unique in the current API Management service instance. Non-current revision has ;rev=n as a suffix where n is the revision number. </param>
         /// <param name="operationId"> Operation identifier within an API. Must be unique in the current API Management service instance. </param>
@@ -296,8 +296,8 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Get the policy configuration at the API Operation level. </summary>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="serviceName"> The name of the API Management service. </param>
         /// <param name="apiId"> API revision identifier. Must be unique in the current API Management service instance. Non-current revision has ;rev=n as a suffix where n is the revision number. </param>
         /// <param name="operationId"> Operation identifier within an API. Must be unique in the current API Management service instance. </param>
@@ -367,8 +367,8 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Creates or updates policy configuration for the API Operation level. </summary>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="serviceName"> The name of the API Management service. </param>
         /// <param name="apiId"> API revision identifier. Must be unique in the current API Management service instance. Non-current revision has ;rev=n as a suffix where n is the revision number. </param>
         /// <param name="operationId"> Operation identifier within an API. Must be unique in the current API Management service instance. </param>
@@ -405,8 +405,8 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Creates or updates policy configuration for the API Operation level. </summary>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="serviceName"> The name of the API Management service. </param>
         /// <param name="apiId"> API revision identifier. Must be unique in the current API Management service instance. Non-current revision has ;rev=n as a suffix where n is the revision number. </param>
         /// <param name="operationId"> Operation identifier within an API. Must be unique in the current API Management service instance. </param>
@@ -470,8 +470,8 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Deletes the policy configuration at the Api Operation. </summary>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="serviceName"> The name of the API Management service. </param>
         /// <param name="apiId"> API revision identifier. Must be unique in the current API Management service instance. Non-current revision has ;rev=n as a suffix where n is the revision number. </param>
         /// <param name="operationId"> Operation identifier within an API. Must be unique in the current API Management service instance. </param>
@@ -501,8 +501,8 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Deletes the policy configuration at the Api Operation. </summary>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="serviceName"> The name of the API Management service. </param>
         /// <param name="apiId"> API revision identifier. Must be unique in the current API Management service instance. Non-current revision has ;rev=n as a suffix where n is the revision number. </param>
         /// <param name="operationId"> Operation identifier within an API. Must be unique in the current API Management service instance. </param>

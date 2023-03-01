@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="subscriptionResourceId"> Subscription identifier path. /subscriptions/{subscriptionId}. </param>
         /// <param name="callCountSuccess"> Number of successful calls. This includes calls returning HttpStatusCode &lt;= 301 and HttpStatusCode.NotModified and HttpStatusCode.TemporaryRedirect. </param>
         /// <param name="callCountBlocked"> Number of calls blocked due to invalid credentials. This includes calls returning HttpStatusCode.Unauthorized and HttpStatusCode.Forbidden and HttpStatusCode.TooManyRequests. </param>
-        /// <param name="callCountFailed"> Number of calls failed due to proxy or backend errors. This includes calls returning HttpStatusCode.BadRequest(400) and any Code between HttpStatusCode.InternalServerError (500) and 600. </param>
+        /// <param name="callCountFailed"> Number of calls failed due to gateway or backend errors. This includes calls returning HttpStatusCode.BadRequest(400) and any Code between HttpStatusCode.InternalServerError (500) and 600. </param>
         /// <param name="callCountOther"> Number of other calls. </param>
         /// <param name="callCountTotal"> Total number of calls. </param>
         /// <param name="bandwidth"> Bandwidth consumed. </param>
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public int? CallCountSuccess { get; }
         /// <summary> Number of calls blocked due to invalid credentials. This includes calls returning HttpStatusCode.Unauthorized and HttpStatusCode.Forbidden and HttpStatusCode.TooManyRequests. </summary>
         public int? CallCountBlocked { get; }
-        /// <summary> Number of calls failed due to proxy or backend errors. This includes calls returning HttpStatusCode.BadRequest(400) and any Code between HttpStatusCode.InternalServerError (500) and 600. </summary>
+        /// <summary> Number of calls failed due to gateway or backend errors. This includes calls returning HttpStatusCode.BadRequest(400) and any Code between HttpStatusCode.InternalServerError (500) and 600. </summary>
         public int? CallCountFailed { get; }
         /// <summary> Number of other calls. </summary>
         public int? CallCountOther { get; }

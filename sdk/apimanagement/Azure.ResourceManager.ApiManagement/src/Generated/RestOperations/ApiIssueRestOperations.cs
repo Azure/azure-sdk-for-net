@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2021-08-01";
+            _apiVersion = apiVersion ?? "2022-08-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -77,8 +77,8 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Lists all issues associated with the specified API. </summary>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="serviceName"> The name of the API Management service. </param>
         /// <param name="apiId"> API identifier. Must be unique in the current API Management service instance. </param>
         /// <param name="filter"> |     Field     |     Usage     |     Supported operators     |     Supported functions     |&lt;/br&gt;|-------------|-------------|-------------|-------------|&lt;/br&gt;| name | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| userId | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| state | filter | eq |     |&lt;/br&gt;. </param>
@@ -112,8 +112,8 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Lists all issues associated with the specified API. </summary>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="serviceName"> The name of the API Management service. </param>
         /// <param name="apiId"> API identifier. Must be unique in the current API Management service instance. </param>
         /// <param name="filter"> |     Field     |     Usage     |     Supported operators     |     Supported functions     |&lt;/br&gt;|-------------|-------------|-------------|-------------|&lt;/br&gt;| name | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| userId | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| state | filter | eq |     |&lt;/br&gt;. </param>
@@ -171,8 +171,8 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Gets the entity state (Etag) version of the Issue for an API specified by its identifier. </summary>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="serviceName"> The name of the API Management service. </param>
         /// <param name="apiId"> API identifier. Must be unique in the current API Management service instance. </param>
         /// <param name="issueId"> Issue identifier. Must be unique in the current API Management service instance. </param>
@@ -207,8 +207,8 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Gets the entity state (Etag) version of the Issue for an API specified by its identifier. </summary>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="serviceName"> The name of the API Management service. </param>
         /// <param name="apiId"> API identifier. Must be unique in the current API Management service instance. </param>
         /// <param name="issueId"> Issue identifier. Must be unique in the current API Management service instance. </param>
@@ -271,8 +271,8 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Gets the details of the Issue for an API specified by its identifier. </summary>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="serviceName"> The name of the API Management service. </param>
         /// <param name="apiId"> API identifier. Must be unique in the current API Management service instance. </param>
         /// <param name="issueId"> Issue identifier. Must be unique in the current API Management service instance. </param>
@@ -307,8 +307,8 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Gets the details of the Issue for an API specified by its identifier. </summary>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="serviceName"> The name of the API Management service. </param>
         /// <param name="apiId"> API identifier. Must be unique in the current API Management service instance. </param>
         /// <param name="issueId"> Issue identifier. Must be unique in the current API Management service instance. </param>
@@ -375,8 +375,8 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Creates a new Issue for an API or updates an existing one. </summary>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="serviceName"> The name of the API Management service. </param>
         /// <param name="apiId"> API identifier. Must be unique in the current API Management service instance. </param>
         /// <param name="issueId"> Issue identifier. Must be unique in the current API Management service instance. </param>
@@ -412,8 +412,8 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Creates a new Issue for an API or updates an existing one. </summary>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="serviceName"> The name of the API Management service. </param>
         /// <param name="apiId"> API identifier. Must be unique in the current API Management service instance. </param>
         /// <param name="issueId"> Issue identifier. Must be unique in the current API Management service instance. </param>
@@ -478,8 +478,8 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Updates an existing issue for an API. </summary>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="serviceName"> The name of the API Management service. </param>
         /// <param name="apiId"> API identifier. Must be unique in the current API Management service instance. </param>
         /// <param name="issueId"> Issue identifier. Must be unique in the current API Management service instance. </param>
@@ -514,8 +514,8 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Updates an existing issue for an API. </summary>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="serviceName"> The name of the API Management service. </param>
         /// <param name="apiId"> API identifier. Must be unique in the current API Management service instance. </param>
         /// <param name="issueId"> Issue identifier. Must be unique in the current API Management service instance. </param>
@@ -575,8 +575,8 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Deletes the specified Issue from an API. </summary>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="serviceName"> The name of the API Management service. </param>
         /// <param name="apiId"> API identifier. Must be unique in the current API Management service instance. </param>
         /// <param name="issueId"> Issue identifier. Must be unique in the current API Management service instance. </param>
@@ -605,8 +605,8 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Deletes the specified Issue from an API. </summary>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="serviceName"> The name of the API Management service. </param>
         /// <param name="apiId"> API identifier. Must be unique in the current API Management service instance. </param>
         /// <param name="issueId"> Issue identifier. Must be unique in the current API Management service instance. </param>
@@ -650,8 +650,8 @@ namespace Azure.ResourceManager.ApiManagement
 
         /// <summary> Lists all issues associated with the specified API. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="serviceName"> The name of the API Management service. </param>
         /// <param name="apiId"> API identifier. Must be unique in the current API Management service instance. </param>
         /// <param name="filter"> |     Field     |     Usage     |     Supported operators     |     Supported functions     |&lt;/br&gt;|-------------|-------------|-------------|-------------|&lt;/br&gt;| name | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| userId | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| state | filter | eq |     |&lt;/br&gt;. </param>
@@ -687,8 +687,8 @@ namespace Azure.ResourceManager.ApiManagement
 
         /// <summary> Lists all issues associated with the specified API. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="serviceName"> The name of the API Management service. </param>
         /// <param name="apiId"> API identifier. Must be unique in the current API Management service instance. </param>
         /// <param name="filter"> |     Field     |     Usage     |     Supported operators     |     Supported functions     |&lt;/br&gt;|-------------|-------------|-------------|-------------|&lt;/br&gt;| name | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| userId | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| state | filter | eq |     |&lt;/br&gt;. </param>

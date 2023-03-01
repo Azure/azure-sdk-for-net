@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2021-08-01";
+            _apiVersion = apiVersion ?? "2022-08-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -73,8 +73,8 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Lists the collection of subscriptions of the specified user. </summary>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="serviceName"> The name of the API Management service. </param>
         /// <param name="userId"> User identifier. Must be unique in the current API Management service instance. </param>
         /// <param name="filter"> | Field     |     Usage     |     Supported operators    | Supported functions               |&lt;/br&gt;|-------------|------------------------|-----------------------------------|&lt;/br&gt;|name | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;|displayName | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;|stateComment | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;|ownerId | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;|scope | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;|userId | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;|productId | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;. </param>
@@ -107,8 +107,8 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Lists the collection of subscriptions of the specified user. </summary>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="serviceName"> The name of the API Management service. </param>
         /// <param name="userId"> User identifier. Must be unique in the current API Management service instance. </param>
         /// <param name="filter"> | Field     |     Usage     |     Supported operators    | Supported functions               |&lt;/br&gt;|-------------|------------------------|-----------------------------------|&lt;/br&gt;|name | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;|displayName | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;|stateComment | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;|ownerId | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;|scope | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;|userId | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;|productId | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;. </param>
@@ -165,8 +165,8 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Gets the specified Subscription entity associated with a particular user. </summary>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="serviceName"> The name of the API Management service. </param>
         /// <param name="userId"> User identifier. Must be unique in the current API Management service instance. </param>
         /// <param name="sid"> Subscription entity Identifier. The entity represents the association between a user and a product in API Management. </param>
@@ -200,8 +200,8 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Gets the specified Subscription entity associated with a particular user. </summary>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="serviceName"> The name of the API Management service. </param>
         /// <param name="userId"> User identifier. Must be unique in the current API Management service instance. </param>
         /// <param name="sid"> Subscription entity Identifier. The entity represents the association between a user and a product in API Management. </param>
@@ -250,8 +250,8 @@ namespace Azure.ResourceManager.ApiManagement
 
         /// <summary> Lists the collection of subscriptions of the specified user. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="serviceName"> The name of the API Management service. </param>
         /// <param name="userId"> User identifier. Must be unique in the current API Management service instance. </param>
         /// <param name="filter"> | Field     |     Usage     |     Supported operators    | Supported functions               |&lt;/br&gt;|-------------|------------------------|-----------------------------------|&lt;/br&gt;|name | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;|displayName | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;|stateComment | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;|ownerId | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;|scope | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;|userId | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;|productId | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;. </param>
@@ -286,8 +286,8 @@ namespace Azure.ResourceManager.ApiManagement
 
         /// <summary> Lists the collection of subscriptions of the specified user. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="serviceName"> The name of the API Management service. </param>
         /// <param name="userId"> User identifier. Must be unique in the current API Management service instance. </param>
         /// <param name="filter"> | Field     |     Usage     |     Supported operators    | Supported functions               |&lt;/br&gt;|-------------|------------------------|-----------------------------------|&lt;/br&gt;|name | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;|displayName | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;|stateComment | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;|ownerId | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;|scope | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;|userId | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;|productId | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;. </param>

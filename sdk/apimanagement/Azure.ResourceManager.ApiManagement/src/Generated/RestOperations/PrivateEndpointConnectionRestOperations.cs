@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2021-08-01";
+            _apiVersion = apiVersion ?? "2022-08-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -59,8 +59,8 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Lists all private endpoint connections of the API Management service instance. </summary>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="serviceName"> The name of the API Management service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serviceName"/> is null. </exception>
@@ -88,8 +88,8 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Lists all private endpoint connections of the API Management service instance. </summary>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="serviceName"> The name of the API Management service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serviceName"/> is null. </exception>
@@ -139,8 +139,8 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Gets the details of the Private Endpoint Connection specified by its identifier. </summary>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="serviceName"> The name of the API Management service. </param>
         /// <param name="privateEndpointConnectionName"> Name of the private endpoint connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -172,8 +172,8 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Gets the details of the Private Endpoint Connection specified by its identifier. </summary>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="serviceName"> The name of the API Management service. </param>
         /// <param name="privateEndpointConnectionName"> Name of the private endpoint connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -231,8 +231,8 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Creates a new Private Endpoint Connection or updates an existing one. </summary>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="serviceName"> The name of the API Management service. </param>
         /// <param name="privateEndpointConnectionName"> Name of the private endpoint connection. </param>
         /// <param name="content"> The ApiManagementPrivateEndpointConnectionCreateOrUpdateContent to use. </param>
@@ -260,8 +260,8 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Creates a new Private Endpoint Connection or updates an existing one. </summary>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="serviceName"> The name of the API Management service. </param>
         /// <param name="privateEndpointConnectionName"> Name of the private endpoint connection. </param>
         /// <param name="content"> The ApiManagementPrivateEndpointConnectionCreateOrUpdateContent to use. </param>
@@ -311,8 +311,8 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Deletes the specified Private Endpoint Connection. </summary>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="serviceName"> The name of the API Management service. </param>
         /// <param name="privateEndpointConnectionName"> Name of the private endpoint connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -339,8 +339,8 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Deletes the specified Private Endpoint Connection. </summary>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="serviceName"> The name of the API Management service. </param>
         /// <param name="privateEndpointConnectionName"> Name of the private endpoint connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -388,8 +388,8 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Gets the private link resources. </summary>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="serviceName"> The name of the API Management service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serviceName"/> is null. </exception>
@@ -417,8 +417,8 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Gets the private link resources. </summary>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="serviceName"> The name of the API Management service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serviceName"/> is null. </exception>
@@ -468,8 +468,8 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Gets the private link resources. </summary>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="serviceName"> The name of the API Management service. </param>
         /// <param name="privateLinkSubResourceName"> Name of the private link resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -501,8 +501,8 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Gets the private link resources. </summary>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="serviceName"> The name of the API Management service. </param>
         /// <param name="privateLinkSubResourceName"> Name of the private link resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

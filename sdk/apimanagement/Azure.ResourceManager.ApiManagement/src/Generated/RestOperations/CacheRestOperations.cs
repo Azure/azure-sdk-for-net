@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2021-08-01";
+            _apiVersion = apiVersion ?? "2022-08-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -67,8 +67,8 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Lists a collection of all external Caches in the specified service instance. </summary>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="serviceName"> The name of the API Management service. </param>
         /// <param name="top"> Number of records to return. </param>
         /// <param name="skip"> Number of records to skip. </param>
@@ -98,8 +98,8 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Lists a collection of all external Caches in the specified service instance. </summary>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="serviceName"> The name of the API Management service. </param>
         /// <param name="top"> Number of records to return. </param>
         /// <param name="skip"> Number of records to skip. </param>
@@ -151,8 +151,8 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Gets the entity state (Etag) version of the Cache specified by its identifier. </summary>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="serviceName"> The name of the API Management service. </param>
         /// <param name="cacheId"> Identifier of the Cache entity. Cache identifier (should be either &apos;default&apos; or valid Azure region identifier). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -185,8 +185,8 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Gets the entity state (Etag) version of the Cache specified by its identifier. </summary>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="serviceName"> The name of the API Management service. </param>
         /// <param name="cacheId"> Identifier of the Cache entity. Cache identifier (should be either &apos;default&apos; or valid Azure region identifier). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -241,8 +241,8 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Gets the details of the Cache specified by its identifier. </summary>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="serviceName"> The name of the API Management service. </param>
         /// <param name="cacheId"> Identifier of the Cache entity. Cache identifier (should be either &apos;default&apos; or valid Azure region identifier). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -274,8 +274,8 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Gets the details of the Cache specified by its identifier. </summary>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="serviceName"> The name of the API Management service. </param>
         /// <param name="cacheId"> Identifier of the Cache entity. Cache identifier (should be either &apos;default&apos; or valid Azure region identifier). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -337,8 +337,8 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Creates or updates an External Cache to be used in Api Management instance. </summary>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="serviceName"> The name of the API Management service. </param>
         /// <param name="cacheId"> Identifier of the Cache entity. Cache identifier (should be either &apos;default&apos; or valid Azure region identifier). </param>
         /// <param name="data"> Create or Update parameters. </param>
@@ -372,8 +372,8 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Creates or updates an External Cache to be used in Api Management instance. </summary>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="serviceName"> The name of the API Management service. </param>
         /// <param name="cacheId"> Identifier of the Cache entity. Cache identifier (should be either &apos;default&apos; or valid Azure region identifier). </param>
         /// <param name="data"> Create or Update parameters. </param>
@@ -434,8 +434,8 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Updates the details of the cache specified by its identifier. </summary>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="serviceName"> The name of the API Management service. </param>
         /// <param name="cacheId"> Identifier of the Cache entity. Cache identifier (should be either &apos;default&apos; or valid Azure region identifier). </param>
         /// <param name="ifMatch"> ETag of the Entity. ETag should match the current entity state from the header response of the GET request or it should be * for unconditional update. </param>
@@ -468,8 +468,8 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Updates the details of the cache specified by its identifier. </summary>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="serviceName"> The name of the API Management service. </param>
         /// <param name="cacheId"> Identifier of the Cache entity. Cache identifier (should be either &apos;default&apos; or valid Azure region identifier). </param>
         /// <param name="ifMatch"> ETag of the Entity. ETag should match the current entity state from the header response of the GET request or it should be * for unconditional update. </param>
@@ -525,8 +525,8 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Deletes specific Cache. </summary>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="serviceName"> The name of the API Management service. </param>
         /// <param name="cacheId"> Identifier of the Cache entity. Cache identifier (should be either &apos;default&apos; or valid Azure region identifier). </param>
         /// <param name="ifMatch"> ETag of the Entity. ETag should match the current entity state from the header response of the GET request or it should be * for unconditional update. </param>
@@ -553,8 +553,8 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Deletes specific Cache. </summary>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="serviceName"> The name of the API Management service. </param>
         /// <param name="cacheId"> Identifier of the Cache entity. Cache identifier (should be either &apos;default&apos; or valid Azure region identifier). </param>
         /// <param name="ifMatch"> ETag of the Entity. ETag should match the current entity state from the header response of the GET request or it should be * for unconditional update. </param>
@@ -596,8 +596,8 @@ namespace Azure.ResourceManager.ApiManagement
 
         /// <summary> Lists a collection of all external Caches in the specified service instance. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="serviceName"> The name of the API Management service. </param>
         /// <param name="top"> Number of records to return. </param>
         /// <param name="skip"> Number of records to skip. </param>
@@ -629,8 +629,8 @@ namespace Azure.ResourceManager.ApiManagement
 
         /// <summary> Lists a collection of all external Caches in the specified service instance. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="serviceName"> The name of the API Management service. </param>
         /// <param name="top"> Number of records to return. </param>
         /// <param name="skip"> Number of records to skip. </param>

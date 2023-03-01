@@ -43,6 +43,16 @@ namespace Azure.ResourceManager.ApiManagement
                 writer.WritePropertyName("clientSecret"u8);
                 writer.WriteStringValue(ClientSecret);
             }
+            if (Optional.IsDefined(UseInTestConsole))
+            {
+                writer.WritePropertyName("useInTestConsole"u8);
+                writer.WriteBooleanValue(UseInTestConsole.Value);
+            }
+            if (Optional.IsDefined(UseInApiDocumentation))
+            {
+                writer.WritePropertyName("useInApiDocumentation"u8);
+                writer.WriteBooleanValue(UseInApiDocumentation.Value);
+            }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
@@ -62,6 +72,8 @@ namespace Azure.ResourceManager.ApiManagement
             Optional<string> metadataEndpoint = default;
             Optional<string> clientId = default;
             Optional<string> clientSecret = default;
+            Optional<bool> useInTestConsole = default;
+            Optional<bool> useInApiDocumentation = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -123,11 +135,31 @@ namespace Azure.ResourceManager.ApiManagement
                             clientSecret = property0.Value.GetString();
                             continue;
                         }
+                        if (property0.NameEquals("useInTestConsole"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            useInTestConsole = property0.Value.GetBoolean();
+                            continue;
+                        }
+                        if (property0.NameEquals("useInApiDocumentation"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            useInApiDocumentation = property0.Value.GetBoolean();
+                            continue;
+                        }
                     }
                     continue;
                 }
             }
-            return new ApiManagementOpenIdConnectProviderData(id, name, type, systemData.Value, displayName.Value, description.Value, metadataEndpoint.Value, clientId.Value, clientSecret.Value);
+            return new ApiManagementOpenIdConnectProviderData(id, name, type, systemData.Value, displayName.Value, description.Value, metadataEndpoint.Value, clientId.Value, clientSecret.Value, Optional.ToNullable(useInTestConsole), Optional.ToNullable(useInApiDocumentation));
         }
     }
 }

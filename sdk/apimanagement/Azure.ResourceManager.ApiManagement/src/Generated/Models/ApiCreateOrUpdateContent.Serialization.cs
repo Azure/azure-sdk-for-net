@@ -142,6 +142,11 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 writer.WritePropertyName("apiType"u8);
                 writer.WriteStringValue(SoapApiType.Value.ToString());
             }
+            if (Optional.IsDefined(TranslateRequiredQueryParametersConduct))
+            {
+                writer.WritePropertyName("translateRequiredQueryParameters"u8);
+                writer.WriteStringValue(TranslateRequiredQueryParametersConduct.Value.ToString());
+            }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }

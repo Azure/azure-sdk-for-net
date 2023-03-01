@@ -35,6 +35,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public string ProfileEditingPolicyName { get; set; }
         /// <summary> Password Reset Policy Name. Only applies to AAD B2C Identity Provider. </summary>
         public string PasswordResetPolicyName { get; set; }
+        /// <summary> The client library to be used in the developer portal. Only applies to AAD and AAD B2C Identity Provider. </summary>
+        public string ClientLibrary { get; set; }
         /// <summary> Client Id of the Application in the external Identity Provider. It is App ID for Facebook login, Client ID for Google login, App ID for Microsoft. </summary>
         public string ClientId { get; set; }
         /// <summary> Client secret of the Application in external Identity Provider, used to authenticate login request. For example, it is App Secret for Facebook login, API Key for Google login, Public Key for Microsoft. </summary>

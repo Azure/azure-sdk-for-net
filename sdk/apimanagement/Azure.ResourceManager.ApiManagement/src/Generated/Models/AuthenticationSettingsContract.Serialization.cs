@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
@@ -25,6 +26,26 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 writer.WritePropertyName("openid"u8);
                 writer.WriteObjectValue(OpenId);
             }
+            if (Optional.IsCollectionDefined(OAuth2AuthenticationSettings))
+            {
+                writer.WritePropertyName("oAuth2AuthenticationSettings"u8);
+                writer.WriteStartArray();
+                foreach (var item in OAuth2AuthenticationSettings)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(OpenidAuthenticationSettings))
+            {
+                writer.WritePropertyName("openidAuthenticationSettings"u8);
+                writer.WriteStartArray();
+                foreach (var item in OpenidAuthenticationSettings)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
             writer.WriteEndObject();
         }
 
@@ -36,6 +57,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
             }
             Optional<OAuth2AuthenticationSettingsContract> oAuth2 = default;
             Optional<OpenIdAuthenticationSettingsContract> openid = default;
+            Optional<IList<OAuth2AuthenticationSettingsContract>> oAuth2AuthenticationSettings = default;
+            Optional<IList<OpenIdAuthenticationSettingsContract>> openidAuthenticationSettings = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("oAuth2"u8))
@@ -58,8 +81,38 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     openid = OpenIdAuthenticationSettingsContract.DeserializeOpenIdAuthenticationSettingsContract(property.Value);
                     continue;
                 }
+                if (property.NameEquals("oAuth2AuthenticationSettings"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    List<OAuth2AuthenticationSettingsContract> array = new List<OAuth2AuthenticationSettingsContract>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(OAuth2AuthenticationSettingsContract.DeserializeOAuth2AuthenticationSettingsContract(item));
+                    }
+                    oAuth2AuthenticationSettings = array;
+                    continue;
+                }
+                if (property.NameEquals("openidAuthenticationSettings"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    List<OpenIdAuthenticationSettingsContract> array = new List<OpenIdAuthenticationSettingsContract>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(OpenIdAuthenticationSettingsContract.DeserializeOpenIdAuthenticationSettingsContract(item));
+                    }
+                    openidAuthenticationSettings = array;
+                    continue;
+                }
             }
-            return new AuthenticationSettingsContract(oAuth2.Value, openid.Value);
+            return new AuthenticationSettingsContract(oAuth2.Value, openid.Value, Optional.ToList(oAuth2AuthenticationSettings), Optional.ToList(openidAuthenticationSettings));
         }
     }
 }

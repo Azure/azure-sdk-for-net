@@ -119,6 +119,11 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 writer.WritePropertyName("enableClientCertificate"u8);
                 writer.WriteBooleanValue(EnableClientCertificate.Value);
             }
+            if (Optional.IsDefined(NatGatewayState))
+            {
+                writer.WritePropertyName("natGatewayState"u8);
+                writer.WriteStringValue(NatGatewayState.Value.ToString());
+            }
             if (Optional.IsDefined(DisableGateway))
             {
                 writer.WritePropertyName("disableGateway"u8);
@@ -198,6 +203,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
             Optional<IDictionary<string, string>> customProperties = default;
             Optional<IList<CertificateConfiguration>> certificates = default;
             Optional<bool> enableClientCertificate = default;
+            Optional<NatGatewayState> natGatewayState = default;
+            Optional<IReadOnlyList<string>> outboundPublicIPAddresses = default;
             Optional<bool> disableGateway = default;
             Optional<VirtualNetworkType> virtualNetworkType = default;
             Optional<ApiVersionConstraint> apiVersionConstraint = default;
@@ -531,6 +538,31 @@ namespace Azure.ResourceManager.ApiManagement.Models
                             enableClientCertificate = property0.Value.GetBoolean();
                             continue;
                         }
+                        if (property0.NameEquals("natGatewayState"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            natGatewayState = new NatGatewayState(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("outboundPublicIPAddresses"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            List<string> array = new List<string>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(item.GetString());
+                            }
+                            outboundPublicIPAddresses = array;
+                            continue;
+                        }
                         if (property0.NameEquals("disableGateway"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -610,7 +642,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     continue;
                 }
             }
-            return new ApiManagementServicePatch(id, name, type, systemData.Value, sku.Value, identity, Optional.ToNullable(etag), Optional.ToList(zones), notificationSenderEmail.Value, provisioningState.Value, targetProvisioningState.Value, Optional.ToNullable(createdAtUtc), gatewayUri.Value, gatewayRegionalUri.Value, portalUri.Value, managementApiUri.Value, scmUri.Value, developerPortalUri.Value, Optional.ToList(hostnameConfigurations), Optional.ToList(publicIPAddresses), Optional.ToList(privateIPAddresses), publicIPAddressId.Value, Optional.ToNullable(publicNetworkAccess), virtualNetworkConfiguration.Value, Optional.ToList(additionalLocations), Optional.ToDictionary(customProperties), Optional.ToList(certificates), Optional.ToNullable(enableClientCertificate), Optional.ToNullable(disableGateway), Optional.ToNullable(virtualNetworkType), apiVersionConstraint.Value, Optional.ToNullable(restore), Optional.ToList(privateEndpointConnections), Optional.ToNullable(platformVersion), publisherEmail.Value, publisherName.Value, Optional.ToDictionary(tags));
+            return new ApiManagementServicePatch(id, name, type, systemData.Value, sku.Value, identity, Optional.ToNullable(etag), Optional.ToList(zones), notificationSenderEmail.Value, provisioningState.Value, targetProvisioningState.Value, Optional.ToNullable(createdAtUtc), gatewayUri.Value, gatewayRegionalUri.Value, portalUri.Value, managementApiUri.Value, scmUri.Value, developerPortalUri.Value, Optional.ToList(hostnameConfigurations), Optional.ToList(publicIPAddresses), Optional.ToList(privateIPAddresses), publicIPAddressId.Value, Optional.ToNullable(publicNetworkAccess), virtualNetworkConfiguration.Value, Optional.ToList(additionalLocations), Optional.ToDictionary(customProperties), Optional.ToList(certificates), Optional.ToNullable(enableClientCertificate), Optional.ToNullable(natGatewayState), Optional.ToList(outboundPublicIPAddresses), Optional.ToNullable(disableGateway), Optional.ToNullable(virtualNetworkType), apiVersionConstraint.Value, Optional.ToNullable(restore), Optional.ToList(privateEndpointConnections), Optional.ToNullable(platformVersion), publisherEmail.Value, publisherName.Value, Optional.ToDictionary(tags));
         }
     }
 }

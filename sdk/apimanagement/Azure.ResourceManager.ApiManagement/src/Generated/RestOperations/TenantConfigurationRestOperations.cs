@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2021-08-01";
+            _apiVersion = apiVersion ?? "2022-08-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -65,8 +65,8 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> This operation applies changes from the specified Git branch to the configuration database. This is a long running operation and could take several minutes to complete. </summary>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="serviceName"> The name of the API Management service. </param>
         /// <param name="configurationName"> The identifier of the Git Configuration Operation. </param>
         /// <param name="content"> Deploy Configuration parameters. </param>
@@ -93,8 +93,8 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> This operation applies changes from the specified Git branch to the configuration database. This is a long running operation and could take several minutes to complete. </summary>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="serviceName"> The name of the API Management service. </param>
         /// <param name="configurationName"> The identifier of the Git Configuration Operation. </param>
         /// <param name="content"> Deploy Configuration parameters. </param>
@@ -148,8 +148,8 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> This operation creates a commit with the current configuration snapshot to the specified branch in the repository. This is a long running operation and could take several minutes to complete. </summary>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="serviceName"> The name of the API Management service. </param>
         /// <param name="configurationName"> The identifier of the Git Configuration Operation. </param>
         /// <param name="content"> Save Configuration parameters. </param>
@@ -176,8 +176,8 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> This operation creates a commit with the current configuration snapshot to the specified branch in the repository. This is a long running operation and could take several minutes to complete. </summary>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="serviceName"> The name of the API Management service. </param>
         /// <param name="configurationName"> The identifier of the Git Configuration Operation. </param>
         /// <param name="content"> Save Configuration parameters. </param>
@@ -231,8 +231,8 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> This operation validates the changes in the specified Git branch. This is a long running operation and could take several minutes to complete. </summary>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="serviceName"> The name of the API Management service. </param>
         /// <param name="configurationName"> The identifier of the Git Configuration Operation. </param>
         /// <param name="content"> Validate Configuration parameters. </param>
@@ -259,8 +259,8 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> This operation validates the changes in the specified Git branch. This is a long running operation and could take several minutes to complete. </summary>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="serviceName"> The name of the API Management service. </param>
         /// <param name="configurationName"> The identifier of the Git Configuration Operation. </param>
         /// <param name="content"> Validate Configuration parameters. </param>
@@ -310,8 +310,8 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Gets the status of the most recent synchronization between the configuration database and the Git repository. </summary>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="serviceName"> The name of the API Management service. </param>
         /// <param name="configurationName"> The identifier of the Git Configuration Operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -340,8 +340,8 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Gets the status of the most recent synchronization between the configuration database and the Git repository. </summary>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="serviceName"> The name of the API Management service. </param>
         /// <param name="configurationName"> The identifier of the Git Configuration Operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

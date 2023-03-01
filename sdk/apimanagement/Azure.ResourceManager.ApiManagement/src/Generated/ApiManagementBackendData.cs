@@ -30,10 +30,10 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="systemData"> The systemData. </param>
         /// <param name="title"> Backend Title. </param>
         /// <param name="description"> Backend Description. </param>
-        /// <param name="resourceUri"> Management Uri of the Resource in External System. This url can be the Arm Resource Id of Logic Apps, Function Apps or API Apps. </param>
+        /// <param name="resourceUri"> Management Uri of the Resource in External System. This URL can be the Arm Resource Id of Logic Apps, Function Apps or API Apps. </param>
         /// <param name="properties"> Backend Properties contract. </param>
         /// <param name="credentials"> Backend Credentials Contract Properties. </param>
-        /// <param name="proxy"> Backend Proxy Contract Properties. </param>
+        /// <param name="proxy"> Backend gateway Contract Properties. </param>
         /// <param name="tls"> Backend TLS Properties. </param>
         /// <param name="uri"> Runtime Url of the Backend. </param>
         /// <param name="protocol"> Backend communication protocol. </param>
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.ApiManagement
         public string Title { get; set; }
         /// <summary> Backend Description. </summary>
         public string Description { get; set; }
-        /// <summary> Management Uri of the Resource in External System. This url can be the Arm Resource Id of Logic Apps, Function Apps or API Apps. </summary>
+        /// <summary> Management Uri of the Resource in External System. This URL can be the Arm Resource Id of Logic Apps, Function Apps or API Apps. </summary>
         public Uri ResourceUri { get; set; }
         /// <summary> Backend Properties contract. </summary>
         internal BackendProperties Properties { get; set; }
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.ApiManagement
 
         /// <summary> Backend Credentials Contract Properties. </summary>
         public BackendCredentialsContract Credentials { get; set; }
-        /// <summary> Backend Proxy Contract Properties. </summary>
+        /// <summary> Backend gateway Contract Properties. </summary>
         public BackendProxyContract Proxy { get; set; }
         /// <summary> Backend TLS Properties. </summary>
         public BackendTlsProperties Tls { get; set; }

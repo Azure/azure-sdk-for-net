@@ -525,6 +525,59 @@ namespace Azure.ResourceManager.ApiManagement
             return GetApiManagementAuthorizationServers().Get(authsid, cancellationToken);
         }
 
+        /// <summary> Gets a collection of AuthorizationProviderContractResources in the ApiManagementService. </summary>
+        /// <returns> An object representing collection of AuthorizationProviderContractResources and their operations over a AuthorizationProviderContractResource. </returns>
+        public virtual AuthorizationProviderContractCollection GetAuthorizationProviderContracts()
+        {
+            return GetCachedClient(Client => new AuthorizationProviderContractCollection(Client, Id));
+        }
+
+        /// <summary>
+        /// Gets the details of the authorization provider specified by its identifier.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/authorizationProviders/{authorizationProviderId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AuthorizationProvider_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="authorizationProviderId"> Identifier of the authorization provider. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="authorizationProviderId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="authorizationProviderId"/> is null. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<AuthorizationProviderContractResource>> GetAuthorizationProviderContractAsync(string authorizationProviderId, CancellationToken cancellationToken = default)
+        {
+            return await GetAuthorizationProviderContracts().GetAsync(authorizationProviderId, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets the details of the authorization provider specified by its identifier.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/authorizationProviders/{authorizationProviderId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AuthorizationProvider_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="authorizationProviderId"> Identifier of the authorization provider. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="authorizationProviderId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="authorizationProviderId"/> is null. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<AuthorizationProviderContractResource> GetAuthorizationProviderContract(string authorizationProviderId, CancellationToken cancellationToken = default)
+        {
+            return GetAuthorizationProviderContracts().Get(authorizationProviderId, cancellationToken);
+        }
+
         /// <summary> Gets a collection of ApiManagementBackendResources in the ApiManagementService. </summary>
         /// <returns> An object representing collection of ApiManagementBackendResources and their operations over a ApiManagementBackendResource. </returns>
         public virtual ApiManagementBackendCollection GetApiManagementBackends()
@@ -1096,6 +1149,114 @@ namespace Azure.ResourceManager.ApiManagement
             return GetApiManagementOpenIdConnectProviders().Get(openId, cancellationToken);
         }
 
+        /// <summary> Gets a collection of PolicyFragmentContractResources in the ApiManagementService. </summary>
+        /// <returns> An object representing collection of PolicyFragmentContractResources and their operations over a PolicyFragmentContractResource. </returns>
+        public virtual PolicyFragmentContractCollection GetPolicyFragmentContracts()
+        {
+            return GetCachedClient(Client => new PolicyFragmentContractCollection(Client, Id));
+        }
+
+        /// <summary>
+        /// Gets a policy fragment.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/policyFragments/{id}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PolicyFragment_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="id"> A resource identifier. </param>
+        /// <param name="format"> Policy fragment content format. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<PolicyFragmentContractResource>> GetPolicyFragmentContractAsync(string id, PolicyFragmentContentFormat? format = null, CancellationToken cancellationToken = default)
+        {
+            return await GetPolicyFragmentContracts().GetAsync(id, format, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets a policy fragment.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/policyFragments/{id}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PolicyFragment_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="id"> A resource identifier. </param>
+        /// <param name="format"> Policy fragment content format. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<PolicyFragmentContractResource> GetPolicyFragmentContract(string id, PolicyFragmentContentFormat? format = null, CancellationToken cancellationToken = default)
+        {
+            return GetPolicyFragmentContracts().Get(id, format, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of PortalConfigContractResources in the ApiManagementService. </summary>
+        /// <returns> An object representing collection of PortalConfigContractResources and their operations over a PortalConfigContractResource. </returns>
+        public virtual PortalConfigContractCollection GetPortalConfigContracts()
+        {
+            return GetCachedClient(Client => new PortalConfigContractCollection(Client, Id));
+        }
+
+        /// <summary>
+        /// Get the developer portal configuration.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/portalconfigs/{portalConfigId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PortalConfig_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="portalConfigId"> Portal configuration identifier. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="portalConfigId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="portalConfigId"/> is null. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<PortalConfigContractResource>> GetPortalConfigContractAsync(string portalConfigId, CancellationToken cancellationToken = default)
+        {
+            return await GetPortalConfigContracts().GetAsync(portalConfigId, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get the developer portal configuration.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/portalconfigs/{portalConfigId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PortalConfig_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="portalConfigId"> Portal configuration identifier. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="portalConfigId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="portalConfigId"/> is null. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<PortalConfigContractResource> GetPortalConfigContract(string portalConfigId, CancellationToken cancellationToken = default)
+        {
+            return GetPortalConfigContracts().Get(portalConfigId, cancellationToken);
+        }
+
         /// <summary> Gets a collection of ApiManagementPortalRevisionResources in the ApiManagementService. </summary>
         /// <returns> An object representing collection of ApiManagementPortalRevisionResources and their operations over a ApiManagementPortalRevisionResource. </returns>
         public virtual ApiManagementPortalRevisionCollection GetApiManagementPortalRevisions()
@@ -1586,6 +1747,59 @@ namespace Azure.ResourceManager.ApiManagement
             return GetApiManagementUsers().Get(userId, cancellationToken);
         }
 
+        /// <summary> Gets a collection of DocumentationContractResources in the ApiManagementService. </summary>
+        /// <returns> An object representing collection of DocumentationContractResources and their operations over a DocumentationContractResource. </returns>
+        public virtual DocumentationContractCollection GetDocumentationContracts()
+        {
+            return GetCachedClient(Client => new DocumentationContractCollection(Client, Id));
+        }
+
+        /// <summary>
+        /// Gets the details of the Documentation specified by its identifier.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/documentations/{documentationId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Documentation_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="documentationId"> Documentation identifier. Must be unique in the current API Management service instance. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="documentationId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="documentationId"/> is null. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<DocumentationContractResource>> GetDocumentationContractAsync(string documentationId, CancellationToken cancellationToken = default)
+        {
+            return await GetDocumentationContracts().GetAsync(documentationId, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets the details of the Documentation specified by its identifier.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/documentations/{documentationId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Documentation_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="documentationId"> Documentation identifier. Must be unique in the current API Management service instance. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="documentationId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="documentationId"/> is null. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<DocumentationContractResource> GetDocumentationContract(string documentationId, CancellationToken cancellationToken = default)
+        {
+            return GetDocumentationContracts().Get(documentationId, cancellationToken);
+        }
+
         /// <summary>
         /// Gets an API Management service resource description.
         /// <list type="bullet">
@@ -2050,19 +2264,21 @@ namespace Azure.ResourceManager.ApiManagement
         /// </list>
         /// </summary>
         /// <param name="contentTypeId"> Content type identifier. </param>
+        /// <param name="apiManagementContentType"> Create or update parameters. </param>
         /// <param name="ifMatch"> ETag of the Entity. Not required when creating an entity, but required when updating an entity. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="contentTypeId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="contentTypeId"/> is null. </exception>
-        public virtual async Task<Response<ApiManagementContentType>> CreateOrUpdateContentTypeAsync(string contentTypeId, ETag? ifMatch = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="contentTypeId"/> or <paramref name="apiManagementContentType"/> is null. </exception>
+        public virtual async Task<Response<ApiManagementContentType>> CreateOrUpdateContentTypeAsync(string contentTypeId, ApiManagementContentType apiManagementContentType, ETag? ifMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(contentTypeId, nameof(contentTypeId));
+            Argument.AssertNotNull(apiManagementContentType, nameof(apiManagementContentType));
 
             using var scope = _contentTypeClientDiagnostics.CreateScope("ApiManagementServiceResource.CreateOrUpdateContentType");
             scope.Start();
             try
             {
-                var response = await _contentTypeRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, contentTypeId, ifMatch, cancellationToken).ConfigureAwait(false);
+                var response = await _contentTypeRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, contentTypeId, apiManagementContentType, ifMatch, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -2086,19 +2302,21 @@ namespace Azure.ResourceManager.ApiManagement
         /// </list>
         /// </summary>
         /// <param name="contentTypeId"> Content type identifier. </param>
+        /// <param name="apiManagementContentType"> Create or update parameters. </param>
         /// <param name="ifMatch"> ETag of the Entity. Not required when creating an entity, but required when updating an entity. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="contentTypeId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="contentTypeId"/> is null. </exception>
-        public virtual Response<ApiManagementContentType> CreateOrUpdateContentType(string contentTypeId, ETag? ifMatch = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="contentTypeId"/> or <paramref name="apiManagementContentType"/> is null. </exception>
+        public virtual Response<ApiManagementContentType> CreateOrUpdateContentType(string contentTypeId, ApiManagementContentType apiManagementContentType, ETag? ifMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(contentTypeId, nameof(contentTypeId));
+            Argument.AssertNotNull(apiManagementContentType, nameof(apiManagementContentType));
 
             using var scope = _contentTypeClientDiagnostics.CreateScope("ApiManagementServiceResource.CreateOrUpdateContentType");
             scope.Start();
             try
             {
-                var response = _contentTypeRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, contentTypeId, ifMatch, cancellationToken);
+                var response = _contentTypeRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, contentTypeId, apiManagementContentType, ifMatch, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -2397,20 +2615,22 @@ namespace Azure.ResourceManager.ApiManagement
         /// </summary>
         /// <param name="contentTypeId"> Content type identifier. </param>
         /// <param name="contentItemId"> Content item identifier. </param>
+        /// <param name="apiManagementContentItem"> Create or update parameters. </param>
         /// <param name="ifMatch"> ETag of the Entity. Not required when creating an entity, but required when updating an entity. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="contentTypeId"/> or <paramref name="contentItemId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="contentTypeId"/> or <paramref name="contentItemId"/> is null. </exception>
-        public virtual async Task<Response<ApiManagementContentItem>> CreateOrUpdateContentItemAsync(string contentTypeId, string contentItemId, ETag? ifMatch = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="contentTypeId"/>, <paramref name="contentItemId"/> or <paramref name="apiManagementContentItem"/> is null. </exception>
+        public virtual async Task<Response<ApiManagementContentItem>> CreateOrUpdateContentItemAsync(string contentTypeId, string contentItemId, ApiManagementContentItem apiManagementContentItem, ETag? ifMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(contentTypeId, nameof(contentTypeId));
             Argument.AssertNotNullOrEmpty(contentItemId, nameof(contentItemId));
+            Argument.AssertNotNull(apiManagementContentItem, nameof(apiManagementContentItem));
 
             using var scope = _contentItemClientDiagnostics.CreateScope("ApiManagementServiceResource.CreateOrUpdateContentItem");
             scope.Start();
             try
             {
-                var response = await _contentItemRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, contentTypeId, contentItemId, ifMatch, cancellationToken).ConfigureAwait(false);
+                var response = await _contentItemRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, contentTypeId, contentItemId, apiManagementContentItem, ifMatch, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -2435,20 +2655,22 @@ namespace Azure.ResourceManager.ApiManagement
         /// </summary>
         /// <param name="contentTypeId"> Content type identifier. </param>
         /// <param name="contentItemId"> Content item identifier. </param>
+        /// <param name="apiManagementContentItem"> Create or update parameters. </param>
         /// <param name="ifMatch"> ETag of the Entity. Not required when creating an entity, but required when updating an entity. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="contentTypeId"/> or <paramref name="contentItemId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="contentTypeId"/> or <paramref name="contentItemId"/> is null. </exception>
-        public virtual Response<ApiManagementContentItem> CreateOrUpdateContentItem(string contentTypeId, string contentItemId, ETag? ifMatch = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="contentTypeId"/>, <paramref name="contentItemId"/> or <paramref name="apiManagementContentItem"/> is null. </exception>
+        public virtual Response<ApiManagementContentItem> CreateOrUpdateContentItem(string contentTypeId, string contentItemId, ApiManagementContentItem apiManagementContentItem, ETag? ifMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(contentTypeId, nameof(contentTypeId));
             Argument.AssertNotNullOrEmpty(contentItemId, nameof(contentItemId));
+            Argument.AssertNotNull(apiManagementContentItem, nameof(apiManagementContentItem));
 
             using var scope = _contentItemClientDiagnostics.CreateScope("ApiManagementServiceResource.CreateOrUpdateContentItem");
             scope.Start();
             try
             {
-                var response = _contentItemRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, contentTypeId, contentItemId, ifMatch, cancellationToken);
+                var response = _contentItemRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, contentTypeId, contentItemId, apiManagementContentItem, ifMatch, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -2719,6 +2941,74 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 var response = _apiManagementServiceRestClient.Backup(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
                 var operation = new ApiManagementArmOperation<ApiManagementServiceResource>(new ApiManagementServiceOperationSource(Client), _apiManagementServiceClientDiagnostics, Pipeline, _apiManagementServiceRestClient.CreateBackupRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Upgrades an API Management service to the Stv2 platform. For details refer to https://aka.ms/apim-migrate-stv2. This change is not reversible. This is long running operation and could take several minutes to complete.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/migrateToStv2</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ApiManagementService_MigrateToStv2</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<ArmOperation<ApiManagementServiceResource>> MigrateToStv2Async(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        {
+            using var scope = _apiManagementServiceClientDiagnostics.CreateScope("ApiManagementServiceResource.MigrateToStv2");
+            scope.Start();
+            try
+            {
+                var response = await _apiManagementServiceRestClient.MigrateToStv2Async(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new ApiManagementArmOperation<ApiManagementServiceResource>(new ApiManagementServiceOperationSource(Client), _apiManagementServiceClientDiagnostics, Pipeline, _apiManagementServiceRestClient.CreateMigrateToStv2Request(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Upgrades an API Management service to the Stv2 platform. For details refer to https://aka.ms/apim-migrate-stv2. This change is not reversible. This is long running operation and could take several minutes to complete.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/migrateToStv2</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ApiManagementService_MigrateToStv2</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual ArmOperation<ApiManagementServiceResource> MigrateToStv2(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        {
+            using var scope = _apiManagementServiceClientDiagnostics.CreateScope("ApiManagementServiceResource.MigrateToStv2");
+            scope.Start();
+            try
+            {
+                var response = _apiManagementServiceRestClient.MigrateToStv2(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                var operation = new ApiManagementArmOperation<ApiManagementServiceResource>(new ApiManagementServiceOperationSource(Client), _apiManagementServiceClientDiagnostics, Pipeline, _apiManagementServiceRestClient.CreateMigrateToStv2Request(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

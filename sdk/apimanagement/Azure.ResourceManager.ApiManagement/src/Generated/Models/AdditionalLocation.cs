@@ -28,6 +28,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             Zones = new ChangeTrackingList<string>();
             PublicIPAddresses = new ChangeTrackingList<IPAddress>();
             PrivateIPAddresses = new ChangeTrackingList<IPAddress>();
+            OutboundPublicIPAddresses = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of AdditionalLocation. </summary>
@@ -39,9 +40,11 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="publicIPAddressId"> Public Standard SKU IP V4 based IP address to be associated with Virtual Network deployed service in the location. Supported only for Premium SKU being deployed in Virtual Network. </param>
         /// <param name="virtualNetworkConfiguration"> Virtual network configuration for the location. </param>
         /// <param name="gatewayRegionalUri"> Gateway URL of the API Management service in the Region. </param>
+        /// <param name="natGatewayState"> Property can be used to enable NAT Gateway for this API Management service. </param>
+        /// <param name="outboundPublicIPAddresses"> Outbound public IPV4 address prefixes associated with NAT Gateway deployed service. Available only for Premium SKU on stv2 platform. </param>
         /// <param name="disableGateway"> Property only valid for an Api Management service deployed in multiple locations. This can be used to disable the gateway in this additional location. </param>
         /// <param name="platformVersion"> Compute Platform Version running the service. </param>
-        internal AdditionalLocation(AzureLocation location, ApiManagementServiceSkuProperties sku, IList<string> zones, IReadOnlyList<IPAddress> publicIPAddresses, IReadOnlyList<IPAddress> privateIPAddresses, ResourceIdentifier publicIPAddressId, VirtualNetworkConfiguration virtualNetworkConfiguration, Uri gatewayRegionalUri, bool? disableGateway, PlatformVersion? platformVersion)
+        internal AdditionalLocation(AzureLocation location, ApiManagementServiceSkuProperties sku, IList<string> zones, IReadOnlyList<IPAddress> publicIPAddresses, IReadOnlyList<IPAddress> privateIPAddresses, ResourceIdentifier publicIPAddressId, VirtualNetworkConfiguration virtualNetworkConfiguration, Uri gatewayRegionalUri, NatGatewayState? natGatewayState, IReadOnlyList<string> outboundPublicIPAddresses, bool? disableGateway, PlatformVersion? platformVersion)
         {
             Location = location;
             Sku = sku;
@@ -51,6 +54,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
             PublicIPAddressId = publicIPAddressId;
             VirtualNetworkConfiguration = virtualNetworkConfiguration;
             GatewayRegionalUri = gatewayRegionalUri;
+            NatGatewayState = natGatewayState;
+            OutboundPublicIPAddresses = outboundPublicIPAddresses;
             DisableGateway = disableGateway;
             PlatformVersion = platformVersion;
         }
@@ -71,6 +76,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public VirtualNetworkConfiguration VirtualNetworkConfiguration { get; set; }
         /// <summary> Gateway URL of the API Management service in the Region. </summary>
         public Uri GatewayRegionalUri { get; }
+        /// <summary> Property can be used to enable NAT Gateway for this API Management service. </summary>
+        public NatGatewayState? NatGatewayState { get; set; }
+        /// <summary> Outbound public IPV4 address prefixes associated with NAT Gateway deployed service. Available only for Premium SKU on stv2 platform. </summary>
+        public IReadOnlyList<string> OutboundPublicIPAddresses { get; }
         /// <summary> Property only valid for an Api Management service deployed in multiple locations. This can be used to disable the gateway in this additional location. </summary>
         public bool? DisableGateway { get; set; }
         /// <summary> Compute Platform Version running the service. </summary>

@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System.Collections.Generic;
+using Azure.Core;
+
 namespace Azure.ResourceManager.ApiManagement.Models
 {
     /// <summary> API Authentication Settings. </summary>
@@ -13,20 +16,30 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <summary> Initializes a new instance of AuthenticationSettingsContract. </summary>
         public AuthenticationSettingsContract()
         {
+            OAuth2AuthenticationSettings = new ChangeTrackingList<OAuth2AuthenticationSettingsContract>();
+            OpenidAuthenticationSettings = new ChangeTrackingList<OpenIdAuthenticationSettingsContract>();
         }
 
         /// <summary> Initializes a new instance of AuthenticationSettingsContract. </summary>
         /// <param name="oAuth2"> OAuth2 Authentication settings. </param>
         /// <param name="openId"> OpenID Connect Authentication Settings. </param>
-        internal AuthenticationSettingsContract(OAuth2AuthenticationSettingsContract oAuth2, OpenIdAuthenticationSettingsContract openId)
+        /// <param name="oAuth2AuthenticationSettings"> Collection of OAuth2 authentication settings included into this API. </param>
+        /// <param name="openidAuthenticationSettings"> Collection of Open ID Connect authentication settings included into this API. </param>
+        internal AuthenticationSettingsContract(OAuth2AuthenticationSettingsContract oAuth2, OpenIdAuthenticationSettingsContract openId, IList<OAuth2AuthenticationSettingsContract> oAuth2AuthenticationSettings, IList<OpenIdAuthenticationSettingsContract> openidAuthenticationSettings)
         {
             OAuth2 = oAuth2;
             OpenId = openId;
+            OAuth2AuthenticationSettings = oAuth2AuthenticationSettings;
+            OpenidAuthenticationSettings = openidAuthenticationSettings;
         }
 
         /// <summary> OAuth2 Authentication settings. </summary>
         public OAuth2AuthenticationSettingsContract OAuth2 { get; set; }
         /// <summary> OpenID Connect Authentication Settings. </summary>
         public OpenIdAuthenticationSettingsContract OpenId { get; set; }
+        /// <summary> Collection of OAuth2 authentication settings included into this API. </summary>
+        public IList<OAuth2AuthenticationSettingsContract> OAuth2AuthenticationSettings { get; }
+        /// <summary> Collection of Open ID Connect authentication settings included into this API. </summary>
+        public IList<OpenIdAuthenticationSettingsContract> OpenidAuthenticationSettings { get; }
     }
 }

@@ -40,12 +40,14 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="resourceOwnerUsername"> Can be optionally specified when resource owner password grant type is supported by this authorization server. Default resource owner username. </param>
         /// <param name="resourceOwnerPassword"> Can be optionally specified when resource owner password grant type is supported by this authorization server. Default resource owner password. </param>
         /// <param name="displayName"> User-friendly authorization server name. </param>
+        /// <param name="useInTestConsole"> If true, the authorization server may be used in the developer portal test console. True by default if no value is provided. </param>
+        /// <param name="useInApiDocumentation"> If true, the authorization server will be used in the API documentation in the developer portal. False by default if no value is provided. </param>
         /// <param name="clientRegistrationEndpoint"> Optional reference to a page where client or app registration for this authorization server is performed. Contains absolute URL to entity being referenced. </param>
         /// <param name="authorizationEndpoint"> OAuth authorization endpoint. See http://tools.ietf.org/html/rfc6749#section-3.2. </param>
         /// <param name="grantTypes"> Form of an authorization grant, which the client uses to request the access token. </param>
         /// <param name="clientId"> Client or app id registered with this authorization server. </param>
         /// <param name="clientSecret"> Client or app secret registered with this authorization server. This property will not be filled on &apos;GET&apos; operations! Use &apos;/listSecrets&apos; POST request to get the value. </param>
-        internal ApiManagementAuthorizationServerPatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string description, IList<AuthorizationMethod> authorizationMethods, IList<ClientAuthenticationMethod> clientAuthenticationMethods, IList<TokenBodyParameterContract> tokenBodyParameters, string tokenEndpoint, bool? doesSupportState, string defaultScope, IList<BearerTokenSendingMethod> bearerTokenSendingMethods, string resourceOwnerUsername, string resourceOwnerPassword, string displayName, string clientRegistrationEndpoint, string authorizationEndpoint, IList<GrantType> grantTypes, string clientId, string clientSecret) : base(id, name, resourceType, systemData)
+        internal ApiManagementAuthorizationServerPatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string description, IList<AuthorizationMethod> authorizationMethods, IList<ClientAuthenticationMethod> clientAuthenticationMethods, IList<TokenBodyParameterContract> tokenBodyParameters, string tokenEndpoint, bool? doesSupportState, string defaultScope, IList<BearerTokenSendingMethod> bearerTokenSendingMethods, string resourceOwnerUsername, string resourceOwnerPassword, string displayName, bool? useInTestConsole, bool? useInApiDocumentation, string clientRegistrationEndpoint, string authorizationEndpoint, IList<GrantType> grantTypes, string clientId, string clientSecret) : base(id, name, resourceType, systemData)
         {
             Description = description;
             AuthorizationMethods = authorizationMethods;
@@ -58,6 +60,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
             ResourceOwnerUsername = resourceOwnerUsername;
             ResourceOwnerPassword = resourceOwnerPassword;
             DisplayName = displayName;
+            UseInTestConsole = useInTestConsole;
+            UseInApiDocumentation = useInApiDocumentation;
             ClientRegistrationEndpoint = clientRegistrationEndpoint;
             AuthorizationEndpoint = authorizationEndpoint;
             GrantTypes = grantTypes;
@@ -87,6 +91,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public string ResourceOwnerPassword { get; set; }
         /// <summary> User-friendly authorization server name. </summary>
         public string DisplayName { get; set; }
+        /// <summary> If true, the authorization server may be used in the developer portal test console. True by default if no value is provided. </summary>
+        public bool? UseInTestConsole { get; set; }
+        /// <summary> If true, the authorization server will be used in the API documentation in the developer portal. False by default if no value is provided. </summary>
+        public bool? UseInApiDocumentation { get; set; }
         /// <summary> Optional reference to a page where client or app registration for this authorization server is performed. Contains absolute URL to entity being referenced. </summary>
         public string ClientRegistrationEndpoint { get; set; }
         /// <summary> OAuth authorization endpoint. See http://tools.ietf.org/html/rfc6749#section-3.2. </summary>

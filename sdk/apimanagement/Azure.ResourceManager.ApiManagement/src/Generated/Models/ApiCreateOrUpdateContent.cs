@@ -76,5 +76,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         ///  * `graphql` creates GraphQL API.
         /// </summary>
         public SoapApiType? SoapApiType { get; set; }
+        /// <summary> Strategy of translating required query parameters to template ones. By default has value &apos;template&apos;. Possible values: &apos;template&apos;, &apos;query&apos;. </summary>
+        public TranslateRequiredQueryParametersConduct? TranslateRequiredQueryParametersConduct { get; set; }
     }
 }

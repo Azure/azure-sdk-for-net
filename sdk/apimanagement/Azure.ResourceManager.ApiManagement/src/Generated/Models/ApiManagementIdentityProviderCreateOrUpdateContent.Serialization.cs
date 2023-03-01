@@ -64,6 +64,11 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 writer.WritePropertyName("passwordResetPolicyName"u8);
                 writer.WriteStringValue(PasswordResetPolicyName);
             }
+            if (Optional.IsDefined(ClientLibrary))
+            {
+                writer.WritePropertyName("clientLibrary"u8);
+                writer.WriteStringValue(ClientLibrary);
+            }
             if (Optional.IsDefined(ClientId))
             {
                 writer.WritePropertyName("clientId"u8);
@@ -96,6 +101,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             Optional<string> signinPolicyName = default;
             Optional<string> profileEditingPolicyName = default;
             Optional<string> passwordResetPolicyName = default;
+            Optional<string> clientLibrary = default;
             Optional<string> clientId = default;
             Optional<string> clientSecret = default;
             foreach (var property in element.EnumerateObject())
@@ -189,6 +195,11 @@ namespace Azure.ResourceManager.ApiManagement.Models
                             passwordResetPolicyName = property0.Value.GetString();
                             continue;
                         }
+                        if (property0.NameEquals("clientLibrary"u8))
+                        {
+                            clientLibrary = property0.Value.GetString();
+                            continue;
+                        }
                         if (property0.NameEquals("clientId"u8))
                         {
                             clientId = property0.Value.GetString();
@@ -203,7 +214,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     continue;
                 }
             }
-            return new ApiManagementIdentityProviderCreateOrUpdateContent(id, name, type, systemData.Value, Optional.ToNullable(type0), signinTenant.Value, Optional.ToList(allowedTenants), authority.Value, signupPolicyName.Value, signinPolicyName.Value, profileEditingPolicyName.Value, passwordResetPolicyName.Value, clientId.Value, clientSecret.Value);
+            return new ApiManagementIdentityProviderCreateOrUpdateContent(id, name, type, systemData.Value, Optional.ToNullable(type0), signinTenant.Value, Optional.ToList(allowedTenants), authority.Value, signupPolicyName.Value, signinPolicyName.Value, profileEditingPolicyName.Value, passwordResetPolicyName.Value, clientLibrary.Value, clientId.Value, clientSecret.Value);
         }
     }
 }

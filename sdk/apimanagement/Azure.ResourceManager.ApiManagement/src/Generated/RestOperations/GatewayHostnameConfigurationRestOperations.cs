@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2021-08-01";
+            _apiVersion = apiVersion ?? "2022-08-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -73,8 +73,8 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Lists the collection of hostname configurations for the specified gateway. </summary>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="serviceName"> The name of the API Management service. </param>
         /// <param name="gatewayId"> Gateway entity identifier. Must be unique in the current API Management service instance. Must not have value &apos;managed&apos;. </param>
         /// <param name="filter"> |     Field     |     Usage     |     Supported operators     |     Supported functions     |&lt;/br&gt;|-------------|-------------|-------------|-------------|&lt;/br&gt;| name | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| hostname | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;. </param>
@@ -107,8 +107,8 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Lists the collection of hostname configurations for the specified gateway. </summary>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="serviceName"> The name of the API Management service. </param>
         /// <param name="gatewayId"> Gateway entity identifier. Must be unique in the current API Management service instance. Must not have value &apos;managed&apos;. </param>
         /// <param name="filter"> |     Field     |     Usage     |     Supported operators     |     Supported functions     |&lt;/br&gt;|-------------|-------------|-------------|-------------|&lt;/br&gt;| name | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| hostname | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;. </param>
@@ -165,8 +165,8 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Checks that hostname configuration entity specified by identifier exists for specified Gateway entity. </summary>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="serviceName"> The name of the API Management service. </param>
         /// <param name="gatewayId"> Gateway entity identifier. Must be unique in the current API Management service instance. Must not have value &apos;managed&apos;. </param>
         /// <param name="hcId"> Gateway hostname configuration identifier. Must be unique in the scope of parent Gateway entity. </param>
@@ -201,8 +201,8 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Checks that hostname configuration entity specified by identifier exists for specified Gateway entity. </summary>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="serviceName"> The name of the API Management service. </param>
         /// <param name="gatewayId"> Gateway entity identifier. Must be unique in the current API Management service instance. Must not have value &apos;managed&apos;. </param>
         /// <param name="hcId"> Gateway hostname configuration identifier. Must be unique in the scope of parent Gateway entity. </param>
@@ -261,8 +261,8 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Get details of a hostname configuration. </summary>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="serviceName"> The name of the API Management service. </param>
         /// <param name="gatewayId"> Gateway entity identifier. Must be unique in the current API Management service instance. Must not have value &apos;managed&apos;. </param>
         /// <param name="hcId"> Gateway hostname configuration identifier. Must be unique in the scope of parent Gateway entity. </param>
@@ -296,8 +296,8 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Get details of a hostname configuration. </summary>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="serviceName"> The name of the API Management service. </param>
         /// <param name="gatewayId"> Gateway entity identifier. Must be unique in the current API Management service instance. Must not have value &apos;managed&apos;. </param>
         /// <param name="hcId"> Gateway hostname configuration identifier. Must be unique in the scope of parent Gateway entity. </param>
@@ -363,8 +363,8 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Creates of updates hostname configuration for a Gateway. </summary>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="serviceName"> The name of the API Management service. </param>
         /// <param name="gatewayId"> Gateway entity identifier. Must be unique in the current API Management service instance. Must not have value &apos;managed&apos;. </param>
         /// <param name="hcId"> Gateway hostname configuration identifier. Must be unique in the scope of parent Gateway entity. </param>
@@ -400,8 +400,8 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Creates of updates hostname configuration for a Gateway. </summary>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="serviceName"> The name of the API Management service. </param>
         /// <param name="gatewayId"> Gateway entity identifier. Must be unique in the current API Management service instance. Must not have value &apos;managed&apos;. </param>
         /// <param name="hcId"> Gateway hostname configuration identifier. Must be unique in the scope of parent Gateway entity. </param>
@@ -462,8 +462,8 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Deletes the specified hostname configuration from the specified Gateway. </summary>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="serviceName"> The name of the API Management service. </param>
         /// <param name="gatewayId"> Gateway entity identifier. Must be unique in the current API Management service instance. Must not have value &apos;managed&apos;. </param>
         /// <param name="hcId"> Gateway hostname configuration identifier. Must be unique in the scope of parent Gateway entity. </param>
@@ -492,8 +492,8 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Deletes the specified hostname configuration from the specified Gateway. </summary>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="serviceName"> The name of the API Management service. </param>
         /// <param name="gatewayId"> Gateway entity identifier. Must be unique in the current API Management service instance. Must not have value &apos;managed&apos;. </param>
         /// <param name="hcId"> Gateway hostname configuration identifier. Must be unique in the scope of parent Gateway entity. </param>
@@ -537,8 +537,8 @@ namespace Azure.ResourceManager.ApiManagement
 
         /// <summary> Lists the collection of hostname configurations for the specified gateway. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="serviceName"> The name of the API Management service. </param>
         /// <param name="gatewayId"> Gateway entity identifier. Must be unique in the current API Management service instance. Must not have value &apos;managed&apos;. </param>
         /// <param name="filter"> |     Field     |     Usage     |     Supported operators     |     Supported functions     |&lt;/br&gt;|-------------|-------------|-------------|-------------|&lt;/br&gt;| name | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| hostname | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;. </param>
@@ -573,8 +573,8 @@ namespace Azure.ResourceManager.ApiManagement
 
         /// <summary> Lists the collection of hostname configurations for the specified gateway. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="serviceName"> The name of the API Management service. </param>
         /// <param name="gatewayId"> Gateway entity identifier. Must be unique in the current API Management service instance. Must not have value &apos;managed&apos;. </param>
         /// <param name="filter"> |     Field     |     Usage     |     Supported operators     |     Supported functions     |&lt;/br&gt;|-------------|-------------|-------------|-------------|&lt;/br&gt;| name | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| hostname | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;. </param>

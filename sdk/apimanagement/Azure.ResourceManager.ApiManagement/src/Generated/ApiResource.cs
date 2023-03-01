@@ -309,6 +309,59 @@ namespace Azure.ResourceManager.ApiManagement
             return GetApiTags().Get(tagId, cancellationToken);
         }
 
+        /// <summary> Gets a collection of ResolverContractResources in the Api. </summary>
+        /// <returns> An object representing collection of ResolverContractResources and their operations over a ResolverContractResource. </returns>
+        public virtual ResolverContractCollection GetResolverContracts()
+        {
+            return GetCachedClient(Client => new ResolverContractCollection(Client, Id));
+        }
+
+        /// <summary>
+        /// Gets the details of the GraphQL API Resolver specified by its identifier.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/apis/{apiId}/resolvers/{resolverId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>GraphQLApiResolver_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resolverId"> Resolver identifier within a GraphQL API. Must be unique in the current API Management service instance. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resolverId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resolverId"/> is null. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<ResolverContractResource>> GetResolverContractAsync(string resolverId, CancellationToken cancellationToken = default)
+        {
+            return await GetResolverContracts().GetAsync(resolverId, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets the details of the GraphQL API Resolver specified by its identifier.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/apis/{apiId}/resolvers/{resolverId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>GraphQLApiResolver_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resolverId"> Resolver identifier within a GraphQL API. Must be unique in the current API Management service instance. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resolverId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resolverId"/> is null. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<ResolverContractResource> GetResolverContract(string resolverId, CancellationToken cancellationToken = default)
+        {
+            return GetResolverContracts().Get(resolverId, cancellationToken);
+        }
+
         /// <summary> Gets a collection of ApiSchemaResources in the Api. </summary>
         /// <returns> An object representing collection of ApiSchemaResources and their operations over a ApiSchemaResource. </returns>
         public virtual ApiSchemaCollection GetApiSchemas()
@@ -521,6 +574,13 @@ namespace Azure.ResourceManager.ApiManagement
         public virtual Response<ApiTagDescriptionResource> GetApiTagDescription(string tagDescriptionId, CancellationToken cancellationToken = default)
         {
             return GetApiTagDescriptions().Get(tagDescriptionId, cancellationToken);
+        }
+
+        /// <summary> Gets an object representing a ServiceApiWikiResource along with the instance operations that can be performed on it in the Api. </summary>
+        /// <returns> Returns a <see cref="ServiceApiWikiResource" /> object. </returns>
+        public virtual ServiceApiWikiResource GetServiceApiWiki()
+        {
+            return new ServiceApiWikiResource(Client, Id.AppendChildResource("wikis", "default"));
         }
 
         /// <summary>

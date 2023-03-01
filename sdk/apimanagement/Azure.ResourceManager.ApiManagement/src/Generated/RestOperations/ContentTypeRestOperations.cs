@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2021-08-01";
+            _apiVersion = apiVersion ?? "2022-08-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -59,8 +59,8 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Lists the developer portal&apos;s content types. Content types describe content items&apos; properties, validation rules, and constraints. </summary>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="serviceName"> The name of the API Management service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serviceName"/> is null. </exception>
@@ -88,8 +88,8 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Lists the developer portal&apos;s content types. Content types describe content items&apos; properties, validation rules, and constraints. </summary>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="serviceName"> The name of the API Management service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serviceName"/> is null. </exception>
@@ -139,8 +139,8 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Gets the details of the developer portal&apos;s content type. Content types describe content items&apos; properties, validation rules, and constraints. </summary>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="serviceName"> The name of the API Management service. </param>
         /// <param name="contentTypeId"> Content type identifier. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -170,8 +170,8 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Gets the details of the developer portal&apos;s content type. Content types describe content items&apos; properties, validation rules, and constraints. </summary>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="serviceName"> The name of the API Management service. </param>
         /// <param name="contentTypeId"> Content type identifier. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.ApiManagement
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string serviceName, string contentTypeId, ETag? ifMatch)
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string serviceName, string contentTypeId, ApiManagementContentType apiManagementContentType, ETag? ifMatch)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -222,27 +222,33 @@ namespace Azure.ResourceManager.ApiManagement
                 request.Headers.Add("If-Match", ifMatch.Value);
             }
             request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(apiManagementContentType);
+            request.Content = content;
             _userAgent.Apply(message);
             return message;
         }
 
         /// <summary> Creates or updates the developer portal&apos;s content type. Content types describe content items&apos; properties, validation rules, and constraints. Custom content types&apos; identifiers need to start with the `c-` prefix. Built-in content types can&apos;t be modified. </summary>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="serviceName"> The name of the API Management service. </param>
         /// <param name="contentTypeId"> Content type identifier. </param>
+        /// <param name="apiManagementContentType"> Create or update parameters. </param>
         /// <param name="ifMatch"> ETag of the Entity. Not required when creating an entity, but required when updating an entity. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="contentTypeId"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="contentTypeId"/> or <paramref name="apiManagementContentType"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="contentTypeId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ApiManagementContentType>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string serviceName, string contentTypeId, ETag? ifMatch = null, CancellationToken cancellationToken = default)
+        public async Task<Response<ApiManagementContentType>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string serviceName, string contentTypeId, ApiManagementContentType apiManagementContentType, ETag? ifMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
             Argument.AssertNotNullOrEmpty(contentTypeId, nameof(contentTypeId));
+            Argument.AssertNotNull(apiManagementContentType, nameof(apiManagementContentType));
 
-            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, serviceName, contentTypeId, ifMatch);
+            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, serviceName, contentTypeId, apiManagementContentType, ifMatch);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -260,22 +266,24 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Creates or updates the developer portal&apos;s content type. Content types describe content items&apos; properties, validation rules, and constraints. Custom content types&apos; identifiers need to start with the `c-` prefix. Built-in content types can&apos;t be modified. </summary>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="serviceName"> The name of the API Management service. </param>
         /// <param name="contentTypeId"> Content type identifier. </param>
+        /// <param name="apiManagementContentType"> Create or update parameters. </param>
         /// <param name="ifMatch"> ETag of the Entity. Not required when creating an entity, but required when updating an entity. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="contentTypeId"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="contentTypeId"/> or <paramref name="apiManagementContentType"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="contentTypeId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ApiManagementContentType> CreateOrUpdate(string subscriptionId, string resourceGroupName, string serviceName, string contentTypeId, ETag? ifMatch = null, CancellationToken cancellationToken = default)
+        public Response<ApiManagementContentType> CreateOrUpdate(string subscriptionId, string resourceGroupName, string serviceName, string contentTypeId, ApiManagementContentType apiManagementContentType, ETag? ifMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
             Argument.AssertNotNullOrEmpty(contentTypeId, nameof(contentTypeId));
+            Argument.AssertNotNull(apiManagementContentType, nameof(apiManagementContentType));
 
-            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, serviceName, contentTypeId, ifMatch);
+            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, serviceName, contentTypeId, apiManagementContentType, ifMatch);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -316,8 +324,8 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Removes the specified developer portal&apos;s content type. Content types describe content items&apos; properties, validation rules, and constraints. Built-in content types (with identifiers starting with the `c-` prefix) can&apos;t be removed. </summary>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="serviceName"> The name of the API Management service. </param>
         /// <param name="contentTypeId"> Content type identifier. </param>
         /// <param name="ifMatch"> ETag of the Entity. ETag should match the current entity state from the header response of the GET request or it should be * for unconditional update. </param>
@@ -344,8 +352,8 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Removes the specified developer portal&apos;s content type. Content types describe content items&apos; properties, validation rules, and constraints. Built-in content types (with identifiers starting with the `c-` prefix) can&apos;t be removed. </summary>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="serviceName"> The name of the API Management service. </param>
         /// <param name="contentTypeId"> Content type identifier. </param>
         /// <param name="ifMatch"> ETag of the Entity. ETag should match the current entity state from the header response of the GET request or it should be * for unconditional update. </param>
@@ -387,8 +395,8 @@ namespace Azure.ResourceManager.ApiManagement
 
         /// <summary> Lists the developer portal&apos;s content types. Content types describe content items&apos; properties, validation rules, and constraints. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="serviceName"> The name of the API Management service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serviceName"/> is null. </exception>
@@ -418,8 +426,8 @@ namespace Azure.ResourceManager.ApiManagement
 
         /// <summary> Lists the developer portal&apos;s content types. Content types describe content items&apos; properties, validation rules, and constraints. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="serviceName"> The name of the API Management service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serviceName"/> is null. </exception>

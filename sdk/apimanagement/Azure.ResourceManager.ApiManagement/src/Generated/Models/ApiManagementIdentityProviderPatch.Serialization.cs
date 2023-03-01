@@ -62,6 +62,11 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 writer.WritePropertyName("passwordResetPolicyName"u8);
                 writer.WriteStringValue(PasswordResetPolicyName);
             }
+            if (Optional.IsDefined(ClientLibrary))
+            {
+                writer.WritePropertyName("clientLibrary"u8);
+                writer.WriteStringValue(ClientLibrary);
+            }
             if (Optional.IsDefined(ClientId))
             {
                 writer.WritePropertyName("clientId"u8);
