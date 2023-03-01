@@ -338,7 +338,7 @@ string reason = dlqMessage.DeadLetterReason;
 string description = dlqMessage.DeadLetterErrorDescription;
 ```
 
-For more information, see the [overview of ServiceBus dead letter queues](/azure/service-bus-messaging/service-bus-dead-letter-queues).
+For more information, see the [overview of ServiceBus dead letter queues](https://learn.microsoft.com/azure/service-bus-messaging/service-bus-dead-letter-queues).
 
 ### Using the Processor
 
