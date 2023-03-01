@@ -30,6 +30,7 @@ namespace Azure.AI.OpenAI.Tests
         }
 
         [RecordedTest]
+        [PlaybackOnly("Used only to test against non-Azure OpenAI public endpoint")]
         public async Task PublicOpenAICompletionsTest()
         {
             var client = GetPublicOpenAIClient();

@@ -9,6 +9,10 @@ namespace Azure.AI.OpenAI.Tests
 {
     public class OpenAITestEnvironment : TestEnvironment
     {
+        /// <summary>The name of the environment variable from which the openAI resource's API key will be extracted for the live tests.</summary>
+        internal const string OpenAIAuthTokenEnvironmentVariableName = "OPENAI_AUTH_TOKEN";
+
+        public string OpenAIAuthTokenString => GetRecordedVariable(OpenAIAuthTokenEnvironmentVariableName, options => options.IsSecret());
         public void ThrowIfCannotDeploy()
         {
             string[] requiredVariableNames = new string[]
