@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
 using System.Diagnostics.Tracing;
 using System.Threading.Tasks;
 using Azure.Core.Diagnostics;
@@ -88,21 +87,25 @@ namespace Azure.Core.Tests
             testListener.EnableEvents(AzureCoreEventSource.Singleton, EventLevel.Verbose);
 
             var mockTransport = new MockTransport(_ =>
-                new MockResponse(300).AddHeader("Location", "http://new.host/"));
+                new MockResponse(300).AddHeader("Location", "https://new.host/"));
 
-            var response = await SendGetRequest(mockTransport, RedirectPolicy.Shared);
+            var response = await SendRequestAsync(mockTransport, messageAction: message =>
+            {
+                RedirectPolicy.SetAllowAutoRedirect(message, true);
+                message.Request.Uri.Reset(new Uri("https://example.com/"));
+            }, RedirectPolicy.Shared);
 
             Assert.AreEqual(300, response.Status);
             Assert.AreEqual(51, mockTransport.Requests.Count);
-            Assert.AreEqual("http://new.host/", mockTransport.Requests[1].Uri.ToString());
+            Assert.AreEqual("https://new.host/", mockTransport.Requests[1].Uri.ToString());
 
             var e = testListener.SingleEventById(22);
 
             Assert.AreEqual(EventLevel.Warning, e.Level);
             Assert.AreEqual("RequestRedirectCountExceeded", e.EventName);
             Assert.AreEqual(mockTransport.Requests[0].ClientRequestId, e.GetProperty<string>("requestId"));
-            Assert.AreEqual("http://new.host/", e.GetProperty<string>("from"));
-            Assert.AreEqual("http://new.host/", e.GetProperty<string>("to"));
+            Assert.AreEqual("https://new.host/", e.GetProperty<string>("from"));
+            Assert.AreEqual("https://new.host/", e.GetProperty<string>("to"));
         }
 
         [Test]
@@ -115,9 +118,10 @@ namespace Azure.Core.Tests
             var mockTransport = new MockTransport(_ =>
                 new MockResponse(300).AddHeader("Location", "http://new.host/"));
 
-            var response = await SendRequestAsync(mockTransport, request =>
+            var response = await SendRequestAsync(mockTransport, messageAction: message =>
             {
-                request.Uri.Reset(new Uri("https://example.com/"));
+                RedirectPolicy.SetAllowAutoRedirect(message, true);
+                message.Request.Uri.Reset(new Uri("https://example.com/"));
             }, RedirectPolicy.Shared);
 
             Assert.AreEqual(300, response.Status);
