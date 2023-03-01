@@ -66,6 +66,10 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static AutoHealTriggers DeserializeAutoHealTriggers(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<RequestsBasedTrigger> requests = default;
             Optional<int> privateBytesInKB = default;
             Optional<IList<StatusCodesBasedTrigger>> statusCodes = default;

@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.AppService.Models
     {
         internal static AppServicePoolSkuInfo DeserializeAppServicePoolSkuInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ResourceType> resourceType = default;
             Optional<AppServiceSkuDescription> sku = default;
             Optional<AppServiceSkuCapacity> capacity = default;

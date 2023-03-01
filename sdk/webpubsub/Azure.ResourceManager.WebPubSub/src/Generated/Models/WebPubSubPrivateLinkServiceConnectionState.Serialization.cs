@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.WebPubSub.Models
 
         internal static WebPubSubPrivateLinkServiceConnectionState DeserializeWebPubSubPrivateLinkServiceConnectionState(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<WebPubSubPrivateLinkServiceConnectionStatus> status = default;
             Optional<string> description = default;
             Optional<string> actionsRequired = default;

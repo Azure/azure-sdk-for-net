@@ -36,6 +36,10 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static QueryUtterancesResults DeserializeQueryUtterancesResults(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> query = default;
             Optional<IList<QueryUtterancesResult>> results = default;
             foreach (var property in element.EnumerateObject())

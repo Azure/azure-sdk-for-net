@@ -24,6 +24,10 @@ namespace Azure.ResourceManager.Workloads.Models
 
         internal static UserProfile DeserializeUserProfile(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string userName = default;
             string sshPublicKey = default;
             foreach (var property in element.EnumerateObject())

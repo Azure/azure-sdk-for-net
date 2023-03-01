@@ -40,6 +40,10 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
 
         internal static RateControl DeserializeRateControl(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<float> bitRateLimit = default;
             Optional<float> encodingInterval = default;
             Optional<float> frameRateLimit = default;

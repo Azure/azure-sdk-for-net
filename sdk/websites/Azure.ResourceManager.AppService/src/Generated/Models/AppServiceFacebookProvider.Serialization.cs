@@ -40,6 +40,10 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static AppServiceFacebookProvider DeserializeAppServiceFacebookProvider(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> enabled = default;
             Optional<AppRegistration> registration = default;
             Optional<string> graphApiVersion = default;

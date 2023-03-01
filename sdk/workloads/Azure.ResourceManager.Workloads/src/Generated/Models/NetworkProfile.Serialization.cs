@@ -43,6 +43,10 @@ namespace Azure.ResourceManager.Workloads.Models
 
         internal static NetworkProfile DeserializeNetworkProfile(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             LoadBalancerType loadBalancerType = default;
             Optional<string> loadBalancerSku = default;
             Optional<string> loadBalancerTier = default;

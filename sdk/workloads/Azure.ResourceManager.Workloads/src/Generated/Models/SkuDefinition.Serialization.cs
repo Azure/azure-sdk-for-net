@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.Workloads.Models
     {
         internal static SkuDefinition DeserializeSkuDefinition(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string name = default;
             Optional<string> resourceType = default;
             Optional<string> tier = default;
