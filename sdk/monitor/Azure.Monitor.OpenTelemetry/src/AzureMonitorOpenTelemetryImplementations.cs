@@ -55,7 +55,10 @@ namespace Azure.Monitor.OpenTelemetry
                         builderOptions.IncludeFormattedMessage = true;
                         builderOptions.ParseStateValues = true;
                         builderOptions.IncludeScopes = false;
-                        builderOptions.AddAzureMonitorLogExporter(o => logExporterOptions.SetValueToExporterOptions(o));
+                        // TODO: In the follow up PR remove the hard-coded value for AddAzureMonitorLogExporter.
+                        // Follow up PR includes the support for logging to read from DI.
+                        // builderOptions.AddAzureMonitorLogExporter(o => logExporterOptions.SetValueToExporterOptions(o));
+                        builderOptions.AddAzureMonitorLogExporter(o => o.ConnectionString = "InstrumentationKey=00000000-0000-0000-0000-000000000000");
                     });
                 }
             });
