@@ -15,13 +15,15 @@ namespace Azure.Messaging.ServiceBus.Amqp
 {
     internal static class AmqpMessageExtensions
     {
-        public static AmqpMessage ToAmqpMessage(this ServiceBusMessage message)
+        public static AmqpMessage ToAmqpMessage(this ServiceBusMessage message) => ToAmqpMessage(message.AmqpMessage);
+
+        public static AmqpMessage ToAmqpMessage(this AmqpAnnotatedMessage message)
         {
-            if (message.AmqpMessage.Body.TryGetData(out IEnumerable<ReadOnlyMemory<byte>> dataBody))
+            if (message.Body.TryGetData(out IEnumerable<ReadOnlyMemory<byte>> dataBody))
             {
                 return AmqpMessage.Create(dataBody.AsAmqpData());
             }
-            if (message.AmqpMessage.Body.TryGetValue(out object value))
+            if (message.Body.TryGetValue(out object value))
             {
                 if (AmqpMessageConverter.TryGetAmqpObjectFromNetObject(value, MappingType.MessageBody, out object amqpObject))
                 {
@@ -32,12 +34,12 @@ namespace Azure.Messaging.ServiceBus.Amqp
                     throw new NotSupportedException(Resources.InvalidAmqpMessageValueBody.FormatForUser(amqpObject?.GetType()));
                 }
             }
-            if (message.AmqpMessage.Body.TryGetSequence(out IEnumerable<IList<object>> sequence))
+            if (message.Body.TryGetSequence(out IEnumerable<IList<object>> sequence))
             {
                 return AmqpMessage.Create(sequence.Select(s => new AmqpSequence((IList)s)).ToList());
             }
 
-            throw new NotSupportedException($"{message.AmqpMessage.Body.GetType()} is not a supported message body type.");
+            throw new NotSupportedException($"{message.Body.GetType()} is not a supported message body type.");
         }
 
         private static IEnumerable<Data> AsAmqpData(this IEnumerable<ReadOnlyMemory<byte>> binaryData)

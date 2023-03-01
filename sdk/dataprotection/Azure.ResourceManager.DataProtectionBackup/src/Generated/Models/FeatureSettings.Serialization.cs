@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(CrossSubscriptionRestoreSettings))
             {
-                writer.WritePropertyName("crossSubscriptionRestoreSettings");
+                writer.WritePropertyName("crossSubscriptionRestoreSettings"u8);
                 writer.WriteObjectValue(CrossSubscriptionRestoreSettings);
             }
             writer.WriteEndObject();
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             Optional<CrossSubscriptionRestoreSettings> crossSubscriptionRestoreSettings = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("crossSubscriptionRestoreSettings"))
+                if (property.NameEquals("crossSubscriptionRestoreSettings"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

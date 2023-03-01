@@ -30,7 +30,6 @@ extends:
   parameters:
     SDKType: client
     ServiceDirectory: search
-    BuildSnippets: true
     ArtifactName: packages
     Artifacts:
     - name: Azure.Search.Documents

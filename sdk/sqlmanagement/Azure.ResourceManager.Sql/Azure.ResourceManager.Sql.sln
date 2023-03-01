@@ -9,6 +9,8 @@ Project("{DCF1AD44-8A51-4851-93A8-0611F8D4DC61}") = "Azure.ResourceManager.Sql",
 EndProject
 Project("{DCF1AD44-8A51-4851-93A8-0611F8D4DC61}") = "Azure.ResourceManager.Sql.Tests", "tests\Azure.ResourceManager.Sql.Tests.csproj", "{BE6FF05E-1E3C-4C35-B18A-89A029B79999}"
 EndProject
+Project("{DCF1AD44-8A51-4851-93A8-0611F8D4DC61}") = "Azure.ResourceManager.Sql.Samples", "samples\Azure.ResourceManager.Sql.Samples.csproj", "{656C277B-1EA7-4A1F-85BF-0E47361BDCB5}"
+EndProject
 Global
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

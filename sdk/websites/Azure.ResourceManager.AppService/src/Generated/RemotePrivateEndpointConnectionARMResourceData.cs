@@ -14,7 +14,10 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary> A class representing the RemotePrivateEndpointConnectionARMResource data model. </summary>
+    /// <summary>
+    /// A class representing the RemotePrivateEndpointConnectionARMResource data model.
+    /// Remote Private Endpoint Connection ARM resource.
+    /// </summary>
     public partial class RemotePrivateEndpointConnectionARMResourceData : ResourceData
     {
         /// <summary> Initializes a new instance of RemotePrivateEndpointConnectionARMResourceData. </summary>

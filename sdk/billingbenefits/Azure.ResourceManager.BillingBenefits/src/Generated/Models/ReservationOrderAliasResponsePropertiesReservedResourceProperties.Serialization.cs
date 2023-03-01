@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(InstanceFlexibility))
             {
-                writer.WritePropertyName("instanceFlexibility");
+                writer.WritePropertyName("instanceFlexibility"u8);
                 writer.WriteStringValue(InstanceFlexibility.Value.ToString());
             }
             writer.WriteEndObject();
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
             Optional<BillingBenefitsInstanceFlexibility> instanceFlexibility = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("instanceFlexibility"))
+                if (property.NameEquals("instanceFlexibility"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

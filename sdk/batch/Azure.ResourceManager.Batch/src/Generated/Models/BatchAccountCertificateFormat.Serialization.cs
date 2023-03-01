@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.Batch.Models
 
         public static BatchAccountCertificateFormat ToBatchAccountCertificateFormat(this string value)
         {
-            if (string.Equals(value, "Pfx", StringComparison.InvariantCultureIgnoreCase)) return BatchAccountCertificateFormat.Pfx;
-            if (string.Equals(value, "Cer", StringComparison.InvariantCultureIgnoreCase)) return BatchAccountCertificateFormat.Cer;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Pfx")) return BatchAccountCertificateFormat.Pfx;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Cer")) return BatchAccountCertificateFormat.Cer;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown BatchAccountCertificateFormat value.");
         }
     }

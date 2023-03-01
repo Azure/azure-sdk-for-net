@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Nginx.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Data))
             {
-                writer.WritePropertyName("data");
+                writer.WritePropertyName("data"u8);
                 writer.WriteStringValue(Data);
             }
             writer.WriteEndObject();
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Nginx.Models
             Optional<string> data = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("data"))
+                if (property.NameEquals("data"u8))
                 {
                     data = property.Value.GetString();
                     continue;

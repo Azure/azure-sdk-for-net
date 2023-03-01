@@ -17,16 +17,16 @@ namespace Azure.ResourceManager.Storage.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(RuleId))
             {
-                writer.WritePropertyName("ruleId");
+                writer.WritePropertyName("ruleId"u8);
                 writer.WriteStringValue(RuleId);
             }
-            writer.WritePropertyName("sourceContainer");
+            writer.WritePropertyName("sourceContainer"u8);
             writer.WriteStringValue(SourceContainer);
-            writer.WritePropertyName("destinationContainer");
+            writer.WritePropertyName("destinationContainer"u8);
             writer.WriteStringValue(DestinationContainer);
             if (Optional.IsDefined(Filters))
             {
-                writer.WritePropertyName("filters");
+                writer.WritePropertyName("filters"u8);
                 writer.WriteObjectValue(Filters);
             }
             writer.WriteEndObject();
@@ -40,22 +40,22 @@ namespace Azure.ResourceManager.Storage.Models
             Optional<ObjectReplicationPolicyFilter> filters = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("ruleId"))
+                if (property.NameEquals("ruleId"u8))
                 {
                     ruleId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("sourceContainer"))
+                if (property.NameEquals("sourceContainer"u8))
                 {
                     sourceContainer = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("destinationContainer"))
+                if (property.NameEquals("destinationContainer"u8))
                 {
                     destinationContainer = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("filters"))
+                if (property.NameEquals("filters"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

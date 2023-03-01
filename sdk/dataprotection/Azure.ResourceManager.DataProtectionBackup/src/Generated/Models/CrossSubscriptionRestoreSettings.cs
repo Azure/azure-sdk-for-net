@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 
         /// <summary> Initializes a new instance of CrossSubscriptionRestoreSettings. </summary>
         /// <param name="state"> CrossSubscriptionRestore state. </param>
-        internal CrossSubscriptionRestoreSettings(CrossSubscriptionRestoreState? state)
+        internal CrossSubscriptionRestoreSettings(DataProtectionBackupCrossSubscriptionRestoreState? state)
         {
             State = state;
         }
 
         /// <summary> CrossSubscriptionRestore state. </summary>
-        public CrossSubscriptionRestoreState? State { get; set; }
+        public DataProtectionBackupCrossSubscriptionRestoreState? State { get; set; }
     }
 }

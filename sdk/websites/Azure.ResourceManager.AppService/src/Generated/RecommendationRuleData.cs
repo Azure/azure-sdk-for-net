@@ -13,7 +13,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary> A class representing the RecommendationRule data model. </summary>
+    /// <summary>
+    /// A class representing the RecommendationRule data model.
+    /// Represents a recommendation rule that the recommendation engine can perform.
+    /// </summary>
     public partial class RecommendationRuleData : ResourceData
     {
         /// <summary> Initializes a new instance of RecommendationRuleData. </summary>

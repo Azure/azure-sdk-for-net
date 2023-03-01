@@ -311,10 +311,16 @@ namespace Azure.Communication.CallAutomation
                 RecognizeOptionsInternal recognizeConfigurationsInternal = new RecognizeOptionsInternal(CommunicationIdentifierSerializer.Serialize(recognizeChoiceOptions.TargetParticipant))
                 {
                     InterruptPrompt = recognizeChoiceOptions.InterruptPrompt,
+                    InitialSilenceTimeoutInSeconds = (int)recognizeChoiceOptions.InitialSilenceTimeout.TotalSeconds
                 };
 
                 recognizeChoiceOptions.RecognizeChoices
                     .ToList().ForEach(t => recognizeConfigurationsInternal.Choices.Add(t));
+
+                if (!String.IsNullOrEmpty(recognizeChoiceOptions.SpeechLanguage))
+                {
+                    recognizeConfigurationsInternal.SpeechLanguage = recognizeChoiceOptions.SpeechLanguage;
+                }
 
                 RecognizeRequestInternal request = new RecognizeRequestInternal(recognizeChoiceOptions.InputType, recognizeConfigurationsInternal);
 

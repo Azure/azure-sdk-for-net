@@ -20,54 +20,54 @@ namespace Azure.ResourceManager.Sql
             writer.WriteStartObject();
             if (Optional.IsDefined(Sku))
             {
-                writer.WritePropertyName("sku");
+                writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
             }
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(Interval))
             {
-                writer.WritePropertyName("interval");
+                writer.WritePropertyName("interval"u8);
                 writer.WriteNumberValue(Interval.Value);
             }
             if (Optional.IsDefined(ConflictResolutionPolicy))
             {
-                writer.WritePropertyName("conflictResolutionPolicy");
+                writer.WritePropertyName("conflictResolutionPolicy"u8);
                 writer.WriteStringValue(ConflictResolutionPolicy.Value.ToString());
             }
             if (Optional.IsDefined(SyncDatabaseId))
             {
-                writer.WritePropertyName("syncDatabaseId");
+                writer.WritePropertyName("syncDatabaseId"u8);
                 writer.WriteStringValue(SyncDatabaseId);
             }
             if (Optional.IsDefined(HubDatabaseUserName))
             {
-                writer.WritePropertyName("hubDatabaseUserName");
+                writer.WritePropertyName("hubDatabaseUserName"u8);
                 writer.WriteStringValue(HubDatabaseUserName);
             }
             if (Optional.IsDefined(HubDatabasePassword))
             {
-                writer.WritePropertyName("hubDatabasePassword");
+                writer.WritePropertyName("hubDatabasePassword"u8);
                 writer.WriteStringValue(HubDatabasePassword);
             }
             if (Optional.IsDefined(Schema))
             {
-                writer.WritePropertyName("schema");
+                writer.WritePropertyName("schema"u8);
                 writer.WriteObjectValue(Schema);
             }
             if (Optional.IsDefined(IsConflictLoggingEnabled))
             {
-                writer.WritePropertyName("enableConflictLogging");
+                writer.WritePropertyName("enableConflictLogging"u8);
                 writer.WriteBooleanValue(IsConflictLoggingEnabled.Value);
             }
             if (Optional.IsDefined(ConflictLoggingRetentionInDays))
             {
-                writer.WritePropertyName("conflictLoggingRetentionInDays");
+                writer.WritePropertyName("conflictLoggingRetentionInDays"u8);
                 writer.WriteNumberValue(ConflictLoggingRetentionInDays.Value);
             }
             if (Optional.IsDefined(UsePrivateLinkConnection))
             {
-                writer.WritePropertyName("usePrivateLinkConnection");
+                writer.WritePropertyName("usePrivateLinkConnection"u8);
                 writer.WriteBooleanValue(UsePrivateLinkConnection.Value);
             }
             writer.WriteEndObject();
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Sql
             Optional<string> privateEndpointName = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("sku"))
+                if (property.NameEquals("sku"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -105,22 +105,22 @@ namespace Azure.ResourceManager.Sql
                     sku = SqlSku.DeserializeSqlSku(property.Value);
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.Sql
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Sql
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("interval"))
+                        if (property0.NameEquals("interval"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.Sql
                             interval = property0.Value.GetInt32();
                             continue;
                         }
-                        if (property0.NameEquals("lastSyncTime"))
+                        if (property0.NameEquals("lastSyncTime"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.Sql
                             lastSyncTime = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("conflictResolutionPolicy"))
+                        if (property0.NameEquals("conflictResolutionPolicy"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.Sql
                             conflictResolutionPolicy = new SyncConflictResolutionPolicy(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("syncDatabaseId"))
+                        if (property0.NameEquals("syncDatabaseId"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -179,17 +179,17 @@ namespace Azure.ResourceManager.Sql
                             syncDatabaseId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("hubDatabaseUserName"))
+                        if (property0.NameEquals("hubDatabaseUserName"u8))
                         {
                             hubDatabaseUserName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("hubDatabasePassword"))
+                        if (property0.NameEquals("hubDatabasePassword"u8))
                         {
                             hubDatabasePassword = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("syncState"))
+                        if (property0.NameEquals("syncState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.Sql
                             syncState = new SyncGroupState(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("schema"))
+                        if (property0.NameEquals("schema"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.Sql
                             schema = SyncGroupSchema.DeserializeSyncGroupSchema(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("enableConflictLogging"))
+                        if (property0.NameEquals("enableConflictLogging"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.Sql
                             enableConflictLogging = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("conflictLoggingRetentionInDays"))
+                        if (property0.NameEquals("conflictLoggingRetentionInDays"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.Sql
                             conflictLoggingRetentionInDays = property0.Value.GetInt32();
                             continue;
                         }
-                        if (property0.NameEquals("usePrivateLinkConnection"))
+                        if (property0.NameEquals("usePrivateLinkConnection"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.Sql
                             usePrivateLinkConnection = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("privateEndpointName"))
+                        if (property0.NameEquals("privateEndpointName"u8))
                         {
                             privateEndpointName = property0.Value.GetString();
                             continue;

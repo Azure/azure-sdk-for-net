@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Storage.Models
             Optional<DateTimeOffset> timestamp = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("allowProtectedAppendWritesAll"))
+                if (property.NameEquals("allowProtectedAppendWritesAll"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Storage.Models
                     allowProtectedAppendWritesAll = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("timestamp"))
+                if (property.NameEquals("timestamp"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

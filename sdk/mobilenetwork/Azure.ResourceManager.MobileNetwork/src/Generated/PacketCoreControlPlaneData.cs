@@ -15,7 +15,10 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.MobileNetwork
 {
-    /// <summary> A class representing the PacketCoreControlPlane data model. </summary>
+    /// <summary>
+    /// A class representing the PacketCoreControlPlane data model.
+    /// Packet core control plane resource.
+    /// </summary>
     public partial class PacketCoreControlPlaneData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of PacketCoreControlPlaneData. </summary>

@@ -11,7 +11,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Avs
 {
-    /// <summary> A class representing the WorkloadNetworkVirtualMachine data model. </summary>
+    /// <summary>
+    /// A class representing the WorkloadNetworkVirtualMachine data model.
+    /// NSX Virtual Machine
+    /// </summary>
     public partial class WorkloadNetworkVirtualMachineData : ResourceData
     {
         /// <summary> Initializes a new instance of WorkloadNetworkVirtualMachineData. </summary>

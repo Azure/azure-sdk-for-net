@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.IotHub.Models
             Optional<IReadOnlyList<IotHubMatchedRoute>> routes = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("routes"))
+                if (property.NameEquals("routes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

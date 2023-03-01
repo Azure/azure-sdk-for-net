@@ -19,12 +19,12 @@ namespace Azure.ResourceManager.AppContainers.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(TableName))
             {
-                writer.WritePropertyName("tableName");
+                writer.WritePropertyName("tableName"u8);
                 writer.WriteStringValue(TableName);
             }
             if (Optional.IsCollectionDefined(Columns))
             {
-                writer.WritePropertyName("columns");
+                writer.WritePropertyName("columns"u8);
                 writer.WriteStartArray();
                 foreach (var item in Columns)
                 {
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             }
             if (Optional.IsCollectionDefined(Rows))
             {
-                writer.WritePropertyName("rows");
+                writer.WritePropertyName("rows"u8);
                 writer.WriteStartArray();
                 foreach (var item in Rows)
                 {
@@ -56,12 +56,12 @@ namespace Azure.ResourceManager.AppContainers.Models
             Optional<IList<BinaryData>> rows = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("tableName"))
+                if (property.NameEquals("tableName"u8))
                 {
                     tableName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("columns"))
+                if (property.NameEquals("columns"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     columns = array;
                     continue;
                 }
-                if (property.NameEquals("rows"))
+                if (property.NameEquals("rows"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -12,7 +12,10 @@ using Azure.ResourceManager.Storage.Models;
 
 namespace Azure.ResourceManager.Storage
 {
-    /// <summary> A class representing the ImmutabilityPolicy data model. </summary>
+    /// <summary>
+    /// A class representing the ImmutabilityPolicy data model.
+    /// The ImmutabilityPolicy property of a blob container, including Id, resource name, resource type, Etag.
+    /// </summary>
     public partial class ImmutabilityPolicyData : ResourceData
     {
         /// <summary> Initializes a new instance of ImmutabilityPolicyData. </summary>

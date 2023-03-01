@@ -18,12 +18,12 @@ namespace Azure.AI.TextAnalytics.Legacy
             double negative = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("positive"))
+                if (property.NameEquals("positive"u8))
                 {
                     positive = property.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("negative"))
+                if (property.NameEquals("negative"u8))
                 {
                     negative = property.Value.GetDouble();
                     continue;

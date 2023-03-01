@@ -15,24 +15,24 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("baseImageTriggerType");
+            writer.WritePropertyName("baseImageTriggerType"u8);
             writer.WriteStringValue(BaseImageTriggerType.ToString());
             if (Optional.IsDefined(UpdateTriggerEndpoint))
             {
-                writer.WritePropertyName("updateTriggerEndpoint");
+                writer.WritePropertyName("updateTriggerEndpoint"u8);
                 writer.WriteStringValue(UpdateTriggerEndpoint);
             }
             if (Optional.IsDefined(UpdateTriggerPayloadType))
             {
-                writer.WritePropertyName("updateTriggerPayloadType");
+                writer.WritePropertyName("updateTriggerPayloadType"u8);
                 writer.WriteStringValue(UpdateTriggerPayloadType.Value.ToString());
             }
             if (Optional.IsDefined(Status))
             {
-                writer.WritePropertyName("status");
+                writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            writer.WritePropertyName("name");
+            writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
             writer.WriteEndObject();
         }
@@ -46,17 +46,17 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             string name = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("baseImageTriggerType"))
+                if (property.NameEquals("baseImageTriggerType"u8))
                 {
                     baseImageTriggerType = new ContainerRegistryBaseImageTriggerType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("updateTriggerEndpoint"))
+                if (property.NameEquals("updateTriggerEndpoint"u8))
                 {
                     updateTriggerEndpoint = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("updateTriggerPayloadType"))
+                if (property.NameEquals("updateTriggerPayloadType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     updateTriggerPayloadType = new ContainerRegistryUpdateTriggerPayloadType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("status"))
+                if (property.NameEquals("status"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     status = new ContainerRegistryTriggerStatus(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;

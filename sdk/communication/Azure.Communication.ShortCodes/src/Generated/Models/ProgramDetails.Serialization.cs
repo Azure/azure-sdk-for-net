@@ -19,12 +19,12 @@ namespace Azure.Communication.ShortCodes.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(IsVanity))
             {
-                writer.WritePropertyName("isVanity");
+                writer.WritePropertyName("isVanity"u8);
                 writer.WriteBooleanValue(IsVanity.Value);
             }
             if (Optional.IsCollectionDefined(PreferredVanityNumbers))
             {
-                writer.WritePropertyName("preferredVanityNumbers");
+                writer.WritePropertyName("preferredVanityNumbers"u8);
                 writer.WriteStartArray();
                 foreach (var item in PreferredVanityNumbers)
                 {
@@ -34,32 +34,32 @@ namespace Azure.Communication.ShortCodes.Models
             }
             if (Optional.IsDefined(NumberType))
             {
-                writer.WritePropertyName("numberType");
+                writer.WritePropertyName("numberType"u8);
                 writer.WriteStringValue(NumberType.Value.ToString());
             }
             if (Optional.IsDefined(IsPoliticalCampaign))
             {
-                writer.WritePropertyName("isPoliticalCampaign");
+                writer.WritePropertyName("isPoliticalCampaign"u8);
                 writer.WriteBooleanValue(IsPoliticalCampaign.Value);
             }
             if (Optional.IsDefined(Name))
             {
-                writer.WritePropertyName("name");
+                writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
             if (Optional.IsDefined(Description))
             {
-                writer.WritePropertyName("description");
+                writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
             if (Optional.IsDefined(Url))
             {
-                writer.WritePropertyName("url");
+                writer.WritePropertyName("url"u8);
                 writer.WriteStringValue(Url.AbsoluteUri);
             }
             if (Optional.IsCollectionDefined(SignUpTypes))
             {
-                writer.WritePropertyName("signUpTypes");
+                writer.WritePropertyName("signUpTypes"u8);
                 writer.WriteStartArray();
                 foreach (var item in SignUpTypes)
                 {
@@ -69,22 +69,22 @@ namespace Azure.Communication.ShortCodes.Models
             }
             if (Optional.IsDefined(SignUpUrl))
             {
-                writer.WritePropertyName("signUpUrl");
+                writer.WritePropertyName("signUpUrl"u8);
                 writer.WriteStringValue(SignUpUrl.AbsoluteUri);
             }
             if (Optional.IsDefined(TermsOfServiceUrl))
             {
-                writer.WritePropertyName("termsOfServiceUrl");
+                writer.WritePropertyName("termsOfServiceUrl"u8);
                 writer.WriteStringValue(TermsOfServiceUrl.AbsoluteUri);
             }
             if (Optional.IsDefined(PrivacyPolicyUrl))
             {
-                writer.WritePropertyName("privacyPolicyUrl");
+                writer.WritePropertyName("privacyPolicyUrl"u8);
                 writer.WriteStringValue(PrivacyPolicyUrl.AbsoluteUri);
             }
             if (Optional.IsDefined(ExpectedDateOfService))
             {
-                writer.WritePropertyName("expectedDateOfService");
+                writer.WritePropertyName("expectedDateOfService"u8);
                 writer.WriteStringValue(ExpectedDateOfService.Value, "O");
             }
             writer.WriteEndObject();
@@ -106,7 +106,7 @@ namespace Azure.Communication.ShortCodes.Models
             Optional<DateTimeOffset> expectedDateOfService = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("isVanity"))
+                if (property.NameEquals("isVanity"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -116,7 +116,7 @@ namespace Azure.Communication.ShortCodes.Models
                     isVanity = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("preferredVanityNumbers"))
+                if (property.NameEquals("preferredVanityNumbers"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -131,7 +131,7 @@ namespace Azure.Communication.ShortCodes.Models
                     preferredVanityNumbers = array;
                     continue;
                 }
-                if (property.NameEquals("numberType"))
+                if (property.NameEquals("numberType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -141,7 +141,7 @@ namespace Azure.Communication.ShortCodes.Models
                     numberType = new NumberType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("isPoliticalCampaign"))
+                if (property.NameEquals("isPoliticalCampaign"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -151,17 +151,17 @@ namespace Azure.Communication.ShortCodes.Models
                     isPoliticalCampaign = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("description"))
+                if (property.NameEquals("description"u8))
                 {
                     description = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("url"))
+                if (property.NameEquals("url"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -171,7 +171,7 @@ namespace Azure.Communication.ShortCodes.Models
                     url = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("signUpTypes"))
+                if (property.NameEquals("signUpTypes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -186,7 +186,7 @@ namespace Azure.Communication.ShortCodes.Models
                     signUpTypes = array;
                     continue;
                 }
-                if (property.NameEquals("signUpUrl"))
+                if (property.NameEquals("signUpUrl"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -196,7 +196,7 @@ namespace Azure.Communication.ShortCodes.Models
                     signUpUrl = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("termsOfServiceUrl"))
+                if (property.NameEquals("termsOfServiceUrl"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -206,7 +206,7 @@ namespace Azure.Communication.ShortCodes.Models
                     termsOfServiceUrl = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("privacyPolicyUrl"))
+                if (property.NameEquals("privacyPolicyUrl"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -216,7 +216,7 @@ namespace Azure.Communication.ShortCodes.Models
                     privacyPolicyUrl = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("expectedDateOfService"))
+                if (property.NameEquals("expectedDateOfService"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(WatermarkMode))
             {
-                writer.WritePropertyName("watermarkMode");
+                writer.WritePropertyName("watermarkMode"u8);
                 writer.WriteStringValue(WatermarkMode.Value.ToString());
             }
             if (Optional.IsDefined(MaxWatermarkDifferenceAcrossPartitions))
             {
-                writer.WritePropertyName("maxWatermarkDifferenceAcrossPartitions");
+                writer.WritePropertyName("maxWatermarkDifferenceAcrossPartitions"u8);
                 writer.WriteStringValue(MaxWatermarkDifferenceAcrossPartitions);
             }
             writer.WriteEndObject();
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             Optional<string> maxWatermarkDifferenceAcrossPartitions = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("watermarkMode"))
+                if (property.NameEquals("watermarkMode"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                     watermarkMode = new StreamingJobOutputWatermarkMode(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("maxWatermarkDifferenceAcrossPartitions"))
+                if (property.NameEquals("maxWatermarkDifferenceAcrossPartitions"u8))
                 {
                     maxWatermarkDifferenceAcrossPartitions = property.Value.GetString();
                     continue;

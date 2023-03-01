@@ -17,31 +17,31 @@ namespace Azure.ResourceManager.BotService.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(EnableCalling))
             {
-                writer.WritePropertyName("enableCalling");
+                writer.WritePropertyName("enableCalling"u8);
                 writer.WriteBooleanValue(EnableCalling.Value);
             }
             if (Optional.IsDefined(CallingWebhook))
             {
-                writer.WritePropertyName("callingWebhook");
+                writer.WritePropertyName("callingWebhook"u8);
                 writer.WriteStringValue(CallingWebhook);
             }
-            writer.WritePropertyName("isEnabled");
+            writer.WritePropertyName("isEnabled"u8);
             writer.WriteBooleanValue(IsEnabled);
             if (Optional.IsDefined(IncomingCallRoute))
             {
-                writer.WritePropertyName("incomingCallRoute");
+                writer.WritePropertyName("incomingCallRoute"u8);
                 writer.WriteStringValue(IncomingCallRoute);
             }
             if (Optional.IsDefined(DeploymentEnvironment))
             {
-                writer.WritePropertyName("deploymentEnvironment");
+                writer.WritePropertyName("deploymentEnvironment"u8);
                 writer.WriteStringValue(DeploymentEnvironment);
             }
             if (Optional.IsDefined(AcceptedTerms))
             {
                 if (AcceptedTerms != null)
                 {
-                    writer.WritePropertyName("acceptedTerms");
+                    writer.WritePropertyName("acceptedTerms"u8);
                     writer.WriteBooleanValue(AcceptedTerms.Value);
                 }
                 else
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.BotService.Models
             Optional<bool?> acceptedTerms = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("enableCalling"))
+                if (property.NameEquals("enableCalling"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -72,27 +72,27 @@ namespace Azure.ResourceManager.BotService.Models
                     enableCalling = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("callingWebhook"))
+                if (property.NameEquals("callingWebhook"u8))
                 {
                     callingWebhook = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("isEnabled"))
+                if (property.NameEquals("isEnabled"u8))
                 {
                     isEnabled = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("incomingCallRoute"))
+                if (property.NameEquals("incomingCallRoute"u8))
                 {
                     incomingCallRoute = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("deploymentEnvironment"))
+                if (property.NameEquals("deploymentEnvironment"u8))
                 {
                     deploymentEnvironment = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("acceptedTerms"))
+                if (property.NameEquals("acceptedTerms"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.Analysis.Models
 
         public static AnalysisConnectionMode ToAnalysisConnectionMode(this string value)
         {
-            if (string.Equals(value, "All", StringComparison.InvariantCultureIgnoreCase)) return AnalysisConnectionMode.All;
-            if (string.Equals(value, "ReadOnly", StringComparison.InvariantCultureIgnoreCase)) return AnalysisConnectionMode.ReadOnly;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "All")) return AnalysisConnectionMode.All;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "ReadOnly")) return AnalysisConnectionMode.ReadOnly;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown AnalysisConnectionMode value.");
         }
     }

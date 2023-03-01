@@ -15,7 +15,10 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.DnsResolver
 {
-    /// <summary> A class representing the DnsResolver data model. </summary>
+    /// <summary>
+    /// A class representing the DnsResolver data model.
+    /// Describes a DNS resolver.
+    /// </summary>
     public partial class DnsResolverData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of DnsResolverData. </summary>

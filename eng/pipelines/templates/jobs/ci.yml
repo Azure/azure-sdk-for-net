@@ -16,7 +16,7 @@ parameters:
   default: not-specified
 - name: BuildSnippets
   type: boolean
-  default: false
+  default: true
 - name: TestSetupSteps
   type: stepList
   default: []
@@ -44,7 +44,7 @@ jobs:
   - job: Build
     pool:
       name: azsdk-pool-mms-win-2022-general
-      vmImage: MMS2022
+      vmImage: windows-2022
 
     variables:
       Codeql.Enabled: true
@@ -219,7 +219,7 @@ jobs:
     - job: Compliance
       pool:
         name: azsdk-pool-mms-win-2022-general
-        vmImage: MMS2022
+        vmImage: windows-2022
       steps:
         - task: UsePythonVersion@0
           displayName: "Use Python 3.6"

@@ -15,7 +15,7 @@ namespace Azure.Core.Tests.Public
         [Test]
         public void CannotConvertObjectToLeaf()
         {
-            dynamic data = JsonDataTestHelpers.CreateFromJson(@"{ ""value"": 5 }");
+            dynamic data = JsonDataTestHelpers.CreateFromJson("""{ "value": 5 }""");
 
             // TODO: Standardize Exception types.
             Assert.Throws<InvalidOperationException>(() => { var i = (int)data; });
@@ -27,9 +27,12 @@ namespace Azure.Core.Tests.Public
         [Test]
         public void CanConvertObjectToModel()
         {
-            dynamic data = JsonDataTestHelpers.CreateFromJson(
-                @"{ ""Message"": ""Hi"",
-                    ""Number"" : 5 }");
+            dynamic data = JsonDataTestHelpers.CreateFromJson("""
+                {
+                    "Message": "Hi",
+                    "Number" : 5
+                }
+                """);
 
             Assert.AreEqual(new SampleModel("Hi", 5), (SampleModel)data);
         }
@@ -39,10 +42,13 @@ namespace Azure.Core.Tests.Public
         {
             // TODO: this is just how JsonSerializer works - change this
             // test to do something useful.
-            dynamic data = JsonDataTestHelpers.CreateFromJson(
-                @"{ ""Message"": ""Hi"",
-                    ""Number"" : 5,
-                    ""Invalid"" : ""Not on SampleModel"" }");
+            dynamic data = JsonDataTestHelpers.CreateFromJson("""
+                {
+                    "Message": "Hi",
+                    "Number" : 5,
+                    "Invalid" : "Not on SampleModel"
+                }
+                """);
 
             SampleModel model = data;
 
@@ -56,7 +62,7 @@ namespace Azure.Core.Tests.Public
 
         public void CanGetMemberOnObject()
         {
-            dynamic data = JsonDataTestHelpers.CreateFromJson(@"{ ""value"": 5 }");
+            dynamic data = JsonDataTestHelpers.CreateFromJson("""{ "value": 5 }""");
             Assert.AreEqual(5, (int)data.value);
         }
 
@@ -66,7 +72,7 @@ namespace Azure.Core.Tests.Public
 
         public void CanSetMemberOnObject()
         {
-            dynamic data = JsonDataTestHelpers.CreateFromJson(@"{ ""value"": 5 }");
+            dynamic data = JsonDataTestHelpers.CreateFromJson("""{ "value": 5 }""");
             Assert.AreEqual(5, (int)data.value);
 
             data.value = 6;
@@ -79,7 +85,7 @@ namespace Azure.Core.Tests.Public
 
         public void CanGetIndexPropertyOnObject()
         {
-            dynamic data = JsonDataTestHelpers.CreateFromJson(@"{ ""value"": ""hi"" }");
+            dynamic data = JsonDataTestHelpers.CreateFromJson("""{ "value": "Hi" }""");
             string prop = data["value"];
             Assert.AreEqual("hi", prop);
         }
@@ -87,7 +93,7 @@ namespace Azure.Core.Tests.Public
         [Test]
         public void CannotGetArrayIndexOnObject()
         {
-            dynamic data = JsonDataTestHelpers.CreateFromJson(@"{ ""value"": ""hi"" }");
+            dynamic data = JsonDataTestHelpers.CreateFromJson("""{ "value": "Hi" }""");
             Assert.Throws<InvalidOperationException>(
                 () => { var x = data[0]; }
             );
@@ -98,7 +104,7 @@ namespace Azure.Core.Tests.Public
 
         public void CanSetIndexPropertyOnObject()
         {
-            dynamic data = JsonDataTestHelpers.CreateFromJson(@"{ ""value"": ""hi"" }");
+            dynamic data = JsonDataTestHelpers.CreateFromJson("""{ "value": "Hi" }""");
             data["value"] = "hello";
             Assert.AreEqual("hello", (string)data["value"]);
         }
@@ -106,7 +112,7 @@ namespace Azure.Core.Tests.Public
         [Test]
         public void CannotSetArrayIndexOnObject()
         {
-            dynamic data = JsonDataTestHelpers.CreateFromJson(@"{ ""value"": ""hi"" }");
+            dynamic data = JsonDataTestHelpers.CreateFromJson("""{ "value": "Hi" }""");
             Assert.Throws<InvalidOperationException>(
                 () => { data[0] = "invalid"; }
             );
@@ -117,7 +123,7 @@ namespace Azure.Core.Tests.Public
         [Test]
         public void CanEnumerateObject()
         {
-            dynamic data = JsonDataTestHelpers.CreateFromJson(@"{ ""first"": 1, ""second"": 2 }");
+            dynamic data = JsonDataTestHelpers.CreateFromJson("""{ "first": 1, "second": 2 }""");
 
             var expectedKeys = new[] { "first", "second" };
             var expectedValues = new[] { 1, 2 };
@@ -134,7 +140,7 @@ namespace Azure.Core.Tests.Public
         [Test]
         public void CannotCallGetDirectly()
         {
-            dynamic data = JsonDataTestHelpers.CreateFromJson(@"{ ""first"": 1, ""second"": 2 }");
+            dynamic data = JsonDataTestHelpers.CreateFromJson("""{ "first": 1, "second": 2 }""");
 
             Assert.Throws<RuntimeBinderException>(() => data.Get("first"));
         }

@@ -25,27 +25,27 @@ namespace Azure.ResourceManager.IotCentral.Models
             Optional<IReadOnlyList<IotCentralAppTemplateLocation>> locations = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("manifestId"))
+                if (property.NameEquals("manifestId"u8))
                 {
                     manifestId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("manifestVersion"))
+                if (property.NameEquals("manifestVersion"u8))
                 {
                     manifestVersion = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("title"))
+                if (property.NameEquals("title"u8))
                 {
                     title = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("order"))
+                if (property.NameEquals("order"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -55,17 +55,17 @@ namespace Azure.ResourceManager.IotCentral.Models
                     order = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("description"))
+                if (property.NameEquals("description"u8))
                 {
                     description = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("industry"))
+                if (property.NameEquals("industry"u8))
                 {
                     industry = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("locations"))
+                if (property.NameEquals("locations"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

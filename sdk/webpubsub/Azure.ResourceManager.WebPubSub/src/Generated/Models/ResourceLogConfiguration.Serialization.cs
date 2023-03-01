@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Categories))
             {
-                writer.WritePropertyName("categories");
+                writer.WritePropertyName("categories"u8);
                 writer.WriteStartArray();
                 foreach (var item in Categories)
                 {
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
             Optional<IList<ResourceLogCategory>> categories = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("categories"))
+                if (property.NameEquals("categories"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

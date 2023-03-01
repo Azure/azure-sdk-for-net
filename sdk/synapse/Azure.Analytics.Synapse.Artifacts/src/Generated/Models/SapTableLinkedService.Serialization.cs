@@ -19,21 +19,21 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("type");
+            writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
             if (Optional.IsDefined(ConnectVia))
             {
-                writer.WritePropertyName("connectVia");
+                writer.WritePropertyName("connectVia"u8);
                 writer.WriteObjectValue(ConnectVia);
             }
             if (Optional.IsDefined(Description))
             {
-                writer.WritePropertyName("description");
+                writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
             if (Optional.IsCollectionDefined(Parameters))
             {
-                writer.WritePropertyName("parameters");
+                writer.WritePropertyName("parameters"u8);
                 writer.WriteStartObject();
                 foreach (var item in Parameters)
                 {
@@ -44,7 +44,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
             if (Optional.IsCollectionDefined(Annotations))
             {
-                writer.WritePropertyName("annotations");
+                writer.WritePropertyName("annotations"u8);
                 writer.WriteStartArray();
                 foreach (var item in Annotations)
                 {
@@ -52,86 +52,86 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 writer.WriteEndArray();
             }
-            writer.WritePropertyName("typeProperties");
+            writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(Server))
             {
-                writer.WritePropertyName("server");
+                writer.WritePropertyName("server"u8);
                 writer.WriteObjectValue(Server);
             }
             if (Optional.IsDefined(SystemNumber))
             {
-                writer.WritePropertyName("systemNumber");
+                writer.WritePropertyName("systemNumber"u8);
                 writer.WriteObjectValue(SystemNumber);
             }
             if (Optional.IsDefined(ClientId))
             {
-                writer.WritePropertyName("clientId");
+                writer.WritePropertyName("clientId"u8);
                 writer.WriteObjectValue(ClientId);
             }
             if (Optional.IsDefined(Language))
             {
-                writer.WritePropertyName("language");
+                writer.WritePropertyName("language"u8);
                 writer.WriteObjectValue(Language);
             }
             if (Optional.IsDefined(SystemId))
             {
-                writer.WritePropertyName("systemId");
+                writer.WritePropertyName("systemId"u8);
                 writer.WriteObjectValue(SystemId);
             }
             if (Optional.IsDefined(UserName))
             {
-                writer.WritePropertyName("userName");
+                writer.WritePropertyName("userName"u8);
                 writer.WriteObjectValue(UserName);
             }
             if (Optional.IsDefined(Password))
             {
-                writer.WritePropertyName("password");
+                writer.WritePropertyName("password"u8);
                 writer.WriteObjectValue(Password);
             }
             if (Optional.IsDefined(MessageServer))
             {
-                writer.WritePropertyName("messageServer");
+                writer.WritePropertyName("messageServer"u8);
                 writer.WriteObjectValue(MessageServer);
             }
             if (Optional.IsDefined(MessageServerService))
             {
-                writer.WritePropertyName("messageServerService");
+                writer.WritePropertyName("messageServerService"u8);
                 writer.WriteObjectValue(MessageServerService);
             }
             if (Optional.IsDefined(SncMode))
             {
-                writer.WritePropertyName("sncMode");
+                writer.WritePropertyName("sncMode"u8);
                 writer.WriteObjectValue(SncMode);
             }
             if (Optional.IsDefined(SncMyName))
             {
-                writer.WritePropertyName("sncMyName");
+                writer.WritePropertyName("sncMyName"u8);
                 writer.WriteObjectValue(SncMyName);
             }
             if (Optional.IsDefined(SncPartnerName))
             {
-                writer.WritePropertyName("sncPartnerName");
+                writer.WritePropertyName("sncPartnerName"u8);
                 writer.WriteObjectValue(SncPartnerName);
             }
             if (Optional.IsDefined(SncLibraryPath))
             {
-                writer.WritePropertyName("sncLibraryPath");
+                writer.WritePropertyName("sncLibraryPath"u8);
                 writer.WriteObjectValue(SncLibraryPath);
             }
             if (Optional.IsDefined(SncQop))
             {
-                writer.WritePropertyName("sncQop");
+                writer.WritePropertyName("sncQop"u8);
                 writer.WriteObjectValue(SncQop);
             }
             if (Optional.IsDefined(LogonGroup))
             {
-                writer.WritePropertyName("logonGroup");
+                writer.WritePropertyName("logonGroup"u8);
                 writer.WriteObjectValue(LogonGroup);
             }
             if (Optional.IsDefined(EncryptedCredential))
             {
-                writer.WritePropertyName("encryptedCredential");
+                writer.WritePropertyName("encryptedCredential"u8);
                 writer.WriteObjectValue(EncryptedCredential);
             }
             writer.WriteEndObject();
@@ -170,12 +170,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("connectVia"))
+                if (property.NameEquals("connectVia"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -185,12 +185,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     connectVia = IntegrationRuntimeReference.DeserializeIntegrationRuntimeReference(property.Value);
                     continue;
                 }
-                if (property.NameEquals("description"))
+                if (property.NameEquals("description"u8))
                 {
                     description = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("parameters"))
+                if (property.NameEquals("parameters"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -205,7 +205,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     parameters = dictionary;
                     continue;
                 }
-                if (property.NameEquals("annotations"))
+                if (property.NameEquals("annotations"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -220,7 +220,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     annotations = array;
                     continue;
                 }
-                if (property.NameEquals("typeProperties"))
+                if (property.NameEquals("typeProperties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -229,7 +229,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("server"))
+                        if (property0.NameEquals("server"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -239,7 +239,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                             server = property0.Value.GetObject();
                             continue;
                         }
-                        if (property0.NameEquals("systemNumber"))
+                        if (property0.NameEquals("systemNumber"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -249,7 +249,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                             systemNumber = property0.Value.GetObject();
                             continue;
                         }
-                        if (property0.NameEquals("clientId"))
+                        if (property0.NameEquals("clientId"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -259,7 +259,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                             clientId = property0.Value.GetObject();
                             continue;
                         }
-                        if (property0.NameEquals("language"))
+                        if (property0.NameEquals("language"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -269,7 +269,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                             language = property0.Value.GetObject();
                             continue;
                         }
-                        if (property0.NameEquals("systemId"))
+                        if (property0.NameEquals("systemId"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -279,7 +279,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                             systemId = property0.Value.GetObject();
                             continue;
                         }
-                        if (property0.NameEquals("userName"))
+                        if (property0.NameEquals("userName"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -289,7 +289,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                             userName = property0.Value.GetObject();
                             continue;
                         }
-                        if (property0.NameEquals("password"))
+                        if (property0.NameEquals("password"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -299,7 +299,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                             password = SecretBase.DeserializeSecretBase(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("messageServer"))
+                        if (property0.NameEquals("messageServer"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -309,7 +309,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                             messageServer = property0.Value.GetObject();
                             continue;
                         }
-                        if (property0.NameEquals("messageServerService"))
+                        if (property0.NameEquals("messageServerService"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -319,7 +319,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                             messageServerService = property0.Value.GetObject();
                             continue;
                         }
-                        if (property0.NameEquals("sncMode"))
+                        if (property0.NameEquals("sncMode"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -329,7 +329,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                             sncMode = property0.Value.GetObject();
                             continue;
                         }
-                        if (property0.NameEquals("sncMyName"))
+                        if (property0.NameEquals("sncMyName"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -339,7 +339,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                             sncMyName = property0.Value.GetObject();
                             continue;
                         }
-                        if (property0.NameEquals("sncPartnerName"))
+                        if (property0.NameEquals("sncPartnerName"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -349,7 +349,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                             sncPartnerName = property0.Value.GetObject();
                             continue;
                         }
-                        if (property0.NameEquals("sncLibraryPath"))
+                        if (property0.NameEquals("sncLibraryPath"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -359,7 +359,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                             sncLibraryPath = property0.Value.GetObject();
                             continue;
                         }
-                        if (property0.NameEquals("sncQop"))
+                        if (property0.NameEquals("sncQop"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -369,7 +369,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                             sncQop = property0.Value.GetObject();
                             continue;
                         }
-                        if (property0.NameEquals("logonGroup"))
+                        if (property0.NameEquals("logonGroup"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -379,7 +379,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                             logonGroup = property0.Value.GetObject();
                             continue;
                         }
-                        if (property0.NameEquals("encryptedCredential"))
+                        if (property0.NameEquals("encryptedCredential"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

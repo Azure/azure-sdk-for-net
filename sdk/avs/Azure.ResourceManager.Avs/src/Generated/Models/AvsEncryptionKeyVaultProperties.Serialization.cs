@@ -18,17 +18,17 @@ namespace Azure.ResourceManager.Avs.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(KeyName))
             {
-                writer.WritePropertyName("keyName");
+                writer.WritePropertyName("keyName"u8);
                 writer.WriteStringValue(KeyName);
             }
             if (Optional.IsDefined(KeyVersion))
             {
-                writer.WritePropertyName("keyVersion");
+                writer.WritePropertyName("keyVersion"u8);
                 writer.WriteStringValue(KeyVersion);
             }
             if (Optional.IsDefined(KeyVaultUri))
             {
-                writer.WritePropertyName("keyVaultUrl");
+                writer.WritePropertyName("keyVaultUrl"u8);
                 writer.WriteStringValue(KeyVaultUri.AbsoluteUri);
             }
             writer.WriteEndObject();
@@ -44,22 +44,22 @@ namespace Azure.ResourceManager.Avs.Models
             Optional<AvsEncryptionVersionType> versionType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("keyName"))
+                if (property.NameEquals("keyName"u8))
                 {
                     keyName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("keyVersion"))
+                if (property.NameEquals("keyVersion"u8))
                 {
                     keyVersion = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("autoDetectedKeyVersion"))
+                if (property.NameEquals("autoDetectedKeyVersion"u8))
                 {
                     autoDetectedKeyVersion = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("keyVaultUrl"))
+                if (property.NameEquals("keyVaultUrl"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Avs.Models
                     keyVaultUrl = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("keyState"))
+                if (property.NameEquals("keyState"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Avs.Models
                     keyState = new AvsEncryptionKeyStatus(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("versionType"))
+                if (property.NameEquals("versionType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

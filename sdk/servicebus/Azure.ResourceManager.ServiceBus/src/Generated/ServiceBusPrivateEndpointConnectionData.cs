@@ -12,7 +12,10 @@ using Azure.ResourceManager.ServiceBus.Models;
 
 namespace Azure.ResourceManager.ServiceBus
 {
-    /// <summary> A class representing the ServiceBusPrivateEndpointConnection data model. </summary>
+    /// <summary>
+    /// A class representing the ServiceBusPrivateEndpointConnection data model.
+    /// Properties of the PrivateEndpointConnection.
+    /// </summary>
     public partial class ServiceBusPrivateEndpointConnectionData : ResourceData
     {
         /// <summary> Initializes a new instance of ServiceBusPrivateEndpointConnectionData. </summary>

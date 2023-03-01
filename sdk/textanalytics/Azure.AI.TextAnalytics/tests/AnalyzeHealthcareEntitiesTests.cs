@@ -461,7 +461,7 @@ namespace Azure.AI.TextAnalytics.Tests
 
             AnalyzeHealthcareEntitiesOperation operation = await client.StartAnalyzeHealthcareEntitiesAsync(s_batchDocuments, new AnalyzeHealthcareEntitiesOptions
             {
-                FhirVersion = WellKnownFhirVersion.V4_0_1,
+                FhirVersion = FhirVersion.V4_0_1,
                 DocumentType = HealthcareDocumentType.DischargeSummary
             });
 
@@ -490,7 +490,7 @@ namespace Azure.AI.TextAnalytics.Tests
 
             NotSupportedException ex = Assert.ThrowsAsync<NotSupportedException>(async () => await client.StartAnalyzeHealthcareEntitiesAsync(s_batchDocuments, new AnalyzeHealthcareEntitiesOptions
             {
-                FhirVersion = WellKnownFhirVersion.V4_0_1,
+                FhirVersion = FhirVersion.V4_0_1,
             }));
 
             Assert.That(ex.Message.EndsWith("Use service API version 2022-10-01-preview or newer."));

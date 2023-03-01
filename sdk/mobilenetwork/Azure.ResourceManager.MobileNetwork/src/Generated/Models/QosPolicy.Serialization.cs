@@ -17,25 +17,25 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(FiveQi))
             {
-                writer.WritePropertyName("5qi");
+                writer.WritePropertyName("5qi"u8);
                 writer.WriteNumberValue(FiveQi.Value);
             }
             if (Optional.IsDefined(AllocationAndRetentionPriorityLevel))
             {
-                writer.WritePropertyName("allocationAndRetentionPriorityLevel");
+                writer.WritePropertyName("allocationAndRetentionPriorityLevel"u8);
                 writer.WriteNumberValue(AllocationAndRetentionPriorityLevel.Value);
             }
             if (Optional.IsDefined(PreemptionCapability))
             {
-                writer.WritePropertyName("preemptionCapability");
+                writer.WritePropertyName("preemptionCapability"u8);
                 writer.WriteStringValue(PreemptionCapability.Value.ToString());
             }
             if (Optional.IsDefined(PreemptionVulnerability))
             {
-                writer.WritePropertyName("preemptionVulnerability");
+                writer.WritePropertyName("preemptionVulnerability"u8);
                 writer.WriteStringValue(PreemptionVulnerability.Value.ToString());
             }
-            writer.WritePropertyName("maximumBitRate");
+            writer.WritePropertyName("maximumBitRate"u8);
             writer.WriteObjectValue(MaximumBitRate);
             writer.WriteEndObject();
         }
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             Ambr maximumBitRate = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("5qi"))
+                if (property.NameEquals("5qi"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                     _5qi = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("allocationAndRetentionPriorityLevel"))
+                if (property.NameEquals("allocationAndRetentionPriorityLevel"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                     allocationAndRetentionPriorityLevel = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("preemptionCapability"))
+                if (property.NameEquals("preemptionCapability"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                     preemptionCapability = new PreemptionCapability(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("preemptionVulnerability"))
+                if (property.NameEquals("preemptionVulnerability"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                     preemptionVulnerability = new PreemptionVulnerability(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("maximumBitRate"))
+                if (property.NameEquals("maximumBitRate"u8))
                 {
                     maximumBitRate = Ambr.DeserializeAmbr(property.Value);
                     continue;

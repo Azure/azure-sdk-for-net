@@ -16,19 +16,19 @@ namespace Azure.MixedReality.RemoteRendering
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("storageContainerUri");
+            writer.WritePropertyName("storageContainerUri"u8);
             writer.WriteStringValue(StorageContainerUri.AbsoluteUri);
             if (Optional.IsDefined(StorageContainerReadListSas))
             {
-                writer.WritePropertyName("storageContainerReadListSas");
+                writer.WritePropertyName("storageContainerReadListSas"u8);
                 writer.WriteStringValue(StorageContainerReadListSas);
             }
             if (Optional.IsDefined(BlobPrefix))
             {
-                writer.WritePropertyName("blobPrefix");
+                writer.WritePropertyName("blobPrefix"u8);
                 writer.WriteStringValue(BlobPrefix);
             }
-            writer.WritePropertyName("relativeInputAssetPath");
+            writer.WritePropertyName("relativeInputAssetPath"u8);
             writer.WriteStringValue(RelativeInputAssetPath);
             writer.WriteEndObject();
         }
@@ -41,22 +41,22 @@ namespace Azure.MixedReality.RemoteRendering
             string relativeInputAssetPath = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("storageContainerUri"))
+                if (property.NameEquals("storageContainerUri"u8))
                 {
                     storageContainerUri = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("storageContainerReadListSas"))
+                if (property.NameEquals("storageContainerReadListSas"u8))
                 {
                     storageContainerReadListSas = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("blobPrefix"))
+                if (property.NameEquals("blobPrefix"u8))
                 {
                     blobPrefix = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("relativeInputAssetPath"))
+                if (property.NameEquals("relativeInputAssetPath"u8))
                 {
                     relativeInputAssetPath = property.Value.GetString();
                     continue;

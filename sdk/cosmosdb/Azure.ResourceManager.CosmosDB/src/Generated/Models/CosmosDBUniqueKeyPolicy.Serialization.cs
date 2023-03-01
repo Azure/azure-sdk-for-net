@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(UniqueKeys))
             {
-                writer.WritePropertyName("uniqueKeys");
+                writer.WritePropertyName("uniqueKeys"u8);
                 writer.WriteStartArray();
                 foreach (var item in UniqueKeys)
                 {
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             Optional<IList<CosmosDBUniqueKey>> uniqueKeys = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("uniqueKeys"))
+                if (property.NameEquals("uniqueKeys"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

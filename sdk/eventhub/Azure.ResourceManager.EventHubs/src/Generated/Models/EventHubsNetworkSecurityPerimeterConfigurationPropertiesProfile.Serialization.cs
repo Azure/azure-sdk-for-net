@@ -20,17 +20,17 @@ namespace Azure.ResourceManager.EventHubs.Models
             Optional<IReadOnlyList<EventHubsNspAccessRule>> accessRules = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("accessRulesVersion"))
+                if (property.NameEquals("accessRulesVersion"u8))
                 {
                     accessRulesVersion = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("accessRules"))
+                if (property.NameEquals("accessRules"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

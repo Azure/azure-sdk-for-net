@@ -21,9 +21,9 @@ namespace Azure.AI.MetricsAdvisor
 
         public static AlertQueryTimeMode ToAlertQueryTimeMode(this string value)
         {
-            if (string.Equals(value, "AnomalyTime", StringComparison.InvariantCultureIgnoreCase)) return AlertQueryTimeMode.AnomalyDetectedOn;
-            if (string.Equals(value, "CreatedTime", StringComparison.InvariantCultureIgnoreCase)) return AlertQueryTimeMode.CreatedOn;
-            if (string.Equals(value, "ModifiedTime", StringComparison.InvariantCultureIgnoreCase)) return AlertQueryTimeMode.LastModified;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "AnomalyTime")) return AlertQueryTimeMode.AnomalyDetectedOn;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "CreatedTime")) return AlertQueryTimeMode.CreatedOn;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "ModifiedTime")) return AlertQueryTimeMode.LastModified;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown AlertQueryTimeMode value.");
         }
     }

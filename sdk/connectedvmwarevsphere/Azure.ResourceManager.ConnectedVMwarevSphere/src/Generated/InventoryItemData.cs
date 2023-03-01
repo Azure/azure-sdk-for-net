@@ -11,7 +11,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ConnectedVMwarevSphere
 {
-    /// <summary> A class representing the InventoryItem data model. </summary>
+    /// <summary>
+    /// A class representing the InventoryItem data model.
+    /// Defines the inventory item.
+    /// </summary>
     public partial class InventoryItemData : ResourceData
     {
         /// <summary> Initializes a new instance of InventoryItemData. </summary>

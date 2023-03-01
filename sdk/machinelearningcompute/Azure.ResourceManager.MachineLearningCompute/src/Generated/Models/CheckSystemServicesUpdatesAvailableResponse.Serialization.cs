@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
             Optional<UpdatesAvailable> updatesAvailable = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("updatesAvailable"))
+                if (property.NameEquals("updatesAvailable"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

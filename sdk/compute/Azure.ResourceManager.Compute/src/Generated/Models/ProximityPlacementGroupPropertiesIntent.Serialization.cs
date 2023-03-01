@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Compute.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(VmSizes))
             {
-                writer.WritePropertyName("vmSizes");
+                writer.WritePropertyName("vmSizes"u8);
                 writer.WriteStartArray();
                 foreach (var item in VmSizes)
                 {
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Compute.Models
             Optional<IList<string>> vmSizes = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("vmSizes"))
+                if (property.NameEquals("vmSizes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

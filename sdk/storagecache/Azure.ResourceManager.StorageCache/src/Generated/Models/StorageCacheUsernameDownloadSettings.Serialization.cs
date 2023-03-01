@@ -18,57 +18,57 @@ namespace Azure.ResourceManager.StorageCache.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(EnableExtendedGroups))
             {
-                writer.WritePropertyName("extendedGroups");
+                writer.WritePropertyName("extendedGroups"u8);
                 writer.WriteBooleanValue(EnableExtendedGroups.Value);
             }
             if (Optional.IsDefined(UsernameSource))
             {
-                writer.WritePropertyName("usernameSource");
+                writer.WritePropertyName("usernameSource"u8);
                 writer.WriteStringValue(UsernameSource.Value.ToString());
             }
             if (Optional.IsDefined(GroupFileUri))
             {
-                writer.WritePropertyName("groupFileURI");
+                writer.WritePropertyName("groupFileURI"u8);
                 writer.WriteStringValue(GroupFileUri.AbsoluteUri);
             }
             if (Optional.IsDefined(UserFileUri))
             {
-                writer.WritePropertyName("userFileURI");
+                writer.WritePropertyName("userFileURI"u8);
                 writer.WriteStringValue(UserFileUri.AbsoluteUri);
             }
             if (Optional.IsDefined(LdapServer))
             {
-                writer.WritePropertyName("ldapServer");
+                writer.WritePropertyName("ldapServer"u8);
                 writer.WriteStringValue(LdapServer);
             }
             if (Optional.IsDefined(LdapBaseDN))
             {
-                writer.WritePropertyName("ldapBaseDN");
+                writer.WritePropertyName("ldapBaseDN"u8);
                 writer.WriteStringValue(LdapBaseDN);
             }
             if (Optional.IsDefined(EncryptLdapConnection))
             {
-                writer.WritePropertyName("encryptLdapConnection");
+                writer.WritePropertyName("encryptLdapConnection"u8);
                 writer.WriteBooleanValue(EncryptLdapConnection.Value);
             }
             if (Optional.IsDefined(RequireValidCertificate))
             {
-                writer.WritePropertyName("requireValidCertificate");
+                writer.WritePropertyName("requireValidCertificate"u8);
                 writer.WriteBooleanValue(RequireValidCertificate.Value);
             }
             if (Optional.IsDefined(AutoDownloadCertificate))
             {
-                writer.WritePropertyName("autoDownloadCertificate");
+                writer.WritePropertyName("autoDownloadCertificate"u8);
                 writer.WriteBooleanValue(AutoDownloadCertificate.Value);
             }
             if (Optional.IsDefined(CaCertificateUri))
             {
-                writer.WritePropertyName("caCertificateURI");
+                writer.WritePropertyName("caCertificateURI"u8);
                 writer.WriteStringValue(CaCertificateUri.AbsoluteUri);
             }
             if (Optional.IsDefined(Credentials))
             {
-                writer.WritePropertyName("credentials");
+                writer.WritePropertyName("credentials"u8);
                 writer.WriteObjectValue(Credentials);
             }
             writer.WriteEndObject();
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.StorageCache.Models
             Optional<StorageCacheUsernameDownloadCredential> credentials = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("extendedGroups"))
+                if (property.NameEquals("extendedGroups"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                     extendedGroups = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("usernameSource"))
+                if (property.NameEquals("usernameSource"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                     usernameSource = new StorageCacheUsernameSourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("groupFileURI"))
+                if (property.NameEquals("groupFileURI"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                     groupFileUri = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("userFileURI"))
+                if (property.NameEquals("userFileURI"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -130,17 +130,17 @@ namespace Azure.ResourceManager.StorageCache.Models
                     userFileUri = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("ldapServer"))
+                if (property.NameEquals("ldapServer"u8))
                 {
                     ldapServer = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("ldapBaseDN"))
+                if (property.NameEquals("ldapBaseDN"u8))
                 {
                     ldapBaseDN = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("encryptLdapConnection"))
+                if (property.NameEquals("encryptLdapConnection"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                     encryptLdapConnection = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("requireValidCertificate"))
+                if (property.NameEquals("requireValidCertificate"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                     requireValidCertificate = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("autoDownloadCertificate"))
+                if (property.NameEquals("autoDownloadCertificate"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                     autoDownloadCertificate = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("caCertificateURI"))
+                if (property.NameEquals("caCertificateURI"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                     caCertificateUri = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("usernameDownloaded"))
+                if (property.NameEquals("usernameDownloaded"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                     usernameDownloaded = new StorageCacheUsernameDownloadedType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("credentials"))
+                if (property.NameEquals("credentials"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

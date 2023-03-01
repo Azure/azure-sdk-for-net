@@ -13,7 +13,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppContainers
 {
-    /// <summary> A class representing the ContainerAppReplica data model. </summary>
+    /// <summary>
+    /// A class representing the ContainerAppReplica data model.
+    /// Container App Revision Replica.
+    /// </summary>
     public partial class ContainerAppReplicaData : ResourceData
     {
         /// <summary> Initializes a new instance of ContainerAppReplicaData. </summary>

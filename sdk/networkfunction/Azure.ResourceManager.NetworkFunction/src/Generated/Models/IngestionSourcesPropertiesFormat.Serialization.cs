@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.NetworkFunction.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(SourceType))
             {
-                writer.WritePropertyName("sourceType");
+                writer.WritePropertyName("sourceType"u8);
                 writer.WriteStringValue(SourceType.Value.ToString());
             }
             if (Optional.IsDefined(ResourceId))
             {
-                writer.WritePropertyName("resourceId");
+                writer.WritePropertyName("resourceId"u8);
                 writer.WriteStringValue(ResourceId);
             }
             writer.WriteEndObject();
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.NetworkFunction.Models
             Optional<string> resourceId = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("sourceType"))
+                if (property.NameEquals("sourceType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.NetworkFunction.Models
                     sourceType = new IngestionSourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("resourceId"))
+                if (property.NameEquals("resourceId"u8))
                 {
                     resourceId = property.Value.GetString();
                     continue;

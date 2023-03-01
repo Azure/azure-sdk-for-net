@@ -21,17 +21,17 @@ namespace Azure.ResourceManager.Network
             writer.WriteStartObject();
             if (Optional.IsDefined(Id))
             {
-                writer.WritePropertyName("id");
+                writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
             if (Optional.IsDefined(Location))
             {
-                writer.WritePropertyName("location");
+                writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
-                writer.WritePropertyName("tags");
+                writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
                 foreach (var item in Tags)
                 {
@@ -40,26 +40,26 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndObject();
             }
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(DisableVpnEncryption))
             {
-                writer.WritePropertyName("disableVpnEncryption");
+                writer.WritePropertyName("disableVpnEncryption"u8);
                 writer.WriteBooleanValue(DisableVpnEncryption.Value);
             }
             if (Optional.IsDefined(AllowBranchToBranchTraffic))
             {
-                writer.WritePropertyName("allowBranchToBranchTraffic");
+                writer.WritePropertyName("allowBranchToBranchTraffic"u8);
                 writer.WriteBooleanValue(AllowBranchToBranchTraffic.Value);
             }
             if (Optional.IsDefined(AllowVnetToVnetTraffic))
             {
-                writer.WritePropertyName("allowVnetToVnetTraffic");
+                writer.WritePropertyName("allowVnetToVnetTraffic"u8);
                 writer.WriteBooleanValue(AllowVnetToVnetTraffic.Value);
             }
             if (Optional.IsDefined(VirtualWanType))
             {
-                writer.WritePropertyName("type");
+                writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(VirtualWanType);
             }
             writer.WriteEndObject();
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Network
             Optional<string> type0 = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("etag"))
+                if (property.NameEquals("etag"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Network
                     etag = new ETag(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -104,12 +104,12 @@ namespace Azure.ResourceManager.Network
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Network
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("location"))
+                if (property.NameEquals("location"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.Network
                     location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("tags"))
+                if (property.NameEquals("tags"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.Network
                     tags = dictionary;
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.Network
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("disableVpnEncryption"))
+                        if (property0.NameEquals("disableVpnEncryption"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.Network
                             disableVpnEncryption = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("virtualHubs"))
+                        if (property0.NameEquals("virtualHubs"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.Network
                             virtualHubs = array;
                             continue;
                         }
-                        if (property0.NameEquals("vpnSites"))
+                        if (property0.NameEquals("vpnSites"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.Network
                             vpnSites = array;
                             continue;
                         }
-                        if (property0.NameEquals("allowBranchToBranchTraffic"))
+                        if (property0.NameEquals("allowBranchToBranchTraffic"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.Network
                             allowBranchToBranchTraffic = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("allowVnetToVnetTraffic"))
+                        if (property0.NameEquals("allowVnetToVnetTraffic"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.Network
                             allowVnetToVnetTraffic = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("office365LocalBreakoutCategory"))
+                        if (property0.NameEquals("office365LocalBreakoutCategory"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.Network
                             office365LocalBreakoutCategory = new OfficeTrafficCategory(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("provisioningState"))
+                        if (property0.NameEquals("provisioningState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.Network
                             provisioningState = new NetworkProvisioningState(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("type"))
+                        if (property0.NameEquals("type"u8))
                         {
                             type0 = property0.Value.GetString();
                             continue;

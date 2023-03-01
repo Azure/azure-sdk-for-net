@@ -32,22 +32,22 @@ namespace Azure.ResourceManager.WorkloadMonitor
             Optional<BinaryData> monitorConfiguration = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.WorkloadMonitor
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -66,32 +66,32 @@ namespace Azure.ResourceManager.WorkloadMonitor
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("monitorName"))
+                        if (property0.NameEquals("monitorName"u8))
                         {
                             monitorName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("monitorType"))
+                        if (property0.NameEquals("monitorType"u8))
                         {
                             monitorType = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("monitoredObject"))
+                        if (property0.NameEquals("monitoredObject"u8))
                         {
                             monitoredObject = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("evaluationTimestamp"))
+                        if (property0.NameEquals("evaluationTimestamp"u8))
                         {
                             evaluationTimestamp = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("currentStateFirstObservedTimestamp"))
+                        if (property0.NameEquals("currentStateFirstObservedTimestamp"u8))
                         {
                             currentStateFirstObservedTimestamp = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("previousMonitorState"))
+                        if (property0.NameEquals("previousMonitorState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.WorkloadMonitor
                             previousMonitorState = new HealthState(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("currentMonitorState"))
+                        if (property0.NameEquals("currentMonitorState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.WorkloadMonitor
                             currentMonitorState = new HealthState(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("evidence"))
+                        if (property0.NameEquals("evidence"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.WorkloadMonitor
                             evidence = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
-                        if (property0.NameEquals("monitorConfiguration"))
+                        if (property0.NameEquals("monitorConfiguration"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

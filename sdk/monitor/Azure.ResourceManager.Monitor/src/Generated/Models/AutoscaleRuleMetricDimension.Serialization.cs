@@ -16,11 +16,11 @@ namespace Azure.ResourceManager.Monitor.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("DimensionName");
+            writer.WritePropertyName("DimensionName"u8);
             writer.WriteStringValue(DimensionName);
-            writer.WritePropertyName("Operator");
+            writer.WritePropertyName("Operator"u8);
             writer.WriteStringValue(Operator.ToString());
-            writer.WritePropertyName("Values");
+            writer.WritePropertyName("Values"u8);
             writer.WriteStartArray();
             foreach (var item in Values)
             {
@@ -37,17 +37,17 @@ namespace Azure.ResourceManager.Monitor.Models
             IList<string> values = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("DimensionName"))
+                if (property.NameEquals("DimensionName"u8))
                 {
                     dimensionName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("Operator"))
+                if (property.NameEquals("Operator"u8))
                 {
                     @operator = new ScaleRuleMetricDimensionOperationType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("Values"))
+                if (property.NameEquals("Values"u8))
                 {
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())

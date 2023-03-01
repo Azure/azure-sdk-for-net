@@ -24,12 +24,12 @@ namespace Azure.ResourceManager.AppContainers.Models
             Optional<string> pesId = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("pesId"))
+                if (property.NameEquals("pesId"u8))
                 {
                     pesId = property.Value.GetString();
                     continue;

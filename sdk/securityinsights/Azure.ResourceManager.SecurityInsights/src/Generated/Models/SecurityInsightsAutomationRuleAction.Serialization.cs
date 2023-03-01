@@ -15,9 +15,9 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("order");
+            writer.WritePropertyName("order"u8);
             writer.WriteNumberValue(Order);
-            writer.WritePropertyName("actionType");
+            writer.WritePropertyName("actionType"u8);
             writer.WriteStringValue(ActionType.ToString());
             writer.WriteEndObject();
         }
@@ -32,22 +32,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     case "RunPlaybook": return AutomationRuleRunPlaybookAction.DeserializeAutomationRuleRunPlaybookAction(element);
                 }
             }
-            int order = default;
-            ActionType actionType = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("order"))
-                {
-                    order = property.Value.GetInt32();
-                    continue;
-                }
-                if (property.NameEquals("actionType"))
-                {
-                    actionType = new ActionType(property.Value.GetString());
-                    continue;
-                }
-            }
-            return new UnknownSecurityInsightsAutomationRuleAction(order, actionType);
+            return UnknownAutomationRuleAction.DeserializeUnknownAutomationRuleAction(element);
         }
     }
 }

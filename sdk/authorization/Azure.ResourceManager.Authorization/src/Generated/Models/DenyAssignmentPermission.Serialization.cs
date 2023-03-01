@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Authorization.Models
             Optional<string> conditionVersion = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("actions"))
+                if (property.NameEquals("actions"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Authorization.Models
                     actions = array;
                     continue;
                 }
-                if (property.NameEquals("notActions"))
+                if (property.NameEquals("notActions"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Authorization.Models
                     notActions = array;
                     continue;
                 }
-                if (property.NameEquals("dataActions"))
+                if (property.NameEquals("dataActions"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Authorization.Models
                     dataActions = array;
                     continue;
                 }
-                if (property.NameEquals("notDataActions"))
+                if (property.NameEquals("notDataActions"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -83,12 +83,12 @@ namespace Azure.ResourceManager.Authorization.Models
                     notDataActions = array;
                     continue;
                 }
-                if (property.NameEquals("condition"))
+                if (property.NameEquals("condition"u8))
                 {
                     condition = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("conditionVersion"))
+                if (property.NameEquals("conditionVersion"u8))
                 {
                     conditionVersion = property.Value.GetString();
                     continue;

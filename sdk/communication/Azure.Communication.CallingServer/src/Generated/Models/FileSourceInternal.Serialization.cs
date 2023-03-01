@@ -15,7 +15,7 @@ namespace Azure.Communication.CallingServer
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("uri");
+            writer.WritePropertyName("uri"u8);
             writer.WriteStringValue(Uri);
             writer.WriteEndObject();
         }

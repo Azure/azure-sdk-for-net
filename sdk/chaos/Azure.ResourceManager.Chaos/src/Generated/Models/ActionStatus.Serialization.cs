@@ -24,22 +24,22 @@ namespace Azure.ResourceManager.Chaos.Models
             Optional<IReadOnlyList<ExperimentExecutionActionTargetDetailsProperties>> targets = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("actionName"))
+                if (property.NameEquals("actionName"u8))
                 {
                     actionName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("actionId"))
+                if (property.NameEquals("actionId"u8))
                 {
                     actionId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("status"))
+                if (property.NameEquals("status"u8))
                 {
                     status = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("startTime"))
+                if (property.NameEquals("startTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Chaos.Models
                     startTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("endTime"))
+                if (property.NameEquals("endTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Chaos.Models
                     endTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("targets"))
+                if (property.NameEquals("targets"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

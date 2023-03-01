@@ -15,16 +15,16 @@ namespace Azure.ResourceManager.DataBox.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("transferConfigurationType");
+            writer.WritePropertyName("transferConfigurationType"u8);
             writer.WriteStringValue(TransferConfigurationType.ToSerialString());
             if (Optional.IsDefined(TransferFilterDetails))
             {
-                writer.WritePropertyName("transferFilterDetails");
+                writer.WritePropertyName("transferFilterDetails"u8);
                 writer.WriteObjectValue(TransferFilterDetails);
             }
             if (Optional.IsDefined(TransferAllDetails))
             {
-                writer.WritePropertyName("transferAllDetails");
+                writer.WritePropertyName("transferAllDetails"u8);
                 writer.WriteObjectValue(TransferAllDetails);
             }
             writer.WriteEndObject();
@@ -37,12 +37,12 @@ namespace Azure.ResourceManager.DataBox.Models
             Optional<TransferConfigurationTransferAllDetails> transferAllDetails = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("transferConfigurationType"))
+                if (property.NameEquals("transferConfigurationType"u8))
                 {
                     transferConfigurationType = property.Value.GetString().ToTransferConfigurationType();
                     continue;
                 }
-                if (property.NameEquals("transferFilterDetails"))
+                if (property.NameEquals("transferFilterDetails"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     transferFilterDetails = TransferConfigurationTransferFilterDetails.DeserializeTransferConfigurationTransferFilterDetails(property.Value);
                     continue;
                 }
-                if (property.NameEquals("transferAllDetails"))
+                if (property.NameEquals("transferAllDetails"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

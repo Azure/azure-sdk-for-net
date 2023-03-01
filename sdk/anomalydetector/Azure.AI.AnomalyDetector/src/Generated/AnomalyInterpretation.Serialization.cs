@@ -20,12 +20,12 @@ namespace Azure.AI.AnomalyDetector
             Optional<CorrelationChanges> correlationChanges = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("variable"))
+                if (property.NameEquals("variable"u8))
                 {
                     variable = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("contributionScore"))
+                if (property.NameEquals("contributionScore"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -35,7 +35,7 @@ namespace Azure.AI.AnomalyDetector
                     contributionScore = property.Value.GetSingle();
                     continue;
                 }
-                if (property.NameEquals("correlationChanges"))
+                if (property.NameEquals("correlationChanges"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

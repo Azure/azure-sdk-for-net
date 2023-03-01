@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.Sql.Models
 
         public static SensitivityLabelUpdateKind ToSensitivityLabelUpdateKind(this string value)
         {
-            if (string.Equals(value, "set", StringComparison.InvariantCultureIgnoreCase)) return SensitivityLabelUpdateKind.Set;
-            if (string.Equals(value, "remove", StringComparison.InvariantCultureIgnoreCase)) return SensitivityLabelUpdateKind.Remove;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "set")) return SensitivityLabelUpdateKind.Set;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "remove")) return SensitivityLabelUpdateKind.Remove;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown SensitivityLabelUpdateKind value.");
         }
     }

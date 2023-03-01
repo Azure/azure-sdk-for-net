@@ -12,7 +12,10 @@ using Azure.ResourceManager.PostgreSql.Models;
 
 namespace Azure.ResourceManager.PostgreSql
 {
-    /// <summary> A class representing the PostgreSqlServerSecurityAlertPolicy data model. </summary>
+    /// <summary>
+    /// A class representing the PostgreSqlServerSecurityAlertPolicy data model.
+    /// A server security alert policy.
+    /// </summary>
     public partial class PostgreSqlServerSecurityAlertPolicyData : ResourceData
     {
         /// <summary> Initializes a new instance of PostgreSqlServerSecurityAlertPolicyData. </summary>

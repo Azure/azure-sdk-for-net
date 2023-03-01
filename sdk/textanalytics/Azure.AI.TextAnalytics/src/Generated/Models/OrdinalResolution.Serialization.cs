@@ -16,13 +16,13 @@ namespace Azure.AI.TextAnalytics
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("offset");
+            writer.WritePropertyName("offset"u8);
             writer.WriteStringValue(Offset);
-            writer.WritePropertyName("relativeTo");
+            writer.WritePropertyName("relativeTo"u8);
             writer.WriteStringValue(RelativeTo.ToString());
-            writer.WritePropertyName("value");
+            writer.WritePropertyName("value"u8);
             writer.WriteStringValue(Value);
-            writer.WritePropertyName("resolutionKind");
+            writer.WritePropertyName("resolutionKind"u8);
             writer.WriteStringValue(ResolutionKind.ToString());
             writer.WriteEndObject();
         }
@@ -35,22 +35,22 @@ namespace Azure.AI.TextAnalytics
             ResolutionKind resolutionKind = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("offset"))
+                if (property.NameEquals("offset"u8))
                 {
                     offset = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("relativeTo"))
+                if (property.NameEquals("relativeTo"u8))
                 {
                     relativeTo = new RelativeTo(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     value = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("resolutionKind"))
+                if (property.NameEquals("resolutionKind"u8))
                 {
                     resolutionKind = new ResolutionKind(property.Value.GetString());
                     continue;

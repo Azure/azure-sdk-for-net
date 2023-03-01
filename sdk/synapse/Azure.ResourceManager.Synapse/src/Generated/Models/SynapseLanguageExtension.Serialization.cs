@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Synapse.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(LanguageExtensionName))
             {
-                writer.WritePropertyName("languageExtensionName");
+                writer.WritePropertyName("languageExtensionName"u8);
                 writer.WriteStringValue(LanguageExtensionName.Value.ToString());
             }
             writer.WriteEndObject();
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Synapse.Models
             Optional<SynapseLanguageExtensionName> languageExtensionName = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("languageExtensionName"))
+                if (property.NameEquals("languageExtensionName"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

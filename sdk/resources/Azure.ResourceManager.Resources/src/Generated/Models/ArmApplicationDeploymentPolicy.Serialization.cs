@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Resources.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("deploymentMode");
+            writer.WritePropertyName("deploymentMode"u8);
             writer.WriteStringValue(DeploymentMode.ToString());
             writer.WriteEndObject();
         }
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Resources.Models
             ArmApplicationDeploymentMode deploymentMode = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("deploymentMode"))
+                if (property.NameEquals("deploymentMode"u8))
                 {
                     deploymentMode = new ArmApplicationDeploymentMode(property.Value.GetString());
                     continue;

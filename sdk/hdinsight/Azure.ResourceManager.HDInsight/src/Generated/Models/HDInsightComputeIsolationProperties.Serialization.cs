@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.HDInsight.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(EnableComputeIsolation))
             {
-                writer.WritePropertyName("enableComputeIsolation");
+                writer.WritePropertyName("enableComputeIsolation"u8);
                 writer.WriteBooleanValue(EnableComputeIsolation.Value);
             }
             if (Optional.IsDefined(HostSku))
             {
-                writer.WritePropertyName("hostSku");
+                writer.WritePropertyName("hostSku"u8);
                 writer.WriteStringValue(HostSku);
             }
             writer.WriteEndObject();
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             Optional<string> hostSku = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("enableComputeIsolation"))
+                if (property.NameEquals("enableComputeIsolation"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     enableComputeIsolation = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("hostSku"))
+                if (property.NameEquals("hostSku"u8))
                 {
                     hostSku = property.Value.GetString();
                     continue;

@@ -17,16 +17,16 @@ namespace Azure.ResourceManager.ManagedServices.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("multiFactorAuthProvider");
+            writer.WritePropertyName("multiFactorAuthProvider"u8);
             writer.WriteStringValue(MultiFactorAuthProvider.ToString());
             if (Optional.IsDefined(MaximumActivationDuration))
             {
-                writer.WritePropertyName("maximumActivationDuration");
+                writer.WritePropertyName("maximumActivationDuration"u8);
                 writer.WriteStringValue(MaximumActivationDuration.Value, "P");
             }
             if (Optional.IsCollectionDefined(ManagedByTenantApprovers))
             {
-                writer.WritePropertyName("managedByTenantApprovers");
+                writer.WritePropertyName("managedByTenantApprovers"u8);
                 writer.WriteStartArray();
                 foreach (var item in ManagedByTenantApprovers)
                 {
@@ -44,12 +44,12 @@ namespace Azure.ResourceManager.ManagedServices.Models
             Optional<IList<ManagedServicesEligibleApprover>> managedByTenantApprovers = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("multiFactorAuthProvider"))
+                if (property.NameEquals("multiFactorAuthProvider"u8))
                 {
                     multiFactorAuthProvider = new MultiFactorAuthProvider(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("maximumActivationDuration"))
+                if (property.NameEquals("maximumActivationDuration"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.ManagedServices.Models
                     maximumActivationDuration = property.Value.GetTimeSpan("P");
                     continue;
                 }
-                if (property.NameEquals("managedByTenantApprovers"))
+                if (property.NameEquals("managedByTenantApprovers"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

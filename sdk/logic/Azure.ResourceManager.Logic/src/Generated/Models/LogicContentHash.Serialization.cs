@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.Logic.Models
             Optional<string> value = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("algorithm"))
+                if (property.NameEquals("algorithm"u8))
                 {
                     algorithm = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     value = property.Value.GetString();
                     continue;

@@ -14,7 +14,10 @@ using Azure.ResourceManager.OperationalInsights.Models;
 
 namespace Azure.ResourceManager.OperationalInsights
 {
-    /// <summary> A class representing the OperationalInsightsWorkspace data model. </summary>
+    /// <summary>
+    /// A class representing the OperationalInsightsWorkspace data model.
+    /// The top level Workspace resource container.
+    /// </summary>
     public partial class OperationalInsightsWorkspaceData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of OperationalInsightsWorkspaceData. </summary>

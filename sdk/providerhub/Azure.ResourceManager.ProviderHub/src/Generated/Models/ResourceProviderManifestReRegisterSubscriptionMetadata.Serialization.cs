@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.ProviderHub.Models
             Optional<int> concurrencyLimit = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("enabled"))
+                if (property.NameEquals("enabled"u8))
                 {
                     enabled = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("concurrencyLimit"))
+                if (property.NameEquals("concurrencyLimit"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

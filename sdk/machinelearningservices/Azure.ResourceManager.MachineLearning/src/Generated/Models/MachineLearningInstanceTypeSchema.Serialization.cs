@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 if (NodeSelector != null)
                 {
-                    writer.WritePropertyName("nodeSelector");
+                    writer.WritePropertyName("nodeSelector"u8);
                     writer.WriteStartObject();
                     foreach (var item in NodeSelector)
                     {
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             if (Optional.IsDefined(Resources))
             {
-                writer.WritePropertyName("resources");
+                writer.WritePropertyName("resources"u8);
                 writer.WriteObjectValue(Resources);
             }
             writer.WriteEndObject();
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Optional<MachineLearningInstanceTypeSchemaResources> resources = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("nodeSelector"))
+                if (property.NameEquals("nodeSelector"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     nodeSelector = dictionary;
                     continue;
                 }
-                if (property.NameEquals("resources"))
+                if (property.NameEquals("resources"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

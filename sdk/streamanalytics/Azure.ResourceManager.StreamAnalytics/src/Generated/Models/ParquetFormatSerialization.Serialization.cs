@@ -18,14 +18,14 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Properties))
             {
-                writer.WritePropertyName("properties");
+                writer.WritePropertyName("properties"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(Properties);
 #else
                 JsonSerializer.Serialize(writer, JsonDocument.Parse(Properties.ToString()).RootElement);
 #endif
             }
-            writer.WritePropertyName("type");
+            writer.WritePropertyName("type"u8);
             writer.WriteStringValue(EventSerializationType.ToString());
             writer.WriteEndObject();
         }
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             EventSerializationType type = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                     properties = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new EventSerializationType(property.Value.GetString());
                     continue;

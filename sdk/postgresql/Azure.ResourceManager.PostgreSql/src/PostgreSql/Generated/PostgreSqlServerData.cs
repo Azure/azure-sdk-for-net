@@ -13,7 +13,10 @@ using Azure.ResourceManager.PostgreSql.Models;
 
 namespace Azure.ResourceManager.PostgreSql
 {
-    /// <summary> A class representing the PostgreSqlServer data model. </summary>
+    /// <summary>
+    /// A class representing the PostgreSqlServer data model.
+    /// Represents a server.
+    /// </summary>
     public partial class PostgreSqlServerData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of PostgreSqlServerData. </summary>

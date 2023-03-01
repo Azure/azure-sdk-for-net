@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.Compute.Models
 
         public static VirtualMachineScaleSetSkuScaleType ToVirtualMachineScaleSetSkuScaleType(this string value)
         {
-            if (string.Equals(value, "None", StringComparison.InvariantCultureIgnoreCase)) return VirtualMachineScaleSetSkuScaleType.None;
-            if (string.Equals(value, "Automatic", StringComparison.InvariantCultureIgnoreCase)) return VirtualMachineScaleSetSkuScaleType.Automatic;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "None")) return VirtualMachineScaleSetSkuScaleType.None;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Automatic")) return VirtualMachineScaleSetSkuScaleType.Automatic;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown VirtualMachineScaleSetSkuScaleType value.");
         }
     }

@@ -19,36 +19,36 @@ namespace Azure.ResourceManager.KubernetesConfiguration
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(RepositoryUri))
             {
-                writer.WritePropertyName("repositoryUrl");
+                writer.WritePropertyName("repositoryUrl"u8);
                 writer.WriteStringValue(RepositoryUri.AbsoluteUri);
             }
             if (Optional.IsDefined(OperatorNamespace))
             {
-                writer.WritePropertyName("operatorNamespace");
+                writer.WritePropertyName("operatorNamespace"u8);
                 writer.WriteStringValue(OperatorNamespace);
             }
             if (Optional.IsDefined(OperatorInstanceName))
             {
-                writer.WritePropertyName("operatorInstanceName");
+                writer.WritePropertyName("operatorInstanceName"u8);
                 writer.WriteStringValue(OperatorInstanceName);
             }
             if (Optional.IsDefined(OperatorType))
             {
-                writer.WritePropertyName("operatorType");
+                writer.WritePropertyName("operatorType"u8);
                 writer.WriteStringValue(OperatorType.Value.ToString());
             }
             if (Optional.IsDefined(OperatorParams))
             {
-                writer.WritePropertyName("operatorParams");
+                writer.WritePropertyName("operatorParams"u8);
                 writer.WriteStringValue(OperatorParams);
             }
             if (Optional.IsCollectionDefined(ConfigurationProtectedSettings))
             {
-                writer.WritePropertyName("configurationProtectedSettings");
+                writer.WritePropertyName("configurationProtectedSettings"u8);
                 writer.WriteStartObject();
                 foreach (var item in ConfigurationProtectedSettings)
                 {
@@ -59,22 +59,22 @@ namespace Azure.ResourceManager.KubernetesConfiguration
             }
             if (Optional.IsDefined(OperatorScope))
             {
-                writer.WritePropertyName("operatorScope");
+                writer.WritePropertyName("operatorScope"u8);
                 writer.WriteStringValue(OperatorScope.Value.ToString());
             }
             if (Optional.IsDefined(SshKnownHostsContents))
             {
-                writer.WritePropertyName("sshKnownHostsContents");
+                writer.WritePropertyName("sshKnownHostsContents"u8);
                 writer.WriteStringValue(SshKnownHostsContents);
             }
             if (Optional.IsDefined(IsHelmOperatorEnabled))
             {
-                writer.WritePropertyName("enableHelmOperator");
+                writer.WritePropertyName("enableHelmOperator"u8);
                 writer.WriteBooleanValue(IsHelmOperatorEnabled.Value);
             }
             if (Optional.IsDefined(HelmOperatorProperties))
             {
-                writer.WritePropertyName("helmOperatorProperties");
+                writer.WritePropertyName("helmOperatorProperties"u8);
                 writer.WriteObjectValue(HelmOperatorProperties);
             }
             writer.WriteEndObject();
@@ -102,22 +102,22 @@ namespace Azure.ResourceManager.KubernetesConfiguration
             Optional<KubernetesConfigurationComplianceStatus> complianceStatus = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("repositoryUrl"))
+                        if (property0.NameEquals("repositoryUrl"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -146,17 +146,17 @@ namespace Azure.ResourceManager.KubernetesConfiguration
                             repositoryUrl = new Uri(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("operatorNamespace"))
+                        if (property0.NameEquals("operatorNamespace"u8))
                         {
                             operatorNamespace = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("operatorInstanceName"))
+                        if (property0.NameEquals("operatorInstanceName"u8))
                         {
                             operatorInstanceName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("operatorType"))
+                        if (property0.NameEquals("operatorType"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -166,12 +166,12 @@ namespace Azure.ResourceManager.KubernetesConfiguration
                             operatorType = new KubernetesOperator(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("operatorParams"))
+                        if (property0.NameEquals("operatorParams"u8))
                         {
                             operatorParams = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("configurationProtectedSettings"))
+                        if (property0.NameEquals("configurationProtectedSettings"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
                             configurationProtectedSettings = dictionary;
                             continue;
                         }
-                        if (property0.NameEquals("operatorScope"))
+                        if (property0.NameEquals("operatorScope"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -196,17 +196,17 @@ namespace Azure.ResourceManager.KubernetesConfiguration
                             operatorScope = new KubernetesOperatorScope(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("repositoryPublicKey"))
+                        if (property0.NameEquals("repositoryPublicKey"u8))
                         {
                             repositoryPublicKey = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("sshKnownHostsContents"))
+                        if (property0.NameEquals("sshKnownHostsContents"u8))
                         {
                             sshKnownHostsContents = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("enableHelmOperator"))
+                        if (property0.NameEquals("enableHelmOperator"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
                             enableHelmOperator = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("helmOperatorProperties"))
+                        if (property0.NameEquals("helmOperatorProperties"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
                             helmOperatorProperties = HelmOperatorProperties.DeserializeHelmOperatorProperties(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("provisioningState"))
+                        if (property0.NameEquals("provisioningState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
                             provisioningState = new KubernetesConfigurationProvisioningStateType(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("complianceStatus"))
+                        if (property0.NameEquals("complianceStatus"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

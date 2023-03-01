@@ -24,42 +24,42 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             Optional<string> streetAddress = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("houseNumber"))
+                if (property.NameEquals("houseNumber"u8))
                 {
                     houseNumber = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("poBox"))
+                if (property.NameEquals("poBox"u8))
                 {
                     poBox = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("road"))
+                if (property.NameEquals("road"u8))
                 {
                     road = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("city"))
+                if (property.NameEquals("city"u8))
                 {
                     city = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("state"))
+                if (property.NameEquals("state"u8))
                 {
                     state = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("postalCode"))
+                if (property.NameEquals("postalCode"u8))
                 {
                     postalCode = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("countryRegion"))
+                if (property.NameEquals("countryRegion"u8))
                 {
                     countryRegion = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("streetAddress"))
+                if (property.NameEquals("streetAddress"u8))
                 {
                     streetAddress = property.Value.GetString();
                     continue;
