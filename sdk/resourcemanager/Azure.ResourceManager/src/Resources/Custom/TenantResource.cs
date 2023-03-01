@@ -16,8 +16,10 @@ namespace Azure.ResourceManager.Resources
     [CodeGenSuppress("GetAsync", typeof(CancellationToken))]
     [CodeGenSuppress("GetAvailableLocations", typeof(CancellationToken))]
     [CodeGenSuppress("GetAvailableLocationsAsync", typeof(CancellationToken))]
+#pragma warning disable CA1825 // Avoid zero-length array allocations
     [CodeGenSuppress("GetTenants")]
     [CodeGenSuppress("CreateResourceIdentifier")]
+#pragma warning restore CA1825 // Avoid zero-length array allocations
     // [CodeGenSuppress("_tenantsRestClient")] // TODO: not working for private member
     public partial class TenantResource : ArmResource
     {
