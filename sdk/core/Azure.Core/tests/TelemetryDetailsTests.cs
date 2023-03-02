@@ -67,6 +67,7 @@ namespace Azure.Core.Tests
 
         [Test]
         [TestCase("ValidParens (2023-)", "ValidParens (2023-)")]
+        [TestCase("(ValidParens (2023-))", "(ValidParens (2023-))")]
         [TestCase("ProperlyEscapedParens \\(2023-\\)", "ProperlyEscapedParens \\(2023-\\)")]
         [TestCase("UnescapedOnlyParens (2023-)", "UnescapedOnlyParens (2023-)")]
         [TestCase("UnmatchedOpenParen (2023-", "UnmatchedOpenParen \\(2023-")]
@@ -74,6 +75,7 @@ namespace Azure.Core.Tests
         [TestCase("UnEscapedInvalidParen (", "UnEscapedInvalidParen \\(")]
         [TestCase("UnEscapedParenWithValidParens2 ())", "UnEscapedParenWithValidParens2 \\(\\)\\)")]
         [TestCase("InvalidParen )", "InvalidParen \\)")]
+        [TestCase("(InvalidParen ", "\\(InvalidParen ")]
         [TestCase("UnescapedParenInText MyO)SDescription ", "UnescapedParenInText MyO\\)SDescription ")]
         [TestCase("UnescapedParenInText MyO(SDescription ", "UnescapedParenInText MyO\\(SDescription ")]
         public void ValidatesProperParenthesisMatching(string input, string output)
