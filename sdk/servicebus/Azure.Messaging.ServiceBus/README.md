@@ -185,7 +185,7 @@ string body = receivedMessage.Body.ToString();
 Console.WriteLine(body);
 ```
 
-For more information on setting up all the needed Azure resources for Sending and Receiving messages, see this [Quickstart](https://learn.microsoft.com/en-us/azure/service-bus-messaging/service-bus-dotnet-get-started-with-queues).
+For more information on setting up the needed Azure resources for sending and receiving messages, see this [Quickstart](https://learn.microsoft.com/azure/service-bus-messaging/service-bus-dotnet-get-started-with-queues).
 
 ### Sending a batch of messages
 
