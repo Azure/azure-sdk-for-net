@@ -19,12 +19,12 @@ namespace Azure.ResourceManager.DataMigration.Models
             Optional<UpdateActionType> updateAction = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("objectName"))
+                if (property.NameEquals("objectName"u8))
                 {
                     objectName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("objectType"))
+                if (property.NameEquals("objectType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     objectType = new ObjectType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("updateAction"))
+                if (property.NameEquals("updateAction"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

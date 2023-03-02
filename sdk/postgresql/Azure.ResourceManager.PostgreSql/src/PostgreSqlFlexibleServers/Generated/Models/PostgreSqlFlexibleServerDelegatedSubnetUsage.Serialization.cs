@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             Optional<long> usage = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("subnetName"))
+                if (property.NameEquals("subnetName"u8))
                 {
                     subnetName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("usage"))
+                if (property.NameEquals("usage"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

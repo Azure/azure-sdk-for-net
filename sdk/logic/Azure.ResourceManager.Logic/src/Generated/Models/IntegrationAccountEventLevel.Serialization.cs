@@ -24,12 +24,12 @@ namespace Azure.ResourceManager.Logic.Models
 
         public static IntegrationAccountEventLevel ToIntegrationAccountEventLevel(this string value)
         {
-            if (string.Equals(value, "LogAlways", StringComparison.InvariantCultureIgnoreCase)) return IntegrationAccountEventLevel.LogAlways;
-            if (string.Equals(value, "Critical", StringComparison.InvariantCultureIgnoreCase)) return IntegrationAccountEventLevel.Critical;
-            if (string.Equals(value, "Error", StringComparison.InvariantCultureIgnoreCase)) return IntegrationAccountEventLevel.Error;
-            if (string.Equals(value, "Warning", StringComparison.InvariantCultureIgnoreCase)) return IntegrationAccountEventLevel.Warning;
-            if (string.Equals(value, "Informational", StringComparison.InvariantCultureIgnoreCase)) return IntegrationAccountEventLevel.Informational;
-            if (string.Equals(value, "Verbose", StringComparison.InvariantCultureIgnoreCase)) return IntegrationAccountEventLevel.Verbose;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "LogAlways")) return IntegrationAccountEventLevel.LogAlways;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Critical")) return IntegrationAccountEventLevel.Critical;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Error")) return IntegrationAccountEventLevel.Error;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Warning")) return IntegrationAccountEventLevel.Warning;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Informational")) return IntegrationAccountEventLevel.Informational;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Verbose")) return IntegrationAccountEventLevel.Verbose;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown IntegrationAccountEventLevel value.");
         }
     }

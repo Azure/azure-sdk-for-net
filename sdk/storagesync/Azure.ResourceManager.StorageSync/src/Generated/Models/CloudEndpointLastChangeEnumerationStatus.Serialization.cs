@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.StorageSync.Models
             Optional<DateTimeOffset> nextRunTimestamp = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("startedTimestamp"))
+                if (property.NameEquals("startedTimestamp"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                     startedTimestamp = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("completedTimestamp"))
+                if (property.NameEquals("completedTimestamp"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                     completedTimestamp = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("namespaceFilesCount"))
+                if (property.NameEquals("namespaceFilesCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                     namespaceFilesCount = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("namespaceDirectoriesCount"))
+                if (property.NameEquals("namespaceDirectoriesCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                     namespaceDirectoriesCount = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("namespaceSizeBytes"))
+                if (property.NameEquals("namespaceSizeBytes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                     namespaceSizeBytes = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("nextRunTimestamp"))
+                if (property.NameEquals("nextRunTimestamp"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

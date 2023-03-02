@@ -43,26 +43,34 @@ namespace Azure.ResourceManager.RecoveryServices
             return apiVersion;
         }
 
-        /// <summary> Gets a collection of VaultResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of VaultResources and their operations over a VaultResource. </returns>
-        public virtual VaultCollection GetVaults()
+        /// <summary> Gets a collection of RecoveryServicesVaultResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of RecoveryServicesVaultResources and their operations over a RecoveryServicesVaultResource. </returns>
+        public virtual RecoveryServicesVaultCollection GetRecoveryServicesVaults()
         {
-            return GetCachedClient(Client => new VaultCollection(Client, Id));
+            return GetCachedClient(Client => new RecoveryServicesVaultCollection(Client, Id));
         }
 
         /// <summary>
         /// API to check for resource name availability.
         /// A name is available if no other resource exists that has the same SubscriptionId, Resource Name and Type
         /// or if one or more such resources exist, each of these must be GC&apos;d and their time of deletion be more than 24 Hours Ago
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/locations/{location}/checkNameAvailability
-        /// Operation Id: RecoveryServices_CheckNameAvailability
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/locations/{location}/checkNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RecoveryServices_CheckNameAvailability</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="location"> Location of the resource. </param>
         /// <param name="content"> Contains information about Resource type and Resource name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<CheckNameAvailabilityResult>> CheckNameAvailabilityRecoveryServiceAsync(AzureLocation location, CheckNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<RecoveryServicesNameAvailabilityResult>> CheckRecoveryServicesNameAvailabilityAsync(AzureLocation location, RecoveryServicesNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            using var scope = RecoveryServicesClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.CheckNameAvailabilityRecoveryService");
+            using var scope = RecoveryServicesClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.CheckRecoveryServicesNameAvailability");
             scope.Start();
             try
             {
@@ -80,15 +88,23 @@ namespace Azure.ResourceManager.RecoveryServices
         /// API to check for resource name availability.
         /// A name is available if no other resource exists that has the same SubscriptionId, Resource Name and Type
         /// or if one or more such resources exist, each of these must be GC&apos;d and their time of deletion be more than 24 Hours Ago
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/locations/{location}/checkNameAvailability
-        /// Operation Id: RecoveryServices_CheckNameAvailability
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/locations/{location}/checkNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RecoveryServices_CheckNameAvailability</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="location"> Location of the resource. </param>
         /// <param name="content"> Contains information about Resource type and Resource name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<CheckNameAvailabilityResult> CheckNameAvailabilityRecoveryService(AzureLocation location, CheckNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public virtual Response<RecoveryServicesNameAvailabilityResult> CheckRecoveryServicesNameAvailability(AzureLocation location, RecoveryServicesNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            using var scope = RecoveryServicesClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.CheckNameAvailabilityRecoveryService");
+            using var scope = RecoveryServicesClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.CheckRecoveryServicesNameAvailability");
             scope.Start();
             try
             {

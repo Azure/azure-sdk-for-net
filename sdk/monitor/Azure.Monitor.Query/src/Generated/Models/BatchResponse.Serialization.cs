@@ -18,7 +18,7 @@ namespace Azure.Monitor.Query.Models
             Optional<IReadOnlyList<BatchQueryResponse>> responses = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("responses"))
+                if (property.NameEquals("responses"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

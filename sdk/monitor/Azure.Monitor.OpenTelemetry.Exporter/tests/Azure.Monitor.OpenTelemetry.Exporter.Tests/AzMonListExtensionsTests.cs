@@ -560,7 +560,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             AzMonList.Add(ref mappedTags, new KeyValuePair<string, object>(SemanticConventions.AttributeNetPeerIp, netPeerIp));
             AzMonList.Add(ref mappedTags, new KeyValuePair<string, object>(SemanticConventions.AttributeNetPeerPort, netPeerPort));
             AzMonList.Add(ref mappedTags, new KeyValuePair<string, object>(SemanticConventions.AttributeDbName, "DbName"));
-            string hostName = null;
+            string? hostName = null;
             if (peerService != null)
             {
                 hostName = peerService;

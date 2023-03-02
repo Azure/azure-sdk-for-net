@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             Optional<DateTimeOffset> lastSkuUpdate = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("serviceTier"))
+                if (property.NameEquals("serviceTier"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                     serviceTier = new OperationalInsightsSkuName(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("enabled"))
+                if (property.NameEquals("enabled"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                     enabled = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("minimumRetention"))
+                if (property.NameEquals("minimumRetention"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                     minimumRetention = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("maximumRetention"))
+                if (property.NameEquals("maximumRetention"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                     maximumRetention = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("defaultRetention"))
+                if (property.NameEquals("defaultRetention"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                     defaultRetention = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("capacityReservationLevel"))
+                if (property.NameEquals("capacityReservationLevel"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -84,14 +84,14 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                     capacityReservationLevel = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("lastSkuUpdate"))
+                if (property.NameEquals("lastSkuUpdate"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    lastSkuUpdate = property.Value.GetDateTimeOffset();
+                    lastSkuUpdate = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
             }

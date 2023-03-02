@@ -4,7 +4,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.Communication.CallAutomation.Models
+namespace Azure.Communication.CallAutomation
 {
     /// <summary>
     /// The Recognize configurations specific for IVR Choices.
@@ -21,5 +21,8 @@ namespace Azure.Communication.CallAutomation.Models
         /// The IvR choices for recognize
         /// </summary>
         public IList<RecognizeChoice> RecognizeChoices { get; }
+
+        /// <summary> Speech language to be recognized, If not set default is en-US. </summary>
+        public string SpeechLanguage { get; set; }
     }
 }

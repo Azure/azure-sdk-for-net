@@ -5,10 +5,7 @@
 
 #nullable disable
 
-using System;
-using System.Linq;
 using System.Threading;
-using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -53,8 +50,16 @@ namespace Azure.ResourceManager.Logic
 
         /// <summary>
         /// Gets a list of workflows by subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Logic/workflows
-        /// Operation Id: Workflows_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Logic/workflows</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Workflows_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="top"> The number of items to be included in the result. </param>
         /// <param name="filter"> The filter to apply on the operation. Options for filters include: State, Trigger, and ReferencedResourceId. </param>
@@ -62,43 +67,23 @@ namespace Azure.ResourceManager.Logic
         /// <returns> An async collection of <see cref="LogicWorkflowResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<LogicWorkflowResource> GetLogicWorkflowsAsync(int? top = null, string filter = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<LogicWorkflowResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = LogicWorkflowWorkflowsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetLogicWorkflows");
-                scope.Start();
-                try
-                {
-                    var response = await LogicWorkflowWorkflowsRestClient.ListBySubscriptionAsync(Id.SubscriptionId, top, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new LogicWorkflowResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<LogicWorkflowResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = LogicWorkflowWorkflowsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetLogicWorkflows");
-                scope.Start();
-                try
-                {
-                    var response = await LogicWorkflowWorkflowsRestClient.ListBySubscriptionNextPageAsync(nextLink, Id.SubscriptionId, top, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new LogicWorkflowResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => LogicWorkflowWorkflowsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, top, filter);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => LogicWorkflowWorkflowsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, top, filter);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new LogicWorkflowResource(Client, LogicWorkflowData.DeserializeLogicWorkflowData(e)), LogicWorkflowWorkflowsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetLogicWorkflows", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Gets a list of workflows by subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Logic/workflows
-        /// Operation Id: Workflows_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Logic/workflows</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Workflows_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="top"> The number of items to be included in the result. </param>
         /// <param name="filter"> The filter to apply on the operation. Options for filters include: State, Trigger, and ReferencedResourceId. </param>
@@ -106,209 +91,101 @@ namespace Azure.ResourceManager.Logic
         /// <returns> A collection of <see cref="LogicWorkflowResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<LogicWorkflowResource> GetLogicWorkflows(int? top = null, string filter = null, CancellationToken cancellationToken = default)
         {
-            Page<LogicWorkflowResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = LogicWorkflowWorkflowsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetLogicWorkflows");
-                scope.Start();
-                try
-                {
-                    var response = LogicWorkflowWorkflowsRestClient.ListBySubscription(Id.SubscriptionId, top, filter, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new LogicWorkflowResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<LogicWorkflowResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = LogicWorkflowWorkflowsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetLogicWorkflows");
-                scope.Start();
-                try
-                {
-                    var response = LogicWorkflowWorkflowsRestClient.ListBySubscriptionNextPage(nextLink, Id.SubscriptionId, top, filter, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new LogicWorkflowResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => LogicWorkflowWorkflowsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, top, filter);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => LogicWorkflowWorkflowsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, top, filter);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new LogicWorkflowResource(Client, LogicWorkflowData.DeserializeLogicWorkflowData(e)), LogicWorkflowWorkflowsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetLogicWorkflows", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Gets a list of integration accounts by subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Logic/integrationAccounts
-        /// Operation Id: IntegrationAccounts_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Logic/integrationAccounts</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>IntegrationAccounts_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="top"> The number of items to be included in the result. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="IntegrationAccountResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<IntegrationAccountResource> GetIntegrationAccountsAsync(int? top = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<IntegrationAccountResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = IntegrationAccountClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetIntegrationAccounts");
-                scope.Start();
-                try
-                {
-                    var response = await IntegrationAccountRestClient.ListBySubscriptionAsync(Id.SubscriptionId, top, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new IntegrationAccountResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<IntegrationAccountResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = IntegrationAccountClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetIntegrationAccounts");
-                scope.Start();
-                try
-                {
-                    var response = await IntegrationAccountRestClient.ListBySubscriptionNextPageAsync(nextLink, Id.SubscriptionId, top, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new IntegrationAccountResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => IntegrationAccountRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, top);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => IntegrationAccountRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, top);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new IntegrationAccountResource(Client, IntegrationAccountData.DeserializeIntegrationAccountData(e)), IntegrationAccountClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetIntegrationAccounts", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Gets a list of integration accounts by subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Logic/integrationAccounts
-        /// Operation Id: IntegrationAccounts_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Logic/integrationAccounts</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>IntegrationAccounts_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="top"> The number of items to be included in the result. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="IntegrationAccountResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<IntegrationAccountResource> GetIntegrationAccounts(int? top = null, CancellationToken cancellationToken = default)
         {
-            Page<IntegrationAccountResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = IntegrationAccountClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetIntegrationAccounts");
-                scope.Start();
-                try
-                {
-                    var response = IntegrationAccountRestClient.ListBySubscription(Id.SubscriptionId, top, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new IntegrationAccountResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<IntegrationAccountResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = IntegrationAccountClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetIntegrationAccounts");
-                scope.Start();
-                try
-                {
-                    var response = IntegrationAccountRestClient.ListBySubscriptionNextPage(nextLink, Id.SubscriptionId, top, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new IntegrationAccountResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => IntegrationAccountRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, top);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => IntegrationAccountRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, top);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new IntegrationAccountResource(Client, IntegrationAccountData.DeserializeIntegrationAccountData(e)), IntegrationAccountClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetIntegrationAccounts", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Gets a list of integration service environments by subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Logic/integrationServiceEnvironments
-        /// Operation Id: IntegrationServiceEnvironments_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Logic/integrationServiceEnvironments</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>IntegrationServiceEnvironments_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="top"> The number of items to be included in the result. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="IntegrationServiceEnvironmentResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<IntegrationServiceEnvironmentResource> GetIntegrationServiceEnvironmentsAsync(int? top = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<IntegrationServiceEnvironmentResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = IntegrationServiceEnvironmentClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetIntegrationServiceEnvironments");
-                scope.Start();
-                try
-                {
-                    var response = await IntegrationServiceEnvironmentRestClient.ListBySubscriptionAsync(Id.SubscriptionId, top, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new IntegrationServiceEnvironmentResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<IntegrationServiceEnvironmentResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = IntegrationServiceEnvironmentClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetIntegrationServiceEnvironments");
-                scope.Start();
-                try
-                {
-                    var response = await IntegrationServiceEnvironmentRestClient.ListBySubscriptionNextPageAsync(nextLink, Id.SubscriptionId, top, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new IntegrationServiceEnvironmentResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => IntegrationServiceEnvironmentRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, top);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => IntegrationServiceEnvironmentRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, top);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new IntegrationServiceEnvironmentResource(Client, IntegrationServiceEnvironmentData.DeserializeIntegrationServiceEnvironmentData(e)), IntegrationServiceEnvironmentClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetIntegrationServiceEnvironments", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Gets a list of integration service environments by subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Logic/integrationServiceEnvironments
-        /// Operation Id: IntegrationServiceEnvironments_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Logic/integrationServiceEnvironments</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>IntegrationServiceEnvironments_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="top"> The number of items to be included in the result. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="IntegrationServiceEnvironmentResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<IntegrationServiceEnvironmentResource> GetIntegrationServiceEnvironments(int? top = null, CancellationToken cancellationToken = default)
         {
-            Page<IntegrationServiceEnvironmentResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = IntegrationServiceEnvironmentClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetIntegrationServiceEnvironments");
-                scope.Start();
-                try
-                {
-                    var response = IntegrationServiceEnvironmentRestClient.ListBySubscription(Id.SubscriptionId, top, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new IntegrationServiceEnvironmentResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<IntegrationServiceEnvironmentResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = IntegrationServiceEnvironmentClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetIntegrationServiceEnvironments");
-                scope.Start();
-                try
-                {
-                    var response = IntegrationServiceEnvironmentRestClient.ListBySubscriptionNextPage(nextLink, Id.SubscriptionId, top, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new IntegrationServiceEnvironmentResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => IntegrationServiceEnvironmentRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, top);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => IntegrationServiceEnvironmentRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, top);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new IntegrationServiceEnvironmentResource(Client, IntegrationServiceEnvironmentData.DeserializeIntegrationServiceEnvironmentData(e)), IntegrationServiceEnvironmentClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetIntegrationServiceEnvironments", "value", "nextLink", cancellationToken);
         }
     }
 }

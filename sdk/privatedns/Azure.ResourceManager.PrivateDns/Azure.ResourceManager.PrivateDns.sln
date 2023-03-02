@@ -7,6 +7,8 @@ Project("{8BCCA942-A639-4B72-9A08-F74AFF80121D}") = "Azure.ResourceManager.Priva
 EndProject
 Project("{8BCCA942-A639-4B72-9A08-F74AFF80121D}") = "Azure.ResourceManager.PrivateDns.Tests", "tests\Azure.ResourceManager.PrivateDns.Tests.csproj", "{AE92756D-428C-41B1-B264-1671BCAB9262}"
 EndProject
+Project("{8BCCA942-A639-4B72-9A08-F74AFF80121D}") = "Azure.ResourceManager.PrivateDns.Samples", "samples\Azure.ResourceManager.PrivateDns.Samples.csproj", "{CCC31236-7E37-4AC3-8BA4-4FDD23E87CB4}"
+EndProject
 Global
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

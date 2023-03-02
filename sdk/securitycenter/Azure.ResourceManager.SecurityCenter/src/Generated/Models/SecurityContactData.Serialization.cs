@@ -17,26 +17,26 @@ namespace Azure.ResourceManager.SecurityCenter
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(Emails))
             {
-                writer.WritePropertyName("emails");
+                writer.WritePropertyName("emails"u8);
                 writer.WriteStringValue(Emails);
             }
             if (Optional.IsDefined(Phone))
             {
-                writer.WritePropertyName("phone");
+                writer.WritePropertyName("phone"u8);
                 writer.WriteStringValue(Phone);
             }
             if (Optional.IsDefined(AlertNotifications))
             {
-                writer.WritePropertyName("alertNotifications");
+                writer.WritePropertyName("alertNotifications"u8);
                 writer.WriteObjectValue(AlertNotifications);
             }
             if (Optional.IsDefined(NotificationsByRole))
             {
-                writer.WritePropertyName("notificationsByRole");
+                writer.WritePropertyName("notificationsByRole"u8);
                 writer.WriteObjectValue(NotificationsByRole);
             }
             writer.WriteEndObject();
@@ -55,22 +55,22 @@ namespace Azure.ResourceManager.SecurityCenter
             Optional<SecurityContactPropertiesNotificationsByRole> notificationsByRole = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.SecurityCenter
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -89,17 +89,17 @@ namespace Azure.ResourceManager.SecurityCenter
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("emails"))
+                        if (property0.NameEquals("emails"u8))
                         {
                             emails = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("phone"))
+                        if (property0.NameEquals("phone"u8))
                         {
                             phone = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("alertNotifications"))
+                        if (property0.NameEquals("alertNotifications"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.SecurityCenter
                             alertNotifications = SecurityContactPropertiesAlertNotifications.DeserializeSecurityContactPropertiesAlertNotifications(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("notificationsByRole"))
+                        if (property0.NameEquals("notificationsByRole"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

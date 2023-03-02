@@ -5,6 +5,7 @@ Run `dotnet build /t:GenerateCode` to generate code.
 ``` yaml
 
 azure-arm: true
+generate-model-factory: false
 csharp: true
 library-name: Logic
 namespace: Azure.ResourceManager.Logic
@@ -213,6 +214,7 @@ rename-rules:
   B2B: B2B|b2b
 
 directive:
+  - remove-operation: Workflows_Update
   - from: logic.json
     where: $.definitions
     transform: >

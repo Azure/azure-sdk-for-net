@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             Optional<Uri> redirectUri = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("redirectUri"))
+                if (property.NameEquals("redirectUri"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

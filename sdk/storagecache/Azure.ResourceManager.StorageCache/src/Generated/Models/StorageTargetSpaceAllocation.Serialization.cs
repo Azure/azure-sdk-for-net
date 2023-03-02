@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.StorageCache.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Name))
             {
-                writer.WritePropertyName("name");
+                writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
             if (Optional.IsDefined(AllocationPercentage))
             {
-                writer.WritePropertyName("allocationPercentage");
+                writer.WritePropertyName("allocationPercentage"u8);
                 writer.WriteNumberValue(AllocationPercentage.Value);
             }
             writer.WriteEndObject();
@@ -34,12 +34,12 @@ namespace Azure.ResourceManager.StorageCache.Models
             Optional<int> allocationPercentage = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("allocationPercentage"))
+                if (property.NameEquals("allocationPercentage"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

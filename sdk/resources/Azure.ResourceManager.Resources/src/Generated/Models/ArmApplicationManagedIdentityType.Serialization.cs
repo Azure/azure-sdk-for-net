@@ -22,10 +22,10 @@ namespace Azure.ResourceManager.Resources.Models
 
         public static ArmApplicationManagedIdentityType ToArmApplicationManagedIdentityType(this string value)
         {
-            if (string.Equals(value, "None", StringComparison.InvariantCultureIgnoreCase)) return ArmApplicationManagedIdentityType.None;
-            if (string.Equals(value, "SystemAssigned", StringComparison.InvariantCultureIgnoreCase)) return ArmApplicationManagedIdentityType.SystemAssigned;
-            if (string.Equals(value, "UserAssigned", StringComparison.InvariantCultureIgnoreCase)) return ArmApplicationManagedIdentityType.UserAssigned;
-            if (string.Equals(value, "SystemAssigned, UserAssigned", StringComparison.InvariantCultureIgnoreCase)) return ArmApplicationManagedIdentityType.SystemAssignedUserAssigned;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "None")) return ArmApplicationManagedIdentityType.None;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "SystemAssigned")) return ArmApplicationManagedIdentityType.SystemAssigned;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "UserAssigned")) return ArmApplicationManagedIdentityType.UserAssigned;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "SystemAssigned, UserAssigned")) return ArmApplicationManagedIdentityType.SystemAssignedUserAssigned;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ArmApplicationManagedIdentityType value.");
         }
     }

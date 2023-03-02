@@ -1,6 +1,6 @@
 # Release History
 
-## 7.12.0-beta.1 (Unreleased)
+## 7.13.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,27 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+- Some checks for cancellation that were occurring after a service operation had been completed have been removed.  Because the service operation was already complete, cancellation was not actually performed and the results of the operation should be returned.
+
+## 7.12.0 (2023-01-12)
+
+### Acknowledgments
+Thank you to our developer community members who helped to make the Service Bus client library better with their contributions to this release:
+
+- Daniel Marbach  _([GitHub](https://github.com/danielmarbach))_
+
+### Features Added
+
+- Added `UpdatePrefetchCount` methods to `ServiceBusProcessor` and `ServiceBusSessionProcessor` to allow updating the prefetch count of a running processor. _(A community contribution, courtesy of [danielmarbach](https://github.com/danielmarbach))_
+
+### Other Changes
+
+- Update AMQP library dependency to leverage new `DrainAsync` method.
+
+### Bugs Fixed
+
+- Fixed issue with `MaxConcurrentCallsPerSession` setting which resulted in the setting not always being respected.
 
 ## 7.11.1 (2022-11-08)
 

@@ -15,31 +15,36 @@ namespace Azure.Communication.PhoneNumbers
     {
         internal static PhoneNumberOperation DeserializePhoneNumberOperation(JsonElement element)
         {
+            PhoneNumberOperationType operationType = default;
             PhoneNumberOperationStatus status = default;
             Optional<string> resourceLocation = default;
             DateTimeOffset createdDateTime = default;
             Optional<CommunicationError> error = default;
             string id = default;
-            PhoneNumberOperationType operationType = default;
             Optional<DateTimeOffset> lastActionDateTime = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("status"))
+                if (property.NameEquals("operationType"u8))
+                {
+                    operationType = new PhoneNumberOperationType(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("status"u8))
                 {
                     status = new PhoneNumberOperationStatus(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("resourceLocation"))
+                if (property.NameEquals("resourceLocation"u8))
                 {
                     resourceLocation = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("createdDateTime"))
+                if (property.NameEquals("createdDateTime"u8))
                 {
                     createdDateTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("error"))
+                if (property.NameEquals("error"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -49,17 +54,12 @@ namespace Azure.Communication.PhoneNumbers
                     error = CommunicationError.DeserializeCommunicationError(property.Value);
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("operationType"))
-                {
-                    operationType = new PhoneNumberOperationType(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("lastActionDateTime"))
+                if (property.NameEquals("lastActionDateTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -70,7 +70,7 @@ namespace Azure.Communication.PhoneNumbers
                     continue;
                 }
             }
-            return new PhoneNumberOperation(status, resourceLocation.Value, createdDateTime, error.Value, id, operationType, Optional.ToNullable(lastActionDateTime));
+            return new PhoneNumberOperation(operationType, status, resourceLocation.Value, createdDateTime, error.Value, id, Optional.ToNullable(lastActionDateTime));
         }
     }
 }

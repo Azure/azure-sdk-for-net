@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.Sql.Models
 
         public static DataMaskingRuleState ToDataMaskingRuleState(this string value)
         {
-            if (string.Equals(value, "Disabled", StringComparison.InvariantCultureIgnoreCase)) return DataMaskingRuleState.Disabled;
-            if (string.Equals(value, "Enabled", StringComparison.InvariantCultureIgnoreCase)) return DataMaskingRuleState.Enabled;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Disabled")) return DataMaskingRuleState.Disabled;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Enabled")) return DataMaskingRuleState.Enabled;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown DataMaskingRuleState value.");
         }
     }

@@ -7,6 +7,8 @@ Project("{7A9FD2D9-CC84-4896-8B92-424B7F03671C}") = "Azure.ResourceManager.Marke
 EndProject
 Project("{7A9FD2D9-CC84-4896-8B92-424B7F03671C}") = "Azure.ResourceManager.Marketplace.Tests", "tests\Azure.ResourceManager.Marketplace.Tests.csproj", "{979A70DE-D021-4C54-B5E8-9804FB83F67C}"
 EndProject
+Project("{7A9FD2D9-CC84-4896-8B92-424B7F03671C}") = "Azure.ResourceManager.Marketplace.Samples", "samples\Azure.ResourceManager.Marketplace.Samples.csproj", "{C36309D7-0416-4BAC-8F44-BBFC7458076E}"
+EndProject
 Global
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

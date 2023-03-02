@@ -15,18 +15,18 @@ namespace Azure.ResourceManager.AppPlatform.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("type");
+            writer.WritePropertyName("type"u8);
             writer.WriteStringValue(UnderlyingResourceType.ToString());
-            writer.WritePropertyName("mountPath");
+            writer.WritePropertyName("mountPath"u8);
             writer.WriteStringValue(MountPath);
             if (Optional.IsDefined(IsReadOnly))
             {
-                writer.WritePropertyName("readOnly");
+                writer.WritePropertyName("readOnly"u8);
                 writer.WriteBooleanValue(IsReadOnly.Value);
             }
             if (Optional.IsCollectionDefined(MountOptions))
             {
-                writer.WritePropertyName("mountOptions");
+                writer.WritePropertyName("mountOptions"u8);
                 writer.WriteStartArray();
                 foreach (var item in MountOptions)
                 {

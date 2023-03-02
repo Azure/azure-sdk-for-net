@@ -4,6 +4,7 @@ Run `dotnet build /t:GenerateCode` to generate code.
 
 ``` yaml
 azure-arm: true
+generate-model-factory: false
 csharp: true
 library-name: AppContainers
 namespace: Azure.ResourceManager.AppContainers
@@ -125,7 +126,7 @@ rename-mapping:
   EnvironmentProvisioningState: ContainerAppEnvironmentProvisioningState
   EnvironmentVar: ContainerAppEnvironmentVariable
   ExtendedLocation: ContainerAppExtendedLocation
-  ExtendedLocationType: ContainerAppExtendedLocationType
+  ExtendedLocationTypes: ContainerAppExtendedLocationType
   ForwardProxy: ContainerAppForwardProxy
   ForwardProxyConvention: ContainerAppForwardProxyConvention
   GithubActionConfiguration: ContainerAppGitHubActionConfiguration
@@ -196,6 +197,7 @@ rename-mapping:
   TrafficWeight.latestRevision: IsLatestRevision
   VnetConfiguration.infrastructureSubnetId: -|arm-id
   VnetConfiguration.internal: IsInternal
+  ContainerApp.properties.eventStreamEndpoint: -|uri
 
 request-path-to-resource-name:
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/connectedEnvironments/{connectedEnvironmentName}/certificates/{certificateName}: ContainerAppConnectedEnvironmentCertificate
@@ -222,5 +224,9 @@ directive:
     transform: >
       if ($['type'] === 'boolean')
         $['x-ms-client-name'] = 'IsEnabled'
-
+  - from: ContainerApps.json
+    where: $.definitions.ContainerApp
+    transform: >
+      $.properties.properties.properties.outboundIpAddresses['x-ms-client-name'] = 'outboundIpAddressList';
+      $.properties.properties.properties.outboundIpAddresses.items['x-ms-format'] = 'ip-address';
 ```

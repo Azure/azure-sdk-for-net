@@ -22,7 +22,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Integration.Tests.AspNetCoreWebAp
         /// <param name="id">Set this value to a random value and use this value to distinguish requests in any unit tests.</param>
         /// <returns></returns>
         [HttpGet("{id?}")]
-        public ActionResult<string> Get(string id = null) => StatusCode((int)HttpStatusCode.OK);
+        public ActionResult<string> Get(string? id = null) => StatusCode((int)HttpStatusCode.OK);
 
         /// <summary>
         /// This URI will return the <see cref="HttpStatusCode"/> matching the provided value.

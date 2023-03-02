@@ -17,8 +17,4 @@
   <ItemGroup>
     <PackageReference Include="System.Linq.Async" />
   </ItemGroup>
-
-  <ItemGroup>
-    <Reference Include="System.Web" />
-  </ItemGroup>
 </Project>

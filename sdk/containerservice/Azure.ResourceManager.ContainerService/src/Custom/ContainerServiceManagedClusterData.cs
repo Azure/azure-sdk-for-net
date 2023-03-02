@@ -44,5 +44,19 @@ namespace Azure.ResourceManager.ContainerService
                 };
             }
         }
+
+        /// <summary> For more information see [setting the AKS cluster auto-upgrade channel](https://docs.microsoft.com/azure/aks/upgrade-cluster#set-auto-upgrade-channel). </summary>
+        [Obsolete("This property is obsolete and will be removed in a future release", false)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public UpgradeChannel? UpgradeChannel
+        {
+            get => AutoUpgradeProfile is null ? default : AutoUpgradeProfile.UpgradeChannel;
+            set
+            {
+                if (AutoUpgradeProfile is null)
+                    AutoUpgradeProfile = new ManagedClusterAutoUpgradeProfile();
+                AutoUpgradeProfile.UpgradeChannel = value;
+            }
+        }
     }
 }

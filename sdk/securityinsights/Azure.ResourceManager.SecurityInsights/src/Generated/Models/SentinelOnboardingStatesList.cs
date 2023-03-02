@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <summary> Initializes a new instance of SentinelOnboardingStatesList. </summary>
         /// <param name="value"> Array of Sentinel onboarding states. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal SentinelOnboardingStatesList(IEnumerable<SentinelOnboardingStateData> value)
+        internal SentinelOnboardingStatesList(IEnumerable<SecurityInsightsSentinelOnboardingStateData> value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         /// <summary> Initializes a new instance of SentinelOnboardingStatesList. </summary>
         /// <param name="value"> Array of Sentinel onboarding states. </param>
-        internal SentinelOnboardingStatesList(IReadOnlyList<SentinelOnboardingStateData> value)
+        internal SentinelOnboardingStatesList(IReadOnlyList<SecurityInsightsSentinelOnboardingStateData> value)
         {
             Value = value;
         }
 
         /// <summary> Array of Sentinel onboarding states. </summary>
-        public IReadOnlyList<SentinelOnboardingStateData> Value { get; }
+        public IReadOnlyList<SecurityInsightsSentinelOnboardingStateData> Value { get; }
     }
 }

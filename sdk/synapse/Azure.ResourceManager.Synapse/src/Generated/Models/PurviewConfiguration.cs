@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using Azure.Core;
+
 namespace Azure.ResourceManager.Synapse.Models
 {
     /// <summary> Purview Configuration. </summary>
@@ -17,12 +19,12 @@ namespace Azure.ResourceManager.Synapse.Models
 
         /// <summary> Initializes a new instance of PurviewConfiguration. </summary>
         /// <param name="purviewResourceId"> Purview Resource ID. </param>
-        internal PurviewConfiguration(string purviewResourceId)
+        internal PurviewConfiguration(ResourceIdentifier purviewResourceId)
         {
             PurviewResourceId = purviewResourceId;
         }
 
         /// <summary> Purview Resource ID. </summary>
-        public string PurviewResourceId { get; set; }
+        public ResourceIdentifier PurviewResourceId { get; set; }
     }
 }

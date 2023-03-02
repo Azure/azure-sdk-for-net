@@ -50,11 +50,12 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
                 ActivityKind.Client,
                 parentContext: default,
                 startTime: DateTime.UtcNow,
-                tags: new Dictionary<string, object>() { ["sampleRate"] = SampleRate });
+                tags: new Dictionary<string, object?>() { ["sampleRate"] = SampleRate });
 
+            Assert.NotNull(activity);
             var monitorTags = TraceHelper.EnumerateActivityTags(activity);
-            var telemetryItem = new TelemetryItem(activity, ref monitorTags, "RoleName", "RoleInstance", "00000000-0000-0000-0000-000000000000");
-            var expTelemetryItem = new TelemetryItem(telemetryItem, default, default, default);
+            var telemetryItem = new TelemetryItem(activity, ref monitorTags, null, "00000000-0000-0000-0000-000000000000");
+            var expTelemetryItem = new TelemetryItem("Exception", telemetryItem, default, default, default);
 
             if (SampleRate is float)
             {
@@ -81,10 +82,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
                 ActivityKind.Client,
                 parentContext: default,
                 startTime: DateTime.UtcNow,
-                tags: new Dictionary<string, object>() { ["sampleRate"] = SampleRate });
+                tags: new Dictionary<string, object?>() { ["sampleRate"] = SampleRate });
 
+            Assert.NotNull(activity);
             var monitorTags = TraceHelper.EnumerateActivityTags(activity);
-            var telemetryItem = new TelemetryItem(activity, ref monitorTags, "RoleName", "RoleInstance", "00000000-0000-0000-0000-000000000000");
+            var telemetryItem = new TelemetryItem(activity, ref monitorTags, null, "00000000-0000-0000-0000-000000000000");
 
             if (SampleRate is float)
             {
@@ -110,10 +112,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             {
             }
 
-            tracerProvider.ForceFlush();
+            tracerProvider?.ForceFlush();
 
             Assert.NotEmpty(telemetryItems);
-            Assert.Equal(100F, telemetryItems.FirstOrDefault().SampleRate);
+            Assert.Equal(100F, telemetryItems.First().SampleRate);
         }
 
         [Fact]
@@ -130,7 +132,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             {
             }
 
-            tracerProvider.ForceFlush();
+            tracerProvider?.ForceFlush();
 
             Assert.Empty(telemetryItems);
         }

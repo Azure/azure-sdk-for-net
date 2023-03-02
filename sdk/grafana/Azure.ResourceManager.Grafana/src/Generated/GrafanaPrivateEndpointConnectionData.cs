@@ -13,7 +13,10 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Grafana
 {
-    /// <summary> A class representing the GrafanaPrivateEndpointConnection data model. </summary>
+    /// <summary>
+    /// A class representing the GrafanaPrivateEndpointConnection data model.
+    /// The Private Endpoint Connection resource.
+    /// </summary>
     public partial class GrafanaPrivateEndpointConnectionData : ResourceData
     {
         /// <summary> Initializes a new instance of GrafanaPrivateEndpointConnectionData. </summary>

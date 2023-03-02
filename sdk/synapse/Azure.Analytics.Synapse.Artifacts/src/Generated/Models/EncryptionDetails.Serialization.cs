@@ -20,7 +20,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Cmk))
             {
-                writer.WritePropertyName("cmk");
+                writer.WritePropertyName("cmk"u8);
                 writer.WriteObjectValue(Cmk);
             }
             writer.WriteEndObject();
@@ -32,7 +32,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Optional<CustomerManagedKeyDetails> cmk = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("doubleEncryptionEnabled"))
+                if (property.NameEquals("doubleEncryptionEnabled"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -42,7 +42,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     doubleEncryptionEnabled = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("cmk"))
+                if (property.NameEquals("cmk"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

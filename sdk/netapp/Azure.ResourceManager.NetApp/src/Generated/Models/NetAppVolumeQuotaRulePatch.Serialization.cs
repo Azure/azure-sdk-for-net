@@ -15,32 +15,21 @@ namespace Azure.ResourceManager.NetApp.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
-            {
-                writer.WritePropertyName("tags");
-                writer.WriteStartObject();
-                foreach (var item in Tags)
-                {
-                    writer.WritePropertyName(item.Key);
-                    writer.WriteStringValue(item.Value);
-                }
-                writer.WriteEndObject();
-            }
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(QuotaSizeInKiBs))
             {
-                writer.WritePropertyName("quotaSizeInKiBs");
+                writer.WritePropertyName("quotaSizeInKiBs"u8);
                 writer.WriteNumberValue(QuotaSizeInKiBs.Value);
             }
             if (Optional.IsDefined(QuotaType))
             {
-                writer.WritePropertyName("quotaType");
+                writer.WritePropertyName("quotaType"u8);
                 writer.WriteStringValue(QuotaType.Value.ToString());
             }
             if (Optional.IsDefined(QuotaTarget))
             {
-                writer.WritePropertyName("quotaTarget");
+                writer.WritePropertyName("quotaTarget"u8);
                 writer.WriteStringValue(QuotaTarget);
             }
             writer.WriteEndObject();

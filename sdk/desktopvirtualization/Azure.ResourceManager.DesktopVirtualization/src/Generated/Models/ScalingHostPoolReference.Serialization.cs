@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(HostPoolId))
             {
-                writer.WritePropertyName("hostPoolArmPath");
+                writer.WritePropertyName("hostPoolArmPath"u8);
                 writer.WriteStringValue(HostPoolId);
             }
             if (Optional.IsDefined(IsScalingPlanEnabled))
             {
-                writer.WritePropertyName("scalingPlanEnabled");
+                writer.WritePropertyName("scalingPlanEnabled"u8);
                 writer.WriteBooleanValue(IsScalingPlanEnabled.Value);
             }
             writer.WriteEndObject();
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             Optional<bool> scalingPlanEnabled = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("hostPoolArmPath"))
+                if (property.NameEquals("hostPoolArmPath"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     hostPoolArmPath = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("scalingPlanEnabled"))
+                if (property.NameEquals("scalingPlanEnabled"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

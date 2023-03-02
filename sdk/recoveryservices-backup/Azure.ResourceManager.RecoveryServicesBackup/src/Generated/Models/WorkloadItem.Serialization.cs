@@ -17,24 +17,24 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(BackupManagementType))
             {
-                writer.WritePropertyName("backupManagementType");
+                writer.WritePropertyName("backupManagementType"u8);
                 writer.WriteStringValue(BackupManagementType);
             }
             if (Optional.IsDefined(WorkloadType))
             {
-                writer.WritePropertyName("workloadType");
+                writer.WritePropertyName("workloadType"u8);
                 writer.WriteStringValue(WorkloadType);
             }
-            writer.WritePropertyName("workloadItemType");
+            writer.WritePropertyName("workloadItemType"u8);
             writer.WriteStringValue(WorkloadItemType);
             if (Optional.IsDefined(FriendlyName))
             {
-                writer.WritePropertyName("friendlyName");
+                writer.WritePropertyName("friendlyName"u8);
                 writer.WriteStringValue(FriendlyName);
             }
             if (Optional.IsDefined(ProtectionState))
             {
-                writer.WritePropertyName("protectionState");
+                writer.WritePropertyName("protectionState"u8);
                 writer.WriteStringValue(ProtectionState.Value.ToString());
             }
             writer.WriteEndObject();
@@ -46,13 +46,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "AzureVmWorkloadItem": return AzureVmWorkloadItem.DeserializeAzureVmWorkloadItem(element);
-                    case "SAPAseDatabase": return AzureVmWorkloadSAPAseDatabaseWorkloadItem.DeserializeAzureVmWorkloadSAPAseDatabaseWorkloadItem(element);
-                    case "SAPAseSystem": return AzureVmWorkloadSAPAseSystemWorkloadItem.DeserializeAzureVmWorkloadSAPAseSystemWorkloadItem(element);
-                    case "SAPHanaDatabase": return AzureVmWorkloadSAPHanaDatabaseWorkloadItem.DeserializeAzureVmWorkloadSAPHanaDatabaseWorkloadItem(element);
-                    case "SAPHanaSystem": return AzureVmWorkloadSAPHanaSystemWorkloadItem.DeserializeAzureVmWorkloadSAPHanaSystemWorkloadItem(element);
-                    case "SQLDataBase": return AzureVmWorkloadSQLDatabaseWorkloadItem.DeserializeAzureVmWorkloadSQLDatabaseWorkloadItem(element);
-                    case "SQLInstance": return AzureVmWorkloadSQLInstanceWorkloadItem.DeserializeAzureVmWorkloadSQLInstanceWorkloadItem(element);
+                    case "AzureVmWorkloadItem": return VmWorkloadItem.DeserializeVmWorkloadItem(element);
+                    case "SAPAseDatabase": return VmWorkloadSapAseDatabaseWorkloadItem.DeserializeVmWorkloadSapAseDatabaseWorkloadItem(element);
+                    case "SAPAseSystem": return VmWorkloadSapAseSystemWorkloadItem.DeserializeVmWorkloadSapAseSystemWorkloadItem(element);
+                    case "SAPHanaDatabase": return VmWorkloadSapHanaDatabaseWorkloadItem.DeserializeVmWorkloadSapHanaDatabaseWorkloadItem(element);
+                    case "SAPHanaSystem": return VmWorkloadSapHanaSystemWorkloadItem.DeserializeVmWorkloadSapHanaSystemWorkloadItem(element);
+                    case "SQLDataBase": return VmWorkloadSqlDatabaseWorkloadItem.DeserializeVmWorkloadSqlDatabaseWorkloadItem(element);
+                    case "SQLInstance": return VmWorkloadSqlInstanceWorkloadItem.DeserializeVmWorkloadSqlInstanceWorkloadItem(element);
                 }
             }
             return UnknownWorkloadItem.DeserializeUnknownWorkloadItem(element);

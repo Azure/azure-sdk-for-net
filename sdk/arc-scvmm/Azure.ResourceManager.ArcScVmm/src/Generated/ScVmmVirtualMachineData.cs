@@ -14,7 +14,10 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.ArcScVmm
 {
-    /// <summary> A class representing the ScVmmVirtualMachine data model. </summary>
+    /// <summary>
+    /// A class representing the ScVmmVirtualMachine data model.
+    /// The VirtualMachines resource definition.
+    /// </summary>
     public partial class ScVmmVirtualMachineData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of ScVmmVirtualMachineData. </summary>

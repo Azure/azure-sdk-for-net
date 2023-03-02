@@ -7,6 +7,8 @@ Project("{DDFACA99-7500-429F-AB64-3C7173DC4D32}") = "Azure.ResourceManager.Stora
 EndProject
 Project("{DDFACA99-7500-429F-AB64-3C7173DC4D32}") = "Azure.ResourceManager.StorageSync.Tests", "tests\Azure.ResourceManager.StorageSync.Tests.csproj", "{2A1B2CC7-27EB-43E7-9272-4E195D506E93}"
 EndProject
+Project("{DDFACA99-7500-429F-AB64-3C7173DC4D32}") = "Azure.ResourceManager.StorageSync.Samples", "samples\Azure.ResourceManager.StorageSync.Samples.csproj", "{6B732188-445C-49D8-A6C8-CED748299128}"
+EndProject
 Global
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

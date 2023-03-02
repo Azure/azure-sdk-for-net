@@ -10,10 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary>
-    /// A paginated list of SkuResource entities.
-    /// Serialized Name: SkuResourceArmPaginatedResult
-    /// </summary>
+    /// <summary> A paginated list of SkuResource entities. </summary>
     internal partial class SkuResourceArmPaginatedResult
     {
         /// <summary> Initializes a new instance of SkuResourceArmPaginatedResult. </summary>
@@ -23,29 +20,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of SkuResourceArmPaginatedResult. </summary>
-        /// <param name="nextLink">
-        /// The link to the next page of SkuResource objects. If null, there are no additional pages.
-        /// Serialized Name: SkuResourceArmPaginatedResult.nextLink
-        /// </param>
-        /// <param name="value">
-        /// An array of objects of type SkuResource.
-        /// Serialized Name: SkuResourceArmPaginatedResult.value
-        /// </param>
+        /// <param name="nextLink"> The link to the next page of SkuResource objects. If null, there are no additional pages. </param>
+        /// <param name="value"> An array of objects of type SkuResource. </param>
         internal SkuResourceArmPaginatedResult(string nextLink, IReadOnlyList<MachineLearningSkuDetail> value)
         {
             NextLink = nextLink;
             Value = value;
         }
 
-        /// <summary>
-        /// The link to the next page of SkuResource objects. If null, there are no additional pages.
-        /// Serialized Name: SkuResourceArmPaginatedResult.nextLink
-        /// </summary>
+        /// <summary> The link to the next page of SkuResource objects. If null, there are no additional pages. </summary>
         public string NextLink { get; }
-        /// <summary>
-        /// An array of objects of type SkuResource.
-        /// Serialized Name: SkuResourceArmPaginatedResult.value
-        /// </summary>
+        /// <summary> An array of objects of type SkuResource. </summary>
         public IReadOnlyList<MachineLearningSkuDetail> Value { get; }
     }
 }

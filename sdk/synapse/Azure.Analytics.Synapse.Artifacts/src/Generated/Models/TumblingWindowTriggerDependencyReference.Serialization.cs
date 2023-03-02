@@ -20,17 +20,17 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Offset))
             {
-                writer.WritePropertyName("offset");
+                writer.WritePropertyName("offset"u8);
                 writer.WriteStringValue(Offset);
             }
             if (Optional.IsDefined(Size))
             {
-                writer.WritePropertyName("size");
+                writer.WritePropertyName("size"u8);
                 writer.WriteStringValue(Size);
             }
-            writer.WritePropertyName("referenceTrigger");
+            writer.WritePropertyName("referenceTrigger"u8);
             writer.WriteObjectValue(ReferenceTrigger);
-            writer.WritePropertyName("type");
+            writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
             writer.WriteEndObject();
         }
@@ -43,22 +43,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             string type = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("offset"))
+                if (property.NameEquals("offset"u8))
                 {
                     offset = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("size"))
+                if (property.NameEquals("size"u8))
                 {
                     size = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("referenceTrigger"))
+                if (property.NameEquals("referenceTrigger"u8))
                 {
                     referenceTrigger = TriggerReference.DeserializeTriggerReference(property.Value);
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = property.Value.GetString();
                     continue;

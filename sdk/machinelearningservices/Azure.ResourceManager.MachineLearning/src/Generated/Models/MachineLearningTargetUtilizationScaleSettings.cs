@@ -9,10 +9,7 @@ using System;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary>
-    /// The MachineLearningTargetUtilizationScaleSettings.
-    /// Serialized Name: TargetUtilizationScaleSettings
-    /// </summary>
+    /// <summary> The MachineLearningTargetUtilizationScaleSettings. </summary>
     public partial class MachineLearningTargetUtilizationScaleSettings : MachineLearningOnlineScaleSettings
     {
         /// <summary> Initializes a new instance of MachineLearningTargetUtilizationScaleSettings. </summary>
@@ -22,26 +19,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of MachineLearningTargetUtilizationScaleSettings. </summary>
-        /// <param name="scaleType">
-        /// [Required] Type of deployment scaling algorithm
-        /// Serialized Name: OnlineScaleSettings.scaleType
-        /// </param>
-        /// <param name="maxInstances">
-        /// The maximum number of instances that the deployment can scale to. The quota will be reserved for max_instances.
-        /// Serialized Name: TargetUtilizationScaleSettings.maxInstances
-        /// </param>
-        /// <param name="minInstances">
-        /// The minimum number of instances to always be present.
-        /// Serialized Name: TargetUtilizationScaleSettings.minInstances
-        /// </param>
-        /// <param name="pollingInterval">
-        /// The polling interval in ISO 8691 format. Only supports duration with precision as low as Seconds.
-        /// Serialized Name: TargetUtilizationScaleSettings.pollingInterval
-        /// </param>
-        /// <param name="targetUtilizationPercentage">
-        /// Target CPU usage for the autoscaler.
-        /// Serialized Name: TargetUtilizationScaleSettings.targetUtilizationPercentage
-        /// </param>
+        /// <param name="scaleType"> [Required] Type of deployment scaling algorithm. </param>
+        /// <param name="maxInstances"> The maximum number of instances that the deployment can scale to. The quota will be reserved for max_instances. </param>
+        /// <param name="minInstances"> The minimum number of instances to always be present. </param>
+        /// <param name="pollingInterval"> The polling interval in ISO 8691 format. Only supports duration with precision as low as Seconds. </param>
+        /// <param name="targetUtilizationPercentage"> Target CPU usage for the autoscaler. </param>
         internal MachineLearningTargetUtilizationScaleSettings(ScaleType scaleType, int? maxInstances, int? minInstances, TimeSpan? pollingInterval, int? targetUtilizationPercentage) : base(scaleType)
         {
             MaxInstances = maxInstances;
@@ -51,25 +33,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
             ScaleType = scaleType;
         }
 
-        /// <summary>
-        /// The maximum number of instances that the deployment can scale to. The quota will be reserved for max_instances.
-        /// Serialized Name: TargetUtilizationScaleSettings.maxInstances
-        /// </summary>
+        /// <summary> The maximum number of instances that the deployment can scale to. The quota will be reserved for max_instances. </summary>
         public int? MaxInstances { get; set; }
-        /// <summary>
-        /// The minimum number of instances to always be present.
-        /// Serialized Name: TargetUtilizationScaleSettings.minInstances
-        /// </summary>
+        /// <summary> The minimum number of instances to always be present. </summary>
         public int? MinInstances { get; set; }
-        /// <summary>
-        /// The polling interval in ISO 8691 format. Only supports duration with precision as low as Seconds.
-        /// Serialized Name: TargetUtilizationScaleSettings.pollingInterval
-        /// </summary>
+        /// <summary> The polling interval in ISO 8691 format. Only supports duration with precision as low as Seconds. </summary>
         public TimeSpan? PollingInterval { get; set; }
-        /// <summary>
-        /// Target CPU usage for the autoscaler.
-        /// Serialized Name: TargetUtilizationScaleSettings.targetUtilizationPercentage
-        /// </summary>
+        /// <summary> Target CPU usage for the autoscaler. </summary>
         public int? TargetUtilizationPercentage { get; set; }
     }
 }

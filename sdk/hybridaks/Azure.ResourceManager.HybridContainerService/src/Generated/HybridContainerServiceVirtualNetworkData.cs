@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.HybridContainerService
 {
-    /// <summary> A class representing the HybridContainerServiceVirtualNetwork data model. </summary>
+    /// <summary>
+    /// A class representing the HybridContainerServiceVirtualNetwork data model.
+    /// The virtualNetworks resource definition.
+    /// </summary>
     public partial class HybridContainerServiceVirtualNetworkData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of HybridContainerServiceVirtualNetworkData. </summary>

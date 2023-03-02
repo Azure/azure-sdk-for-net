@@ -20,22 +20,22 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<string> diskEncryptionSetId = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("diskId"))
+                if (property.NameEquals("diskId"u8))
                 {
                     diskId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("seedManagedDiskId"))
+                if (property.NameEquals("seedManagedDiskId"u8))
                 {
                     seedManagedDiskId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("replicaDiskType"))
+                if (property.NameEquals("replicaDiskType"u8))
                 {
                     replicaDiskType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("diskEncryptionSetId"))
+                if (property.NameEquals("diskEncryptionSetId"u8))
                 {
                     diskEncryptionSetId = property.Value.GetString();
                     continue;

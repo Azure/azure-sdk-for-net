@@ -27,22 +27,22 @@ namespace Azure.ResourceManager.Logic.Models
             Optional<LogicApiDeploymentParameterMetadataSet> deploymentParameters = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("source"))
+                if (property.NameEquals("source"u8))
                 {
                     source = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("brandColor"))
+                if (property.NameEquals("brandColor"u8))
                 {
                     brandColor = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("hideKey"))
+                if (property.NameEquals("hideKey"u8))
                 {
                     hideKey = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("tags"))
+                if (property.NameEquals("tags"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Logic.Models
                     tags = dictionary;
                     continue;
                 }
-                if (property.NameEquals("ApiType"))
+                if (property.NameEquals("ApiType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Logic.Models
                     apiType = new LogicApiType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("wsdlService"))
+                if (property.NameEquals("wsdlService"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Logic.Models
                     wsdlService = LogicWsdlService.DeserializeLogicWsdlService(property.Value);
                     continue;
                 }
-                if (property.NameEquals("wsdlImportMethod"))
+                if (property.NameEquals("wsdlImportMethod"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -87,12 +87,12 @@ namespace Azure.ResourceManager.Logic.Models
                     wsdlImportMethod = new LogicWsdlImportMethod(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("connectionType"))
+                if (property.NameEquals("connectionType"u8))
                 {
                     connectionType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("provisioningState"))
+                if (property.NameEquals("provisioningState"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Logic.Models
                     provisioningState = new LogicWorkflowProvisioningState(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("deploymentParameters"))
+                if (property.NameEquals("deploymentParameters"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

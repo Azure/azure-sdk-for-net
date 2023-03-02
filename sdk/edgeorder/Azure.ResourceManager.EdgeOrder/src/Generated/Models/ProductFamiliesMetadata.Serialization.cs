@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             Optional<IReadOnlyList<ResourceProviderDetails>> resourceProviderDetails = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -35,12 +35,12 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("displayName"))
+                        if (property0.NameEquals("displayName"u8))
                         {
                             displayName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("description"))
+                        if (property0.NameEquals("description"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                             description = ProductDescription.DeserializeProductDescription(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("imageInformation"))
+                        if (property0.NameEquals("imageInformation"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                             imageInformation = array;
                             continue;
                         }
-                        if (property0.NameEquals("costInformation"))
+                        if (property0.NameEquals("costInformation"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                             costInformation = EdgeOrderProductCostInformation.DeserializeEdgeOrderProductCostInformation(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("availabilityInformation"))
+                        if (property0.NameEquals("availabilityInformation"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                             availabilityInformation = ProductAvailabilityInformation.DeserializeProductAvailabilityInformation(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("hierarchyInformation"))
+                        if (property0.NameEquals("hierarchyInformation"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                             hierarchyInformation = HierarchyInformation.DeserializeHierarchyInformation(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("filterableProperties"))
+                        if (property0.NameEquals("filterableProperties"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                             filterableProperties = array;
                             continue;
                         }
-                        if (property0.NameEquals("productLines"))
+                        if (property0.NameEquals("productLines"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                             productLines = array;
                             continue;
                         }
-                        if (property0.NameEquals("resourceProviderDetails"))
+                        if (property0.NameEquals("resourceProviderDetails"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

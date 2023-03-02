@@ -18,26 +18,26 @@ namespace Azure.ResourceManager.SecurityCenter
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(DisplayName))
             {
-                writer.WritePropertyName("displayName");
+                writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
             if (Optional.IsDefined(Description))
             {
-                writer.WritePropertyName("description");
+                writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
             if (Optional.IsDefined(RemediationDescription))
             {
-                writer.WritePropertyName("remediationDescription");
+                writer.WritePropertyName("remediationDescription"u8);
                 writer.WriteStringValue(RemediationDescription);
             }
             if (Optional.IsCollectionDefined(Categories))
             {
-                writer.WritePropertyName("categories");
+                writer.WritePropertyName("categories"u8);
                 writer.WriteStartArray();
                 foreach (var item in Categories)
                 {
@@ -47,22 +47,22 @@ namespace Azure.ResourceManager.SecurityCenter
             }
             if (Optional.IsDefined(Severity))
             {
-                writer.WritePropertyName("severity");
+                writer.WritePropertyName("severity"u8);
                 writer.WriteStringValue(Severity.Value.ToString());
             }
             if (Optional.IsDefined(UserImpact))
             {
-                writer.WritePropertyName("userImpact");
+                writer.WritePropertyName("userImpact"u8);
                 writer.WriteStringValue(UserImpact.Value.ToString());
             }
             if (Optional.IsDefined(ImplementationEffort))
             {
-                writer.WritePropertyName("implementationEffort");
+                writer.WritePropertyName("implementationEffort"u8);
                 writer.WriteStringValue(ImplementationEffort.Value.ToString());
             }
             if (Optional.IsCollectionDefined(Threats))
             {
-                writer.WritePropertyName("threats");
+                writer.WritePropertyName("threats"u8);
                 writer.WriteStartArray();
                 foreach (var item in Threats)
                 {
@@ -72,32 +72,32 @@ namespace Azure.ResourceManager.SecurityCenter
             }
             if (Optional.IsDefined(IsPreview))
             {
-                writer.WritePropertyName("preview");
+                writer.WritePropertyName("preview"u8);
                 writer.WriteBooleanValue(IsPreview.Value);
             }
             if (Optional.IsDefined(AssessmentType))
             {
-                writer.WritePropertyName("assessmentType");
+                writer.WritePropertyName("assessmentType"u8);
                 writer.WriteStringValue(AssessmentType.Value.ToString());
             }
             if (Optional.IsDefined(PartnerData))
             {
-                writer.WritePropertyName("partnerData");
+                writer.WritePropertyName("partnerData"u8);
                 writer.WriteObjectValue(PartnerData);
             }
             if (Optional.IsDefined(PublishDates))
             {
-                writer.WritePropertyName("publishDates");
+                writer.WritePropertyName("publishDates"u8);
                 writer.WriteObjectValue(PublishDates);
             }
             if (Optional.IsDefined(PlannedDeprecationDate))
             {
-                writer.WritePropertyName("plannedDeprecationDate");
+                writer.WritePropertyName("plannedDeprecationDate"u8);
                 writer.WriteStringValue(PlannedDeprecationDate);
             }
             if (Optional.IsCollectionDefined(Tactics))
             {
-                writer.WritePropertyName("tactics");
+                writer.WritePropertyName("tactics"u8);
                 writer.WriteStartArray();
                 foreach (var item in Tactics)
                 {
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.SecurityCenter
             }
             if (Optional.IsCollectionDefined(Techniques))
             {
-                writer.WritePropertyName("techniques");
+                writer.WritePropertyName("techniques"u8);
                 writer.WriteStartArray();
                 foreach (var item in Techniques)
                 {

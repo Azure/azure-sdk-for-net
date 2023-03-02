@@ -3,7 +3,6 @@
 
 using System.Collections.Generic;
 using System.Linq;
-using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Azure.Core.Serialization;
 using Microsoft.Azure.SignalR;
@@ -16,26 +15,16 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Configuration.Memory;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
 using Microsoft.Extensions.Options;
 using Moq;
-using SignalRServiceExtension.Tests.Utils.Loggings;
 using Xunit;
-using Xunit.Abstractions;
 using Constants = Microsoft.Azure.WebJobs.Extensions.SignalRService.Constants;
 
 namespace SignalRServiceExtension.Tests
 {
     public class ServiceManagerStoreTests
     {
-        private readonly ITestOutputHelper _output;
-
-        public ServiceManagerStoreTests(ITestOutputHelper output)
-        {
-            _output = output;
-        }
-
         [Fact]
         public void GetServiceManager_WithSingleEndpoint()
         {
@@ -58,14 +47,11 @@ namespace SignalRServiceExtension.Tests
             configuration[connectionStringKey] = connectionString;
             configuration[Constants.FunctionsWorkerRuntime] = Constants.DotnetWorker;
 
-            var setup = new OptionsSetup(configuration, SingletonAzureComponentFactory.Instance, connectionStringKey, new());
-            var options = new ServiceManagerOptions();
-            setup.Configure(options);
-            Assert.NotNull(options.ProductInfo);
-            var reg = new Regex(@"\[(\w*)=(\w*)\]");
-            var match = reg.Match(options.ProductInfo);
-            Assert.Equal(Constants.FunctionsWorkerProductInfoKey, match.Groups[1].Value);
-            Assert.Equal(Constants.DotnetWorker, match.Groups[2].Value);
+            var serviceManagerStore = new ServiceManagerStore(configuration, NullLoggerFactory.Instance, SingletonAzureComponentFactory.Instance, Options.Create(new SignalROptions()));
+            var productInfo = (serviceManagerStore.GetOrAddByConnectionStringKey(connectionStringKey).GetAsync("hub").Result as ServiceHubContextImpl).ServiceProvider.GetRequiredService<IOptions<ServiceManagerOptions>>().Value.ProductInfo;
+            Assert.NotNull(productInfo);
+            Assert.StartsWith("Microsoft.Azure.WebJobs.Extensions.SignalRService", productInfo);
+            Assert.EndsWith(" [func=dotnet]", productInfo);
         }
 
         [Fact]
@@ -115,9 +101,7 @@ namespace SignalRServiceExtension.Tests
             configuration[Constants.AzureSignalRConnectionStringName] = connectionStrings[0];
             // Only persistent mode supports hot reload.
             configuration[Constants.ServiceTransportTypeName] = "Persistent";
-            var loggerFactory = new LoggerFactory();
-            loggerFactory.AddProvider(new XunitLoggerProvider(_output));
-            var managerStore = new ServiceManagerStore(configuration, loggerFactory, SingletonAzureComponentFactory.Instance, Options.Create(new SignalROptions()), mock.Object);
+            var managerStore = new ServiceManagerStore(configuration, NullLoggerFactory.Instance, SingletonAzureComponentFactory.Instance, Options.Create(new SignalROptions()), mock.Object);
             var hubContextStore = managerStore.GetOrAddByConnectionStringKey(Constants.AzureSignalRConnectionStringName);
             var hubContext = await hubContextStore.GetAsync("hub") as ServiceHubContext;
             await hubContext.ClientManager.UserExistsAsync("a");

@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="integrationRuntimeName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="integrationRuntimeName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<IntegrationRuntimeAuthKeys>> RegenerateAsync(string subscriptionId, string resourceGroupName, string workspaceName, string integrationRuntimeName, IntegrationRuntimeRegenerateKeyContent content, CancellationToken cancellationToken = default)
+        public async Task<Response<SynapseIntegrationRuntimeAuthKeys>> RegenerateAsync(string subscriptionId, string resourceGroupName, string workspaceName, string integrationRuntimeName, IntegrationRuntimeRegenerateKeyContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -87,9 +87,9 @@ namespace Azure.ResourceManager.Synapse
             {
                 case 200:
                     {
-                        IntegrationRuntimeAuthKeys value = default;
+                        SynapseIntegrationRuntimeAuthKeys value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = IntegrationRuntimeAuthKeys.DeserializeIntegrationRuntimeAuthKeys(document.RootElement);
+                        value = SynapseIntegrationRuntimeAuthKeys.DeserializeSynapseIntegrationRuntimeAuthKeys(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="integrationRuntimeName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="integrationRuntimeName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<IntegrationRuntimeAuthKeys> Regenerate(string subscriptionId, string resourceGroupName, string workspaceName, string integrationRuntimeName, IntegrationRuntimeRegenerateKeyContent content, CancellationToken cancellationToken = default)
+        public Response<SynapseIntegrationRuntimeAuthKeys> Regenerate(string subscriptionId, string resourceGroupName, string workspaceName, string integrationRuntimeName, IntegrationRuntimeRegenerateKeyContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -120,9 +120,9 @@ namespace Azure.ResourceManager.Synapse
             {
                 case 200:
                     {
-                        IntegrationRuntimeAuthKeys value = default;
+                        SynapseIntegrationRuntimeAuthKeys value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = IntegrationRuntimeAuthKeys.DeserializeIntegrationRuntimeAuthKeys(document.RootElement);
+                        value = SynapseIntegrationRuntimeAuthKeys.DeserializeSynapseIntegrationRuntimeAuthKeys(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="integrationRuntimeName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="integrationRuntimeName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<IntegrationRuntimeAuthKeys>> ListAsync(string subscriptionId, string resourceGroupName, string workspaceName, string integrationRuntimeName, CancellationToken cancellationToken = default)
+        public async Task<Response<SynapseIntegrationRuntimeAuthKeys>> ListAsync(string subscriptionId, string resourceGroupName, string workspaceName, string integrationRuntimeName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -174,9 +174,9 @@ namespace Azure.ResourceManager.Synapse
             {
                 case 200:
                     {
-                        IntegrationRuntimeAuthKeys value = default;
+                        SynapseIntegrationRuntimeAuthKeys value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = IntegrationRuntimeAuthKeys.DeserializeIntegrationRuntimeAuthKeys(document.RootElement);
+                        value = SynapseIntegrationRuntimeAuthKeys.DeserializeSynapseIntegrationRuntimeAuthKeys(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="integrationRuntimeName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="integrationRuntimeName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<IntegrationRuntimeAuthKeys> List(string subscriptionId, string resourceGroupName, string workspaceName, string integrationRuntimeName, CancellationToken cancellationToken = default)
+        public Response<SynapseIntegrationRuntimeAuthKeys> List(string subscriptionId, string resourceGroupName, string workspaceName, string integrationRuntimeName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -205,9 +205,9 @@ namespace Azure.ResourceManager.Synapse
             {
                 case 200:
                     {
-                        IntegrationRuntimeAuthKeys value = default;
+                        SynapseIntegrationRuntimeAuthKeys value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = IntegrationRuntimeAuthKeys.DeserializeIntegrationRuntimeAuthKeys(document.RootElement);
+                        value = SynapseIntegrationRuntimeAuthKeys.DeserializeSynapseIntegrationRuntimeAuthKeys(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

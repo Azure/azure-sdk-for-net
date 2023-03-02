@@ -103,74 +103,18 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual AsyncPageable<DatasetResource> GetDatasetsByWorkspaceAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<DatasetResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("DatasetClient.GetDatasetsByWorkspace");
-                scope.Start();
-                try
-                {
-                    var response = await RestClient.GetDatasetsByWorkspaceAsync(cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<DatasetResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("DatasetClient.GetDatasetsByWorkspace");
-                scope.Start();
-                try
-                {
-                    var response = await RestClient.GetDatasetsByWorkspaceNextPageAsync(nextLink, cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => RestClient.CreateGetDatasetsByWorkspaceRequest();
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => RestClient.CreateGetDatasetsByWorkspaceNextPageRequest(nextLink);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, DatasetResource.DeserializeDatasetResource, _clientDiagnostics, _pipeline, "DatasetClient.GetDatasetsByWorkspace", "value", "nextLink", cancellationToken);
         }
 
         /// <summary> Lists datasets. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Pageable<DatasetResource> GetDatasetsByWorkspace(CancellationToken cancellationToken = default)
         {
-            Page<DatasetResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("DatasetClient.GetDatasetsByWorkspace");
-                scope.Start();
-                try
-                {
-                    var response = RestClient.GetDatasetsByWorkspace(cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<DatasetResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("DatasetClient.GetDatasetsByWorkspace");
-                scope.Start();
-                try
-                {
-                    var response = RestClient.GetDatasetsByWorkspaceNextPage(nextLink, cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => RestClient.CreateGetDatasetsByWorkspaceRequest();
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => RestClient.CreateGetDatasetsByWorkspaceNextPageRequest(nextLink);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, DatasetResource.DeserializeDatasetResource, _clientDiagnostics, _pipeline, "DatasetClient.GetDatasetsByWorkspace", "value", "nextLink", cancellationToken);
         }
 
         /// <summary> Creates or updates a dataset. </summary>

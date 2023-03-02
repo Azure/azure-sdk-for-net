@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.Batch.Models
 
         public static BatchCertificateStoreLocation ToBatchCertificateStoreLocation(this string value)
         {
-            if (string.Equals(value, "CurrentUser", StringComparison.InvariantCultureIgnoreCase)) return BatchCertificateStoreLocation.CurrentUser;
-            if (string.Equals(value, "LocalMachine", StringComparison.InvariantCultureIgnoreCase)) return BatchCertificateStoreLocation.LocalMachine;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "CurrentUser")) return BatchCertificateStoreLocation.CurrentUser;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "LocalMachine")) return BatchCertificateStoreLocation.LocalMachine;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown BatchCertificateStoreLocation value.");
         }
     }

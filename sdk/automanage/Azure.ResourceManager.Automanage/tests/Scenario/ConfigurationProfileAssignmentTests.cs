@@ -19,20 +19,20 @@ namespace Azure.ResourceManager.Automanage.Tests.Scenario
             var rg = await CreateResourceGroup("SDKAutomanage-", DefaultLocation);
 
             // create VM from existing ARM template
-            var vm = CreateVirtualMachineFromTemplate(vmName, rg).Result;
+            var vmId = await CreateVirtualMachineFromTemplate(vmName, rg);
 
             // create assignment between best practices profile and VM
             string profileId = "/providers/Microsoft.Automanage/bestPractices/AzureBestPracticesProduction";
-            var result = await CreateAssignment(vm, profileId);
+            var result = await CreateAssignment(vmId, profileId);
 
             // fetch assignment
-            var assignment = await ArmClient.GetConfigurationProfileAssignmentAsync(vm.Id, "default");
+            var assignment = await ArmClient.GetAutomanageVmConfigurationProfileAssignmentAsync(vmId, "default");
 
             // assert
             Assert.True(assignment.Value.HasData);
             Assert.NotNull(assignment.Value.Data.Name);
             Assert.NotNull(assignment.Value.Data.Id);
-            Assert.AreEqual(vm.Id, assignment.Value.Data.Properties.TargetId);
+            Assert.AreEqual(vmId, assignment.Value.Data.Properties.TargetId);
         }
 
         [TestCase]
@@ -44,11 +44,11 @@ namespace Azure.ResourceManager.Automanage.Tests.Scenario
             var rg = await CreateResourceGroup("SDKAutomanage-", DefaultLocation);
 
             // create VM from existing ARM template
-            var vm = CreateVirtualMachineFromTemplate(vmName, rg).Result;
+            var vmId = await CreateVirtualMachineFromTemplate(vmName, rg);
 
             // create assignment between best practices profile and VM
             string profileId = "/providers/Microsoft.Automanage/bestPractices/AzureBestPracticesProduction";
-            var assignment = CreateAssignment(vm, profileId).Result;
+            var assignment = await CreateAssignment(vmId, profileId);
 
             // assert
             Assert.True(assignment.HasData);
@@ -66,16 +66,16 @@ namespace Azure.ResourceManager.Automanage.Tests.Scenario
             var rg = await CreateResourceGroup("SDKAutomanage-", DefaultLocation);
 
             // fetch configuration profile collection
-            var profileCollection = rg.GetConfigurationProfiles();
+            var profileCollection = rg.GetAutomanageConfigurationProfiles();
 
             // create configuration profile
             var profile = await CreateConfigurationProfile(profileCollection, profileName);
 
             // create VM from existing ARM template
-            var vm = CreateVirtualMachineFromTemplate(vmName, rg).Result;
+            var vmId = await CreateVirtualMachineFromTemplate(vmName, rg);
 
             // create assignment between custom profile and VM
-            var assignment = CreateAssignment(vm, profile.Id).Result;
+            var assignment = await CreateAssignment(vmId, profile.Id);
 
             // assert
             Assert.True(assignment.HasData);

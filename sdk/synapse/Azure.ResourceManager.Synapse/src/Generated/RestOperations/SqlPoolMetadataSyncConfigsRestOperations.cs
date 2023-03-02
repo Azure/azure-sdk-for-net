@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="sqlPoolName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="sqlPoolName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<MetadataSyncConfigData>> GetAsync(string subscriptionId, string resourceGroupName, string workspaceName, string sqlPoolName, CancellationToken cancellationToken = default)
+        public async Task<Response<SynapseMetadataSyncConfigurationData>> GetAsync(string subscriptionId, string resourceGroupName, string workspaceName, string sqlPoolName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -80,13 +80,13 @@ namespace Azure.ResourceManager.Synapse
             {
                 case 200:
                     {
-                        MetadataSyncConfigData value = default;
+                        SynapseMetadataSyncConfigurationData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = MetadataSyncConfigData.DeserializeMetadataSyncConfigData(document.RootElement);
+                        value = SynapseMetadataSyncConfigurationData.DeserializeSynapseMetadataSyncConfigurationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((MetadataSyncConfigData)null, message.Response);
+                    return Response.FromValue((SynapseMetadataSyncConfigurationData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="sqlPoolName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="sqlPoolName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<MetadataSyncConfigData> Get(string subscriptionId, string resourceGroupName, string workspaceName, string sqlPoolName, CancellationToken cancellationToken = default)
+        public Response<SynapseMetadataSyncConfigurationData> Get(string subscriptionId, string resourceGroupName, string workspaceName, string sqlPoolName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -113,19 +113,19 @@ namespace Azure.ResourceManager.Synapse
             {
                 case 200:
                     {
-                        MetadataSyncConfigData value = default;
+                        SynapseMetadataSyncConfigurationData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = MetadataSyncConfigData.DeserializeMetadataSyncConfigData(document.RootElement);
+                        value = SynapseMetadataSyncConfigurationData.DeserializeSynapseMetadataSyncConfigurationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((MetadataSyncConfigData)null, message.Response);
+                    return Response.FromValue((SynapseMetadataSyncConfigurationData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateCreateRequest(string subscriptionId, string resourceGroupName, string workspaceName, string sqlPoolName, MetadataSyncConfigData data)
+        internal HttpMessage CreateCreateRequest(string subscriptionId, string resourceGroupName, string workspaceName, string sqlPoolName, SynapseMetadataSyncConfigurationData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="sqlPoolName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="sqlPoolName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<MetadataSyncConfigData>> CreateAsync(string subscriptionId, string resourceGroupName, string workspaceName, string sqlPoolName, MetadataSyncConfigData data, CancellationToken cancellationToken = default)
+        public async Task<Response<SynapseMetadataSyncConfigurationData>> CreateAsync(string subscriptionId, string resourceGroupName, string workspaceName, string sqlPoolName, SynapseMetadataSyncConfigurationData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -175,9 +175,9 @@ namespace Azure.ResourceManager.Synapse
             {
                 case 200:
                     {
-                        MetadataSyncConfigData value = default;
+                        SynapseMetadataSyncConfigurationData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = MetadataSyncConfigData.DeserializeMetadataSyncConfigData(document.RootElement);
+                        value = SynapseMetadataSyncConfigurationData.DeserializeSynapseMetadataSyncConfigurationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="sqlPoolName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="sqlPoolName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<MetadataSyncConfigData> Create(string subscriptionId, string resourceGroupName, string workspaceName, string sqlPoolName, MetadataSyncConfigData data, CancellationToken cancellationToken = default)
+        public Response<SynapseMetadataSyncConfigurationData> Create(string subscriptionId, string resourceGroupName, string workspaceName, string sqlPoolName, SynapseMetadataSyncConfigurationData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -208,9 +208,9 @@ namespace Azure.ResourceManager.Synapse
             {
                 case 200:
                     {
-                        MetadataSyncConfigData value = default;
+                        SynapseMetadataSyncConfigurationData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = MetadataSyncConfigData.DeserializeMetadataSyncConfigData(document.RootElement);
+                        value = SynapseMetadataSyncConfigurationData.DeserializeSynapseMetadataSyncConfigurationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

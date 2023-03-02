@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-beta.2 (Unreleased)
+## 1.1.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -10,11 +10,40 @@
 
 ### Other Changes
 
+## 1.0.2 (2023-02-21)
+
+### Other Changes
+
+- Upgraded dependent `Azure.Core` to `1.28.0`.
+- Upgraded dependent `Azure.ResourceManager` to `1.4.0`.
+
+## 1.0.1 (2022-12-27)
+
+### Bugs Fixed
+
+- Fix the incorrect format of the `ContainerAppData.OutboundIPAddresses` by deprecating this property and adding new property `ContainerAppData.OutboundIPAddressList`.
+
+## 1.0.0 (2022-12-23)
+
+This is the first stable release of the AppContainers Management library.
+
+### Features Added
+
+- Upgraded API version to 2022-10-01.
+
+### Breaking Changes
+
+Polishing since last public beta release:
+- Prepended `ContainerApp` prefix to all single / simple model names.
+- Corrected the format of all `ResourceIdentifier` type properties / parameters.
+- Corrected the format of all `IPAddress` type properties / parameters.
+- Optimized the name of some models and functions.
+
 ## 1.0.0-beta.1 (2022-07-12)
 
 ### Breaking Changes
 
-- Change the namesapce from `Azure.ResourceManager.Applications.Containers` to `Azure.ResourceManager.AppContainers`.
+- Change the namespace from `Azure.ResourceManager.Applications.Containers` to `Azure.ResourceManager.AppContainers`.
 
 ### General New Features
 

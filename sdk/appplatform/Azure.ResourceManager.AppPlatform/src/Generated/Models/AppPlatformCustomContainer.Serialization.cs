@@ -18,17 +18,17 @@ namespace Azure.ResourceManager.AppPlatform.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Server))
             {
-                writer.WritePropertyName("server");
+                writer.WritePropertyName("server"u8);
                 writer.WriteStringValue(Server);
             }
             if (Optional.IsDefined(ContainerImage))
             {
-                writer.WritePropertyName("containerImage");
+                writer.WritePropertyName("containerImage"u8);
                 writer.WriteStringValue(ContainerImage);
             }
             if (Optional.IsCollectionDefined(Command))
             {
-                writer.WritePropertyName("command");
+                writer.WritePropertyName("command"u8);
                 writer.WriteStartArray();
                 foreach (var item in Command)
                 {
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             }
             if (Optional.IsCollectionDefined(Args))
             {
-                writer.WritePropertyName("args");
+                writer.WritePropertyName("args"u8);
                 writer.WriteStartArray();
                 foreach (var item in Args)
                 {
@@ -48,12 +48,12 @@ namespace Azure.ResourceManager.AppPlatform.Models
             }
             if (Optional.IsDefined(ImageRegistryCredential))
             {
-                writer.WritePropertyName("imageRegistryCredential");
+                writer.WritePropertyName("imageRegistryCredential"u8);
                 writer.WriteObjectValue(ImageRegistryCredential);
             }
             if (Optional.IsDefined(LanguageFramework))
             {
-                writer.WritePropertyName("languageFramework");
+                writer.WritePropertyName("languageFramework"u8);
                 writer.WriteStringValue(LanguageFramework);
             }
             writer.WriteEndObject();
@@ -69,17 +69,17 @@ namespace Azure.ResourceManager.AppPlatform.Models
             Optional<string> languageFramework = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("server"))
+                if (property.NameEquals("server"u8))
                 {
                     server = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("containerImage"))
+                if (property.NameEquals("containerImage"u8))
                 {
                     containerImage = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("command"))
+                if (property.NameEquals("command"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     command = array;
                     continue;
                 }
-                if (property.NameEquals("args"))
+                if (property.NameEquals("args"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     args = array;
                     continue;
                 }
-                if (property.NameEquals("imageRegistryCredential"))
+                if (property.NameEquals("imageRegistryCredential"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     imageRegistryCredential = AppPlatformImageRegistryCredential.DeserializeAppPlatformImageRegistryCredential(property.Value);
                     continue;
                 }
-                if (property.NameEquals("languageFramework"))
+                if (property.NameEquals("languageFramework"u8))
                 {
                     languageFramework = property.Value.GetString();
                     continue;

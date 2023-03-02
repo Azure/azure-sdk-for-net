@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ArcScVmm.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(SkipShutdown))
             {
-                writer.WritePropertyName("skipShutdown");
+                writer.WritePropertyName("skipShutdown"u8);
                 writer.WriteBooleanValue(SkipShutdown.Value);
             }
             writer.WriteEndObject();

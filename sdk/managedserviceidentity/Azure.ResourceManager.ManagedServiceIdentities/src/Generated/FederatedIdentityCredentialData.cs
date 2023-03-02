@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ManagedServiceIdentities
 {
-    /// <summary> A class representing the FederatedIdentityCredential data model. </summary>
+    /// <summary>
+    /// A class representing the FederatedIdentityCredential data model.
+    /// Describes a federated identity credential.
+    /// </summary>
     public partial class FederatedIdentityCredentialData : ResourceData
     {
         /// <summary> Initializes a new instance of FederatedIdentityCredentialData. </summary>

@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary>
-    /// The MachineLearningKeyType.
-    /// Serialized Name: KeyType
-    /// </summary>
+    /// <summary> The MachineLearningKeyType. </summary>
     public readonly partial struct MachineLearningKeyType : IEquatable<MachineLearningKeyType>
     {
         private readonly string _value;
@@ -28,15 +25,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
         private const string PrimaryValue = "Primary";
         private const string SecondaryValue = "Secondary";
 
-        /// <summary>
-        /// Primary
-        /// Serialized Name: KeyType.Primary
-        /// </summary>
+        /// <summary> Primary. </summary>
         public static MachineLearningKeyType Primary { get; } = new MachineLearningKeyType(PrimaryValue);
-        /// <summary>
-        /// Secondary
-        /// Serialized Name: KeyType.Secondary
-        /// </summary>
+        /// <summary> Secondary. </summary>
         public static MachineLearningKeyType Secondary { get; } = new MachineLearningKeyType(SecondaryValue);
         /// <summary> Determines if two <see cref="MachineLearningKeyType"/> values are the same. </summary>
         public static bool operator ==(MachineLearningKeyType left, MachineLearningKeyType right) => left.Equals(right);

@@ -9,10 +9,7 @@ using System;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary>
-    /// Job execution constraints.
-    /// Serialized Name: NlpVerticalLimitSettings
-    /// </summary>
+    /// <summary> Job execution constraints. </summary>
     public partial class NlpVerticalLimitSettings
     {
         /// <summary> Initializes a new instance of NlpVerticalLimitSettings. </summary>
@@ -21,18 +18,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of NlpVerticalLimitSettings. </summary>
-        /// <param name="maxConcurrentTrials">
-        /// Maximum Concurrent AutoML iterations.
-        /// Serialized Name: NlpVerticalLimitSettings.maxConcurrentTrials
-        /// </param>
-        /// <param name="maxTrials">
-        /// Number of AutoML iterations.
-        /// Serialized Name: NlpVerticalLimitSettings.maxTrials
-        /// </param>
-        /// <param name="timeout">
-        /// AutoML job timeout.
-        /// Serialized Name: NlpVerticalLimitSettings.timeout
-        /// </param>
+        /// <param name="maxConcurrentTrials"> Maximum Concurrent AutoML iterations. </param>
+        /// <param name="maxTrials"> Number of AutoML iterations. </param>
+        /// <param name="timeout"> AutoML job timeout. </param>
         internal NlpVerticalLimitSettings(int? maxConcurrentTrials, int? maxTrials, TimeSpan? timeout)
         {
             MaxConcurrentTrials = maxConcurrentTrials;
@@ -40,20 +28,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Timeout = timeout;
         }
 
-        /// <summary>
-        /// Maximum Concurrent AutoML iterations.
-        /// Serialized Name: NlpVerticalLimitSettings.maxConcurrentTrials
-        /// </summary>
+        /// <summary> Maximum Concurrent AutoML iterations. </summary>
         public int? MaxConcurrentTrials { get; set; }
-        /// <summary>
-        /// Number of AutoML iterations.
-        /// Serialized Name: NlpVerticalLimitSettings.maxTrials
-        /// </summary>
+        /// <summary> Number of AutoML iterations. </summary>
         public int? MaxTrials { get; set; }
-        /// <summary>
-        /// AutoML job timeout.
-        /// Serialized Name: NlpVerticalLimitSettings.timeout
-        /// </summary>
+        /// <summary> AutoML job timeout. </summary>
         public TimeSpan? Timeout { get; set; }
     }
 }

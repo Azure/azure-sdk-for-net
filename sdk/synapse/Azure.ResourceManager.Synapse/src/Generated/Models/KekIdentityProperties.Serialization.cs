@@ -16,14 +16,14 @@ namespace Azure.ResourceManager.Synapse.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(UserAssignedIdentity))
+            if (Optional.IsDefined(UserAssignedIdentityId))
             {
-                writer.WritePropertyName("userAssignedIdentity");
-                writer.WriteStringValue(UserAssignedIdentity);
+                writer.WritePropertyName("userAssignedIdentity"u8);
+                writer.WriteStringValue(UserAssignedIdentityId);
             }
             if (Optional.IsDefined(UseSystemAssignedIdentity))
             {
-                writer.WritePropertyName("useSystemAssignedIdentity");
+                writer.WritePropertyName("useSystemAssignedIdentity"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(UseSystemAssignedIdentity);
 #else
@@ -35,16 +35,21 @@ namespace Azure.ResourceManager.Synapse.Models
 
         internal static KekIdentityProperties DeserializeKekIdentityProperties(JsonElement element)
         {
-            Optional<string> userAssignedIdentity = default;
+            Optional<ResourceIdentifier> userAssignedIdentity = default;
             Optional<BinaryData> useSystemAssignedIdentity = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("userAssignedIdentity"))
+                if (property.NameEquals("userAssignedIdentity"u8))
                 {
-                    userAssignedIdentity = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    userAssignedIdentity = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("useSystemAssignedIdentity"))
+                if (property.NameEquals("useSystemAssignedIdentity"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

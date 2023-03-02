@@ -16,36 +16,36 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(CompressedQuery))
             {
-                writer.WritePropertyName("compressedQuery");
+                writer.WritePropertyName("compressedQuery"u8);
                 writer.WriteStringValue(CompressedQuery);
             }
             if (Optional.IsDefined(SupportedCloud))
             {
-                writer.WritePropertyName("supportedCloud");
+                writer.WritePropertyName("supportedCloud"u8);
                 writer.WriteStringValue(SupportedCloud.Value.ToString());
             }
             if (Optional.IsDefined(Severity))
             {
-                writer.WritePropertyName("severity");
+                writer.WritePropertyName("severity"u8);
                 writer.WriteStringValue(Severity.Value.ToString());
             }
             if (Optional.IsDefined(DisplayName))
             {
-                writer.WritePropertyName("displayName");
+                writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
             if (Optional.IsDefined(Description))
             {
-                writer.WritePropertyName("description");
+                writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
             if (Optional.IsDefined(RemediationDescription))
             {
-                writer.WritePropertyName("remediationDescription");
+                writer.WritePropertyName("remediationDescription"u8);
                 writer.WriteStringValue(RemediationDescription);
             }
             writer.WriteEndObject();
@@ -66,22 +66,22 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             Optional<string> remediationDescription = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -100,12 +100,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("compressedQuery"))
+                        if (property0.NameEquals("compressedQuery"u8))
                         {
                             compressedQuery = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("supportedCloud"))
+                        if (property0.NameEquals("supportedCloud"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                             supportedCloud = new CustomAssessmentAutomationSupportedCloud(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("severity"))
+                        if (property0.NameEquals("severity"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -125,17 +125,17 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                             severity = new CustomAssessmentSeverity(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("displayName"))
+                        if (property0.NameEquals("displayName"u8))
                         {
                             displayName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("description"))
+                        if (property0.NameEquals("description"u8))
                         {
                             description = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("remediationDescription"))
+                        if (property0.NameEquals("remediationDescription"u8))
                         {
                             remediationDescription = property0.Value.GetString();
                             continue;

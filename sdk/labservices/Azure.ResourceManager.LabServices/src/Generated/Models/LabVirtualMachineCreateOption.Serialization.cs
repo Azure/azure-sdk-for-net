@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.LabServices.Models
 
         public static LabVirtualMachineCreateOption ToLabVirtualMachineCreateOption(this string value)
         {
-            if (string.Equals(value, "Image", StringComparison.InvariantCultureIgnoreCase)) return LabVirtualMachineCreateOption.Image;
-            if (string.Equals(value, "TemplateVM", StringComparison.InvariantCultureIgnoreCase)) return LabVirtualMachineCreateOption.TemplateVm;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Image")) return LabVirtualMachineCreateOption.Image;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "TemplateVM")) return LabVirtualMachineCreateOption.TemplateVm;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown LabVirtualMachineCreateOption value.");
         }
     }

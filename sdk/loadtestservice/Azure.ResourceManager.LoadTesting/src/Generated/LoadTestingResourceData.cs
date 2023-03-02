@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.LoadTesting
 {
-    /// <summary> A class representing the LoadTestingResource data model. </summary>
+    /// <summary>
+    /// A class representing the LoadTestingResource data model.
+    /// LoadTest details
+    /// </summary>
     public partial class LoadTestingResourceData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of LoadTestingResourceData. </summary>
@@ -33,7 +36,7 @@ namespace Azure.ResourceManager.LoadTesting
         /// <param name="provisioningState"> Resource provisioning state. </param>
         /// <param name="dataPlaneUri"> Resource data plane URI. </param>
         /// <param name="encryption"> CMK Encryption property. </param>
-        internal LoadTestingResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, string description, LoadTestingProvisioningState? provisioningState, string dataPlaneUri, CustomerManagedKeyEncryptionProperties encryption) : base(id, name, resourceType, systemData, tags, location)
+        internal LoadTestingResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, string description, LoadTestingProvisioningState? provisioningState, string dataPlaneUri, LoadTestingCmkEncryptionProperties encryption) : base(id, name, resourceType, systemData, tags, location)
         {
             Identity = identity;
             Description = description;
@@ -51,6 +54,6 @@ namespace Azure.ResourceManager.LoadTesting
         /// <summary> Resource data plane URI. </summary>
         public string DataPlaneUri { get; }
         /// <summary> CMK Encryption property. </summary>
-        public CustomerManagedKeyEncryptionProperties Encryption { get; set; }
+        public LoadTestingCmkEncryptionProperties Encryption { get; set; }
     }
 }

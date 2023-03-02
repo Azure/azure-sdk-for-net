@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -55,8 +54,16 @@ namespace Azure.ResourceManager.MachineLearning
 
         /// <summary>
         /// Creates a batch inference endpoint (asynchronous).
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/batchEndpoints/{endpointName}
-        /// Operation Id: BatchEndpoints_CreateOrUpdate
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/batchEndpoints/{endpointName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>BatchEndpoints_CreateOrUpdate</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="endpointName"> Name for the Batch inference endpoint. </param>
@@ -88,8 +95,16 @@ namespace Azure.ResourceManager.MachineLearning
 
         /// <summary>
         /// Creates a batch inference endpoint (asynchronous).
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/batchEndpoints/{endpointName}
-        /// Operation Id: BatchEndpoints_CreateOrUpdate
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/batchEndpoints/{endpointName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>BatchEndpoints_CreateOrUpdate</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="endpointName"> Name for the Batch inference endpoint. </param>
@@ -121,8 +136,16 @@ namespace Azure.ResourceManager.MachineLearning
 
         /// <summary>
         /// Gets a batch inference endpoint by name.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/batchEndpoints/{endpointName}
-        /// Operation Id: BatchEndpoints_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/batchEndpoints/{endpointName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>BatchEndpoints_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="endpointName"> Name for the Batch Endpoint. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -150,8 +173,16 @@ namespace Azure.ResourceManager.MachineLearning
 
         /// <summary>
         /// Gets a batch inference endpoint by name.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/batchEndpoints/{endpointName}
-        /// Operation Id: BatchEndpoints_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/batchEndpoints/{endpointName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>BatchEndpoints_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="endpointName"> Name for the Batch Endpoint. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -179,8 +210,16 @@ namespace Azure.ResourceManager.MachineLearning
 
         /// <summary>
         /// Lists Batch inference endpoint in the workspace.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/batchEndpoints
-        /// Operation Id: BatchEndpoints_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/batchEndpoints</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>BatchEndpoints_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="count"> Number of endpoints to be retrieved in a page of results. </param>
         /// <param name="skip"> Continuation token for pagination. </param>
@@ -188,43 +227,23 @@ namespace Azure.ResourceManager.MachineLearning
         /// <returns> An async collection of <see cref="MachineLearningBatchEndpointResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<MachineLearningBatchEndpointResource> GetAllAsync(int? count = null, string skip = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<MachineLearningBatchEndpointResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _machineLearningBatchEndpointBatchEndpointsClientDiagnostics.CreateScope("MachineLearningBatchEndpointCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _machineLearningBatchEndpointBatchEndpointsRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, count, skip, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new MachineLearningBatchEndpointResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<MachineLearningBatchEndpointResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _machineLearningBatchEndpointBatchEndpointsClientDiagnostics.CreateScope("MachineLearningBatchEndpointCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _machineLearningBatchEndpointBatchEndpointsRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, count, skip, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new MachineLearningBatchEndpointResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _machineLearningBatchEndpointBatchEndpointsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, count, skip);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _machineLearningBatchEndpointBatchEndpointsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, count, skip);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new MachineLearningBatchEndpointResource(Client, MachineLearningBatchEndpointData.DeserializeMachineLearningBatchEndpointData(e)), _machineLearningBatchEndpointBatchEndpointsClientDiagnostics, Pipeline, "MachineLearningBatchEndpointCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Lists Batch inference endpoint in the workspace.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/batchEndpoints
-        /// Operation Id: BatchEndpoints_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/batchEndpoints</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>BatchEndpoints_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="count"> Number of endpoints to be retrieved in a page of results. </param>
         /// <param name="skip"> Continuation token for pagination. </param>
@@ -232,43 +251,23 @@ namespace Azure.ResourceManager.MachineLearning
         /// <returns> A collection of <see cref="MachineLearningBatchEndpointResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<MachineLearningBatchEndpointResource> GetAll(int? count = null, string skip = null, CancellationToken cancellationToken = default)
         {
-            Page<MachineLearningBatchEndpointResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _machineLearningBatchEndpointBatchEndpointsClientDiagnostics.CreateScope("MachineLearningBatchEndpointCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _machineLearningBatchEndpointBatchEndpointsRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, count, skip, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new MachineLearningBatchEndpointResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<MachineLearningBatchEndpointResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _machineLearningBatchEndpointBatchEndpointsClientDiagnostics.CreateScope("MachineLearningBatchEndpointCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _machineLearningBatchEndpointBatchEndpointsRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, count, skip, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new MachineLearningBatchEndpointResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _machineLearningBatchEndpointBatchEndpointsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, count, skip);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _machineLearningBatchEndpointBatchEndpointsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, count, skip);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new MachineLearningBatchEndpointResource(Client, MachineLearningBatchEndpointData.DeserializeMachineLearningBatchEndpointData(e)), _machineLearningBatchEndpointBatchEndpointsClientDiagnostics, Pipeline, "MachineLearningBatchEndpointCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/batchEndpoints/{endpointName}
-        /// Operation Id: BatchEndpoints_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/batchEndpoints/{endpointName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>BatchEndpoints_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="endpointName"> Name for the Batch Endpoint. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -294,8 +293,16 @@ namespace Azure.ResourceManager.MachineLearning
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/batchEndpoints/{endpointName}
-        /// Operation Id: BatchEndpoints_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/batchEndpoints/{endpointName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>BatchEndpoints_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="endpointName"> Name for the Batch Endpoint. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

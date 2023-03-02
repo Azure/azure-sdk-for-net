@@ -17,20 +17,20 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         internal static BookmarkList DeserializeBookmarkList(JsonElement element)
         {
             Optional<string> nextLink = default;
-            IReadOnlyList<BookmarkData> value = default;
+            IReadOnlyList<SecurityInsightsBookmarkData> value = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("nextLink"))
+                if (property.NameEquals("nextLink"u8))
                 {
                     nextLink = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
-                    List<BookmarkData> array = new List<BookmarkData>();
+                    List<SecurityInsightsBookmarkData> array = new List<SecurityInsightsBookmarkData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(BookmarkData.DeserializeBookmarkData(item));
+                        array.Add(SecurityInsightsBookmarkData.DeserializeSecurityInsightsBookmarkData(item));
                     }
                     value = array;
                     continue;

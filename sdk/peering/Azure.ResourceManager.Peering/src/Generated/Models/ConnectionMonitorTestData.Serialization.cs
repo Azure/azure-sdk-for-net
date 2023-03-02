@@ -18,26 +18,26 @@ namespace Azure.ResourceManager.Peering
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(SourceAgent))
             {
-                writer.WritePropertyName("sourceAgent");
+                writer.WritePropertyName("sourceAgent"u8);
                 writer.WriteStringValue(SourceAgent);
             }
             if (Optional.IsDefined(Destination))
             {
-                writer.WritePropertyName("destination");
+                writer.WritePropertyName("destination"u8);
                 writer.WriteStringValue(Destination);
             }
             if (Optional.IsDefined(DestinationPort))
             {
-                writer.WritePropertyName("destinationPort");
+                writer.WritePropertyName("destinationPort"u8);
                 writer.WriteNumberValue(DestinationPort.Value);
             }
             if (Optional.IsDefined(TestFrequencyInSec))
             {
-                writer.WritePropertyName("testFrequencyInSec");
+                writer.WritePropertyName("testFrequencyInSec"u8);
                 writer.WriteNumberValue(TestFrequencyInSec.Value);
             }
             writer.WriteEndObject();
@@ -59,22 +59,22 @@ namespace Azure.ResourceManager.Peering
             Optional<PeeringProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Peering
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -93,17 +93,17 @@ namespace Azure.ResourceManager.Peering
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("sourceAgent"))
+                        if (property0.NameEquals("sourceAgent"u8))
                         {
                             sourceAgent = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("destination"))
+                        if (property0.NameEquals("destination"u8))
                         {
                             destination = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("destinationPort"))
+                        if (property0.NameEquals("destinationPort"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Peering
                             destinationPort = property0.Value.GetInt32();
                             continue;
                         }
-                        if (property0.NameEquals("testFrequencyInSec"))
+                        if (property0.NameEquals("testFrequencyInSec"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Peering
                             testFrequencyInSec = property0.Value.GetInt32();
                             continue;
                         }
-                        if (property0.NameEquals("isTestSuccessful"))
+                        if (property0.NameEquals("isTestSuccessful"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.Peering
                             isTestSuccessful = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("path"))
+                        if (property0.NameEquals("path"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Peering
                             path = array;
                             continue;
                         }
-                        if (property0.NameEquals("provisioningState"))
+                        if (property0.NameEquals("provisioningState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

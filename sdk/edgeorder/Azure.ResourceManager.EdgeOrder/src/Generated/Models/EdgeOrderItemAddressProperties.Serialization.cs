@@ -17,10 +17,10 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(ShippingAddress))
             {
-                writer.WritePropertyName("shippingAddress");
+                writer.WritePropertyName("shippingAddress"u8);
                 writer.WriteObjectValue(ShippingAddress);
             }
-            writer.WritePropertyName("contactDetails");
+            writer.WritePropertyName("contactDetails"u8);
             writer.WriteObjectValue(ContactDetails);
             writer.WriteEndObject();
         }
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             Optional<EdgeOrderAddressValidationStatus> addressValidationStatus = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("shippingAddress"))
+                if (property.NameEquals("shippingAddress"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -42,12 +42,12 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                     shippingAddress = EdgeOrderShippingAddress.DeserializeEdgeOrderShippingAddress(property.Value);
                     continue;
                 }
-                if (property.NameEquals("contactDetails"))
+                if (property.NameEquals("contactDetails"u8))
                 {
                     contactDetails = EdgeOrderAddressContactDetails.DeserializeEdgeOrderAddressContactDetails(property.Value);
                     continue;
                 }
-                if (property.NameEquals("addressValidationStatus"))
+                if (property.NameEquals("addressValidationStatus"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

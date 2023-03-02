@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Resources.Models
             Optional<BinaryData> template = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("template"))
+                if (property.NameEquals("template"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

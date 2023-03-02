@@ -16,8 +16,12 @@ namespace Azure.Identity.Tests.Mock
         private Mock<EnvironmentCredential> mockEnvironmentCredential = new();
         public Action<Mock<AzureCliCredential>> OnCreateAzureCliCredential { get; set; }
         private Mock<AzureCliCredential> mockAzureCliCredential = new();
+        public Action<Mock<WorkloadIdentityCredential>> OnCreateWorkloadIdentityCredential { get; set; }
+        private Mock<WorkloadIdentityCredential> mockWorkloadIdentityCredential = new();
         public Action<Mock<ManagedIdentityCredential>> OnCreateManagedIdentityCredential { get; set; }
         private Mock<ManagedIdentityCredential> mockManagedIdentityCredential = new();
+        public Action<Mock<AzureDeveloperCliCredential>> OnCreateAzureDeveloperCliCredential { get; set; }
+        private Mock<AzureDeveloperCliCredential> mockAzureDeveloperCliCredential = new();
         public Action<Mock<SharedTokenCacheCredential>> OnCreateSharedTokenCacheCredential { get; set; }
         private Mock<SharedTokenCacheCredential> mockSharedTokenCacheCredential = new();
         public Action<Mock<InteractiveBrowserCredential>> OnCreateInteractiveBrowserCredential { get; set; }
@@ -35,6 +39,12 @@ namespace Azure.Identity.Tests.Mock
             return mockEnvironmentCredential.Object;
         }
 
+        public override TokenCredential CreateWorkloadIdentityCredential()
+        {
+            OnCreateWorkloadIdentityCredential?.Invoke(mockWorkloadIdentityCredential);
+            return mockWorkloadIdentityCredential.Object;
+        }
+
         public override TokenCredential CreateManagedIdentityCredential()
         {
             OnCreateManagedIdentityCredential?.Invoke(mockManagedIdentityCredential);
@@ -45,6 +55,12 @@ namespace Azure.Identity.Tests.Mock
         {
             OnCreateSharedTokenCacheCredential?.Invoke(mockSharedTokenCacheCredential);
             return mockSharedTokenCacheCredential.Object;
+        }
+
+        public override TokenCredential CreateAzureDeveloperCliCredential()
+        {
+            OnCreateAzureDeveloperCliCredential?.Invoke(mockAzureDeveloperCliCredential);
+            return mockAzureDeveloperCliCredential.Object;
         }
 
         public override TokenCredential CreateAzureCliCredential()

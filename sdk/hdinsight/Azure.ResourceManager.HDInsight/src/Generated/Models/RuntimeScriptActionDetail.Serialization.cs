@@ -17,16 +17,16 @@ namespace Azure.ResourceManager.HDInsight.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("name");
+            writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            writer.WritePropertyName("uri");
+            writer.WritePropertyName("uri"u8);
             writer.WriteStringValue(Uri.AbsoluteUri);
             if (Optional.IsDefined(Parameters))
             {
-                writer.WritePropertyName("parameters");
+                writer.WritePropertyName("parameters"u8);
                 writer.WriteStringValue(Parameters);
             }
-            writer.WritePropertyName("roles");
+            writer.WritePropertyName("roles"u8);
             writer.WriteStartArray();
             foreach (var item in Roles)
             {
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             Optional<string> applicationName = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("scriptExecutionId"))
+                if (property.NameEquals("scriptExecutionId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     scriptExecutionId = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("startTime"))
+                if (property.NameEquals("startTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     startTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("endTime"))
+                if (property.NameEquals("endTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -82,17 +82,17 @@ namespace Azure.ResourceManager.HDInsight.Models
                     endTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("status"))
+                if (property.NameEquals("status"u8))
                 {
                     status = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("operation"))
+                if (property.NameEquals("operation"u8))
                 {
                     operation = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("executionSummary"))
+                if (property.NameEquals("executionSummary"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -107,27 +107,27 @@ namespace Azure.ResourceManager.HDInsight.Models
                     executionSummary = array;
                     continue;
                 }
-                if (property.NameEquals("debugInformation"))
+                if (property.NameEquals("debugInformation"u8))
                 {
                     debugInformation = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("uri"))
+                if (property.NameEquals("uri"u8))
                 {
                     uri = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("parameters"))
+                if (property.NameEquals("parameters"u8))
                 {
                     parameters = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("roles"))
+                if (property.NameEquals("roles"u8))
                 {
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     roles = array;
                     continue;
                 }
-                if (property.NameEquals("applicationName"))
+                if (property.NameEquals("applicationName"u8))
                 {
                     applicationName = property.Value.GetString();
                     continue;

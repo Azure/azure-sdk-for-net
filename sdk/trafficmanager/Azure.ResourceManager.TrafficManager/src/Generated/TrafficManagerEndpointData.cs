@@ -11,7 +11,10 @@ using Azure.ResourceManager.TrafficManager.Models;
 
 namespace Azure.ResourceManager.TrafficManager
 {
-    /// <summary> A class representing the TrafficManagerEndpoint data model. </summary>
+    /// <summary>
+    /// A class representing the TrafficManagerEndpoint data model.
+    /// Class representing a Traffic Manager endpoint.
+    /// </summary>
     public partial class TrafficManagerEndpointData : TrafficManagerProxyResourceData
     {
         /// <summary> Initializes a new instance of TrafficManagerEndpointData. </summary>

@@ -46,8 +46,16 @@ namespace Azure.ResourceManager.ManagedServices
 
         /// <summary>
         /// Gets the registration definition details.
-        /// Request Path: /{scope}/providers/Microsoft.ManagedServices/registrationDefinitions/{registrationDefinitionId}
-        /// Operation Id: RegistrationDefinitions_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.ManagedServices/registrationDefinitions/{registrationDefinitionId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RegistrationDefinitions_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
@@ -63,8 +71,16 @@ namespace Azure.ResourceManager.ManagedServices
 
         /// <summary>
         /// Gets the registration definition details.
-        /// Request Path: /{scope}/providers/Microsoft.ManagedServices/registrationDefinitions/{registrationDefinitionId}
-        /// Operation Id: RegistrationDefinitions_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.ManagedServices/registrationDefinitions/{registrationDefinitionId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RegistrationDefinitions_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
@@ -89,8 +105,16 @@ namespace Azure.ResourceManager.ManagedServices
 
         /// <summary>
         /// Gets the details of the specified registration assignment.
-        /// Request Path: /{scope}/providers/Microsoft.ManagedServices/registrationAssignments/{registrationAssignmentId}
-        /// Operation Id: RegistrationAssignments_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.ManagedServices/registrationAssignments/{registrationAssignmentId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RegistrationAssignments_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
@@ -107,8 +131,16 @@ namespace Azure.ResourceManager.ManagedServices
 
         /// <summary>
         /// Gets the details of the specified registration assignment.
-        /// Request Path: /{scope}/providers/Microsoft.ManagedServices/registrationAssignments/{registrationAssignmentId}
-        /// Operation Id: RegistrationAssignments_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.ManagedServices/registrationAssignments/{registrationAssignmentId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RegistrationAssignments_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
@@ -134,8 +166,16 @@ namespace Azure.ResourceManager.ManagedServices
 
         /// <summary>
         /// Get the marketplace registration definition for the marketplace identifier.
-        /// Request Path: /{scope}/providers/Microsoft.ManagedServices/marketplaceRegistrationDefinitions/{marketplaceIdentifier}
-        /// Operation Id: MarketplaceRegistrationDefinitions_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.ManagedServices/marketplaceRegistrationDefinitions/{marketplaceIdentifier}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>MarketplaceRegistrationDefinitions_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
@@ -151,8 +191,16 @@ namespace Azure.ResourceManager.ManagedServices
 
         /// <summary>
         /// Get the marketplace registration definition for the marketplace identifier.
-        /// Request Path: /{scope}/providers/Microsoft.ManagedServices/marketplaceRegistrationDefinitions/{marketplaceIdentifier}
-        /// Operation Id: MarketplaceRegistrationDefinitions_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.ManagedServices/marketplaceRegistrationDefinitions/{marketplaceIdentifier}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>MarketplaceRegistrationDefinitions_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>

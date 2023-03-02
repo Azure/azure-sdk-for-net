@@ -13,7 +13,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ManagementGroups
 {
-    /// <summary> A class representing the ManagementGroup data model. </summary>
+    /// <summary>
+    /// A class representing the ManagementGroup data model.
+    /// The management group details.
+    /// </summary>
     public partial class ManagementGroupData : ResourceData
     {
         /// <summary> Initializes a new instance of ManagementGroupData. </summary>

@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary>
-    /// The MachineLearningListViewType.
-    /// Serialized Name: ListViewType
-    /// </summary>
+    /// <summary> The MachineLearningListViewType. </summary>
     public readonly partial struct MachineLearningListViewType : IEquatable<MachineLearningListViewType>
     {
         private readonly string _value;
@@ -29,20 +26,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
         private const string ArchivedOnlyValue = "ArchivedOnly";
         private const string AllValue = "All";
 
-        /// <summary>
-        /// ActiveOnly
-        /// Serialized Name: ListViewType.ActiveOnly
-        /// </summary>
+        /// <summary> ActiveOnly. </summary>
         public static MachineLearningListViewType ActiveOnly { get; } = new MachineLearningListViewType(ActiveOnlyValue);
-        /// <summary>
-        /// ArchivedOnly
-        /// Serialized Name: ListViewType.ArchivedOnly
-        /// </summary>
+        /// <summary> ArchivedOnly. </summary>
         public static MachineLearningListViewType ArchivedOnly { get; } = new MachineLearningListViewType(ArchivedOnlyValue);
-        /// <summary>
-        /// All
-        /// Serialized Name: ListViewType.All
-        /// </summary>
+        /// <summary> All. </summary>
         public static MachineLearningListViewType All { get; } = new MachineLearningListViewType(AllValue);
         /// <summary> Determines if two <see cref="MachineLearningListViewType"/> values are the same. </summary>
         public static bool operator ==(MachineLearningListViewType left, MachineLearningListViewType right) => left.Equals(right);

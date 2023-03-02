@@ -15,9 +15,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("recommendationType");
+            writer.WritePropertyName("recommendationType"u8);
             writer.WriteStringValue(RecommendationType.ToString());
-            writer.WritePropertyName("status");
+            writer.WritePropertyName("status"u8);
             writer.WriteStringValue(Status.ToString());
             writer.WriteEndObject();
         }
@@ -29,17 +29,17 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             RecommendationConfigStatus status = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("recommendationType"))
+                if (property.NameEquals("recommendationType"u8))
                 {
                     recommendationType = new IotSecurityRecommendationType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("status"))
+                if (property.NameEquals("status"u8))
                 {
                     status = new RecommendationConfigStatus(property.Value.GetString());
                     continue;

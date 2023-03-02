@@ -12,7 +12,10 @@ using Azure.ResourceManager.Relay.Models;
 
 namespace Azure.ResourceManager.Relay
 {
-    /// <summary> A class representing the RelayNetworkRuleSet data model. </summary>
+    /// <summary>
+    /// A class representing the RelayNetworkRuleSet data model.
+    /// Description of topic resource.
+    /// </summary>
     public partial class RelayNetworkRuleSetData : ResourceData
     {
         /// <summary> Initializes a new instance of RelayNetworkRuleSetData. </summary>

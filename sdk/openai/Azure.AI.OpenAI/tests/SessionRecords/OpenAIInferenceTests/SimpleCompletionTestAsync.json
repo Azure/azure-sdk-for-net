@@ -1,0 +1,66 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://sdk2319.openai.azure.com/openai/deployments/text-davinci-002/completions?api-version=2022-12-01",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "27",
+        "Content-Type": "application/json",
+        "traceparent": "00-2c9f5238dcf9e405fce318d9d5755b47-61a87a4ab7d54c76-00",
+        "User-Agent": "azsdk-net-AI.OpenAI/1.0.0-alpha.20230214.1 (.NET 7.0.2; Microsoft Windows 10.0.22623)",
+        "x-ms-client-request-id": "cefc73be1aca7a6559d20cb04feac9da",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "prompt": [
+          "Hello World!"
+        ]
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Access-Control-Allow-Origin": "*",
+        "apim-request-id": "abb131c9-58ec-4abd-95de-5f9055712ef1",
+        "Cache-Control": "must-revalidate, no-cache",
+        "Content-Length": "278",
+        "Content-Type": "application/json",
+        "Date": "Tue, 14 Feb 2023 23:03:25 GMT",
+        "openai-model": "text-davinci-002",
+        "openai-processing-ms": "140.9207",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "x-accel-buffering": "no",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "cefc73be1aca7a6559d20cb04feac9da",
+        "x-ms-region": "West Europe",
+        "X-Request-ID": "4914a549-0bb2-4234-a201-3892b1afd92a"
+      },
+      "ResponseBody": {
+        "id": "cmpl-6jycXCQW7E0ZuAHAWmpHDcfgAW0e3",
+        "object": "text_completion",
+        "created": 1676415805,
+        "model": "text-davinci-002",
+        "choices": [
+          {
+            "text": "2\n\nThat\u0027s great!",
+            "index": 0,
+            "logprobs": null,
+            "finish_reason": "stop"
+          }
+        ],
+        "usage": {
+          "prompt_tokens": 3,
+          "completion_tokens": 7,
+          "total_tokens": 10
+        }
+      }
+    }
+  ],
+  "Variables": {
+    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
+    "OPENAI_DEPLOYMENT_ID": "text-davinci-002",
+    "OPENAI_EMBEDDINGS_DEPLOYMENT_ID": "text-similarity-davinci-001",
+    "OPENAI_ENDPOINT": "https://sdk2319.openai.azure.com/",
+    "RandomSeed": "34581406"
+  }
+}

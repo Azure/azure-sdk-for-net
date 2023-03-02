@@ -24,6 +24,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 using System.Transactions;
+using Azure.Core.Shared;
 using Azure.Core.Tests;
 using Azure.Messaging.ServiceBus.Diagnostics;
 using Constants = Microsoft.Azure.WebJobs.ServiceBus.Constants;
@@ -392,13 +393,13 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
         [Test]
         public async Task TestBatch_ProcessMessagesSpan()
         {
-            using var listener = new ClientDiagnosticListener(EntityScopeFactory.DiagnosticNamespace);
+            using var listener = new ClientDiagnosticListener(DiagnosticProperty.DiagnosticNamespace);
             await TestMultiple<ServiceBusMultipleMessagesTestJob_BindToPocoArray>();
             var scope = listener.AssertAndRemoveScope(Constants.ProcessMessagesActivityName);
             var tags = scope.Activity.Tags.ToList();
-            CollectionAssert.Contains(tags, new KeyValuePair<string, string>(DiagnosticProperty.EntityAttribute, FirstQueueScope.QueueName));
-            CollectionAssert.Contains(tags, new KeyValuePair<string, string>(DiagnosticProperty.EndpointAttribute, ServiceBusTestEnvironment.Instance.FullyQualifiedNamespace));
-            CollectionAssert.Contains(tags, new KeyValuePair<string, string>(DiagnosticProperty.ServiceContextAttribute, DiagnosticProperty.ServiceBusServiceContext));
+            CollectionAssert.Contains(tags, new KeyValuePair<string, string>(MessagingClientDiagnostics.MessageBusDestination, FirstQueueScope.QueueName));
+            CollectionAssert.Contains(tags, new KeyValuePair<string, string>(MessagingClientDiagnostics.PeerAddress, ServiceBusTestEnvironment.Instance.FullyQualifiedNamespace));
+            CollectionAssert.Contains(tags, new KeyValuePair<string, string>(MessagingClientDiagnostics.MessageBusDestination, DiagnosticProperty.ServiceBusServiceContext));
             Assert.AreEqual(2, scope.LinkedActivities.Count);
             Assert.IsTrue(scope.IsCompleted);
         }
@@ -407,13 +408,13 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
         public async Task TestBatch_ProcessMessagesSpan_FailedScope()
         {
             ExpectedRemainingMessages = 2;
-            using var listener = new ClientDiagnosticListener(EntityScopeFactory.DiagnosticNamespace);
+            using var listener = new ClientDiagnosticListener(DiagnosticProperty.DiagnosticNamespace);
             await TestMultiple<ServiceBusMultipleMessagesTestJob_BindToPocoArray_Throws>();
             var scope = listener.AssertAndRemoveScope(Constants.ProcessMessagesActivityName);
             var tags = scope.Activity.Tags.ToList();
-            CollectionAssert.Contains(tags, new KeyValuePair<string, string>(DiagnosticProperty.EntityAttribute, FirstQueueScope.QueueName));
-            CollectionAssert.Contains(tags, new KeyValuePair<string, string>(DiagnosticProperty.EndpointAttribute, ServiceBusTestEnvironment.Instance.FullyQualifiedNamespace));
-            CollectionAssert.Contains(tags, new KeyValuePair<string, string>(DiagnosticProperty.ServiceContextAttribute, DiagnosticProperty.ServiceBusServiceContext));
+            CollectionAssert.Contains(tags, new KeyValuePair<string, string>(MessagingClientDiagnostics.MessageBusDestination, FirstQueueScope.QueueName));
+            CollectionAssert.Contains(tags, new KeyValuePair<string, string>(MessagingClientDiagnostics.PeerAddress, ServiceBusTestEnvironment.Instance.FullyQualifiedNamespace));
+            CollectionAssert.Contains(tags, new KeyValuePair<string, string>(MessagingClientDiagnostics.MessageBusDestination, DiagnosticProperty.ServiceBusServiceContext));
             Assert.AreEqual(2, scope.LinkedActivities.Count);
             Assert.IsTrue(scope.IsFailed);
         }

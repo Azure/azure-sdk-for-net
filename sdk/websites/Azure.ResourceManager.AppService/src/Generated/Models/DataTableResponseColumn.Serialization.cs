@@ -17,17 +17,17 @@ namespace Azure.ResourceManager.AppService.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(ColumnName))
             {
-                writer.WritePropertyName("columnName");
+                writer.WritePropertyName("columnName"u8);
                 writer.WriteStringValue(ColumnName);
             }
             if (Optional.IsDefined(DataType))
             {
-                writer.WritePropertyName("dataType");
+                writer.WritePropertyName("dataType"u8);
                 writer.WriteStringValue(DataType);
             }
             if (Optional.IsDefined(ColumnType))
             {
-                writer.WritePropertyName("columnType");
+                writer.WritePropertyName("columnType"u8);
                 writer.WriteStringValue(ColumnType);
             }
             writer.WriteEndObject();
@@ -40,17 +40,17 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<string> columnType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("columnName"))
+                if (property.NameEquals("columnName"u8))
                 {
                     columnName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("dataType"))
+                if (property.NameEquals("dataType"u8))
                 {
                     dataType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("columnType"))
+                if (property.NameEquals("columnType"u8))
                 {
                     columnType = property.Value.GetString();
                     continue;

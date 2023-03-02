@@ -38,8 +38,16 @@ namespace Azure.ResourceManager.DataShare
 
         /// <summary>
         /// Get an invitation
-        /// Request Path: /providers/Microsoft.DataShare/locations/{location}/consumerInvitations/{invitationId}
-        /// Operation Id: ConsumerInvitations_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.DataShare/locations/{location}/consumerInvitations/{invitationId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ConsumerInvitations_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="location"> Location of the invitation. </param>
@@ -53,8 +61,16 @@ namespace Azure.ResourceManager.DataShare
 
         /// <summary>
         /// Get an invitation
-        /// Request Path: /providers/Microsoft.DataShare/locations/{location}/consumerInvitations/{invitationId}
-        /// Operation Id: ConsumerInvitations_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.DataShare/locations/{location}/consumerInvitations/{invitationId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ConsumerInvitations_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="location"> Location of the invitation. </param>
@@ -68,8 +84,16 @@ namespace Azure.ResourceManager.DataShare
 
         /// <summary>
         /// Reject an invitation
-        /// Request Path: /providers/Microsoft.DataShare/locations/{location}/rejectInvitation
-        /// Operation Id: ConsumerInvitations_RejectInvitation
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.DataShare/locations/{location}/rejectInvitation</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ConsumerInvitations_RejectInvitation</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="location"> Location of the invitation. </param>
@@ -85,8 +109,16 @@ namespace Azure.ResourceManager.DataShare
 
         /// <summary>
         /// Reject an invitation
-        /// Request Path: /providers/Microsoft.DataShare/locations/{location}/rejectInvitation
-        /// Operation Id: ConsumerInvitations_RejectInvitation
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.DataShare/locations/{location}/rejectInvitation</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ConsumerInvitations_RejectInvitation</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="location"> Location of the invitation. </param>
@@ -102,8 +134,16 @@ namespace Azure.ResourceManager.DataShare
 
         /// <summary>
         /// Activate the email registration for the current tenant
-        /// Request Path: /providers/Microsoft.DataShare/locations/{location}/activateEmail
-        /// Operation Id: EmailRegistrations_ActivateEmail
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.DataShare/locations/{location}/activateEmail</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>EmailRegistrations_ActivateEmail</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="location"> Location of the activation. </param>
@@ -119,8 +159,16 @@ namespace Azure.ResourceManager.DataShare
 
         /// <summary>
         /// Activate the email registration for the current tenant
-        /// Request Path: /providers/Microsoft.DataShare/locations/{location}/activateEmail
-        /// Operation Id: EmailRegistrations_ActivateEmail
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.DataShare/locations/{location}/activateEmail</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>EmailRegistrations_ActivateEmail</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="location"> Location of the activation. </param>
@@ -136,8 +184,16 @@ namespace Azure.ResourceManager.DataShare
 
         /// <summary>
         /// Register an email for the current tenant
-        /// Request Path: /providers/Microsoft.DataShare/locations/{location}/registerEmail
-        /// Operation Id: EmailRegistrations_RegisterEmail
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.DataShare/locations/{location}/registerEmail</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>EmailRegistrations_RegisterEmail</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="location"> Location of the registration. </param>
@@ -149,8 +205,16 @@ namespace Azure.ResourceManager.DataShare
 
         /// <summary>
         /// Register an email for the current tenant
-        /// Request Path: /providers/Microsoft.DataShare/locations/{location}/registerEmail
-        /// Operation Id: EmailRegistrations_RegisterEmail
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.DataShare/locations/{location}/registerEmail</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>EmailRegistrations_RegisterEmail</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="location"> Location of the registration. </param>
@@ -171,8 +235,16 @@ namespace Azure.ResourceManager.DataShare
 
         /// <summary>
         /// List Accounts in Subscription
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DataShare/accounts
-        /// Operation Id: Accounts_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DataShare/accounts</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Accounts_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="skipToken"> Continuation token. </param>
@@ -185,8 +257,16 @@ namespace Azure.ResourceManager.DataShare
 
         /// <summary>
         /// List Accounts in Subscription
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DataShare/accounts
-        /// Operation Id: Accounts_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DataShare/accounts</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Accounts_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="skipToken"> Continuation token. </param>
@@ -216,8 +296,16 @@ namespace Azure.ResourceManager.DataShare
 
         /// <summary>
         /// Get an account
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataShare/accounts/{accountName}
-        /// Operation Id: Accounts_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataShare/accounts/{accountName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Accounts_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="accountName"> The name of the share account. </param>
@@ -232,8 +320,16 @@ namespace Azure.ResourceManager.DataShare
 
         /// <summary>
         /// Get an account
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataShare/accounts/{accountName}
-        /// Operation Id: Accounts_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataShare/accounts/{accountName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Accounts_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="accountName"> The name of the share account. </param>

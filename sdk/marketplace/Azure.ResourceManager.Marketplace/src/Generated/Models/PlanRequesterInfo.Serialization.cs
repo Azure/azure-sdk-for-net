@@ -21,27 +21,27 @@ namespace Azure.ResourceManager.Marketplace.Models
             Optional<string> subscriptionName = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("user"))
+                if (property.NameEquals("user"u8))
                 {
                     user = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("date"))
+                if (property.NameEquals("date"u8))
                 {
                     date = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("justification"))
+                if (property.NameEquals("justification"u8))
                 {
                     justification = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("subscriptionId"))
+                if (property.NameEquals("subscriptionId"u8))
                 {
                     subscriptionId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("subscriptionName"))
+                if (property.NameEquals("subscriptionName"u8))
                 {
                     subscriptionName = property.Value.GetString();
                     continue;

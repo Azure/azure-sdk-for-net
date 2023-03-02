@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppConfiguration
 {
-    /// <summary> A class representing the DeletedAppConfigurationStore data model. </summary>
+    /// <summary>
+    /// A class representing the DeletedAppConfigurationStore data model.
+    /// Deleted configuration store information with extended details.
+    /// </summary>
     public partial class DeletedAppConfigurationStoreData : ResourceData
     {
         /// <summary> Initializes a new instance of DeletedAppConfigurationStoreData. </summary>

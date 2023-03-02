@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -50,92 +49,60 @@ namespace Azure.ResourceManager.Datadog
 
         /// <summary>
         /// List Datadog marketplace agreements in the subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Datadog/agreements
-        /// Operation Id: MarketplaceAgreements_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Datadog/agreements</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>MarketplaceAgreements_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="DatadogAgreementResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DatadogAgreementResource> GetMarketplaceAgreementsAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<DatadogAgreementResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = MarketplaceAgreementsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetMarketplaceAgreements");
-                scope.Start();
-                try
-                {
-                    var response = await MarketplaceAgreementsRestClient.ListAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<DatadogAgreementResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = MarketplaceAgreementsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetMarketplaceAgreements");
-                scope.Start();
-                try
-                {
-                    var response = await MarketplaceAgreementsRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => MarketplaceAgreementsRestClient.CreateListRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => MarketplaceAgreementsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, DatadogAgreementResource.DeserializeDatadogAgreementResource, MarketplaceAgreementsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetMarketplaceAgreements", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// List Datadog marketplace agreements in the subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Datadog/agreements
-        /// Operation Id: MarketplaceAgreements_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Datadog/agreements</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>MarketplaceAgreements_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DatadogAgreementResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DatadogAgreementResource> GetMarketplaceAgreements(CancellationToken cancellationToken = default)
         {
-            Page<DatadogAgreementResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = MarketplaceAgreementsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetMarketplaceAgreements");
-                scope.Start();
-                try
-                {
-                    var response = MarketplaceAgreementsRestClient.List(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<DatadogAgreementResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = MarketplaceAgreementsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetMarketplaceAgreements");
-                scope.Start();
-                try
-                {
-                    var response = MarketplaceAgreementsRestClient.ListNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => MarketplaceAgreementsRestClient.CreateListRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => MarketplaceAgreementsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, DatadogAgreementResource.DeserializeDatadogAgreementResource, MarketplaceAgreementsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetMarketplaceAgreements", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Create Datadog marketplace agreement in the subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Datadog/agreements/default
-        /// Operation Id: MarketplaceAgreements_CreateOrUpdate
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Datadog/agreements/default</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>MarketplaceAgreements_CreateOrUpdate</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="body"> The DatadogAgreementResource to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -157,8 +124,16 @@ namespace Azure.ResourceManager.Datadog
 
         /// <summary>
         /// Create Datadog marketplace agreement in the subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Datadog/agreements/default
-        /// Operation Id: MarketplaceAgreements_CreateOrUpdate
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Datadog/agreements/default</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>MarketplaceAgreements_CreateOrUpdate</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="body"> The DatadogAgreementResource to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -180,86 +155,46 @@ namespace Azure.ResourceManager.Datadog
 
         /// <summary>
         /// List all monitors under the specified subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Datadog/monitors
-        /// Operation Id: Monitors_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Datadog/monitors</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Monitors_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="DatadogMonitorResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DatadogMonitorResource> GetDatadogMonitorResourcesAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<DatadogMonitorResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = DatadogMonitorResourceMonitorsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetDatadogMonitorResources");
-                scope.Start();
-                try
-                {
-                    var response = await DatadogMonitorResourceMonitorsRestClient.ListAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new DatadogMonitorResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<DatadogMonitorResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = DatadogMonitorResourceMonitorsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetDatadogMonitorResources");
-                scope.Start();
-                try
-                {
-                    var response = await DatadogMonitorResourceMonitorsRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new DatadogMonitorResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => DatadogMonitorResourceMonitorsRestClient.CreateListRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DatadogMonitorResourceMonitorsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DatadogMonitorResource(Client, DatadogMonitorResourceData.DeserializeDatadogMonitorResourceData(e)), DatadogMonitorResourceMonitorsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetDatadogMonitorResources", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// List all monitors under the specified subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Datadog/monitors
-        /// Operation Id: Monitors_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Datadog/monitors</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Monitors_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DatadogMonitorResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DatadogMonitorResource> GetDatadogMonitorResources(CancellationToken cancellationToken = default)
         {
-            Page<DatadogMonitorResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = DatadogMonitorResourceMonitorsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetDatadogMonitorResources");
-                scope.Start();
-                try
-                {
-                    var response = DatadogMonitorResourceMonitorsRestClient.List(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new DatadogMonitorResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<DatadogMonitorResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = DatadogMonitorResourceMonitorsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetDatadogMonitorResources");
-                scope.Start();
-                try
-                {
-                    var response = DatadogMonitorResourceMonitorsRestClient.ListNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new DatadogMonitorResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => DatadogMonitorResourceMonitorsRestClient.CreateListRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DatadogMonitorResourceMonitorsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DatadogMonitorResource(Client, DatadogMonitorResourceData.DeserializeDatadogMonitorResourceData(e)), DatadogMonitorResourceMonitorsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetDatadogMonitorResources", "value", "nextLink", cancellationToken);
         }
     }
 }

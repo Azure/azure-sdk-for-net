@@ -17,17 +17,17 @@ namespace Azure.ResourceManager.ExtendedLocations.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(ApiVersion))
             {
-                writer.WritePropertyName("apiVersion");
+                writer.WritePropertyName("apiVersion"u8);
                 writer.WriteStringValue(ApiVersion);
             }
             if (Optional.IsDefined(ResourceProviderNamespace))
             {
-                writer.WritePropertyName("resourceProviderNamespace");
+                writer.WritePropertyName("resourceProviderNamespace"u8);
                 writer.WriteStringValue(ResourceProviderNamespace);
             }
             if (Optional.IsDefined(ResourceType))
             {
-                writer.WritePropertyName("resourceType");
+                writer.WritePropertyName("resourceType"u8);
                 writer.WriteStringValue(ResourceType);
             }
             writer.WriteEndObject();
@@ -40,17 +40,17 @@ namespace Azure.ResourceManager.ExtendedLocations.Models
             Optional<string> resourceType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("apiVersion"))
+                if (property.NameEquals("apiVersion"u8))
                 {
                     apiVersion = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("resourceProviderNamespace"))
+                if (property.NameEquals("resourceProviderNamespace"u8))
                 {
                     resourceProviderNamespace = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("resourceType"))
+                if (property.NameEquals("resourceType"u8))
                 {
                     resourceType = property.Value.GetString();
                     continue;

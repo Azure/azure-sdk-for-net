@@ -18,12 +18,12 @@ namespace Azure.Communication.JobRouter.Models
             int unassignmentCount = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("jobId"))
+                if (property.NameEquals("jobId"u8))
                 {
                     jobId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("unassignmentCount"))
+                if (property.NameEquals("unassignmentCount"u8))
                 {
                     unassignmentCount = property.Value.GetInt32();
                     continue;

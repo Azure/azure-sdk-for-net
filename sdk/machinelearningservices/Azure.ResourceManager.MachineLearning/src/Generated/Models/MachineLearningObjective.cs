@@ -10,21 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary>
-    /// Optimization objective.
-    /// Serialized Name: Objective
-    /// </summary>
+    /// <summary> Optimization objective. </summary>
     public partial class MachineLearningObjective
     {
         /// <summary> Initializes a new instance of MachineLearningObjective. </summary>
-        /// <param name="goal">
-        /// [Required] Defines supported metric goals for hyperparameter tuning
-        /// Serialized Name: Objective.goal
-        /// </param>
-        /// <param name="primaryMetric">
-        /// [Required] Name of the metric to optimize.
-        /// Serialized Name: Objective.primaryMetric
-        /// </param>
+        /// <param name="goal"> [Required] Defines supported metric goals for hyperparameter tuning. </param>
+        /// <param name="primaryMetric"> [Required] Name of the metric to optimize. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="primaryMetric"/> is null. </exception>
         public MachineLearningObjective(MachineLearningGoal goal, string primaryMetric)
         {
@@ -34,15 +25,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
             PrimaryMetric = primaryMetric;
         }
 
-        /// <summary>
-        /// [Required] Defines supported metric goals for hyperparameter tuning
-        /// Serialized Name: Objective.goal
-        /// </summary>
+        /// <summary> [Required] Defines supported metric goals for hyperparameter tuning. </summary>
         public MachineLearningGoal Goal { get; set; }
-        /// <summary>
-        /// [Required] Name of the metric to optimize.
-        /// Serialized Name: Objective.primaryMetric
-        /// </summary>
+        /// <summary> [Required] Name of the metric to optimize. </summary>
         public string PrimaryMetric { get; set; }
     }
 }

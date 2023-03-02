@@ -17,17 +17,17 @@ namespace Azure.ResourceManager.IotHub.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(RoutingSource))
             {
-                writer.WritePropertyName("routingSource");
+                writer.WritePropertyName("routingSource"u8);
                 writer.WriteStringValue(RoutingSource.Value.ToString());
             }
             if (Optional.IsDefined(Message))
             {
-                writer.WritePropertyName("message");
+                writer.WritePropertyName("message"u8);
                 writer.WriteObjectValue(Message);
             }
             if (Optional.IsDefined(Twin))
             {
-                writer.WritePropertyName("twin");
+                writer.WritePropertyName("twin"u8);
                 writer.WriteObjectValue(Twin);
             }
             writer.WriteEndObject();

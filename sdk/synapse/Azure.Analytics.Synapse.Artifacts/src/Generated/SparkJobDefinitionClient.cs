@@ -103,74 +103,18 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual AsyncPageable<SparkJobDefinitionResource> GetSparkJobDefinitionsByWorkspaceAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<SparkJobDefinitionResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("SparkJobDefinitionClient.GetSparkJobDefinitionsByWorkspace");
-                scope.Start();
-                try
-                {
-                    var response = await RestClient.GetSparkJobDefinitionsByWorkspaceAsync(cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<SparkJobDefinitionResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("SparkJobDefinitionClient.GetSparkJobDefinitionsByWorkspace");
-                scope.Start();
-                try
-                {
-                    var response = await RestClient.GetSparkJobDefinitionsByWorkspaceNextPageAsync(nextLink, cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => RestClient.CreateGetSparkJobDefinitionsByWorkspaceRequest();
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => RestClient.CreateGetSparkJobDefinitionsByWorkspaceNextPageRequest(nextLink);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, SparkJobDefinitionResource.DeserializeSparkJobDefinitionResource, _clientDiagnostics, _pipeline, "SparkJobDefinitionClient.GetSparkJobDefinitionsByWorkspace", "value", "nextLink", cancellationToken);
         }
 
         /// <summary> Lists spark job definitions. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Pageable<SparkJobDefinitionResource> GetSparkJobDefinitionsByWorkspace(CancellationToken cancellationToken = default)
         {
-            Page<SparkJobDefinitionResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("SparkJobDefinitionClient.GetSparkJobDefinitionsByWorkspace");
-                scope.Start();
-                try
-                {
-                    var response = RestClient.GetSparkJobDefinitionsByWorkspace(cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<SparkJobDefinitionResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("SparkJobDefinitionClient.GetSparkJobDefinitionsByWorkspace");
-                scope.Start();
-                try
-                {
-                    var response = RestClient.GetSparkJobDefinitionsByWorkspaceNextPage(nextLink, cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => RestClient.CreateGetSparkJobDefinitionsByWorkspaceRequest();
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => RestClient.CreateGetSparkJobDefinitionsByWorkspaceNextPageRequest(nextLink);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, SparkJobDefinitionResource.DeserializeSparkJobDefinitionResource, _clientDiagnostics, _pipeline, "SparkJobDefinitionClient.GetSparkJobDefinitionsByWorkspace", "value", "nextLink", cancellationToken);
         }
 
         /// <summary> Creates or updates a Spark Job Definition. </summary>

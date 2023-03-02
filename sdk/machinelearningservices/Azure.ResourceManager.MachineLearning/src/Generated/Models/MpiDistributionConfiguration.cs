@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary>
-    /// MPI distribution configuration.
-    /// Serialized Name: Mpi
-    /// </summary>
+    /// <summary> MPI distribution configuration. </summary>
     public partial class MpiDistributionConfiguration : MachineLearningDistributionConfiguration
     {
         /// <summary> Initializes a new instance of MpiDistributionConfiguration. </summary>
@@ -20,24 +17,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of MpiDistributionConfiguration. </summary>
-        /// <param name="distributionType">
-        /// [Required] Specifies the type of distribution framework.
-        /// Serialized Name: DistributionConfiguration.distributionType
-        /// </param>
-        /// <param name="processCountPerInstance">
-        /// Number of processes per MPI node.
-        /// Serialized Name: Mpi.processCountPerInstance
-        /// </param>
+        /// <param name="distributionType"> [Required] Specifies the type of distribution framework. </param>
+        /// <param name="processCountPerInstance"> Number of processes per MPI node. </param>
         internal MpiDistributionConfiguration(DistributionType distributionType, int? processCountPerInstance) : base(distributionType)
         {
             ProcessCountPerInstance = processCountPerInstance;
             DistributionType = distributionType;
         }
 
-        /// <summary>
-        /// Number of processes per MPI node.
-        /// Serialized Name: Mpi.processCountPerInstance
-        /// </summary>
+        /// <summary> Number of processes per MPI node. </summary>
         public int? ProcessCountPerInstance { get; set; }
     }
 }

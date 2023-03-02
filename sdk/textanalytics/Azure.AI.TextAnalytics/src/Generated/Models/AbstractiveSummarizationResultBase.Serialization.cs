@@ -16,7 +16,7 @@ namespace Azure.AI.TextAnalytics.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("documents");
+            writer.WritePropertyName("documents"u8);
             writer.WriteStartArray();
             foreach (var item in Documents)
             {
@@ -31,7 +31,7 @@ namespace Azure.AI.TextAnalytics.Models
             IList<AbstractiveSummaryDocumentResultWithDetectedLanguage> documents = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("documents"))
+                if (property.NameEquals("documents"u8))
                 {
                     List<AbstractiveSummaryDocumentResultWithDetectedLanguage> array = new List<AbstractiveSummaryDocumentResultWithDetectedLanguage>();
                     foreach (var item in property.Value.EnumerateArray())

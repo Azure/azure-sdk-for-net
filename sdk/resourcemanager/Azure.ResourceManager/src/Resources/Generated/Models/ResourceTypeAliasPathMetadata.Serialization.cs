@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Resources.Models
             Optional<ResourceTypeAliasPathAttributes> attributes = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Resources.Models
                     type = new ResourceTypeAliasPathTokenType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("attributes"))
+                if (property.NameEquals("attributes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

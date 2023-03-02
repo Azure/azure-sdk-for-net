@@ -469,7 +469,7 @@
                     async () => await AddTasksSimpleTestAsync(batchCli, testName, 1, resourceFiles: resourceFiles).ConfigureAwait(false)).ConfigureAwait(false);
                 var innerException = exception.InnerException;
                 Assert.IsType<BatchException>(innerException);
-                Assert.Equal(((BatchException)innerException).RequestInformation.BatchError.Code, BatchErrorCodeStrings.RequestBodyTooLarge);
+                Assert.Equal(BatchErrorCodeStrings.RequestBodyTooLarge, ((BatchException)innerException).RequestInformation.BatchError.Code);
             },
             TestTimeout);
         }

@@ -13,7 +13,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.MachineLearning
 {
-    /// <summary> A class representing the MachineLearningWorkspace data model. </summary>
+    /// <summary>
+    /// A class representing the MachineLearningWorkspace data model.
+    /// An object that represents a machine learning workspace.
+    /// </summary>
     public partial class MachineLearningWorkspaceData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of MachineLearningWorkspaceData. </summary>
@@ -31,115 +34,34 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="identity">
-        /// The identity of the resource.
-        /// Serialized Name: Workspace.identity
-        /// </param>
-        /// <param name="sku">
-        /// The sku of the workspace.
-        /// Serialized Name: Workspace.sku
-        /// </param>
-        /// <param name="workspaceId">
-        /// The immutable id associated with this workspace.
-        /// Serialized Name: Workspace.properties.workspaceId
-        /// </param>
-        /// <param name="description">
-        /// The description of this workspace.
-        /// Serialized Name: Workspace.properties.description
-        /// </param>
-        /// <param name="friendlyName">
-        /// The friendly name for this workspace. This name in mutable
-        /// Serialized Name: Workspace.properties.friendlyName
-        /// </param>
-        /// <param name="keyVault">
-        /// ARM id of the key vault associated with this workspace. This cannot be changed once the workspace has been created
-        /// Serialized Name: Workspace.properties.keyVault
-        /// </param>
-        /// <param name="applicationInsights">
-        /// ARM id of the application insights associated with this workspace.
-        /// Serialized Name: Workspace.properties.applicationInsights
-        /// </param>
-        /// <param name="containerRegistry">
-        /// ARM id of the container registry associated with this workspace.
-        /// Serialized Name: Workspace.properties.containerRegistry
-        /// </param>
-        /// <param name="storageAccount">
-        /// ARM id of the storage account associated with this workspace. This cannot be changed once the workspace has been created
-        /// Serialized Name: Workspace.properties.storageAccount
-        /// </param>
-        /// <param name="discoveryUri">
-        /// Url for the discovery service to identify regional endpoints for machine learning experimentation services
-        /// Serialized Name: Workspace.properties.discoveryUrl
-        /// </param>
-        /// <param name="provisioningState">
-        /// The current deployment state of workspace resource. The provisioningState is to indicate states for resource provisioning.
-        /// Serialized Name: Workspace.properties.provisioningState
-        /// </param>
-        /// <param name="encryption">
-        /// The encryption settings of Azure ML workspace.
-        /// Serialized Name: Workspace.properties.encryption
-        /// </param>
-        /// <param name="hbiWorkspace">
-        /// The flag to signal HBI data in the workspace and reduce diagnostic data collected by the service
-        /// Serialized Name: Workspace.properties.hbiWorkspace
-        /// </param>
-        /// <param name="serviceProvisionedResourceGroup">
-        /// The name of the managed resource group created by workspace RP in customer subscription if the workspace is CMK workspace
-        /// Serialized Name: Workspace.properties.serviceProvisionedResourceGroup
-        /// </param>
-        /// <param name="privateLinkCount">
-        /// Count of private connections in the workspace
-        /// Serialized Name: Workspace.properties.privateLinkCount
-        /// </param>
-        /// <param name="imageBuildCompute">
-        /// The compute name for image build
-        /// Serialized Name: Workspace.properties.imageBuildCompute
-        /// </param>
-        /// <param name="allowPublicAccessWhenBehindVnet">
-        /// The flag to indicate whether to allow public access when behind VNet.
-        /// Serialized Name: Workspace.properties.allowPublicAccessWhenBehindVnet
-        /// </param>
-        /// <param name="publicNetworkAccess">
-        /// Whether requests from Public Network are allowed.
-        /// Serialized Name: Workspace.properties.publicNetworkAccess
-        /// </param>
-        /// <param name="privateEndpointConnections">
-        /// The list of private endpoint connections in the workspace.
-        /// Serialized Name: Workspace.properties.privateEndpointConnections
-        /// </param>
-        /// <param name="sharedPrivateLinkResources">
-        /// The list of shared private link resources in this workspace.
-        /// Serialized Name: Workspace.properties.sharedPrivateLinkResources
-        /// </param>
-        /// <param name="notebookInfo">
-        /// The notebook info of Azure ML workspace.
-        /// Serialized Name: Workspace.properties.notebookInfo
-        /// </param>
-        /// <param name="serviceManagedResourcesSettings">
-        /// The service managed resource settings.
-        /// Serialized Name: Workspace.properties.serviceManagedResourcesSettings
-        /// </param>
-        /// <param name="primaryUserAssignedIdentity">
-        /// The user assigned identity resource id that represents the workspace identity.
-        /// Serialized Name: Workspace.properties.primaryUserAssignedIdentity
-        /// </param>
-        /// <param name="tenantId">
-        /// The tenant id associated with this workspace.
-        /// Serialized Name: Workspace.properties.tenantId
-        /// </param>
-        /// <param name="isStorageHnsEnabled">
-        /// If the storage associated with the workspace has hierarchical namespace(HNS) enabled.
-        /// Serialized Name: Workspace.properties.storageHnsEnabled
-        /// </param>
-        /// <param name="mlFlowTrackingUri">
-        /// The URI associated with this workspace that machine learning flow must point at to set up tracking.
-        /// Serialized Name: Workspace.properties.mlFlowTrackingUri
-        /// </param>
-        /// <param name="isV1LegacyMode">
-        /// Enabling v1_legacy_mode may prevent you from using features provided by the v2 API.
-        /// Serialized Name: Workspace.properties.v1LegacyMode
-        /// </param>
-        internal MachineLearningWorkspaceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, MachineLearningSku sku, string workspaceId, string description, string friendlyName, string keyVault, string applicationInsights, string containerRegistry, string storageAccount, Uri discoveryUri, MachineLearningProvisioningState? provisioningState, MachineLearningEncryptionSetting encryption, bool? hbiWorkspace, string serviceProvisionedResourceGroup, int? privateLinkCount, string imageBuildCompute, bool? allowPublicAccessWhenBehindVnet, MachineLearningPublicNetworkAccess? publicNetworkAccess, IReadOnlyList<MachineLearningPrivateEndpointConnectionData> privateEndpointConnections, IList<MachineLearningSharedPrivateLinkResource> sharedPrivateLinkResources, MachineLearningNotebookResourceInfo notebookInfo, ServiceManagedResourcesSettings serviceManagedResourcesSettings, string primaryUserAssignedIdentity, Guid? tenantId, bool? isStorageHnsEnabled, Uri mlFlowTrackingUri, bool? isV1LegacyMode) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="identity"> The identity of the resource. </param>
+        /// <param name="sku"> The sku of the workspace. </param>
+        /// <param name="workspaceId"> The immutable id associated with this workspace. </param>
+        /// <param name="description"> The description of this workspace. </param>
+        /// <param name="friendlyName"> The friendly name for this workspace. This name in mutable. </param>
+        /// <param name="keyVault"> ARM id of the key vault associated with this workspace. This cannot be changed once the workspace has been created. </param>
+        /// <param name="applicationInsights"> ARM id of the application insights associated with this workspace. </param>
+        /// <param name="containerRegistry"> ARM id of the container registry associated with this workspace. </param>
+        /// <param name="storageAccount"> ARM id of the storage account associated with this workspace. This cannot be changed once the workspace has been created. </param>
+        /// <param name="discoveryUri"> Url for the discovery service to identify regional endpoints for machine learning experimentation services. </param>
+        /// <param name="provisioningState"> The current deployment state of workspace resource. The provisioningState is to indicate states for resource provisioning. </param>
+        /// <param name="encryption"> The encryption settings of Azure ML workspace. </param>
+        /// <param name="isHbiWorkspace"> The flag to signal HBI data in the workspace and reduce diagnostic data collected by the service. </param>
+        /// <param name="serviceProvisionedResourceGroup"> The name of the managed resource group created by workspace RP in customer subscription if the workspace is CMK workspace. </param>
+        /// <param name="privateLinkCount"> Count of private connections in the workspace. </param>
+        /// <param name="imageBuildCompute"> The compute name for image build. </param>
+        /// <param name="allowPublicAccessWhenBehindVnet"> The flag to indicate whether to allow public access when behind VNet. </param>
+        /// <param name="publicNetworkAccess"> Whether requests from Public Network are allowed. </param>
+        /// <param name="privateEndpointConnections"> The list of private endpoint connections in the workspace. </param>
+        /// <param name="sharedPrivateLinkResources"> The list of shared private link resources in this workspace. </param>
+        /// <param name="notebookInfo"> The notebook info of Azure ML workspace. </param>
+        /// <param name="serviceManagedResourcesSettings"> The service managed resource settings. </param>
+        /// <param name="primaryUserAssignedIdentity"> The user assigned identity resource id that represents the workspace identity. </param>
+        /// <param name="tenantId"> The tenant id associated with this workspace. </param>
+        /// <param name="isStorageHnsEnabled"> If the storage associated with the workspace has hierarchical namespace(HNS) enabled. </param>
+        /// <param name="mlFlowTrackingUri"> The URI associated with this workspace that machine learning flow must point at to set up tracking. </param>
+        /// <param name="isV1LegacyMode"> Enabling v1_legacy_mode may prevent you from using features provided by the v2 API. </param>
+        internal MachineLearningWorkspaceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, MachineLearningSku sku, string workspaceId, string description, string friendlyName, string keyVault, string applicationInsights, string containerRegistry, string storageAccount, Uri discoveryUri, MachineLearningProvisioningState? provisioningState, MachineLearningEncryptionSetting encryption, bool? isHbiWorkspace, string serviceProvisionedResourceGroup, int? privateLinkCount, string imageBuildCompute, bool? allowPublicAccessWhenBehindVnet, MachineLearningPublicNetworkAccess? publicNetworkAccess, IReadOnlyList<MachineLearningPrivateEndpointConnectionData> privateEndpointConnections, IList<MachineLearningSharedPrivateLinkResource> sharedPrivateLinkResources, MachineLearningNotebookResourceInfo notebookInfo, ServiceManagedResourcesSettings serviceManagedResourcesSettings, string primaryUserAssignedIdentity, Guid? tenantId, bool? isStorageHnsEnabled, Uri mlFlowTrackingUri, bool? isV1LegacyMode) : base(id, name, resourceType, systemData, tags, location)
         {
             Identity = identity;
             Sku = sku;
@@ -153,7 +75,7 @@ namespace Azure.ResourceManager.MachineLearning
             DiscoveryUri = discoveryUri;
             ProvisioningState = provisioningState;
             Encryption = encryption;
-            HbiWorkspace = hbiWorkspace;
+            IsHbiWorkspace = isHbiWorkspace;
             ServiceProvisionedResourceGroup = serviceProvisionedResourceGroup;
             PrivateLinkCount = privateLinkCount;
             ImageBuildCompute = imageBuildCompute;
@@ -170,120 +92,51 @@ namespace Azure.ResourceManager.MachineLearning
             IsV1LegacyMode = isV1LegacyMode;
         }
 
-        /// <summary>
-        /// The identity of the resource.
-        /// Serialized Name: Workspace.identity
-        /// </summary>
+        /// <summary> The identity of the resource. </summary>
         public ManagedServiceIdentity Identity { get; set; }
-        /// <summary>
-        /// The sku of the workspace.
-        /// Serialized Name: Workspace.sku
-        /// </summary>
+        /// <summary> The sku of the workspace. </summary>
         public MachineLearningSku Sku { get; set; }
-        /// <summary>
-        /// The immutable id associated with this workspace.
-        /// Serialized Name: Workspace.properties.workspaceId
-        /// </summary>
+        /// <summary> The immutable id associated with this workspace. </summary>
         public string WorkspaceId { get; }
-        /// <summary>
-        /// The description of this workspace.
-        /// Serialized Name: Workspace.properties.description
-        /// </summary>
+        /// <summary> The description of this workspace. </summary>
         public string Description { get; set; }
-        /// <summary>
-        /// The friendly name for this workspace. This name in mutable
-        /// Serialized Name: Workspace.properties.friendlyName
-        /// </summary>
+        /// <summary> The friendly name for this workspace. This name in mutable. </summary>
         public string FriendlyName { get; set; }
-        /// <summary>
-        /// ARM id of the key vault associated with this workspace. This cannot be changed once the workspace has been created
-        /// Serialized Name: Workspace.properties.keyVault
-        /// </summary>
+        /// <summary> ARM id of the key vault associated with this workspace. This cannot be changed once the workspace has been created. </summary>
         public string KeyVault { get; set; }
-        /// <summary>
-        /// ARM id of the application insights associated with this workspace.
-        /// Serialized Name: Workspace.properties.applicationInsights
-        /// </summary>
+        /// <summary> ARM id of the application insights associated with this workspace. </summary>
         public string ApplicationInsights { get; set; }
-        /// <summary>
-        /// ARM id of the container registry associated with this workspace.
-        /// Serialized Name: Workspace.properties.containerRegistry
-        /// </summary>
+        /// <summary> ARM id of the container registry associated with this workspace. </summary>
         public string ContainerRegistry { get; set; }
-        /// <summary>
-        /// ARM id of the storage account associated with this workspace. This cannot be changed once the workspace has been created
-        /// Serialized Name: Workspace.properties.storageAccount
-        /// </summary>
+        /// <summary> ARM id of the storage account associated with this workspace. This cannot be changed once the workspace has been created. </summary>
         public string StorageAccount { get; set; }
-        /// <summary>
-        /// Url for the discovery service to identify regional endpoints for machine learning experimentation services
-        /// Serialized Name: Workspace.properties.discoveryUrl
-        /// </summary>
+        /// <summary> Url for the discovery service to identify regional endpoints for machine learning experimentation services. </summary>
         public Uri DiscoveryUri { get; set; }
-        /// <summary>
-        /// The current deployment state of workspace resource. The provisioningState is to indicate states for resource provisioning.
-        /// Serialized Name: Workspace.properties.provisioningState
-        /// </summary>
+        /// <summary> The current deployment state of workspace resource. The provisioningState is to indicate states for resource provisioning. </summary>
         public MachineLearningProvisioningState? ProvisioningState { get; }
-        /// <summary>
-        /// The encryption settings of Azure ML workspace.
-        /// Serialized Name: Workspace.properties.encryption
-        /// </summary>
+        /// <summary> The encryption settings of Azure ML workspace. </summary>
         public MachineLearningEncryptionSetting Encryption { get; set; }
-        /// <summary>
-        /// The flag to signal HBI data in the workspace and reduce diagnostic data collected by the service
-        /// Serialized Name: Workspace.properties.hbiWorkspace
-        /// </summary>
-        public bool? HbiWorkspace { get; set; }
-        /// <summary>
-        /// The name of the managed resource group created by workspace RP in customer subscription if the workspace is CMK workspace
-        /// Serialized Name: Workspace.properties.serviceProvisionedResourceGroup
-        /// </summary>
+        /// <summary> The flag to signal HBI data in the workspace and reduce diagnostic data collected by the service. </summary>
+        public bool? IsHbiWorkspace { get; set; }
+        /// <summary> The name of the managed resource group created by workspace RP in customer subscription if the workspace is CMK workspace. </summary>
         public string ServiceProvisionedResourceGroup { get; }
-        /// <summary>
-        /// Count of private connections in the workspace
-        /// Serialized Name: Workspace.properties.privateLinkCount
-        /// </summary>
+        /// <summary> Count of private connections in the workspace. </summary>
         public int? PrivateLinkCount { get; }
-        /// <summary>
-        /// The compute name for image build
-        /// Serialized Name: Workspace.properties.imageBuildCompute
-        /// </summary>
+        /// <summary> The compute name for image build. </summary>
         public string ImageBuildCompute { get; set; }
-        /// <summary>
-        /// The flag to indicate whether to allow public access when behind VNet.
-        /// Serialized Name: Workspace.properties.allowPublicAccessWhenBehindVnet
-        /// </summary>
+        /// <summary> The flag to indicate whether to allow public access when behind VNet. </summary>
         public bool? AllowPublicAccessWhenBehindVnet { get; set; }
-        /// <summary>
-        /// Whether requests from Public Network are allowed.
-        /// Serialized Name: Workspace.properties.publicNetworkAccess
-        /// </summary>
+        /// <summary> Whether requests from Public Network are allowed. </summary>
         public MachineLearningPublicNetworkAccess? PublicNetworkAccess { get; set; }
-        /// <summary>
-        /// The list of private endpoint connections in the workspace.
-        /// Serialized Name: Workspace.properties.privateEndpointConnections
-        /// </summary>
+        /// <summary> The list of private endpoint connections in the workspace. </summary>
         public IReadOnlyList<MachineLearningPrivateEndpointConnectionData> PrivateEndpointConnections { get; }
-        /// <summary>
-        /// The list of shared private link resources in this workspace.
-        /// Serialized Name: Workspace.properties.sharedPrivateLinkResources
-        /// </summary>
+        /// <summary> The list of shared private link resources in this workspace. </summary>
         public IList<MachineLearningSharedPrivateLinkResource> SharedPrivateLinkResources { get; }
-        /// <summary>
-        /// The notebook info of Azure ML workspace.
-        /// Serialized Name: Workspace.properties.notebookInfo
-        /// </summary>
+        /// <summary> The notebook info of Azure ML workspace. </summary>
         public MachineLearningNotebookResourceInfo NotebookInfo { get; }
-        /// <summary>
-        /// The service managed resource settings.
-        /// Serialized Name: Workspace.properties.serviceManagedResourcesSettings
-        /// </summary>
+        /// <summary> The service managed resource settings. </summary>
         internal ServiceManagedResourcesSettings ServiceManagedResourcesSettings { get; set; }
-        /// <summary>
-        /// The throughput of the collections in cosmosdb database
-        /// Serialized Name: CosmosDbSettings.collectionsThroughput
-        /// </summary>
+        /// <summary> The throughput of the collections in cosmosdb database. </summary>
         public int? CosmosDbCollectionsThroughput
         {
             get => ServiceManagedResourcesSettings is null ? default : ServiceManagedResourcesSettings.CosmosDbCollectionsThroughput;
@@ -295,30 +148,15 @@ namespace Azure.ResourceManager.MachineLearning
             }
         }
 
-        /// <summary>
-        /// The user assigned identity resource id that represents the workspace identity.
-        /// Serialized Name: Workspace.properties.primaryUserAssignedIdentity
-        /// </summary>
+        /// <summary> The user assigned identity resource id that represents the workspace identity. </summary>
         public string PrimaryUserAssignedIdentity { get; set; }
-        /// <summary>
-        /// The tenant id associated with this workspace.
-        /// Serialized Name: Workspace.properties.tenantId
-        /// </summary>
+        /// <summary> The tenant id associated with this workspace. </summary>
         public Guid? TenantId { get; }
-        /// <summary>
-        /// If the storage associated with the workspace has hierarchical namespace(HNS) enabled.
-        /// Serialized Name: Workspace.properties.storageHnsEnabled
-        /// </summary>
+        /// <summary> If the storage associated with the workspace has hierarchical namespace(HNS) enabled. </summary>
         public bool? IsStorageHnsEnabled { get; }
-        /// <summary>
-        /// The URI associated with this workspace that machine learning flow must point at to set up tracking.
-        /// Serialized Name: Workspace.properties.mlFlowTrackingUri
-        /// </summary>
+        /// <summary> The URI associated with this workspace that machine learning flow must point at to set up tracking. </summary>
         public Uri MlFlowTrackingUri { get; }
-        /// <summary>
-        /// Enabling v1_legacy_mode may prevent you from using features provided by the v2 API.
-        /// Serialized Name: Workspace.properties.v1LegacyMode
-        /// </summary>
+        /// <summary> Enabling v1_legacy_mode may prevent you from using features provided by the v2 API. </summary>
         public bool? IsV1LegacyMode { get; set; }
     }
 }

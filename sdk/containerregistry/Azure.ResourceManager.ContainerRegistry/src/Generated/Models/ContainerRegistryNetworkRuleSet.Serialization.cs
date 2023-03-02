@@ -16,11 +16,11 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("defaultAction");
+            writer.WritePropertyName("defaultAction"u8);
             writer.WriteStringValue(DefaultAction.ToString());
             if (Optional.IsCollectionDefined(IPRules))
             {
-                writer.WritePropertyName("ipRules");
+                writer.WritePropertyName("ipRules"u8);
                 writer.WriteStartArray();
                 foreach (var item in IPRules)
                 {
@@ -37,12 +37,12 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             Optional<IList<ContainerRegistryIPRule>> ipRules = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("defaultAction"))
+                if (property.NameEquals("defaultAction"u8))
                 {
                     defaultAction = new ContainerRegistryNetworkRuleDefaultAction(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("ipRules"))
+                if (property.NameEquals("ipRules"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

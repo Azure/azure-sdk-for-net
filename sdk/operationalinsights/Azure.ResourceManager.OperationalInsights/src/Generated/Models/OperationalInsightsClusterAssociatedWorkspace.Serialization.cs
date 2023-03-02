@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             Optional<DateTimeOffset> associateDate = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("workspaceId"))
+                if (property.NameEquals("workspaceId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -37,12 +37,12 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                     workspaceId = property.Value.GetGuid();
                     continue;
                 }
-                if (property.NameEquals("workspaceName"))
+                if (property.NameEquals("workspaceName"u8))
                 {
                     workspaceName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("resourceId"))
+                if (property.NameEquals("resourceId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                     resourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("associateDate"))
+                if (property.NameEquals("associateDate"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

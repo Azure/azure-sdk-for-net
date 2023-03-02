@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -54,8 +53,16 @@ namespace Azure.ResourceManager.NetApp
 
         /// <summary>
         /// Check if a resource name is available.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.NetApp/locations/{location}/checkNameAvailability
-        /// Operation Id: NetAppResource_CheckNameAvailability
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.NetApp/locations/{location}/checkNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetAppResource_CheckNameAvailability</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="location"> The name of Azure region. </param>
         /// <param name="content"> Name availability request. </param>
@@ -78,8 +85,16 @@ namespace Azure.ResourceManager.NetApp
 
         /// <summary>
         /// Check if a resource name is available.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.NetApp/locations/{location}/checkNameAvailability
-        /// Operation Id: NetAppResource_CheckNameAvailability
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.NetApp/locations/{location}/checkNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetAppResource_CheckNameAvailability</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="location"> The name of Azure region. </param>
         /// <param name="content"> Name availability request. </param>
@@ -102,8 +117,16 @@ namespace Azure.ResourceManager.NetApp
 
         /// <summary>
         /// Check if a file path is available.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.NetApp/locations/{location}/checkFilePathAvailability
-        /// Operation Id: NetAppResource_CheckFilePathAvailability
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.NetApp/locations/{location}/checkFilePathAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetAppResource_CheckFilePathAvailability</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="location"> The name of Azure region. </param>
         /// <param name="content"> File path availability request. </param>
@@ -126,8 +149,16 @@ namespace Azure.ResourceManager.NetApp
 
         /// <summary>
         /// Check if a file path is available.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.NetApp/locations/{location}/checkFilePathAvailability
-        /// Operation Id: NetAppResource_CheckFilePathAvailability
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.NetApp/locations/{location}/checkFilePathAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetAppResource_CheckFilePathAvailability</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="location"> The name of Azure region. </param>
         /// <param name="content"> File path availability request. </param>
@@ -150,8 +181,16 @@ namespace Azure.ResourceManager.NetApp
 
         /// <summary>
         /// Check if a quota is available.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.NetApp/locations/{location}/checkQuotaAvailability
-        /// Operation Id: NetAppResource_CheckQuotaAvailability
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.NetApp/locations/{location}/checkQuotaAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetAppResource_CheckQuotaAvailability</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="location"> The name of Azure region. </param>
         /// <param name="content"> Quota availability request. </param>
@@ -174,8 +213,16 @@ namespace Azure.ResourceManager.NetApp
 
         /// <summary>
         /// Check if a quota is available.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.NetApp/locations/{location}/checkQuotaAvailability
-        /// Operation Id: NetAppResource_CheckQuotaAvailability
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.NetApp/locations/{location}/checkQuotaAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetAppResource_CheckQuotaAvailability</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="location"> The name of Azure region. </param>
         /// <param name="content"> Quota availability request. </param>
@@ -198,8 +245,16 @@ namespace Azure.ResourceManager.NetApp
 
         /// <summary>
         /// Provides storage to network proximity and logical zone mapping information.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.NetApp/locations/{location}/regionInfo
-        /// Operation Id: NetAppResource_QueryRegionInfo
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.NetApp/locations/{location}/regionInfo</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetAppResource_QueryRegionInfo</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="location"> The name of Azure region. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -221,8 +276,16 @@ namespace Azure.ResourceManager.NetApp
 
         /// <summary>
         /// Provides storage to network proximity and logical zone mapping information.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.NetApp/locations/{location}/regionInfo
-        /// Operation Id: NetAppResource_QueryRegionInfo
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.NetApp/locations/{location}/regionInfo</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetAppResource_QueryRegionInfo</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="location"> The name of Azure region. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -244,64 +307,60 @@ namespace Azure.ResourceManager.NetApp
 
         /// <summary>
         /// Get the default and current limits for quotas
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.NetApp/locations/{location}/quotaLimits
-        /// Operation Id: NetAppResourceQuotaLimits_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.NetApp/locations/{location}/quotaLimits</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetAppResourceQuotaLimits_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="location"> The name of Azure region. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="NetAppSubscriptionQuotaItem" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<NetAppSubscriptionQuotaItem> GetNetAppQuotaLimitsAsync(AzureLocation location, CancellationToken cancellationToken = default)
         {
-            async Task<Page<NetAppSubscriptionQuotaItem>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = NetAppResourceQuotaLimitsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetNetAppQuotaLimits");
-                scope.Start();
-                try
-                {
-                    var response = await NetAppResourceQuotaLimitsRestClient.ListAsync(Id.SubscriptionId, location, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => NetAppResourceQuotaLimitsRestClient.CreateListRequest(Id.SubscriptionId, location);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, NetAppSubscriptionQuotaItem.DeserializeNetAppSubscriptionQuotaItem, NetAppResourceQuotaLimitsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetNetAppQuotaLimits", "value", null, cancellationToken);
         }
 
         /// <summary>
         /// Get the default and current limits for quotas
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.NetApp/locations/{location}/quotaLimits
-        /// Operation Id: NetAppResourceQuotaLimits_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.NetApp/locations/{location}/quotaLimits</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetAppResourceQuotaLimits_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="location"> The name of Azure region. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="NetAppSubscriptionQuotaItem" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<NetAppSubscriptionQuotaItem> GetNetAppQuotaLimits(AzureLocation location, CancellationToken cancellationToken = default)
         {
-            Page<NetAppSubscriptionQuotaItem> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = NetAppResourceQuotaLimitsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetNetAppQuotaLimits");
-                scope.Start();
-                try
-                {
-                    var response = NetAppResourceQuotaLimitsRestClient.List(Id.SubscriptionId, location, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => NetAppResourceQuotaLimitsRestClient.CreateListRequest(Id.SubscriptionId, location);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, NetAppSubscriptionQuotaItem.DeserializeNetAppSubscriptionQuotaItem, NetAppResourceQuotaLimitsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetNetAppQuotaLimits", "value", null, cancellationToken);
         }
 
         /// <summary>
         /// Get the default and current subscription quota limit
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.NetApp/locations/{location}/quotaLimits/{quotaLimitName}
-        /// Operation Id: NetAppResourceQuotaLimits_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.NetApp/locations/{location}/quotaLimits/{quotaLimitName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetAppResourceQuotaLimits_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="location"> The name of Azure region. </param>
         /// <param name="quotaLimitName"> The name of the Quota Limit. </param>
@@ -324,8 +383,16 @@ namespace Azure.ResourceManager.NetApp
 
         /// <summary>
         /// Get the default and current subscription quota limit
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.NetApp/locations/{location}/quotaLimits/{quotaLimitName}
-        /// Operation Id: NetAppResourceQuotaLimits_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.NetApp/locations/{location}/quotaLimits/{quotaLimitName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetAppResourceQuotaLimits_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="location"> The name of Azure region. </param>
         /// <param name="quotaLimitName"> The name of the Quota Limit. </param>
@@ -348,86 +415,46 @@ namespace Azure.ResourceManager.NetApp
 
         /// <summary>
         /// List and describe all NetApp accounts in the subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.NetApp/netAppAccounts
-        /// Operation Id: Accounts_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.NetApp/netAppAccounts</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Accounts_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="NetAppAccountResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<NetAppAccountResource> GetNetAppAccountsAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<NetAppAccountResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = NetAppAccountAccountsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetNetAppAccounts");
-                scope.Start();
-                try
-                {
-                    var response = await NetAppAccountAccountsRestClient.ListBySubscriptionAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new NetAppAccountResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<NetAppAccountResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = NetAppAccountAccountsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetNetAppAccounts");
-                scope.Start();
-                try
-                {
-                    var response = await NetAppAccountAccountsRestClient.ListBySubscriptionNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new NetAppAccountResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => NetAppAccountAccountsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => NetAppAccountAccountsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NetAppAccountResource(Client, NetAppAccountData.DeserializeNetAppAccountData(e)), NetAppAccountAccountsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetNetAppAccounts", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// List and describe all NetApp accounts in the subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.NetApp/netAppAccounts
-        /// Operation Id: Accounts_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.NetApp/netAppAccounts</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Accounts_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="NetAppAccountResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<NetAppAccountResource> GetNetAppAccounts(CancellationToken cancellationToken = default)
         {
-            Page<NetAppAccountResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = NetAppAccountAccountsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetNetAppAccounts");
-                scope.Start();
-                try
-                {
-                    var response = NetAppAccountAccountsRestClient.ListBySubscription(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new NetAppAccountResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<NetAppAccountResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = NetAppAccountAccountsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetNetAppAccounts");
-                scope.Start();
-                try
-                {
-                    var response = NetAppAccountAccountsRestClient.ListBySubscriptionNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new NetAppAccountResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => NetAppAccountAccountsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => NetAppAccountAccountsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NetAppAccountResource(Client, NetAppAccountData.DeserializeNetAppAccountData(e)), NetAppAccountAccountsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetNetAppAccounts", "value", "nextLink", cancellationToken);
         }
     }
 }

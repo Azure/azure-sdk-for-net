@@ -19,17 +19,17 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Status))
             {
-                writer.WritePropertyName("status");
+                writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
             if (Optional.IsDefined(Target))
             {
-                writer.WritePropertyName("target");
+                writer.WritePropertyName("target"u8);
                 writer.WriteNumberValue(Target.Value);
             }
             if (Optional.IsCollectionDefined(CostThresholds))
             {
-                writer.WritePropertyName("costThresholds");
+                writer.WritePropertyName("costThresholds"u8);
                 writer.WriteStartArray();
                 foreach (var item in CostThresholds)
                 {
@@ -39,17 +39,17 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             }
             if (Optional.IsDefined(CycleStartOn))
             {
-                writer.WritePropertyName("cycleStartDateTime");
+                writer.WritePropertyName("cycleStartDateTime"u8);
                 writer.WriteStringValue(CycleStartOn.Value, "O");
             }
             if (Optional.IsDefined(CycleEndOn))
             {
-                writer.WritePropertyName("cycleEndDateTime");
+                writer.WritePropertyName("cycleEndDateTime"u8);
                 writer.WriteStringValue(CycleEndOn.Value, "O");
             }
             if (Optional.IsDefined(CycleType))
             {
-                writer.WritePropertyName("cycleType");
+                writer.WritePropertyName("cycleType"u8);
                 writer.WriteStringValue(CycleType.Value.ToString());
             }
             writer.WriteEndObject();
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             Optional<DevTestLabReportingCycleType> cycleType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("status"))
+                if (property.NameEquals("status"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                     status = new DevTestLabTargetCostStatus(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("target"))
+                if (property.NameEquals("target"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                     target = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("costThresholds"))
+                if (property.NameEquals("costThresholds"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                     costThresholds = array;
                     continue;
                 }
-                if (property.NameEquals("cycleStartDateTime"))
+                if (property.NameEquals("cycleStartDateTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                     cycleStartDateTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("cycleEndDateTime"))
+                if (property.NameEquals("cycleEndDateTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                     cycleEndDateTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("cycleType"))
+                if (property.NameEquals("cycleType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

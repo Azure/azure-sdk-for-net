@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Network.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Workspaces))
             {
-                writer.WritePropertyName("workspaces");
+                writer.WritePropertyName("workspaces"u8);
                 writer.WriteStartArray();
                 foreach (var item in Workspaces)
                 {
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Network.Models
             }
             if (Optional.IsDefined(DefaultWorkspaceId))
             {
-                writer.WritePropertyName("defaultWorkspaceId");
+                writer.WritePropertyName("defaultWorkspaceId"u8);
                 JsonSerializer.Serialize(writer, DefaultWorkspaceId);
             }
             writer.WriteEndObject();
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Network.Models
             Optional<WritableSubResource> defaultWorkspaceId = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("workspaces"))
+                if (property.NameEquals("workspaces"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Network.Models
                     workspaces = array;
                     continue;
                 }
-                if (property.NameEquals("defaultWorkspaceId"))
+                if (property.NameEquals("defaultWorkspaceId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -67,8 +66,16 @@ namespace Azure.ResourceManager.WorkloadMonitor
 
         /// <summary>
         /// Get the current health status of a monitor of a virtual machine. Optional parameter: $expand (retrieve the monitor&apos;s evidence and configuration).
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{providerName}/{resourceCollectionName}/{resourceName}/providers/Microsoft.WorkloadMonitor/monitors/{monitorId}
-        /// Operation Id: HealthMonitors_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{providerName}/{resourceCollectionName}/{resourceName}/providers/Microsoft.WorkloadMonitor/monitors/{monitorId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>HealthMonitors_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="monitorId"> The monitor Id of the virtual machine. </param>
         /// <param name="expand"> Optionally expand the monitor’s evidence and/or configuration. Example: $expand=evidence,configuration. </param>
@@ -97,8 +104,16 @@ namespace Azure.ResourceManager.WorkloadMonitor
 
         /// <summary>
         /// Get the current health status of a monitor of a virtual machine. Optional parameter: $expand (retrieve the monitor&apos;s evidence and configuration).
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{providerName}/{resourceCollectionName}/{resourceName}/providers/Microsoft.WorkloadMonitor/monitors/{monitorId}
-        /// Operation Id: HealthMonitors_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{providerName}/{resourceCollectionName}/{resourceName}/providers/Microsoft.WorkloadMonitor/monitors/{monitorId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>HealthMonitors_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="monitorId"> The monitor Id of the virtual machine. </param>
         /// <param name="expand"> Optionally expand the monitor’s evidence and/or configuration. Example: $expand=evidence,configuration. </param>
@@ -127,8 +142,16 @@ namespace Azure.ResourceManager.WorkloadMonitor
 
         /// <summary>
         /// Get the current health status of all monitors of a virtual machine. Optional parameters: $expand (retrieve the monitor&apos;s evidence and configuration) and $filter (filter by monitor name).
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{providerName}/{resourceCollectionName}/{resourceName}/providers/Microsoft.WorkloadMonitor/monitors
-        /// Operation Id: HealthMonitors_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{providerName}/{resourceCollectionName}/{resourceName}/providers/Microsoft.WorkloadMonitor/monitors</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>HealthMonitors_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="filter"> Optionally filter by monitor name. Example: $filter=monitorName eq &apos;logical-disks|C:|disk-free-space-mb.&apos;. </param>
         /// <param name="expand"> Optionally expand the monitor’s evidence and/or configuration. Example: $expand=evidence,configuration. </param>
@@ -136,43 +159,23 @@ namespace Azure.ResourceManager.WorkloadMonitor
         /// <returns> An async collection of <see cref="HealthMonitorResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<HealthMonitorResource> GetAllAsync(string filter = null, string expand = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<HealthMonitorResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _healthMonitorClientDiagnostics.CreateScope("HealthMonitorCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _healthMonitorRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, _providerName, _resourceCollectionName, _resourceName, filter, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new HealthMonitorResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<HealthMonitorResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _healthMonitorClientDiagnostics.CreateScope("HealthMonitorCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _healthMonitorRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, _providerName, _resourceCollectionName, _resourceName, filter, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new HealthMonitorResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _healthMonitorRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, _providerName, _resourceCollectionName, _resourceName, filter, expand);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _healthMonitorRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, _providerName, _resourceCollectionName, _resourceName, filter, expand);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new HealthMonitorResource(Client, HealthMonitorData.DeserializeHealthMonitorData(e)), _healthMonitorClientDiagnostics, Pipeline, "HealthMonitorCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Get the current health status of all monitors of a virtual machine. Optional parameters: $expand (retrieve the monitor&apos;s evidence and configuration) and $filter (filter by monitor name).
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{providerName}/{resourceCollectionName}/{resourceName}/providers/Microsoft.WorkloadMonitor/monitors
-        /// Operation Id: HealthMonitors_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{providerName}/{resourceCollectionName}/{resourceName}/providers/Microsoft.WorkloadMonitor/monitors</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>HealthMonitors_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="filter"> Optionally filter by monitor name. Example: $filter=monitorName eq &apos;logical-disks|C:|disk-free-space-mb.&apos;. </param>
         /// <param name="expand"> Optionally expand the monitor’s evidence and/or configuration. Example: $expand=evidence,configuration. </param>
@@ -180,43 +183,23 @@ namespace Azure.ResourceManager.WorkloadMonitor
         /// <returns> A collection of <see cref="HealthMonitorResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<HealthMonitorResource> GetAll(string filter = null, string expand = null, CancellationToken cancellationToken = default)
         {
-            Page<HealthMonitorResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _healthMonitorClientDiagnostics.CreateScope("HealthMonitorCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _healthMonitorRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, _providerName, _resourceCollectionName, _resourceName, filter, expand, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new HealthMonitorResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<HealthMonitorResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _healthMonitorClientDiagnostics.CreateScope("HealthMonitorCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _healthMonitorRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, _providerName, _resourceCollectionName, _resourceName, filter, expand, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new HealthMonitorResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _healthMonitorRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, _providerName, _resourceCollectionName, _resourceName, filter, expand);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _healthMonitorRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, _providerName, _resourceCollectionName, _resourceName, filter, expand);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new HealthMonitorResource(Client, HealthMonitorData.DeserializeHealthMonitorData(e)), _healthMonitorClientDiagnostics, Pipeline, "HealthMonitorCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{providerName}/{resourceCollectionName}/{resourceName}/providers/Microsoft.WorkloadMonitor/monitors/{monitorId}
-        /// Operation Id: HealthMonitors_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{providerName}/{resourceCollectionName}/{resourceName}/providers/Microsoft.WorkloadMonitor/monitors/{monitorId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>HealthMonitors_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="monitorId"> The monitor Id of the virtual machine. </param>
         /// <param name="expand"> Optionally expand the monitor’s evidence and/or configuration. Example: $expand=evidence,configuration. </param>
@@ -243,8 +226,16 @@ namespace Azure.ResourceManager.WorkloadMonitor
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{providerName}/{resourceCollectionName}/{resourceName}/providers/Microsoft.WorkloadMonitor/monitors/{monitorId}
-        /// Operation Id: HealthMonitors_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{providerName}/{resourceCollectionName}/{resourceName}/providers/Microsoft.WorkloadMonitor/monitors/{monitorId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>HealthMonitors_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="monitorId"> The monitor Id of the virtual machine. </param>
         /// <param name="expand"> Optionally expand the monitor’s evidence and/or configuration. Example: $expand=evidence,configuration. </param>

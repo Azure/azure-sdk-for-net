@@ -5,10 +5,7 @@
 
 #nullable disable
 
-using System;
-using System.Linq;
 using System.Threading;
-using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -58,340 +55,180 @@ namespace Azure.ResourceManager.StorageCache
 
         /// <summary>
         /// Get the list of StorageCache.Cache SKUs available to this subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.StorageCache/skus
-        /// Operation Id: Skus_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.StorageCache/skus</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Skus_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="StorageCacheSku" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<StorageCacheSku> GetStorageCacheSkusAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<StorageCacheSku>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = SkusClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetStorageCacheSkus");
-                scope.Start();
-                try
-                {
-                    var response = await SkusRestClient.ListAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<StorageCacheSku>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = SkusClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetStorageCacheSkus");
-                scope.Start();
-                try
-                {
-                    var response = await SkusRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => SkusRestClient.CreateListRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => SkusRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, StorageCacheSku.DeserializeStorageCacheSku, SkusClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetStorageCacheSkus", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Get the list of StorageCache.Cache SKUs available to this subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.StorageCache/skus
-        /// Operation Id: Skus_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.StorageCache/skus</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Skus_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="StorageCacheSku" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<StorageCacheSku> GetStorageCacheSkus(CancellationToken cancellationToken = default)
         {
-            Page<StorageCacheSku> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = SkusClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetStorageCacheSkus");
-                scope.Start();
-                try
-                {
-                    var response = SkusRestClient.List(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<StorageCacheSku> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = SkusClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetStorageCacheSkus");
-                scope.Start();
-                try
-                {
-                    var response = SkusRestClient.ListNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => SkusRestClient.CreateListRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => SkusRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, StorageCacheSku.DeserializeStorageCacheSku, SkusClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetStorageCacheSkus", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Get the list of Cache Usage Models available to this subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.StorageCache/usageModels
-        /// Operation Id: UsageModels_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.StorageCache/usageModels</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>UsageModels_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="StorageCacheUsageModel" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<StorageCacheUsageModel> GetUsageModelsAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<StorageCacheUsageModel>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = UsageModelsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetUsageModels");
-                scope.Start();
-                try
-                {
-                    var response = await UsageModelsRestClient.ListAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<StorageCacheUsageModel>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = UsageModelsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetUsageModels");
-                scope.Start();
-                try
-                {
-                    var response = await UsageModelsRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => UsageModelsRestClient.CreateListRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => UsageModelsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, StorageCacheUsageModel.DeserializeStorageCacheUsageModel, UsageModelsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetUsageModels", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Get the list of Cache Usage Models available to this subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.StorageCache/usageModels
-        /// Operation Id: UsageModels_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.StorageCache/usageModels</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>UsageModels_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="StorageCacheUsageModel" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<StorageCacheUsageModel> GetUsageModels(CancellationToken cancellationToken = default)
         {
-            Page<StorageCacheUsageModel> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = UsageModelsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetUsageModels");
-                scope.Start();
-                try
-                {
-                    var response = UsageModelsRestClient.List(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<StorageCacheUsageModel> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = UsageModelsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetUsageModels");
-                scope.Start();
-                try
-                {
-                    var response = UsageModelsRestClient.ListNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => UsageModelsRestClient.CreateListRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => UsageModelsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, StorageCacheUsageModel.DeserializeStorageCacheUsageModel, UsageModelsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetUsageModels", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Gets the quantity used and quota limit for resources
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.StorageCache/locations/{location}/usages
-        /// Operation Id: AscUsages_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.StorageCache/locations/{location}/usages</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AscUsages_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="location"> The name of the region to query for usage information. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="StorageCacheUsage" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<StorageCacheUsage> GetStorageCacheUsagesAsync(AzureLocation location, CancellationToken cancellationToken = default)
         {
-            async Task<Page<StorageCacheUsage>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = AscUsagesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetStorageCacheUsages");
-                scope.Start();
-                try
-                {
-                    var response = await AscUsagesRestClient.ListAsync(Id.SubscriptionId, location, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<StorageCacheUsage>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = AscUsagesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetStorageCacheUsages");
-                scope.Start();
-                try
-                {
-                    var response = await AscUsagesRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, location, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => AscUsagesRestClient.CreateListRequest(Id.SubscriptionId, location);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => AscUsagesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, location);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, StorageCacheUsage.DeserializeStorageCacheUsage, AscUsagesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetStorageCacheUsages", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Gets the quantity used and quota limit for resources
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.StorageCache/locations/{location}/usages
-        /// Operation Id: AscUsages_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.StorageCache/locations/{location}/usages</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AscUsages_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="location"> The name of the region to query for usage information. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="StorageCacheUsage" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<StorageCacheUsage> GetStorageCacheUsages(AzureLocation location, CancellationToken cancellationToken = default)
         {
-            Page<StorageCacheUsage> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = AscUsagesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetStorageCacheUsages");
-                scope.Start();
-                try
-                {
-                    var response = AscUsagesRestClient.List(Id.SubscriptionId, location, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<StorageCacheUsage> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = AscUsagesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetStorageCacheUsages");
-                scope.Start();
-                try
-                {
-                    var response = AscUsagesRestClient.ListNextPage(nextLink, Id.SubscriptionId, location, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => AscUsagesRestClient.CreateListRequest(Id.SubscriptionId, location);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => AscUsagesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, location);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, StorageCacheUsage.DeserializeStorageCacheUsage, AscUsagesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetStorageCacheUsages", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Returns all Caches the user has access to under a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.StorageCache/caches
-        /// Operation Id: Caches_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.StorageCache/caches</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Caches_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="StorageCacheResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<StorageCacheResource> GetStorageCachesAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<StorageCacheResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = StorageCacheCachesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetStorageCaches");
-                scope.Start();
-                try
-                {
-                    var response = await StorageCacheCachesRestClient.ListAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new StorageCacheResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<StorageCacheResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = StorageCacheCachesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetStorageCaches");
-                scope.Start();
-                try
-                {
-                    var response = await StorageCacheCachesRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new StorageCacheResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => StorageCacheCachesRestClient.CreateListRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => StorageCacheCachesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new StorageCacheResource(Client, StorageCacheData.DeserializeStorageCacheData(e)), StorageCacheCachesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetStorageCaches", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Returns all Caches the user has access to under a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.StorageCache/caches
-        /// Operation Id: Caches_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.StorageCache/caches</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Caches_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="StorageCacheResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<StorageCacheResource> GetStorageCaches(CancellationToken cancellationToken = default)
         {
-            Page<StorageCacheResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = StorageCacheCachesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetStorageCaches");
-                scope.Start();
-                try
-                {
-                    var response = StorageCacheCachesRestClient.List(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new StorageCacheResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<StorageCacheResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = StorageCacheCachesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetStorageCaches");
-                scope.Start();
-                try
-                {
-                    var response = StorageCacheCachesRestClient.ListNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new StorageCacheResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => StorageCacheCachesRestClient.CreateListRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => StorageCacheCachesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new StorageCacheResource(Client, StorageCacheData.DeserializeStorageCacheData(e)), StorageCacheCachesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetStorageCaches", "value", "nextLink", cancellationToken);
         }
     }
 }

@@ -504,8 +504,14 @@ namespace Microsoft.Azure.Management.Compute
         /// </exception>
         Task<AzureOperationResponse> RedeployWithHttpMessagesAsync(string resourceGroupName, string vmName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Reimages the virtual machine which has an ephemeral OS disk back to
-        /// its initial state.
+        /// Reimages (upgrade the operating system) a virtual machine which
+        /// don't have a ephemeral OS disk, for virtual machines who have a
+        /// ephemeral OS disk the virtual machine is reset to initial state.
+        /// NOTE: The retaining of old OS disk depends on the value of
+        /// deleteOption of OS disk. If deleteOption is detach, the old OS disk
+        /// will be preserved after reimage. If deleteOption is delete, the old
+        /// OS disk will be deleted after reimage. The deleteOption of the OS
+        /// disk should be updated accordingly before performing the reimage.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -513,10 +519,8 @@ namespace Microsoft.Azure.Management.Compute
         /// <param name='vmName'>
         /// The name of the virtual machine.
         /// </param>
-        /// <param name='tempDisk'>
-        /// Specifies whether to reimage temp disk. Default value: false. Note:
-        /// This temp disk reimage parameter is only supported for VM/VMSS with
-        /// Ephemeral OS disk.
+        /// <param name='parameters'>
+        /// Parameters supplied to the Reimage Virtual Machine operation.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -530,7 +534,7 @@ namespace Microsoft.Azure.Management.Compute
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse> ReimageWithHttpMessagesAsync(string resourceGroupName, string vmName, bool? tempDisk = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse> ReimageWithHttpMessagesAsync(string resourceGroupName, string vmName, VirtualMachineReimageParameters parameters = default(VirtualMachineReimageParameters), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// The operation to retrieve SAS URIs for a virtual machine's boot
         /// diagnostic logs.
@@ -970,8 +974,14 @@ namespace Microsoft.Azure.Management.Compute
         /// </exception>
         Task<AzureOperationResponse> BeginRedeployWithHttpMessagesAsync(string resourceGroupName, string vmName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Reimages the virtual machine which has an ephemeral OS disk back to
-        /// its initial state.
+        /// Reimages (upgrade the operating system) a virtual machine which
+        /// don't have a ephemeral OS disk, for virtual machines who have a
+        /// ephemeral OS disk the virtual machine is reset to initial state.
+        /// NOTE: The retaining of old OS disk depends on the value of
+        /// deleteOption of OS disk. If deleteOption is detach, the old OS disk
+        /// will be preserved after reimage. If deleteOption is delete, the old
+        /// OS disk will be deleted after reimage. The deleteOption of the OS
+        /// disk should be updated accordingly before performing the reimage.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -979,10 +989,8 @@ namespace Microsoft.Azure.Management.Compute
         /// <param name='vmName'>
         /// The name of the virtual machine.
         /// </param>
-        /// <param name='tempDisk'>
-        /// Specifies whether to reimage temp disk. Default value: false. Note:
-        /// This temp disk reimage parameter is only supported for VM/VMSS with
-        /// Ephemeral OS disk.
+        /// <param name='parameters'>
+        /// Parameters supplied to the Reimage Virtual Machine operation.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -996,7 +1004,7 @@ namespace Microsoft.Azure.Management.Compute
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse> BeginReimageWithHttpMessagesAsync(string resourceGroupName, string vmName, bool? tempDisk = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse> BeginReimageWithHttpMessagesAsync(string resourceGroupName, string vmName, VirtualMachineReimageParameters parameters = default(VirtualMachineReimageParameters), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// The operation to perform maintenance on a virtual machine.
         /// </summary>

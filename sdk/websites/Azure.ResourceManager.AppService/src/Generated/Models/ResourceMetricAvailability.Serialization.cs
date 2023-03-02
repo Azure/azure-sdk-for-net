@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<string> retention = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("timeGrain"))
+                if (property.NameEquals("timeGrain"u8))
                 {
                     timeGrain = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("retention"))
+                if (property.NameEquals("retention"u8))
                 {
                     retention = property.Value.GetString();
                     continue;

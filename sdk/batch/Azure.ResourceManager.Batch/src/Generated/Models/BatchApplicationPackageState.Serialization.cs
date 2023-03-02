@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.Batch.Models
 
         public static BatchApplicationPackageState ToBatchApplicationPackageState(this string value)
         {
-            if (string.Equals(value, "Pending", StringComparison.InvariantCultureIgnoreCase)) return BatchApplicationPackageState.Pending;
-            if (string.Equals(value, "Active", StringComparison.InvariantCultureIgnoreCase)) return BatchApplicationPackageState.Active;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Pending")) return BatchApplicationPackageState.Pending;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Active")) return BatchApplicationPackageState.Active;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown BatchApplicationPackageState value.");
         }
     }

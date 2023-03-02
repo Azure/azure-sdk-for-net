@@ -12,14 +12,14 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.MachineLearning
 {
-    /// <summary> A class representing the MachineLearningComponentVersion data model. </summary>
+    /// <summary>
+    /// A class representing the MachineLearningComponentVersion data model.
+    /// Azure Resource Manager resource envelope.
+    /// </summary>
     public partial class MachineLearningComponentVersionData : ResourceData
     {
         /// <summary> Initializes a new instance of MachineLearningComponentVersionData. </summary>
-        /// <param name="properties">
-        /// [Required] Additional attributes of the entity.
-        /// Serialized Name: ComponentVersionResource.properties
-        /// </param>
+        /// <param name="properties"> [Required] Additional attributes of the entity. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
         public MachineLearningComponentVersionData(MachineLearningComponentVersionProperties properties)
         {
@@ -33,19 +33,13 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties">
-        /// [Required] Additional attributes of the entity.
-        /// Serialized Name: ComponentVersionResource.properties
-        /// </param>
+        /// <param name="properties"> [Required] Additional attributes of the entity. </param>
         internal MachineLearningComponentVersionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, MachineLearningComponentVersionProperties properties) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
         }
 
-        /// <summary>
-        /// [Required] Additional attributes of the entity.
-        /// Serialized Name: ComponentVersionResource.properties
-        /// </summary>
+        /// <summary> [Required] Additional attributes of the entity. </summary>
         public MachineLearningComponentVersionProperties Properties { get; set; }
     }
 }

@@ -11,7 +11,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DevCenter
 {
-    /// <summary> A class representing the ImageVersion data model. </summary>
+    /// <summary>
+    /// A class representing the ImageVersion data model.
+    /// Represents an image version.
+    /// </summary>
     public partial class ImageVersionData : ResourceData
     {
         /// <summary> Initializes a new instance of ImageVersionData. </summary>

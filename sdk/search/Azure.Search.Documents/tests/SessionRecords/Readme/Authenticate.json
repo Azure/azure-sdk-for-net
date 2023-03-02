@@ -1,9 +1,9 @@
 {
   "Entries": [],
   "Variables": {
-    "SearchIndexName": "mbqvlxmt",
+    "SearchIndexName": "ylixaavx",
     "SEARCH_ADMIN_API_KEY": "Sanitized",
-    "SEARCH_ENDPOINT_SUFFIX": null,
-    "SEARCH_SERVICE_NAME": "mohitc-acs"
+    "SEARCH_ENDPOINT_SUFFIX": "search.windows.net",
+    "SEARCH_SERVICE_NAME": "azs-net-shrejaazsearch"
   }
 }

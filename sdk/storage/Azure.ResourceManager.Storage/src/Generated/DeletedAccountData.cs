@@ -11,7 +11,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Storage
 {
-    /// <summary> A class representing the DeletedAccount data model. </summary>
+    /// <summary>
+    /// A class representing the DeletedAccount data model.
+    /// Deleted storage account
+    /// </summary>
     public partial class DeletedAccountData : ResourceData
     {
         /// <summary> Initializes a new instance of DeletedAccountData. </summary>

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Hci.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Tags))
             {
-                writer.WritePropertyName("tags");
+                writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
                 foreach (var item in Tags)
                 {
@@ -26,26 +26,26 @@ namespace Azure.ResourceManager.Hci.Models
                 }
                 writer.WriteEndObject();
             }
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(CloudManagementEndpoint))
             {
-                writer.WritePropertyName("cloudManagementEndpoint");
+                writer.WritePropertyName("cloudManagementEndpoint"u8);
                 writer.WriteStringValue(CloudManagementEndpoint);
             }
             if (Optional.IsDefined(AadClientId))
             {
-                writer.WritePropertyName("aadClientId");
+                writer.WritePropertyName("aadClientId"u8);
                 writer.WriteStringValue(AadClientId.Value);
             }
             if (Optional.IsDefined(AadTenantId))
             {
-                writer.WritePropertyName("aadTenantId");
+                writer.WritePropertyName("aadTenantId"u8);
                 writer.WriteStringValue(AadTenantId.Value);
             }
             if (Optional.IsDefined(DesiredProperties))
             {
-                writer.WritePropertyName("desiredProperties");
+                writer.WritePropertyName("desiredProperties"u8);
                 writer.WriteObjectValue(DesiredProperties);
             }
             writer.WriteEndObject();

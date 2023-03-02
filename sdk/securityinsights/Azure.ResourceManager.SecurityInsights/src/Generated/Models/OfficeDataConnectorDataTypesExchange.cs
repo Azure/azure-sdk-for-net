@@ -11,8 +11,13 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     internal partial class OfficeDataConnectorDataTypesExchange : DataConnectorDataTypeCommon
     {
         /// <summary> Initializes a new instance of OfficeDataConnectorDataTypesExchange. </summary>
+        public OfficeDataConnectorDataTypesExchange()
+        {
+        }
+
+        /// <summary> Initializes a new instance of OfficeDataConnectorDataTypesExchange. </summary>
         /// <param name="state"> Describe whether this data type connection is enabled or not. </param>
-        public OfficeDataConnectorDataTypesExchange(DataTypeState state) : base(state)
+        internal OfficeDataConnectorDataTypesExchange(SecurityInsightsDataTypeConnectionState? state) : base(state)
         {
         }
     }

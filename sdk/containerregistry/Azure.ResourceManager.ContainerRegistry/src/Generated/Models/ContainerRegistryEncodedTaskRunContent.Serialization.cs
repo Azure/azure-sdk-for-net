@@ -16,16 +16,16 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("encodedTaskContent");
+            writer.WritePropertyName("encodedTaskContent"u8);
             writer.WriteStringValue(EncodedTaskContent);
             if (Optional.IsDefined(EncodedValuesContent))
             {
-                writer.WritePropertyName("encodedValuesContent");
+                writer.WritePropertyName("encodedValuesContent"u8);
                 writer.WriteStringValue(EncodedValuesContent);
             }
             if (Optional.IsCollectionDefined(Values))
             {
-                writer.WritePropertyName("values");
+                writer.WritePropertyName("values"u8);
                 writer.WriteStartArray();
                 foreach (var item in Values)
                 {
@@ -35,41 +35,41 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             }
             if (Optional.IsDefined(TimeoutInSeconds))
             {
-                writer.WritePropertyName("timeout");
+                writer.WritePropertyName("timeout"u8);
                 writer.WriteNumberValue(TimeoutInSeconds.Value);
             }
-            writer.WritePropertyName("platform");
+            writer.WritePropertyName("platform"u8);
             writer.WriteObjectValue(Platform);
             if (Optional.IsDefined(AgentConfiguration))
             {
-                writer.WritePropertyName("agentConfiguration");
+                writer.WritePropertyName("agentConfiguration"u8);
                 writer.WriteObjectValue(AgentConfiguration);
             }
             if (Optional.IsDefined(SourceLocation))
             {
-                writer.WritePropertyName("sourceLocation");
+                writer.WritePropertyName("sourceLocation"u8);
                 writer.WriteStringValue(SourceLocation);
             }
             if (Optional.IsDefined(Credentials))
             {
-                writer.WritePropertyName("credentials");
+                writer.WritePropertyName("credentials"u8);
                 writer.WriteObjectValue(Credentials);
             }
-            writer.WritePropertyName("type");
+            writer.WritePropertyName("type"u8);
             writer.WriteStringValue(RunRequestType);
             if (Optional.IsDefined(IsArchiveEnabled))
             {
-                writer.WritePropertyName("isArchiveEnabled");
+                writer.WritePropertyName("isArchiveEnabled"u8);
                 writer.WriteBooleanValue(IsArchiveEnabled.Value);
             }
             if (Optional.IsDefined(AgentPoolName))
             {
-                writer.WritePropertyName("agentPoolName");
+                writer.WritePropertyName("agentPoolName"u8);
                 writer.WriteStringValue(AgentPoolName);
             }
             if (Optional.IsDefined(LogTemplate))
             {
-                writer.WritePropertyName("logTemplate");
+                writer.WritePropertyName("logTemplate"u8);
                 writer.WriteStringValue(LogTemplate);
             }
             writer.WriteEndObject();
@@ -91,17 +91,17 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             Optional<string> logTemplate = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("encodedTaskContent"))
+                if (property.NameEquals("encodedTaskContent"u8))
                 {
                     encodedTaskContent = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("encodedValuesContent"))
+                if (property.NameEquals("encodedValuesContent"u8))
                 {
                     encodedValuesContent = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("values"))
+                if (property.NameEquals("values"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     values = array;
                     continue;
                 }
-                if (property.NameEquals("timeout"))
+                if (property.NameEquals("timeout"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -126,12 +126,12 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     timeout = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("platform"))
+                if (property.NameEquals("platform"u8))
                 {
                     platform = ContainerRegistryPlatformProperties.DeserializeContainerRegistryPlatformProperties(property.Value);
                     continue;
                 }
-                if (property.NameEquals("agentConfiguration"))
+                if (property.NameEquals("agentConfiguration"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -141,12 +141,12 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     agentConfiguration = ContainerRegistryAgentProperties.DeserializeContainerRegistryAgentProperties(property.Value);
                     continue;
                 }
-                if (property.NameEquals("sourceLocation"))
+                if (property.NameEquals("sourceLocation"u8))
                 {
                     sourceLocation = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("credentials"))
+                if (property.NameEquals("credentials"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -156,12 +156,12 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     credentials = ContainerRegistryCredentials.DeserializeContainerRegistryCredentials(property.Value);
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("isArchiveEnabled"))
+                if (property.NameEquals("isArchiveEnabled"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -171,12 +171,12 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     isArchiveEnabled = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("agentPoolName"))
+                if (property.NameEquals("agentPoolName"u8))
                 {
                     agentPoolName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("logTemplate"))
+                if (property.NameEquals("logTemplate"u8))
                 {
                     logTemplate = property.Value.GetString();
                     continue;

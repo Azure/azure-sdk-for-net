@@ -15,9 +15,9 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("order");
+            writer.WritePropertyName("order"u8);
             writer.WriteNumberValue(Order);
-            writer.WritePropertyName("actionType");
+            writer.WritePropertyName("actionType"u8);
             writer.WriteStringValue(ActionType.ToString());
             writer.WriteEndObject();
         }
@@ -25,15 +25,15 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         internal static UnknownAutomationRuleAction DeserializeUnknownAutomationRuleAction(JsonElement element)
         {
             int order = default;
-            ActionType actionType = default;
+            ActionType actionType = "Unknown";
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("order"))
+                if (property.NameEquals("order"u8))
                 {
                     order = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("actionType"))
+                if (property.NameEquals("actionType"u8))
                 {
                     actionType = new ActionType(property.Value.GetString());
                     continue;

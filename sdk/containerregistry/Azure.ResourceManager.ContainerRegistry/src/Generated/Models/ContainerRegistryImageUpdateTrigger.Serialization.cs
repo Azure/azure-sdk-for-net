@@ -19,17 +19,17 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Id))
             {
-                writer.WritePropertyName("id");
+                writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id.Value);
             }
             if (Optional.IsDefined(Timestamp))
             {
-                writer.WritePropertyName("timestamp");
+                writer.WritePropertyName("timestamp"u8);
                 writer.WriteStringValue(Timestamp.Value, "O");
             }
             if (Optional.IsCollectionDefined(Images))
             {
-                writer.WritePropertyName("images");
+                writer.WritePropertyName("images"u8);
                 writer.WriteStartArray();
                 foreach (var item in Images)
                 {
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             Optional<IList<ContainerRegistryImageDescriptor>> images = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     id = property.Value.GetGuid();
                     continue;
                 }
-                if (property.NameEquals("timestamp"))
+                if (property.NameEquals("timestamp"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     timestamp = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("images"))
+                if (property.NameEquals("images"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

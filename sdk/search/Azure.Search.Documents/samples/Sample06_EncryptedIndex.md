@@ -83,11 +83,11 @@ SearchIndexer indexer = new SearchIndexer(
     // Map the fields in our documents we want to index.
     FieldMappings =
     {
-        new FieldMapping("hotelId"),
-        new FieldMapping("hotelName"),
-        new FieldMapping("description"),
-        new FieldMapping("tags"),
-        new FieldMapping("address")
+        new FieldMapping("HotelId"),
+        new FieldMapping("HotelName"),
+        new FieldMapping("Description"),
+        new FieldMapping("Tags"),
+        new FieldMapping("Address")
     },
     Parameters = new IndexingParameters
     {

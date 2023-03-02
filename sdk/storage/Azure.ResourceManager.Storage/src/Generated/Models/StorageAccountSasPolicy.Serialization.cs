@@ -15,9 +15,9 @@ namespace Azure.ResourceManager.Storage.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("sasExpirationPeriod");
+            writer.WritePropertyName("sasExpirationPeriod"u8);
             writer.WriteStringValue(SasExpirationPeriod);
-            writer.WritePropertyName("expirationAction");
+            writer.WritePropertyName("expirationAction"u8);
             writer.WriteStringValue(ExpirationAction.ToString());
             writer.WriteEndObject();
         }
@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.Storage.Models
             ExpirationAction expirationAction = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("sasExpirationPeriod"))
+                if (property.NameEquals("sasExpirationPeriod"u8))
                 {
                     sasExpirationPeriod = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("expirationAction"))
+                if (property.NameEquals("expirationAction"u8))
                 {
                     expirationAction = new ExpirationAction(property.Value.GetString());
                     continue;

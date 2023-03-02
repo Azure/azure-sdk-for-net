@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.Media.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Parity))
             {
-                writer.WritePropertyName("parity");
+                writer.WritePropertyName("parity"u8);
                 writer.WriteStringValue(Parity.Value.ToString());
             }
             if (Optional.IsDefined(Mode))
             {
-                writer.WritePropertyName("mode");
+                writer.WritePropertyName("mode"u8);
                 writer.WriteStringValue(Mode.Value.ToString());
             }
             writer.WriteEndObject();
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Media.Models
             Optional<DeinterlaceMode> mode = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("parity"))
+                if (property.NameEquals("parity"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Media.Models
                     parity = new DeinterlaceParity(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("mode"))
+                if (property.NameEquals("mode"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

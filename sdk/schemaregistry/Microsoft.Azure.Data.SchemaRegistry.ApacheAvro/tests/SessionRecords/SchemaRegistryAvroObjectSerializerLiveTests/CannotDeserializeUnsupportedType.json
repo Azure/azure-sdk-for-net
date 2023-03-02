@@ -1,8 +1,8 @@
 {
   "Entries": [],
   "Variables": {
-    "RandomSeed": "1872862857",
-    "SCHEMAREGISTRY_ENDPOINT": "sr-playground.servicebus.windows.net",
-    "SCHEMAREGISTRY_GROUP": "miyanni_srgroup"
+    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com/",
+    "SCHEMAREGISTRY_ENDPOINT_AVRO": "mreddingschemaregistry-avro.servicebus.windows.net",
+    "SCHEMAREGISTRY_GROUP": "azsdk_net_test_group"
   }
 }

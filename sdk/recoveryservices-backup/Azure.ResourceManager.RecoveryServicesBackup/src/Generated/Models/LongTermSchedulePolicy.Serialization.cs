@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("schedulePolicyType");
+            writer.WritePropertyName("schedulePolicyType"u8);
             writer.WriteStringValue(SchedulePolicyType);
             writer.WriteEndObject();
         }
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             string schedulePolicyType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("schedulePolicyType"))
+                if (property.NameEquals("schedulePolicyType"u8))
                 {
                     schedulePolicyType = property.Value.GetString();
                     continue;

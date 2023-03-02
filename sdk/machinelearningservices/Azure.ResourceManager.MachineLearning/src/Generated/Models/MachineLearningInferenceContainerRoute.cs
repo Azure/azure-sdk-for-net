@@ -10,21 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary>
-    /// The MachineLearningInferenceContainerRoute.
-    /// Serialized Name: Route
-    /// </summary>
+    /// <summary> The MachineLearningInferenceContainerRoute. </summary>
     public partial class MachineLearningInferenceContainerRoute
     {
         /// <summary> Initializes a new instance of MachineLearningInferenceContainerRoute. </summary>
-        /// <param name="path">
-        /// [Required] The path for the route.
-        /// Serialized Name: Route.path
-        /// </param>
-        /// <param name="port">
-        /// [Required] The port for the route.
-        /// Serialized Name: Route.port
-        /// </param>
+        /// <param name="path"> [Required] The path for the route. </param>
+        /// <param name="port"> [Required] The port for the route. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="path"/> is null. </exception>
         public MachineLearningInferenceContainerRoute(string path, int port)
         {
@@ -34,15 +25,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Port = port;
         }
 
-        /// <summary>
-        /// [Required] The path for the route.
-        /// Serialized Name: Route.path
-        /// </summary>
+        /// <summary> [Required] The path for the route. </summary>
         public string Path { get; set; }
-        /// <summary>
-        /// [Required] The port for the route.
-        /// Serialized Name: Route.port
-        /// </summary>
+        /// <summary> [Required] The port for the route. </summary>
         public int Port { get; set; }
     }
 }

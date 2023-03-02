@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             Optional<float> @base = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("base"))
+                if (property.NameEquals("base"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
