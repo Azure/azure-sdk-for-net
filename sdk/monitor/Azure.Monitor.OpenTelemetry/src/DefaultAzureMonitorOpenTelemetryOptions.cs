@@ -9,6 +9,7 @@ namespace Azure.Monitor.OpenTelemetry
     internal class DefaultAzureMonitorOpenTelemetryOptions : IConfigureOptions<AzureMonitorOpenTelemetryOptions>
     {
         private const string AzureMonitorOpenTelemetrySectionFromConfig = "AzureMonitorOpenTelemetry";
+        private const string ConnectionStringEnvironmentVariable = "APPLICATIONINSIGHTS_CONNECTION_STRING";
         private readonly IConfiguration? _configuration;
 
         /// <summary>
@@ -25,6 +26,13 @@ namespace Azure.Monitor.OpenTelemetry
             if (_configuration != null)
             {
                 _configuration.GetSection(AzureMonitorOpenTelemetrySectionFromConfig).Bind(options);
+            }
+
+            string? connectionString = _configuration?[ConnectionStringEnvironmentVariable];
+
+            if (!string.IsNullOrWhiteSpace(connectionString))
+            {
+                options.ConnectionString = connectionString;
             }
         }
     }
