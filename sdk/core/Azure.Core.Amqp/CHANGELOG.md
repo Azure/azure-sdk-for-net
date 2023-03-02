@@ -12,7 +12,7 @@ Thank you to our developer community members who helped to make the Azure.Core.A
 
 ### Breaking Changes
 
-- The nullability annotations were updated for the following properties of `AmqpAnnotatedMessage` to allow null values to be set in the dictionary, to comply with the [AMQP specification](http://docs.oasis-open.org/amqp/core/v1.0/os/amqp-core-messaging-v1.0-os.html#section-message-format):
+- The nullability annotations were updated for the following properties of `AmqpAnnotatedMessage` to allow null values to be set in the dictionary, to comply with the [AMQP specification](https://docs.oasis-open.org/amqp/core/v1.0/os/amqp-core-messaging-v1.0-os.html#section-message-format):
   - `ApplicationProperties`
   - `DeliveryAnnotations`
   - `MessageAnnotations`
