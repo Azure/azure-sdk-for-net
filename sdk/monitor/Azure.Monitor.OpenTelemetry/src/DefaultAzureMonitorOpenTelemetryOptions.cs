@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
 
@@ -9,6 +10,7 @@ namespace Azure.Monitor.OpenTelemetry
     internal class DefaultAzureMonitorOpenTelemetryOptions : IConfigureOptions<AzureMonitorOpenTelemetryOptions>
     {
         private const string AzureMonitorOpenTelemetrySectionFromConfig = "AzureMonitorOpenTelemetry";
+        private const string ConnectionStringEnvironmentVariable = "APPLICATIONINSIGHTS_CONNECTION_STRING";
         private readonly IConfiguration? _configuration;
 
         /// <summary>
@@ -25,6 +27,13 @@ namespace Azure.Monitor.OpenTelemetry
             if (_configuration != null)
             {
                 _configuration.GetSection(AzureMonitorOpenTelemetrySectionFromConfig).Bind(options);
+            }
+
+            string connectionString = Environment.GetEnvironmentVariable(ConnectionStringEnvironmentVariable);
+
+            if (!string.IsNullOrWhiteSpace(connectionString))
+            {
+                options.ConnectionString = connectionString;
             }
         }
     }
