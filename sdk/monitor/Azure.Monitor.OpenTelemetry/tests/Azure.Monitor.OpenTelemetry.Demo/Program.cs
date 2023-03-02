@@ -5,17 +5,14 @@
 using System.Diagnostics;
 using Azure.Monitor.OpenTelemetry;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using OpenTelemetry.Extensions.AzureMonitor;
-using OpenTelemetry.Trace;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddAzureMonitorOpenTelemetry();
+builder.Services.AddAzureMonitor();
 
 /*
-builder.Services.AddAzureMonitorOpenTelemetry(o =>
+builder.Services.AddAzureMonitor(o =>
 {
     o.ConnectionString = "InstrumentationKey=00000000-0000-0000-0000-000000000000";
     // Set the Credential property to enable AAD based authentication:
@@ -25,8 +22,7 @@ builder.Services.AddAzureMonitorOpenTelemetry(o =>
 
 // To customize sampling, Set ApplicationInsightsSampler to desired sampling ratio and
 // configure with OpenTelemetryTracerProvider.
-// Please note that ConfigureOpenTelemetryTracerProvider should be called after builder.Services.AddAzureMonitorOpenTelemetry().
-
+// Please note that ConfigureOpenTelemetryTracerProvider should be called after builder.Services.AddAzureMonitor().
 // builder.Services.ConfigureOpenTelemetryTracerProvider((sp, builder) => builder.SetSampler(new ApplicationInsightsSampler(0.9F)));
 
 var app = builder.Build();

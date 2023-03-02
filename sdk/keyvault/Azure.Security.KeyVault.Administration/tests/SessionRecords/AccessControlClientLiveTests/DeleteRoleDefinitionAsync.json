@@ -1,14 +1,14 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://heathskeyvaulthsm.managedhsm.azure.net/providers/Microsoft.Authorization/roleDefinitions/417b9ea4-6bad-28d7-db32-d7a132acd9d1?api-version=7.4-preview.1",
+      "RequestUri": "https://tcac7e9c41ef52cechsm.managedhsm.azure.net/providers/Microsoft.Authorization/roleDefinitions/5229622b-7c7d-5f7f-59d6-fea81f8782a8?api-version=7.4",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
         "Content-Length": "0",
-        "traceparent": "00-59611658fd15a0c85195288f0f37da3c-f0519488d3b1293f-00",
-        "User-Agent": "azsdk-net-Security.KeyVault.Administration/4.3.0-alpha.20221028.1 (.NET 6.0.10; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "4bf090a3f2717303d923139382fcaa8a",
+        "traceparent": "00-be4717c241606531f1549ec42e65488f-3dfb387184473a2d-00",
+        "User-Agent": "azsdk-net-Security.KeyVault.Administration/4.3.0-alpha.20230301.1 (.NET 7.0.3; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "421ee5a671937ffd706c61593b0f9890",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -22,27 +22,27 @@
         "WWW-Authenticate": "Bearer authorization=\u0022https://login.microsoftonline.com/72f988bf-86f1-41af-91ab-2d7cd011db47\u0022, resource=\u0022https://managedhsm.azure.net\u0022",
         "X-Content-Type-Options": "nosniff",
         "X-Frame-Options": "SAMEORIGIN",
-        "x-ms-request-id": "1e850602-570e-11ed-9665-0022488df0c4",
-        "x-ms-server-latency": "1"
+        "x-ms-request-id": "34cb6c66-b876-11ed-b430-000d3a612dea",
+        "x-ms-server-latency": "0"
       },
       "ResponseBody": null
     },
     {
-      "RequestUri": "https://heathskeyvaulthsm.managedhsm.azure.net/providers/Microsoft.Authorization/roleDefinitions/417b9ea4-6bad-28d7-db32-d7a132acd9d1?api-version=7.4-preview.1",
+      "RequestUri": "https://tcac7e9c41ef52cechsm.managedhsm.azure.net/providers/Microsoft.Authorization/roleDefinitions/5229622b-7c7d-5f7f-59d6-fea81f8782a8?api-version=7.4",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Length": "150",
         "Content-Type": "application/json",
-        "traceparent": "00-59611658fd15a0c85195288f0f37da3c-f0519488d3b1293f-00",
-        "User-Agent": "azsdk-net-Security.KeyVault.Administration/4.3.0-alpha.20221028.1 (.NET 6.0.10; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "4bf090a3f2717303d923139382fcaa8a",
+        "traceparent": "00-be4717c241606531f1549ec42e65488f-3dfb387184473a2d-00",
+        "User-Agent": "azsdk-net-Security.KeyVault.Administration/4.3.0-alpha.20230301.1 (.NET 7.0.3; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "421ee5a671937ffd706c61593b0f9890",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
         "properties": {
-          "description": "rolesElzqC2w",
+          "description": "role2SC2D31d",
           "type": "CustomRole",
           "permissions": [
             {
@@ -62,19 +62,19 @@
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
         "X-Frame-Options": "SAMEORIGIN",
-        "x-ms-keyvault-network-info": "conn_type=Ipv4;addr=24.16.19.131;act_addr_fam=Ipv4;",
-        "x-ms-keyvault-region": "northus",
-        "x-ms-request-id": "1e9e6b9c-570e-11ed-9665-0022488df0c4",
-        "x-ms-server-latency": "37"
+        "x-ms-keyvault-network-info": "conn_type=Ipv4;addr=131.107.159.211;act_addr_fam=Ipv4;",
+        "x-ms-keyvault-region": "northcentralus",
+        "x-ms-request-id": "34e9c576-b876-11ed-b430-000d3a612dea",
+        "x-ms-server-latency": "35"
       },
       "ResponseBody": {
-        "id": "Microsoft.KeyVault/providers/Microsoft.Authorization/roleDefinitions/417b9ea4-6bad-28d7-db32-d7a132acd9d1",
-        "name": "417b9ea4-6bad-28d7-db32-d7a132acd9d1",
+        "id": "Microsoft.KeyVault/providers/Microsoft.Authorization/roleDefinitions/5229622b-7c7d-5f7f-59d6-fea81f8782a8",
+        "name": "5229622b-7c7d-5f7f-59d6-fea81f8782a8",
         "properties": {
           "assignableScopes": [
             "/"
           ],
-          "description": "rolesElzqC2w",
+          "description": "role2SC2D31d",
           "permissions": [
             {
               "actions": [],
@@ -92,14 +92,14 @@
       }
     },
     {
-      "RequestUri": "https://heathskeyvaulthsm.managedhsm.azure.net/providers/Microsoft.Authorization/roleDefinitions/417b9ea4-6bad-28d7-db32-d7a132acd9d1?api-version=7.4-preview.1",
+      "RequestUri": "https://tcac7e9c41ef52cechsm.managedhsm.azure.net/providers/Microsoft.Authorization/roleDefinitions/5229622b-7c7d-5f7f-59d6-fea81f8782a8?api-version=7.4",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-7002b631284cd8072a30016c2e377799-5c9fac425ae7a6c4-00",
-        "User-Agent": "azsdk-net-Security.KeyVault.Administration/4.3.0-alpha.20221028.1 (.NET 6.0.10; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "741ff495b02530f6c3cfd79f574aae5d",
+        "traceparent": "00-e8171676721b44ea5742759107182371-ef41c951b47eb011-00",
+        "User-Agent": "azsdk-net-Security.KeyVault.Administration/4.3.0-alpha.20230301.1 (.NET 7.0.3; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "76553a05392f500144d32cd958a7fa7c",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -112,19 +112,19 @@
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
         "X-Frame-Options": "SAMEORIGIN",
-        "x-ms-keyvault-network-info": "conn_type=Ipv4;addr=24.16.19.131;act_addr_fam=Ipv4;",
-        "x-ms-keyvault-region": "northus",
-        "x-ms-request-id": "1ead9bd0-570e-11ed-9665-0022488df0c4",
-        "x-ms-server-latency": "36"
+        "x-ms-keyvault-network-info": "conn_type=Ipv4;addr=131.107.159.211;act_addr_fam=Ipv4;",
+        "x-ms-keyvault-region": "northcentralus",
+        "x-ms-request-id": "34f731de-b876-11ed-b430-000d3a612dea",
+        "x-ms-server-latency": "33"
       },
       "ResponseBody": {
-        "id": "Microsoft.KeyVault/providers/Microsoft.Authorization/roleDefinitions/417b9ea4-6bad-28d7-db32-d7a132acd9d1",
-        "name": "417b9ea4-6bad-28d7-db32-d7a132acd9d1",
+        "id": "Microsoft.KeyVault/providers/Microsoft.Authorization/roleDefinitions/5229622b-7c7d-5f7f-59d6-fea81f8782a8",
+        "name": "5229622b-7c7d-5f7f-59d6-fea81f8782a8",
         "properties": {
           "assignableScopes": [
             "/"
           ],
-          "description": "rolesElzqC2w",
+          "description": "role2SC2D31d",
           "permissions": [
             {
               "actions": [],
@@ -142,14 +142,14 @@
       }
     },
     {
-      "RequestUri": "https://heathskeyvaulthsm.managedhsm.azure.net/providers/Microsoft.Authorization/roleDefinitions?api-version=7.4-preview.1",
+      "RequestUri": "https://tcac7e9c41ef52cechsm.managedhsm.azure.net/providers/Microsoft.Authorization/roleDefinitions?api-version=7.4",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-2f428227e10a3a75820e7ba81f57a3ea-e742b8399f4204b5-00",
-        "User-Agent": "azsdk-net-Security.KeyVault.Administration/4.3.0-alpha.20221028.1 (.NET 6.0.10; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "7d67f64bc63db2aa9a0867895844a5de",
+        "traceparent": "00-de267ed0d3587e2f844de6360e228538-97b8c82a99675eac-00",
+        "User-Agent": "azsdk-net-Security.KeyVault.Administration/4.3.0-alpha.20230301.1 (.NET 7.0.3; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "e07c6c79e80db9da64a9e1111a25244a",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -162,10 +162,10 @@
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
         "X-Frame-Options": "SAMEORIGIN",
-        "x-ms-build-version": "1.0.20221011-1-b82851ba-develop",
-        "x-ms-keyvault-network-info": "conn_type=Ipv4;addr=24.16.19.131;act_addr_fam=Ipv4;",
-        "x-ms-keyvault-region": "northus",
-        "x-ms-request-id": "1ebc8ffa-570e-11ed-9665-0022488df0c4",
+        "x-ms-build-version": "1.0.20230208-1-3e0fbecc-develop",
+        "x-ms-keyvault-network-info": "conn_type=Ipv4;addr=131.107.159.211;act_addr_fam=Ipv4;",
+        "x-ms-keyvault-region": "northcentralus",
+        "x-ms-request-id": "350466f6-b876-11ed-b430-000d3a612dea",
         "x-ms-server-latency": "1"
       },
       "ResponseBody": {
@@ -410,13 +410,36 @@
             "type": "Microsoft.Authorization/roleDefinitions"
           },
           {
-            "id": "Microsoft.KeyVault/providers/Microsoft.Authorization/roleDefinitions/62988ee3-1048-e443-731d-57613ad9bf78",
-            "name": "62988ee3-1048-e443-731d-57613ad9bf78",
+            "id": "Microsoft.KeyVault/providers/Microsoft.Authorization/roleDefinitions/b5efb96a-3c8b-bde8-76a5-165e9f9ab819",
+            "name": "b5efb96a-3c8b-bde8-76a5-165e9f9ab819",
             "properties": {
               "assignableScopes": [
                 "/"
               ],
-              "description": "roleBA2Z7ET2",
+              "description": "role5fNoXCih",
+              "permissions": [
+                {
+                  "actions": [],
+                  "dataActions": [
+                    "Microsoft.KeyVault/managedHsm/keys/backup/action"
+                  ],
+                  "notActions": [],
+                  "notDataActions": []
+                }
+              ],
+              "roleName": "",
+              "type": "CustomRole"
+            },
+            "type": "Microsoft.Authorization/roleDefinitions"
+          },
+          {
+            "id": "Microsoft.KeyVault/providers/Microsoft.Authorization/roleDefinitions/cc9223e8-1b9e-7e89-3985-1633723f4676",
+            "name": "cc9223e8-1b9e-7e89-3985-1633723f4676",
+            "properties": {
+              "assignableScopes": [
+                "/"
+              ],
+              "description": "roleXcSXvaJt",
               "permissions": [
                 {
                   "actions": [],
@@ -434,36 +457,13 @@
             "type": "Microsoft.Authorization/roleDefinitions"
           },
           {
-            "id": "Microsoft.KeyVault/providers/Microsoft.Authorization/roleDefinitions/6ecb407f-20ed-bcb8-6ada-374da339e772",
-            "name": "6ecb407f-20ed-bcb8-6ada-374da339e772",
+            "id": "Microsoft.KeyVault/providers/Microsoft.Authorization/roleDefinitions/d83ee13b-6b77-6b50-a7ca-43b09ba7208f",
+            "name": "d83ee13b-6b77-6b50-a7ca-43b09ba7208f",
             "properties": {
               "assignableScopes": [
                 "/"
               ],
-              "description": "roleAJLli98D",
-              "permissions": [
-                {
-                  "actions": [],
-                  "dataActions": [
-                    "Microsoft.KeyVault/managedHsm/keys/backup/action"
-                  ],
-                  "notActions": [],
-                  "notDataActions": []
-                }
-              ],
-              "roleName": "",
-              "type": "CustomRole"
-            },
-            "type": "Microsoft.Authorization/roleDefinitions"
-          },
-          {
-            "id": "Microsoft.KeyVault/providers/Microsoft.Authorization/roleDefinitions/e0c6c2e1-4011-afc7-518a-aa1eebfdbacc",
-            "name": "e0c6c2e1-4011-afc7-518a-aa1eebfdbacc",
-            "properties": {
-              "assignableScopes": [
-                "/"
-              ],
-              "description": "rolewaPBfJEI",
+              "description": "role1XZR0zJK",
               "permissions": [
                 {
                   "actions": [],
@@ -486,7 +486,7 @@
   ],
   "Variables": {
     "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com/",
-    "AZURE_MANAGEDHSM_URL": "https://heathskeyvaulthsm.managedhsm.azure.net/",
-    "RandomSeed": "805039824"
+    "AZURE_MANAGEDHSM_URL": "https://tcac7e9c41ef52cechsm.managedhsm.azure.net/",
+    "RandomSeed": "1034120234"
   }
 }
