@@ -14,7 +14,10 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.NetworkFunction
 {
-    /// <summary> A class representing the AzureTrafficCollector data model. </summary>
+    /// <summary>
+    /// A class representing the AzureTrafficCollector data model.
+    /// Azure Traffic Collector resource.
+    /// </summary>
     public partial class AzureTrafficCollectorData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of AzureTrafficCollectorData. </summary>

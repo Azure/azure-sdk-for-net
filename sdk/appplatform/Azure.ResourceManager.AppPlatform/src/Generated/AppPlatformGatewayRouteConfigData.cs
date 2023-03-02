@@ -11,7 +11,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppPlatform
 {
-    /// <summary> A class representing the AppPlatformGatewayRouteConfig data model. </summary>
+    /// <summary>
+    /// A class representing the AppPlatformGatewayRouteConfig data model.
+    /// Spring Cloud Gateway route config resource
+    /// </summary>
     public partial class AppPlatformGatewayRouteConfigData : ResourceData
     {
         /// <summary> Initializes a new instance of AppPlatformGatewayRouteConfigData. </summary>

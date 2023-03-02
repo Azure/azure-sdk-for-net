@@ -21,9 +21,9 @@ namespace Azure.ResourceManager.Monitor.Models
 
         public static MonitorScaleDirection ToMonitorScaleDirection(this string value)
         {
-            if (string.Equals(value, "None", StringComparison.InvariantCultureIgnoreCase)) return MonitorScaleDirection.None;
-            if (string.Equals(value, "Increase", StringComparison.InvariantCultureIgnoreCase)) return MonitorScaleDirection.Increase;
-            if (string.Equals(value, "Decrease", StringComparison.InvariantCultureIgnoreCase)) return MonitorScaleDirection.Decrease;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "None")) return MonitorScaleDirection.None;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Increase")) return MonitorScaleDirection.Increase;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Decrease")) return MonitorScaleDirection.Decrease;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown MonitorScaleDirection value.");
         }
     }

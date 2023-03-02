@@ -24,12 +24,12 @@ namespace Azure.ResourceManager.Synapse.Models
 
         public static SynapseDataMaskingFunction ToSynapseDataMaskingFunction(this string value)
         {
-            if (string.Equals(value, "Default", StringComparison.InvariantCultureIgnoreCase)) return SynapseDataMaskingFunction.Default;
-            if (string.Equals(value, "CCN", StringComparison.InvariantCultureIgnoreCase)) return SynapseDataMaskingFunction.Ccn;
-            if (string.Equals(value, "Email", StringComparison.InvariantCultureIgnoreCase)) return SynapseDataMaskingFunction.Email;
-            if (string.Equals(value, "Number", StringComparison.InvariantCultureIgnoreCase)) return SynapseDataMaskingFunction.Number;
-            if (string.Equals(value, "SSN", StringComparison.InvariantCultureIgnoreCase)) return SynapseDataMaskingFunction.Ssn;
-            if (string.Equals(value, "Text", StringComparison.InvariantCultureIgnoreCase)) return SynapseDataMaskingFunction.Text;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Default")) return SynapseDataMaskingFunction.Default;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "CCN")) return SynapseDataMaskingFunction.Ccn;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Email")) return SynapseDataMaskingFunction.Email;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Number")) return SynapseDataMaskingFunction.Number;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "SSN")) return SynapseDataMaskingFunction.Ssn;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Text")) return SynapseDataMaskingFunction.Text;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown SynapseDataMaskingFunction value.");
         }
     }

@@ -28,16 +28,16 @@ namespace Azure.ResourceManager.AppService.Models
 
         public static WebAppBackupStatus ToWebAppBackupStatus(this string value)
         {
-            if (string.Equals(value, "InProgress", StringComparison.InvariantCultureIgnoreCase)) return WebAppBackupStatus.InProgress;
-            if (string.Equals(value, "Failed", StringComparison.InvariantCultureIgnoreCase)) return WebAppBackupStatus.Failed;
-            if (string.Equals(value, "Succeeded", StringComparison.InvariantCultureIgnoreCase)) return WebAppBackupStatus.Succeeded;
-            if (string.Equals(value, "TimedOut", StringComparison.InvariantCultureIgnoreCase)) return WebAppBackupStatus.TimedOut;
-            if (string.Equals(value, "Created", StringComparison.InvariantCultureIgnoreCase)) return WebAppBackupStatus.Created;
-            if (string.Equals(value, "Skipped", StringComparison.InvariantCultureIgnoreCase)) return WebAppBackupStatus.Skipped;
-            if (string.Equals(value, "PartiallySucceeded", StringComparison.InvariantCultureIgnoreCase)) return WebAppBackupStatus.PartiallySucceeded;
-            if (string.Equals(value, "DeleteInProgress", StringComparison.InvariantCultureIgnoreCase)) return WebAppBackupStatus.DeleteInProgress;
-            if (string.Equals(value, "DeleteFailed", StringComparison.InvariantCultureIgnoreCase)) return WebAppBackupStatus.DeleteFailed;
-            if (string.Equals(value, "Deleted", StringComparison.InvariantCultureIgnoreCase)) return WebAppBackupStatus.Deleted;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "InProgress")) return WebAppBackupStatus.InProgress;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Failed")) return WebAppBackupStatus.Failed;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Succeeded")) return WebAppBackupStatus.Succeeded;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "TimedOut")) return WebAppBackupStatus.TimedOut;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Created")) return WebAppBackupStatus.Created;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Skipped")) return WebAppBackupStatus.Skipped;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "PartiallySucceeded")) return WebAppBackupStatus.PartiallySucceeded;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "DeleteInProgress")) return WebAppBackupStatus.DeleteInProgress;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "DeleteFailed")) return WebAppBackupStatus.DeleteFailed;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Deleted")) return WebAppBackupStatus.Deleted;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown WebAppBackupStatus value.");
         }
     }

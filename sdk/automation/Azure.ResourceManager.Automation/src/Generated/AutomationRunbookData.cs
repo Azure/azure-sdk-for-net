@@ -14,7 +14,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Automation
 {
-    /// <summary> A class representing the AutomationRunbook data model. </summary>
+    /// <summary>
+    /// A class representing the AutomationRunbook data model.
+    /// Definition of the runbook type.
+    /// </summary>
     public partial class AutomationRunbookData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of AutomationRunbookData. </summary>

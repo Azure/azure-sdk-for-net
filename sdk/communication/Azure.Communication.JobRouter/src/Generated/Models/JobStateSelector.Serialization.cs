@@ -27,15 +27,15 @@ namespace Azure.Communication.JobRouter
 
         public static JobStateSelector ToJobStateSelector(this string value)
         {
-            if (string.Equals(value, "all", StringComparison.InvariantCultureIgnoreCase)) return JobStateSelector.All;
-            if (string.Equals(value, "pendingClassification", StringComparison.InvariantCultureIgnoreCase)) return JobStateSelector.PendingClassification;
-            if (string.Equals(value, "queued", StringComparison.InvariantCultureIgnoreCase)) return JobStateSelector.Queued;
-            if (string.Equals(value, "assigned", StringComparison.InvariantCultureIgnoreCase)) return JobStateSelector.Assigned;
-            if (string.Equals(value, "completed", StringComparison.InvariantCultureIgnoreCase)) return JobStateSelector.Completed;
-            if (string.Equals(value, "closed", StringComparison.InvariantCultureIgnoreCase)) return JobStateSelector.Closed;
-            if (string.Equals(value, "cancelled", StringComparison.InvariantCultureIgnoreCase)) return JobStateSelector.Cancelled;
-            if (string.Equals(value, "classificationFailed", StringComparison.InvariantCultureIgnoreCase)) return JobStateSelector.ClassificationFailed;
-            if (string.Equals(value, "active", StringComparison.InvariantCultureIgnoreCase)) return JobStateSelector.Active;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "all")) return JobStateSelector.All;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "pendingClassification")) return JobStateSelector.PendingClassification;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "queued")) return JobStateSelector.Queued;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "assigned")) return JobStateSelector.Assigned;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "completed")) return JobStateSelector.Completed;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "closed")) return JobStateSelector.Closed;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "cancelled")) return JobStateSelector.Cancelled;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "classificationFailed")) return JobStateSelector.ClassificationFailed;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "active")) return JobStateSelector.Active;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown JobStateSelector value.");
         }
     }

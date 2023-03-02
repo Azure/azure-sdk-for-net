@@ -15,7 +15,10 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Redis
 {
-    /// <summary> A class representing the Redis data model. </summary>
+    /// <summary>
+    /// A class representing the Redis data model.
+    /// A single Redis item in List or Get Operation.
+    /// </summary>
     public partial class RedisData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of RedisData. </summary>

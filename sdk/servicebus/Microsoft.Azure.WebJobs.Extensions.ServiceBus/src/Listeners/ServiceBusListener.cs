@@ -8,6 +8,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Pipeline;
+using Azure.Core.Shared;
 using Azure.Messaging.ServiceBus;
 using Azure.Messaging.ServiceBus.Administration;
 using Azure.Messaging.ServiceBus.Diagnostics;
@@ -50,7 +51,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
         private CancellationTokenRegistration _batchReceiveRegistration;
         private Task _batchLoop;
         private Lazy<string> _details;
-        private Lazy<EntityScopeFactory> _scopeFactory;
+        private Lazy<MessagingClientDiagnostics> _clientDiagnostics;
 
         public ServiceBusListener(
             string functionId,
@@ -124,8 +125,13 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
                     loggerFactory
                     ));
 
-            _scopeFactory = new Lazy<EntityScopeFactory>(
-                () => new EntityScopeFactory(_batchReceiver.Value.EntityPath, _batchReceiver.Value.FullyQualifiedNamespace));
+            _clientDiagnostics = new Lazy<MessagingClientDiagnostics>(
+                () => new MessagingClientDiagnostics(
+                    DiagnosticProperty.DiagnosticNamespace,
+                    DiagnosticProperty.ResourceProviderNamespace,
+                    DiagnosticProperty.ServiceBusServiceContext,
+                    _batchReceiver.Value.FullyQualifiedNamespace,
+                    _batchReceiver.Value.EntityPath));
 
             if (concurrencyManager.Enabled)
             {
@@ -436,9 +442,11 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
                             receiveActions,
                             _client.Value);
 
-                        using DiagnosticScope scope = _scopeFactory.Value.CreateScope(
+                        using DiagnosticScope scope = _clientDiagnostics.Value.CreateScope(
                             _isSessionsEnabled ? Constants.ProcessSessionMessagesActivityName : Constants.ProcessMessagesActivityName,
-                            DiagnosticScope.ActivityKind.Consumer);
+                            DiagnosticScope.ActivityKind.Consumer,
+                            MessagingDiagnosticOperation.Process);
+
                         scope.SetMessageData(messagesArray);
 
                         scope.Start();

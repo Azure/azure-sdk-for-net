@@ -11,7 +11,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary> A class representing the HybridConnection data model. </summary>
+    /// <summary>
+    /// A class representing the HybridConnection data model.
+    /// Hybrid Connection contract. This is used to configure a Hybrid Connection.
+    /// </summary>
     public partial class HybridConnectionData : ResourceData
     {
         /// <summary> Initializes a new instance of HybridConnectionData. </summary>
