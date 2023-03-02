@@ -58,7 +58,7 @@ namespace Azure.Monitor.OpenTelemetry
             services.AddOptions<OpenTelemetryLoggerOptions>()
                     .Configure<IOptionsMonitor<AzureMonitorOpenTelemetryOptions>>((loggingOptions, azureOptions) =>
                     {
-                        loggingOptions.AddAzureMonitorLogExporter(o => azureOptions.Get("").SetValueToExporterOptions(o));
+                        loggingOptions.AddAzureMonitorLogExporter(o => azureOptions.Get(Options.DefaultName).SetValueToExporterOptions(o));
                     });
 
             ServiceDescriptor? sdkTracerProviderServiceRegistration = null;
@@ -106,7 +106,7 @@ namespace Azure.Monitor.OpenTelemetry
                 .AddOptions<AzureMonitorExporterOptions>()
                 .Configure<IOptionsMonitor<AzureMonitorOpenTelemetryOptions>>((exporterOptions, azureMonitorOptions) =>
                 {
-                    azureMonitorOptions.Get("").SetValueToExporterOptions(exporterOptions);
+                    azureMonitorOptions.Get(Options.DefaultName).SetValueToExporterOptions(exporterOptions);
                 });
 
             // Now we register our own services for TracerProvider,
@@ -115,7 +115,7 @@ namespace Azure.Monitor.OpenTelemetry
 
             services.AddSingleton(sp =>
             {
-                var options = sp.GetRequiredService<IOptionsMonitor<AzureMonitorOpenTelemetryOptions>>().Get("");
+                var options = sp.GetRequiredService<IOptionsMonitor<AzureMonitorOpenTelemetryOptions>>().Get(Options.DefaultName);
                 if (!options.EnableTraces)
                 {
                     return new NoopTracerProvider();
@@ -130,7 +130,7 @@ namespace Azure.Monitor.OpenTelemetry
 
             services.AddSingleton(sp =>
             {
-                var options = sp.GetRequiredService<IOptionsMonitor<AzureMonitorOpenTelemetryOptions>>().Get("");
+                var options = sp.GetRequiredService<IOptionsMonitor<AzureMonitorOpenTelemetryOptions>>().Get(Options.DefaultName);
                 if (!options.EnableMetrics)
                 {
                     return new NoopMeterProvider();
@@ -145,7 +145,7 @@ namespace Azure.Monitor.OpenTelemetry
 
             services.AddSingleton(sp =>
             {
-                var options = sp.GetRequiredService<IOptionsMonitor<AzureMonitorOpenTelemetryOptions>>().Get("");
+                var options = sp.GetRequiredService<IOptionsMonitor<AzureMonitorOpenTelemetryOptions>>().Get(Options.DefaultName);
                 if (!options.EnableLogs)
                 {
                     return new NoopLoggerProvider();
