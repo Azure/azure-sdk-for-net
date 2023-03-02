@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.Core.Shared;
 using Azure.Messaging.EventHubs.Core;
 using Azure.Messaging.EventHubs.Diagnostics;
 
@@ -96,11 +97,16 @@ namespace Azure.Messaging.EventHubs.Producer
         private string EventHubName { get; }
 
         /// <summary>
-        ///   The list of diagnostic identifiers of events added to this batch.  To be used during
+        ///   The list of trace parent/trace state tuples of events added to this batch.  To be used during
         ///   instrumentation.
         /// </summary>
         ///
-        private List<string> EventDiagnosticIdentifiers { get; } = new List<string>();
+        private List<(string TraceParent, string TraceState)> EventDiagnosticIdentifiers { get; } = new List<(string, string)>();
+
+        /// <summary>
+        ///   The client diagnostics to use when instrumenting events added to the batch.
+        /// </summary>
+        private MessagingClientDiagnostics ClientDiagnostics { get; }
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="EventDataBatch"/> class.
@@ -110,7 +116,7 @@ namespace Azure.Messaging.EventHubs.Producer
         /// <param name="fullyQualifiedNamespace">The fully qualified Event Hubs namespace to use for instrumentation.</param>
         /// <param name="eventHubName">The name of the specific Event Hub to associate the events with during instrumentation.</param>
         /// <param name="sendOptions">The set of options that should be used when publishing the batch.</param>
-        ///
+        /// <param name="clientDiagnostics">The client diagnostics to use when instrumenting events added to the batch.</param>
         /// <remarks>
         ///   As an internal type, this class performs only basic sanity checks against its arguments.  It
         ///   is assumed that callers are trusted and have performed deep validation.
@@ -123,7 +129,8 @@ namespace Azure.Messaging.EventHubs.Producer
         internal EventDataBatch(TransportEventBatch transportBatch,
                                 string fullyQualifiedNamespace,
                                 string eventHubName,
-                                SendEventOptions sendOptions)
+                                SendEventOptions sendOptions,
+                                MessagingClientDiagnostics clientDiagnostics)
         {
             Argument.AssertNotNull(transportBatch, nameof(transportBatch));
             Argument.AssertNotNullOrEmpty(fullyQualifiedNamespace, nameof(fullyQualifiedNamespace));
@@ -134,6 +141,7 @@ namespace Azure.Messaging.EventHubs.Producer
             FullyQualifiedNamespace = fullyQualifiedNamespace;
             EventHubName = eventHubName;
             SendOptions = sendOptions;
+            ClientDiagnostics = clientDiagnostics;
         }
 
         /// <summary>
@@ -173,17 +181,17 @@ namespace Azure.Messaging.EventHubs.Producer
                 AssertNotLocked();
 
                 var messageScopeCreated = false;
-                var identifier = default(string);
+                var traceparent = default(string);
 
                 try
                 {
-                    (messageScopeCreated, identifier) = EventDataInstrumentation.InstrumentEvent(eventData, FullyQualifiedNamespace, EventHubName);
+                    ClientDiagnostics.InstrumentMessage(eventData.Properties, DiagnosticProperty.EventActivityName, out messageScopeCreated, out traceparent, out var tracestate);
 
                     var added = InnerBatch.TryAdd(eventData);
 
-                    if ((added) && (identifier != null))
+                    if ((added) && (traceparent != null))
                     {
-                        EventDiagnosticIdentifiers.Add(identifier);
+                        EventDiagnosticIdentifiers.Add((traceparent, tracestate));
                     }
 
                     return added;
@@ -195,9 +203,9 @@ namespace Azure.Messaging.EventHubs.Producer
                     // instrumentation will have been captured by the batch's copy of the event, if it was accepted
                     // into the batch.
 
-                    if ((messageScopeCreated) && (identifier != null))
+                    if ((messageScopeCreated) && (traceparent != null))
                     {
-                        EventDataInstrumentation.ResetEvent(eventData);
+                        MessagingClientDiagnostics.ResetEvent(eventData.Properties);
                     }
                 }
             }
@@ -246,7 +254,7 @@ namespace Azure.Messaging.EventHubs.Producer
         ///
         /// <returns>A read-only list of diagnostic identifiers.</returns>
         ///
-        internal IReadOnlyList<string> GetEventDiagnosticIdentifiers() => EventDiagnosticIdentifiers;
+        internal IReadOnlyList<(string TraceParent, string TraceState)> GetTraceContext() => EventDiagnosticIdentifiers;
 
         /// <summary>
         ///   Assigns message sequence numbers and publisher metadata to the batch in

@@ -11,7 +11,7 @@ azure-arm: true
 generate-model-factory: false
 library-name: Compute
 namespace: Azure.ResourceManager.Compute
-require: https://github.com/Azure/azure-rest-api-specs/blob/1ef2c08c58b21094edc5b8d2cb12d1bbc6d2d068/specification/compute/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/5bba638fd53d813e475bfdc3b1b2789ee75b187c/specification/compute/resource-manager/readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true

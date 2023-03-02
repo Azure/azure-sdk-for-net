@@ -86,7 +86,7 @@ namespace Azure.AI.TextAnalytics.Tests
             IReadOnlyCollection<SingleLabelClassifyActionResult> singleLabelClassifyResults = resultCollection.SingleLabelClassifyResults;
             IReadOnlyCollection<MultiLabelClassifyActionResult> multiLabelClassifyResults = resultCollection.MultiLabelClassifyResults;
             IReadOnlyCollection<AnalyzeHealthcareEntitiesActionResult> analyzeHealthcareEntitiesActionResults = resultCollection.AnalyzeHealthcareEntitiesResults;
-            IReadOnlyCollection<ExtractiveSummarizeActionResult> extractiveSummarizeActionResults = resultCollection.ExtractiveSummarizeResults;
+            IReadOnlyCollection<ExtractSummaryActionResult> extractSummaryActionResults = resultCollection.ExtractSummaryResults;
 
             Assert.IsNotNull(keyPhrasesActionsResults);
             Assert.IsNotNull(entitiesActionsResults);
@@ -97,7 +97,7 @@ namespace Azure.AI.TextAnalytics.Tests
             Assert.IsNotNull(multiLabelClassifyResults);
             Assert.IsNotNull(recognizeCustomEntitiesActionResults);
             Assert.IsNotNull(analyzeHealthcareEntitiesActionResults);
-            Assert.IsNotNull(extractiveSummarizeActionResults);
+            Assert.IsNotNull(extractSummaryActionResults);
 
             var keyPhrasesListId1 = new List<string> { "CEO", "SpaceX", "Elon Musk", "Tesla" };
             var keyPhrasesListId2 = new List<string> { "Tesla stock" };
@@ -818,7 +818,7 @@ namespace Azure.AI.TextAnalytics.Tests
 
         [RecordedTest]
         [ServiceVersion(Min = TextAnalyticsClientOptions.ServiceVersion.V2022_10_01_Preview)]
-        public async Task AnalyzeOperationExtractiveSummarize()
+        public async Task AnalyzeOperationExtractSummary()
         {
             TextAnalyticsClient client = GetClient();
             var documents = new List<string>
@@ -830,8 +830,8 @@ namespace Azure.AI.TextAnalytics.Tests
 
             TextAnalyticsActions batchActions = new TextAnalyticsActions()
             {
-                ExtractiveSummarizeActions = new List<ExtractiveSummarizeAction>() { new ExtractiveSummarizeAction() { MaxSentenceCount = 2 } },
-                DisplayName = "AnalyzeOperationExtractiveSummarize",
+                ExtractSummaryActions = new List<ExtractSummaryAction>() { new ExtractSummaryAction() { MaxSentenceCount = 2 } },
+                DisplayName = "AnalyzeOperationExtractSummary",
             };
 
             AnalyzeActionsOperation operation = await client.StartAnalyzeActionsAsync(documents, batchActions);
@@ -839,18 +839,18 @@ namespace Azure.AI.TextAnalytics.Tests
 
             // Take the first page.
             AnalyzeActionsResult resultCollection = operation.Value.ToEnumerableAsync().Result.FirstOrDefault();
-            IReadOnlyCollection<ExtractiveSummarizeActionResult> extractiveSummarizeActionsResults = resultCollection.ExtractiveSummarizeResults;
-            Assert.IsNotNull(extractiveSummarizeActionsResults);
+            IReadOnlyCollection<ExtractSummaryActionResult> extractSummaryActionsResults = resultCollection.ExtractSummaryResults;
+            Assert.IsNotNull(extractSummaryActionsResults);
 
-            ExtractiveSummarizeResultCollection extractiveSummarizeDocumentsResults = extractiveSummarizeActionsResults.FirstOrDefault().DocumentsResults;
-            Assert.AreEqual(1, extractiveSummarizeDocumentsResults.Count);
+            ExtractSummaryResultCollection extractSummaryDocumentsResults = extractSummaryActionsResults.FirstOrDefault().DocumentsResults;
+            Assert.AreEqual(1, extractSummaryDocumentsResults.Count);
 
-            Assert.AreEqual(2, extractiveSummarizeDocumentsResults[0].Sentences.Count);
+            Assert.AreEqual(2, extractSummaryDocumentsResults[0].Sentences.Count);
         }
 
         [RecordedTest]
         [ServiceVersion(Min = TextAnalyticsClientOptions.ServiceVersion.V2022_10_01_Preview)]
-        public async Task AnalyzeOperationAbstractiveSummarize()
+        public async Task AnalyzeOperationAbstractSummary()
         {
             TextAnalyticsClient client = GetClient();
             var documents = new List<string>
@@ -862,8 +862,8 @@ namespace Azure.AI.TextAnalytics.Tests
 
             TextAnalyticsActions batchActions = new TextAnalyticsActions()
             {
-                AbstractiveSummarizeActions = new List<AbstractiveSummarizeAction>() { new AbstractiveSummarizeAction() { MaxSentenceCount = 2 } },
-                DisplayName = "AnalyzeOperationAbstractiveSummarize",
+                AbstractSummaryActions = new List<AbstractSummaryAction>() { new AbstractSummaryAction() { MaxSentenceCount = 2 } },
+                DisplayName = "AnalyzeOperationAbstractSummary",
             };
 
             AnalyzeActionsOperation operation = await client.StartAnalyzeActionsAsync(documents, batchActions);
@@ -871,13 +871,13 @@ namespace Azure.AI.TextAnalytics.Tests
 
             // Take the first page.
             AnalyzeActionsResult resultCollection = operation.Value.ToEnumerableAsync().Result.FirstOrDefault();
-            IReadOnlyCollection<AbstractiveSummarizeActionResult> abstractiveSummarizeActionsResults = resultCollection.AbstractiveSummarizeResults;
-            Assert.IsNotNull(abstractiveSummarizeActionsResults);
+            IReadOnlyCollection<AbstractSummaryActionResult> abstractSummaryActionsResults = resultCollection.AbstractSummaryResults;
+            Assert.IsNotNull(abstractSummaryActionsResults);
 
-            AbstractiveSummarizeResultCollection abstractiveSummarizeDocumentsResults = abstractiveSummarizeActionsResults.FirstOrDefault().DocumentsResults;
-            Assert.AreEqual(1, abstractiveSummarizeDocumentsResults.Count);
+            AbstractSummaryResultCollection abstractSummaryDocumentsResults = abstractSummaryActionsResults.FirstOrDefault().DocumentsResults;
+            Assert.AreEqual(1, abstractSummaryDocumentsResults.Count);
 
-            AbstractiveSummarizeResult result = abstractiveSummarizeDocumentsResults[0];
+            AbstractSummaryResult result = abstractSummaryDocumentsResults[0];
             Assert.Greater(result.Summaries.Count, 0);
 
             AbstractiveSummary summary = result.Summaries.FirstOrDefault();
@@ -970,7 +970,7 @@ namespace Azure.AI.TextAnalytics.Tests
 
         [RecordedTest]
         [ServiceVersion(Max = TextAnalyticsClientOptions.ServiceVersion.V2022_05_01)]
-        public void AnalyzeOperationExtractiveSummarizeActionNotSupported()
+        public void AnalyzeOperationExtractSummaryActionNotSupported()
         {
             TestDiagnostics = false;
 
@@ -978,9 +978,9 @@ namespace Azure.AI.TextAnalytics.Tests
 
             TextAnalyticsActions batchActions = new()
             {
-                ExtractiveSummarizeActions = new[]
+                ExtractSummaryActions = new[]
                 {
-                    new ExtractiveSummarizeAction(),
+                    new ExtractSummaryAction(),
                 },
             };
 

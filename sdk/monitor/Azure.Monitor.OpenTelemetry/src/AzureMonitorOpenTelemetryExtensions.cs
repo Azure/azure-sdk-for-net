@@ -3,6 +3,8 @@
 
 using System;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
+using Microsoft.Extensions.Options;
 
 namespace Azure.Monitor.OpenTelemetry
 {
@@ -18,6 +20,8 @@ namespace Azure.Monitor.OpenTelemetry
         /// <returns>The <see cref="IServiceCollection"/> so that additional calls can be chained.</returns>
         public static IServiceCollection AddAzureMonitorOpenTelemetry(this IServiceCollection services)
         {
+            services.TryAddSingleton<IConfigureOptions<AzureMonitorOpenTelemetryOptions>,
+                                    DefaultAzureMonitorOpenTelemetryOptions>();
             return services.AddAzureMonitorOpenTelemetry(o => o = new AzureMonitorOpenTelemetryOptions());
         }
 
