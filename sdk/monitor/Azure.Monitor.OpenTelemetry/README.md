@@ -8,7 +8,7 @@ The Azure Monitor Distro is a client library that sends telemetry data to Azure 
 
 - **Azure Subscription:**  To use Azure services, including Azure Monitor Distro, you'll need a subscription.  If you do not have an existing Azure account, you may sign up for a [free trial](https://azure.microsoft.com/free/dotnet/) or use your [Visual Studio Subscription](https://visualstudio.microsoft.com/subscriptions/) benefits when you [create an account](https://azure.microsoft.com/account).
 - **Azure Application Insights Connection String:** To send telemetry data to the monitoring service you'll need connection string from Azure Application Insights. If you are not familiar with creating Azure resources, you may wish to follow the step-by-step guide for [Create an Application Insights resource](https://docs.microsoft.com/azure/azure-monitor/app/create-new-resource) and [copy the connection string](https://docs.microsoft.com/azure/azure-monitor/app/sdk-connection-string?tabs=net#find-your-connection-string).
-- **ASP.NET Core App:** An ASP.NET Core application is required to instrument it with Azure Monitor Distro. You can either bring your own app or follow the [Get started with ASP.NET Core MVC][https://docs.microsoft.com/aspnet/core/tutorials/first-mvc-app/start-mvc] to create a new one.
+- **ASP.NET Core App:** An ASP.NET Core application is required to instrument it with Azure Monitor Distro. You can either bring your own app or follow the [Get started with ASP.NET Core MVC](https://docs.microsoft.com/aspnet/core/tutorials/first-mvc-app/start-mvc) to create a new one.
 
 ### Install the package
 
@@ -46,7 +46,7 @@ var app = builder.Build();
 
 #### Example 2
 
-To enable Azure Monitor OpenTelemetry Distro with hard-coded connection string, add AddAzureMonitorOpenTelemetry() to your `Program.cs` with the `AzureMonitorOptions` containing the connection string.
+To enable Azure Monitor OpenTelemetry Distro with a hard-coded connection string, add AddAzureMonitorOpenTelemetry() to your `Program.cs` with the `AzureMonitorOptions` containing the connection string.
 
 ```C#
 // This method gets called by the runtime. Use this method to add services to the container.
