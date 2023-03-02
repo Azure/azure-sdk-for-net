@@ -9,7 +9,7 @@ input-file:
 - https://github.com/Azure/azure-rest-api-specs/blob/b06d0e410f6bc96169664bf456e84f8fa2f60b23/specification/appconfiguration/data-plane/Microsoft.AppConfiguration/preview/2022-11-01-preview/appconfiguration.json
 namespace: Azure.Data.AppConfiguration
 title: ConfigurationClient
-public-clients: true
+public-clients: false
 ```
 
 ### Change Endpoint type to Uri
