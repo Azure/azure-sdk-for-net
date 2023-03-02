@@ -29,7 +29,7 @@ The following examples demonstrate how to integrate the Azure Monitor OpenTeleme
 
 #### Example 1
 
-To enable Azure Monitor OpenTelemetry Distro, add `AddAzureMonitorOpenTelemetry()` to your `Program.cs` file and set the `APPLICATIONINSIGHTS_CONNECTION_STRING` environment variable to the connection string from your Application Insights resource.
+To enable Azure Monitor OpenTelemetry Distro, add `AddAzureMonitor()` to your `Program.cs` file and set the `APPLICATIONINSIGHTS_CONNECTION_STRING` environment variable to the connection string from your Application Insights resource.
 
 ```C#
 // This method gets called by the runtime. Use this method to add services to the container.
@@ -46,7 +46,7 @@ var app = builder.Build();
 
 #### Example 2
 
-To enable Azure Monitor OpenTelemetry Distro with a hard-coded connection string, add AddAzureMonitorOpenTelemetry() to your `Program.cs` with the `AzureMonitorOptions` containing the connection string.
+To enable Azure Monitor OpenTelemetry Distro with a hard-coded connection string, add `AddAzureMonitor()` to your `Program.cs` with the `AzureMonitorOptions` containing the connection string.
 
 ```C#
 // This method gets called by the runtime. Use this method to add services to the container.
@@ -61,7 +61,7 @@ builder.Services.AddMvc();
 var app = builder.Build();
 ```
 
-Note that in the examples above, `AddAzureMonitorOpenTelemetry` is added to the `IServiceCollection` in the `Program.cs` file. You can also add it in the `ConfigureServices` method of your `Startup.cs` file.
+Note that in the examples above, `AddAzureMonitor` is added to the `IServiceCollection` in the `Program.cs` file. You can also add it in the `ConfigureServices` method of your `Startup.cs` file.
 
 ### Authenticate the client
 
