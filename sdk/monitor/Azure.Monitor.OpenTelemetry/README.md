@@ -25,17 +25,17 @@ These are provided without support and are not intended for production workloads
 
 ### Enabling Azure Monitor OpenTelemetry in your application
 
-The following examples demonstrate how to integrate the Azure Monitor OpenTelemetry Distro into your application.
+The following examples demonstrate how to integrate the Azure Monitor Distro into your application.
 
 #### Example 1
 
-To enable Azure Monitor OpenTelemetry Distro, add `AddAzureMonitor()` to your `Program.cs` file and set the `APPLICATIONINSIGHTS_CONNECTION_STRING` environment variable to the connection string from your Application Insights resource.
+To enable Azure Monitor Distro, add `AddAzureMonitor()` to your `Program.cs` file and set the `APPLICATIONINSIGHTS_CONNECTION_STRING` environment variable to the connection string from your Application Insights resource.
 
 ```C#
 // This method gets called by the runtime. Use this method to add services to the container.
 var builder = WebApplication.CreateBuilder(args);
 
-// The following line enables Azure Monitor OpenTelemetry Distro.
+// The following line enables Azure Monitor Distro.
 builder.Services.AddAzureMonitor();
 
 // This code adds other services for your application.
@@ -46,13 +46,13 @@ var app = builder.Build();
 
 #### Example 2
 
-To enable Azure Monitor OpenTelemetry Distro with a hard-coded connection string, add `AddAzureMonitor()` to your `Program.cs` with the `AzureMonitorOptions` containing the connection string.
+To enable Azure Monitor Distro with a hard-coded connection string, add `AddAzureMonitor()` to your `Program.cs` with the `AzureMonitorOptions` containing the connection string.
 
 ```C#
 // This method gets called by the runtime. Use this method to add services to the container.
 var builder = WebApplication.CreateBuilder(args);
 
-// The following line enables Azure Monitor OpenTelemetry Distro with hard-coded connection string.
+// The following line enables Azure Monitor Distro with hard-coded connection string.
 builder.Services.AddAzureMonitor(o => o.ConnectionString = "InstrumentationKey=00000000-0000-0000-0000-000000000000");
 
 // This code adds other services for your application.
@@ -65,7 +65,7 @@ Note that in the examples above, `AddAzureMonitor` is added to the `IServiceColl
 
 ### Authenticate the client
 
-Azure Active Directory (AAD) authentication is an optional feature that can be used with Application Insights. To enable AAD authentication, set the `Credential` property in `AzureMonitorOptions`. This is made easy with the [Azure Identity library][identity], which provides support for authenticating Azure SDK clients with their corresponding Azure services.
+Azure Active Directory (AAD) authentication is an optional feature that can be used with Azure Monitor Distro. To enable AAD authentication, set the `Credential` property in `AzureMonitorOptions`. This is made easy with the [Azure Identity library][identity], which provides support for authenticating Azure SDK clients with their corresponding Azure services.
 
 ```C#
 // Call AddAzureMonitor and set Credential to authenticate through Active Directory.
@@ -78,7 +78,7 @@ builder.Services.AddAzureMonitor(o =>
 
 With this configuration, the Azure Monitor Distro will use the credentials of the currently logged-in user or of the service principal to authenticate and send telemetry data to Azure Monitor.
 
-Note that the `Credential` property is optional. If it is not set, Azure Monitor OpenTelemetry Distro will use the Instrumentation Key from the Connection String to send data to Application Insights resource.
+Note that the `Credential` property is optional. If it is not set, Azure Monitor Distro will use the Instrumentation Key from the Connection String to send data to Azure Monitor.
 
 ## Key concepts
 
