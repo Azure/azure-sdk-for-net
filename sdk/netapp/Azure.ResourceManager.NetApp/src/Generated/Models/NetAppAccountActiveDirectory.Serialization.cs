@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.NetApp.Models
             }
             if (Optional.IsDefined(PreferredServersForLdapClient))
             {
-                writer.WritePropertyName("preferredServersForLdapClient");
+                writer.WritePropertyName("preferredServersForLdapClient"u8);
                 writer.WriteStringValue(PreferredServersForLdapClient);
             }
             writer.WriteEndObject();
@@ -359,7 +359,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     ldapSearchScope = NetAppLdapSearchScopeConfiguration.DeserializeNetAppLdapSearchScopeConfiguration(property.Value);
                     continue;
                 }
-                if (property.NameEquals("preferredServersForLdapClient"))
+                if (property.NameEquals("preferredServersForLdapClient"u8))
                 {
                     preferredServersForLdapClient = property.Value.GetString();
                     continue;

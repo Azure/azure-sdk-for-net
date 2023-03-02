@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.NetApp.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(RelocationRequested))
             {
-                writer.WritePropertyName("relocationRequested");
+                writer.WritePropertyName("relocationRequested"u8);
                 writer.WriteBooleanValue(RelocationRequested.Value);
             }
             writer.WriteEndObject();
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.NetApp.Models
             Optional<bool> readyToBeFinalized = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("relocationRequested"))
+                if (property.NameEquals("relocationRequested"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     relocationRequested = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("readyToBeFinalized"))
+                if (property.NameEquals("readyToBeFinalized"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

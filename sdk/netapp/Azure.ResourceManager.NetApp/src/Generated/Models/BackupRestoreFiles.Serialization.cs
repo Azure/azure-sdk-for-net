@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.NetApp.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("fileList");
+            writer.WritePropertyName("fileList"u8);
             writer.WriteStartArray();
             foreach (var item in FileList)
             {
@@ -24,10 +24,10 @@ namespace Azure.ResourceManager.NetApp.Models
             writer.WriteEndArray();
             if (Optional.IsDefined(RestoreFilePath))
             {
-                writer.WritePropertyName("restoreFilePath");
+                writer.WritePropertyName("restoreFilePath"u8);
                 writer.WriteStringValue(RestoreFilePath);
             }
-            writer.WritePropertyName("destinationVolumeId");
+            writer.WritePropertyName("destinationVolumeId"u8);
             writer.WriteStringValue(DestinationVolumeId);
             writer.WriteEndObject();
         }

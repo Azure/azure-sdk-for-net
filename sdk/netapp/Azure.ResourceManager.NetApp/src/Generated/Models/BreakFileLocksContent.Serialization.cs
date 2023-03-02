@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.NetApp.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(ClientIP))
             {
-                writer.WritePropertyName("clientIp");
+                writer.WritePropertyName("clientIp"u8);
                 writer.WriteStringValue(ClientIP);
             }
             if (Optional.IsDefined(ConfirmRunningDisruptiveOperation))
             {
-                writer.WritePropertyName("confirmRunningDisruptiveOperation");
+                writer.WritePropertyName("confirmRunningDisruptiveOperation"u8);
                 writer.WriteBooleanValue(ConfirmRunningDisruptiveOperation.Value);
             }
             writer.WriteEndObject();

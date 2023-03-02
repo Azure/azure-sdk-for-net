@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.NetApp.Models
             }
             if (Optional.IsDefined(VolumeRelocation))
             {
-                writer.WritePropertyName("volumeRelocation");
+                writer.WritePropertyName("volumeRelocation"u8);
                 writer.WriteObjectValue(VolumeRelocation);
             }
             writer.WriteEndObject();
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     snapshot = VolumeSnapshotProperties.DeserializeVolumeSnapshotProperties(property.Value);
                     continue;
                 }
-                if (property.NameEquals("volumeRelocation"))
+                if (property.NameEquals("volumeRelocation"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
