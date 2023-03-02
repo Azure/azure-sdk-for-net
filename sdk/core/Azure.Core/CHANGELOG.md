@@ -5,6 +5,14 @@
 ### Features Added
 
 - `ActivitySource` activities that are used when using the [experimental OpenTelemetry support](https://devblogs.microsoft.com/azure-sdk/introducing-experimental-opentelemetry-support-in-the-azure-sdk-for-net/) will include the `az.schema_url` tag indicating the OpenTelemetry schema version. They will also include the attribute names specified [here](https://github.com/Azure/azure-sdk/blob/main/docs/tracing/distributed-tracing-conventions.yml). 
+- "West US 3", "Sweden Central" and "Qatar Central" locations are added to `Azure.Core.AzureLocation`
+
+### Improvements
+
+- `Azure.Core.ArrayBackedPropertyBag` is used to store request headers before `HttpRequestMessage` is created instead of `System.Net.Http.Headers.HttpContentHeaders`
+- `Azure.HttpRange.ToString` uses `string.Create` instead of `FormattableString.Invariant` in .NET 6.0+
+- `Azure.Core.Diagnostics.AzureCoreEventSource` checks `EventLevel` before formatting data for the events
+- `Azure.Core.Pipeline.HttpClientTransport.JoinHeaderValues` uses `System.Runtime.CompilerServices.DefaultInterpolatedStringHandler` to join header string values in .NET 6.0+
 
 ### Bugs Fixed
 
