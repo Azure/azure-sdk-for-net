@@ -73,8 +73,9 @@ namespace Azure.Communication.CallingServer
             }
 
             HttpMessage message = GetHttpMessage(sourceEndpoint, pageRange);
-
+            RedirectPolicy.SetAllowAutoRedirect(message, true);
             await _client._pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+
             switch (message.Response.Status)
             {
                 case 200:
@@ -102,6 +103,7 @@ namespace Azure.Communication.CallingServer
             }
 
             HttpMessage message = GetHttpMessage(sourceEndpoint, pageRange);
+            RedirectPolicy.SetAllowAutoRedirect(message, true);
             _client._pipeline.Send(message, cancellationToken);
 
             switch (message.Response.Status)
