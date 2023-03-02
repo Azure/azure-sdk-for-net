@@ -592,7 +592,7 @@ If this is neglected, _clientDiagnostics will be null at test runtime.
 
 - In order to observe test network traffic with Fiddler, you can either set the `AZURE_ENABLE_FIDDLER` environment variable or the `EnableFiddler` [runsetting](https://github.com/Azure/azure-sdk-for-net/blob/main/eng/nunit.runsettings) parameter to `true`.
 
-There are various helpful classes that assist in writing tests for the Azure SDK. Below are some of them.
+Several classes that are useful when writing tests for the Azure SDK are highlighted below:
 
 ### TestEnvVar
 
