@@ -6,25 +6,25 @@ using Microsoft.Extensions.Options;
 
 namespace Azure.Monitor.OpenTelemetry
 {
-    internal class DefaultAzureMonitorOpenTelemetryOptions : IConfigureOptions<AzureMonitorOpenTelemetryOptions>
+    internal class DefaultAzureMonitorOptions : IConfigureOptions<AzureMonitorOptions>
     {
-        private const string AzureMonitorOpenTelemetrySectionFromConfig = "AzureMonitorOpenTelemetry";
+        private const string AzureMonitorSectionFromConfig = "AzureMonitor";
         private readonly IConfiguration? _configuration;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="DefaultAzureMonitorOpenTelemetryOptions"/> class.
+        /// Initializes a new instance of the <see cref="DefaultAzureMonitorOptions"/> class.
         /// </summary>
         /// <param name="configuration"><see cref="IConfiguration"/> from which configuration for ApplicationInsights can be retrieved.</param>
-        public DefaultAzureMonitorOpenTelemetryOptions(IConfiguration? configuration = null)
+        public DefaultAzureMonitorOptions(IConfiguration? configuration = null)
         {
             _configuration = configuration;
         }
 
-        public void Configure(AzureMonitorOpenTelemetryOptions options)
+        public void Configure(AzureMonitorOptions options)
         {
             if (_configuration != null)
             {
-                _configuration.GetSection(AzureMonitorOpenTelemetrySectionFromConfig).Bind(options);
+                _configuration.GetSection(AzureMonitorSectionFromConfig).Bind(options);
             }
         }
     }
