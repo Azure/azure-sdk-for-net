@@ -65,7 +65,7 @@ Note that in the examples above, `AddAzureMonitor` is added to the `IServiceColl
 
 ### Authenticate the client
 
-To authenticate the client using Azure Active Directory (AAD), you'll need to set the Credential property in AzureMonitorOptions. This is made easy with the [Azure Identity library][identity], which provides support for authenticating Azure SDK clients with their corresponding Azure services.
+Azure Active Directory (AAD) authentication is an optional feature that can be used with Application Insights. To enable AAD authentication, set the `Credential` property in `AzureMonitorOptions`. This is made easy with the [Azure Identity library][identity], which provides support for authenticating Azure SDK clients with their corresponding Azure services.
 
 ```C#
 // Call AddAzureMonitor and set Credential to authenticate through Active Directory.
@@ -77,6 +77,8 @@ builder.Services.AddAzureMonitor(o =>
 ```
 
 With this configuration, the Azure Monitor Distro will use the credentials of the currently logged-in user or of the service principal to authenticate and send telemetry data to Azure Monitor.
+
+Note that the `Credential` property is optional. If it is not set, Azure Monitor OpenTelemetry Distro will use the Instrumentation Key from the Connection String to send data to Application Insights resource.
 
 ## Key concepts
 
