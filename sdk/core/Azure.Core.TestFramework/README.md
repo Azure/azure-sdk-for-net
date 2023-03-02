@@ -1,4 +1,8 @@
-# Using the TestFramework
+# .NET Azure SDK Test Framework
+
+The .NET Azure SDK Test Framework, aka the Test Framework, is a set of classes that help you to write tests against the Azure SDK for .NET. It provides support for both recorded tests and unit tests. The Test Framework uses NUnit as its underlying testing framework. All Track 2 libraries (Azure.* naming) should use the Test Framework for their tests.
+
+## Using the TestFramework
 
 To start using the Test Framework, add a project reference using the alias `AzureCoreTestFramework` into your test `.csproj`:
 
@@ -12,11 +16,11 @@ To start using the Test Framework, add a project reference using the alias `Azur
 </Project>
 ```
 
-As an example, see the [Template](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/template/Azure.Template/tests/Azure.Template.Tests.csproj#L15) project.
+As an example, see the [Template](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/template/Azure.Template/tests/Azure.Template.Tests.csproj#L15) project. If you create a new project from the template, the Test Framework will be already referenced.
 
 ## Sync-async tests
 
-The test framework provides the ability to write tests using async client methods and automatically run them using sync overloads. To write sync-async client tests, inherit from `ClientTestBase` class and use the `InstrumentClient` method to wrap your client into a proxy class that automatically forwards async calls to their sync overloads.
+The Test Framework provides the ability to write tests using async client methods and automatically run them using sync overloads. This means that you don't need to duplicate tests to cover calling both the sync and async overloads of service client methods. To write sync-async client tests, inherit from `ClientTestBase` class and use the `InstrumentClient` method to wrap your client into a proxy class. This proxy class will automatically forward async calls to their sync overloads for the sync version of the test. `ClientTestBase` defines two TestFixtures - one for sync tests and one for async tests.
 
 ``` C#
 public class ConfigurationLiveTests: ClientTestBase
@@ -46,17 +50,28 @@ public class ConfigurationLiveTests: ClientTestBase
 
 In the test explorer, async tests will display as `TestClassName(true)` and sync tests as `TestClassName(false)`.
 
-When using sync-async tests with recorded tests two sessions files will be generated - the async test session will have `Async.json` suffix.
+When using sync-async tests with recorded tests two sessions files will be generated - the async test session will have `Async.json` suffix. Note that if defining a recorded test, you would inherit from `RecordedTestBase` instead of `ClientTestBase`. This will be discussed in more detail in [Recorded Tests](#recorded-tests).
 
 You can disable the sync-forwarding for an individual test by applying the `[AsyncOnly]` attribute to the test method.
 
 __Limitation__: all method calls/properties that are being used have to be `virtual`.
 
-## Test environment and live test resources
+## Recorded tests
 
-Follow the [live test resources management](https://github.com/azure/azure-sdk-for-net/tree/main/eng/common/TestResources/README.md) to create a live test resources deployment template and get it deployed. The deployment template should be named `test-resources.json` and will live under your service directory.
+The bulk of the functionality of the Test Framework is around supporting the ability to run what we call recorded tests. This type of test can be thought of as a functional test as opposed to a unit test. A recorded test can be run in three different [modes](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core.TestFramework/src/RecordedTestMode.cs):
+  - `Live` - The requests in the tests are run against live Azure resources.
+  - `Record` - This is the same as live mode with one key difference - the HTTP traffic from your tests is saved locally on your machine.
+  - `Playback` - The requests that your library generates when running a test are compared against the requests in the recording for that test. For each matched request, the corresponding response is extracted from the recording and "played back" as the response.
 
-To use the environment provided by the `New-TestResources.ps1`, create a class that inherits from `TestEnvironment` and exposes required values as properties:
+Under the hood, when tests are run in `Playback` or `Record` mode, requests are forwarded to the [Test Proxy](https://github.com/Azure/azure-sdk-tools/blob/main/tools/test-proxy/Azure.Sdk.Tools.TestProxy/README.md). The test proxy is a proxy server that runs locally on your machine automatically when in `Record` or `Playback` mode. The proxy is responsible for saving the requests and responses when running in `Record` mode and for returning the recorded responses when running in `Playback` mode. The proxy should be mostly transparent to the developer, other than when you are trying to debug. More on that later.
+
+### Test resource creation and TestEnvironment
+
+In order to actually run recorded tests, you will need Azure resources that the test can run against. Follow the [live test resources management](https://github.com/azure/azure-sdk-for-net/tree/main/eng/common/TestResources/README.md) to create a live test resources deployment template and get it deployed. The deployment template should be named `test-resources.json` or for bicep templates, `test-resources.bicep`, and will live under your service directory.
+
+When running tests in `Live` or `Record` mode locally, the Test Framework will prompt you to create the live test resources required for the tests if you don't have environment variables or an env file containing the required variables needed for the tests. This means that you do not have to manually run the New-TestResources script when attempting to run live tests! The Test Framework will also attempt to automatically extend the expiration of the test resource resource group whenever live tests are run. If the resource group specified in your .env file or environment variable has already expired and thus been deleted, the framework will prompt you to create a new resource group just like it would if an env variable required by the test was missing.
+
+To access the the outputted variables of your test-resources template, create a class that inherits from `TestEnvironment` and exposes required values as properties:
 
 ``` C#
 public class AppConfigurationTestEnvironment : TestEnvironment
@@ -69,7 +84,7 @@ public class AppConfigurationTestEnvironment : TestEnvironment
 }
 ```
 
-__NOTE:__ Make sure that variables containing secret values are not recorded or are sanitized.
+__NOTE:__ Make sure that variables containing secret values are not recorded or are sanitized. If you accidentally leak a secret, follow the guidance [here](https://dev.azure.com/azure-sdk/internal/_wiki/wikis/internal.wiki/101/Leaked-secret-procedure). 
 
 To sanitize variables use the `options` parameter of `GetRecordedVariable`:
 
@@ -122,8 +137,8 @@ public partial class ConfigurationSamples: SamplesBase<AppConfigurationTestEnvir
 ```
 
 If resources require some time to become eventually consistent and there's a scenario that can be used to detect if asynchronous process completed
-then you can consider implementing `TestEnvironment.IsEnvironmentReadyAsync`. Test framework will probe the scenario couple of times before starting tests or
-fail test run if resources don't become available:
+then you can consider implementing `TestEnvironment.IsEnvironmentReadyAsync`. The Test Framework will probe the scenario couple of times before starting tests or
+fail the test run if resources don't become available:
 
 ``` C#
 public class AppConfigurationTestEnvironment : TestEnvironment
@@ -146,60 +161,9 @@ public class AppConfigurationTestEnvironment : TestEnvironment
 }
 ```
 
-### Running live tests serially
+### Defining the recorded test class
 
-By default, NUnit does not run tests within each assembly in parallel, but this be [configured](https://docs.nunit.org/articles/nunit/technical-notes/usage/Framework-Parallel-Test-Execution.html).
-Especially for unit tests, this is often desirable; however, live and [recorded tests](#recorded-tests) may run into some issues. Thus, by default, the `RecordedTestBase` described below is attributed
-as `[NonParallelizable]`.
-
-However, when projects are built and tested in CIs, all projects are testing in parallel. This means, for example, you can have two or more assemblies running tests such as one backing up or restoring
-a resource while another assembly's tests are trying to use that resource. The service may return an error like HTTP 409.
-
-To isolate one or more projects so that they are tested serially, add a _service.projects_ file to your service directory e.g., _sdk/keyvault/service.projects_ with content like the following to set the
-`TestInParallel` metadata to `false`:
-
-```xml
-<Project>
-  <ItemGroup>
-    <ProjectReference Update="$(MSBuildThisFileDirectory)Azure.Security.KeyVault.Administration/tests/*.csproj">
-        <TestInParallel>false</TestInParallel>
-    </ProjectReference>
-  </ItemGroup>
-</Project>
-```
-
-## Test settings
-
-Test settings can be configured via `.runsettings` files. See [nunit.runsettings](https://github.com/Azure/azure-sdk-for-net/blob/main/eng/nunit.runsettings) for available knobs.
-
-There are two ways to work with `.runsettings`. Both are picked up by Visual Studio without restart.
-
-- You can edit [nunit.runsettings](https://github.com/Azure/azure-sdk-for-net/blob/main/eng/nunit.runsettings) locally to achieve desired configuration.
-- You can prepare few copies of `.runsettings` by cloning [nunit.runsettings](https://github.com/Azure/azure-sdk-for-net/blob/main/eng/nunit.runsettings).
-
-Load them in Visual Studio (`Test>Configure Run Settings` menu) and switch between them. This option requires setting an environment variable `AZURE_SKIP_DEFAULT_RUN_SETTINGS=true`.
-
-## TokenCredential
-
-If a test or sample uses `TokenCredential` to construct the client use `TestEnvironment.Credential` to retrieve it.
-
-``` C#
-public abstract class KeysTestBase : RecordedTestBase<KeyVaultTestEnvironment>
-{
-    internal KeyClient GetClient() =>
-        InstrumentClient(
-            new KeyClient(
-                new Uri(TestEnvironment.KeyVaultUrl),TestEnvironment.Credential,
-                InstrumentClientOptions(
-                    new KeyClientOptions())));
-}
-```
-
-## Recorded tests
-
-The test framework provides an ability to record HTTP requests and responses and replay them for offline test runs. This allows the full suite of tests to be run as part of PR validation without running live tests. In general, live tests are run as part of a separate internal pipeline that runs nightly.
-
-To use recorded test functionality inherit from `RecordedTestBase<T>` class and use `InstrumentClientOptions` method when creating the client instance. Pass the test environment class as a generic argument to `RecordedTestBase`.
+To use recorded test functionality, define a class that inherits from the `RecordedTestBase<T>` class and use the `InstrumentClientOptions` method when creating the client instance. Pass the test environment class as a generic argument to `RecordedTestBase`. If any tests should not be recorded, e.g. because the recording would be too large, apply the `LiveOnly` attribute at either the test or class level, as appropriate. These instances should be rare - the goal is to have all recorded tests run in all modes.
 
 ``` C#
 public class ConfigurationLiveTests: RecordedTestBase<AppConfigurationTestEnvironment>
@@ -256,16 +220,14 @@ public class ConfigurationLiveTests: RecordedTestBase<AppConfigurationTestEnviro
 
 In addition to the auto-rerecording functionality, using the RecordedTestAttribute also will automatically retry tests that fail due due to exceeding the global test time limit.
 
-When running tests in `Live` or `Record` mode, the Test Framework will prompt you to create the live test resources required for the tests if you don't have environment variables or an env file containing the required variables needed for the tests. This means that you do not have to manually run the New-TestResources script when attempting to run live tests! The Test Framework will also attempt to automatically extend the expiration of the test resource resource group whenever live tests are run. If the resource group specified in your .env file or environment variable has already expired and thus been deleted, the framework will prompt you to create a new resource group just like it would if an env variable required by the test was missing.
-
 ### Recording
 
-When tests are run in recording mode, session records are saved to the project directory automatically in a folder named 'SessionRecords'.
+When tests are run in `Record` mode, session records are saved to the project directory automatically in a folder named 'SessionRecords'.
 
 ### Sanitizing
 
-Secrets that are part of requests, responses, headers, or connections strings should be sanitized before saving the record.
-__Do not check in session records containing secrets.__ Common headers like `Authentication` are sanitized automatically, but if custom logic is required and/or if request or response body need to be sanitized, the `Sanitizer` property should be used as an extension point.
+Secrets that are part of requests, responses, headers, or connections strings should be sanitized before saving the record. 
+__Do not check in session records containing secrets.__ Common headers like `Authentication` are sanitized automatically, but if custom logic is required and/or if request or response body need to be sanitized, several properties of `RecordedTestBase` can be used to customize the sanitization process.
 
 For example:
 
@@ -296,9 +258,17 @@ public class FormRecognizerLiveTests: RecordedTestBase<FormRecognizerTestEnviron
 }
 ```
 
+If more advanced sanitization is needed, you can use any of the regex-based sanitizer properties of `RecordedTestBase`. These are listed below along with example usages.
+- [BodyKeySanitizers](https://grep.app/search?q=BodyKeySanitizers&filter[repo][0]=Azure/azure-sdk-for-net)
+- [BodyRegexSanitizers](https://grep.app/search?q=BodyRegexSanitizers&filter[repo][0]=Azure/azure-sdk-for-net)
+- [UriRegexSanitizers](https://grep.app/search?q=UriRegexSanitizers&filter[repo][0]=Azure/azure-sdk-for-net)
+- [HeaderRegexSanitizers](https://grep.app/search?q=HeaderRegexSanitizers&filter[repo][0]=Azure/azure-sdk-for-net)
+
+_Note that when using any of the regex sanitizers, you must take care to ensure that the regex is specific enough to not match unintended values. When a regex is too broad and matches unintended values, this often manifests as the request or response being corrupted._
+
 ### Matching
 
-When tests are run in `Playback` mode, the HTTP method, Uri, and headers are used to match the request to the recordings. Some headers change on every request and are not controlled by the client code and should be ignored during matching. Common headers like `Date`, `x-ms-date`, `x-ms-client-request-id`, `User-Agent`, `Request-Id` are ignored by default but if more headers need to be ignored, use the various matching properties to customize as needed.
+When tests are run in `Playback` mode, the Test Proxy uses the HTTP method, Uri, and headers to match the request to the recordings. Some headers change on every request and are not controlled by the client code and should be ignored during matching. Common headers like `Date`, `x-ms-date`, `x-ms-client-request-id`, `User-Agent`, `Request-Id` are ignored by default but if more headers need to be ignored, use the various matching properties to customize as needed.
 
 ``` C#
     public class ConfigurationLiveTests: RecordedTestBase<AppConfigurationTestEnvironment>
@@ -311,6 +281,44 @@ When tests are run in `Playback` mode, the HTTP method, Uri, and headers are use
     }
 ```
 
+### Running live tests serially
+
+By default, NUnit does not run tests within each assembly in parallel, but this be [configured](https://docs.nunit.org/articles/nunit/technical-notes/usage/Framework-Parallel-Test-Execution.html).
+Especially for unit tests, this is often desirable; however, live and [recorded tests](#recorded-tests) may run into some issues. Thus, by default, the `RecordedTestBase` described below is attributed
+as `[NonParallelizable]`.
+
+However, when projects are built and tested in CIs, all projects are testing in parallel. This means, for example, you can have two or more assemblies running tests such as one backing up or restoring
+a resource while another assembly's tests are trying to use that resource. The service may return an error like HTTP 409.
+
+To isolate one or more projects so that they are tested serially, add a _service.projects_ file to your service directory e.g., _sdk/keyvault/service.projects_ with content like the following to set the
+`TestInParallel` metadata to `false`:
+
+```xml
+<Project>
+  <ItemGroup>
+    <ProjectReference Update="$(MSBuildThisFileDirectory)Azure.Security.KeyVault.Administration/tests/*.csproj">
+        <TestInParallel>false</TestInParallel>
+    </ProjectReference>
+  </ItemGroup>
+</Project>
+```
+
+### TokenCredential
+
+If a test or sample uses `TokenCredential` to construct the client use `TestEnvironment.Credential` to retrieve it.
+
+``` C#
+public abstract class KeysTestBase : RecordedTestBase<KeyVaultTestEnvironment>
+{
+    internal KeyClient GetClient() =>
+        InstrumentClient(
+            new KeyClient(
+                new Uri(TestEnvironment.KeyVaultUrl),TestEnvironment.Credential,
+                InstrumentClientOptions(
+                    new KeyClientOptions())));
+}
+```
+
 ### Ignoring intermittent service errors
 
 If your live tests are impacted by temporary or intermittent services errors, be sure the service team is aware and has a plan to address the issues.
@@ -318,25 +326,42 @@ If these issues cannot be resolved, you can attribute test classes or test metho
 This attribute, when used with `RecordedTestBase`-derived test fixtures and methods attributed with `[RecordedTest]`, which mark tests that failed with that specific error as "inconclusive", along with an optional
 reason you specify and the original error information.
 
-### Misc
+### Debugging Test Proxy
 
-You can use `Recording.GenerateId()` to generate repeatable random IDs.
+The Test Proxy and Test Framework include detailed error messages for test failures. However, there will  always be times where it is necessary to debug to figure out what is going wrong, particularly if the issue actually exists in the Test Framework or Test Proxy code rather than in your test or client library.
 
-You should only use `Recording.Random` for random values (and you MUST make the same number of random calls in the same order every test run)
+In order to enable debug mode, set the `UseLocalDebugProxy` property to true in your class that inherits from `RecordedTestBase`:
 
-You can use `Recording.Now` and `Recording.UtcNow` if you need certain values to capture the time the test was recorded.
+```C#
+public KeyClientLiveTests(bool isAsync, KeyClientOptions.ServiceVersion serviceVersion)
+    : this(isAsync, serviceVersion, null /* RecordedTestMode.Record /* to re-record */)
+{
+    UseLocalDebugProxy = true;
+}
+```
 
-It's possible to add additional recording variables for advanced scenarios (like custom test configuration, etc.) by using `Recording.SetVariable` or `Recording.GetVariable`.
+In order to debug the test proxy, you will need to check out the [azure-sdk-tools](https://github.com/Azure/azure-sdk-tools) repo locally. The best practice is to first create a fork of the repo, and then clone your fork locally.
 
-You can use `if (Mode == RecordingMode.Playback) { ... }` to change behavior for playback only scenarios (in particular to make polling times instantaneous)
+Once you have cloned the repo, open the [Test Proxy solution](https://github.com/Azure/azure-sdk-tools/blob/main/tools/test-proxy/Azure.Sdk.Tools.TestProxy.sln) in your IDE.
 
-You can use `using (Recording.DisableRecording()) { ... }` to disable recording in the code block (useful for polling methods)
+If you are attempting to debug `Playback` mode, set a breakpoint in the HandlePlaybackRequest method of [RecordingHandler](https://github.com/Azure/azure-sdk-tools/blob/main/tools/test-proxy/Azure.Sdk.Tools.TestProxy/RecordingHandler.cs). If you are attempting to debug `Record` mode, set a breakpoint in the `HandleRecordRequestAsync` method of [RecordingHandler](https://github.com/Azure/azure-sdk-tools/blob/main/tools/test-proxy/Azure.Sdk.Tools.TestProxy/RecordingHandler.cs). It may also be helpful to put breakpoints in [Admin.cs](https://github.com/Azure/azure-sdk-tools/blob/main/tools/test-proxy/Azure.Sdk.Tools.TestProxy/Admin.cs) to verify that your sanitizers are being added as expected.
 
-In order to enable testing with Fiddler, you can either set the  `AZURE_ENABLE_FIDDLER` environment variable or the `EnableFiddler` [runsetting](https://github.com/Azure/azure-sdk-for-net/blob/main/eng/nunit.runsettings) parameter to `true`.
+With your breakpoints set, run the Test Proxy project, and then run your test that you are trying to debug. You should see your breakpoints hit. 
 
-## Support multi service version testing
+## Test settings
 
-To enable multi-version testing, add the `ClientTestFixture` attribute listing to all the service versions to the test class itself or a base class:
+Test settings can be configured via `.runsettings` files. See [nunit.runsettings](https://github.com/Azure/azure-sdk-for-net/blob/main/eng/nunit.runsettings) for available knobs.
+
+There are two ways to work with `.runsettings`. Both are picked up by Visual Studio without restart.
+
+- You can edit [nunit.runsettings](https://github.com/Azure/azure-sdk-for-net/blob/main/eng/nunit.runsettings) locally to achieve desired configuration.
+- You can prepare few copies of `.runsettings` by cloning [nunit.runsettings](https://github.com/Azure/azure-sdk-for-net/blob/main/eng/nunit.runsettings).
+
+Load them in Visual Studio (`Test>Configure Run Settings` menu) and switch between them. This option requires setting an environment variable `AZURE_SKIP_DEFAULT_RUN_SETTINGS=true`.
+
+### Support multi service version testing
+
+To enable multi-version testing, add the `ClientTestFixture` attribute containing all of the service versions to the test class itself or a base class:
 
 ```C#
 [ClientTestFixture(
@@ -355,6 +380,7 @@ public abstract class BlobTestBase : StorageTestBase
     // ...
 }
 ```
+**Whenever a new ServiceVersion is added to the client library, the test class should be updated to include it.**
 
 The `ServiceVersion` must be either an Enum that is convertible to an Int32 or a string in the format of a date with an optional preview qualifier `yyyy-MM-dd[-preview]`.
 The list passed into `ClientTestFixture` must be homogenous.
@@ -393,9 +419,9 @@ How it looks it the test explorer:
 
 ![image](https://user-images.githubusercontent.com/1697911/72942831-52c7ca00-3d29-11ea-9b7e-2e54198d800d.png)
 
-__Note:__ If test recordings are enabled, the recordings will be generated against the latests version of the service.
+__Note:__ If test recordings are enabled, the recordings will be generated against the latest version of the service.
 
-## Support for an additional test parameter
+### Support for an additional test parameter
 
 The `ClientTestFixture` attribute also supports specifying an additional array of parameter values to send to the test class.
 Similar to the service versions, this results in the creation of a permutation of each test for each parameter value specified.
@@ -503,13 +529,27 @@ For this to work with tests, your test class must have an `InternalsVisibleTo` i
 
 If this is neglected, _clientDiagnostics will be null at test runtime.
 
-## Miscellaneous Helpers
+## Miscellaneous
+
+You can use `Recording.GenerateId()` to generate repeatable random IDs.
+
+You should only use `Recording.Random` for random values (and you MUST make the same number of random calls in the same order every test run)
+
+You can use `Recording.Now` and `Recording.UtcNow` if you need certain values to capture the time the test was recorded.
+
+It's possible to add additional recording variables for advanced scenarios (like custom test configuration, etc.) by using `Recording.SetVariable` or `Recording.GetVariable`.
+
+You can use `if (Mode == RecordingMode.Playback) { ... }` to change behavior for playback only scenarios (in particular to make polling times instantaneous)
+
+You can use `using (Recording.DisableRecording()) { ... }` to disable recording in the code block (useful for polling methods)
+
+In order to enable testing with Fiddler, you can either set the  `AZURE_ENABLE_FIDDLER` environment variable or the `EnableFiddler` [runsetting](https://github.com/Azure/azure-sdk-for-net/blob/main/eng/nunit.runsettings) parameter to `true`.
 
 There are various helpful classes that assist in writing tests for the Azure SDK. Below are some of them.
 
 ### TestEnvVar
 
-[TestEnvVar](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core.TestFramework/src/TestEnvVar.cs) allows you to wrap a block of code with a using statement inside which the configured Environment variables will be set to your supplied values.
+[TestEnvVar](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core.TestFramework/src/TestEnvVar.cs) allows you to wrap a block of code with a using statement inside which the configured Environment variables will be set to your supplied values.
 It ensures that the existing value of any configured environment variables are preserved before they are set them and restores them outside the scope of the using block.
 
 ```c#
@@ -523,7 +563,7 @@ using (var _ = new TestEnvVar("AZURE_TENANT_ID", "foo"))
 
 ### TestAppContextSwitch
 
-[TestAppContextSwitch](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core.TestFramework/src/TestAppContextSwitch.cs) allows you to wrap a block of code with a using statement inside which the configured [AppContext](https://docs.microsoft.com/dotnet/api/system.appcontext) switch will be set to your supplied values.
+[TestAppContextSwitch](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core.TestFramework/src/TestAppContextSwitch.cs) allows you to wrap a block of code with a using statement inside which the configured [AppContext](https://docs.microsoft.com/dotnet/api/system.appcontext) switch will be set to your supplied values.
 It ensures that the existing value of any configured switches are preserved before they are set them and restores them outside the scope of the using block.
 Note: Even if an `AppContext` switch was un-set prior to setting it via `TestAppContextSwitch`, it will be unset after leaving the scope of the using block.
 
