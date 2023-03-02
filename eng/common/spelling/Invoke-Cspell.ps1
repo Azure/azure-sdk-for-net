@@ -167,7 +167,7 @@ $originalLocation = Get-Location
 
 try {
   Set-Location $PackageInstallCache
-  npm ci
+  npm ci | Write-Host
 
   # Use the mutated configuration file when calling cspell
   $command = "npx cspell $JobType --config $CSpellConfigPath --no-must-find-files --root $SpellCheckRoot --relative"
