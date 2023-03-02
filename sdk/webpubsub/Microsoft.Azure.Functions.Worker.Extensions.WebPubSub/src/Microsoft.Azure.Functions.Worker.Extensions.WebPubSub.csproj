@@ -10,6 +10,10 @@
     <NoWarn>$(NoWarn);AZC0001;CA2227</NoWarn>
     <IsExtensionClientLibrary>true</IsExtensionClientLibrary>
   </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="..\..\Microsoft.Azure.WebPubSub.Common\src\Internal\BinaryDataJsonConverter.cs" Link="Converters\BinaryDataJsonConverter.cs" />
+    <Compile Include="..\..\Microsoft.Azure.WebPubSub.Common\src\Shared\ConnectionStatesConverter.cs" Link="Converters\ConnectionStatesConverter.cs" />
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.Azure.Functions.Worker.Extensions.Abstractions" />

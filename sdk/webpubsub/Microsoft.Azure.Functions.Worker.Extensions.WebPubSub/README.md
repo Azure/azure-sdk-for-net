@@ -1,12 +1,18 @@
 # Azure Web PubSub extension of isolated-process Azure Functions client library for .NET
 
-This extension defines the function binding types and triggers in Azure Functions for .NET isolated-process, allowing you to easily write functions that respond to any event published to Web PubSub.
+This extension defines the binding types and triggers in the .NET isolated worker process for Azure Functions, allowing you to write functions that respond to any event published to Web PubSub.
+
+[Source code][source] |
+Package |
+API reference documentation |
+[Product documentation](https://aka.ms/awps/doc) |
+[Samples]
 
 ## Getting started
 
 ### Install the package
 
-Install the client library from [NuGet](https://www.nuget.org/):
+Install the client library from [NuGet]:
 
 ```dotnetcli
 dotnet add package Microsoft.Azure.Functions.Worker.Extensions.WebPubSub
@@ -14,52 +20,157 @@ dotnet add package Microsoft.Azure.Functions.Worker.Extensions.WebPubSub
 
 ### Prerequisites
 
-- An [Azure subscription][azure_sub].
-- An existing Azure Web PubSub service instance.
+You must have an [Azure subscription][free_subs] and an Azure resource group with a Web PubSub resource. Follow this [step-by-step tutorial][tutorial] to create an Azure Web PubSub instance.
 
 ### Authenticate the client
 
-Not applicable for the library. You should work with a client library to deserialize service requests in a friendly way.
+In order to let the extension work with Azure Web PubSub service, you will need to provide a valid `ConnectionString`. 
+
+You can find the **Keys** for you Azure Web PubSub service in the [Azure Portal][portal].
+
+The `AzureWebJobsStorage` connection string is used to preserve the processing checkpoint information as required refer to [Storage considerations][storage]
+
+For the local development use the `local.settings.json` file to store the connection string, `<connection-string>` can be set to `WebPubSubConnectionString` as default supported in the extension, or you can set customized names by mapping it with `Connection = <connection-string>` in function binding attributes:
+
+```json
+{
+  "Values": {
+    "AzureWebJobsStorage": "UseDevelopmentStorage=true",
+    "<connection-string>": "Endpoint=https://<webpubsub-name>.webpubsub.azure.com;AccessKey=<access-key>;Version=1.0;"
+  }
+}
+```
+When deployed use the [application settings][app_setting] to set the connection string.
 
 ## Key concepts
 
-### Events
+### Using Web PubSub input binding
 
-Connect, Connected, Disconnected are system events indicate connection stage. And Connect is a blocking event that service will wait for the response to determine next action. Any error returned will drop the connection.
+Please follow the [input binding tutorial](#functions-that-uses-web-pubsub-input-binding) to learn about using this extension for building `WebPubSubConnection` to create Websockets connection to service with input binding.
 
-User events are message event. It's also a blocking event which service is waiting for response. And server can return information in the response which will be sent to the caller directly.
+### Using Web PubSub output binding
 
-### WebPubSubEventRequest
+Please follow the [output binding tutorial](#functions-that-uses-web-pubsub-output-binding) to learn about using this extension for publishing Web PubSub messages.
 
-WebPubSubEventRequest, represents a abstract request come from service side. In detail, it should be ValidationRequest or one of the 4 events, which are ConnectEventRequest, ConnectedEventRequest, UserEventRequest and DisconnectedEventRequest. ValidationRequest represent the request for [Abuse Protection](https://github.com/cloudevents/spec/blob/v1.0.1/http-webhook.md#4-abuse-protection).
+### Using Web PubSub trigger
 
-### WebPubSubEventResponse
+Please follow the [trigger binding tutorial](#functions-that-uses-web-pubsub-trigger) to learn about triggering an Azure Function when an event is sent from service upstream.
 
-WebPubSubEventResponse, represents a abstract response should return to service. In detail, it should be EventErrorResponse or one of the 2 blocking events, which are ConnectEventResponse and UserEventResponse.
+In `Connect` and `UserEvent` events, function will respect return values to send back service. Then service will depend on the response to proceed the request or else. The responses and events are paired. For example, `Connect` will only respect `ConnectEventResponse` or `EventErrorResponse`, and ignore other returns. When `EventErrorResponse` is returned, service will drop client connection.
 
 ## Examples
 
-Check Microsoft.Azure.WebPubSub.AspNetCore for E2E using examples.
+### Functions that uses Web PubSub input binding
+
+Use `WebPubSubConnectionInput` to build the client negotiate URL.
+
+```C# Snippet:WebPubSubConnectionInputFunction
+[Function("Negotiate")]
+public static HttpResponseData Run([HttpTrigger(AuthorizationLevel.Anonymous)] HttpRequestData req,
+[WebPubSubConnectionInput(Hub = "chat")] WebPubSubConnection connectionInfo)
+{
+    var response = req.CreateResponse(HttpStatusCode.OK);
+    response.WriteAsJsonAsync(connectionInfo);
+    return response;
+}
+```
+
+Use `WebPubSubContextInput` to read Web PubSub request under `HttpTrigger`. This is useful when work with Static Web Apps which supports `HttpTrigger` functions only.
+
+```C# Snippet:WebPubSubContextInputFunction
+// validate method when upstream set as http://<func-host>/api/{event}
+[Function("validate")]
+public static HttpResponseData Validate(
+    [HttpTrigger(AuthorizationLevel.Anonymous, "options")] HttpRequestData req,
+    [WebPubSubContextInput] WebPubSubContext wpsReq)
+{
+    return BuildHttpResponseData(req, wpsReq.Response);
+}
+
+// Respond AbuseProtection to put header correctly.
+private static HttpResponseData BuildHttpResponseData(HttpRequestData request, SimpleResponse wpsResponse)
+{
+    var response = request.CreateResponse();
+    response.StatusCode = (HttpStatusCode)wpsResponse.Status;
+    response.Body = response.Body;
+    foreach (var header in wpsResponse.Headers)
+    {
+        response.Headers.Add(header.Key, header.Value);
+    }
+    return response;
+}
+```
+
+### Functions that uses Web PubSub output binding
+
+```C# Snippet:WebPubSubOutputFunction
+[Function("Notification")]
+[WebPubSubOutput(Hub = "notification")]
+public static WebPubSubAction Run([HttpTrigger(AuthorizationLevel.Function, "get", "post")] HttpRequestData req)
+{
+    return new SendToAllAction
+    {
+        Data = BinaryData.FromString($"Hello SendToAll."),
+        DataType = WebPubSubDataType.Text
+    };
+}
+```
+
+### Functions that uses Web PubSub trigger
+
+```C# Snippet:WebPubSubTriggerUserEventFunction
+[Function("Broadcast")]
+public static UserEventResponse Run(
+[WebPubSubTrigger("chat", WebPubSubEventType.User, "message")] UserEventRequest request)
+{
+    return new UserEventResponse($"[SYSTEM ACK] Received client message. From: {request.ConnectionContext.ConnectionId}, Data: {request.Data}");
+}
+```
 
 ## Troubleshooting
 
-You can also easily [enable console logging](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/Diagnostics.md#logging) if you want to dig deeper into the requests you're making against the service.
+Please refer to [Monitor Azure Functions][monitor] for troubleshooting guidance.
 
 ## Next steps
 
-Please take a look at the
-[samples][samples_ref]
-directory for detailed examples on how to use this library.
+Read the [introduction to Azure Function][func_intro] or [creating an Azure Function guide][create].
 
 ## Contributing
 
-This project welcomes contributions and suggestions. Most contributions require you to agree to a Contributor License Agreement (CLA) declaring that you have the right to, and actually do, grant us the rights to use your contribution. For details, visit <https://cla.microsoft.com>.
+See our [CONTRIBUTING.md][contrib] for details on building,
+testing, and contributing to this library.
 
-When you submit a pull request, a CLA-bot will automatically determine whether you need to provide a CLA and decorate the PR appropriately (e.g., label, comment). Simply follow the instructions provided by the bot. You will only need to do this once across all repos using our CLA.
+This project welcomes contributions and suggestions.  Most contributions require
+you to agree to a Contributor License Agreement (CLA) declaring that you have
+the right to, and actually do, grant us the rights to use your contribution. For
+details, visit [cla.microsoft.com][cla].
 
-This project has adopted the [Microsoft Open Source Code of Conduct][code_of_conduct]. For more information see the [Code of Conduct FAQ][code_of_conduct_faq] or contact opencode@microsoft.com with any additional questions or comments.
+This project has adopted the [Microsoft Open Source Code of Conduct][coc].
+For more information see the [Code of Conduct FAQ][coc_faq]
+or contact [opencode@microsoft.com][coc_contact] with any
+additional questions or comments.
 
-![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsdk%2Feventgrid%2FMicrosoft.Azure.Messaging.EventGrid.CloudNativeCloudEvents%2FREADME.png)
+![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsdk%2Fsearch%2FMicrosoft.Azure.Functions.Worker.Extensions.WebPubSub%2FREADME.png)
 
-[azure_sub]: https://azure.microsoft.com/free/dotnet/
-[samples_ref]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/webpubsub/Azure.Messaging.WebPubSub/tests/Samples/
+<!-- LINKS -->
+<!-- TODO: update to sdk main branch after initial merge -->
+[source]: https://github.com/JialinXin/azure-sdk-for-net/tree/awps/isolated-func/sdk/webpubsub/Microsoft.Azure.Functions.Worker.Extensions.WebPubSub/src
+<!-- [package] TODO: add after initial release -->
+<!-- [api_docs] TODO: add after initial release -->
+<!-- TODO: update to sdk main branch after initial merge -->
+[samples]: https://github.com/JialinXin/azure-sdk-for-net/tree/awps/isolated-func/sdk/webpubsub/Microsoft.Azure.Functions.Worker.Extensions.WebPubSub/samples
+[nuget]: https://www.nuget.org/
+[free_subs]: https://azure.microsoft.com/free/dotnet/
+[portal]: https://portal.azure.com/
+[tutorial]: https://learn.microsoft.com/azure/azure-web-pubsub/howto-develop-create-instance
+[storage]: https://learn.microsoft.com/azure/azure-functions/storage-considerations#storage-account-requirements
+[app_setting]: https://learn.microsoft.com/azure/azure-functions/functions-how-to-use-azure-function-app-settings
+[monitor]: https://learn.microsoft.com/azure/azure-functions/functions-monitoring
+[func_intro]: https://learn.microsoft.com/azure/azure-functions/functions-overview
+[create]: https://learn.microsoft.com/azure/azure-functions/functions-overview
+
+[contrib]: https://github.com/Azure/azure-sdk-for-net/tree/main/CONTRIBUTING.md
+[cla]: https://cla.microsoft.com
+[coc]: https://opensource.microsoft.com/codeofconduct/
+[coc_faq]: https://opensource.microsoft.com/codeofconduct/faq/
+[coc_contact]: mailto:opencode@microsoft.com

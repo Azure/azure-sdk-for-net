@@ -1,5 +1,5 @@
-﻿// Copyright (c) .NET Foundation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for license information.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
 
 using System;
 using System.Net;
@@ -27,6 +27,7 @@ internal class WebPubSubContextInputFunction
         return response;
     }
 
+    #region Snippet:WebPubSubContextInputFunction
     // validate method when upstream set as http://<func-host>/api/{event}
     [Function("validate")]
     public static HttpResponseData Validate(
@@ -48,4 +49,5 @@ internal class WebPubSubContextInputFunction
         }
         return response;
     }
+    #endregion
 }

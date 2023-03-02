@@ -8,11 +8,17 @@ namespace Microsoft.Azure.Functions.Worker
     /// </summary>
     public abstract class WebPubSubAction
     {
+        private static string _actionName;
+
         internal string ActionName
         {
             get
             {
-                return GetType().Name.Replace("Action", "");
+                if (_actionName == null)
+                {
+                    _actionName = GetType().Name.Replace("Action", "");
+                }
+                return _actionName;
             }
         }
     }

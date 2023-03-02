@@ -1,5 +1,5 @@
-﻿// Copyright (c) .NET Foundation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for license information.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
 
 using System;
 using Microsoft.Azure.Functions.Worker;
@@ -9,6 +9,7 @@ namespace SampleApp;
 
 public static class WebPubSubOutputFunction
 {
+    #region Snippet:WebPubSubOutputFunction
     [Function("Notification")]
     [WebPubSubOutput(Hub = "notification")]
     public static WebPubSubAction Run([HttpTrigger(AuthorizationLevel.Function, "get", "post")] HttpRequestData req)
@@ -19,7 +20,9 @@ public static class WebPubSubOutputFunction
             DataType = WebPubSubDataType.Text
         };
     }
+    #endregion
 
+    // multiple output
     [Function("Notification1")]
     public static MultipleActions MultipleActions([HttpTrigger(AuthorizationLevel.Function, "get", "post")] HttpRequestData req)
     {
@@ -37,12 +40,12 @@ public static class WebPubSubOutputFunction
             }
         };
     }
-}
-
-public class MultipleActions
-{
-    [WebPubSubOutput(Hub = "notification")]
-    public SendToAllAction SendToAll { get; set; }
-    [WebPubSubOutput(Hub = "notification")]
-    public AddUserToGroupAction AddUserToGroup { get; set; }
+    
+    public class MultipleActions
+    {
+        [WebPubSubOutput(Hub = "notification")]
+        public SendToAllAction SendToAll { get; set; }
+        [WebPubSubOutput(Hub = "notification")]
+        public AddUserToGroupAction AddUserToGroup { get; set; }
+    }
 }
