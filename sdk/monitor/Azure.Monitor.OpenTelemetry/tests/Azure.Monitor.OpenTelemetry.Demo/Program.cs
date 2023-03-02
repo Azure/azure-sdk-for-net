@@ -24,7 +24,7 @@ builder.Services.AddAzureMonitor(o =>
 // To customize sampling, Set ApplicationInsightsSampler to desired sampling ratio and
 // configure with OpenTelemetryTracerProvider.
 // Please note that ConfigureOpenTelemetryTracerProvider should be called after
-// builder.Services.AddAzureMonitorOpenTelemetry().
+// builder.Services.AddAzureMonitor().
 builder.Services.ConfigureOpenTelemetryTracerProvider((sp, builder) => builder.SetSampler(new ApplicationInsightsSampler(0.9F)));
 
 var app = builder.Build();
