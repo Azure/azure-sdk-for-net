@@ -14,16 +14,16 @@ The Azure Monitor Distro is a client library that sends telemetry data to Azure 
 Install the Azure Monitor Distro for .NET with [NuGet](https://www.nuget.org/):
 
 ```dotnetcli
-dotnet add package Azure.Monitor.OpenTelemetry.AspNetCore --prerelease
+dotnet add package Azure.Monitor.OpenTelemetry --prerelease
 ```
 
 ### Authenticate the client
 
-To authenticate the client using Azure Active Directory (AAD), you'll need to set the Credential property in AzureMonitorOpenTelemetryOptions. This is made easy with the [Azure Identity library][identity], which provides support for authenticating Azure SDK clients with their corresponding Azure services.
+To authenticate the client using Azure Active Directory (AAD), you'll need to set the Credential property in AzureMonitorOptions. This is made easy with the [Azure Identity library][identity], which provides support for authenticating Azure SDK clients with their corresponding Azure services.
 
 ```C#
-// Call AddAzureMonitorOpenTelemetry and set Credential to authenticate through Active Directory.
-builder.Services.AddAzureMonitorOpenTelemetry(o =>
+// Call AddAzureMonitor and set Credential to authenticate through Active Directory.
+builder.Services.AddAzureMonitor(o =>
 {
     o.ConnectionString = "InstrumentationKey=00000000-0000-0000-0000-000000000000";
     o.Credential = new DefaultAzureCredential();
