@@ -1,5 +1,9 @@
 ## Microsoft.Azure.Management.ApiManagment release notes
 
+### Changes in 9.0.0-preview
+
+- Switch the .NET client to use api-version `2022-08-01`
+
 ### Changes in 8.0.0-preview
 
 - Switch the .NET client to use api-version `2021-08-01`
@@ -18,12 +22,12 @@
 ### Changes in 5.0.0-preview
 
 - Switch the .NET client to use api-version `2019-12-01`
-- `properties` entity renamed to `namedValues` 
+- `properties` entity renamed to `namedValues`
 - new `gateway` entity added
-- Added POST operations to get entities secret properties. Secret properties will not be returned with GET or LIST operations anymore. Entities are: `accessInformation`, `authorizationServers`, `delegationSettings`, `identityProviders`, `namedValues`, `openIdConnectProviders`, `subscriptions`. 
+- Added POST operations to get entities secret properties. Secret properties will not be returned with GET or LIST operations anymore. Entities are: `accessInformation`, `authorizationServers`, `delegationSettings`, `identityProviders`, `namedValues`, `openIdConnectProviders`, `subscriptions`.
 - `diagnostics` entity: `enableHttpCorrelationHeaders` property is not supported, `loggerId` is a required property now.
 - Breaking Change: `capacity` is a required parameter with creating ApiManagement service.
-- Added support for creating `userAssignedIdentity`. 
+- Added support for creating `userAssignedIdentity`.
 - Added support for `disableGateway` property, which allows taking a region out of a multi-region premium sku ApiManagement service
 - Added support for `apiVersionConstraint` property which allows limiting all control plane calls higher than a specific api-version
 - Breaking Change: Exception thrown in case of failure changed from `CloudException` to `ErrorResponseException`.
