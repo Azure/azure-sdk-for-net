@@ -63,7 +63,7 @@ The bulk of the functionality of the Test Framework is around supporting the abi
   - `Record` - This is the same as live mode with one key difference - the HTTP traffic from your tests is saved locally on your machine.
   - `Playback` - The requests that your library generates when running a test are compared against the requests in the recording for that test. For each matched request, the corresponding response is extracted from the recording and "played back" as the response.
 
-Under the hood, when tests are run in `Playback` or `Record` mode, requests are forwarded to the [Test Proxy](https://github.com/Azure/azure-sdk-tools/blob/main/tools/test-proxy/Azure.Sdk.Tools.TestProxy/README.md). The test proxy is a proxy server that runs locally on your machine automatically when in `Record` or `Playback` mode. The proxy is responsible for saving the requests and responses when running in `Record` mode and for returning the recorded responses when running in `Playback` mode. The proxy should be mostly transparent to the developer, other than when you are trying to debug. More on that later.
+Under the hood, when tests are run in `Playback` or `Record` mode, requests are forwarded to the [Test Proxy](https://github.com/Azure/azure-sdk-tools/blob/main/tools/test-proxy/Azure.Sdk.Tools.TestProxy/README.md). The test proxy is a proxy server that runs locally on your machine automatically when in `Record` or `Playback` mode. The proxy is responsible for saving the requests and responses when running in `Record` mode and for returning the recorded responses when running in `Playback` mode. The proxy should be mostly transparent to the developer, other than when you are trying to [debug](#debugging-test-proxy).
 
 ### Test resource creation and TestEnvironment
 
@@ -346,6 +346,10 @@ Once you have cloned the repo, open the [Test Proxy solution](https://github.com
 If you are attempting to debug `Playback` mode, set a breakpoint in the HandlePlaybackRequest method of [RecordingHandler](https://github.com/Azure/azure-sdk-tools/blob/main/tools/test-proxy/Azure.Sdk.Tools.TestProxy/RecordingHandler.cs). If you are attempting to debug `Record` mode, set a breakpoint in the `HandleRecordRequestAsync` method of [RecordingHandler](https://github.com/Azure/azure-sdk-tools/blob/main/tools/test-proxy/Azure.Sdk.Tools.TestProxy/RecordingHandler.cs). It may also be helpful to put breakpoints in [Admin.cs](https://github.com/Azure/azure-sdk-tools/blob/main/tools/test-proxy/Azure.Sdk.Tools.TestProxy/Admin.cs) to verify that your sanitizers are being added as expected.
 
 With your breakpoints set, run the Test Proxy project, and then run your test that you are trying to debug. You should see your breakpoints hit. 
+
+The key integration points between the Test Framework and the Test Proxy are:
+ - InstrumentClientOptions method of `RecordedTestBase` - calling this on your client options will set the [ClientOptions.Transport property](https://learn.microsoft.com/dotnet/api/azure.core.clientoptions.transport?view=azure-dotnet) to be [ProxyTransport](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core.TestFramework/src/ProxyTransport.cs) to your client options. The ProxyTransport will send all requests to the Test Proxy.
+ - [TestProxy.cs](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core.TestFramework/src/TestProxy.cs) - This class is responsible for starting and stopping the Test Proxy process, as well as reporting any errors that occur in the Test Proxy process. The Test Proxy process is started automatically when running tests in `Record` or `Playback` mode, and is stopped automatically when the test run is complete. The Test Proxy process is shared between tests and test classes within a process.
 
 ## Test settings
 
