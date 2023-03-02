@@ -224,7 +224,7 @@ When tests are run in `Record` mode, session records are saved to the project di
 
 ### Sanitizing
 
-Secrets that are part of requests, responses, headers, or connections strings should be sanitized before saving the record. 
+Secrets that are part of requests, responses, headers, or connections strings should be sanitized before saving the record.
 __Do not check in session records containing secrets.__ Common headers like `Authentication` are sanitized automatically, but if custom logic is required and/or if request or response body need to be sanitized, several properties of `RecordedTestBase` can be used to customize the sanitization process.
 
 For example:
@@ -281,7 +281,7 @@ When tests are run in `Playback` mode, the Test Proxy uses the HTTP method, Uri,
 
 ### Running live tests serially
 
-By default, NUnit does not run tests within each assembly in parallel, but this be [configured](https://docs.nunit.org/articles/nunit/technical-notes/usage/Framework-Parallel-Test-Execution.html).
+By default, NUnit does not run tests within each assembly in parallel, but this can be [configured](https://docs.nunit.org/articles/nunit/technical-notes/usage/Framework-Parallel-Test-Execution.html).
 Especially for unit tests, this is often desirable; however, live and [recorded tests](#recorded-tests) may run into some issues. Thus, by default, the `RecordedTestBase` described below is attributed
 as `[NonParallelizable]`.
 
