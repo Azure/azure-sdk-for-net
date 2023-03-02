@@ -24,7 +24,6 @@ namespace Azure.Security.KeyVault.Keys.Tests
         public KeyClientLiveTests(bool isAsync, KeyClientOptions.ServiceVersion serviceVersion)
             : this(isAsync, serviceVersion, null /* RecordedTestMode.Record /* to re-record */)
         {
-            UseLocalDebugProxy = true;
         }
 
         protected KeyClientLiveTests(bool isAsync, KeyClientOptions.ServiceVersion serviceVersion, RecordedTestMode? mode)
