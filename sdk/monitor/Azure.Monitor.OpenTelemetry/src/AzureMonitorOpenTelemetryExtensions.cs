@@ -3,11 +3,8 @@
 
 using System;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging.Configuration;
-using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Options;
-using OpenTelemetry.Logs;
 
 namespace Azure.Monitor.OpenTelemetry
 {
@@ -49,32 +46,6 @@ namespace Azure.Monitor.OpenTelemetry
         public static IServiceCollection AddAzureMonitorOpenTelemetry(this IServiceCollection services, Action<AzureMonitorOpenTelemetryOptions> configureAzureMonitorOpenTelemetry)
         {
             return AzureMonitorOpenTelemetryImplementations.AddAzureMonitorOpenTelemetryWithAction(services, configureAzureMonitorOpenTelemetry);
-        }
-
-        /// <summary>
-        /// Adds NullLogger to the <see cref="ILoggerFactory"/>.
-        /// </summary>
-        /// <remarks>This method is added to support dependency injection for logging configuration.</remarks>
-        /// <param name="builder">The <see cref="ILoggingBuilder"/> to use.</param>
-        /// <param name="configure">Configuration action.</param>
-        /// <returns>The supplied <see cref="ILoggingBuilder"/> for call chaining.</returns>
-        internal static ILoggingBuilder AddAzureMonitorOpenTelemetryLogger(this ILoggingBuilder builder, Action<AzureMonitorOpenTelemetryOptions> configure)
-        {
-            builder.AddConfiguration();
-
-            builder.Services.TryAddEnumerable(
-                ServiceDescriptor.Singleton<ILoggerProvider, AzureMonitorOpenTelemetryLoggerProvider>(
-                    sp => new AzureMonitorOpenTelemetryLoggerProvider(sp)));
-
-            LoggerProviderOptions.RegisterProviderOptions
-                <AzureMonitorOpenTelemetryOptions, AzureMonitorOpenTelemetryLoggerProvider>(builder.Services);
-
-            if (configure != null)
-            {
-                builder.Services.Configure(configure);
-            }
-
-            return builder;
         }
     }
 }
