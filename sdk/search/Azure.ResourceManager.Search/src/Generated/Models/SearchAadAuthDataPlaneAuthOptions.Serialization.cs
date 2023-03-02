@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Search.Models
 {
-    public partial class DataPlaneAuthOptions : IUtf8JsonSerializable
+    public partial class SearchAadAuthDataPlaneAuthOptions : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Search.Models
             writer.WriteEndObject();
         }
 
-        internal static DataPlaneAuthOptions DeserializeDataPlaneAuthOptions(JsonElement element)
+        internal static SearchAadAuthDataPlaneAuthOptions DeserializeSearchAadAuthDataPlaneAuthOptions(JsonElement element)
         {
             Optional<BinaryData> apiKeyOnly = default;
             Optional<DataPlaneAadOrApiKeyAuthOption> aadOrApiKey = default;
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Search.Models
                     continue;
                 }
             }
-            return new DataPlaneAuthOptions(apiKeyOnly.Value, aadOrApiKey.Value);
+            return new SearchAadAuthDataPlaneAuthOptions(apiKeyOnly.Value, aadOrApiKey.Value);
         }
     }
 }

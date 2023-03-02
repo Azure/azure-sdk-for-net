@@ -7,14 +7,26 @@
 
 namespace Azure.ResourceManager.Search.Models
 {
-    /// <summary> Describes how a search service should enforce having one or more non customer encrypted resources. </summary>
-    public enum SearchEncryptionWithCmk
+    /// <summary> Describes a policy that determines how resources within the search service are to be encrypted with Customer Managed Keys. </summary>
+    public partial class SearchEncryptionWithCmk
     {
-        /// <summary> Enforcement policy is not explicitly specified, with the behavior being the same as if it were set to &apos;Disabled&apos;. </summary>
-        Unspecified,
-        /// <summary> No enforcement will be made and the search service can have non customer encrypted resources. </summary>
-        Disabled,
-        /// <summary> Search service will be marked as non-compliant if there are one or more non customer encrypted resources. </summary>
-        Enabled
+        /// <summary> Initializes a new instance of SearchEncryptionWithCmk. </summary>
+        public SearchEncryptionWithCmk()
+        {
+        }
+
+        /// <summary> Initializes a new instance of SearchEncryptionWithCmk. </summary>
+        /// <param name="enforcement"> Describes how a search service should enforce having one or more non customer encrypted resources. </param>
+        /// <param name="encryptionComplianceStatus"> Describes whether the search service is compliant or not with respect to having non customer encrypted resources. If a service has more than one non customer encrypted resource and &apos;Enforcement&apos; is &apos;enabled&apos; then the service will be marked as &apos;nonCompliant&apos;. </param>
+        internal SearchEncryptionWithCmk(SearchEncryptionWithCmkEnforcement? enforcement, SearchEncryptionComplianceStatus? encryptionComplianceStatus)
+        {
+            Enforcement = enforcement;
+            EncryptionComplianceStatus = encryptionComplianceStatus;
+        }
+
+        /// <summary> Describes how a search service should enforce having one or more non customer encrypted resources. </summary>
+        public SearchEncryptionWithCmkEnforcement? Enforcement { get; set; }
+        /// <summary> Describes whether the search service is compliant or not with respect to having non customer encrypted resources. If a service has more than one non customer encrypted resource and &apos;Enforcement&apos; is &apos;enabled&apos; then the service will be marked as &apos;nonCompliant&apos;. </summary>
+        public SearchEncryptionComplianceStatus? EncryptionComplianceStatus { get; }
     }
 }

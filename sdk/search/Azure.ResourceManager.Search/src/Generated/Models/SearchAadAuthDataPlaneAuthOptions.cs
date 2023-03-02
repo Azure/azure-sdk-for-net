@@ -10,17 +10,17 @@ using System;
 namespace Azure.ResourceManager.Search.Models
 {
     /// <summary> Defines the options for how the data plane API of a Search service authenticates requests. This cannot be set if &apos;disableLocalAuth&apos; is set to true. </summary>
-    public partial class DataPlaneAuthOptions
+    public partial class SearchAadAuthDataPlaneAuthOptions
     {
-        /// <summary> Initializes a new instance of DataPlaneAuthOptions. </summary>
-        public DataPlaneAuthOptions()
+        /// <summary> Initializes a new instance of SearchAadAuthDataPlaneAuthOptions. </summary>
+        public SearchAadAuthDataPlaneAuthOptions()
         {
         }
 
-        /// <summary> Initializes a new instance of DataPlaneAuthOptions. </summary>
+        /// <summary> Initializes a new instance of SearchAadAuthDataPlaneAuthOptions. </summary>
         /// <param name="apiKeyOnly"> Indicates that only the API key needs to be used for authentication. </param>
         /// <param name="aadOrApiKey"> Indicates that either the API key or an access token from Azure Active Directory can be used for authentication. </param>
-        internal DataPlaneAuthOptions(BinaryData apiKeyOnly, DataPlaneAadOrApiKeyAuthOption aadOrApiKey)
+        internal SearchAadAuthDataPlaneAuthOptions(BinaryData apiKeyOnly, DataPlaneAadOrApiKeyAuthOption aadOrApiKey)
         {
             ApiKeyOnly = apiKeyOnly;
             AadOrApiKey = aadOrApiKey;
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Search.Models
         /// <summary> Indicates that either the API key or an access token from Azure Active Directory can be used for authentication. </summary>
         internal DataPlaneAadOrApiKeyAuthOption AadOrApiKey { get; set; }
         /// <summary> Describes what response the data plane API of a Search service would send for requests that failed authentication. </summary>
-        public AadAuthFailureMode? AadAuthFailureMode
+        public SearchAadAuthFailureMode? AadAuthFailureMode
         {
             get => AadOrApiKey is null ? default : AadOrApiKey.AadAuthFailureMode;
             set

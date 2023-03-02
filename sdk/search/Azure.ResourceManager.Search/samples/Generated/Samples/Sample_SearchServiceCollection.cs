@@ -97,9 +97,9 @@ namespace Azure.ResourceManager.Search.Samples
                 ReplicaCount = 3,
                 PartitionCount = 1,
                 HostingMode = SearchServiceHostingMode.Default,
-                AuthOptions = new DataPlaneAuthOptions()
+                AuthOptions = new SearchAadAuthDataPlaneAuthOptions()
                 {
-                    AadAuthFailureMode = AadAuthFailureMode.Http401WithBearerChallenge,
+                    AadAuthFailureMode = SearchAadAuthFailureMode.Http401WithBearerChallenge,
                 },
                 Tags =
 {
@@ -297,9 +297,9 @@ Value = "123.4.6.0/18",
                 ReplicaCount = 3,
                 PartitionCount = 1,
                 HostingMode = SearchServiceHostingMode.Default,
-                EncryptionWithCmk = new EncryptionWithCmk()
+                EncryptionWithCmk = new SearchEncryptionWithCmk()
                 {
-                    Enforcement = SearchEncryptionWithCmk.Enabled,
+                    Enforcement = SearchEncryptionWithCmkEnforcement.Enabled,
                 },
                 Tags =
 {

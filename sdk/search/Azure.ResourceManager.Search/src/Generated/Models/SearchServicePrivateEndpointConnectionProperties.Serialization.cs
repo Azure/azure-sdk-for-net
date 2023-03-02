@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Search.Models
             Optional<WritableSubResource> privateEndpoint = default;
             Optional<SearchServicePrivateLinkServiceConnectionState> privateLinkServiceConnectionState = default;
             Optional<string> groupId = default;
-            Optional<PrivateLinkServiceConnectionProvisioningState> provisioningState = default;
+            Optional<SearchPrivateLinkServiceConnectionProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("privateEndpoint"u8))
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Search.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    provisioningState = new PrivateLinkServiceConnectionProvisioningState(property.Value.GetString());
+                    provisioningState = new SearchPrivateLinkServiceConnectionProvisioningState(property.Value.GetString());
                     continue;
                 }
             }

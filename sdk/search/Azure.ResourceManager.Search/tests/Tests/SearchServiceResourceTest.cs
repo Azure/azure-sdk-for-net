@@ -298,7 +298,7 @@ namespace Azure.ResourceManager.Search.Tests.Tests
             Assert.NotNull(result);
             Assert.IsFalse(result.Data.DisableLocalAuth);
 
-            data.AuthOptions = new DataPlaneAuthOptions
+            data.AuthOptions = new SearchAadAuthDataPlaneAuthOptions
             {
                 ApiKeyOnly = BinaryData.FromObjectAsJson(new { })
             };
@@ -310,9 +310,9 @@ namespace Azure.ResourceManager.Search.Tests.Tests
             Assert.IsNull(result.Data.AuthOptions.AadOrApiKey);
             Assert.IsNotNull(result.Data.AuthOptions.ApiKeyOnly);
 
-            data.AuthOptions = new DataPlaneAuthOptions
+            data.AuthOptions = new SearchAadAuthDataPlaneAuthOptions
             {
-                AadOrApiKey = new DataPlaneAadOrApiKeyAuthOption(AadAuthFailureMode.Http401WithBearerChallenge)
+                AadOrApiKey = new DataPlaneAadOrApiKeyAuthOption(SearchAadAuthFailureMode.Http401WithBearerChallenge)
             };
             SearchResource = (await SearchCollection.CreateOrUpdateAsync(WaitUntil.Completed, name, data)).Value;
             result = (await SearchResource.GetAsync()).Value;
@@ -321,11 +321,11 @@ namespace Azure.ResourceManager.Search.Tests.Tests
             Assert.IsNotNull(result.Data.AuthOptions);
             Assert.IsNull(result.Data.AuthOptions.ApiKeyOnly);
             Assert.IsNotNull(result.Data.AuthOptions.AadOrApiKey);
-            Assert.AreEqual(AadAuthFailureMode.Http401WithBearerChallenge, result.Data.AuthOptions.AadOrApiKey.AadAuthFailureMode);
+            Assert.AreEqual(SearchAadAuthFailureMode.Http401WithBearerChallenge, result.Data.AuthOptions.AadOrApiKey.AadAuthFailureMode);
 
-            data.AuthOptions = new DataPlaneAuthOptions
+            data.AuthOptions = new SearchAadAuthDataPlaneAuthOptions
             {
-                AadOrApiKey = new DataPlaneAadOrApiKeyAuthOption(AadAuthFailureMode.Http403)
+                AadOrApiKey = new DataPlaneAadOrApiKeyAuthOption(SearchAadAuthFailureMode.Http403)
             };
             SearchResource = (await SearchCollection.CreateOrUpdateAsync(WaitUntil.Completed, name, data)).Value;
             result = (await SearchResource.GetAsync()).Value;
@@ -334,7 +334,7 @@ namespace Azure.ResourceManager.Search.Tests.Tests
             Assert.IsNotNull(result.Data.AuthOptions);
             Assert.IsNull(result.Data.AuthOptions.ApiKeyOnly);
             Assert.IsNotNull(result.Data.AuthOptions.AadOrApiKey);
-            Assert.AreEqual(AadAuthFailureMode.Http403, result.Data.AuthOptions.AadOrApiKey.AadAuthFailureMode);
+            Assert.AreEqual(SearchAadAuthFailureMode.Http403, result.Data.AuthOptions.AadOrApiKey.AadAuthFailureMode);
         }
     }
 }

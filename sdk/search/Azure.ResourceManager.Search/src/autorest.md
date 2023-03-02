@@ -17,19 +17,25 @@ modelerfour:
   flatten-payloads: false
 
 rename-mapping:
+  AadAuthFailureMode: SearchAadAuthFailureMode
   AdminKeyKind: SearchServiceAdminKeyKind
   AdminKeyResult: SearchServiceAdminKeyResult
   CheckNameAvailabilityInput: SearchServiceNameAvailabilityContent
   CheckNameAvailabilityOutput: SearchServiceNameAvailabilityResult
+  DataPlaneAuthOptions: SearchAadAuthDataPlaneAuthOptions
+  EncryptionWithCmk: SearchEncryptionWithCmk
   HostingMode: SearchServiceHostingMode
   IpRule: SearchServiceIPRule
   PrivateEndpointConnectionProperties: SearchServicePrivateEndpointConnectionProperties
   PrivateEndpointConnectionPropertiesPrivateLinkServiceConnectionState: SearchServicePrivateLinkServiceConnectionState
   PrivateLinkServiceConnectionStatus: SearchServicePrivateLinkServiceConnectionStatus
+  PrivateLinkServiceConnectionProvisioningState: SearchPrivateLinkServiceConnectionProvisioningState
   ProvisioningState: SearchServiceProvisioningState
   PublicNetworkAccess: SearchServicePublicNetworkAccess
   QueryKey: SearchServiceQueryKey
   ResourceType: SearchServiceResourceType
+  SearchEncryptionWithCmk: SearchEncryptionWithCmkEnforcement
+  SearchServiceData.DisableLocalAuth: IsLocalAuthDisabled
   ShareablePrivateLinkResourceProperties: ShareableSearchServicePrivateLinkResourceProperties
   ShareablePrivateLinkResourceType: ShareableSearchServicePrivateLinkResourceType
   SharedPrivateLinkResource: SharedSearchServicePrivateLinkResource
@@ -39,6 +45,7 @@ rename-mapping:
   SharedPrivateLinkResourceProvisioningState: SharedSearchServicePrivateLinkResourceProvisioningState
   SharedPrivateLinkResourceStatus: SharedSearchServicePrivateLinkResourceStatus
   UnavailableNameReason: SearchServiceNameUnavailableReason
+  
 
 format-by-name-rules:
   'tenantId': 'uuid'

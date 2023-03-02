@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Search
         /// <param name="authOptions"> Defines the options for how the data plane API of a search service authenticates requests. This cannot be set if &apos;disableLocalAuth&apos; is set to true. </param>
         /// <param name="privateEndpointConnections"> The list of private endpoint connections to the Azure Cognitive Search service. </param>
         /// <param name="sharedPrivateLinkResources"> The list of shared private link resources managed by the Azure Cognitive Search service. </param>
-        internal SearchServiceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, SearchSku sku, ManagedServiceIdentity identity, int? replicaCount, int? partitionCount, SearchServiceHostingMode? hostingMode, SearchServicePublicNetworkAccess? publicNetworkAccess, SearchServiceStatus? status, string statusDetails, SearchServiceProvisioningState? provisioningState, NetworkRuleSet networkRuleSet, EncryptionWithCmk encryptionWithCmk, bool? disableLocalAuth, DataPlaneAuthOptions authOptions, IReadOnlyList<SearchPrivateEndpointConnectionData> privateEndpointConnections, IReadOnlyList<SharedSearchServicePrivateLinkResourceData> sharedPrivateLinkResources) : base(id, name, resourceType, systemData, tags, location)
+        internal SearchServiceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, SearchSku sku, ManagedServiceIdentity identity, int? replicaCount, int? partitionCount, SearchServiceHostingMode? hostingMode, SearchServicePublicNetworkAccess? publicNetworkAccess, SearchServiceStatus? status, string statusDetails, SearchServiceProvisioningState? provisioningState, NetworkRuleSet networkRuleSet, SearchEncryptionWithCmk encryptionWithCmk, bool? disableLocalAuth, SearchAadAuthDataPlaneAuthOptions authOptions, IReadOnlyList<SearchPrivateEndpointConnectionData> privateEndpointConnections, IReadOnlyList<SharedSearchServicePrivateLinkResourceData> sharedPrivateLinkResources) : base(id, name, resourceType, systemData, tags, location)
         {
             Sku = sku;
             Identity = identity;
@@ -111,11 +111,11 @@ namespace Azure.ResourceManager.Search
         }
 
         /// <summary> Specifies any policy regarding encryption of resources (such as indexes) using customer manager keys within a search service. </summary>
-        public EncryptionWithCmk EncryptionWithCmk { get; set; }
+        public SearchEncryptionWithCmk EncryptionWithCmk { get; set; }
         /// <summary> When set to true, calls to the search service will not be permitted to utilize API keys for authentication. This cannot be set to true if &apos;dataPlaneAuthOptions&apos; are defined. </summary>
         public bool? DisableLocalAuth { get; set; }
         /// <summary> Defines the options for how the data plane API of a search service authenticates requests. This cannot be set if &apos;disableLocalAuth&apos; is set to true. </summary>
-        public DataPlaneAuthOptions AuthOptions { get; set; }
+        public SearchAadAuthDataPlaneAuthOptions AuthOptions { get; set; }
         /// <summary> The list of private endpoint connections to the Azure Cognitive Search service. </summary>
         public IReadOnlyList<SearchPrivateEndpointConnectionData> PrivateEndpointConnections { get; }
         /// <summary> The list of shared private link resources managed by the Azure Cognitive Search service. </summary>

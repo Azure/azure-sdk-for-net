@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Search.Models
 
         internal static DataPlaneAadOrApiKeyAuthOption DeserializeDataPlaneAadOrApiKeyAuthOption(JsonElement element)
         {
-            Optional<AadAuthFailureMode> aadAuthFailureMode = default;
+            Optional<SearchAadAuthFailureMode> aadAuthFailureMode = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("aadAuthFailureMode"u8))
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Search.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    aadAuthFailureMode = property.Value.GetString().ToAadAuthFailureMode();
+                    aadAuthFailureMode = property.Value.GetString().ToSearchAadAuthFailureMode();
                     continue;
                 }
             }

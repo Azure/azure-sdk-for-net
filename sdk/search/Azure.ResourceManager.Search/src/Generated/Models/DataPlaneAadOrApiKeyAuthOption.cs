@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.Search.Models
 
         /// <summary> Initializes a new instance of DataPlaneAadOrApiKeyAuthOption. </summary>
         /// <param name="aadAuthFailureMode"> Describes what response the data plane API of a Search service would send for requests that failed authentication. </param>
-        internal DataPlaneAadOrApiKeyAuthOption(AadAuthFailureMode? aadAuthFailureMode)
+        internal DataPlaneAadOrApiKeyAuthOption(SearchAadAuthFailureMode? aadAuthFailureMode)
         {
             AadAuthFailureMode = aadAuthFailureMode;
         }
 
         /// <summary> Describes what response the data plane API of a Search service would send for requests that failed authentication. </summary>
-        public AadAuthFailureMode? AadAuthFailureMode { get; set; }
+        public SearchAadAuthFailureMode? AadAuthFailureMode { get; set; }
     }
 }

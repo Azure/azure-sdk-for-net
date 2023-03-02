@@ -226,9 +226,9 @@ namespace Azure.ResourceManager.Search.Samples
             SearchServicePatch patch = new SearchServicePatch(new AzureLocation("placeholder"))
             {
                 ReplicaCount = 2,
-                AuthOptions = new DataPlaneAuthOptions()
+                AuthOptions = new SearchAadAuthDataPlaneAuthOptions()
                 {
-                    AadAuthFailureMode = AadAuthFailureMode.Http401WithBearerChallenge,
+                    AadAuthFailureMode = SearchAadAuthFailureMode.Http401WithBearerChallenge,
                 },
                 Tags =
 {
@@ -431,9 +431,9 @@ Value = "123.4.6.0/18",
             SearchServicePatch patch = new SearchServicePatch(new AzureLocation("placeholder"))
             {
                 ReplicaCount = 2,
-                EncryptionWithCmk = new EncryptionWithCmk()
+                EncryptionWithCmk = new SearchEncryptionWithCmk()
                 {
-                    Enforcement = SearchEncryptionWithCmk.Enabled,
+                    Enforcement = SearchEncryptionWithCmkEnforcement.Enabled,
                 },
                 Tags =
 {

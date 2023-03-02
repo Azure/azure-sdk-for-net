@@ -112,9 +112,9 @@ namespace Azure.ResourceManager.Search.Models
             Optional<string> statusDetails = default;
             Optional<SearchServiceProvisioningState> provisioningState = default;
             Optional<NetworkRuleSet> networkRuleSet = default;
-            Optional<EncryptionWithCmk> encryptionWithCmk = default;
+            Optional<SearchEncryptionWithCmk> encryptionWithCmk = default;
             Optional<bool?> disableLocalAuth = default;
-            Optional<DataPlaneAuthOptions> authOptions = default;
+            Optional<SearchAadAuthDataPlaneAuthOptions> authOptions = default;
             Optional<IReadOnlyList<SearchPrivateEndpointConnectionData>> privateEndpointConnections = default;
             Optional<IReadOnlyList<SharedSearchServicePrivateLinkResourceData>> sharedPrivateLinkResources = default;
             foreach (var property in element.EnumerateObject())
@@ -275,7 +275,7 @@ namespace Azure.ResourceManager.Search.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            encryptionWithCmk = EncryptionWithCmk.DeserializeEncryptionWithCmk(property0.Value);
+                            encryptionWithCmk = SearchEncryptionWithCmk.DeserializeSearchEncryptionWithCmk(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("disableLocalAuth"u8))
@@ -295,7 +295,7 @@ namespace Azure.ResourceManager.Search.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            authOptions = DataPlaneAuthOptions.DeserializeDataPlaneAuthOptions(property0.Value);
+                            authOptions = SearchAadAuthDataPlaneAuthOptions.DeserializeSearchAadAuthDataPlaneAuthOptions(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("privateEndpointConnections"u8))

@@ -5,26 +5,52 @@
 
 #nullable disable
 
-using System;
+using System.Text.Json;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Search.Models
 {
-    internal static partial class SearchEncryptionWithCmkExtensions
+    public partial class SearchEncryptionWithCmk : IUtf8JsonSerializable
     {
-        public static string ToSerialString(this SearchEncryptionWithCmk value) => value switch
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
-            SearchEncryptionWithCmk.Unspecified => "Unspecified",
-            SearchEncryptionWithCmk.Disabled => "Disabled",
-            SearchEncryptionWithCmk.Enabled => "Enabled",
-            _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown SearchEncryptionWithCmk value.")
-        };
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Enforcement))
+            {
+                writer.WritePropertyName("enforcement"u8);
+                writer.WriteStringValue(Enforcement.Value.ToSerialString());
+            }
+            writer.WriteEndObject();
+        }
 
-        public static SearchEncryptionWithCmk ToSearchEncryptionWithCmk(this string value)
+        internal static SearchEncryptionWithCmk DeserializeSearchEncryptionWithCmk(JsonElement element)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Unspecified")) return SearchEncryptionWithCmk.Unspecified;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Disabled")) return SearchEncryptionWithCmk.Disabled;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Enabled")) return SearchEncryptionWithCmk.Enabled;
-            throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown SearchEncryptionWithCmk value.");
+            Optional<SearchEncryptionWithCmkEnforcement> enforcement = default;
+            Optional<SearchEncryptionComplianceStatus> encryptionComplianceStatus = default;
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("enforcement"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    enforcement = property.Value.GetString().ToSearchEncryptionWithCmkEnforcement();
+                    continue;
+                }
+                if (property.NameEquals("encryptionComplianceStatus"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    encryptionComplianceStatus = property.Value.GetString().ToSearchEncryptionComplianceStatus();
+                    continue;
+                }
+            }
+            return new SearchEncryptionWithCmk(Optional.ToNullable(enforcement), Optional.ToNullable(encryptionComplianceStatus));
         }
     }
 }
