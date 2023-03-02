@@ -1,16 +1,16 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Core;
-using Microsoft.Identity.Client;
 using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Globalization;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Linq;
-using System.Collections.Generic;
-using System.Globalization;
+using Azure.Core;
 using Azure.Core.Pipeline;
-using System.ComponentModel;
+using Microsoft.Identity.Client;
 
 namespace Azure.Identity
 {
@@ -28,6 +28,7 @@ namespace Azure.Identity
         private readonly CredentialPipeline _pipeline;
         private readonly bool _skipTenantValidation;
         private readonly AuthenticationRecord _record;
+        private IAccount _account;
         private readonly AsyncLockWithValue<IAccount> _accountAsyncLock;
 
         internal string TenantId { get; }
@@ -116,24 +117,26 @@ namespace Azure.Identity
         [ForwardsClientCalls(true)]
         public virtual async Task LogoutAsync(CancellationToken cancellationToken = default)
         {
-            if (_record == null)
+            if (_account == null)
             {
                 return;
             }
 
-            await Client.RemoveUserAsync(new AuthenticationAccount(_record), cancellationToken).ConfigureAwait(false);
+            await Client.RemoveUserAsync(_account, cancellationToken).ConfigureAwait(false);
+            _account = null;
         }
 
         /// <inheritdoc/>
         [ForwardsClientCalls(true)]
         public virtual void Logout(CancellationToken cancellationToken = default)
         {
-            if (_record == null)
+            if (_account == null)
             {
                 return;
             }
 
-            Client.RemoveUser(new AuthenticationAccount(_record), cancellationToken);
+            Client.RemoveUser(_account, cancellationToken);
+            _account = null;
         }
 #pragma warning restore CA2119 // Seal methods that satisfy private interfaces
 
@@ -169,12 +172,11 @@ namespace Azure.Identity
                 return asyncLock.Value;
             }
 
-            IAccount account;
             if (_record != null)
             {
-                account = new AuthenticationAccount(_record);
-                asyncLock.SetValue(account);
-                return account;
+                _account = new AuthenticationAccount(_record);
+                asyncLock.SetValue(_account);
+                return _account;
             }
 
             List<IAccount> accounts = await Client.GetAccountsAsync(async, cancellationToken).ConfigureAwait(false);
@@ -206,9 +208,9 @@ namespace Azure.Identity
                 throw new CredentialUnavailableException(GetCredentialUnavailableMessage(filteredAccounts));
             }
 
-            account = filteredAccounts[0];
-            asyncLock.SetValue(account);
-            return account;
+            _account = filteredAccounts[0];
+            asyncLock.SetValue(_account);
+            return _account;
         }
 
         private string GetCredentialUnavailableMessage(List<IAccount> filteredAccounts)

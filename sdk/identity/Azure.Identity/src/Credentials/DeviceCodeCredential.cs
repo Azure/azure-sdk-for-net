@@ -195,6 +195,7 @@ namespace Azure.Identity
             }
 
             await Client.RemoveUserAsync(new AuthenticationAccount(Record), cancellationToken).ConfigureAwait(false);
+            Record = null;
         }
 
         /// <inheritdoc/>
@@ -207,6 +208,7 @@ namespace Azure.Identity
             }
 
             Client.RemoveUser(new AuthenticationAccount(Record), cancellationToken);
+            Record = null;
         }
 #pragma warning restore CA2119 // Seal methods that satisfy private interfaces
 

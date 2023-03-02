@@ -130,6 +130,7 @@ namespace Azure.Identity
                 return;
             }
             await Client.RemoveUserAsync(_account, cancellationToken).ConfigureAwait(false);
+            _account = null;
         }
 
         /// <inheritdoc/>
@@ -141,6 +142,7 @@ namespace Azure.Identity
                 return;
             }
             Client.RemoveUser(_account, cancellationToken);
+            _account = null;
         }
 #pragma warning restore CA2119 // Seal methods that satisfy private interfaces
     }
