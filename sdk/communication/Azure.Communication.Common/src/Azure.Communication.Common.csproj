@@ -25,7 +25,4 @@
     <Compile Include="$(AzureCoreSharedSources)TaskExtensions.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)Base64Url.cs" LinkBase="Shared" />
   </ItemGroup>
-  <ItemGroup>
-    <ExcludeFromCodeCoverage>true</ExcludeFromCodeCoverage>
-  </ItemGroup>
 </Project>
