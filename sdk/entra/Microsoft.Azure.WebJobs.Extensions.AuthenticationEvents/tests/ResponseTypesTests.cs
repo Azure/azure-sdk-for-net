@@ -5,13 +5,14 @@ using System.IO;
 using System.Net;
 using System.Net.Http;
 using System.Threading;
-using Xunit;
+using NUnit.Framework;
 using static Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests.TestHelper;
-using Payloads = Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests.Payloads.TokenIssuanceStart;
+using System.Threading.Tasks;
 
 namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests
 {
     /// <summary>Class for housing all tests pertaining to Response Type Casting</summary>
+    [TestFixture]
     public class ResponseTypesTests
     {
         /// <summary>Available Types to test</summary>
@@ -31,14 +32,14 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests
 
         /// <summary>Test the response value setting based on the response type expected.</summary>
         /// <param name="responseType">The response type to test as a function return value.</param>
-        [Theory]
-        [InlineData(ResponseTypes.String)]
-        [InlineData(ResponseTypes.HttpResponse)]
-        [InlineData(ResponseTypes.HttpResponseMessage)]
-        [InlineData(ResponseTypes.Unknown)]
-        [InlineData(ResponseTypes.AuthEventResponse)]
+        [Test]
+        [TestCase(ResponseTypes.String)]
+        [TestCase(ResponseTypes.HttpResponse)]
+        [TestCase(ResponseTypes.HttpResponseMessage)]
+        [TestCase(ResponseTypes.Unknown)]
+        [TestCase(ResponseTypes.AuthEventResponse)]
         [Obsolete]
-        public async void Tests(ResponseTypes responseType)
+        public async Task Tests(ResponseTypes responseType)
         {
             var (code, payload) = GetExpected(responseType);
 
@@ -67,7 +68,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests
                 }
             });
 
-            Assert.Equal(httpResponseMessage.StatusCode, code);
+            Assert.AreEqual(httpResponseMessage.StatusCode, code);
             Assert.True(DoesPayloadMatch(payload, httpResponseMessage.Content.ReadAsStringAsync().Result));
         }
 

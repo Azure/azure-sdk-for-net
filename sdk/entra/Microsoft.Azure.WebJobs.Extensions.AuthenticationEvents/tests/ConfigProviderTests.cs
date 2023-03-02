@@ -1,11 +1,13 @@
 using System;
 using System.Net;
 using System.Net.Http;
-using Xunit;
+using System.Threading.Tasks;
+using NUnit.Framework;
 using static Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests.TestHelper;
 
 namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests
 {
+    [TestFixture]
     /// <summary>
     /// this class will test EventsTriggerConfigProvider
     /// </summary>
@@ -18,15 +20,14 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests
         /// <param name="httpStatusCode"></param>
         /// <param name="method"></param>
         /// <param name="expectedMessage"></param>
-        ///
         [Obsolete]
-        [Theory]
-        [InlineData("http://test/mock?function=onTokenissuancestart", HttpStatusCode.Unauthorized, HttpMethods.Post, null)]
-        [InlineData("http://test/mock?function=onTokenissuancestart", HttpStatusCode.BadRequest, HttpMethods.Post, null)]
-        [InlineData("http://test/mock?function=onTokenissuancestart", HttpStatusCode.OK, HttpMethods.Post, "{'hi':'bye'}")]
-        [InlineData("http://test/mock?", HttpStatusCode.BadRequest, HttpMethods.Post, "{\"errors\":[\"Please supply the function name via the query parameter: functionName, available functions: onTokenIssuanceStart\"]}")]
-        [InlineData("http://test/mock?function=onTokenissuancestart", HttpStatusCode.BadRequest, HttpMethods.Get, "{\"errors\":[\"Method can only be post.\"]}")]
-        public async void PostConfigProviderTests(string url, HttpStatusCode httpStatusCode, HttpMethods method, string expectedMessage)
+        [Test]
+        [TestCase("http://test/mock?function=onTokenissuancestart", HttpStatusCode.Unauthorized, HttpMethods.Post, null)]
+        [TestCase("http://test/mock?function=onTokenissuancestart", HttpStatusCode.BadRequest, HttpMethods.Post, null)]
+        [TestCase("http://test/mock?function=onTokenissuancestart", HttpStatusCode.OK, HttpMethods.Post, "{'hi':'bye'}")]
+        [TestCase("http://test/mock?", HttpStatusCode.BadRequest, HttpMethods.Post, "{\"errors\":[\"Please supply the function name via the query parameter: functionName, available functions: onTokenIssuanceStart\"]}")]
+        [TestCase("http://test/mock?function=onTokenissuancestart", HttpStatusCode.BadRequest, HttpMethods.Get, "{\"errors\":[\"Method can only be post.\"]}")]
+        public async Task PostConfigProviderTests(string url, HttpStatusCode httpStatusCode, HttpMethods method, string expectedMessage)
         {
             HttpResponseMessage httpResponse = await BaseTest(method, url, t =>
             {
@@ -38,10 +39,10 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests
                 }
             });
 
-            Assert.Equal(httpStatusCode, httpResponse.StatusCode);
+            Assert.AreEqual(httpStatusCode, httpResponse.StatusCode);
             if (expectedMessage != null)
             {
-                Assert.Equal(expectedMessage, await httpResponse.Content.ReadAsStringAsync());
+                Assert.AreEqual(expectedMessage, await httpResponse.Content.ReadAsStringAsync());
             }
         }
     }
