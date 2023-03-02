@@ -185,6 +185,8 @@ string body = receivedMessage.Body.ToString();
 Console.WriteLine(body);
 ```
 
+For more information on setting up all the needed Azure resources for Sending and Receiving messages, see this [Quickstart](https://learn.microsoft.com/en-us/azure/service-bus-messaging/service-bus-dotnet-get-started-with-queues).
+
 ### Sending a batch of messages
 
 There are two ways of sending several messages at once. The first way of doing this uses safe-batching. With safe-batching, you can create a `ServiceBusMessageBatch` object, which will allow you to attempt to add messages one at a time to the batch using the `TryAdd` method. If the message cannot fit in the batch, `TryAdd` will return false.
