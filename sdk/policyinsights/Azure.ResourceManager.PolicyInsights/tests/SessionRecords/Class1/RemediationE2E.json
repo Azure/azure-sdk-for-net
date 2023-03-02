@@ -1,0 +1,386 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://management.azure.com/tenants?api-version=2021-01-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-7d44614e9b902b5bae815c8c70caf42a-ac1bbef9d8e48b1d-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET 7.0.3; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "300146aec5b3e207b3a732e6ffec4335",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "140",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 01 Mar 2023 06:57:41 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "634885dc-e40d-4e5e-980e-1fdf6bf938ab",
+        "x-ms-ratelimit-remaining-tenant-reads": "11999",
+        "x-ms-request-id": "634885dc-e40d-4e5e-980e-1fdf6bf938ab",
+        "x-ms-routing-request-id": "JAPANEAST:20230301T065741Z:634885dc-e40d-4e5e-980e-1fdf6bf938ab"
+      },
+      "ResponseBody": {
+        "value": [
+          {
+            "id": "/tenants/72f988bf-86f1-41af-91ab-2d7cd011db47",
+            "tenantId": "72f988bf-86f1-41af-91ab-2d7cd011db47",
+            "tenantCategory": "Home"
+          }
+        ]
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c?api-version=2021-01-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-00850a73c2f3ff966c25eb1160c31387-38ba12ee7890e46f-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET 7.0.3; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "97e73d9c41f7e6fe9f2ddfa2074f9485",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "748",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 01 Mar 2023 06:57:41 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "5ac2b25e-72d7-4f92-b9ae-99a8be538992",
+        "x-ms-ratelimit-remaining-subscription-reads": "11999",
+        "x-ms-request-id": "5ac2b25e-72d7-4f92-b9ae-99a8be538992",
+        "x-ms-routing-request-id": "JAPANEAST:20230301T065742Z:5ac2b25e-72d7-4f92-b9ae-99a8be538992"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+        "authorizationSource": "RoleBased",
+        "managedByTenants": [],
+        "tags": {
+          "TagKey-9823": "TagValue-1254",
+          "TagKey-3481": "TagValue-320",
+          "TagKey-4926": "TagValue-1187",
+          "TagKey-751": "TagValue-3921",
+          "TagKey-1866": "TagValue-8559",
+          "TagKey-3094": "TagValue-9190",
+          "TagKey-2449": "TagValue-9",
+          "TagKey-8379": "TagValue-164",
+          "TagKey-7470": "TagValue-2205",
+          "TagKey-4236": "TagValue-3698",
+          "TagKey-5316": "TagValue-2725"
+        },
+        "subscriptionId": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+        "tenantId": "72f988bf-86f1-41af-91ab-2d7cd011db47",
+        "displayName": ".NET Mgmt SDK Test with TTL = 1 Day",
+        "state": "Enabled",
+        "subscriptionPolicies": {
+          "locationPlacementId": "Internal_2014-09-01",
+          "quotaId": "Internal_2014-09-01",
+          "spendingLimit": "Off"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.PolicyInsights/remediations?api-version=2021-10-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-9e5e0793d6a26060a1d19032c4ad70a5-ea4e4961a718a388-00",
+        "User-Agent": "azsdk-net-ResourceManager.PolicyInsights/1.2.0-alpha.20230301.1 (.NET 7.0.3; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "5e907b8c74e3b1ccadb5ced25a7dad72",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "3325",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 01 Mar 2023 06:57:43 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Kestrel",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "78a56683-a5a6-475e-9d16-8b2878e0dbf3",
+        "x-ms-ratelimit-remaining-policy-insights-requests": "149",
+        "x-ms-ratelimit-remaining-subscription-reads": "11998",
+        "x-ms-request-id": "78a56683-a5a6-475e-9d16-8b2878e0dbf3",
+        "x-ms-routing-request-id": "JAPANEAST:20230301T065743Z:78a56683-a5a6-475e-9d16-8b2878e0dbf3"
+      },
+      "ResponseBody": {
+        "value": [
+          {
+            "properties": {
+              "policyAssignmentId": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/policyrg0000/providers/microsoft.authorization/policyassignments/944926686acd4d49b7550766",
+              "provisioningState": "Succeeded",
+              "createdOn": "2023-03-01T06:56:46.5737722Z",
+              "lastUpdatedOn": "2023-03-01T06:56:46.5738756Z",
+              "filters": {
+                "locations": [
+                  "eastus"
+                ]
+              },
+              "deploymentStatus": {
+                "totalDeployments": 0,
+                "successfulDeployments": 0,
+                "failedDeployments": 0
+              },
+              "resourceDiscoveryMode": "ExistingNonCompliant",
+              "correlationId": "6602ab9d-5068-4b0f-a8fd-974a5b2f01a5",
+              "resourceCount": 1,
+              "parallelDeployments": 1,
+              "failureThreshold": {
+                "percentage": 0.42
+              }
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/policyrg0000/providers/microsoft.policyinsights/remediations/remediation0000",
+            "name": "remediation0000",
+            "type": "Microsoft.PolicyInsights/remediations",
+            "systemData": {
+              "createdBy": "8e6d47e0-7969-4fde-a62c-4fea4f165e98",
+              "createdByType": "Application",
+              "createdAt": "2023-03-01T06:56:44.6564197Z",
+              "lastModifiedBy": "8e6d47e0-7969-4fde-a62c-4fea4f165e98",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-03-01T06:56:44.6564197Z"
+            }
+          },
+          {
+            "properties": {
+              "policyAssignmentId": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/microsoft.authorization/policyassignments/3bbee6571e0340dba6df72bf",
+              "provisioningState": "Succeeded",
+              "createdOn": "2023-03-01T06:49:33.4470989Z",
+              "lastUpdatedOn": "2023-03-01T06:49:33.4472007Z",
+              "filters": {
+                "locations": [
+                  "eastus"
+                ]
+              },
+              "deploymentStatus": {
+                "totalDeployments": 0,
+                "successfulDeployments": 0,
+                "failedDeployments": 0
+              },
+              "resourceDiscoveryMode": "ExistingNonCompliant",
+              "correlationId": "f5293336-9ec4-49da-9237-d8e84932e2da",
+              "resourceCount": 1,
+              "parallelDeployments": 1,
+              "failureThreshold": {
+                "percentage": 0.42
+              }
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/microsoft.policyinsights/remediations/remediation0000",
+            "name": "remediation0000",
+            "type": "Microsoft.PolicyInsights/remediations",
+            "systemData": {
+              "createdBy": "8e6d47e0-7969-4fde-a62c-4fea4f165e98",
+              "createdByType": "Application",
+              "createdAt": "2023-03-01T06:49:31.2989714Z",
+              "lastModifiedBy": "8e6d47e0-7969-4fde-a62c-4fea4f165e98",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-03-01T06:49:31.2989714Z"
+            }
+          },
+          {
+            "properties": {
+              "policyAssignmentId": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/microsoft.authorization/policyassignments/3bbee6571e0340dba6df72bf",
+              "provisioningState": "Succeeded",
+              "createdOn": "2023-03-01T06:41:54.0745382Z",
+              "lastUpdatedOn": "2023-03-01T06:41:54.0746876Z",
+              "filters": {
+                "locations": [
+                  "eastus"
+                ]
+              },
+              "deploymentStatus": {
+                "totalDeployments": 0,
+                "successfulDeployments": 0,
+                "failedDeployments": 0
+              },
+              "resourceDiscoveryMode": "ExistingNonCompliant",
+              "correlationId": "c3006db6-df3a-46b3-ad51-9c05938aade4",
+              "resourceCount": 1,
+              "parallelDeployments": 1,
+              "failureThreshold": {
+                "percentage": 0.42
+              }
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/microsoft.policyinsights/remediations/b49b6437-706d-4208-8508-65d87a9b2e37",
+            "name": "b49b6437-706d-4208-8508-65d87a9b2e37",
+            "type": "Microsoft.PolicyInsights/remediations",
+            "systemData": {
+              "createdBy": "8e6d47e0-7969-4fde-a62c-4fea4f165e98",
+              "createdByType": "Application",
+              "createdAt": "2023-03-01T06:41:52.9174182Z",
+              "lastModifiedBy": "8e6d47e0-7969-4fde-a62c-4fea4f165e98",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-03-01T06:41:52.9174182Z"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.PolicyInsights/remediations?api-version=2021-10-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-1962ed449b477a768c86c9c324bf3448-9c950520a384ead4-00",
+        "User-Agent": "azsdk-net-ResourceManager.PolicyInsights/1.2.0-alpha.20230301.1 (.NET 7.0.3; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "2357cd5b8c586c4f471a9085e565da64",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "3325",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 01 Mar 2023 06:57:43 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Kestrel",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "66b81393-3f0a-4fd3-bc54-00ef20bb7b80",
+        "x-ms-ratelimit-remaining-policy-insights-requests": "148",
+        "x-ms-ratelimit-remaining-subscription-reads": "11997",
+        "x-ms-request-id": "66b81393-3f0a-4fd3-bc54-00ef20bb7b80",
+        "x-ms-routing-request-id": "JAPANEAST:20230301T065744Z:66b81393-3f0a-4fd3-bc54-00ef20bb7b80"
+      },
+      "ResponseBody": {
+        "value": [
+          {
+            "properties": {
+              "policyAssignmentId": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/policyrg0000/providers/microsoft.authorization/policyassignments/944926686acd4d49b7550766",
+              "provisioningState": "Succeeded",
+              "createdOn": "2023-03-01T06:56:46.5737722Z",
+              "lastUpdatedOn": "2023-03-01T06:56:46.5738756Z",
+              "filters": {
+                "locations": [
+                  "eastus"
+                ]
+              },
+              "deploymentStatus": {
+                "totalDeployments": 0,
+                "successfulDeployments": 0,
+                "failedDeployments": 0
+              },
+              "resourceDiscoveryMode": "ExistingNonCompliant",
+              "correlationId": "6602ab9d-5068-4b0f-a8fd-974a5b2f01a5",
+              "resourceCount": 1,
+              "parallelDeployments": 1,
+              "failureThreshold": {
+                "percentage": 0.42
+              }
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/policyrg0000/providers/microsoft.policyinsights/remediations/remediation0000",
+            "name": "remediation0000",
+            "type": "Microsoft.PolicyInsights/remediations",
+            "systemData": {
+              "createdBy": "8e6d47e0-7969-4fde-a62c-4fea4f165e98",
+              "createdByType": "Application",
+              "createdAt": "2023-03-01T06:56:44.6564197Z",
+              "lastModifiedBy": "8e6d47e0-7969-4fde-a62c-4fea4f165e98",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-03-01T06:56:44.6564197Z"
+            }
+          },
+          {
+            "properties": {
+              "policyAssignmentId": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/microsoft.authorization/policyassignments/3bbee6571e0340dba6df72bf",
+              "provisioningState": "Succeeded",
+              "createdOn": "2023-03-01T06:49:33.4470989Z",
+              "lastUpdatedOn": "2023-03-01T06:49:33.4472007Z",
+              "filters": {
+                "locations": [
+                  "eastus"
+                ]
+              },
+              "deploymentStatus": {
+                "totalDeployments": 0,
+                "successfulDeployments": 0,
+                "failedDeployments": 0
+              },
+              "resourceDiscoveryMode": "ExistingNonCompliant",
+              "correlationId": "f5293336-9ec4-49da-9237-d8e84932e2da",
+              "resourceCount": 1,
+              "parallelDeployments": 1,
+              "failureThreshold": {
+                "percentage": 0.42
+              }
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/microsoft.policyinsights/remediations/remediation0000",
+            "name": "remediation0000",
+            "type": "Microsoft.PolicyInsights/remediations",
+            "systemData": {
+              "createdBy": "8e6d47e0-7969-4fde-a62c-4fea4f165e98",
+              "createdByType": "Application",
+              "createdAt": "2023-03-01T06:49:31.2989714Z",
+              "lastModifiedBy": "8e6d47e0-7969-4fde-a62c-4fea4f165e98",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-03-01T06:49:31.2989714Z"
+            }
+          },
+          {
+            "properties": {
+              "policyAssignmentId": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/microsoft.authorization/policyassignments/3bbee6571e0340dba6df72bf",
+              "provisioningState": "Succeeded",
+              "createdOn": "2023-03-01T06:41:54.0745382Z",
+              "lastUpdatedOn": "2023-03-01T06:41:54.0746876Z",
+              "filters": {
+                "locations": [
+                  "eastus"
+                ]
+              },
+              "deploymentStatus": {
+                "totalDeployments": 0,
+                "successfulDeployments": 0,
+                "failedDeployments": 0
+              },
+              "resourceDiscoveryMode": "ExistingNonCompliant",
+              "correlationId": "c3006db6-df3a-46b3-ad51-9c05938aade4",
+              "resourceCount": 1,
+              "parallelDeployments": 1,
+              "failureThreshold": {
+                "percentage": 0.42
+              }
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/microsoft.policyinsights/remediations/b49b6437-706d-4208-8508-65d87a9b2e37",
+            "name": "b49b6437-706d-4208-8508-65d87a9b2e37",
+            "type": "Microsoft.PolicyInsights/remediations",
+            "systemData": {
+              "createdBy": "8e6d47e0-7969-4fde-a62c-4fea4f165e98",
+              "createdByType": "Application",
+              "createdAt": "2023-03-01T06:41:52.9174182Z",
+              "lastModifiedBy": "8e6d47e0-7969-4fde-a62c-4fea4f165e98",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-03-01T06:41:52.9174182Z"
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "Variables": {
+    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
+    "RandomSeed": "1976578610",
+    "RESOURCE_MANAGER_URL": null,
+    "SUBSCRIPTION_ID": "db1ab6f0-4769-4b27-930e-01e2ef9c123c"
+  }
+}

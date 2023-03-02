@@ -6,6 +6,7 @@ using Azure.Core.TestFramework;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.TestFramework;
 using NUnit.Framework;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Azure.ResourceManager.PolicyInsights.Tests
@@ -13,6 +14,11 @@ namespace Azure.ResourceManager.PolicyInsights.Tests
     public class PolicyInsightsManagementTestBase : ManagementRecordedTestBase<PolicyInsightsManagementTestEnvironment>
     {
         protected ArmClient Client { get; private set; }
+        protected TenantResource DefaultTenant { get; private set; }
+        protected SubscriptionResource DefaultSubscription { get; private set; }
+        protected ResourceIdentifier DefaultPolicyAssignmentId { get; private set; }
+        protected const string ResourceGroupNamePrefix = "PolicyRG";
+        protected AzureLocation DefaultLocation = AzureLocation.EastUS;
 
         protected PolicyInsightsManagementTestBase(bool isAsync, RecordedTestMode mode)
         : base(isAsync, mode)
@@ -25,16 +31,20 @@ namespace Azure.ResourceManager.PolicyInsights.Tests
         }
 
         [SetUp]
-        public void CreateCommonClient()
+        public async Task CreateCommonClient()
         {
             Client = GetArmClient();
+            var tenants = await Client.GetTenants().GetAllAsync().ToEnumerableAsync();
+            DefaultTenant = tenants.FirstOrDefault();
+            DefaultSubscription = await Client.GetDefaultSubscriptionAsync();
+            DefaultPolicyAssignmentId = new ResourceIdentifier($"{DefaultSubscription.Id}/providers/microsoft.authorization/policyassignments/3bbee6571e0340dba6df72bf");
         }
 
-        protected async Task<ResourceGroupResource> CreateResourceGroup(SubscriptionResource subscription, string rgNamePrefix, AzureLocation location)
+        protected async Task<ResourceGroupResource> CreateResourceGroup()
         {
-            string rgName = Recording.GenerateAssetName(rgNamePrefix);
-            ResourceGroupData input = new ResourceGroupData(location);
-            var lro = await subscription.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, rgName, input);
+            string rgName = Recording.GenerateAssetName(ResourceGroupNamePrefix);
+            ResourceGroupData input = new ResourceGroupData(DefaultLocation);
+            var lro = await DefaultSubscription.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, rgName, input);
             return lro.Value;
         }
     }
