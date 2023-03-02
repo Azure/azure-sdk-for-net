@@ -14,6 +14,7 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Diagnostics;
 using Azure.Core.Pipeline;
+using Azure.Core.Shared;
 using Azure.Messaging.EventHubs.Consumer;
 using Azure.Messaging.EventHubs.Core;
 using Azure.Messaging.EventHubs.Diagnostics;
@@ -226,6 +227,12 @@ namespace Azure.Messaging.EventHubs.Primitives
         private int EventBatchMaximumCount { get; }
 
         /// <summary>
+        ///   The client diagnostics for this processor.
+        /// </summary>
+        ///
+        private MessagingClientDiagnostics ClientDiagnostics { get; }
+
+        /// <summary>
         ///   Initializes a new instance of the <see cref="EventProcessor{TPartition}"/> class.
         /// </summary>
         ///
@@ -325,6 +332,12 @@ namespace Azure.Messaging.EventHubs.Primitives
 
             ConnectionFactory = () => new EventHubConnection(connectionString, eventHubName, options.ConnectionOptions);
             LoadBalancer = new PartitionLoadBalancer(CreateCheckpointStore(this), Identifier, ConsumerGroup, FullyQualifiedNamespace, EventHubName, options.PartitionOwnershipExpirationInterval, options.LoadBalancingUpdateInterval);
+            ClientDiagnostics = new MessagingClientDiagnostics(
+                DiagnosticProperty.DiagnosticNamespace,
+                DiagnosticProperty.ResourceProviderNamespace,
+                DiagnosticProperty.EventHubsServiceContext,
+                FullyQualifiedNamespace,
+                EventHubName);
         }
 
         /// <summary>
@@ -443,6 +456,12 @@ namespace Azure.Messaging.EventHubs.Primitives
 
             ConnectionFactory = () => EventHubConnection.CreateWithCredential(fullyQualifiedNamespace, eventHubName, credential, options.ConnectionOptions);
             LoadBalancer = loadBalancer ?? new PartitionLoadBalancer(CreateCheckpointStore(this), Identifier, ConsumerGroup, FullyQualifiedNamespace, EventHubName, Options.PartitionOwnershipExpirationInterval, Options.LoadBalancingUpdateInterval);
+            ClientDiagnostics = new MessagingClientDiagnostics(
+                DiagnosticProperty.DiagnosticNamespace,
+                DiagnosticProperty.ResourceProviderNamespace,
+                DiagnosticProperty.EventHubsServiceContext,
+                FullyQualifiedNamespace,
+                EventHubName);
         }
 
         /// <summary>
@@ -591,17 +610,18 @@ namespace Azure.Messaging.EventHubs.Primitives
 
             // Create the diagnostics scope used for distributed tracing and instrument the events in the batch.
 
-            using var diagnosticScope = EventDataInstrumentation.ScopeFactory.CreateScope(DiagnosticProperty.EventProcessorProcessingActivityName, DiagnosticScope.ActivityKind.Consumer);
-            diagnosticScope.AddAttribute(DiagnosticProperty.EventHubAttribute, EventHubName);
-            diagnosticScope.AddAttribute(DiagnosticProperty.EndpointAttribute, FullyQualifiedNamespace);
+            using var diagnosticScope = ClientDiagnostics.CreateScope(DiagnosticProperty.EventProcessorProcessingActivityName, DiagnosticScope.ActivityKind.Consumer, MessagingDiagnosticOperation.Process);
 
             if ((diagnosticScope.IsEnabled) && (eventBatch.Any()))
             {
                 var isBatch = (EventBatchMaximumCount > 1);
 
+                if (isBatch && ActivityExtensions.SupportsActivitySource())
+                    diagnosticScope.AddIntegerAttribute(MessagingClientDiagnostics.BatchCount, eventBatch.Count);
+
                 foreach (var eventData in eventBatch)
                 {
-                    if (EventDataInstrumentation.TryExtractDiagnosticId(eventData, out string diagnosticId))
+                    if (MessagingClientDiagnostics.TryExtractTraceContext(eventData.Properties, out var traceparent, out var tracestate))
                     {
                         if (isBatch)
                         {
@@ -612,11 +632,11 @@ namespace Azure.Messaging.EventHubs.Primitives
 
                             // Use links only when the batch size is not set to a single event.
 
-                            diagnosticScope.AddLink(diagnosticId, null, attributes);
+                            diagnosticScope.AddLink(traceparent, tracestate, attributes);
                         }
                         else
                         {
-                            diagnosticScope.SetTraceContext(diagnosticId);
+                            diagnosticScope.SetTraceContext(traceparent, tracestate);
                             diagnosticScope.AddAttribute(
                                 DiagnosticProperty.EnqueuedTimeAttribute,
                                 eventData.EnqueuedTime.ToUnixTimeMilliseconds().ToString(CultureInfo.InvariantCulture));
