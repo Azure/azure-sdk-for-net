@@ -351,6 +351,51 @@ The key integration points between the Test Framework and the Test Proxy are:
  - InstrumentClientOptions method of `RecordedTestBase` - calling this on your client options will set the [ClientOptions.Transport property](https://learn.microsoft.com/dotnet/api/azure.core.clientoptions.transport?view=azure-dotnet) to be [ProxyTransport](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core.TestFramework/src/ProxyTransport.cs) to your client options. The ProxyTransport will send all requests to the Test Proxy.
  - [TestProxy.cs](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core.TestFramework/src/TestProxy.cs) - This class is responsible for starting and stopping the Test Proxy process, as well as reporting any errors that occur in the Test Proxy process. The Test Proxy process is started automatically when running tests in `Record` or `Playback` mode, and is stopped automatically when the test run is complete. The Test Proxy process is shared between tests and test classes within a process.
 
+## Unit tests
+
+The Test Framework provides several classes that can help you write unit tests for your client library.  Unit tests are helpful for scenarios that would be tricky to test with a recorded test, such as simulating certain error scenarios.
+
+The key types that are useful here are [MockResponse](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core.TestFramework/src/MockResponse.cs), [MockTransport](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core.TestFramework/src/MockTransport.cs), and [MockCredential](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core.TestFramework/src/MockCredential.cs).
+
+Here is an example of how these types can be used to write a test that validates an error scenario is handled correctly:
+
+```C#
+[Test]
+public async Task AuthorizationHeadersAddedOnceWithRetries()
+{
+    // arrange
+    var finalResponse = new MockResponse(200);
+    var setting = new ConfigurationSetting
+    {
+        Key = "test-key",
+        Value = "test-value"
+    };
+    finalResponse.SetContent(JsonSerializer.Serialize(setting));
+    
+    // The MockTransport allows us to specify the set of responses that will be returned 
+    // by the transport. In this case, we are specifying that the first request will
+    // return a 503 - which is retriable, and the second request will return a 200.
+    var mockTransport = new MockTransport(new MockResponse(503), finalResponse);
+    var options = new ConfigurationClientOptions
+    {
+        Transport = mockTransport
+    };
+    var credential = new MockCredential();
+    var uri = new Uri("https://localHost");
+    var client = new ConfigurationClient(uri, credential, options);
+
+    // act
+    await client.GetConfigurationSettingAsync(setting.Key, setting.Label);
+    
+    // We can access the requests that were sent by the client using the Requests property
+    var retriedRequest = mockTransport.Requests[1];
+  
+    // assert
+    Assert.True(retriedRequest.Headers.TryGetValues("Authorization", out var authorizationHeaders));
+    Assert.AreEqual(1, authorizationHeaders.Count());
+}
+```
+
 ## Test settings
 
 Test settings can be configured via `.runsettings` files. See [nunit.runsettings](https://github.com/Azure/azure-sdk-for-net/blob/main/eng/nunit.runsettings) for available knobs.
