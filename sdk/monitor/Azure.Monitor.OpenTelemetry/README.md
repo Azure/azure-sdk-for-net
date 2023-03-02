@@ -8,14 +8,60 @@ The Azure Monitor Distro is a client library that sends telemetry data to Azure 
 
 - **Azure Subscription:**  To use Azure services, including Azure Monitor Distro, you'll need a subscription.  If you do not have an existing Azure account, you may sign up for a [free trial](https://azure.microsoft.com/free/dotnet/) or use your [Visual Studio Subscription](https://visualstudio.microsoft.com/subscriptions/) benefits when you [create an account](https://azure.microsoft.com/account).
 - **Azure Application Insights Connection String:** To send telemetry data to the monitoring service you'll need connection string from Azure Application Insights. If you are not familiar with creating Azure resources, you may wish to follow the step-by-step guide for [Create an Application Insights resource](https://docs.microsoft.com/azure/azure-monitor/app/create-new-resource) and [copy the connection string](https://docs.microsoft.com/azure/azure-monitor/app/sdk-connection-string?tabs=net#find-your-connection-string).
+- **ASP.NET Core App:** An ASP.NET Core application is required to instrument it with Azure Monitor Distro. You can either bring your own app or follow the [Get started with ASP.NET Core MVC][https://docs.microsoft.com/aspnet/core/tutorials/first-mvc-app/start-mvc] to create a new one.
 
 ### Install the package
 
-Install the Azure Monitor Distro for .NET with [NuGet](https://www.nuget.org/):
+Install the Azure Monitor Distro for .NET from [NuGet](https://www.nuget.org/):
 
 ```dotnetcli
 dotnet add package Azure.Monitor.OpenTelemetry.AspNetCore --prerelease
 ```
+
+#### Nightly builds
+
+Nightly builds are available from this repo's [dev feed](https://github.com/Azure/azure-sdk-for-net/blob/main/CONTRIBUTING.md#nuget-package-dev-feed).
+These are provided without support and are not intended for production workloads.
+
+### Enabling Azure Monitor OpenTelemetry in your application
+
+The following examples demonstrate how to integrate the Azure Monitor OpenTelemetry Distro into your application.
+
+#### Example 1
+
+To enable Azure Monitor OpenTelemetry Distro, add `AddAzureMonitorOpenTelemetry()` to your `Program.cs` file and set the `APPLICATIONINSIGHTS_CONNECTION_STRING` environment variable to the connection string from your Application Insights resource.
+
+```C#
+// This method gets called by the runtime. Use this method to add services to the container.
+var builder = WebApplication.CreateBuilder(args);
+
+// The following line enables Azure Monitor OpenTelemetry Distro.
+builder.Services.AddAzureMonitor();
+
+// This code adds other services for your application.
+builder.Services.AddMvc();
+
+var app = builder.Build();
+```
+
+#### Example 2
+
+To enable Azure Monitor OpenTelemetry Distro with hard-coded connection string, add AddAzureMonitorOpenTelemetry() to your `Program.cs` with the `AzureMonitorOptions` containing the connection string.
+
+```C#
+// This method gets called by the runtime. Use this method to add services to the container.
+var builder = WebApplication.CreateBuilder(args);
+
+// The following line enables Azure Monitor OpenTelemetry Distro with hard-coded connection string.
+builder.Services.AddAzureMonitor(o => o.ConnectionString = "InstrumentationKey=00000000-0000-0000-0000-000000000000");
+
+// This code adds other services for your application.
+builder.Services.AddMvc();
+
+var app = builder.Build();
+```
+
+Note that in the examples above, `AddAzureMonitorOpenTelemetry` is added to the `IServiceCollection` in the `Program.cs` file. You can also add it in the `ConfigureServices` method of your `Startup.cs` file.
 
 ### Authenticate the client
 
