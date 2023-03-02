@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="current"> The current quota value. </param>
         /// <param name="default"> The default quota value. </param>
-        internal NetAppSubscriptionQuotaItem(ResourceIdentifier id, string name, ResourceType resourceType, ResourceManager.Models.SystemData systemData, int? current, int? @default) : base(id, name, resourceType, systemData)
+        internal NetAppSubscriptionQuotaItem(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, int? current, int? @default) : base(id, name, resourceType, systemData)
         {
             Current = current;
             Default = @default;
