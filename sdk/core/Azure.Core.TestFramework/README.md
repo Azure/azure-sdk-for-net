@@ -50,8 +50,6 @@ public class ConfigurationLiveTests: ClientTestBase
 
 In the test explorer, async tests will display as `TestClassName(true)` and sync tests as `TestClassName(false)`.
 
-When using sync-async tests with recorded tests two sessions files will be generated - the async test session will have `Async.json` suffix. Note that if defining a recorded test, you would inherit from `RecordedTestBase` instead of `ClientTestBase`. This will be discussed in more detail in [Recorded Tests](#recorded-tests).
-
 You can disable the sync-forwarding for an individual test by applying the `[AsyncOnly]` attribute to the test method.
 
 __Limitation__: all method calls/properties that are being used have to be `virtual`.
@@ -60,14 +58,14 @@ __Limitation__: all method calls/properties that are being used have to be `virt
 
 The bulk of the functionality of the Test Framework is around supporting the ability to run what we call recorded tests. This type of test can be thought of as a functional test as opposed to a unit test. A recorded test can be run in three different [modes](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core.TestFramework/src/RecordedTestMode.cs):
   - `Live` - The requests in the tests are run against live Azure resources.
-  - `Record` - This is the same as live mode with one key difference - the HTTP traffic from your tests is saved locally on your machine in the form of session files.
-  - `Playback` - The requests that your library generates when running a test are compared against the requests in the recording for that test. For each matched request, the corresponding response is extracted from the recording and "played back" as the response.
+  - `Record` - This is the same as live mode with one key difference - the HTTP traffic from your tests is saved locally on your machine in the form of session files. When using sync-async tests (which is the default behavior unless specifying `SyncOnly` or `AsyncOnly` attributes) with recorded tests two sessions files will be generated - the async test session will have `Async.json` suffix.
+  - `Playback` - The requests that your library generates when running a test are compared against the requests in the recording for that test. For each matched request, the corresponding response is extracted from the recording and "played back" as the response. The test will fail if a request issued by the library cannot be matched to the ones found in the session file, taking into account any [sanitization](#sanitizing) or [matching](#matching) customizations that may have been applied to the request.
 
 Under the hood, when tests are run in `Playback` or `Record` mode, requests are forwarded to the [Test Proxy](https://github.com/Azure/azure-sdk-tools/blob/main/tools/test-proxy/Azure.Sdk.Tools.TestProxy/README.md). The test proxy is a proxy server that runs locally on your machine automatically when in `Record` or `Playback` mode. The proxy is responsible for saving the requests and responses when running in `Record` mode and for returning the recorded responses when running in `Playback` mode. The proxy should be mostly transparent to the developer, other than when you are trying to [debug](#debugging-test-proxy).
 
 ### Test resource creation and TestEnvironment
 
-In order to actually run recorded tests in `Live` or `Record` mode, you will need Azure resources that the test can run against. Follow the [live test resources management](https://github.com/azure/azure-sdk-for-net/tree/main/eng/common/TestResources/README.md) to create a live test resources deployment template and get it deployed. The deployment template should be named `test-resources.json` or for bicep templates, `test-resources.bicep`, and will live in the root of your service directory.
+In order to actually run recorded tests in `Live` or `Record` mode, you will need Azure resources that the test can run against. Follow the [live test resources management](https://github.com/azure/azure-sdk-for-net/tree/main/eng/common/TestResources/README.md) to create a live test resources deployment template and get it deployed. The deployment template should be named `test-resources.json`, or for bicep templates, `test-resources.bicep`, and will live in the root of your service directory.
 
 When running tests in `Live` or `Record` mode locally, the Test Framework will prompt you to create the live test resources required for the tests if you don't have environment variables or an env file containing the required variables needed for the tests. This means that you do not have to manually run the New-TestResources script when attempting to run live tests! The Test Framework will also attempt to automatically extend the expiration of the test resource resource group whenever live tests are run. If the resource group specified in your .env file or environment variable has already expired and thus been deleted, the framework will prompt you to create a new resource group just like it would if an env variable required by the test was missing.
 
@@ -264,7 +262,7 @@ If more advanced sanitization is needed, you can use any of the regex-based sani
 - [UriRegexSanitizers](https://grep.app/search?q=UriRegexSanitizers&filter[repo][0]=Azure/azure-sdk-for-net)
 - [HeaderRegexSanitizers](https://grep.app/search?q=HeaderRegexSanitizers&filter[repo][0]=Azure/azure-sdk-for-net)
 
-_Note that when using any of the regex sanitizers, you must take care to ensure that the regex is specific enough to not match unintended values. When a regex is too broad and matches unintended values, this often manifests as the request or response being corrupted._
+_Note that when using any of the regex sanitizers, you must take care to ensure that the regex is specific enough to not match unintended values. When a regex is too broad and matches unintended values, this can result in the request or response being corrupted which may manifest in a `JsonReaderException`._
 
 ### Matching
 
@@ -580,19 +578,19 @@ If this is neglected, _clientDiagnostics will be null at test runtime.
 
 ## Miscellaneous
 
-You can use `Recording.GenerateId()` to generate repeatable random IDs.
+- You can use `Recording.GenerateId()` to generate repeatable random IDs.
 
-You should only use `Recording.Random` for random values (and you MUST make the same number of random calls in the same order every test run)
+- You should only use `Recording.Random` for random values (and you MUST make the same number of random calls in the same order every test run)
 
-You can use `Recording.Now` and `Recording.UtcNow` if you need to use date or time values that will be included in the recording.
+- You can use `Recording.Now` and `Recording.UtcNow` if you need to use date or time values that will be included in the recording.
 
-It's possible to add additional recording variables for advanced scenarios (like custom test configuration, etc.) by using `Recording.SetVariable` or `Recording.GetVariable`.
+- It's possible to add additional recording variables for advanced scenarios (like custom test configuration, etc.) by using `Recording.SetVariable` or `Recording.GetVariable`.
 
-You can use `if (Mode == RecordingMode.Playback) { ... }` to change behavior for playback only scenarios (in particular to make polling times instantaneous)
+- You can use `if (Mode == RecordingMode.Playback) { ... }` to change behavior for playback only scenarios (in particular to make polling times instantaneous)
 
-You can use `using (Recording.DisableRecording()) { ... }` to disable recording in the code block (useful for polling methods)
+- You can use `using (Recording.DisableRecording()) { ... }` to disable recording in the code block (useful for polling methods)
 
-In order to observe test network traffic with Fiddler, you can either set the `AZURE_ENABLE_FIDDLER` environment variable or the `EnableFiddler` [runsetting](https://github.com/Azure/azure-sdk-for-net/blob/main/eng/nunit.runsettings) parameter to `true`.
+- In order to observe test network traffic with Fiddler, you can either set the `AZURE_ENABLE_FIDDLER` environment variable or the `EnableFiddler` [runsetting](https://github.com/Azure/azure-sdk-for-net/blob/main/eng/nunit.runsettings) parameter to `true`.
 
 There are various helpful classes that assist in writing tests for the Azure SDK. Below are some of them.
 
