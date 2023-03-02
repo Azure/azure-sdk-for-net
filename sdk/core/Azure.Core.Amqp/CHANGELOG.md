@@ -18,8 +18,6 @@ Thank you to our developer community members who helped to make the Azure.Core.A
   - `MessageAnnotations`
   - `Footer`
 
-### Bugs Fixed
-
 ### Other Changes
 
 - Make `AmqpAddress` and `AmqpMessageId` readonly structs. _(A community contribution, courtesy of [danielmarbach](https://github.com/danielmarbach))_
