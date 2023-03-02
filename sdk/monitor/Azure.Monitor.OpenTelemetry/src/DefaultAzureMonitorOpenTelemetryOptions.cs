@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
 
@@ -28,7 +29,7 @@ namespace Azure.Monitor.OpenTelemetry
                 _configuration.GetSection(AzureMonitorOpenTelemetrySectionFromConfig).Bind(options);
             }
 
-            string? connectionString = _configuration?[ConnectionStringEnvironmentVariable];
+            string connectionString = Environment.GetEnvironmentVariable(ConnectionStringEnvironmentVariable);
 
             if (!string.IsNullOrWhiteSpace(connectionString))
             {
