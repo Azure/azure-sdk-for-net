@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-beta.2 (Unreleased)
+## 1.0.0-beta(Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,7 @@
 ### Bugs Fixed
 
 ### Other Changes
+This is the first stable release of StorageMover client library.
 
 ## 1.0.0-beta.1 (2022-12-09)
 

@@ -1,0 +1,844 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e?api-version=2021-01-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-5ad1ee4dd53f704e91a348a6f9af18c6-f9b9d5d37fe0e842-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET Framework 4.8.4614.0; Microsoft Windows 10.0.19045 )",
+        "x-ms-client-request-id": "992278f0e5c269eb5382b833f9bd6e80",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "411",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 02 Mar 2023 15:17:32 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "e8fcb204-3c3e-4a50-94d4-5d74f5b4bec0",
+        "x-ms-ratelimit-remaining-subscription-reads": "11985",
+        "x-ms-request-id": "e8fcb204-3c3e-4a50-94d4-5d74f5b4bec0",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20230302T151732Z:e8fcb204-3c3e-4a50-94d4-5d74f5b4bec0"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e",
+        "authorizationSource": "RoleBased",
+        "managedByTenants": [],
+        "subscriptionId": "45b60d85-fd72-427a-a708-f994d26e593e",
+        "tenantId": "72f988bf-86f1-41af-91ab-2d7cd011db47",
+        "displayName": "AzureStorage_DMStaging_10041369",
+        "state": "Enabled",
+        "subscriptionPolicies": {
+          "locationPlacementId": "Internal_2014-09-01",
+          "quotaId": "Internal_2014-09-01",
+          "spendingLimit": "Off"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourcegroups/teststomover?api-version=**",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-1f4ad7a4ea97cd49b2700e1b943a69d5-e6207b9dd4751741-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET Framework 4.8.4614.0; Microsoft Windows 10.0.19045 )",
+        "x-ms-client-request-id": "eff7cfe09651642ab7e98a9c2c15b225",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "226",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 02 Mar 2023 15:17:32 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "69ada3c6-f42d-42dc-9fb1-e7553dcddf4e",
+        "x-ms-ratelimit-remaining-subscription-reads": "11984",
+        "x-ms-request-id": "69ada3c6-f42d-42dc-9fb1-e7553dcddf4e",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20230302T151732Z:69ada3c6-f42d-42dc-9fb1-e7553dcddf4e"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover",
+        "name": "teststomover",
+        "type": "Microsoft.Resources/resourceGroups",
+        "location": "eastus2euap",
+        "properties": {
+          "provisioningState": "Succeeded"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.StorageMover/storageMovers/testsm1?api-version=2023-03-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-50b541a71b76144bb77cf1bb4adaf8bd-2c3e3af2de0ff242-00",
+        "User-Agent": "azsdk-net-ResourceManager.StorageMover/1.0.0-alpha.20230302.1 (.NET Framework 4.8.4614.0; Microsoft Windows 10.0.19045 )",
+        "x-ms-client-request-id": "696ea44dc031d424418487750ef8212c",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "556",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 02 Mar 2023 15:17:32 GMT",
+        "ETag": "\u00220000072f-0000-3400-0000-63ff0a780000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "696ea44dc031d424418487750ef8212c",
+        "x-ms-correlation-request-id": "ffae591b-7d20-47e6-9cb0-edafc96322a0",
+        "x-ms-providerhub-traffic": "True",
+        "x-ms-ratelimit-remaining-subscription-reads": "11983",
+        "x-ms-request-id": "1a9ac43a-6e74-4aef-9cb3-86e166425547",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20230302T151733Z:ffae591b-7d20-47e6-9cb0-edafc96322a0"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.StorageMover/storageMovers/testsm1",
+        "name": "testsm1",
+        "type": "microsoft.storagemover/storagemovers",
+        "location": "eastus2euap",
+        "systemData": {
+          "createdBy": "a000255f-5f09-45e0-a970-9d9ed9cc6453",
+          "createdByType": "Application",
+          "createdAt": "2023-03-01T08:19:03.3105576Z",
+          "lastModifiedBy": "a000255f-5f09-45e0-a970-9d9ed9cc6453",
+          "lastModifiedByType": "Application",
+          "lastModifiedAt": "2023-03-01T08:19:03.3105576Z"
+        },
+        "properties": {
+          "provisioningState": "Succeeded"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.StorageMover/storageMovers/testsm1/projects/testp1?api-version=2023-03-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-bfad97c78e7d584f81c044dd496cc79a-d62c5792c8c43c47-00",
+        "User-Agent": "azsdk-net-ResourceManager.StorageMover/1.0.0-alpha.20230302.1 (.NET Framework 4.8.4614.0; Microsoft Windows 10.0.19045 )",
+        "x-ms-client-request-id": "af3c5aa76e935a714ebee1d85a4f3c3d",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "555",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 02 Mar 2023 15:17:33 GMT",
+        "ETag": "\u002200009318-0000-3400-0000-63ff0b0e0000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "af3c5aa76e935a714ebee1d85a4f3c3d",
+        "x-ms-correlation-request-id": "f3a0a761-d59f-4e0e-a8a7-f16109cca957",
+        "x-ms-providerhub-traffic": "True",
+        "x-ms-ratelimit-remaining-subscription-reads": "11982",
+        "x-ms-request-id": "6cd6a0d6-351c-49ad-b01c-b14699ebefd5",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20230302T151733Z:f3a0a761-d59f-4e0e-a8a7-f16109cca957"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.StorageMover/storageMovers/testsm1/projects/testp1",
+        "name": "testp1",
+        "type": "microsoft.storagemover/storagemovers/projects",
+        "systemData": {
+          "createdBy": "a000255f-5f09-45e0-a970-9d9ed9cc6453",
+          "createdByType": "Application",
+          "createdAt": "2023-03-01T08:21:33.6075583Z",
+          "lastModifiedBy": "a000255f-5f09-45e0-a970-9d9ed9cc6453",
+          "lastModifiedByType": "Application",
+          "lastModifiedAt": "2023-03-01T08:21:33.6075583Z"
+        },
+        "properties": {
+          "provisioningState": "Succeeded"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.StorageMover/storageMovers/testsm1/projects/testp1/jobDefinitions/testjobdef2?api-version=2023-03-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-bb5ddd7f645a3b428ccd922c5d53f396-030fe0325ac4844b-00",
+        "User-Agent": "azsdk-net-ResourceManager.StorageMover/1.0.0-alpha.20230302.1 (.NET Framework 4.8.4614.0; Microsoft Windows 10.0.19045 )",
+        "x-ms-client-request-id": "55e693d0054f1f4faa23aecd0eb455be",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "1603",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 02 Mar 2023 15:17:34 GMT",
+        "ETag": "\u00220100f9f1-0000-3400-0000-6400bdf60000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "55e693d0054f1f4faa23aecd0eb455be",
+        "x-ms-correlation-request-id": "da02fc81-d4a8-4be2-a3da-dd143b65da69",
+        "x-ms-providerhub-traffic": "True",
+        "x-ms-ratelimit-remaining-subscription-reads": "11981",
+        "x-ms-request-id": "39b14633-f8d0-4406-911e-8e53a0a46444",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20230302T151734Z:da02fc81-d4a8-4be2-a3da-dd143b65da69"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.StorageMover/storageMovers/testsm1/projects/testp1/jobDefinitions/testjobdef2",
+        "name": "testjobdef2",
+        "type": "microsoft.storagemover/storagemovers/projects/jobdefinitions",
+        "systemData": {
+          "createdBy": "a000255f-5f09-45e0-a970-9d9ed9cc6453",
+          "createdByType": "Application",
+          "createdAt": "2023-03-02T13:27:56.7656198Z",
+          "lastModifiedBy": "aed824f0-6446-4ef9-9e17-98b0157c09dc",
+          "lastModifiedByType": "Application",
+          "lastModifiedAt": "2023-03-02T15:17:10.5303813Z"
+        },
+        "properties": {
+          "copyMode": "Additive",
+          "sourceName": "testnfsendpoint",
+          "sourceResourceId": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.StorageMover/storageMovers/testsm1/endpoints/testnfsendpoint",
+          "targetName": "testsmcontainerendpoint",
+          "targetResourceId": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.StorageMover/storageMovers/testsm1/endpoints/testsmcontainerendpoint",
+          "latestJobRunName": "891c6188-4852-41d2-97b4-0a32c376a216",
+          "latestJobRunResourceId": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.StorageMover/storageMovers/testsm1/projects/testp1/jobDefinitions/testjobdef2/jobRuns/891c6188-4852-41d2-97b4-0a32c376a216",
+          "latestJobRunStatus": "Started",
+          "agentName": "testagent3",
+          "agentResourceId": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.StorageMover/storageMovers/testsm1/agents/testagent3",
+          "provisioningState": "Succeeded"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.StorageMover/storageMovers/testsm1/projects/testp1/jobDefinitions/testjobdef2/jobRuns/6e8c0dfe-821a-427d-8d11-a9ed7f1c9c13?api-version=2023-03-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-66786f32bebab54aa223dbd9975af271-38a7c1accddd4441-00",
+        "User-Agent": "azsdk-net-ResourceManager.StorageMover/1.0.0-alpha.20230302.1 (.NET Framework 4.8.4614.0; Microsoft Windows 10.0.19045 )",
+        "x-ms-client-request-id": "d2f55ec802d8df9133131a72de4b79f2",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "2969",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 02 Mar 2023 15:17:34 GMT",
+        "ETag": "\u002200003811-0000-3400-0000-6400a8660000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "d2f55ec802d8df9133131a72de4b79f2",
+        "x-ms-correlation-request-id": "ddbbec76-b40f-4902-844c-651826a4f7be",
+        "x-ms-providerhub-traffic": "True",
+        "x-ms-ratelimit-remaining-subscription-reads": "11980",
+        "x-ms-request-id": "02337341-0504-4a97-a97f-b8d916292ac5",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20230302T151734Z:ddbbec76-b40f-4902-844c-651826a4f7be"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.StorageMover/storageMovers/testsm1/projects/testp1/jobDefinitions/testjobdef2/jobRuns/6e8c0dfe-821a-427d-8d11-a9ed7f1c9c13",
+        "name": "6e8c0dfe-821a-427d-8d11-a9ed7f1c9c13",
+        "type": "microsoft.storagemover/storagemovers/projects/jobdefinitions/jobruns",
+        "systemData": {
+          "createdBy": "aed824f0-6446-4ef9-9e17-98b0157c09dc",
+          "createdByType": "Application",
+          "createdAt": "2023-03-02T13:30:08.1099129Z",
+          "lastModifiedBy": "aed824f0-6446-4ef9-9e17-98b0157c09dc",
+          "lastModifiedByType": "Application",
+          "lastModifiedAt": "2023-03-02T13:45:09.9147271Z"
+        },
+        "properties": {
+          "status": "Canceled",
+          "agentName": "testagent3",
+          "agentResourceId": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.StorageMover/storageMovers/testsm1/agents/testagent3",
+          "lastStatusUpdate": "2023-03-02T13:30:07.9956746Z",
+          "sourceName": "testnfsendpoint",
+          "sourceResourceId": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.StorageMover/storageMovers/testsm1/endpoints/testnfsendpoint",
+          "sourceProperties": {
+            "host": "10.0.0.1",
+            "nfsVersion": "NFSauto",
+            "export": "/",
+            "endpointType": "NfsMount",
+            "provisioningState": "Succeeded"
+          },
+          "targetName": "testsmcontainerendpoint",
+          "targetResourceId": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.StorageMover/storageMovers/testsm1/endpoints/testsmcontainerendpoint",
+          "targetProperties": {
+            "storageAccountResourceId": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.Storage/storageAccounts/testsomoveraccount",
+            "blobContainerName": "testsmcontainer",
+            "endpointType": "AzureStorageBlobContainer",
+            "provisioningState": "Succeeded"
+          },
+          "jobDefinitionProperties": {
+            "copyMode": "Additive",
+            "sourceName": "testnfsendpoint",
+            "sourceResourceId": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.StorageMover/storageMovers/testsm1/endpoints/testnfsendpoint",
+            "targetName": "testsmcontainerendpoint",
+            "targetResourceId": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.StorageMover/storageMovers/testsm1/endpoints/testsmcontainerendpoint",
+            "latestJobRunName": "6e8c0dfe-821a-427d-8d11-a9ed7f1c9c13",
+            "latestJobRunResourceId": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.StorageMover/storageMovers/testsm1/projects/testp1/jobDefinitions/testjobdef2/jobRuns/6e8c0dfe-821a-427d-8d11-a9ed7f1c9c13",
+            "latestJobRunStatus": "Canceled",
+            "agentName": "testagent3",
+            "agentResourceId": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.StorageMover/storageMovers/testsm1/agents/testagent3",
+            "internalMetadata": {
+              "jobDefinitionId": "a1f0cb69-fbb0-4810-8f0f-839bea141594"
+            },
+            "provisioningState": "Succeeded"
+          },
+          "provisioningState": "Succeeded"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.StorageMover/storageMovers/testsm1/projects/testp1/jobDefinitions/testjobdef2/jobRuns?api-version=2023-03-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-47c6315b53d7ea408a5e8de6b68d7e3a-25d8e93c20c5bf4f-00",
+        "User-Agent": "azsdk-net-ResourceManager.StorageMover/1.0.0-alpha.20230302.1 (.NET Framework 4.8.4614.0; Microsoft Windows 10.0.19045 )",
+        "x-ms-client-request-id": "7ba54a47cc12a1dc0b1c0470bfa34c9a",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "16195",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 02 Mar 2023 15:17:35 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "7ba54a47cc12a1dc0b1c0470bfa34c9a",
+        "x-ms-correlation-request-id": "a652dd12-f47c-4937-bdda-393e6c4a26f1",
+        "x-ms-providerhub-traffic": "True",
+        "x-ms-ratelimit-remaining-subscription-reads": "11979",
+        "x-ms-request-id": "630102e2-9901-4a7b-9677-3a9aeb593661",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20230302T151735Z:a652dd12-f47c-4937-bdda-393e6c4a26f1"
+      },
+      "ResponseBody": {
+        "value": [
+          {
+            "id": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.StorageMover/storageMovers/testsm1/projects/testp1/jobDefinitions/testjobdef2/jobRuns/6e8c0dfe-821a-427d-8d11-a9ed7f1c9c13",
+            "name": "6e8c0dfe-821a-427d-8d11-a9ed7f1c9c13",
+            "type": "microsoft.storagemover/storagemovers/projects/jobdefinitions/jobruns",
+            "systemData": {
+              "createdBy": "aed824f0-6446-4ef9-9e17-98b0157c09dc",
+              "createdByType": "Application",
+              "createdAt": "2023-03-02T13:30:08.1099129Z",
+              "lastModifiedBy": "aed824f0-6446-4ef9-9e17-98b0157c09dc",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-03-02T13:45:09.9147271Z"
+            },
+            "properties": {
+              "status": "Canceled",
+              "agentName": "testagent3",
+              "agentResourceId": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.StorageMover/storageMovers/testsm1/agents/testagent3",
+              "lastStatusUpdate": "2023-03-02T13:30:07.9956746Z",
+              "sourceName": "testnfsendpoint",
+              "sourceResourceId": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.StorageMover/storageMovers/testsm1/endpoints/testnfsendpoint",
+              "sourceProperties": {
+                "host": "10.0.0.1",
+                "nfsVersion": "NFSauto",
+                "export": "/",
+                "endpointType": "NfsMount",
+                "provisioningState": "Succeeded"
+              },
+              "targetName": "testsmcontainerendpoint",
+              "targetResourceId": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.StorageMover/storageMovers/testsm1/endpoints/testsmcontainerendpoint",
+              "targetProperties": {
+                "storageAccountResourceId": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.Storage/storageAccounts/testsomoveraccount",
+                "blobContainerName": "testsmcontainer",
+                "endpointType": "AzureStorageBlobContainer",
+                "provisioningState": "Succeeded"
+              },
+              "jobDefinitionProperties": {
+                "copyMode": "Additive",
+                "sourceName": "testnfsendpoint",
+                "sourceResourceId": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.StorageMover/storageMovers/testsm1/endpoints/testnfsendpoint",
+                "targetName": "testsmcontainerendpoint",
+                "targetResourceId": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.StorageMover/storageMovers/testsm1/endpoints/testsmcontainerendpoint",
+                "latestJobRunName": "6e8c0dfe-821a-427d-8d11-a9ed7f1c9c13",
+                "latestJobRunResourceId": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.StorageMover/storageMovers/testsm1/projects/testp1/jobDefinitions/testjobdef2/jobRuns/6e8c0dfe-821a-427d-8d11-a9ed7f1c9c13",
+                "latestJobRunStatus": "Canceled",
+                "agentName": "testagent3",
+                "agentResourceId": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.StorageMover/storageMovers/testsm1/agents/testagent3",
+                "internalMetadata": {
+                  "jobDefinitionId": "a1f0cb69-fbb0-4810-8f0f-839bea141594"
+                },
+                "provisioningState": "Succeeded"
+              },
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.StorageMover/storageMovers/testsm1/projects/testp1/jobDefinitions/testjobdef2/jobRuns/3412df9f-48f2-4c31-8e4a-2d7b171ef20c",
+            "name": "3412df9f-48f2-4c31-8e4a-2d7b171ef20c",
+            "type": "microsoft.storagemover/storagemovers/projects/jobdefinitions/jobruns",
+            "systemData": {
+              "createdBy": "aed824f0-6446-4ef9-9e17-98b0157c09dc",
+              "createdByType": "Application",
+              "createdAt": "2023-03-02T13:56:59.2018521Z",
+              "lastModifiedBy": "aed824f0-6446-4ef9-9e17-98b0157c09dc",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-03-02T14:12:08.2767703Z"
+            },
+            "properties": {
+              "status": "Failed",
+              "agentName": "testagent3",
+              "agentResourceId": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.StorageMover/storageMovers/testsm1/agents/testagent3",
+              "lastStatusUpdate": "2023-03-02T13:56:59.1826059Z",
+              "sourceName": "testnfsendpoint",
+              "sourceResourceId": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.StorageMover/storageMovers/testsm1/endpoints/testnfsendpoint",
+              "sourceProperties": {
+                "host": "10.0.0.1",
+                "nfsVersion": "NFSauto",
+                "export": "/",
+                "endpointType": "NfsMount",
+                "provisioningState": "Succeeded"
+              },
+              "targetName": "testsmcontainerendpoint",
+              "targetResourceId": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.StorageMover/storageMovers/testsm1/endpoints/testsmcontainerendpoint",
+              "targetProperties": {
+                "storageAccountResourceId": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.Storage/storageAccounts/testsomoveraccount",
+                "blobContainerName": "testsmcontainer",
+                "endpointType": "AzureStorageBlobContainer",
+                "provisioningState": "Succeeded"
+              },
+              "jobDefinitionProperties": {
+                "copyMode": "Additive",
+                "sourceName": "testnfsendpoint",
+                "sourceResourceId": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.StorageMover/storageMovers/testsm1/endpoints/testnfsendpoint",
+                "targetName": "testsmcontainerendpoint",
+                "targetResourceId": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.StorageMover/storageMovers/testsm1/endpoints/testsmcontainerendpoint",
+                "latestJobRunName": "3412df9f-48f2-4c31-8e4a-2d7b171ef20c",
+                "latestJobRunResourceId": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.StorageMover/storageMovers/testsm1/projects/testp1/jobDefinitions/testjobdef2/jobRuns/3412df9f-48f2-4c31-8e4a-2d7b171ef20c",
+                "latestJobRunStatus": "Queued",
+                "agentName": "testagent3",
+                "agentResourceId": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.StorageMover/storageMovers/testsm1/agents/testagent3",
+                "internalMetadata": {
+                  "jobDefinitionId": "a1f0cb69-fbb0-4810-8f0f-839bea141594"
+                },
+                "provisioningState": "Succeeded"
+              },
+              "provisioningState": "Succeeded",
+              "scanStatus": "NotStarted",
+              "executionStartTime": "2023-03-02T13:57:13.2929296Z",
+              "itemsScanned": 0,
+              "itemsExcluded": 0,
+              "itemsUnsupported": 0,
+              "itemsNoTransferNeeded": 0,
+              "itemsFailed": 0,
+              "itemsTransferred": 0,
+              "bytesScanned": 0,
+              "bytesExcluded": 0,
+              "bytesUnsupported": 0,
+              "bytesNoTransferNeeded": 0,
+              "bytesFailed": 0,
+              "bytesTransferred": 0,
+              "executionEndTime": "2023-03-02T14:07:14.2062295Z",
+              "error": {
+                "code": "JobRunError",
+                "message": "There was an error while running this job. Please check the support bundle from the Agent VM for details."
+              }
+            }
+          },
+          {
+            "id": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.StorageMover/storageMovers/testsm1/projects/testp1/jobDefinitions/testjobdef2/jobRuns/1a8cf22a-648c-47a7-a3ec-4d4a3e9ef73c",
+            "name": "1a8cf22a-648c-47a7-a3ec-4d4a3e9ef73c",
+            "type": "microsoft.storagemover/storagemovers/projects/jobdefinitions/jobruns",
+            "systemData": {
+              "createdBy": "aed824f0-6446-4ef9-9e17-98b0157c09dc",
+              "createdByType": "Application",
+              "createdAt": "2023-03-02T14:07:53.867201Z",
+              "lastModifiedBy": "aed824f0-6446-4ef9-9e17-98b0157c09dc",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-03-02T14:15:07.1844208Z"
+            },
+            "properties": {
+              "status": "Failed",
+              "scanStatus": "NotStarted",
+              "agentName": "testagent3",
+              "agentResourceId": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.StorageMover/storageMovers/testsm1/agents/testagent3",
+              "executionStartTime": "2023-03-02T14:08:09.5226944Z",
+              "lastStatusUpdate": "2023-03-02T14:07:53.8542248Z",
+              "itemsScanned": 0,
+              "itemsExcluded": 0,
+              "itemsUnsupported": 0,
+              "itemsNoTransferNeeded": 0,
+              "itemsFailed": 0,
+              "itemsTransferred": 0,
+              "bytesScanned": 0,
+              "bytesExcluded": 0,
+              "bytesUnsupported": 0,
+              "bytesNoTransferNeeded": 0,
+              "bytesFailed": 0,
+              "bytesTransferred": 0,
+              "sourceName": "testnfsendpoint",
+              "sourceResourceId": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.StorageMover/storageMovers/testsm1/endpoints/testnfsendpoint",
+              "sourceProperties": {
+                "host": "10.0.0.1",
+                "nfsVersion": "NFSauto",
+                "export": "/",
+                "endpointType": "NfsMount",
+                "provisioningState": "Succeeded"
+              },
+              "targetName": "testsmcontainerendpoint",
+              "targetResourceId": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.StorageMover/storageMovers/testsm1/endpoints/testsmcontainerendpoint",
+              "targetProperties": {
+                "storageAccountResourceId": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.Storage/storageAccounts/testsomoveraccount",
+                "blobContainerName": "testsmcontainer",
+                "endpointType": "AzureStorageBlobContainer",
+                "provisioningState": "Succeeded"
+              },
+              "jobDefinitionProperties": {
+                "copyMode": "Additive",
+                "sourceName": "testnfsendpoint",
+                "sourceResourceId": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.StorageMover/storageMovers/testsm1/endpoints/testnfsendpoint",
+                "targetName": "testsmcontainerendpoint",
+                "targetResourceId": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.StorageMover/storageMovers/testsm1/endpoints/testsmcontainerendpoint",
+                "latestJobRunName": "1a8cf22a-648c-47a7-a3ec-4d4a3e9ef73c",
+                "latestJobRunResourceId": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.StorageMover/storageMovers/testsm1/projects/testp1/jobDefinitions/testjobdef2/jobRuns/1a8cf22a-648c-47a7-a3ec-4d4a3e9ef73c",
+                "latestJobRunStatus": "Queued",
+                "agentName": "testagent3",
+                "agentResourceId": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.StorageMover/storageMovers/testsm1/agents/testagent3",
+                "internalMetadata": {
+                  "jobDefinitionId": "a1f0cb69-fbb0-4810-8f0f-839bea141594"
+                },
+                "provisioningState": "Succeeded"
+              },
+              "provisioningState": "Succeeded",
+              "executionEndTime": "2023-03-02T14:10:16.9303314Z",
+              "error": {
+                "code": "JobRunError",
+                "message": "There was an error while running this job. Please check the support bundle from the Agent VM for details."
+              }
+            }
+          },
+          {
+            "id": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.StorageMover/storageMovers/testsm1/projects/testp1/jobDefinitions/testjobdef2/jobRuns/3456a6cb-91ef-44d6-a68e-da4b41d50f40",
+            "name": "3456a6cb-91ef-44d6-a68e-da4b41d50f40",
+            "type": "microsoft.storagemover/storagemovers/projects/jobdefinitions/jobruns",
+            "systemData": {
+              "createdBy": "aed824f0-6446-4ef9-9e17-98b0157c09dc",
+              "createdByType": "Application",
+              "createdAt": "2023-03-02T14:10:53.8226649Z",
+              "lastModifiedBy": "aed824f0-6446-4ef9-9e17-98b0157c09dc",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-03-02T14:25:55.2899516Z"
+            },
+            "properties": {
+              "status": "Canceled",
+              "agentName": "testagent3",
+              "agentResourceId": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.StorageMover/storageMovers/testsm1/agents/testagent3",
+              "lastStatusUpdate": "2023-03-02T14:10:53.7441253Z",
+              "sourceName": "testnfsendpoint",
+              "sourceResourceId": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.StorageMover/storageMovers/testsm1/endpoints/testnfsendpoint",
+              "sourceProperties": {
+                "host": "10.0.0.1",
+                "nfsVersion": "NFSauto",
+                "export": "/",
+                "endpointType": "NfsMount",
+                "provisioningState": "Succeeded"
+              },
+              "targetName": "testsmcontainerendpoint",
+              "targetResourceId": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.StorageMover/storageMovers/testsm1/endpoints/testsmcontainerendpoint",
+              "targetProperties": {
+                "storageAccountResourceId": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.Storage/storageAccounts/testsomoveraccount",
+                "blobContainerName": "testsmcontainer",
+                "endpointType": "AzureStorageBlobContainer",
+                "provisioningState": "Succeeded"
+              },
+              "jobDefinitionProperties": {
+                "copyMode": "Additive",
+                "sourceName": "testnfsendpoint",
+                "sourceResourceId": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.StorageMover/storageMovers/testsm1/endpoints/testnfsendpoint",
+                "targetName": "testsmcontainerendpoint",
+                "targetResourceId": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.StorageMover/storageMovers/testsm1/endpoints/testsmcontainerendpoint",
+                "latestJobRunName": "3456a6cb-91ef-44d6-a68e-da4b41d50f40",
+                "latestJobRunResourceId": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.StorageMover/storageMovers/testsm1/projects/testp1/jobDefinitions/testjobdef2/jobRuns/3456a6cb-91ef-44d6-a68e-da4b41d50f40",
+                "latestJobRunStatus": "Canceled",
+                "agentName": "testagent3",
+                "agentResourceId": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.StorageMover/storageMovers/testsm1/agents/testagent3",
+                "internalMetadata": {
+                  "jobDefinitionId": "a1f0cb69-fbb0-4810-8f0f-839bea141594"
+                },
+                "provisioningState": "Succeeded"
+              },
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.StorageMover/storageMovers/testsm1/projects/testp1/jobDefinitions/testjobdef2/jobRuns/891c6188-4852-41d2-97b4-0a32c376a216",
+            "name": "891c6188-4852-41d2-97b4-0a32c376a216",
+            "type": "microsoft.storagemover/storagemovers/projects/jobdefinitions/jobruns",
+            "systemData": {
+              "createdBy": "aed824f0-6446-4ef9-9e17-98b0157c09dc",
+              "createdByType": "Application",
+              "createdAt": "2023-03-02T15:10:20.6348855Z",
+              "lastModifiedBy": "aed824f0-6446-4ef9-9e17-98b0157c09dc",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-03-02T15:17:10.3897221Z"
+            },
+            "properties": {
+              "status": "Started",
+              "agentName": "testagent3",
+              "agentResourceId": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.StorageMover/storageMovers/testsm1/agents/testagent3",
+              "lastStatusUpdate": "2023-03-02T15:10:20.6208608Z",
+              "sourceName": "testnfsendpoint",
+              "sourceResourceId": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.StorageMover/storageMovers/testsm1/endpoints/testnfsendpoint",
+              "sourceProperties": {
+                "host": "10.0.0.1",
+                "nfsVersion": "NFSauto",
+                "export": "/",
+                "endpointType": "NfsMount",
+                "provisioningState": "Succeeded"
+              },
+              "targetName": "testsmcontainerendpoint",
+              "targetResourceId": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.StorageMover/storageMovers/testsm1/endpoints/testsmcontainerendpoint",
+              "targetProperties": {
+                "storageAccountResourceId": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.Storage/storageAccounts/testsomoveraccount",
+                "blobContainerName": "testsmcontainer",
+                "endpointType": "AzureStorageBlobContainer",
+                "provisioningState": "Succeeded"
+              },
+              "jobDefinitionProperties": {
+                "copyMode": "Additive",
+                "sourceName": "testnfsendpoint",
+                "sourceResourceId": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.StorageMover/storageMovers/testsm1/endpoints/testnfsendpoint",
+                "targetName": "testsmcontainerendpoint",
+                "targetResourceId": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.StorageMover/storageMovers/testsm1/endpoints/testsmcontainerendpoint",
+                "latestJobRunName": "891c6188-4852-41d2-97b4-0a32c376a216",
+                "latestJobRunResourceId": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.StorageMover/storageMovers/testsm1/projects/testp1/jobDefinitions/testjobdef2/jobRuns/891c6188-4852-41d2-97b4-0a32c376a216",
+                "latestJobRunStatus": "Queued",
+                "agentName": "testagent3",
+                "agentResourceId": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.StorageMover/storageMovers/testsm1/agents/testagent3",
+                "internalMetadata": {
+                  "jobDefinitionId": "a1f0cb69-fbb0-4810-8f0f-839bea141594"
+                },
+                "provisioningState": "Succeeded"
+              },
+              "provisioningState": "Succeeded",
+              "scanStatus": "NotStarted",
+              "executionStartTime": "2023-03-02T15:10:43.7585176Z",
+              "itemsScanned": 0,
+              "itemsExcluded": 0,
+              "itemsUnsupported": 0,
+              "itemsNoTransferNeeded": 0,
+              "itemsFailed": 0,
+              "itemsTransferred": 0,
+              "bytesScanned": 0,
+              "bytesExcluded": 0,
+              "bytesUnsupported": 0,
+              "bytesNoTransferNeeded": 0,
+              "bytesFailed": 0,
+              "bytesTransferred": 0
+            }
+          }
+        ]
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.StorageMover/storageMovers/testsm1/projects/testp1/jobDefinitions/testjobdef2/jobRuns/6e8c0dfe-821a-427d-8d11-a9ed7f1c9c13?api-version=2023-03-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-f4a4520922740b4482d5310be32eef23-26b92d3edf875546-00",
+        "User-Agent": "azsdk-net-ResourceManager.StorageMover/1.0.0-alpha.20230302.1 (.NET Framework 4.8.4614.0; Microsoft Windows 10.0.19045 )",
+        "x-ms-client-request-id": "fc1023696959cd640107223cebdc415f",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "2969",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 02 Mar 2023 15:17:35 GMT",
+        "ETag": "\u002200003811-0000-3400-0000-6400a8660000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "fc1023696959cd640107223cebdc415f",
+        "x-ms-correlation-request-id": "cd54aeae-19b9-4ef2-ad52-fb766535c968",
+        "x-ms-providerhub-traffic": "True",
+        "x-ms-ratelimit-remaining-subscription-reads": "11978",
+        "x-ms-request-id": "90da0e4b-449b-4e41-9b15-f419ff0b66b5",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20230302T151736Z:cd54aeae-19b9-4ef2-ad52-fb766535c968"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.StorageMover/storageMovers/testsm1/projects/testp1/jobDefinitions/testjobdef2/jobRuns/6e8c0dfe-821a-427d-8d11-a9ed7f1c9c13",
+        "name": "6e8c0dfe-821a-427d-8d11-a9ed7f1c9c13",
+        "type": "microsoft.storagemover/storagemovers/projects/jobdefinitions/jobruns",
+        "systemData": {
+          "createdBy": "aed824f0-6446-4ef9-9e17-98b0157c09dc",
+          "createdByType": "Application",
+          "createdAt": "2023-03-02T13:30:08.1099129Z",
+          "lastModifiedBy": "aed824f0-6446-4ef9-9e17-98b0157c09dc",
+          "lastModifiedByType": "Application",
+          "lastModifiedAt": "2023-03-02T13:45:09.9147271Z"
+        },
+        "properties": {
+          "status": "Canceled",
+          "agentName": "testagent3",
+          "agentResourceId": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.StorageMover/storageMovers/testsm1/agents/testagent3",
+          "lastStatusUpdate": "2023-03-02T13:30:07.9956746Z",
+          "sourceName": "testnfsendpoint",
+          "sourceResourceId": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.StorageMover/storageMovers/testsm1/endpoints/testnfsendpoint",
+          "sourceProperties": {
+            "host": "10.0.0.1",
+            "nfsVersion": "NFSauto",
+            "export": "/",
+            "endpointType": "NfsMount",
+            "provisioningState": "Succeeded"
+          },
+          "targetName": "testsmcontainerendpoint",
+          "targetResourceId": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.StorageMover/storageMovers/testsm1/endpoints/testsmcontainerendpoint",
+          "targetProperties": {
+            "storageAccountResourceId": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.Storage/storageAccounts/testsomoveraccount",
+            "blobContainerName": "testsmcontainer",
+            "endpointType": "AzureStorageBlobContainer",
+            "provisioningState": "Succeeded"
+          },
+          "jobDefinitionProperties": {
+            "copyMode": "Additive",
+            "sourceName": "testnfsendpoint",
+            "sourceResourceId": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.StorageMover/storageMovers/testsm1/endpoints/testnfsendpoint",
+            "targetName": "testsmcontainerendpoint",
+            "targetResourceId": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.StorageMover/storageMovers/testsm1/endpoints/testsmcontainerendpoint",
+            "latestJobRunName": "6e8c0dfe-821a-427d-8d11-a9ed7f1c9c13",
+            "latestJobRunResourceId": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.StorageMover/storageMovers/testsm1/projects/testp1/jobDefinitions/testjobdef2/jobRuns/6e8c0dfe-821a-427d-8d11-a9ed7f1c9c13",
+            "latestJobRunStatus": "Canceled",
+            "agentName": "testagent3",
+            "agentResourceId": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.StorageMover/storageMovers/testsm1/agents/testagent3",
+            "internalMetadata": {
+              "jobDefinitionId": "a1f0cb69-fbb0-4810-8f0f-839bea141594"
+            },
+            "provisioningState": "Succeeded"
+          },
+          "provisioningState": "Succeeded"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.StorageMover/storageMovers/testsm1/projects/testp1/jobDefinitions/testjobdef2/jobRuns/6e8c0dfe-821a-427d-8d11-a9ed7f1c9c13?api-version=2023-03-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-91ab23c464c58e43b28d095683cd1c91-e36f4a022d834c40-00",
+        "User-Agent": "azsdk-net-ResourceManager.StorageMover/1.0.0-alpha.20230302.1 (.NET Framework 4.8.4614.0; Microsoft Windows 10.0.19045 )",
+        "x-ms-client-request-id": "c485bba9da0efcab8254c7bcfe211f8f",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "2969",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 02 Mar 2023 15:17:36 GMT",
+        "ETag": "\u002200003811-0000-3400-0000-6400a8660000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "c485bba9da0efcab8254c7bcfe211f8f",
+        "x-ms-correlation-request-id": "d0c4d740-698c-46b7-9116-b974158fefe9",
+        "x-ms-providerhub-traffic": "True",
+        "x-ms-ratelimit-remaining-subscription-reads": "11977",
+        "x-ms-request-id": "44cb6dbd-134a-4863-8dad-c8bd9f486b7a",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20230302T151736Z:d0c4d740-698c-46b7-9116-b974158fefe9"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.StorageMover/storageMovers/testsm1/projects/testp1/jobDefinitions/testjobdef2/jobRuns/6e8c0dfe-821a-427d-8d11-a9ed7f1c9c13",
+        "name": "6e8c0dfe-821a-427d-8d11-a9ed7f1c9c13",
+        "type": "microsoft.storagemover/storagemovers/projects/jobdefinitions/jobruns",
+        "systemData": {
+          "createdBy": "aed824f0-6446-4ef9-9e17-98b0157c09dc",
+          "createdByType": "Application",
+          "createdAt": "2023-03-02T13:30:08.1099129Z",
+          "lastModifiedBy": "aed824f0-6446-4ef9-9e17-98b0157c09dc",
+          "lastModifiedByType": "Application",
+          "lastModifiedAt": "2023-03-02T13:45:09.9147271Z"
+        },
+        "properties": {
+          "status": "Canceled",
+          "agentName": "testagent3",
+          "agentResourceId": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.StorageMover/storageMovers/testsm1/agents/testagent3",
+          "lastStatusUpdate": "2023-03-02T13:30:07.9956746Z",
+          "sourceName": "testnfsendpoint",
+          "sourceResourceId": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.StorageMover/storageMovers/testsm1/endpoints/testnfsendpoint",
+          "sourceProperties": {
+            "host": "10.0.0.1",
+            "nfsVersion": "NFSauto",
+            "export": "/",
+            "endpointType": "NfsMount",
+            "provisioningState": "Succeeded"
+          },
+          "targetName": "testsmcontainerendpoint",
+          "targetResourceId": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.StorageMover/storageMovers/testsm1/endpoints/testsmcontainerendpoint",
+          "targetProperties": {
+            "storageAccountResourceId": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.Storage/storageAccounts/testsomoveraccount",
+            "blobContainerName": "testsmcontainer",
+            "endpointType": "AzureStorageBlobContainer",
+            "provisioningState": "Succeeded"
+          },
+          "jobDefinitionProperties": {
+            "copyMode": "Additive",
+            "sourceName": "testnfsendpoint",
+            "sourceResourceId": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.StorageMover/storageMovers/testsm1/endpoints/testnfsendpoint",
+            "targetName": "testsmcontainerendpoint",
+            "targetResourceId": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.StorageMover/storageMovers/testsm1/endpoints/testsmcontainerendpoint",
+            "latestJobRunName": "6e8c0dfe-821a-427d-8d11-a9ed7f1c9c13",
+            "latestJobRunResourceId": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.StorageMover/storageMovers/testsm1/projects/testp1/jobDefinitions/testjobdef2/jobRuns/6e8c0dfe-821a-427d-8d11-a9ed7f1c9c13",
+            "latestJobRunStatus": "Canceled",
+            "agentName": "testagent3",
+            "agentResourceId": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/teststomover/providers/Microsoft.StorageMover/storageMovers/testsm1/agents/testagent3",
+            "internalMetadata": {
+              "jobDefinitionId": "a1f0cb69-fbb0-4810-8f0f-839bea141594"
+            },
+            "provisioningState": "Succeeded"
+          },
+          "provisioningState": "Succeeded"
+        }
+      }
+    }
+  ],
+  "Variables": {
+    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
+    "RandomSeed": "910219856",
+    "RESOURCE_MANAGER_URL": null,
+    "SUBSCRIPTION_ID": "45b60d85-fd72-427a-a708-f994d26e593e"
+  }
+}
