@@ -17,6 +17,7 @@
 ### Bugs Fixed
 
 - `ActivitySource` activities will no longer be stamped with the `kind` attribute as this is redundant with the OpenTelemetry `SpanKind` attribute.
+- The product information section of the UserAgent header is now validated for invalid parenthesis formatting and escaped, if necessary.
 
 ## 1.28.0 (2023-02-06)
 

@@ -399,7 +399,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             var tags = scope.Activity.Tags.ToList();
             CollectionAssert.Contains(tags, new KeyValuePair<string, string>(MessagingClientDiagnostics.MessageBusDestination, FirstQueueScope.QueueName));
             CollectionAssert.Contains(tags, new KeyValuePair<string, string>(MessagingClientDiagnostics.PeerAddress, ServiceBusTestEnvironment.Instance.FullyQualifiedNamespace));
-            CollectionAssert.Contains(tags, new KeyValuePair<string, string>(MessagingClientDiagnostics.MessageBusDestination, DiagnosticProperty.ServiceBusServiceContext));
+            CollectionAssert.Contains(tags, new KeyValuePair<string, string>(MessagingClientDiagnostics.Component, DiagnosticProperty.ServiceBusServiceContext));
             Assert.AreEqual(2, scope.LinkedActivities.Count);
             Assert.IsTrue(scope.IsCompleted);
         }
@@ -414,7 +414,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             var tags = scope.Activity.Tags.ToList();
             CollectionAssert.Contains(tags, new KeyValuePair<string, string>(MessagingClientDiagnostics.MessageBusDestination, FirstQueueScope.QueueName));
             CollectionAssert.Contains(tags, new KeyValuePair<string, string>(MessagingClientDiagnostics.PeerAddress, ServiceBusTestEnvironment.Instance.FullyQualifiedNamespace));
-            CollectionAssert.Contains(tags, new KeyValuePair<string, string>(MessagingClientDiagnostics.MessageBusDestination, DiagnosticProperty.ServiceBusServiceContext));
+            CollectionAssert.Contains(tags, new KeyValuePair<string, string>(MessagingClientDiagnostics.Component, DiagnosticProperty.ServiceBusServiceContext));
             Assert.AreEqual(2, scope.LinkedActivities.Count);
             Assert.IsTrue(scope.IsFailed);
         }

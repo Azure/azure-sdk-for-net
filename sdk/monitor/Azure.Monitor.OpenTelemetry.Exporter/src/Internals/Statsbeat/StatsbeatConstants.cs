@@ -15,6 +15,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat
         {
             "francecentral",
             "francesouth",
+            "germanywestcentral",
             "northeurope",
             "norwayeast",
             "norwaywest",
