@@ -19,6 +19,7 @@ namespace Azure.AI.OpenAI.Tests
         {
             public const string CompletionsDeploymentIdVariable = "OPENAI_DEPLOYMENT_ID";
             public const string EmbeddingsDeploymentIdVariable = "OPENAI_EMBEDDINGS_DEPLOYMENT_ID";
+            public const string OpenAIAuthTokenVariable = "OPENAI_AUTH_TOKEN";
             public const string EndpointVariable = "OPENAI_ENDPOINT";
             public const string ResourceGroupName = "openai-test-rg";
             public const string CognitiveServicesAccountName = "openai-sdk-test-automation-account";
@@ -37,6 +38,7 @@ namespace Azure.AI.OpenAI.Tests
         private AzureKeyCredential _apiKey;
         private string _completionsDeploymentId;
         private string _embeddingsDeploymentId;
+        private string _openAIAuthToken;
 
         protected OpenAITestBase(bool isAsync, RecordedTestMode? mode = null) : base(isAsync, mode)
         {
@@ -50,7 +52,7 @@ namespace Azure.AI.OpenAI.Tests
             new OpenAIClient(_endpoint, TestEnvironment.Credential, GetInstrumentedClientOptions()));
 
         protected OpenAIClient GetPublicOpenAIClient() => InstrumentClient(
-            new OpenAIClient(TestEnvironment.OpenAIAuthTokenString, InstrumentClientOptions(new OpenAIClientOptions(OpenAIClientOptions.ServiceVersion.V2022_12_01))) );
+            new OpenAIClient(_openAIAuthToken, InstrumentClientOptions(new OpenAIClientOptions(OpenAIClientOptions.ServiceVersion.V2022_12_01))) );
 
         [SetUp]
         public void CreateDeployment()
@@ -61,6 +63,7 @@ namespace Azure.AI.OpenAI.Tests
                 _endpoint = new Uri(Recording.GetVariable(Constants.EndpointVariable, null));
                 _completionsDeploymentId = Recording.GetVariable(Constants.CompletionsDeploymentIdVariable, null);
                 _embeddingsDeploymentId = Recording.GetVariable(Constants.EmbeddingsDeploymentIdVariable, null);
+                _openAIAuthToken = Recording.GetVariable(Constants.OpenAIAuthTokenVariable, null);
                 _apiKey = new AzureKeyCredential("unused placeholder value for recordings");
             }
             else if (_apiKey is not null)

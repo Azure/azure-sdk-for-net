@@ -69,6 +69,7 @@
     "OPENAI_DEPLOYMENT_ID": "text-davinci-002",
     "OPENAI_EMBEDDINGS_DEPLOYMENT_ID": "text-similarity-davinci-001",
     "OPENAI_ENDPOINT": "https://api.openai.com/v1",
+    "OPENAI_AUTH_TOKEN": "",
     "RandomSeed": "1377940996"
   }
 }
