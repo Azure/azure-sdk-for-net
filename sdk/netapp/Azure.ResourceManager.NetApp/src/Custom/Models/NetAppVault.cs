@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.NetApp.Models
         public string VaultName { get; }
 
         internal NetAppVault() { }
-        internal NetAppVault(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string vaultName) : base(id, name, resourceType, systemData)
+        internal NetAppVault(ResourceIdentifier id, string name, ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, string vaultName) : base(id, name, resourceType, systemData)
         {
             VaultName = vaultName;
             throw null;
