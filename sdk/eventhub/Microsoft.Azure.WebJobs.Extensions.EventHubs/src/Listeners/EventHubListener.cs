@@ -165,7 +165,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
                     else if (totalEvents > _maxBatchSize)
                     {
                         var eventsToAdd = storedEventsForPartition.Take(_maxBatchSize).ToArray();
-                        storedEventsForPartition.RemoveRange(0, _maxBatchSize - 1);
+                        storedEventsForPartition.RemoveRange(0, _maxBatchSize);
 
                         return eventsToAdd;
                     }
@@ -205,6 +205,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
             private TimeSpan _maxWaitTime;
             private ValueStopwatch _currentCycle;
             private EventProcessorHostPartition _mostRecentPartitionContext;
+            private CancellationTokenSource _storedEventsBackgroundTaskCts;
 
             public EventProcessor(EventHubOptions options, ITriggeredFunctionExecutor executor, ILogger logger, bool singleDispatch)
             {
@@ -285,27 +286,38 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
                     {
                         // Batch dispatch
 
-                        var partitionId = context.PartitionId;
-
                         if (_minimumBatchesEnabled)
                         {
-                            var triggerEvents = _storedEventsManager.ProcessWithStoredEvents(context, messages.ToList(), false, _cts.Token);
+                            var triggerEvents = _storedEventsManager.ProcessWithStoredEvents(context, messages.ToList(), false, linkedCts.Token);
 
                             if (triggerEvents.Length > 0)
                             {
-                                await TriggerExecute(triggerEvents, context, _cts.Token).ConfigureAwait(false);
-                                eventToCheckpoint = triggerEvents.LastOrDefault();
+                                await TriggerExecute(triggerEvents, context, linkedCts.Token).ConfigureAwait(false);
+                                eventToCheckpoint = triggerEvents.Last();
+
+                                if (_storedEventsBackgroundTask != null)
+                                {
+                                    // If there is a background timer task, cancel it and dispose of the cancellation token.
+                                    _storedEventsBackgroundTaskCts.Cancel();
+                                    _storedEventsBackgroundTaskCts.Dispose();
+                                    _storedEventsBackgroundTaskCts = null;
+                                }
 
                                 if (_storedEventsManager.HasStoredEvents)
                                 {
-                                    _storedEventsBackgroundTask = MonitorStoredEvents(_cts.Token);
+                                    // If there are events waiting to be processed, create a new linked cancellation token and start or restart the
+                                    // timer on the newest stored events.
+                                    _storedEventsBackgroundTaskCts = CancellationTokenSource.CreateLinkedTokenSource(_cts.Token, processingCancellationToken);
+                                    _storedEventsBackgroundTask = MonitorStoredEvents(_storedEventsBackgroundTaskCts.Token);
                                 }
                             }
                             else
                             {
                                 if (_storedEventsManager.HasStoredEvents && _storedEventsBackgroundTask == null)
                                 {
-                                    _storedEventsBackgroundTask = MonitorStoredEvents(_cts.Token);
+                                    // If we don't have enough events and the timer hasn't been started yet, start it.
+                                    _storedEventsBackgroundTaskCts = CancellationTokenSource.CreateLinkedTokenSource(_cts.Token, processingCancellationToken);
+                                    _storedEventsBackgroundTask = MonitorStoredEvents(_storedEventsBackgroundTaskCts.Token);
                                 }
                             }
                         }
@@ -335,6 +347,10 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
 
             private async Task TriggerExecute(EventData[] events, EventProcessorHostPartition context, CancellationToken cancellationToken)
             {
+                if (events.Length == 0)
+                {
+                    throw new Exception("received 0");
+                }
                 var triggerInput = new EventHubTriggerInput
                 {
                     Events = events,
@@ -356,16 +372,25 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
 
             public async Task MonitorStoredEvents(CancellationToken cancellationToken)
             {
-                _currentCycle = ValueStopwatch.StartNew();
-                var timeElapsed = _currentCycle.GetElapsedTime();
-                //var remainingTime = _maxWaitTime - timeElapsed;
-                var remainingTime = RemainingTime(timeElapsed);
+                try
+                {
+                    _currentCycle = ValueStopwatch.StartNew();
+                    var timeElapsed = _currentCycle.GetElapsedTime();
+                    //var remainingTime = _maxWaitTime - timeElapsed;
+                    var remainingTime = RemainingTime(timeElapsed);
 
-                await Task.Delay(remainingTime, cancellationToken).ConfigureAwait(false);
-                var triggerEvents = _storedEventsManager.ProcessWithStoredEvents(_mostRecentPartitionContext, timerTrigger: true, cancellationToken: cancellationToken);
+                    await Task.Delay(remainingTime, cancellationToken).ConfigureAwait(false);
+                    var triggerEvents = _storedEventsManager.ProcessWithStoredEvents(_mostRecentPartitionContext, timerTrigger: true, cancellationToken: cancellationToken);
 
-                await TriggerExecute(triggerEvents, _mostRecentPartitionContext, cancellationToken).ConfigureAwait(false);
-                await CheckpointAsync(triggerEvents.Last(), _mostRecentPartitionContext).ConfigureAwait(false);
+                    if (triggerEvents.Length > 0)
+                    {
+                        await TriggerExecute(triggerEvents, _mostRecentPartitionContext, cancellationToken).ConfigureAwait(false);
+                        await CheckpointAsync(triggerEvents.Last(), _mostRecentPartitionContext).ConfigureAwait(false);
+                    }
+                }
+                catch (TaskCanceledException)
+                {
+                }
             }
 
             private TimeSpan RemainingTime(TimeSpan elapsed)
@@ -428,6 +453,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
                     {
                         _cts.Dispose();
                         _storedEventsManager.Dispose();
+                        _storedEventsBackgroundTaskCts.Dispose();
                     }
 
                     _disposed = true;
