@@ -1061,7 +1061,10 @@ namespace Azure.Data.AppConfiguration
 
         /// <summary> Updates the state of a configuration setting snapshot to archive. </summary>
         /// <param name="snapshot"> The snapshot object of the configuration setting snapshot to archive. </param>
-        /// <param name="onlyIfUnchanged">TODO</param>
+        /// <param name="onlyIfUnchanged">If set to true and the configuration settings snapshot exists in the configuration store, update the snapshot
+        /// status if the passed-in <see cref="ConfigurationSettingsSnapshot"/> has the same status as the one in the configuration store. The status
+        /// is the same if their ETag fields match.  If the two snapshots have a different status, this method will throw an exception to indicate
+        /// that the snapshot in the configuration store was modified since it was last obtained by the client.</param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<ConfigurationSettingsSnapshot>> ArchiveSnapshotAsync(ConfigurationSettingsSnapshot snapshot, bool onlyIfUnchanged = false, CancellationToken cancellationToken = default)
         {
@@ -1145,7 +1148,10 @@ namespace Azure.Data.AppConfiguration
 
         /// <summary> Updates the state of a configuration setting snapshot to archive. </summary>
         /// <param name="snapshot"> The snapshot object of the configuration setting snapshot to archive. </param>
-        /// <param name="onlyIfUnchanged">TODO</param>
+        /// <param name="onlyIfUnchanged">If set to true and the configuration settings snapshot exists in the configuration store, update the snapshot
+        /// status if the passed-in <see cref="ConfigurationSettingsSnapshot"/> has the same status as the one in the configuration store. The status
+        /// is the same if their ETag fields match.  If the two snapshots have a different status, this method will throw an exception to indicate
+        /// that the snapshot in the configuration store was modified since it was last obtained by the client.</param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<ConfigurationSettingsSnapshot> ArchiveSnapshot(ConfigurationSettingsSnapshot snapshot, bool onlyIfUnchanged = false, CancellationToken cancellationToken = default)
         {
@@ -1227,7 +1233,10 @@ namespace Azure.Data.AppConfiguration
 
         /// <summary> Updates the state of a configuration setting snapshot to ready. </summary>
         /// <param name="snapshot"> The name of the configuration setting snapshot to delete. </param>
-        /// <param name="onlyIfUnchanged">TODO</param>
+        /// <param name="onlyIfUnchanged">If set to true and the configuration settings snapshot exists in the configuration store, update the snapshot
+        /// status if the passed-in <see cref="ConfigurationSettingsSnapshot"/> has the same status as the one in the configuration store. The status
+        /// is the same if their ETag fields match.  If the two snapshots have a different status, this method will throw an exception to indicate
+        /// that the snapshot in the configuration store was modified since it was last obtained by the client.</param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<ConfigurationSettingsSnapshot>> RecoverSnapshotAsync(ConfigurationSettingsSnapshot snapshot, bool onlyIfUnchanged = false, CancellationToken cancellationToken = default)
         {
@@ -1245,9 +1254,9 @@ namespace Azure.Data.AppConfiguration
                 };
                 using RequestContent content = SnapshotUpdateParameters.ToRequestContent(snapshotUpdateParameters);
 
-                // TODO
+                MatchConditions requestOptions = onlyIfUnchanged ? new MatchConditions { IfMatch = snapshot.Etag } : default;
 
-                Response response = await UpdateSnapshotStatusAsync(snapshot.Name, content, new MatchConditions(), context).ConfigureAwait(false);
+                Response response = await UpdateSnapshotStatusAsync(snapshot.Name, content, requestOptions, context).ConfigureAwait(false);
                 ConfigurationSettingsSnapshot value = ConfigurationSettingsSnapshot.FromResponse(response);
                 return Response.FromValue(value, response);
             }
@@ -1290,7 +1299,10 @@ namespace Azure.Data.AppConfiguration
 
         /// <summary> Updates the state of a configuration setting snapshot to ready. </summary>
         /// <param name="snapshot"> The name of the configuration setting snapshot to delete. </param>
-        /// <param name="onlyIfUnchanged">TODO</param>
+        /// <param name="onlyIfUnchanged">If set to true and the configuration settings snapshot exists in the configuration store, update the snapshot
+        /// status if the passed-in <see cref="ConfigurationSettingsSnapshot"/> has the same status as the one in the configuration store. The status
+        /// is the same if their ETag fields match.  If the two snapshots have a different status, this method will throw an exception to indicate
+        /// that the snapshot in the configuration store was modified since it was last obtained by the client.</param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<ConfigurationSettingsSnapshot> RecoverSnapshot(ConfigurationSettingsSnapshot snapshot, bool onlyIfUnchanged = false, CancellationToken cancellationToken = default)
         {
@@ -1308,7 +1320,9 @@ namespace Azure.Data.AppConfiguration
                 };
                 using RequestContent content = SnapshotUpdateParameters.ToRequestContent(snapshotUpdateParameters);
 
-                Response response = UpdateSnapshotStatus(snapshot.Name, content, new MatchConditions(), context);
+                MatchConditions requestOptions = onlyIfUnchanged ? new MatchConditions { IfMatch = snapshot.Etag } : default;
+
+                Response response = UpdateSnapshotStatus(snapshot.Name, content, requestOptions, context);
                 ConfigurationSettingsSnapshot value = ConfigurationSettingsSnapshot.FromResponse(response);
                 return Response.FromValue(value, response);
             }
