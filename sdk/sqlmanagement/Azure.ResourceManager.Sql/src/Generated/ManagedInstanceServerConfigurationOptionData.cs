@@ -11,7 +11,10 @@ using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
-    /// <summary> A class representing the ManagedInstanceServerConfigurationOption data model. </summary>
+    /// <summary>
+    /// A class representing the ManagedInstanceServerConfigurationOption data model.
+    /// A server configuration option
+    /// </summary>
     public partial class ManagedInstanceServerConfigurationOptionData : ResourceData
     {
         /// <summary> Initializes a new instance of ManagedInstanceServerConfigurationOptionData. </summary>

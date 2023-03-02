@@ -12,7 +12,10 @@ using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
-    /// <summary> A class representing the ManagedInstanceStartStopSchedule data model. </summary>
+    /// <summary>
+    /// A class representing the ManagedInstanceStartStopSchedule data model.
+    /// Managed instance&apos;s Start/Stop schedule.
+    /// </summary>
     public partial class ManagedInstanceStartStopScheduleData : ResourceData
     {
         /// <summary> Initializes a new instance of ManagedInstanceStartStopScheduleData. </summary>
