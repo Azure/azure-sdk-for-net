@@ -24,8 +24,9 @@ param(
     [Parameter(Mandatory = $true)]
     [string] $GitUrl,
 
+    # Explicitly set this to null so that PS command line parser doesn't try to parse and pass it as ""
     [Parameter(Mandatory = $false)]
-    [string] $PushArgs = "",
+    [string] $PushArgs = $null,
 
     [Parameter(Mandatory = $false)]
     [string] $RemoteName = "azure-sdk-fork",
@@ -83,7 +84,7 @@ if (!$SkipCommit) {
         $amendOption = "--amend"
     }
     else {
-        # Explicitly set this to null so that PS command line parser doesn't try to parse pass it as ""
+        # Explicitly set this to null so that PS command line parser doesn't try to parse and pass it as ""
         $amendOption = $null
     }
     Write-Host "git -c user.name=`"azure-sdk`" -c user.email=`"azuresdk@microsoft.com`" commit $amendOption -am `"$CommitMsg`""
