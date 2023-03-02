@@ -336,7 +336,6 @@ In order to enable debug mode, set the `UseLocalDebugProxy` property to true in 
 public KeyClientLiveTests(bool isAsync, KeyClientOptions.ServiceVersion serviceVersion)
     : this(isAsync, serviceVersion, null /* RecordedTestMode.Record /* to re-record */)
 {
-    UseLocalDebugProxy = true;
 }
 ```
 
