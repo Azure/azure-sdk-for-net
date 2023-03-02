@@ -16,7 +16,6 @@ namespace Azure.ResourceManager.PolicyInsights.Tests
         protected ArmClient Client { get; private set; }
         protected TenantResource DefaultTenant { get; private set; }
         protected SubscriptionResource DefaultSubscription { get; private set; }
-        protected ResourceIdentifier DefaultPolicyAssignmentId { get; private set; }
         protected const string ResourceGroupNamePrefix = "PolicyRG";
         protected AzureLocation DefaultLocation = AzureLocation.EastUS;
 
@@ -37,7 +36,6 @@ namespace Azure.ResourceManager.PolicyInsights.Tests
             var tenants = await Client.GetTenants().GetAllAsync().ToEnumerableAsync();
             DefaultTenant = tenants.FirstOrDefault();
             DefaultSubscription = await Client.GetDefaultSubscriptionAsync();
-            DefaultPolicyAssignmentId = new ResourceIdentifier($"{DefaultSubscription.Id}/providers/microsoft.authorization/policyassignments/3bbee6571e0340dba6df72bf");
         }
 
         protected async Task<ResourceGroupResource> CreateResourceGroup()
@@ -45,6 +43,17 @@ namespace Azure.ResourceManager.PolicyInsights.Tests
             string rgName = Recording.GenerateAssetName(ResourceGroupNamePrefix);
             ResourceGroupData input = new ResourceGroupData(DefaultLocation);
             var lro = await DefaultSubscription.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, rgName, input);
+            return lro.Value;
+        }
+
+        protected async Task<PolicyAssignmentResource> CreatePolicyAssignment(ArmResource armResource, string policyAssignmentName, string PolicyDefinitionId = "/providers/Microsoft.Authorization/policyDefinitions/06a78e20-9358-41c9-923c-fb736d382a4d")
+        {
+            PolicyAssignmentData input = new PolicyAssignmentData
+            {
+                DisplayName = $"PolicyInsights Test ${policyAssignmentName}",
+                PolicyDefinitionId = PolicyDefinitionId
+            };
+            ArmOperation<PolicyAssignmentResource> lro = await armResource.GetPolicyAssignments().CreateOrUpdateAsync(WaitUntil.Completed, policyAssignmentName, input);
             return lro.Value;
         }
     }

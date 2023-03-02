@@ -9,61 +9,113 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.PolicyInsights.Models;
+using Azure.ResourceManager.Resources;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.PolicyInsights.Tests
 {
     internal class PolicyRemediationTests : PolicyInsightsManagementTestBase
     {
-        private PolicyRemediationCollection _policyRemediationCollection;
         private const string _remediationPrefixName = "remediation";
+        private PolicyAssignmentResource _policyAssignment;
 
-        public PolicyRemediationTests(bool isAsync) : base(isAsync, RecordedTestMode.Record)
+        public PolicyRemediationTests(bool isAsync) : base(isAsync)//, RecordedTestMode.Record)
         {
         }
 
-        [SetUp]
-        public void Setup()
+        [TearDown]
+        public async Task TearDown()
         {
-            _policyRemediationCollection = Client.GetPolicyRemediations(DefaultSubscription.Id);
+            await _policyAssignment.DeleteAsync(WaitUntil.Completed);
         }
 
         [RecordedTest]
         public async Task Remediations_SubscriptionCrud()
         {
+            // Assign a policy for test
+            string policyAssignmentName = Recording.GenerateAssetName("policy");
+            _policyAssignment = await CreatePolicyAssignment(DefaultSubscription, policyAssignmentName);
+
             // CreateOrUpdate
+            var policyRemediationCollection = Client.GetPolicyRemediations(DefaultSubscription.Id);
             var policyRemediationName = Recording.GenerateAssetName(_remediationPrefixName);
             var data = new PolicyRemediationData()
             {
-                PolicyAssignmentId = DefaultPolicyAssignmentId,
+                PolicyAssignmentId = _policyAssignment.Data.Id,
                 Filter = new RemediationFilters() { Locations = { AzureLocation.EastUS } },
                 ParallelDeployments = 1,
                 ResourceCount = 1,
                 FailureThreshold = new RemediationPropertiesFailureThreshold() { Percentage = (float?)0.42 }
             };
-            var policyRemediation = await _policyRemediationCollection.CreateOrUpdateAsync(WaitUntil.Completed, policyRemediationName, data);
+            var policyRemediation = await policyRemediationCollection.CreateOrUpdateAsync(WaitUntil.Completed, policyRemediationName, data);
             ValidatepolicyRemediation(policyRemediation.Value.Data, policyRemediationName);
 
             // Exist
-            var flag = await _policyRemediationCollection.ExistsAsync(policyRemediationName);
+            var flag = await policyRemediationCollection.ExistsAsync(policyRemediationName);
             Assert.IsTrue(flag);
 
             // Get
-            var getPolicyRemediation = await _policyRemediationCollection.GetAsync(policyRemediationName);
+            var getPolicyRemediation = await policyRemediationCollection.GetAsync(policyRemediationName);
             ValidatepolicyRemediation(getPolicyRemediation.Value.Data, policyRemediationName);
 
             // List
-            var list = await _policyRemediationCollection.GetAllAsync().ToEnumerableAsync();
+            var list = await policyRemediationCollection.GetAllAsync().ToEnumerableAsync();
 
             // Delete
             await policyRemediation.Value.DeleteAsync(WaitUntil.Completed);
-            flag = await _policyRemediationCollection.ExistsAsync(policyRemediationName);
+            flag = await policyRemediationCollection.ExistsAsync(policyRemediationName);
+            Assert.IsFalse(flag);
+        }
+
+        [RecordedTest]
+        public async Task Remediations_ResourceGroupCrud()
+        {
+            // Create a resource group
+            var resourceGroup = await CreateResourceGroup();
+
+            // Assign a policy for test
+            string policyAssignmentName = Recording.GenerateAssetName("policy");
+            _policyAssignment = await CreatePolicyAssignment(resourceGroup, policyAssignmentName);
+
+            // CreateOrUpdate
+            var policyRemediationCollection = Client.GetPolicyRemediations(resourceGroup.Id);
+            var policyRemediationName = Recording.GenerateAssetName(_remediationPrefixName);
+            var data = new PolicyRemediationData()
+            {
+                PolicyAssignmentId = _policyAssignment.Data.Id,
+                Filter = new RemediationFilters() { Locations = { AzureLocation.EastUS } },
+                ParallelDeployments = 1,
+                ResourceCount = 1,
+                FailureThreshold = new RemediationPropertiesFailureThreshold() { Percentage = (float?)0.42 }
+            };
+            var policyRemediation = await policyRemediationCollection.CreateOrUpdateAsync(WaitUntil.Completed, policyRemediationName, data);
+            ValidatepolicyRemediation(policyRemediation.Value.Data, policyRemediationName);
+
+            // Exist
+            var flag = await policyRemediationCollection.ExistsAsync(policyRemediationName);
+            Assert.IsTrue(flag);
+
+            // Get
+            var getPolicyRemediation = await policyRemediationCollection.GetAsync(policyRemediationName);
+            ValidatepolicyRemediation(getPolicyRemediation.Value.Data, policyRemediationName);
+
+            // List
+            var list = await policyRemediationCollection.GetAllAsync().ToEnumerableAsync();
+
+            // Delete
+            await policyRemediation.Value.DeleteAsync(WaitUntil.Completed);
+            flag = await policyRemediationCollection.ExistsAsync(policyRemediationName);
             Assert.IsFalse(flag);
         }
 
         private void ValidatepolicyRemediation(PolicyRemediationData policyRemediation, string policyRemediationName)
         {
             Assert.IsNotNull(policyRemediation);
+            Assert.IsNotNull(policyRemediation.Id);
+            Assert.AreEqual(policyRemediationName, policyRemediation.Name);
+            Assert.AreEqual(1, policyRemediation.ParallelDeployments);
+            Assert.AreEqual(1, policyRemediation.ResourceCount);
+            Assert.AreEqual((float)0.42, policyRemediation.FailureThreshold.Percentage);
         }
     }
 }
