@@ -25,21 +25,26 @@ namespace Azure.Monitor.OpenTelemetry.Tests
             builder.Services.AddAzureMonitor(o =>
             {
                 o.Transport = transport;
-                o.ConnectionString = "InstrumentationKey=00000000-0000-0000-0000-00000000CODE";
+                o.ConnectionString = "InstrumentationKey=00000000-0000-0000-0000-000000000000";
                 o.EnableLogs = false;
                 o.EnableMetrics = false;
             });
 
             var app = builder.Build();
             app.MapGet("/", () => "Hello");
+
             _ = app.RunAsync("http://localhost:9999");
 
+            // Send request
             using var httpClient = new HttpClient();
             var res = await httpClient.GetStringAsync("http://localhost:9999").ConfigureAwait(false);
             Assert.NotNull(res);
 
+            // Wait for the backend/ingestion to receive requests
             WaitForRequest(transport);
 
+            // Assert
+            // TODO: Validate request content
             Assert.True(transport.Requests.Count > 0);
 
             await app.DisposeAsync();
