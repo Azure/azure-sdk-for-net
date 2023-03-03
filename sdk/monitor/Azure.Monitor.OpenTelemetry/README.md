@@ -65,7 +65,7 @@ Note that in the examples above, `AddAzureMonitor` is added to the `IServiceColl
 
 ### Authenticate the client
 
-Azure Active Directory (AAD) authentication is an optional feature that can be used with Azure Monitor Distro. To enable AAD authentication, set the `Credential` property in `AzureMonitorOptions`. This is made easy with the [Azure Identity library][identity], which provides support for authenticating Azure SDK clients with their corresponding Azure services.
+Azure Active Directory (AAD) authentication is an optional feature that can be used with Azure Monitor Distro. To enable AAD authentication, set the `Credential` property in `AzureMonitorOptions`. This is made easy with the [Azure Identity library][https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/identity/Azure.Identity/README.md], which provides support for authenticating Azure SDK clients with their corresponding Azure services.
 
 ```C#
 // Call AddAzureMonitor and set Credential to authenticate through Active Directory.
@@ -82,7 +82,7 @@ Note that the `Credential` property is optional. If it is not set, Azure Monitor
 
 ## Key concepts
 
-The Azure Monitor Distro uses instrumentation libraries from the .NET OpenTelemetry SDK to provide a convenient and easy way to export telemetry data to Azure Monitor.
+The Azure Monitor Distro is a distribution package that includes the .NET OpenTelemetry SDK and instrumentation libraries for [ASP.NET Core](https://www.nuget.org/packages/OpenTelemetry.Instrumentation.AspNetCore/), [HttpClient](https://www.nuget.org/packages/OpenTelemetry.Instrumentation.Http/), and [SQLClient](https://www.nuget.org/packages/OpenTelemetry.Instrumentation.SqlClient). Additionally, the distro includes the Azure Monitor exporter, which enables users to easily send telemetry data to Azure Monitor.
 
 ## Examples
 
