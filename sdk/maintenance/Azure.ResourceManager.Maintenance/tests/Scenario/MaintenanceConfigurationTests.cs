@@ -43,8 +43,10 @@ namespace Azure.ResourceManager.Maintenance.Tests
 
             await maintenanceConfigurationResource.DeleteAsync(WaitUntil.Completed);
 
-            maintenanceConfigurationResource = await _resourceGroup.GetMaintenanceConfigurationAsync(maintenanceConfigurationResource.Data.Name);
-            Assert.IsEmpty(maintenanceConfigurationResource.Data.Id);
+            MaintenanceConfigurationCollection collection = _resourceGroup.GetMaintenanceConfigurations();
+
+            var exist = await collection.ExistsAsync(maintenanceConfigurationResource.Data.Name);
+            Assert.IsFalse(exist.Value);
         }
 
         [RecordedTest]
