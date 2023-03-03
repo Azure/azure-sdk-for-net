@@ -15,7 +15,8 @@ variables:
   - template: /eng/pipelines/templates/variables/globals.yml
 
 stages:
-  - stage: Run_PowerShell_Tests
+  - stage:
+    displayName: Run PowerShell Tests
     jobs:
       - job: Test
         strategy:
