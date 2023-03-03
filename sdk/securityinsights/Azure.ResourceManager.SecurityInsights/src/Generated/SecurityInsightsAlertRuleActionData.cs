@@ -11,7 +11,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.SecurityInsights
 {
-    /// <summary> A class representing the SecurityInsightsAlertRuleAction data model. </summary>
+    /// <summary>
+    /// A class representing the SecurityInsightsAlertRuleAction data model.
+    /// Action for alert rule.
+    /// </summary>
     public partial class SecurityInsightsAlertRuleActionData : ResourceData
     {
         /// <summary> Initializes a new instance of SecurityInsightsAlertRuleActionData. </summary>

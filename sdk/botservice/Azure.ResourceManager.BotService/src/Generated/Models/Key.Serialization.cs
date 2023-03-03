@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.BotService.Models
 
         public static Key ToKey(this string value)
         {
-            if (string.Equals(value, "key1", StringComparison.InvariantCultureIgnoreCase)) return Key.Key1;
-            if (string.Equals(value, "key2", StringComparison.InvariantCultureIgnoreCase)) return Key.Key2;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "key1")) return Key.Key1;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "key2")) return Key.Key2;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown Key value.");
         }
     }

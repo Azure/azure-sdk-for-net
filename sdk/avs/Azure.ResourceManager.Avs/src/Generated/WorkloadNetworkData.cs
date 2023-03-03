@@ -10,7 +10,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Avs
 {
-    /// <summary> A class representing the WorkloadNetwork data model. </summary>
+    /// <summary>
+    /// A class representing the WorkloadNetwork data model.
+    /// Workload Network
+    /// </summary>
     public partial class WorkloadNetworkData : ResourceData
     {
         /// <summary> Initializes a new instance of WorkloadNetworkData. </summary>

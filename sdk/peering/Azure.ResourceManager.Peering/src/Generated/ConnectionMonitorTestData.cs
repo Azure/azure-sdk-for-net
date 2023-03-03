@@ -12,7 +12,10 @@ using Azure.ResourceManager.Peering.Models;
 
 namespace Azure.ResourceManager.Peering
 {
-    /// <summary> A class representing the ConnectionMonitorTest data model. </summary>
+    /// <summary>
+    /// A class representing the ConnectionMonitorTest data model.
+    /// The Connection Monitor Test class.
+    /// </summary>
     public partial class ConnectionMonitorTestData : ResourceData
     {
         /// <summary> Initializes a new instance of ConnectionMonitorTestData. </summary>

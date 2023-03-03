@@ -13,7 +13,10 @@ using Azure.ResourceManager.Purview.Models;
 
 namespace Azure.ResourceManager.Purview
 {
-    /// <summary> A class representing the PurviewAccount data model. </summary>
+    /// <summary>
+    /// A class representing the PurviewAccount data model.
+    /// Account resource
+    /// </summary>
     public partial class PurviewAccountData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of PurviewAccountData. </summary>

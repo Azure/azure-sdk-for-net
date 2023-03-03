@@ -21,9 +21,9 @@ namespace Azure.Storage.Blobs.Models
 
         public static BlockListType ToBlockListType(this string value)
         {
-            if (string.Equals(value, "committed", StringComparison.InvariantCultureIgnoreCase)) return BlockListType.Committed;
-            if (string.Equals(value, "uncommitted", StringComparison.InvariantCultureIgnoreCase)) return BlockListType.Uncommitted;
-            if (string.Equals(value, "all", StringComparison.InvariantCultureIgnoreCase)) return BlockListType.All;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "committed")) return BlockListType.Committed;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "uncommitted")) return BlockListType.Uncommitted;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "all")) return BlockListType.All;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown BlockListType value.");
         }
     }

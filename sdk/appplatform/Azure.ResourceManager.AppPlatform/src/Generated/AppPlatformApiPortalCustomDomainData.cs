@@ -11,7 +11,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppPlatform
 {
-    /// <summary> A class representing the AppPlatformApiPortalCustomDomain data model. </summary>
+    /// <summary>
+    /// A class representing the AppPlatformApiPortalCustomDomain data model.
+    /// Custom domain of the API portal
+    /// </summary>
     public partial class AppPlatformApiPortalCustomDomainData : ResourceData
     {
         /// <summary> Initializes a new instance of AppPlatformApiPortalCustomDomainData. </summary>

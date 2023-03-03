@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DevCenter
 {
-    /// <summary> A class representing the Catalog data model. </summary>
+    /// <summary>
+    /// A class representing the Catalog data model.
+    /// Represents a catalog.
+    /// </summary>
     public partial class CatalogData : ResourceData
     {
         /// <summary> Initializes a new instance of CatalogData. </summary>

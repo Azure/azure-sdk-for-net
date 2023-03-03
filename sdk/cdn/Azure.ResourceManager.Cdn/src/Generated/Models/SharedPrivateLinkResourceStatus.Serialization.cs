@@ -23,11 +23,11 @@ namespace Azure.ResourceManager.Cdn.Models
 
         public static SharedPrivateLinkResourceStatus ToSharedPrivateLinkResourceStatus(this string value)
         {
-            if (string.Equals(value, "Pending", StringComparison.InvariantCultureIgnoreCase)) return SharedPrivateLinkResourceStatus.Pending;
-            if (string.Equals(value, "Approved", StringComparison.InvariantCultureIgnoreCase)) return SharedPrivateLinkResourceStatus.Approved;
-            if (string.Equals(value, "Rejected", StringComparison.InvariantCultureIgnoreCase)) return SharedPrivateLinkResourceStatus.Rejected;
-            if (string.Equals(value, "Disconnected", StringComparison.InvariantCultureIgnoreCase)) return SharedPrivateLinkResourceStatus.Disconnected;
-            if (string.Equals(value, "Timeout", StringComparison.InvariantCultureIgnoreCase)) return SharedPrivateLinkResourceStatus.Timeout;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Pending")) return SharedPrivateLinkResourceStatus.Pending;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Approved")) return SharedPrivateLinkResourceStatus.Approved;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Rejected")) return SharedPrivateLinkResourceStatus.Rejected;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Disconnected")) return SharedPrivateLinkResourceStatus.Disconnected;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Timeout")) return SharedPrivateLinkResourceStatus.Timeout;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown SharedPrivateLinkResourceStatus value.");
         }
     }

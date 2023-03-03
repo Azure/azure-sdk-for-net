@@ -15,7 +15,10 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> A class representing the DdosProtectionPlan data model. </summary>
+    /// <summary>
+    /// A class representing the DdosProtectionPlan data model.
+    /// A DDoS protection plan in a resource group.
+    /// </summary>
     public partial class DdosProtectionPlanData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of DdosProtectionPlanData. </summary>

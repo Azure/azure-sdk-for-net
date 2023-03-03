@@ -13,7 +13,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Avs
 {
-    /// <summary> A class representing the AvsPrivateCloud data model. </summary>
+    /// <summary>
+    /// A class representing the AvsPrivateCloud data model.
+    /// A private cloud resource
+    /// </summary>
     public partial class AvsPrivateCloudData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of AvsPrivateCloudData. </summary>

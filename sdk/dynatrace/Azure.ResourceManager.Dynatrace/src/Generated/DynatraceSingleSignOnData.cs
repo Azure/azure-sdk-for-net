@@ -13,7 +13,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Dynatrace
 {
-    /// <summary> A class representing the DynatraceSingleSignOn data model. </summary>
+    /// <summary>
+    /// A class representing the DynatraceSingleSignOn data model.
+    /// Single sign-on configurations for a given monitor resource.
+    /// </summary>
     public partial class DynatraceSingleSignOnData : ResourceData
     {
         /// <summary> Initializes a new instance of DynatraceSingleSignOnData. </summary>

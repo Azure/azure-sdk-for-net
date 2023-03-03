@@ -118,7 +118,7 @@ namespace Azure.AI.OpenAI
                     lock (_streamingChoicesLock)
                     {
                         doneWaiting = _streamingTaskComplete || i < _streamingChoices.Count;
-                        isFinalIndex = _streamingTaskComplete && i == _streamingChoices.Count - 1;
+                        isFinalIndex = _streamingTaskComplete && i >= _streamingChoices.Count - 1;
                     }
 
                     if (!doneWaiting)
