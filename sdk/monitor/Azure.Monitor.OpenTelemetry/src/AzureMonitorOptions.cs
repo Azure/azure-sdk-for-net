@@ -60,7 +60,7 @@ namespace Azure.Monitor.OpenTelemetry
         /// Override the default directory for offline storage.
         /// </summary>
         public string StorageDirectory { get; set; }
-        
+
         // Used for testing purpose
         internal HttpPipelineTransport Transport;
 
