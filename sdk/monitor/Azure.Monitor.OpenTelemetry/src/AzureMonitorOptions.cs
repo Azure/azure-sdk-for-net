@@ -14,9 +14,9 @@ using System.Net;
 namespace Azure.Monitor.OpenTelemetry
 {
     /// <summary>
-    /// Options that allow users to configure the Azure Monitor OpenTelemetry.
+    /// Options that allow users to configure the Azure Monitor.
     /// </summary>
-    public class AzureMonitorOpenTelemetryOptions
+    public class AzureMonitorOptions
     {
         /// <summary>
         /// The Connection String provides users with a single configuration setting to identify the Azure Monitor resource and endpoint.
@@ -63,7 +63,7 @@ namespace Azure.Monitor.OpenTelemetry
 
         internal HttpPipelineTransport Transport;
 
-        internal AzureMonitorOpenTelemetryOptions Clone(AzureMonitorOpenTelemetryOptions options)
+        internal AzureMonitorOptions Clone(AzureMonitorOptions options)
         {
             if (options != null)
             {

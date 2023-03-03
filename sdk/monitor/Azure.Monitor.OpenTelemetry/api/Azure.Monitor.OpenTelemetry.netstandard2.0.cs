@@ -1,14 +1,14 @@
 namespace Azure.Monitor.OpenTelemetry
 {
-    public static partial class AzureMonitorOpenTelemetryExtensions
+    public static partial class AzureMonitorExtensions
     {
-        public static Microsoft.Extensions.DependencyInjection.IServiceCollection AddAzureMonitorOpenTelemetry(this Microsoft.Extensions.DependencyInjection.IServiceCollection services) { throw null; }
-        public static Microsoft.Extensions.DependencyInjection.IServiceCollection AddAzureMonitorOpenTelemetry(this Microsoft.Extensions.DependencyInjection.IServiceCollection services, Azure.Monitor.OpenTelemetry.AzureMonitorOpenTelemetryOptions options) { throw null; }
-        public static Microsoft.Extensions.DependencyInjection.IServiceCollection AddAzureMonitorOpenTelemetry(this Microsoft.Extensions.DependencyInjection.IServiceCollection services, System.Action<Azure.Monitor.OpenTelemetry.AzureMonitorOpenTelemetryOptions> configureAzureMonitorOpenTelemetry) { throw null; }
+        public static Microsoft.Extensions.DependencyInjection.IServiceCollection AddAzureMonitor(this Microsoft.Extensions.DependencyInjection.IServiceCollection services) { throw null; }
+        public static Microsoft.Extensions.DependencyInjection.IServiceCollection AddAzureMonitor(this Microsoft.Extensions.DependencyInjection.IServiceCollection services, Azure.Monitor.OpenTelemetry.AzureMonitorOptions options) { throw null; }
+        public static Microsoft.Extensions.DependencyInjection.IServiceCollection AddAzureMonitor(this Microsoft.Extensions.DependencyInjection.IServiceCollection services, System.Action<Azure.Monitor.OpenTelemetry.AzureMonitorOptions> configureAzureMonitor) { throw null; }
     }
-    public partial class AzureMonitorOpenTelemetryOptions
+    public partial class AzureMonitorOptions
     {
-        public AzureMonitorOpenTelemetryOptions() { }
+        public AzureMonitorOptions() { }
         public string ConnectionString { get { throw null; } set { } }
         public Azure.Core.TokenCredential Credential { get { throw null; } set { } }
         public bool DisableOfflineStorage { get { throw null; } set { } }
