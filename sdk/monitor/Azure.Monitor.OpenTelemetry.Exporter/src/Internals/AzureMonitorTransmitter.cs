@@ -64,7 +64,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                 return ConnectionStringParser.GetValues(options.ConnectionString);
             }
 
-            throw new InvalidOperationException("A connection string was not found. This MUST be provided via either AzureMonitorExporterOptions or set in the environment variable 'APPLICATIONINSIGHTS_CONNECTION_STRING'");
+            throw new InvalidOperationException("A connection string was not found. Please set your connection string.");
         }
 
         private static ApplicationInsightsRestClient InitializeRestClient(AzureMonitorExporterOptions options, ConnectionVars connectionVars, TokenCredential? credential)
