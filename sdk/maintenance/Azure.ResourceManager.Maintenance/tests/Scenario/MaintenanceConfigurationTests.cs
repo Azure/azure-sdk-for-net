@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
@@ -15,6 +16,7 @@ namespace Azure.ResourceManager.Maintenance.Tests
     {
         private SubscriptionResource _subscription;
         private ResourceGroupResource _resourceGroup;
+        private MaintenanceConfigurationCollection _configCollection;
 
         public MaintenanceConfigurationTests(bool isAsync) : base(isAsync) //, RecordedTestMode.Record)
         { }
@@ -28,6 +30,8 @@ namespace Azure.ResourceManager.Maintenance.Tests
                _subscription,
                "Maintenance-RG-",
                Location);
+
+            _configCollection = _resourceGroup.GetMaintenanceConfigurations();
         }
 
         [TearDown]
@@ -56,12 +60,30 @@ namespace Azure.ResourceManager.Maintenance.Tests
             Assert.IsNotEmpty(maintenanceConfigurationResource.Data.Id);
         }
 
+        [RecordedTest]
+        public async Task ListTest()
+        {
+            MaintenanceConfigurationResource config1 = await Create();
+            MaintenanceConfigurationResource config2 = await Create();
+
+            var list = await _configCollection.GetAllAsync().ToEnumerableAsync();
+            Assert.IsTrue(list.Count >= 2);
+            Assert.IsNotEmpty(list);
+            Assert.IsTrue(list.Exists(item => item.Data.Name == config1.Data.Name));
+            Assert.IsTrue(list.Exists(item => item.Data.Name == config2.Data.Name));
+        }
+
+        [RecordedTest]
+        public async Task GetTest()
+        {
+            MaintenanceConfigurationResource config = await Create();
+
+            var retrieveConfig = await _configCollection.GetAsync(config.Data.Name);
+            Assert.IsNotEmpty(retrieveConfig.Value.Data.Id);
+        }
+
         private async Task<MaintenanceConfigurationResource> Create()
         {
-            // get the collection of this MaintenanceConfigurationResource
-            MaintenanceConfigurationCollection collection = _resourceGroup.GetMaintenanceConfigurations();
-
-            // invoke the operation
             string resourceName = Recording.GenerateAssetName("maintenance-config-");
             MaintenanceConfigurationData data = new MaintenanceConfigurationData(Location)
             {
@@ -74,7 +96,7 @@ namespace Azure.ResourceManager.Maintenance.Tests
                 TimeZone = "Pacific Standard Time",
                 RecurEvery = "Day",
             };
-            ArmOperation<MaintenanceConfigurationResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, resourceName, data);
+            ArmOperation<MaintenanceConfigurationResource> lro = await _configCollection.CreateOrUpdateAsync(WaitUntil.Completed, resourceName, data);
             return lro.Value;
         }
     }
