@@ -136,9 +136,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                         return null;
                     }
 
-                    // TODO: uncomment following line for enablement.
-                    // return new AzureMonitorStatsbeat(connectionVars);
-                    return null;
+                    return new AzureMonitorStatsbeat(connectionVars);
                 }
                 catch (Exception ex)
                 {
