@@ -59,6 +59,7 @@ namespace Azure.Monitor.OpenTelemetry
 
         // Used for testing purpose
         internal HttpPipelineTransport Transport;
+
         internal void Clone(AzureMonitorOptions options)
         {
             if (options != null)
