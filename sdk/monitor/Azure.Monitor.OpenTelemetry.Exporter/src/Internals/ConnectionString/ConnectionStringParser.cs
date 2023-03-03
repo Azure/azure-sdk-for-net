@@ -44,7 +44,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.ConnectionString
             catch (Exception ex)
             {
                 AzureMonitorExporterEventSource.Log.WriteError("ConnectionStringError", ex);
-                throw new InvalidOperationException("Connection String Error: A valid connection string is required to send telemetry data to Azure Monitor. Please set your connection string.", ex);
+                throw new InvalidOperationException("Connection String Error: " + ex.Message, ex);
             }
         }
 
