@@ -305,7 +305,29 @@ namespace Azure.Containers.ContainerRegistry.Specialized
         }
 
         /// <summary>
-        /// Upload an artifact blob.
+        /// Upload a container registry blob.
+        /// </summary>
+        /// <param name="content">The blob content.</param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
+        public virtual Response<UploadBlobResult> UploadBlob(BinaryData content, CancellationToken cancellationToken = default)
+        {
+            return UploadBlob(content.ToStream(), cancellationToken);
+        }
+
+        /// <summary>
+        /// Upload a container registry blob.
+        /// </summary>
+        /// <param name="content">The blob content.</param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
+        public virtual async Task<Response<UploadBlobResult>> UploadBlobAsync(BinaryData content, CancellationToken cancellationToken = default)
+        {
+            return await UploadBlobAsync(content.ToStream(), cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Upload a container registry blob.
         /// </summary>
         /// <param name="stream">The stream containing the blob data.</param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -328,7 +350,7 @@ namespace Azure.Containers.ContainerRegistry.Specialized
 
                 ValidateDigest(result.Digest, completeUploadResult.Headers.DockerContentDigest);
 
-                return Response.FromValue(new UploadBlobResult(completeUploadResult.Headers.DockerContentDigest, result.SizeInBytes), completeUploadResult.GetRawResponse());
+                return Response.FromValue(new UploadBlobResult(completeUploadResult.Headers.DockerContentDigest), completeUploadResult.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -338,7 +360,7 @@ namespace Azure.Containers.ContainerRegistry.Specialized
         }
 
         /// <summary>
-        /// Upload an artifact blob.
+        /// Upload a container registry blob.
         /// </summary>
         /// <param name="stream">The stream containing the blob data.</param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -361,7 +383,7 @@ namespace Azure.Containers.ContainerRegistry.Specialized
 
                 ValidateDigest(result.Digest, completeUploadResult.Headers.DockerContentDigest);
 
-                return Response.FromValue(new UploadBlobResult(completeUploadResult.Headers.DockerContentDigest, result.SizeInBytes), completeUploadResult.GetRawResponse());
+                return Response.FromValue(new UploadBlobResult(completeUploadResult.Headers.DockerContentDigest), completeUploadResult.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -602,7 +624,7 @@ namespace Azure.Containers.ContainerRegistry.Specialized
         }
 
         /// <summary>
-        /// Download an artifact blob.
+        /// Download a container registry blob.
         /// This API is a prefered way to fetch blobs that can fit into memory.
         /// The content is provided as <see cref="BinaryData"/> that provides a lightweight abstraction for a payload of bytes.
         /// It provides convenient helper methods to get out commonly used primitives, such as streams, strings, or bytes.
@@ -629,7 +651,7 @@ namespace Azure.Containers.ContainerRegistry.Specialized
         }
 
         /// <summary>
-        /// Download an artifact blob.
+        /// Download a container registry blob.
         /// This API is a prefered way to fetch blobs that can fit into memory.
         /// The content is provided as <see cref="BinaryData"/> that provides a lightweight abstraction for a payload of bytes.
         /// It provides convenient helper methods to get out commonly used primitives, such as streams, strings, or bytes.

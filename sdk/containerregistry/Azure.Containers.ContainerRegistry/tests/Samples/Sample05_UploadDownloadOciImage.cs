@@ -40,26 +40,26 @@ namespace Azure.Containers.ContainerRegistry.Tests.Samples
             OciImageManifest manifest = new();
 
             // Upload a config file
-            using Stream config = BinaryData.FromString("Sample config").ToStream();
+            BinaryData config = BinaryData.FromString("Sample config");
             UploadBlobResult uploadConfigResult = await client.UploadBlobAsync(config);
 
             // Update manifest with config info
             manifest.Config = new OciBlobDescriptor()
             {
                 Digest = uploadConfigResult.Digest,
-                SizeInBytes = uploadConfigResult.SizeInBytes,
+                SizeInBytes = config.ToMemory().Length,
                 MediaType = "application/vnd.oci.image.config.v1+json"
             };
 
             // Upload a layer file
-            using Stream layer = BinaryData.FromString("Sample layer").ToStream();
+            BinaryData layer = BinaryData.FromString("Sample layer");
             UploadBlobResult uploadLayerResult = await client.UploadBlobAsync(layer);
 
             // Update manifest with layer info
             manifest.Layers.Add(new OciBlobDescriptor()
             {
                 Digest = uploadLayerResult.Digest,
-                SizeInBytes = uploadLayerResult.SizeInBytes,
+                SizeInBytes = layer.ToMemory().Length,
                 MediaType = "application/vnd.oci.image.layer.v1.tar"
             });
 

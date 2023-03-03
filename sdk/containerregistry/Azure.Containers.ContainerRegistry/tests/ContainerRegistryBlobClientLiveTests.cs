@@ -314,6 +314,31 @@ namespace Azure.Containers.ContainerRegistry.Tests
             var repositoryId = Recording.Random.NewGuid().ToString();
             var client = CreateBlobClient(repositoryId);
 
+            int blobSize = 1024;
+
+            BinaryData data = BinaryData.FromBytes(GetConstantBuffer(blobSize, 1));
+
+            string digest = BlobHelper.ComputeDigest(data.ToStream());
+            UploadBlobResult uploadResult = await client.UploadBlobAsync(data);
+
+            Assert.AreEqual(digest, uploadResult.Digest);
+
+            // Assert
+            var downloadResult = await client.DownloadBlobAsync(digest);
+            Assert.AreEqual(digest, downloadResult.Value.Digest);
+            Assert.AreEqual(data.ToMemory().Length, downloadResult.Value.Content.ToMemory().Length);
+
+            // Clean up
+            await client.DeleteBlobAsync(digest);
+        }
+
+        [RecordedTest]
+        public async Task CanUploadBlobStream()
+        {
+            // Arrange
+            var repositoryId = Recording.Random.NewGuid().ToString();
+            var client = CreateBlobClient(repositoryId);
+
             string digest = default;
             long streamLength;
 
@@ -325,10 +350,9 @@ namespace Azure.Containers.ContainerRegistry.Tests
             {
                 digest = BlobHelper.ComputeDigest(stream);
                 UploadBlobResult uploadResult = await client.UploadBlobAsync(stream);
-                streamLength = uploadResult.SizeInBytes;
+                streamLength = stream.Length;
 
                 Assert.AreEqual(digest, uploadResult.Digest);
-                Assert.AreEqual(stream.Length, uploadResult.SizeInBytes);
             }
 
             // Assert
@@ -362,7 +386,6 @@ namespace Azure.Containers.ContainerRegistry.Tests
 
             // Assert
             Assert.AreEqual(digest, uploadResult.Digest);
-            Assert.AreEqual(blobSize, uploadResult.SizeInBytes);
 
             // Clean up
             await client.DeleteBlobAsync(digest);
@@ -392,7 +415,6 @@ namespace Azure.Containers.ContainerRegistry.Tests
 
             // Assert
             Assert.AreEqual(digest, uploadResult.Digest);
-            Assert.AreEqual(blobSize, uploadResult.SizeInBytes);
 
             // Clean up
             await client.DeleteBlobAsync(digest);
@@ -420,7 +442,6 @@ namespace Azure.Containers.ContainerRegistry.Tests
 
             // Assert
             Assert.AreEqual(digest, uploadResult.Digest);
-            Assert.AreEqual(blobSize, uploadResult.SizeInBytes);
 
             // Clean up
             await client.DeleteBlobAsync(digest);
@@ -447,7 +468,6 @@ namespace Azure.Containers.ContainerRegistry.Tests
 
             // Assert
             Assert.AreEqual(digest, uploadResult.Digest);
-            Assert.AreEqual(blobSize, uploadResult.SizeInBytes);
 
             // Clean up
             await client.DeleteBlobAsync(digest);
@@ -711,7 +731,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
                     // Update manifest
                     OciBlobDescriptor descriptor = new OciBlobDescriptor();
                     descriptor.Digest = uploadResult.Value.Digest;
-                    descriptor.SizeInBytes = uploadResult.Value.SizeInBytes;
+                    descriptor.SizeInBytes = fs.Length;
                     descriptor.MediaType = "application/vnd.acme.rocket.config";
 
                     manifest.Config = descriptor;
@@ -731,7 +751,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
                         // Update manifest
                         OciBlobDescriptor descriptor = new OciBlobDescriptor();
                         descriptor.Digest = uploadResult.Value.Digest;
-                        descriptor.SizeInBytes = uploadResult.Value.SizeInBytes;
+                        descriptor.SizeInBytes = fs.Length;
                         descriptor.MediaType = "application/vnd.oci.image.layer.v1.tar";
 
                         manifest.Layers.Add(descriptor);
