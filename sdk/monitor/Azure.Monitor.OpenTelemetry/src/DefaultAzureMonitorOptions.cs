@@ -31,10 +31,18 @@ namespace Azure.Monitor.OpenTelemetry
 
             string connectionString = Environment.GetEnvironmentVariable(ConnectionStringEnvironmentVariable);
 
-            if (!string.IsNullOrWhiteSpace(connectionString))
+            try
             {
-                options.ConnectionString = connectionString;
+                if (!string.IsNullOrWhiteSpace(connectionString))
+                {
+                    options.ConnectionString = connectionString;
+                }
             }
+            catch
+            {
+                // TODO: Log Error.
+            }
+
         }
     }
 }
