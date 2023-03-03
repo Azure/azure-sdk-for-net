@@ -4,10 +4,8 @@
 #nullable disable
 
 using Azure.Core;
+using Azure.Core.Pipeline;
 using Azure.Monitor.OpenTelemetry.Exporter;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Options;
-using System;
 
 namespace Azure.Monitor.OpenTelemetry
 {
@@ -59,6 +57,8 @@ namespace Azure.Monitor.OpenTelemetry
         /// </summary>
         public string StorageDirectory { get; set; }
 
+        // Used for testing purpose
+        internal HttpPipelineTransport Transport;
         internal void Clone(AzureMonitorOptions options)
         {
             if (options != null)
@@ -69,6 +69,7 @@ namespace Azure.Monitor.OpenTelemetry
                 EnableMetrics = options.EnableMetrics;
                 EnableTraces = options.EnableTraces;
                 StorageDirectory = options.StorageDirectory;
+                Transport = options.Transport;
             }
         }
 
@@ -78,6 +79,10 @@ namespace Azure.Monitor.OpenTelemetry
             exporterOptions.Credential = Credential;
             exporterOptions.DisableOfflineStorage = DisableOfflineStorage;
             exporterOptions.StorageDirectory = StorageDirectory;
+            if (Transport != null)
+            {
+                exporterOptions.Transport = Transport;
+            }
         }
     }
 }
