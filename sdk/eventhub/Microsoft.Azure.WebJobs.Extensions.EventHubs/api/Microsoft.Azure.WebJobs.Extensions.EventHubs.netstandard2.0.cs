@@ -17,7 +17,7 @@ namespace Microsoft.Azure.WebJobs
         public string ConsumerGroup { get { throw null; } set { } }
         public string EventHubName { get { throw null; } }
     }
-    public static partial class IAsyncCollectorExtensions
+    public static partial class EventHubWebJobsExtensions
     {
         public static System.Threading.Tasks.Task AddAsync(this Microsoft.Azure.WebJobs.IAsyncCollector<Azure.Messaging.EventHubs.EventData> instance, Azure.Messaging.EventHubs.EventData eventData, string partitionKey, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }

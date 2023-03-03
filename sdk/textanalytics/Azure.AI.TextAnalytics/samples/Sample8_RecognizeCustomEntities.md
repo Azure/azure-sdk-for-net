@@ -4,7 +4,7 @@ This sample demonstrates how to recognize custom entities in one or more documen
 
 ## Create a `TextAnalyticsClient`
 
-To create a new `TextAnalyticsClient`, you will need the service endpoint and credentials of your Language resource. To authenticate, you can use the [`DefaultAzureCredential`][DefaultAzureCredential], which combines credentials commonly used to authenticate when deployed on Azure, with credentials used to authenticate in a development environment. In this sample, however, you will use an `AzureKeyCredential`, which you can create simply with an API key.
+To create a new `TextAnalyticsClient`, you will need the service endpoint and credentials of your Language resource. To authenticate, you can use the [`DefaultAzureCredential`][DefaultAzureCredential], which combines credentials commonly used to authenticate when deployed on Azure, with credentials used to authenticate in a development environment. In this sample, however, you will use an `AzureKeyCredential`, which you can create with an API key.
 
 ```C# Snippet:CreateTextAnalyticsClient
 Uri endpoint = new("<endpoint>");
@@ -112,6 +112,8 @@ await foreach (AnalyzeActionsResult documentsInPage in operation.Value)
     }
 }
 ```
+
+See the [README] of the Text Analytics client library for more information, including useful links and instructions.
 
 <!-- LINKS -->
 [train_model]: https://aka.ms/azsdk/textanalytics/customentityrecognition

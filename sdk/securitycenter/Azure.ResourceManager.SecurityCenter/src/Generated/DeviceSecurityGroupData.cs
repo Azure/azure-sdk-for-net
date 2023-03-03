@@ -12,7 +12,10 @@ using Azure.ResourceManager.SecurityCenter.Models;
 
 namespace Azure.ResourceManager.SecurityCenter
 {
-    /// <summary> A class representing the DeviceSecurityGroup data model. </summary>
+    /// <summary>
+    /// A class representing the DeviceSecurityGroup data model.
+    /// The device security group resource
+    /// </summary>
     public partial class DeviceSecurityGroupData : ResourceData
     {
         /// <summary> Initializes a new instance of DeviceSecurityGroupData. </summary>

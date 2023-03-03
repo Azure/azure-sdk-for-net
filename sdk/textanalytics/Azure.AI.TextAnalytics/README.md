@@ -33,7 +33,7 @@ This table shows the relationship between SDK versions and supported API version
 
 |SDK version  |Supported API version of service
 |-------------|-----------------------------------------------------|
-|5.3.0-beta.1 | 3.0, 3.1, 2022-05-01, 2022-10-01-preview (default)
+|5.3.0-beta.2 | 3.0, 3.1, 2022-05-01, 2022-10-01-preview (default)
 |5.2.0        | 3.0, 3.1, 2022-05-01 (default)
 |5.1.X        | 3.0, 3.1 (default)
 |5.0.0        | 3.0
@@ -758,8 +758,8 @@ Samples are provided for each main functional area, and for each area, samples a
 * [Custom Single Label Classification][single_category_classify_sample]
 * [Custom Multi Label Classification][multi_category_classify_sample]
 * [Dynamic Classification][dynamic_classify_sample]
-* [Extractive Summarization][extractive_summarize_sample]
-* [Abstractive Summarization][abstractive_summarize_sample]
+* [Extractive Summarization][extract_summary_sample]
+* [Abstractive Summarization][abstract_summary_sample]
 
 ### Advanced samples
 
@@ -821,8 +821,8 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [single_category_classify_sample]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/textanalytics/Azure.AI.TextAnalytics/samples/Sample9_SingleLabelClassify.md
 [multi_category_classify_sample]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/textanalytics/Azure.AI.TextAnalytics/samples/Sample10_MultiLabelClassify.md
 [dynamic_classify_sample]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/textanalytics/Azure.AI.TextAnalytics/samples/Sample11_DynamicClassify.md
-[extractive_summarize_sample]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/textanalytics/Azure.AI.TextAnalytics/samples/Sample12_ExtractiveSummarize.md
-[abstractive_summarize_sample]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/textanalytics/Azure.AI.TextAnalytics/samples/Sample13_AbstractiveSummarize.md
+[extract_summary_sample]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/textanalytics/Azure.AI.TextAnalytics/samples/Sample12_ExtractSummary.md
+[abstract_summary_sample]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/textanalytics/Azure.AI.TextAnalytics/samples/Sample13_AbstractSummary.md
 
 [azure_cli]: https://docs.microsoft.com/cli/azure
 [azure_sub]: https://azure.microsoft.com/free/dotnet/

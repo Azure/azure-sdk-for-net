@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.Sql.Models
 
         public static TransparentDataEncryptionState ToTransparentDataEncryptionState(this string value)
         {
-            if (string.Equals(value, "Enabled", StringComparison.InvariantCultureIgnoreCase)) return TransparentDataEncryptionState.Enabled;
-            if (string.Equals(value, "Disabled", StringComparison.InvariantCultureIgnoreCase)) return TransparentDataEncryptionState.Disabled;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Enabled")) return TransparentDataEncryptionState.Enabled;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Disabled")) return TransparentDataEncryptionState.Disabled;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown TransparentDataEncryptionState value.");
         }
     }

@@ -11,7 +11,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppPlatform
 {
-    /// <summary> A class representing the AppPlatformGatewayCustomDomain data model. </summary>
+    /// <summary>
+    /// A class representing the AppPlatformGatewayCustomDomain data model.
+    /// Custom domain of the Spring Cloud Gateway
+    /// </summary>
     public partial class AppPlatformGatewayCustomDomainData : ResourceData
     {
         /// <summary> Initializes a new instance of AppPlatformGatewayCustomDomainData. </summary>

@@ -13,7 +13,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.EventGrid
 {
-    /// <summary> A class representing the EventGridSubscription data model. </summary>
+    /// <summary>
+    /// A class representing the EventGridSubscription data model.
+    /// Event Subscription
+    /// </summary>
     public partial class EventGridSubscriptionData : ResourceData
     {
         /// <summary> Initializes a new instance of EventGridSubscriptionData. </summary>

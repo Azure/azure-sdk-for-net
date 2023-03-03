@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DevTestLabs
 {
-    /// <summary> A class representing the DevTestLabArtifact data model. </summary>
+    /// <summary>
+    /// A class representing the DevTestLabArtifact data model.
+    /// An artifact.
+    /// </summary>
     public partial class DevTestLabArtifactData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of DevTestLabArtifactData. </summary>

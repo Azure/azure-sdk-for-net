@@ -18,8 +18,8 @@ steps:
     - task: NodeTool@0
       condition: and(succeededOrFailed(), ne(variables['Skip.SpellCheck'],'true'))
       inputs:
-        versionSpec: 18.x
-      displayName: Use Node.js 18.x
+        versionSpec: 18.13.0
+      displayName: Use Node.js 18.13.0
 
     - task: PowerShell@2
       displayName: Check spelling (cspell)

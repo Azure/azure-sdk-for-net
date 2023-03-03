@@ -13,7 +13,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.KubernetesConfiguration
 {
-    /// <summary> A class representing the KubernetesSourceControlConfiguration data model. </summary>
+    /// <summary>
+    /// A class representing the KubernetesSourceControlConfiguration data model.
+    /// The SourceControl Configuration object returned in Get &amp; Put response.
+    /// </summary>
     public partial class KubernetesSourceControlConfigurationData : ResourceData
     {
         /// <summary> Initializes a new instance of KubernetesSourceControlConfigurationData. </summary>

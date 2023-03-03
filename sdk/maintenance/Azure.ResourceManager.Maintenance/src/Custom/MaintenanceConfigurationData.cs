@@ -11,7 +11,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Maintenance
 {
-    /// <summary> A class representing the MaintenanceConfiguration data model. </summary>
+    /// <summary>
+    /// A class representing the MaintenanceConfiguration data model.
+    /// Maintenance configuration record type
+    /// </summary>
     public partial class MaintenanceConfigurationData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of MaintenanceConfigurationData. </summary>

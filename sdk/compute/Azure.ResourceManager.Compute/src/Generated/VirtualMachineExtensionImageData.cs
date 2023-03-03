@@ -11,7 +11,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Compute
 {
-    /// <summary> A class representing the VirtualMachineExtensionImage data model. </summary>
+    /// <summary>
+    /// A class representing the VirtualMachineExtensionImage data model.
+    /// Describes a Virtual Machine Extension Image.
+    /// </summary>
     public partial class VirtualMachineExtensionImageData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of VirtualMachineExtensionImageData. </summary>

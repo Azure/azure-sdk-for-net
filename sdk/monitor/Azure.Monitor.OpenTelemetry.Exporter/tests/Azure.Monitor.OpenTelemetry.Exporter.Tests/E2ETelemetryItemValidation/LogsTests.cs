@@ -49,6 +49,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
                     .AddFilter<OpenTelemetryLoggerProvider>(logCategoryName, logLevel)
                     .AddOpenTelemetry(options =>
                     {
+                        options.ParseStateValues = true;
                         options.AddAzureMonitorLogExporterForTest(out telemetryItems);
                     });
             });

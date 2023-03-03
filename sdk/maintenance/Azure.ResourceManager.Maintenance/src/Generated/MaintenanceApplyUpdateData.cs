@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Maintenance
 {
-    /// <summary> A class representing the MaintenanceApplyUpdate data model. </summary>
+    /// <summary>
+    /// A class representing the MaintenanceApplyUpdate data model.
+    /// Apply Update request
+    /// </summary>
     public partial class MaintenanceApplyUpdateData : ResourceData
     {
         /// <summary> Initializes a new instance of MaintenanceApplyUpdateData. </summary>

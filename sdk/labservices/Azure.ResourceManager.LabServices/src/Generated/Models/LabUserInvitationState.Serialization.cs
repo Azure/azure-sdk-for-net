@@ -22,10 +22,10 @@ namespace Azure.ResourceManager.LabServices.Models
 
         public static LabUserInvitationState ToLabUserInvitationState(this string value)
         {
-            if (string.Equals(value, "NotSent", StringComparison.InvariantCultureIgnoreCase)) return LabUserInvitationState.NotSent;
-            if (string.Equals(value, "Sending", StringComparison.InvariantCultureIgnoreCase)) return LabUserInvitationState.Sending;
-            if (string.Equals(value, "Sent", StringComparison.InvariantCultureIgnoreCase)) return LabUserInvitationState.Sent;
-            if (string.Equals(value, "Failed", StringComparison.InvariantCultureIgnoreCase)) return LabUserInvitationState.Failed;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "NotSent")) return LabUserInvitationState.NotSent;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Sending")) return LabUserInvitationState.Sending;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Sent")) return LabUserInvitationState.Sent;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Failed")) return LabUserInvitationState.Failed;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown LabUserInvitationState value.");
         }
     }

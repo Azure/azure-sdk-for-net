@@ -1,8 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-#nullable disable // TODO: remove and fix errors
-
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -55,10 +53,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 
             // Transmit
             var mockResponse = new MockResponse(200).SetContent("Ok");
-            var transmitter = GetTransmitter(mockResponse);
+            using var transmitter = GetTransmitter(mockResponse);
             transmitter.TrackAsync(telemetryItems, false, CancellationToken.None).EnsureCompleted();
 
             //Assert
+            Assert.NotNull(transmitter._fileBlobProvider);
             Assert.Empty(transmitter._fileBlobProvider.GetBlobs());
         }
 
@@ -72,10 +71,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 
             // Transmit
             var mockResponse = new MockResponse(500).SetContent("Internal Server Error");
-            var transmitter = GetTransmitter(mockResponse);
+            using var transmitter = GetTransmitter(mockResponse);
             transmitter.TrackAsync(telemetryItems, false, CancellationToken.None).EnsureCompleted();
 
             //Assert
+            Assert.NotNull(transmitter._fileBlobProvider);
             Assert.Single(transmitter._fileBlobProvider.GetBlobs());
         }
 
@@ -91,10 +91,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             var mockResponse = new MockResponse(429)
                                     .AddHeader("Retry-After", "6")
                                     .SetContent("Too Many Requests");
-            var transmitter = GetTransmitter(mockResponse);
+            using var transmitter = GetTransmitter(mockResponse);
             transmitter.TrackAsync(telemetryItems, false, CancellationToken.None).EnsureCompleted();
 
             //Assert
+            Assert.NotNull(transmitter._fileBlobProvider);
             Assert.Single(transmitter._fileBlobProvider.GetBlobs());
         }
 
@@ -116,12 +117,13 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             var mockResponse = new MockResponse(206)
                                     .AddHeader("Retry-After", "6")
                                     .SetContent("{\"itemsReceived\": 3,\"itemsAccepted\": 1,\"errors\":[{\"index\": 0,\"statusCode\": 429,\"message\": \"Throttle\"},{\"index\": 1,\"statusCode\": 429,\"message\": \"Throttle\"}]}");
-            var transmitter = GetTransmitter(mockResponse);
+            using var transmitter = GetTransmitter(mockResponse);
             transmitter.TrackAsync(telemetryItems, false, CancellationToken.None).EnsureCompleted();
 
             //Assert
+            Assert.NotNull(transmitter._fileBlobProvider);
             Assert.Single(transmitter._fileBlobProvider.GetBlobs());
-            transmitter._fileBlobProvider.TryGetBlob(out var blob);
+            Assert.True(transmitter._fileBlobProvider.TryGetBlob(out var blob));
             blob.TryRead(out var content);
 
             Assert.NotNull(content);
@@ -134,6 +136,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             Assert.Equal(2, items.Count());
         }
 
+        // TODO: REWRITE THIS TEST FOR IDISPOSABLE
         [Fact]
         public void TransmitFromStorage()
         {
@@ -169,10 +172,13 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         private static AzureMonitorTransmitter GetTransmitter(MockResponse mockResponse)
         {
             MockTransport mockTransport = new MockTransport(mockResponse);
-            AzureMonitorExporterOptions options = new AzureMonitorExporterOptions();
-            options.ConnectionString = $"InstrumentationKey={testIkey};IngestionEndpoint={testEndpoint}";
-            options.StorageDirectory = StorageHelper.GetDefaultStorageDirectory() + "\\test";
-            options.Transport = mockTransport;
+            AzureMonitorExporterOptions options = new AzureMonitorExporterOptions
+            {
+                ConnectionString = $"InstrumentationKey={testIkey};IngestionEndpoint={testEndpoint}",
+                StorageDirectory = StorageHelper.GetDefaultStorageDirectory() + "\\test",
+                Transport = mockTransport,
+                EnableStatsbeat = false, // disabled in tests.
+            };
             AzureMonitorTransmitter transmitter = new AzureMonitorTransmitter(options);
 
             // Overwrite storage with mock
@@ -190,13 +196,14 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
                 parentContext: default,
                 startTime: DateTime.UtcNow);
 
+            Assert.NotNull(activity);
             return activity;
         }
 
         private static TelemetryItem CreateTelemetryItem(Activity activity)
         {
             var monitorTags = TraceHelper.EnumerateActivityTags(activity);
-            return new TelemetryItem(activity, ref monitorTags, null, null);
+            return new TelemetryItem(activity, ref monitorTags, null, string.Empty);
         }
 
         private class MockFileProvider : PersistentBlobProvider
@@ -224,7 +231,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 
             protected override bool OnTryGetBlob(out PersistentBlob blob)
             {
-                blob = this.GetBlobs().FirstOrDefault();
+                blob = this.GetBlobs().First();
 
                 return true;
             }
@@ -232,7 +239,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 
         private class MockFileBlob : PersistentBlob
         {
-            private byte[] _buffer;
+            private byte[] _buffer = Array.Empty<byte>();
 
             private readonly List<PersistentBlob> _mockStorage;
 

@@ -20,8 +20,8 @@ namespace Azure.AI.TextAnalytics.Legacy.Models
 
         public static Conditionality ToConditionality(this string value)
         {
-            if (string.Equals(value, "hypothetical", StringComparison.InvariantCultureIgnoreCase)) return Conditionality.Hypothetical;
-            if (string.Equals(value, "conditional", StringComparison.InvariantCultureIgnoreCase)) return Conditionality.Conditional;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "hypothetical")) return Conditionality.Hypothetical;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "conditional")) return Conditionality.Conditional;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown Conditionality value.");
         }
     }

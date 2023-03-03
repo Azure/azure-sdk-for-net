@@ -14,7 +14,10 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Dns
 {
-    /// <summary> A class representing the DnsZone data model. </summary>
+    /// <summary>
+    /// A class representing the DnsZone data model.
+    /// Describes a DNS zone.
+    /// </summary>
     public partial class DnsZoneData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of DnsZoneData. </summary>
