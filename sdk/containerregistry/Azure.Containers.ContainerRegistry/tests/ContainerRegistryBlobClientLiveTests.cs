@@ -245,7 +245,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
             // Assert
             Assert.AreEqual("sha256:e6c1c9dcc9c45a3dbfa654f8c8fad5c91529c137c1e2f6eb0995931c0aa74d99", result.Digest);
 
-            // The following fails because the manifest media type is set to OciManifest by default
+            // The following fails because the manifest media type is set to OciImageManifest by default
             fs.Position = 0;
             Assert.ThrowsAsync<RequestFailedException>(async () => await client.UploadManifestAsync(fs));
         }
@@ -288,7 +288,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
             }
         }
 
-        private static void ValidateManifest(OciManifest manifest)
+        private static void ValidateManifest(OciImageManifest manifest)
         {
             // These are from the values in the Data\oci-artifact\manifest.json file.
             Assert.IsNotNull(manifest);
@@ -296,13 +296,13 @@ namespace Azure.Containers.ContainerRegistry.Tests
             Assert.IsNotNull(manifest.Config);
             Assert.AreEqual("application/vnd.acme.rocket.config", manifest.Config.MediaType);
             Assert.AreEqual("sha256:d25b42d3dbad5361ed2d909624d899e7254a822c9a632b582ebd3a44f9b0dbc8", manifest.Config.Digest);
-            Assert.AreEqual(171, manifest.Config.Size);
+            Assert.AreEqual(171, manifest.Config.SizeInBytes);
 
             Assert.IsNotNull(manifest.Layers);
             Assert.AreEqual(1, manifest.Layers.Count);
             Assert.AreEqual("application/vnd.oci.image.layer.v1.tar", manifest.Layers[0].MediaType);
             Assert.AreEqual("sha256:654b93f61054e4ce90ed203bb8d556a6200d5f906cf3eca0620738d6dc18cbed", manifest.Layers[0].Digest);
-            Assert.AreEqual(28, manifest.Layers[0].Size);
+            Assert.AreEqual(28, manifest.Layers[0].SizeInBytes);
         }
 
         #region Upload Blob Tests
@@ -325,10 +325,10 @@ namespace Azure.Containers.ContainerRegistry.Tests
             {
                 digest = BlobHelper.ComputeDigest(stream);
                 UploadBlobResult uploadResult = await client.UploadBlobAsync(stream);
-                streamLength = uploadResult.Size;
+                streamLength = uploadResult.SizeInBytes;
 
                 Assert.AreEqual(digest, uploadResult.Digest);
-                Assert.AreEqual(stream.Length, uploadResult.Size);
+                Assert.AreEqual(stream.Length, uploadResult.SizeInBytes);
             }
 
             // Assert
@@ -362,7 +362,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
 
             // Assert
             Assert.AreEqual(digest, uploadResult.Digest);
-            Assert.AreEqual(blobSize, uploadResult.Size);
+            Assert.AreEqual(blobSize, uploadResult.SizeInBytes);
 
             // Clean up
             await client.DeleteBlobAsync(digest);
@@ -392,7 +392,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
 
             // Assert
             Assert.AreEqual(digest, uploadResult.Digest);
-            Assert.AreEqual(blobSize, uploadResult.Size);
+            Assert.AreEqual(blobSize, uploadResult.SizeInBytes);
 
             // Clean up
             await client.DeleteBlobAsync(digest);
@@ -420,7 +420,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
 
             // Assert
             Assert.AreEqual(digest, uploadResult.Digest);
-            Assert.AreEqual(blobSize, uploadResult.Size);
+            Assert.AreEqual(blobSize, uploadResult.SizeInBytes);
 
             // Clean up
             await client.DeleteBlobAsync(digest);
@@ -447,7 +447,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
 
             // Assert
             Assert.AreEqual(digest, uploadResult.Digest);
-            Assert.AreEqual(blobSize, uploadResult.Size);
+            Assert.AreEqual(blobSize, uploadResult.SizeInBytes);
 
             // Clean up
             await client.DeleteBlobAsync(digest);
@@ -697,7 +697,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
         {
             var path = Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "oci-artifact");
 
-            OciManifest manifest = new OciManifest();
+            OciImageManifest manifest = new OciImageManifest();
             manifest.SchemaVersion = 2;
 
             // Upload config
@@ -711,7 +711,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
                     // Update manifest
                     OciBlobDescriptor descriptor = new OciBlobDescriptor();
                     descriptor.Digest = uploadResult.Value.Digest;
-                    descriptor.Size = uploadResult.Value.Size;
+                    descriptor.SizeInBytes = uploadResult.Value.SizeInBytes;
                     descriptor.MediaType = "application/vnd.acme.rocket.config";
 
                     manifest.Config = descriptor;
@@ -731,7 +731,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
                         // Update manifest
                         OciBlobDescriptor descriptor = new OciBlobDescriptor();
                         descriptor.Digest = uploadResult.Value.Digest;
-                        descriptor.Size = uploadResult.Value.Size;
+                        descriptor.SizeInBytes = uploadResult.Value.SizeInBytes;
                         descriptor.MediaType = "application/vnd.oci.image.layer.v1.tar";
 
                         manifest.Layers.Add(descriptor);
@@ -762,7 +762,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
             {
                 await manifestResult.Value.Content.ToStream().CopyToAsync(fs);
             }
-            OciManifest manifest = manifestResult.Value.AsOciManifest();
+            OciImageManifest manifest = manifestResult.Value.AsOciManifest();
 
             // Download Config
             string configFileName = Path.Combine(path, "config.json");

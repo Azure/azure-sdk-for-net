@@ -6,10 +6,10 @@ using Azure.Core;
 namespace Azure.Containers.ContainerRegistry.Specialized
 {
     [CodeGenModel("OCIManifest")]
-    public partial class OciManifest
+    public partial class OciImageManifest
     {
-        /// <summary> Initializes a new instance of OciManifest. </summary>
-        public OciManifest()
+        /// <summary> Initializes a new instance of OciImageManifest. </summary>
+        public OciImageManifest()
         {
             Layers = new ChangeTrackingList<OciBlobDescriptor>();
             SchemaVersion = 2;

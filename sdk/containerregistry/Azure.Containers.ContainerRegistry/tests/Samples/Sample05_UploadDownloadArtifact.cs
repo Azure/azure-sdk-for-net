@@ -37,7 +37,7 @@ namespace Azure.Containers.ContainerRegistry.Tests.Samples
             #region Snippet:ContainerRegistry_Samples_UploadArtifactAsync
 
             // Create a manifest to list files in this artifact
-            OciManifest manifest = new();
+            OciImageManifest manifest = new();
 
             // Upload a config file
             using Stream config = BinaryData.FromString("Sample config").ToStream();
@@ -47,7 +47,7 @@ namespace Azure.Containers.ContainerRegistry.Tests.Samples
             manifest.Config = new OciBlobDescriptor()
             {
                 Digest = uploadConfigResult.Value.Digest,
-                Size = uploadConfigResult.Value.Size,
+                Size = uploadConfigResult.Value.SizeInBytes,
                 MediaType = OciMediaType.ImageConfig.ToString()
             };
 
@@ -59,7 +59,7 @@ namespace Azure.Containers.ContainerRegistry.Tests.Samples
             manifest.Layers.Add(new OciBlobDescriptor()
             {
                 Digest = uploadLayerResult.Value.Digest,
-                Size = uploadLayerResult.Value.Size,
+                Size = uploadLayerResult.Value.SizeInBytes,
                 MediaType = OciMediaType.ImageLayer.ToString()
             });
 
@@ -93,7 +93,7 @@ namespace Azure.Containers.ContainerRegistry.Tests.Samples
 
             // Download the manifest to obtain the list of files in the artifact
             DownloadManifestResult result = await client.DownloadManifestAsync(tag);
-            OciManifest manifest = result.AsOciManifest();
+            OciImageManifest manifest = result.AsOciManifest();
 
             await WriteFile(Path.Combine(path, "manifest.json"), result.Content);
 

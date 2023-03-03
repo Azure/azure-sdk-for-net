@@ -17,7 +17,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
 
         public static async Task<string> UploadTestImageAsync(this ContainerRegistryBlobClient client, string tag = default)
         {
-            OciManifest manifest = new()
+            OciImageManifest manifest = new()
             {
                 SchemaVersion = 2
             };
@@ -29,7 +29,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
             manifest.Config = new OciBlobDescriptor()
             {
                 Digest = uploadConfigResult.Value.Digest,
-                Size = uploadConfigResult.Value.Size,
+                Size = uploadConfigResult.Value.SizeInBytes,
                 MediaType = "application/vnd.oci.image.config.v1+json"
             };
 
@@ -40,7 +40,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
             manifest.Layers.Add(new OciBlobDescriptor()
             {
                 Digest = uploadLayerResult.Value.Digest,
-                Size = uploadLayerResult.Value.Size,
+                Size = uploadLayerResult.Value.SizeInBytes,
                 MediaType = "application/vnd.oci.image.layer.v1.tar"
             });
 

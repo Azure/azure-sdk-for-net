@@ -148,7 +148,7 @@ namespace Azure.Containers.ContainerRegistry.Specialized
         /// a default value of "application/vnd.oci.image.manifest.v1+json".</param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        public virtual Response<UploadManifestResult> UploadManifest(OciManifest manifest, string tag = default, ManifestMediaType? mediaType = default, CancellationToken cancellationToken = default)
+        public virtual Response<UploadManifestResult> UploadManifest(OciImageManifest manifest, string tag = default, ManifestMediaType? mediaType = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(manifest, nameof(manifest));
 
@@ -202,7 +202,7 @@ namespace Azure.Containers.ContainerRegistry.Specialized
         /// a default value of "application/vnd.oci.image.manifest.v1+json".</param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        public virtual async Task<Response<UploadManifestResult>> UploadManifestAsync(OciManifest manifest, string tag = default, ManifestMediaType? mediaType = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<UploadManifestResult>> UploadManifestAsync(OciImageManifest manifest, string tag = default, ManifestMediaType? mediaType = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(manifest, nameof(manifest));
 
@@ -251,7 +251,7 @@ namespace Azure.Containers.ContainerRegistry.Specialized
         {
             string contentDigest = BlobHelper.ComputeDigest(stream);
             string tagOrDigest = tag ?? contentDigest;
-            string contentType = mediaType.HasValue ? mediaType.ToString() : ManifestMediaType.OciManifest.ToString();
+            string contentType = mediaType.HasValue ? mediaType.ToString() : ManifestMediaType.OciImageManifest.ToString();
 
             ResponseWithHeaders<ContainerRegistryCreateManifestHeaders> response = async ?
                 await _restClient.CreateManifestAsync(_repositoryName, tagOrDigest, stream, contentType, cancellationToken).ConfigureAwait(false) :
@@ -286,7 +286,7 @@ namespace Azure.Containers.ContainerRegistry.Specialized
             return copy;
         }
 
-        private static MemoryStream SerializeManifest(OciManifest manifest)
+        private static MemoryStream SerializeManifest(OciImageManifest manifest)
         {
             MemoryStream stream = new();
             Utf8JsonWriter jsonWriter = new(stream);
@@ -298,10 +298,10 @@ namespace Azure.Containers.ContainerRegistry.Specialized
             return stream;
         }
 
-        private static OciManifest DeserializeManifest(Stream stream)
+        private static OciImageManifest DeserializeManifest(Stream stream)
         {
             using var document = JsonDocument.Parse(stream);
-            return OciManifest.DeserializeOciManifest(document.RootElement);
+            return OciImageManifest.DeserializeOciImageManifest(document.RootElement);
         }
 
         /// <summary>
@@ -328,7 +328,7 @@ namespace Azure.Containers.ContainerRegistry.Specialized
 
                 ValidateDigest(result.Digest, completeUploadResult.Headers.DockerContentDigest);
 
-                return Response.FromValue(new UploadBlobResult(completeUploadResult.Headers.DockerContentDigest, result.Size), completeUploadResult.GetRawResponse());
+                return Response.FromValue(new UploadBlobResult(completeUploadResult.Headers.DockerContentDigest, result.SizeInBytes), completeUploadResult.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -361,7 +361,7 @@ namespace Azure.Containers.ContainerRegistry.Specialized
 
                 ValidateDigest(result.Digest, completeUploadResult.Headers.DockerContentDigest);
 
-                return Response.FromValue(new UploadBlobResult(completeUploadResult.Headers.DockerContentDigest, result.Size), completeUploadResult.GetRawResponse());
+                return Response.FromValue(new UploadBlobResult(completeUploadResult.Headers.DockerContentDigest, result.SizeInBytes), completeUploadResult.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -579,7 +579,7 @@ namespace Azure.Containers.ContainerRegistry.Specialized
             sb.Append(", ");
             sb.Append(ManifestMediaType.DockerManifestV1);
             sb.Append(", ");
-            sb.Append(ManifestMediaType.OciManifest);
+            sb.Append(ManifestMediaType.OciImageManifest);
             sb.Append(", ");
             sb.Append(ManifestMediaType.OciIndex);
 
