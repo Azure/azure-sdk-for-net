@@ -5,7 +5,6 @@ using System;
 using System.IO;
 using System.Linq;
 using System.Text;
-using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Containers.ContainerRegistry.Specialized;
@@ -13,9 +12,7 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Core.TestFramework;
 using Azure.Core.TestFramework.Models;
-using Microsoft.Extensions.Primitives;
 using NUnit.Framework;
-using NUnit.Framework.Interfaces;
 
 namespace Azure.Containers.ContainerRegistry.Tests
 {
@@ -248,6 +245,34 @@ namespace Azure.Containers.ContainerRegistry.Tests
             // The following fails because the manifest media type is set to OciImageManifest by default
             fs.Position = 0;
             Assert.ThrowsAsync<RequestFailedException>(async () => await client.UploadManifestAsync(fs));
+        }
+
+        [RecordedTest]
+        public async Task CanUploadDockerManifest_BinaryData()
+        {
+            // Arrange
+
+            // We have imported the library/hello-world image in test set-up,
+            // so config and blob files pointed to by the manifest are already in the registry.
+
+            var client = CreateBlobClient("library/hello-world");
+
+            // Act
+            string path = Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "docker", "hello-world", "manifest.json");
+            BinaryData content;
+
+            using (FileStream fs = File.OpenRead(path))
+            {
+                content = BinaryData.FromStream(fs);
+            }
+
+            UploadManifestResult result = await client.UploadManifestAsync(content, mediaType: ManifestMediaType.DockerManifest);
+
+            // Assert
+            Assert.AreEqual("sha256:e6c1c9dcc9c45a3dbfa654f8c8fad5c91529c137c1e2f6eb0995931c0aa74d99", result.Digest);
+
+            // The following fails because the manifest media type is set to OciImageManifest by default
+            Assert.ThrowsAsync<RequestFailedException>(async () => await client.UploadManifestAsync(content));
         }
 
         [RecordedTest]

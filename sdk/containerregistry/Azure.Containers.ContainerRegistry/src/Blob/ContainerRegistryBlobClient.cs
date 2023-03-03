@@ -169,22 +169,36 @@ namespace Azure.Containers.ContainerRegistry.Specialized
         /// <summary>
         /// Uploads an artifact manifest.
         /// </summary>
-        /// <param name="manifestStream">The <see cref="Stream"/> manifest to upload.</param>
+        /// <param name="content">The <see cref="BinaryData"/> containing the serialized manifest to upload.</param>
         /// <param name="tag">A optional tag to assign to the artifact this manifest represents.</param>
         /// <param name="mediaType">The media type of the manifest.  If not specified, this value will be set to
         /// a default value of "application/vnd.oci.image.manifest.v1+json".</param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        public virtual Response<UploadManifestResult> UploadManifest(Stream manifestStream, string tag = default, ManifestMediaType? mediaType = default, CancellationToken cancellationToken = default)
+        public virtual Response<UploadManifestResult> UploadManifest(BinaryData content, string tag = default, ManifestMediaType? mediaType = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(manifestStream, nameof(manifestStream));
+            return UploadManifest(content.ToStream(), tag, mediaType, cancellationToken);
+        }
+
+        /// <summary>
+        /// Uploads an artifact manifest.
+        /// </summary>
+        /// <param name="stream">The <see cref="Stream"/> containing the serialized manifest to upload.</param>
+        /// <param name="tag">A optional tag to assign to the artifact this manifest represents.</param>
+        /// <param name="mediaType">The media type of the manifest.  If not specified, this value will be set to
+        /// a default value of "application/vnd.oci.image.manifest.v1+json".</param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
+        public virtual Response<UploadManifestResult> UploadManifest(Stream stream, string tag = default, ManifestMediaType? mediaType = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(stream, nameof(stream));
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ContainerRegistryBlobClient)}.{nameof(UploadManifest)}");
             scope.Start();
             try
             {
-                using MemoryStream stream = CopyStreamAsync(manifestStream, false).EnsureCompleted();
-                return UploadManifestInternalAsync(stream, tag, mediaType, false, cancellationToken).EnsureCompleted();
+                using MemoryStream manifestStream = CopyStreamAsync(stream, false).EnsureCompleted();
+                return UploadManifestInternalAsync(manifestStream, tag, mediaType, false, cancellationToken).EnsureCompleted();
             }
             catch (Exception e)
             {
@@ -223,22 +237,36 @@ namespace Azure.Containers.ContainerRegistry.Specialized
         /// <summary>
         /// Uploads an artifact manifest.
         /// </summary>
-        /// <param name="manifestStream">The <see cref="Stream"/> manifest to upload.</param>
+        /// <param name="content">The <see cref="BinaryData"/> containing the serialized manifest to upload.</param>
         /// <param name="tag">A optional tag to assign to the artifact this manifest represents.</param>
         /// <param name="mediaType">The media type of the manifest.  If not specified, this value will be set to
         /// a default value of "application/vnd.oci.image.manifest.v1+json".</param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        public virtual async Task<Response<UploadManifestResult>> UploadManifestAsync(Stream manifestStream, string tag = default, ManifestMediaType? mediaType = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<UploadManifestResult>> UploadManifestAsync(BinaryData content, string tag = default, ManifestMediaType? mediaType = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(manifestStream, nameof(manifestStream));
+            return await UploadManifestAsync(content.ToStream(), tag, mediaType, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Uploads an artifact manifest.
+        /// </summary>
+        /// <param name="stream">The <see cref="Stream"/> containing the serialized manifest to upload.</param>
+        /// <param name="tag">A optional tag to assign to the artifact this manifest represents.</param>
+        /// <param name="mediaType">The media type of the manifest.  If not specified, this value will be set to
+        /// a default value of "application/vnd.oci.image.manifest.v1+json".</param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
+        public virtual async Task<Response<UploadManifestResult>> UploadManifestAsync(Stream stream, string tag = default, ManifestMediaType? mediaType = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(stream, nameof(stream));
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ContainerRegistryBlobClient)}.{nameof(UploadManifest)}");
             scope.Start();
             try
             {
-                using MemoryStream stream = await CopyStreamAsync(manifestStream, true).ConfigureAwait(false);
-                return await UploadManifestInternalAsync(stream, tag, mediaType, true, cancellationToken).ConfigureAwait(false);
+                using MemoryStream manifestStream = await CopyStreamAsync(stream, true).ConfigureAwait(false);
+                return await UploadManifestInternalAsync(manifestStream, tag, mediaType, true, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
