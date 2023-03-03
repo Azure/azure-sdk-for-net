@@ -91,7 +91,10 @@ namespace Azure.Monitor.OpenTelemetry
             exporterOptions.Credential = Credential;
             exporterOptions.DisableOfflineStorage = DisableOfflineStorage;
             exporterOptions.StorageDirectory = StorageDirectory;
-            exporterOptions.Transport = Transport;
+            if (Transport != null)
+            {
+                exporterOptions.Transport = Transport;
+            }
         }
     }
 }
