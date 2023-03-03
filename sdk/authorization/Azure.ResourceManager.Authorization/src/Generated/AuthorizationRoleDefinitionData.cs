@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Authorization
 {
-    /// <summary> A class representing the AuthorizationRoleDefinition data model. </summary>
+    /// <summary>
+    /// A class representing the AuthorizationRoleDefinition data model.
+    /// Role definition.
+    /// </summary>
     public partial class AuthorizationRoleDefinitionData : ResourceData
     {
         /// <summary> Initializes a new instance of AuthorizationRoleDefinitionData. </summary>

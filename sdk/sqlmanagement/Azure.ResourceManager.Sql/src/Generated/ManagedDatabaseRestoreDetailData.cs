@@ -13,7 +13,10 @@ using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
-    /// <summary> A class representing the ManagedDatabaseRestoreDetail data model. </summary>
+    /// <summary>
+    /// A class representing the ManagedDatabaseRestoreDetail data model.
+    /// A managed database restore details.
+    /// </summary>
     public partial class ManagedDatabaseRestoreDetailData : ResourceData
     {
         /// <summary> Initializes a new instance of ManagedDatabaseRestoreDetailData. </summary>

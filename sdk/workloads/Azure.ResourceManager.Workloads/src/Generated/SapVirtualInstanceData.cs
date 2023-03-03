@@ -13,7 +13,10 @@ using Azure.ResourceManager.Workloads.Models;
 
 namespace Azure.ResourceManager.Workloads
 {
-    /// <summary> A class representing the SapVirtualInstance data model. </summary>
+    /// <summary>
+    /// A class representing the SapVirtualInstance data model.
+    /// Define the Virtual Instance for SAP.
+    /// </summary>
     public partial class SapVirtualInstanceData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of SapVirtualInstanceData. </summary>

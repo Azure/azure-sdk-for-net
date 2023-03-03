@@ -135,12 +135,12 @@ namespace Azure.ResourceManager.Compute.Samples
             Console.WriteLine($"Succeeded");
         }
 
-        // VirtualMachineImages_Get_MaximumSet_Gen
+        // VirtualMachineImage_Get_MaximumSet_Gen
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetVirtualMachineImage_VirtualMachineImagesGetMaximumSetGen()
+        public async Task GetVirtualMachineImage_VirtualMachineImageGetMaximumSetGen()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-11-01/examples/virtualMachineImageExamples/VirtualMachineImages_Get_MaximumSet_Gen.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-11-01/examples/virtualMachineImageExamples/VirtualMachineImage_Get_MaximumSet_Gen.json
             // this example is just showing the usage of "VirtualMachineImages_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -165,12 +165,12 @@ namespace Azure.ResourceManager.Compute.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // VirtualMachineImages_Get_MinimumSet_Gen
+        // VirtualMachineImage_Get_MinimumSet_Gen
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetVirtualMachineImage_VirtualMachineImagesGetMinimumSetGen()
+        public async Task GetVirtualMachineImage_VirtualMachineImageGetMinimumSetGen()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-11-01/examples/virtualMachineImageExamples/VirtualMachineImages_Get_MinimumSet_Gen.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-11-01/examples/virtualMachineImageExamples/VirtualMachineImage_Get_MinimumSet_Gen.json
             // this example is just showing the usage of "VirtualMachineImages_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -195,12 +195,12 @@ namespace Azure.ResourceManager.Compute.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // VirtualMachineImages_List_MaximumSet_Gen
+        // VirtualMachineImage_List_MaximumSet_Gen
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetVirtualMachineImages_VirtualMachineImagesListMaximumSetGen()
+        public async Task GetVirtualMachineImages_VirtualMachineImageListMaximumSetGen()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-11-01/examples/virtualMachineImageExamples/VirtualMachineImages_List_MaximumSet_Gen.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-11-01/examples/virtualMachineImageExamples/VirtualMachineImage_List_MaximumSet_Gen.json
             // this example is just showing the usage of "VirtualMachineImages_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -224,12 +224,12 @@ namespace Azure.ResourceManager.Compute.Samples
             Console.WriteLine($"Succeeded");
         }
 
-        // VirtualMachineImages_List_MinimumSet_Gen
+        // VirtualMachineImage_List_MinimumSet_Gen
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetVirtualMachineImages_VirtualMachineImagesListMinimumSetGen()
+        public async Task GetVirtualMachineImages_VirtualMachineImageListMinimumSetGen()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-11-01/examples/virtualMachineImageExamples/VirtualMachineImages_List_MinimumSet_Gen.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-11-01/examples/virtualMachineImageExamples/VirtualMachineImage_List_MinimumSet_Gen.json
             // this example is just showing the usage of "VirtualMachineImages_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -253,12 +253,12 @@ namespace Azure.ResourceManager.Compute.Samples
             Console.WriteLine($"Succeeded");
         }
 
-        // VirtualMachineImages_ListOffers_MaximumSet_Gen
+        // VirtualMachineImage_ListOffers_MaximumSet_Gen
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetVirtualMachineImageOffers_VirtualMachineImagesListOffersMaximumSetGen()
+        public async Task GetVirtualMachineImageOffers_VirtualMachineImageListOffersMaximumSetGen()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-11-01/examples/virtualMachineImageExamples/VirtualMachineImages_ListOffers_MaximumSet_Gen.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-11-01/examples/virtualMachineImageExamples/VirtualMachineImage_ListOffers_MaximumSet_Gen.json
             // this example is just showing the usage of "VirtualMachineImages_ListOffers" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -283,12 +283,12 @@ namespace Azure.ResourceManager.Compute.Samples
             Console.WriteLine($"Succeeded");
         }
 
-        // VirtualMachineImages_ListOffers_MinimumSet_Gen
+        // VirtualMachineImage_ListOffers_MinimumSet_Gen
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetVirtualMachineImageOffers_VirtualMachineImagesListOffersMinimumSetGen()
+        public async Task GetVirtualMachineImageOffers_VirtualMachineImageListOffersMinimumSetGen()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-11-01/examples/virtualMachineImageExamples/VirtualMachineImages_ListOffers_MinimumSet_Gen.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-11-01/examples/virtualMachineImageExamples/VirtualMachineImage_ListOffers_MinimumSet_Gen.json
             // this example is just showing the usage of "VirtualMachineImages_ListOffers" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -313,12 +313,12 @@ namespace Azure.ResourceManager.Compute.Samples
             Console.WriteLine($"Succeeded");
         }
 
-        // VirtualMachineImages_ListPublishers_MaximumSet_Gen
+        // VirtualMachineImage_ListPublishers_MaximumSet_Gen
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetVirtualMachineImagePublishers_VirtualMachineImagesListPublishersMaximumSetGen()
+        public async Task GetVirtualMachineImagePublishers_VirtualMachineImageListPublishersMaximumSetGen()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-11-01/examples/virtualMachineImageExamples/VirtualMachineImages_ListPublishers_MaximumSet_Gen.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-11-01/examples/virtualMachineImageExamples/VirtualMachineImage_ListPublishers_MaximumSet_Gen.json
             // this example is just showing the usage of "VirtualMachineImages_ListPublishers" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -342,12 +342,12 @@ namespace Azure.ResourceManager.Compute.Samples
             Console.WriteLine($"Succeeded");
         }
 
-        // VirtualMachineImages_ListPublishers_MinimumSet_Gen
+        // VirtualMachineImage_ListPublishers_MinimumSet_Gen
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetVirtualMachineImagePublishers_VirtualMachineImagesListPublishersMinimumSetGen()
+        public async Task GetVirtualMachineImagePublishers_VirtualMachineImageListPublishersMinimumSetGen()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-11-01/examples/virtualMachineImageExamples/VirtualMachineImages_ListPublishers_MinimumSet_Gen.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-11-01/examples/virtualMachineImageExamples/VirtualMachineImage_ListPublishers_MinimumSet_Gen.json
             // this example is just showing the usage of "VirtualMachineImages_ListPublishers" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -371,12 +371,12 @@ namespace Azure.ResourceManager.Compute.Samples
             Console.WriteLine($"Succeeded");
         }
 
-        // VirtualMachineImages_ListSkus_MaximumSet_Gen
+        // VirtualMachineImage_ListSkus_MaximumSet_Gen
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetVirtualMachineImageSkus_VirtualMachineImagesListSkusMaximumSetGen()
+        public async Task GetVirtualMachineImageSkus_VirtualMachineImageListSkusMaximumSetGen()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-11-01/examples/virtualMachineImageExamples/VirtualMachineImages_ListSkus_MaximumSet_Gen.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-11-01/examples/virtualMachineImageExamples/VirtualMachineImage_ListSkus_MaximumSet_Gen.json
             // this example is just showing the usage of "VirtualMachineImages_ListSkus" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -402,12 +402,12 @@ namespace Azure.ResourceManager.Compute.Samples
             Console.WriteLine($"Succeeded");
         }
 
-        // VirtualMachineImages_ListSkus_MinimumSet_Gen
+        // VirtualMachineImage_ListSkus_MinimumSet_Gen
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetVirtualMachineImageSkus_VirtualMachineImagesListSkusMinimumSetGen()
+        public async Task GetVirtualMachineImageSkus_VirtualMachineImageListSkusMinimumSetGen()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-11-01/examples/virtualMachineImageExamples/VirtualMachineImages_ListSkus_MinimumSet_Gen.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-11-01/examples/virtualMachineImageExamples/VirtualMachineImage_ListSkus_MinimumSet_Gen.json
             // this example is just showing the usage of "VirtualMachineImages_ListSkus" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

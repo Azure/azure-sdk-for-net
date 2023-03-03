@@ -13,7 +13,10 @@ using Azure.ResourceManager.Workloads.Models;
 
 namespace Azure.ResourceManager.Workloads
 {
-    /// <summary> A class representing the SapDatabaseInstance data model. </summary>
+    /// <summary>
+    /// A class representing the SapDatabaseInstance data model.
+    /// Define the SAP Database Instance.
+    /// </summary>
     public partial class SapDatabaseInstanceData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of SapDatabaseInstanceData. </summary>

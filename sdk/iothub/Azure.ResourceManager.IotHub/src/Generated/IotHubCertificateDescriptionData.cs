@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.IotHub
 {
-    /// <summary> A class representing the IotHubCertificateDescription data model. </summary>
+    /// <summary>
+    /// A class representing the IotHubCertificateDescription data model.
+    /// The X509 Certificate.
+    /// </summary>
     public partial class IotHubCertificateDescriptionData : ResourceData
     {
         /// <summary> Initializes a new instance of IotHubCertificateDescriptionData. </summary>

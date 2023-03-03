@@ -11,7 +11,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary> A class representing the SlotConfigNamesResource data model. </summary>
+    /// <summary>
+    /// A class representing the SlotConfigNamesResource data model.
+    /// Slot Config names azure resource.
+    /// </summary>
     public partial class SlotConfigNamesResourceData : ResourceData
     {
         /// <summary> Initializes a new instance of SlotConfigNamesResourceData. </summary>

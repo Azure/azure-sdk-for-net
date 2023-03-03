@@ -14,7 +14,10 @@ using Azure.ResourceManager.StreamAnalytics.Models;
 
 namespace Azure.ResourceManager.StreamAnalytics
 {
-    /// <summary> A class representing the StreamingJob data model. </summary>
+    /// <summary>
+    /// A class representing the StreamingJob data model.
+    /// A streaming job object, containing all information associated with the named streaming job.
+    /// </summary>
     public partial class StreamingJobData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of StreamingJobData. </summary>

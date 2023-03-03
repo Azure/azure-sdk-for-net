@@ -10,7 +10,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Synapse
 {
-    /// <summary> A class representing the SynapseWorkloadGroup data model. </summary>
+    /// <summary>
+    /// A class representing the SynapseWorkloadGroup data model.
+    /// Workload group operations for a sql pool
+    /// </summary>
     public partial class SynapseWorkloadGroupData : ResourceData
     {
         /// <summary> Initializes a new instance of SynapseWorkloadGroupData. </summary>

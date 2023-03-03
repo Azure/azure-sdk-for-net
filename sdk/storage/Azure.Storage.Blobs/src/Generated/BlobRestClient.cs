@@ -1151,6 +1151,91 @@ namespace Azure.Storage.Blobs
             }
         }
 
+        internal HttpMessage CreateAcquireLeaseRequest(int? timeout, long? duration, string proposedLeaseId, string ifTags, RequestConditions requestConditions, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier201);
+            var request = message.Request;
+            request.Method = RequestMethod.Put;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_url, false);
+            uri.AppendQuery("comp", "lease", true);
+            if (timeout != null)
+            {
+                uri.AppendQuery("timeout", timeout.Value, true);
+            }
+            request.Uri = uri;
+            request.Headers.Add("x-ms-lease-action", "acquire");
+            if (duration != null)
+            {
+                request.Headers.Add("x-ms-lease-duration", duration.Value);
+            }
+            if (proposedLeaseId != null)
+            {
+                request.Headers.Add("x-ms-proposed-lease-id", proposedLeaseId);
+            }
+            if (ifTags != null)
+            {
+                request.Headers.Add("x-ms-if-tags", ifTags);
+            }
+            request.Headers.Add("x-ms-version", _version);
+            request.Headers.Add("Accept", "application/xml");
+            if (requestConditions != null)
+            {
+                request.Headers.Add(requestConditions, "R");
+            }
+            return message;
+        }
+
+        /// <summary> [Update] The Lease Blob operation establishes and manages a lock on a blob for write and delete operations. </summary>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations&quot;&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
+        /// <param name="duration"> Specifies the duration of the lease, in seconds, or negative one (-1) for a lease that never expires. A non-infinite lease can be between 15 and 60 seconds. A lease duration cannot be changed using renew or change. </param>
+        /// <param name="proposedLeaseId"> Proposed lease ID, in a GUID string format. The Blob service returns 400 (Invalid request) if the proposed lease ID is not in the correct format. See Guid Constructor (String) for a list of valid GUID string formats. </param>
+        /// <param name="ifTags"> Specify a SQL where clause on blob tags to operate only on blobs with a matching value. </param>
+        /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> AcquireLeaseAsync(int? timeout = null, long? duration = null, string proposedLeaseId = null, string ifTags = null, RequestConditions requestConditions = null, RequestContext context = null)
+        {
+            using var scope = ClientDiagnostics.CreateScope("Blob.AcquireLease");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateAcquireLeaseRequest(timeout, duration, proposedLeaseId, ifTags, requestConditions, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> [Update] The Lease Blob operation establishes and manages a lock on a blob for write and delete operations. </summary>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations&quot;&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
+        /// <param name="duration"> Specifies the duration of the lease, in seconds, or negative one (-1) for a lease that never expires. A non-infinite lease can be between 15 and 60 seconds. A lease duration cannot be changed using renew or change. </param>
+        /// <param name="proposedLeaseId"> Proposed lease ID, in a GUID string format. The Blob service returns 400 (Invalid request) if the proposed lease ID is not in the correct format. See Guid Constructor (String) for a list of valid GUID string formats. </param>
+        /// <param name="ifTags"> Specify a SQL where clause on blob tags to operate only on blobs with a matching value. </param>
+        /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response AcquireLease(int? timeout = null, long? duration = null, string proposedLeaseId = null, string ifTags = null, RequestConditions requestConditions = null, RequestContext context = null)
+        {
+            using var scope = ClientDiagnostics.CreateScope("Blob.AcquireLease");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateAcquireLeaseRequest(timeout, duration, proposedLeaseId, ifTags, requestConditions, context);
+                return _pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         internal HttpMessage CreateReleaseLeaseRequest(string leaseId, int? timeout, DateTimeOffset? ifModifiedSince, DateTimeOffset? ifUnmodifiedSince, string ifMatch, string ifNoneMatch, string ifTags)
         {
             var message = _pipeline.CreateMessage();
@@ -2506,5 +2591,7 @@ namespace Azure.Storage.Blobs
 
         private static ResponseClassifier _responseClassifier200;
         private static ResponseClassifier ResponseClassifier200 => _responseClassifier200 ??= new StatusCodeClassifier(stackalloc ushort[] { 200 });
+        private static ResponseClassifier _responseClassifier201;
+        private static ResponseClassifier ResponseClassifier201 => _responseClassifier201 ??= new StatusCodeClassifier(stackalloc ushort[] { 201 });
     }
 }

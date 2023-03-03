@@ -12,7 +12,10 @@ using Azure.ResourceManager.Workloads.Models;
 
 namespace Azure.ResourceManager.Workloads
 {
-    /// <summary> A class representing the SapProviderInstance data model. </summary>
+    /// <summary>
+    /// A class representing the SapProviderInstance data model.
+    /// A provider instance associated with SAP monitor.
+    /// </summary>
     public partial class SapProviderInstanceData : ResourceData
     {
         /// <summary> Initializes a new instance of SapProviderInstanceData. </summary>

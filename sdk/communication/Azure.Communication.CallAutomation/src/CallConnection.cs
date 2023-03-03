@@ -294,8 +294,6 @@ namespace Azure.Communication.CallAutomation
         {
             TransferToParticipantRequestInternal request = new TransferToParticipantRequestInternal(CommunicationIdentifierSerializer.Serialize(options.CallInvite.Target));
 
-            request.TransfereeCallerId = options.CallInvite.SourceCallerIdNumber == null ? null : new PhoneNumberIdentifierModel(options.CallInvite.SourceCallerIdNumber.PhoneNumber);
-
             request.CustomContext = new CustomContextInternal(
                 options.CallInvite.SipHeaders == null ? new ChangeTrackingDictionary<string, string>() : options.CallInvite.SipHeaders,
                 options.CallInvite.VoipHeaders == null ? new ChangeTrackingDictionary<string, string>() : options.CallInvite.VoipHeaders);

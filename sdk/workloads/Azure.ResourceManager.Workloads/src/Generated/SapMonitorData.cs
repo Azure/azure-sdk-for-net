@@ -13,7 +13,10 @@ using Azure.ResourceManager.Workloads.Models;
 
 namespace Azure.ResourceManager.Workloads
 {
-    /// <summary> A class representing the SapMonitor data model. </summary>
+    /// <summary>
+    /// A class representing the SapMonitor data model.
+    /// SAP monitor info on Azure (ARM properties and SAP monitor properties)
+    /// </summary>
     public partial class SapMonitorData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of SapMonitorData. </summary>

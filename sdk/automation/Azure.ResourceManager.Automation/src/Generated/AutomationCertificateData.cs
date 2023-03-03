@@ -11,7 +11,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Automation
 {
-    /// <summary> A class representing the AutomationCertificate data model. </summary>
+    /// <summary>
+    /// A class representing the AutomationCertificate data model.
+    /// Definition of the certificate.
+    /// </summary>
     public partial class AutomationCertificateData : ResourceData
     {
         /// <summary> Initializes a new instance of AutomationCertificateData. </summary>
