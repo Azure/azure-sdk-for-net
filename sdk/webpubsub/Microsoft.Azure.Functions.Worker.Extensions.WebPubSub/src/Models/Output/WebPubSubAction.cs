@@ -10,14 +10,14 @@ namespace Microsoft.Azure.Functions.Worker
     {
         private static string _actionName;
 
-        internal string ActionName
+        /// <summary>
+        /// Readonly name to deserialize to correct WebPubSubAction.
+        /// </summary>
+        public string ActionName
         {
             get
             {
-                if (_actionName == null)
-                {
-                    _actionName = GetType().Name.Replace("Action", "");
-                }
+                _actionName ??= GetType().Name.Replace("Action", "");
                 return _actionName;
             }
         }

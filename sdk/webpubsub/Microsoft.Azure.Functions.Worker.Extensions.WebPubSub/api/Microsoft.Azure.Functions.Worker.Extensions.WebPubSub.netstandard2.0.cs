@@ -182,6 +182,7 @@ namespace Microsoft.Azure.Functions.Worker
     public abstract partial class WebPubSubAction
     {
         protected WebPubSubAction() { }
+        public string ActionName { get { throw null; } }
     }
     public sealed partial class WebPubSubClientCertificate
     {
