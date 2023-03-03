@@ -19,7 +19,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             {
                 return null;
             }
-            ApiVersion apiVersion = default;
+            string apiVersion = default;
             string modelId = default;
             StringIndexType stringIndexType = default;
             string content = default;
@@ -34,7 +34,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             {
                 if (property.NameEquals("apiVersion"u8))
                 {
-                    apiVersion = new ApiVersion(property.Value.GetString());
+                    apiVersion = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("modelId"u8))

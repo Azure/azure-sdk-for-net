@@ -34,7 +34,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <returns> A new <see cref="DocumentAnalysis.AddressValue"/> instance for mocking. </returns>
         public static AddressValue AddressValue(string houseNumber = null, string poBox = null, string road = null, string city = null, string state = null, string postalCode = null, string countryRegion = null, string streetAddress = null)
         {
-            return new AddressValue(houseNumber, poBox, road, city, state, postalCode, countryRegion, streetAddress);
+            return new AddressValue(houseNumber, poBox, road, city, state, postalCode, countryRegion, streetAddress, unit: null, cityDistrict: null, stateDistrict: null, suburb: null, house: null, level: null);
         }
 
         /// <summary> Initializes a new instance of AnalyzedDocument. </summary>
@@ -90,7 +90,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <returns> A new <see cref="DocumentAnalysis.CurrencyValue"/> instance for mocking. </returns>
         public static CurrencyValue CurrencyValue(double amount = default, string symbol = null)
         {
-            return new CurrencyValue(amount, symbol);
+            return new CurrencyValue(amount, symbol, currencyCode: null);
         }
 
         /// <summary> Initializes a new instance of DocumentTypeDetails. </summary>
@@ -268,7 +268,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <returns> A new <see cref="DocumentAnalysis.DocumentKeyValuePair"/> instance for mocking. </returns>
         public static DocumentKeyValuePair DocumentKeyValuePair(DocumentKeyValueElement key = null, DocumentKeyValueElement value = null, float confidence = default)
         {
-            return new DocumentKeyValuePair(key, value, confidence);
+            return new DocumentKeyValuePair(key, value, commonName: null, confidence);
         }
 
         /// <summary> Initializes a new instance of DocumentLanguage. </summary>
@@ -363,7 +363,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             tags ??= new Dictionary<string, string>();
             documentTypes ??= new Dictionary<string, DocumentTypeDetails>();
 
-            return new DocumentModelDetails(modelId, description, createdOn, apiVersion: null, tags, documentTypes);
+            return new DocumentModelDetails(modelId, description, createdOn, expirationDateTime: null, apiVersion: null, tags, documentTypes);
         }
 
         /// <summary> Initializes a new instance of DocumentModelSummary. </summary>
@@ -376,7 +376,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         {
             tags ??= new Dictionary<string, string>();
 
-            return new DocumentModelSummary(modelId, description, createdOn, apiVersion: null, tags);
+            return new DocumentModelSummary(modelId, description, createdOn, expirationDateTime: null, apiVersion: null, tags);
         }
 
         /// <summary> Initializes a new instance of DocumentPage. </summary>
@@ -443,7 +443,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         {
             spans ??= new List<DocumentSpan>();
 
-            return new DocumentStyle(isHandwritten, spans?.ToList(), confidence);
+            return new DocumentStyle(isHandwritten, similarFontFamily: null, fontStyle: null, fontWeight: null, color: null, backgroundColor: null, spans?.ToList(), confidence);
         }
 
         /// <summary> Initializes a new instance of DocumentTable. </summary>

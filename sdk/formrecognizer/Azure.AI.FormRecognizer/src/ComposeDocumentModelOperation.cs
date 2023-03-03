@@ -107,7 +107,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             await _operationInternal.WaitForCompletionAsync(pollingInterval, cancellationToken).ConfigureAwait(false);
 
         internal ComposeDocumentModelOperation(
-            string location,
+            Uri location,
             Response postResponse,
             DocumentAnalysisRestClient allOperations,
             ClientDiagnostics diagnostics)
@@ -116,7 +116,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             _diagnostics = diagnostics;
             _operationInternal = new(_diagnostics, this, rawResponse: postResponse);
 
-            Id = location.Split('/').Last().Split('?').FirstOrDefault();
+            Id = location.AbsoluteUri.Split('/').Last().Split('?').FirstOrDefault();
         }
 
         /// <summary>
@@ -168,8 +168,8 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         async ValueTask<OperationState<DocumentModelDetails>> IOperation<DocumentModelDetails>.UpdateStateAsync(bool async, CancellationToken cancellationToken)
         {
             Response<OperationDetails> response = async
-                ? await _serviceClient.GetOperationAsync(Id, cancellationToken).ConfigureAwait(false)
-                : _serviceClient.GetOperation(Id, cancellationToken);
+                ? await _serviceClient.MiscellaneousGetOperationAsync(Id, cancellationToken).ConfigureAwait(false)
+                : _serviceClient.MiscellaneousGetOperation(Id, cancellationToken);
 
             DocumentOperationStatus status = response.Value.Status;
             Response rawResponse = response.GetRawResponse();

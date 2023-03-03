@@ -15,6 +15,9 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         {
             ContentType1.ApplicationOctetStream => "application/octet-stream",
             ContentType1.ApplicationPdf => "application/pdf",
+            ContentType1.ApplicationVndOpenxmlformatsOfficedocumentPresentationmlPresentation => "application/vnd.openxmlformats-officedocument.presentationml.presentation",
+            ContentType1.ApplicationVndOpenxmlformatsOfficedocumentSpreadsheetmlSheet => "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+            ContentType1.ApplicationVndOpenxmlformatsOfficedocumentWordprocessingmlDocument => "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
             ContentType1.ImageBmp => "image/bmp",
             ContentType1.ImageHeif => "image/heif",
             ContentType1.ImageJpeg => "image/jpeg",
@@ -27,6 +30,9 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         {
             if (StringComparer.OrdinalIgnoreCase.Equals(value, "application/octet-stream")) return ContentType1.ApplicationOctetStream;
             if (StringComparer.OrdinalIgnoreCase.Equals(value, "application/pdf")) return ContentType1.ApplicationPdf;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "application/vnd.openxmlformats-officedocument.presentationml.presentation")) return ContentType1.ApplicationVndOpenxmlformatsOfficedocumentPresentationmlPresentation;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")) return ContentType1.ApplicationVndOpenxmlformatsOfficedocumentSpreadsheetmlSheet;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "application/vnd.openxmlformats-officedocument.wordprocessingml.document")) return ContentType1.ApplicationVndOpenxmlformatsOfficedocumentWordprocessingmlDocument;
             if (StringComparer.OrdinalIgnoreCase.Equals(value, "image/bmp")) return ContentType1.ImageBmp;
             if (StringComparer.OrdinalIgnoreCase.Equals(value, "image/heif")) return ContentType1.ImageHeif;
             if (StringComparer.OrdinalIgnoreCase.Equals(value, "image/jpeg")) return ContentType1.ImageJpeg;

@@ -7,7 +7,6 @@ using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.DocumentAnalysis
 {
-    [CodeGenModel("DocumentPage")]
     public partial class DocumentPage
     {
         /// <summary> Initializes a new instance of DocumentPage. </summary>
@@ -64,6 +63,31 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// pixel. For PDF, the unit is inch.
         /// </summary>
         public DocumentPageLengthUnit? Unit { get; private set; }
+
+        /// <summary>
+        /// Kind of document page.
+        /// </summary>
+        internal DocumentPageKind Kind { get; }
+
+        /// <summary>
+        /// Extracted annotations from the page.
+        /// </summary>
+        internal IReadOnlyList<DocumentAnnotation> Annotations { get; }
+
+        /// <summary>
+        /// Extracted barcodes from the page.
+        /// </summary>
+        internal IReadOnlyList<DocumentBarcode> Barcodes { get; }
+
+        /// <summary>
+        /// Extracted formulas from the page.
+        /// </summary>
+        internal IReadOnlyList<DocumentFormula> Formulas { get; }
+
+        /// <summary>
+        /// Extracted images from the page.
+        /// </summary>
+        internal IReadOnlyList<DocumentImage> Images { get; }
 
         [CodeGenMember("Unit")]
         private V3LengthUnit? UnitPrivate

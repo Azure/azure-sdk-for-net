@@ -5,19 +5,20 @@
 
 #nullable disable
 
+using System;
 using Azure;
 using Azure.Core;
 
 namespace Azure.AI.FormRecognizer
 {
-    internal partial class DocumentAnalysisBuildDocumentModelHeaders
+    internal partial class DocumentAnalysisDocumentClassifiersBuildClassifierHeaders
     {
         private readonly Response _response;
-        public DocumentAnalysisBuildDocumentModelHeaders(Response response)
+        public DocumentAnalysisDocumentClassifiersBuildClassifierHeaders(Response response)
         {
             _response = response;
         }
         /// <summary> Operation result URL. </summary>
-        public string OperationLocation => _response.Headers.TryGetValue("Operation-Location", out string value) ? value : null;
+        public Uri OperationLocation => _response.Headers.TryGetValue("Operation-Location", out Uri value) ? value : null;
     }
 }

@@ -7,7 +7,6 @@ using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.DocumentAnalysis
 {
-    [CodeGenModel("DocumentSpan")]
     public readonly partial struct DocumentSpan : IEquatable<DocumentSpan>
     {
         /// <summary>

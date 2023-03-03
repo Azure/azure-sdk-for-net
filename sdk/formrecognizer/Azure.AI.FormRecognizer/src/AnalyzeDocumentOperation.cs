@@ -104,7 +104,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <param name="diagnostics">The client diagnostics for exception creation in case of failure.</param>
         /// <param name="operationLocation">The address of the long-running operation. It can be obtained from the response headers upon starting the operation.</param>
         /// <param name="postResponse">Response from the POSt request that initiated the operation.</param>
-        internal AnalyzeDocumentOperation(DocumentAnalysisRestClient serviceClient, ClientDiagnostics diagnostics, string operationLocation, Response postResponse)
+        internal AnalyzeDocumentOperation(DocumentAnalysisRestClient serviceClient, ClientDiagnostics diagnostics, Uri operationLocation, Response postResponse)
         {
             _serviceClient = serviceClient;
             _diagnostics = diagnostics;
@@ -116,7 +116,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             // TODO: Add validation here (should we store _resuldId and _modelId as GUIDs?)
             // https://github.com/Azure/azure-sdk-for-net/issues/10385
 
-            string[] substrs = operationLocation.Split('/', '?');
+            string[] substrs = operationLocation.AbsoluteUri.Split('/', '?');
 
             _resultId = substrs[substrs.Length - 2];
             _modelId = substrs[substrs.Length - 4];
@@ -184,8 +184,8 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         async ValueTask<OperationState<AnalyzeResult>> IOperation<AnalyzeResult>.UpdateStateAsync(bool async, CancellationToken cancellationToken)
         {
             Response<AnalyzeResultOperation> response = async
-                ? await _serviceClient.GetAnalyzeDocumentResultAsync(_modelId, _resultId, cancellationToken).ConfigureAwait(false)
-                : _serviceClient.GetAnalyzeDocumentResult(_modelId, _resultId, cancellationToken);
+                ? await _serviceClient.DocumentModelsGetAnalyzeResultAsync(_modelId, _resultId, cancellationToken).ConfigureAwait(false)
+                : _serviceClient.DocumentModelsGetAnalyzeResult(_modelId, _resultId, cancellationToken);
 
             AnalyzeResultOperationStatus status = response.Value.Status;
             Response rawResponse = response.GetRawResponse();

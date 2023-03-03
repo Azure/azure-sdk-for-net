@@ -507,21 +507,6 @@ namespace Azure.AI.FormRecognizer.Models
         }
 
         #region generated methods
-        /// <summary> Initializes a new instance of AddressValue. </summary>
-        /// <param name="houseNumber"> House or building number. </param>
-        /// <param name="poBox"> Post office box number. </param>
-        /// <param name="road"> Street name. </param>
-        /// <param name="city"> Name of city, town, village, etc. </param>
-        /// <param name="state"> First-level administrative division. </param>
-        /// <param name="postalCode"> Postal code used for mail sorting. </param>
-        /// <param name="countryRegion"> Country/region. </param>
-        /// <param name="streetAddress"> Street-level address, excluding city, state, countryRegion, and postalCode. </param>
-        /// <returns> A new <see cref="DocumentAnalysis.AddressValue"/> instance for mocking. </returns>
-        internal static AddressValue AddressValue(string houseNumber = null, string poBox = null, string road = null, string city = null, string state = null, string postalCode = null, string countryRegion = null, string streetAddress = null)
-        {
-            return new AddressValue(houseNumber, poBox, road, city, state, postalCode, countryRegion, streetAddress);
-        }
-
         /// <summary> Initializes a new instance of BoundingRegion. </summary>
         /// <param name="pageNumber"> 1-based page number of page containing the bounding region. </param>
         /// <param name="polygon"> Bounding polygon on the page, or the entire page if not specified. </param>
@@ -569,11 +554,22 @@ namespace Azure.AI.FormRecognizer.Models
 
         /// <summary> Initializes a new instance of CurrencyValue. </summary>
         /// <param name="amount"> Currency amount. </param>
-        /// <param name="currencySymbol"> Currency symbol label, if any. </param>
+        /// <param name="symbol"> Currency symbol label, if any. </param>
+        /// <param name="currencyCode"> Resolved currency code (ISO 4217), if any. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="symbol"/> or <paramref name="currencyCode"/> is null. </exception>
         /// <returns> A new <see cref="DocumentAnalysis.CurrencyValue"/> instance for mocking. </returns>
-        internal static CurrencyValue CurrencyValue(double amount = default, string currencySymbol = null)
+        internal static CurrencyValue CurrencyValue(double amount = default, string symbol = null, string currencyCode = null)
         {
-            return new CurrencyValue(amount, currencySymbol);
+            if (symbol == null)
+            {
+                throw new ArgumentNullException(nameof(symbol));
+            }
+            if (currencyCode == null)
+            {
+                throw new ArgumentNullException(nameof(currencyCode));
+            }
+
+            return new CurrencyValue(amount, symbol, currencyCode);
         }
 
         /// <summary> Initializes a new instance of DocumentLanguage. </summary>
@@ -632,11 +628,12 @@ namespace Azure.AI.FormRecognizer.Models
         /// <summary> Initializes a new instance of DocumentKeyValuePair. </summary>
         /// <param name="key"> Field label of the key-value pair. </param>
         /// <param name="value"> Field value of the key-value pair. </param>
+        /// <param name="commonName"> Common name of the key-value pair. </param>
         /// <param name="confidence"> Confidence of correctly extracting the key-value pair. </param>
         /// <returns> A new <see cref="DocumentAnalysis.DocumentKeyValuePair"/> instance for mocking. </returns>
-        internal static DocumentKeyValuePair DocumentKeyValuePair(DocumentKeyValueElement key = null, DocumentKeyValueElement value = null, float confidence = default)
+        internal static DocumentKeyValuePair DocumentKeyValuePair(DocumentKeyValueElement key = null, DocumentKeyValueElement value = null, string commonName = null, float confidence = default)
         {
-            return new DocumentKeyValuePair(key, value, confidence);
+            return new DocumentKeyValuePair(key, value, commonName, confidence);
         }
 
         /// <summary> Initializes a new instance of DocumentKeyValueElement. </summary>
@@ -666,18 +663,6 @@ namespace Azure.AI.FormRecognizer.Models
             fields ??= new Dictionary<string, DocumentField>();
 
             return new AnalyzedDocument(documentType, boundingRegions?.ToList(), spans?.ToList(), fields, confidence);
-        }
-
-        /// <summary> Initializes a new instance of DocumentStyle. </summary>
-        /// <param name="isHandwritten"> Is content handwritten?. </param>
-        /// <param name="spans"> Location of the text elements in the concatenated content the style applies to. </param>
-        /// <param name="confidence"> Confidence of correctly identifying the style. </param>
-        /// <returns> A new <see cref="DocumentAnalysis.DocumentStyle"/> instance for mocking. </returns>
-        internal static DocumentStyle DocumentStyle(bool? isHandwritten = null, IEnumerable<DocumentSpan> spans = null, float confidence = default)
-        {
-            spans ??= new List<DocumentSpan>();
-
-            return new DocumentStyle(isHandwritten, spans?.ToList(), confidence);
         }
 
         /// <summary> Initializes a new instance of DocumentModelBuildOperationDetails. </summary>
@@ -738,36 +723,6 @@ namespace Azure.AI.FormRecognizer.Models
             tags ??= new Dictionary<string, string>();
 
             return new DocumentModelCopyToOperationDetails(operationId, status, percentCompleted, createdOn, lastUpdatedOn, kind, resourceLocation, apiVersion, tags, jsonError, result);
-        }
-
-        /// <summary> Initializes a new instance of DocumentModelDetails. </summary>
-        /// <param name="modelId"> Unique document model name. </param>
-        /// <param name="description"> Document model description. </param>
-        /// <param name="createdOn"> Date and time (UTC) when the document model was created. </param>
-        /// <param name="apiVersion"> API version used to create this document model. </param>
-        /// <param name="tags"> List of key-value tag attributes associated with the document model. </param>
-        /// <param name="docTypes"> Supported document types. </param>
-        /// <returns> A new <see cref="DocumentAnalysis.DocumentModelDetails"/> instance for mocking. </returns>
-        internal static DocumentModelDetails DocumentModelDetails(string modelId = null, string description = null, DateTimeOffset createdOn = default, string apiVersion = null, IReadOnlyDictionary<string, string> tags = null, IReadOnlyDictionary<string, DocumentTypeDetails> docTypes = null)
-        {
-            tags ??= new Dictionary<string, string>();
-            docTypes ??= new Dictionary<string, DocumentTypeDetails>();
-
-            return new DocumentModelDetails(modelId, description, createdOn, apiVersion, tags, docTypes);
-        }
-
-        /// <summary> Initializes a new instance of DocumentModelSummary. </summary>
-        /// <param name="modelId"> Unique model name. </param>
-        /// <param name="description"> Model description. </param>
-        /// <param name="createdOn"> Date and time (UTC) when the model was created. </param>
-        /// <param name="apiVersion"> API version used to create this model. </param>
-        /// <param name="tags"> List of key-value tag attributes associated with the model. </param>
-        /// <returns> A new <see cref="DocumentAnalysis.DocumentModelSummary"/> instance for mocking. </returns>
-        internal static DocumentModelSummary DocumentModelSummary(string modelId = null, string description = null, DateTimeOffset createdOn = default, string apiVersion = null, IReadOnlyDictionary<string, string> tags = null)
-        {
-            tags ??= new Dictionary<string, string>();
-
-            return new DocumentModelSummary(modelId, description, createdOn, apiVersion, tags);
         }
 
         /// <summary> Initializes a new instance of OperationSummary. </summary>

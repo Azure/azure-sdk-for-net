@@ -11,7 +11,6 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
     /// The type of the value of a <see cref="DocumentField"/>.
     /// </summary>
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Naming", "CA1720:Identifier contains type name")]
-    [CodeGenModel("DocumentFieldType")]
     public enum DocumentFieldType
     {
         /// <summary>
@@ -89,6 +88,11 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <summary>
         /// Used for <see cref="AddressValue"/> type.
         /// </summary>
-        Address
+        Address,
+
+        /// <summary>
+        /// Used for <see cref="bool"/> type.
+        /// </summary>
+        Boolean
     }
 }

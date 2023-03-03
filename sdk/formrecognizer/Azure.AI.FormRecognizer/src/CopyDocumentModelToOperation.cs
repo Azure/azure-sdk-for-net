@@ -94,13 +94,13 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <param name="diagnostics">The client diagnostics for exception creation in case of failure.</param>
         /// <param name="operationLocation">The address of the long-running operation. It can be obtained from the response headers upon starting the operation.</param>
         /// <param name="postResponse">Response from the POSt request that initiated the operation.</param>
-        internal CopyDocumentModelToOperation(DocumentAnalysisRestClient serviceClient, ClientDiagnostics diagnostics, string operationLocation, Response postResponse)
+        internal CopyDocumentModelToOperation(DocumentAnalysisRestClient serviceClient, ClientDiagnostics diagnostics, Uri operationLocation, Response postResponse)
         {
             _serviceClient = serviceClient;
             _diagnostics = diagnostics;
             _operationInternal = new(_diagnostics, this, rawResponse: postResponse);
 
-            Id = operationLocation.Split('/').Last().Split('?').FirstOrDefault();
+            Id = operationLocation.AbsoluteUri.Split('/').Last().Split('?').FirstOrDefault();
         }
 
         /// <summary>
@@ -173,8 +173,8 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         async ValueTask<OperationState<DocumentModelDetails>> IOperation<DocumentModelDetails>.UpdateStateAsync(bool async, CancellationToken cancellationToken)
         {
             Response<OperationDetails> response = async
-                ? await _serviceClient.GetOperationAsync(Id, cancellationToken).ConfigureAwait(false)
-                : _serviceClient.GetOperation(Id, cancellationToken);
+                ? await _serviceClient.MiscellaneousGetOperationAsync(Id, cancellationToken).ConfigureAwait(false)
+                : _serviceClient.MiscellaneousGetOperation(Id, cancellationToken);
 
             DocumentOperationStatus status = response.Value.Status;
             Response rawResponse = response.GetRawResponse();

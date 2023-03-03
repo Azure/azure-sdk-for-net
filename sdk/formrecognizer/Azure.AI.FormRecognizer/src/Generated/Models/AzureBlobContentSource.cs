@@ -23,8 +23,17 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             ContainerUrl = containerUrl;
         }
 
+        /// <summary> Initializes a new instance of AzureBlobContentSource. </summary>
+        /// <param name="containerUrl"> Azure Blob Storage container URL. </param>
+        /// <param name="prefix"> Blob name prefix. </param>
+        internal AzureBlobContentSource(Uri containerUrl, string prefix)
+        {
+            ContainerUrl = containerUrl;
+            Prefix = prefix;
+        }
+
         /// <summary> Azure Blob Storage container URL. </summary>
-        public Uri ContainerUrl { get; }
+        public Uri ContainerUrl { get; set; }
         /// <summary> Blob name prefix. </summary>
         public string Prefix { get; set; }
     }

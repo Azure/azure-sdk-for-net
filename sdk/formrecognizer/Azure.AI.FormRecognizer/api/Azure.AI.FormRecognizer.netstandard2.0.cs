@@ -513,6 +513,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         Signature = 11,
         Currency = 12,
         Address = 13,
+        Boolean = 14,
     }
     public partial class DocumentFieldValue
     {
