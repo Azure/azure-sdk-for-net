@@ -29,10 +29,10 @@ namespace Azure.Monitor.OpenTelemetry
                 _configuration.GetSection(AzureMonitorSectionFromConfig).Bind(options);
             }
 
-            string connectionString = Environment.GetEnvironmentVariable(ConnectionStringEnvironmentVariable);
-
             try
             {
+                string connectionString = Environment.GetEnvironmentVariable(ConnectionStringEnvironmentVariable);
+
                 if (!string.IsNullOrWhiteSpace(connectionString))
                 {
                     options.ConnectionString = connectionString;
