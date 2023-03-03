@@ -82,7 +82,7 @@ Note that the `Credential` property is optional. If it is not set, Azure Monitor
 
 ## Key concepts
 
-The Azure Monitor Distro is a distribution package that includes the .NET OpenTelemetry SDK and instrumentation libraries for [ASP.NET Core](https://www.nuget.org/packages/OpenTelemetry.Instrumentation.AspNetCore/), [HttpClient](https://www.nuget.org/packages/OpenTelemetry.Instrumentation.Http/), and [SQLClient](https://www.nuget.org/packages/OpenTelemetry.Instrumentation.SqlClient). Additionally, the distro includes the Azure Monitor exporter, which enables users to easily send telemetry data to Azure Monitor.
+The Azure Monitor Distro is a distribution package which enables users to send telemetry data to Azure Monitor. It includes the .NET OpenTelemetry SDK and instrumentation libraries for [ASP.NET Core](https://www.nuget.org/packages/OpenTelemetry.Instrumentation.AspNetCore/), [HttpClient](https://www.nuget.org/packages/OpenTelemetry.Instrumentation.Http/), and [SQLClient](https://www.nuget.org/packages/OpenTelemetry.Instrumentation.SqlClient).
 
 ## Examples
 
