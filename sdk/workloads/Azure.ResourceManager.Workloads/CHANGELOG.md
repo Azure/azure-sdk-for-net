@@ -1,5 +1,12 @@
 # Release History
 
+## 1.0.0 (2023-05-05)
+
+### Features Added
+
+  - Updated descriptions across Resource Types.
+  - Removed unused properties from ImageReference : ExactVersion, SharedGalleryImageId
+
 ## 1.0.0-beta.3 (2023-03-06)
 
 ### Features Added
