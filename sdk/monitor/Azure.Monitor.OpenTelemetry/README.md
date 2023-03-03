@@ -65,7 +65,7 @@ Note that in the examples above, `AddAzureMonitor` is added to the `IServiceColl
 
 ### Authenticate the client
 
-Azure Active Directory (AAD) authentication is an optional feature that can be used with Azure Monitor Distro. To enable AAD authentication, set the `Credential` property in `AzureMonitorOptions`. This is made easy with the [Azure Identity library][https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/identity/Azure.Identity/README.md], which provides support for authenticating Azure SDK clients with their corresponding Azure services.
+Azure Active Directory (AAD) authentication is an optional feature that can be used with Azure Monitor Distro. To enable AAD authentication, set the `Credential` property in `AzureMonitorOptions`. This is made easy with the [Azure Identity library](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/identity/Azure.Identity/README.md), which provides support for authenticating Azure SDK clients with their corresponding Azure services.
 
 ```C#
 // Call AddAzureMonitor and set Credential to authenticate through Active Directory.
