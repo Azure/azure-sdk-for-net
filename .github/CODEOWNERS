@@ -592,7 +592,7 @@
 /sdk/objectanchors/                                                @crtreasu @rgarcia @JoshLove-msft
 
 # PRLabel: %Open AI
-/sdk/openai/                                                       @jpalvarezl @trrwilson @joseharriaga
+/sdk/openai/                                                       @jpalvarezl @trrwilson @joseharriaga @m-nash
 
 # PRLabel: %Operational Insights
 # ServiceLabel: %Operational Insights %Service Attention
