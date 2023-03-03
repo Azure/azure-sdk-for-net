@@ -10,11 +10,11 @@ using NUnit.Framework;
 
 namespace Azure.Containers.ContainerRegistry.Tests.Samples
 {
-    public partial class UploadArtifactSample : ContainerRegistrySamplesBase
+    public partial class UploadOciImageSample : ContainerRegistrySamplesBase
     {
         [Test]
         [AsyncOnly]
-        public async Task UploadArtifactAsync()
+        public async Task UploadOciImageAsync()
         {
             Environment.SetEnvironmentVariable("REGISTRY_ENDPOINT", TestEnvironment.Endpoint);
 
@@ -23,7 +23,7 @@ namespace Azure.Containers.ContainerRegistry.Tests.Samples
             // Get the service endpoint from the environment
             Uri endpoint = new Uri(Environment.GetEnvironmentVariable("REGISTRY_ENDPOINT"));
 
-            string repository = "sample-artifact";
+            string repository = "sample-oci-image";
             string tag = "demo";
 
             // Create a new ContainerRegistryBlobClient
@@ -34,33 +34,33 @@ namespace Azure.Containers.ContainerRegistry.Tests.Samples
 
             #endregion
 
-            #region Snippet:ContainerRegistry_Samples_UploadArtifactAsync
+            #region Snippet:ContainerRegistry_Samples_UploadOciImageAsync
 
-            // Create a manifest to list files in this artifact
+            // Create a manifest to list files in this image
             OciImageManifest manifest = new();
 
             // Upload a config file
             using Stream config = BinaryData.FromString("Sample config").ToStream();
-            var uploadConfigResult = await client.UploadBlobAsync(config);
+            UploadBlobResult uploadConfigResult = await client.UploadBlobAsync(config);
 
             // Update manifest with config info
             manifest.Config = new OciBlobDescriptor()
             {
-                Digest = uploadConfigResult.Value.Digest,
-                Size = uploadConfigResult.Value.SizeInBytes,
-                MediaType = OciMediaType.ImageConfig.ToString()
+                Digest = uploadConfigResult.Digest,
+                SizeInBytes = uploadConfigResult.SizeInBytes,
+                MediaType = "application/vnd.oci.image.config.v1+json"
             };
 
             // Upload a layer file
             using Stream layer = BinaryData.FromString("Sample layer").ToStream();
-            var uploadLayerResult = await client.UploadBlobAsync(layer);
+            UploadBlobResult uploadLayerResult = await client.UploadBlobAsync(layer);
 
             // Update manifest with layer info
             manifest.Layers.Add(new OciBlobDescriptor()
             {
-                Digest = uploadLayerResult.Value.Digest,
-                Size = uploadLayerResult.Value.SizeInBytes,
-                MediaType = OciMediaType.ImageLayer.ToString()
+                Digest = uploadLayerResult.Digest,
+                SizeInBytes = uploadLayerResult.SizeInBytes,
+                MediaType = "application/vnd.oci.image.layer.v1.tar"
             });
 
             // Finally, upload the manifest file
@@ -71,14 +71,14 @@ namespace Azure.Containers.ContainerRegistry.Tests.Samples
 
         [Test]
         [AsyncOnly]
-        public async Task DownloadArtifactAsync()
+        public async Task DownloadOciImageAsync()
         {
             Environment.SetEnvironmentVariable("REGISTRY_ENDPOINT", TestEnvironment.Endpoint);
 
             // Get the service endpoint from the environment
             Uri endpoint = new Uri(Environment.GetEnvironmentVariable("REGISTRY_ENDPOINT"));
 
-            string repository = "sample-artifact";
+            string repository = "sample-oci-image";
             string tag = "demo";
             string path = Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "validate-pull");
             Directory.CreateDirectory(path);
@@ -89,35 +89,34 @@ namespace Azure.Containers.ContainerRegistry.Tests.Samples
                 Audience = ContainerRegistryAudience.AzureResourceManagerPublicCloud
             });
 
-            #region Snippet:ContainerRegistry_Samples_DownloadArtifactAsync
+            #region Snippet:ContainerRegistry_Samples_DownloadOciImageAsync
 
-            // Download the manifest to obtain the list of files in the artifact
+            // Download the manifest to obtain the list of files in the image
             DownloadManifestResult result = await client.DownloadManifestAsync(tag);
             OciImageManifest manifest = result.AsOciManifest();
 
-            await WriteFile(Path.Combine(path, "manifest.json"), result.Content);
+            string manifestFile = Path.Combine(path, "manifest.json");
+            using (FileStream stream = File.Create(manifestFile))
+            {
+                await result.Content.ToStream().CopyToAsync(stream);
+            }
 
             // Download and write out the config
             DownloadBlobResult configBlob = await client.DownloadBlobAsync(manifest.Config.Digest);
 
-            await WriteFile(Path.Combine(path, "config.json"), configBlob.Content);
-
-            // Download and write out the layers
-            foreach (var layerFile in manifest.Layers)
+            string configFile = Path.Combine(path, "config.json");
+            using (FileStream stream = File.Create(configFile))
             {
-                string fileName = Path.Combine(path, TrimSha(layerFile.Digest));
-                using (FileStream fs = File.Create(fileName))
-                {
-                    await client.DownloadBlobToAsync(layerFile.Digest, fs);
-                }
+                await configBlob.Content.ToStream().CopyToAsync(stream);
             }
 
-            // Helper methods
-            async Task WriteFile(string path, BinaryData content)
+            // Download and write out the layers
+            foreach (OciBlobDescriptor layer in manifest.Layers)
             {
-                using (FileStream fs = File.Create(path))
+                string layerFile = Path.Combine(path, TrimSha(layer.Digest));
+                using (FileStream stream = File.Create(layerFile))
                 {
-                    await content.ToStream().CopyToAsync(fs);
+                    await client.DownloadBlobToAsync(layer.Digest, stream);
                 }
             }
 
