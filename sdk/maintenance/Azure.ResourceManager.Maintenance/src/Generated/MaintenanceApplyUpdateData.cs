@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Maintenance
         /// <param name="status"> The status. </param>
         /// <param name="resourceId"> The resourceId. </param>
         /// <param name="lastUpdatedOn"> Last Update time. </param>
-        internal MaintenanceApplyUpdateData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, MaintenanceUpdateStatus? status, ResourceIdentifier resourceId, DateTimeOffset? lastUpdatedOn) : base(id, name, resourceType, systemData)
+        internal MaintenanceApplyUpdateData(ResourceIdentifier id, string name, ResourceType resourceType, ResourceManager.Models.SystemData systemData, MaintenanceUpdateStatus? status, ResourceIdentifier resourceId, DateTimeOffset? lastUpdatedOn) : base(id, name, resourceType, systemData)
         {
             Status = status;
             ResourceId = resourceId;

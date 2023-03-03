@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Maintenance.Models
         /// <param name="location"> Location of the resource. </param>
         /// <param name="maintenanceConfigurationId"> The maintenance configuration Id. </param>
         /// <param name="resourceId"> The unique resourceId. </param>
-        internal MaintenanceConfigurationAssignmentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, ResourceIdentifier maintenanceConfigurationId, ResourceIdentifier resourceId) : base(id, name, resourceType, systemData)
+        internal MaintenanceConfigurationAssignmentData(ResourceIdentifier id, string name, ResourceType resourceType, ResourceManager.Models.SystemData systemData, AzureLocation? location, ResourceIdentifier maintenanceConfigurationId, ResourceIdentifier resourceId) : base(id, name, resourceType, systemData)
         {
             Location = location;
             MaintenanceConfigurationId = maintenanceConfigurationId;
