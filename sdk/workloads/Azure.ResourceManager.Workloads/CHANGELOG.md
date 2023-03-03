@@ -26,10 +26,6 @@ AMS
   - Removed WordPressInstance operations and related models.
   - Removed GetSkus operation and related models.
 
-### Bugs Fixed
-
-### Other Changes
-
 ## 1.0.0-beta.2 (2023-02-16)
 
 ### Features Added
