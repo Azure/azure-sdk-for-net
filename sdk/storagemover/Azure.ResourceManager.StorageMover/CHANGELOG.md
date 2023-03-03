@@ -1,12 +1,6 @@
 # Release History
 
-## 1.0.0 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
-
-### Bugs Fixed
+## 1.0.0 (2023-03-03)
 
 ### Other Changes
 This is the first stable release of StorageMover client library.
