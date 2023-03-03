@@ -7,12 +7,11 @@ using System.Net.Http;
 using Azure.Monitor.OpenTelemetry;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Logging;
-using OpenTelemetry.Extensions.AzureMonitor;
-using OpenTelemetry.Trace;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddAzureMonitor();
+
 /*
 builder.Services.AddAzureMonitor(o =>
 {
@@ -24,9 +23,8 @@ builder.Services.AddAzureMonitor(o =>
 
 // To customize sampling, Set ApplicationInsightsSampler to desired sampling ratio and
 // configure with OpenTelemetryTracerProvider.
-// Please note that ConfigureOpenTelemetryTracerProvider should be called after
-// builder.Services.AddAzureMonitor().
-builder.Services.ConfigureOpenTelemetryTracerProvider((sp, builder) => builder.SetSampler(new ApplicationInsightsSampler(0.9F)));
+// Please note that ConfigureOpenTelemetryTracerProvider should be called after builder.Services.AddAzureMonitor().
+// builder.Services.ConfigureOpenTelemetryTracerProvider((sp, builder) => builder.SetSampler(new ApplicationInsightsSampler(0.9F)));
 
 var app = builder.Build();
 app.MapGet("/", () =>
