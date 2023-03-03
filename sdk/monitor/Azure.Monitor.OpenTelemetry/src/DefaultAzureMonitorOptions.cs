@@ -42,7 +42,6 @@ namespace Azure.Monitor.OpenTelemetry
             {
                 // TODO: Log Error.
             }
-
         }
     }
 }
