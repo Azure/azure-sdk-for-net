@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace Azure.AI.OpenAI.Tests
 {
@@ -27,6 +28,21 @@ namespace Azure.AI.OpenAI.Tests
             Assert.That(client, Is.InstanceOf<OpenAIClient>());
             OpenAIClient tokenClient = GetClientWithCredential();
             Assert.That(tokenClient, Is.InstanceOf<OpenAIClient>());
+        }
+
+        [RecordedTest]
+        [PlaybackOnly("Used only to test against non-Azure OpenAI public endpoint")]
+        public async Task PublicOpenAIEmbeddingsTest()
+        {
+            var client = GetPublicOpenAIClient();
+            Assert.That(client, Is.InstanceOf<OpenAIClient>());
+            EmbeddingsOptions embeddingsRequest = new EmbeddingsOptions("Your text string goes here")
+            {
+                Model = "text-embedding-ada-002"
+            };
+            Assert.That(embeddingsRequest, Is.InstanceOf<EmbeddingsOptions>());
+            Response<Embeddings> response = await client.GetEmbeddingsAsync(EmbeddingsDeploymentId, embeddingsRequest);
+            Assert.That(response, Is.InstanceOf<Response<Embeddings>>());
         }
 
         [RecordedTest]
