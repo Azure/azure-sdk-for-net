@@ -32,9 +32,9 @@ namespace Azure.Identity.Tests
             var options = new InteractiveBrowserCredentialOptions
             {
                 Transport = config.Transport,
-                DisableInstanceDiscovery = config.DisableMetadataDiscovery ?? false,
+                DisableInstanceDiscovery = config.DisableInstanceDiscovery,
                 TokenCachePersistenceOptions = tokenCacheOptions,
-                AdditionallyAllowedTenantsCore = config.AdditionallyAllowedTenants,
+                AdditionallyAllowedTenants = config.AdditionallyAllowedTenants,
                 AuthenticationRecord = new AuthenticationRecord(ExpectedUsername, "login.windows.net", $"{ObjectId}.{resolvedTenantId}", resolvedTenantId, ClientId),
             };
             var pipeline = CredentialPipeline.GetInstance(options);

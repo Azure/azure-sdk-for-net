@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.Compute
         /// <returns> Returns a <see cref="VirtualMachineScaleSetRollingUpgradeResource" /> object. </returns>
         public virtual VirtualMachineScaleSetRollingUpgradeResource GetVirtualMachineScaleSetRollingUpgrade()
         {
-            return new VirtualMachineScaleSetRollingUpgradeResource(Client, new ResourceIdentifier(Id.ToString() + "/rollingUpgrades/latest"));
+            return new VirtualMachineScaleSetRollingUpgradeResource(Client, Id.AppendChildResource("rollingUpgrades", "latest"));
         }
 
         /// <summary> Gets a collection of VirtualMachineScaleSetVmResources in the VirtualMachineScaleSet. </summary>

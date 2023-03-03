@@ -14,7 +14,10 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Orbital
 {
-    /// <summary> A class representing the OrbitalContact data model. </summary>
+    /// <summary>
+    /// A class representing the OrbitalContact data model.
+    /// Customer creates a contact resource for a spacecraft resource.
+    /// </summary>
     public partial class OrbitalContactData : ResourceData
     {
         /// <summary> Initializes a new instance of OrbitalContactData. </summary>

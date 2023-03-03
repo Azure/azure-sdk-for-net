@@ -14,7 +14,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Marketplace
 {
-    /// <summary> A class representing the PrivateStore data model. </summary>
+    /// <summary>
+    /// A class representing the PrivateStore data model.
+    /// The PrivateStore data structure.
+    /// </summary>
     public partial class PrivateStoreData : ResourceData
     {
         /// <summary> Initializes a new instance of PrivateStoreData. </summary>

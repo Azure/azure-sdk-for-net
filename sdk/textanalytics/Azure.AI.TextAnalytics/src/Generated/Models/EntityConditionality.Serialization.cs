@@ -20,8 +20,8 @@ namespace Azure.AI.TextAnalytics
 
         public static EntityConditionality ToEntityConditionality(this string value)
         {
-            if (string.Equals(value, "hypothetical", StringComparison.InvariantCultureIgnoreCase)) return EntityConditionality.Hypothetical;
-            if (string.Equals(value, "conditional", StringComparison.InvariantCultureIgnoreCase)) return EntityConditionality.Conditional;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "hypothetical")) return EntityConditionality.Hypothetical;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "conditional")) return EntityConditionality.Conditional;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown EntityConditionality value.");
         }
     }

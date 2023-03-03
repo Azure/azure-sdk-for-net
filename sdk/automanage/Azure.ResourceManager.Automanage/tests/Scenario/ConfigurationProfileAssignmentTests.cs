@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Automanage.Tests.Scenario
             var rg = await CreateResourceGroup("SDKAutomanage-", DefaultLocation);
 
             // fetch configuration profile collection
-            var profileCollection = rg.GetConfigurationProfiles();
+            var profileCollection = rg.GetAutomanageConfigurationProfiles();
 
             // create configuration profile
             var profile = await CreateConfigurationProfile(profileCollection, profileName);

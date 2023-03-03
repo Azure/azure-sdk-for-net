@@ -10,7 +10,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Synapse
 {
-    /// <summary> A class representing the SynapseDataWarehouseUserActivity data model. </summary>
+    /// <summary>
+    /// A class representing the SynapseDataWarehouseUserActivity data model.
+    /// User activities of a data warehouse
+    /// </summary>
     public partial class SynapseDataWarehouseUserActivityData : ResourceData
     {
         /// <summary> Initializes a new instance of SynapseDataWarehouseUserActivityData. </summary>

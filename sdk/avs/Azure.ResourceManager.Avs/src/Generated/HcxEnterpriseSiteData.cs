@@ -11,7 +11,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Avs
 {
-    /// <summary> A class representing the HcxEnterpriseSite data model. </summary>
+    /// <summary>
+    /// A class representing the HcxEnterpriseSite data model.
+    /// An HCX Enterprise Site resource
+    /// </summary>
     public partial class HcxEnterpriseSiteData : ResourceData
     {
         /// <summary> Initializes a new instance of HcxEnterpriseSiteData. </summary>

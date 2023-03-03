@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         private const string WindowsValue = "Windows";
         private const string VCenterValue = "VCenter";
         private const string VmAppContainerValue = "VMAppContainer";
-        private const string SqlAGWorkLoadContainerValue = "SQLAGWorkLoadContainer";
+        private const string SqlAvailabilityGroupWorkLoadContainerValue = "SQLAGWorkLoadContainer";
         private const string StorageContainerValue = "StorageContainer";
         private const string GenericContainerValue = "GenericContainer";
 
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <summary> VMAppContainer. </summary>
         public static MabServerType VmAppContainer { get; } = new MabServerType(VmAppContainerValue);
         /// <summary> SQLAGWorkLoadContainer. </summary>
-        public static MabServerType SqlAGWorkLoadContainer { get; } = new MabServerType(SqlAGWorkLoadContainerValue);
+        public static MabServerType SqlAvailabilityGroupWorkLoadContainer { get; } = new MabServerType(SqlAvailabilityGroupWorkLoadContainerValue);
         /// <summary> StorageContainer. </summary>
         public static MabServerType StorageContainer { get; } = new MabServerType(StorageContainerValue);
         /// <summary> GenericContainer. </summary>

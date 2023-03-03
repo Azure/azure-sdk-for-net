@@ -14,7 +14,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.HealthcareApis
 {
-    /// <summary> A class representing the DicomService data model. </summary>
+    /// <summary>
+    /// A class representing the DicomService data model.
+    /// The description of Dicom Service
+    /// </summary>
     public partial class DicomServiceData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of DicomServiceData. </summary>

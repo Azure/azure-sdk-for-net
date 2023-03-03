@@ -46,6 +46,16 @@ namespace Azure.ResourceManager.ContainerService.Models
                 writer.WritePropertyName("disableRunCommand"u8);
                 writer.WriteBooleanValue(DisableRunCommand.Value);
             }
+            if (Optional.IsDefined(EnableVnetIntegration))
+            {
+                writer.WritePropertyName("enableVnetIntegration"u8);
+                writer.WriteBooleanValue(EnableVnetIntegration.Value);
+            }
+            if (Optional.IsDefined(SubnetId))
+            {
+                writer.WritePropertyName("subnetId"u8);
+                writer.WriteStringValue(SubnetId);
+            }
             writer.WriteEndObject();
         }
 
@@ -56,6 +66,8 @@ namespace Azure.ResourceManager.ContainerService.Models
             Optional<string> privateDnsZone = default;
             Optional<bool> enablePrivateClusterPublicFQDN = default;
             Optional<bool> disableRunCommand = default;
+            Optional<bool> enableVnetIntegration = default;
+            Optional<ResourceIdentifier> subnetId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("authorizedIPRanges"u8))
@@ -108,8 +120,28 @@ namespace Azure.ResourceManager.ContainerService.Models
                     disableRunCommand = property.Value.GetBoolean();
                     continue;
                 }
+                if (property.NameEquals("enableVnetIntegration"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    enableVnetIntegration = property.Value.GetBoolean();
+                    continue;
+                }
+                if (property.NameEquals("subnetId"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    subnetId = new ResourceIdentifier(property.Value.GetString());
+                    continue;
+                }
             }
-            return new ManagedClusterApiServerAccessProfile(Optional.ToList(authorizedIPRanges), Optional.ToNullable(enablePrivateCluster), privateDnsZone.Value, Optional.ToNullable(enablePrivateClusterPublicFQDN), Optional.ToNullable(disableRunCommand));
+            return new ManagedClusterApiServerAccessProfile(Optional.ToList(authorizedIPRanges), Optional.ToNullable(enablePrivateCluster), privateDnsZone.Value, Optional.ToNullable(enablePrivateClusterPublicFQDN), Optional.ToNullable(disableRunCommand), Optional.ToNullable(enableVnetIntegration), subnetId.Value);
         }
     }
 }

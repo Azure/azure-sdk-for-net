@@ -12,7 +12,10 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Media
 {
-    /// <summary> A class representing the MediaServicesPrivateEndpointConnection data model. </summary>
+    /// <summary>
+    /// A class representing the MediaServicesPrivateEndpointConnection data model.
+    /// The Private Endpoint Connection resource.
+    /// </summary>
     public partial class MediaServicesPrivateEndpointConnectionData : ResourceData
     {
         /// <summary> Initializes a new instance of MediaServicesPrivateEndpointConnectionData. </summary>

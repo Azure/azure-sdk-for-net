@@ -21,9 +21,9 @@ namespace Azure.ResourceManager.Batch.Models
 
         public static BatchCertificateVisibility ToBatchCertificateVisibility(this string value)
         {
-            if (string.Equals(value, "StartTask", StringComparison.InvariantCultureIgnoreCase)) return BatchCertificateVisibility.StartTask;
-            if (string.Equals(value, "Task", StringComparison.InvariantCultureIgnoreCase)) return BatchCertificateVisibility.Task;
-            if (string.Equals(value, "RemoteUser", StringComparison.InvariantCultureIgnoreCase)) return BatchCertificateVisibility.RemoteUser;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "StartTask")) return BatchCertificateVisibility.StartTask;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Task")) return BatchCertificateVisibility.Task;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "RemoteUser")) return BatchCertificateVisibility.RemoteUser;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown BatchCertificateVisibility value.");
         }
     }

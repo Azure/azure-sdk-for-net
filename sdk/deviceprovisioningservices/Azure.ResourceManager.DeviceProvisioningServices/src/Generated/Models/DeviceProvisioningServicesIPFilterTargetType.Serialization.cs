@@ -21,9 +21,9 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
 
         public static DeviceProvisioningServicesIPFilterTargetType ToDeviceProvisioningServicesIPFilterTargetType(this string value)
         {
-            if (string.Equals(value, "all", StringComparison.InvariantCultureIgnoreCase)) return DeviceProvisioningServicesIPFilterTargetType.All;
-            if (string.Equals(value, "serviceApi", StringComparison.InvariantCultureIgnoreCase)) return DeviceProvisioningServicesIPFilterTargetType.ServiceApi;
-            if (string.Equals(value, "deviceApi", StringComparison.InvariantCultureIgnoreCase)) return DeviceProvisioningServicesIPFilterTargetType.DeviceApi;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "all")) return DeviceProvisioningServicesIPFilterTargetType.All;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "serviceApi")) return DeviceProvisioningServicesIPFilterTargetType.ServiceApi;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "deviceApi")) return DeviceProvisioningServicesIPFilterTargetType.DeviceApi;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown DeviceProvisioningServicesIPFilterTargetType value.");
         }
     }

@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DigitalTwins
 {
-    /// <summary> A class representing the DigitalTwinsPrivateLinkResource data model. </summary>
+    /// <summary>
+    /// A class representing the DigitalTwinsPrivateLinkResource data model.
+    /// The group information for creating a private endpoint on Digital Twin.
+    /// </summary>
     public partial class DigitalTwinsPrivateLinkResourceData : ResourceData
     {
         /// <summary> Initializes a new instance of DigitalTwinsPrivateLinkResourceData. </summary>

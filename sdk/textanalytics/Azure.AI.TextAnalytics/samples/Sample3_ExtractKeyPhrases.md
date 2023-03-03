@@ -2,28 +2,28 @@
 
 This sample demonstrates how to extract key phrases from one or more documents.
 
-## Creating a `TextAnalyticsClient`
+## Create a `TextAnalyticsClient`
 
-To create a new `TextAnalyticsClient` to extract key phrases from a document, you need a Cognitive Services or Language service endpoint and credentials.  You can use the [DefaultAzureCredential][DefaultAzureCredential] to try a number of common authentication methods optimized for both running as a service and development.  In the sample below, however, you'll use a Language service API key credential by creating an `AzureKeyCredential` object, that if needed, will allow you to update the API key without creating a new client. See [README][README] for links and instructions.
-
-You can set `endpoint` and `apiKey` based on an environment variable, a configuration setting, or any way that works for your application.
+To create a new `TextAnalyticsClient`, you will need the service endpoint and credentials of your Language resource. To authenticate, you can use the [`DefaultAzureCredential`][DefaultAzureCredential], which combines credentials commonly used to authenticate when deployed on Azure, with credentials used to authenticate in a development environment. In this sample, however, you will use an `AzureKeyCredential`, which you can create with an API key.
 
 ```C# Snippet:CreateTextAnalyticsClient
-string endpoint = "<endpoint>";
-string apiKey = "<apiKey>";
-TextAnalyticsClient client = new(new Uri(endpoint), new AzureKeyCredential(apiKey));
+Uri endpoint = new("<endpoint>");
+AzureKeyCredential credential = new("<apiKey>");
+TextAnalyticsClient client = new(endpoint, credential);
 ```
+
+The values of the `endpoint` and `apiKey` variables can be retrieved from environment variables, configuration settings, or any other secure approach that works for your application.
 
 ## Extracting key phrases from a single document
 
 To extract key phrases from a document, use the `ExtractKeyPhrases` method.  The returned value the collection of `KeyPhrases` that were extracted from the document.
 
-```C# Snippet:ExtractKeyPhrases
-string document = @"My cat might need to see a veterinarian. It has been sneezing more than normal, and although my
-                    little sister thinks it is funny, I am worried it has the cold that I got last week.
-                    We are going to call tomorrow and try to schedule an appointment for this week. Hopefully it
-                    will be covered by the cat's insurance.
-                    It might be good to not let it sleep in my room for a while.";
+```C# Snippet:Sample3_ExtractKeyPhrases
+string document =
+    "My cat might need to see a veterinarian. It has been sneezing more than normal, and although my"
+    + " little sister thinks it is funny, I am worried it has the cold that I got last week. We are going"
+    + " to call tomorrow and try to schedule an appointment for this week. Hopefully it will be covered by"
+    + " the cat's insurance. It might be good to not let it sleep in my room for a while.";
 
 try
 {
@@ -47,27 +47,30 @@ catch (RequestFailedException exception)
 
 To extract key phrases from multiple documents, call `ExtractKeyPhrasesBatch` on an `IEnumerable` of strings.  The results are returned as a `ExtractKeyPhrasesResultCollection`.
 
-```C# Snippet:TextAnalyticsSample3ExtractKeyPhrasesConvenience
-string documentA = @"We love this trail and make the trip every year. The views are breathtaking and well
-                    worth the hike! Yesterday was foggy though, so we missed the spectacular views.
-                    We tried again today and it was amazing. Everyone in my family liked the trail although
-                    it was too challenging for the less athletic among us.
-                    Not necessarily recommended for small children.
-                    A hotel close to the trail offers services for childcare in case you want that.";
+```C# Snippet:Sample3_ExtractKeyPhrasesBatchConvenience
+string documentA =
+    "We love this trail and make the trip every year. The views are breathtaking and well worth the hike!"
+    + " Yesterday was foggy though, so we missed the spectacular views. We tried again today and it was"
+    + " amazing. Everyone in my family liked the trail although it was too challenging for the less"
+    + " athletic among us. Not necessarily recommended for small children. A hotel close to the trail"
+    + " offers services for childcare in case you want that.";
 
-string documentB = @"Last week we stayed at Hotel Foo to celebrate our anniversary. The staff knew about
-                    our anniversary so they helped me organize a little surprise for my partner.
-                    The room was clean and with the decoration I requested. It was perfect!";
+string documentB =
+    "Last week we stayed at Hotel Foo to celebrate our anniversary. The staff knew about our anniversary"
+    + " so they helped me organize a little surprise for my partner. The room was clean and with the"
+    + " decoration I requested. It was perfect!";
 
-string documentC = @"That was the best day of my life! We went on a 4 day trip where we stayed at Hotel Foo.
-                    They had great amenities that included an indoor pool, a spa, and a bar.
-                    The spa offered couples massages which were really good. 
-                    The spa was clean and felt very peaceful. Overall the whole experience was great.
-                    We will definitely come back.";
+string documentC =
+    "That was the best day of my life! We went on a 4 day trip where we stayed at Hotel Foo. They had"
+    + " great amenities that included an indoor pool, a spa, and a bar. The spa offered couples massages"
+    + " which were really good. The spa was clean and felt very peaceful. Overall the whole experience was"
+    + " great. We will definitely come back.";
 
 string documentD = string.Empty;
 
-var documents = new List<string>
+// Prepare the input of the text analysis operation. You can add multiple documents to this list and
+// perform the same operation on all of them simultaneously.
+List<string> batchedDocuments = new()
 {
     documentA,
     documentB,
@@ -75,59 +78,60 @@ var documents = new List<string>
     documentD
 };
 
-Response<ExtractKeyPhrasesResultCollection> response = client.ExtractKeyPhrasesBatch(documents);
+Response<ExtractKeyPhrasesResultCollection> response = client.ExtractKeyPhrasesBatch(batchedDocuments);
 ExtractKeyPhrasesResultCollection keyPhrasesInDocuments = response.Value;
 
 int i = 0;
-Console.WriteLine($"Results of \"Extract Key Phrases\" Model, version: \"{keyPhrasesInDocuments.ModelVersion}\"");
-Console.WriteLine("");
+Console.WriteLine($"Extract Key Phrases, model version: \"{keyPhrasesInDocuments.ModelVersion}\"");
+Console.WriteLine();
 
-foreach (ExtractKeyPhrasesResult keyPhrases in keyPhrasesInDocuments)
+foreach (ExtractKeyPhrasesResult documentResult in keyPhrasesInDocuments)
 {
-    Console.WriteLine($"On document with Text: \"{documents[i++]}\"");
-    Console.WriteLine("");
+    Console.WriteLine($"Result for document with Text = \"{batchedDocuments[i++]}\"");
 
-    if (keyPhrases.HasError)
+    if (documentResult.HasError)
     {
-        Console.WriteLine("  Error!");
-        Console.WriteLine($"  Document error: {keyPhrases.Error.ErrorCode}.");
-        Console.WriteLine($"  Message: {keyPhrases.Error.Message}");
+        Console.WriteLine($"  Error!");
+        Console.WriteLine($"  Document error code: {documentResult.Error.ErrorCode}");
+        Console.WriteLine($"  Message: {documentResult.Error.Message}");
+        Console.WriteLine();
+        continue;
     }
-    else
-    {
-        Console.WriteLine($"  Extracted the following {keyPhrases.KeyPhrases.Count()} key phrases:");
 
-        foreach (string keyPhrase in keyPhrases.KeyPhrases)
-        {
-            Console.WriteLine($"    {keyPhrase}");
-        }
+    Console.WriteLine($"  Extracted {documentResult.KeyPhrases.Count()} key phrases:");
+
+    foreach (string keyPhrase in documentResult.KeyPhrases)
+    {
+        Console.WriteLine($"    {keyPhrase}");
     }
-    Console.WriteLine("");
+    Console.WriteLine();
 }
 ```
 
 To extract key phrases from a collection of documents in different languages, call `ExtractKeyPhrasesBatch` on an `IEnumerable` of `TextDocumentInput` objects, setting the `Language` on each document.
 
-```C# Snippet:TextAnalyticsSample3ExtractKeyPhrasesBatch
-string documentA = @"We love this trail and make the trip every year. The views are breathtaking and well
-                    worth the hike! Yesterday was foggy though, so we missed the spectacular views.
-                    We tried again today and it was amazing. Everyone in my family liked the trail although
-                    it was too challenging for the less athletic among us.
-                    Not necessarily recommended for small children.
-                    A hotel close to the trail offers services for childcare in case you want that.";
+```C# Snippet:Sample3_ExtractKeyPhrasesBatch
+string documentA =
+    "We love this trail and make the trip every year. The views are breathtaking and well worth the hike!"
+    + " Yesterday was foggy though, so we missed the spectacular views. We tried again today and it was"
+    + " amazing. Everyone in my family liked the trail although it was too challenging for the less"
+    + " athletic among us. Not necessarily recommended for small children. A hotel close to the trail"
+    + " offers services for childcare in case you want that.";
 
-string documentB = @"Nos hospedamos en el Hotel Foo la semana pasada por nuestro aniversario. La gerencia
-                    sabía de nuestra celebración y me ayudaron a tenerle una sorpresa a mi pareja.
-                    La habitación estaba limpia y decorada como yo había pedido. Una gran experiencia.
-                    El próximo año volveremos.";
+string documentB =
+    "Nos hospedamos en el Hotel Foo la semana pasada por nuestro aniversario. La gerencia sabía de nuestra"
+    + " celebración y me ayudaron a tenerle una sorpresa a mi pareja. La habitación estaba limpia y"
+    + " decorada como yo había pedido. Una gran experiencia. El próximo año volveremos.";
 
-string documentC = @"That was the best day of my life! We went on a 4 day trip where we stayed at Hotel Foo.
-                    They had great amenities that included an indoor pool, a spa, and a bar.
-                    The spa offered couples massages which were really good. 
-                    The spa was clean and felt very peaceful. Overall the whole experience was great.
-                    We will definitely come back.";
+string documentC =
+    "That was the best day of my life! We went on a 4 day trip where we stayed at Hotel Foo. They had"
+    + " great amenities that included an indoor pool, a spa, and a bar. The spa offered couples massages"
+    + " which were really good. The spa was clean and felt very peaceful. Overall the whole experience was"
+    + " great. We will definitely come back.";
 
-var documents = new List<TextDocumentInput>
+// Prepare the input of the text analysis operation. You can add multiple documents to this list and
+// perform the same operation on all of them simultaneously.
+List<TextDocumentInput> batchedDocuments = new()
 {
     new TextDocumentInput("1", documentA)
     {
@@ -144,40 +148,42 @@ var documents = new List<TextDocumentInput>
     new TextDocumentInput("4", string.Empty)
 };
 
-var options = new TextAnalyticsRequestOptions { IncludeStatistics = true };
-Response<ExtractKeyPhrasesResultCollection> response = client.ExtractKeyPhrasesBatch(documents, options);
+TextAnalyticsRequestOptions options = new() { IncludeStatistics = true };
+Response<ExtractKeyPhrasesResultCollection> response = client.ExtractKeyPhrasesBatch(batchedDocuments, options);
 ExtractKeyPhrasesResultCollection keyPhrasesInDocuments = response.Value;
 
 int i = 0;
-Console.WriteLine($"Results of \"Extract Key Phrases\" Model, version: \"{keyPhrasesInDocuments.ModelVersion}\"");
-Console.WriteLine("");
+Console.WriteLine($"Extract Key Phrases, model version: \"{keyPhrasesInDocuments.ModelVersion}\"");
+Console.WriteLine();
 
-foreach (ExtractKeyPhrasesResult keyPhrases in keyPhrasesInDocuments)
+foreach (ExtractKeyPhrasesResult documentResult in keyPhrasesInDocuments)
 {
-    TextDocumentInput document = documents[i++];
+    TextDocumentInput document = batchedDocuments[i++];
 
-    Console.WriteLine($"On document (Id={document.Id}, Language=\"{document.Language}\"):");
+    Console.WriteLine($"Result for document with Id = \"{document.Id}\" and Language = \"{document.Language}\":");
 
-    if (keyPhrases.HasError)
+    if (documentResult.HasError)
     {
-        Console.WriteLine("  Error!");
-        Console.WriteLine($"  Document error: {keyPhrases.Error.ErrorCode}.");
-        Console.WriteLine($"  Message: {keyPhrases.Error.Message}");
+        Console.WriteLine($"  Error!");
+        Console.WriteLine($"  Document error code: {documentResult.Error.ErrorCode}");
+        Console.WriteLine($"  Message: {documentResult.Error.Message}");
+        Console.WriteLine();
+        continue;
     }
-    else
+
+    Console.WriteLine($"  Extracted {documentResult.KeyPhrases.Count()} key phrases:");
+
+    foreach (string keyPhrase in documentResult.KeyPhrases)
     {
-        Console.WriteLine($"  Extracted the following {keyPhrases.KeyPhrases.Count()} key phrases:");
-
-        foreach (string keyPhrase in keyPhrases.KeyPhrases)
-        {
-            Console.WriteLine($"    {keyPhrase}");
-        }
-
-        Console.WriteLine($"  Document statistics:");
-        Console.WriteLine($"    Character count: {keyPhrases.Statistics.CharacterCount}");
-        Console.WriteLine($"    Transaction count: {keyPhrases.Statistics.TransactionCount}");
+        Console.WriteLine($"    {keyPhrase}");
     }
-    Console.WriteLine("");
+
+    Console.WriteLine();
+
+    Console.WriteLine($"  Document statistics:");
+    Console.WriteLine($"    Character count: {documentResult.Statistics.CharacterCount}");
+    Console.WriteLine($"    Transaction count: {documentResult.Statistics.TransactionCount}");
+    Console.WriteLine();
 }
 
 Console.WriteLine($"Batch operation statistics:");
@@ -185,8 +191,10 @@ Console.WriteLine($"  Document count: {keyPhrasesInDocuments.Statistics.Document
 Console.WriteLine($"  Valid document count: {keyPhrasesInDocuments.Statistics.ValidDocumentCount}");
 Console.WriteLine($"  Invalid document count: {keyPhrasesInDocuments.Statistics.InvalidDocumentCount}");
 Console.WriteLine($"  Transaction count: {keyPhrasesInDocuments.Statistics.TransactionCount}");
-Console.WriteLine("");
+Console.WriteLine();
 ```
+
+See the [README] of the Text Analytics client library for more information, including useful links and instructions.
 
 [DefaultAzureCredential]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/README.md
 [README]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/textanalytics/Azure.AI.TextAnalytics/README.md

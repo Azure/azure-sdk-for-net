@@ -1494,9 +1494,7 @@ namespace Azure.Storage.Blobs
             string operationName,
             string parameterName)
         {
-            if (AppContextSwitchHelper.GetConfigValue(
-                Constants.DisableRequestConditionsValidationSwitchName,
-                Constants.DisableRequestConditionsValidationEnvVar))
+            if (CompatSwitches.DisableRequestConditionsValidation)
             {
                 return;
             }
@@ -1526,9 +1524,7 @@ namespace Azure.Storage.Blobs
             string operationName,
             string parameterName)
         {
-            if (AppContextSwitchHelper.GetConfigValue(
-                Constants.DisableRequestConditionsValidationSwitchName,
-                Constants.DisableRequestConditionsValidationEnvVar))
+            if (CompatSwitches.DisableRequestConditionsValidation)
             {
                 return;
             }
@@ -1558,9 +1554,7 @@ namespace Azure.Storage.Blobs
             string operationName,
             string parameterName)
         {
-            if (AppContextSwitchHelper.GetConfigValue(
-                Constants.DisableRequestConditionsValidationSwitchName,
-                Constants.DisableRequestConditionsValidationEnvVar))
+            if (CompatSwitches.DisableRequestConditionsValidation)
             {
                 return;
             }
@@ -1589,9 +1583,7 @@ namespace Azure.Storage.Blobs
             string operationName,
             string parameterName)
         {
-            if (AppContextSwitchHelper.GetConfigValue(
-                Constants.DisableRequestConditionsValidationSwitchName,
-                Constants.DisableRequestConditionsValidationEnvVar))
+            if (CompatSwitches.DisableRequestConditionsValidation)
             {
                 return;
             }
@@ -1637,9 +1629,7 @@ namespace Azure.Storage.Blobs
             string operationName,
             string parameterName)
         {
-            if (AppContextSwitchHelper.GetConfigValue(
-                Constants.DisableRequestConditionsValidationSwitchName,
-                Constants.DisableRequestConditionsValidationEnvVar))
+            if (CompatSwitches.DisableRequestConditionsValidation)
             {
                 return;
             }

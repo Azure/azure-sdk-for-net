@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary> A class representing the PublicCertificate data model. </summary>
+    /// <summary>
+    /// A class representing the PublicCertificate data model.
+    /// Public certificate object
+    /// </summary>
     public partial class PublicCertificateData : ResourceData
     {
         /// <summary> Initializes a new instance of PublicCertificateData. </summary>

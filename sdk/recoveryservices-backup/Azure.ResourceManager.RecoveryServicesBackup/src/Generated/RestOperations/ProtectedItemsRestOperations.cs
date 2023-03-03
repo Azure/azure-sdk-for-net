@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/>, <paramref name="fabricName"/>, <paramref name="containerName"/> or <paramref name="protectedItemName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/>, <paramref name="fabricName"/>, <paramref name="containerName"/> or <paramref name="protectedItemName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ProtectedItemResourceData>> GetAsync(string subscriptionId, string resourceGroupName, string vaultName, string fabricName, string containerName, string protectedItemName, string filter = null, CancellationToken cancellationToken = default)
+        public async Task<Response<BackupProtectedItemData>> GetAsync(string subscriptionId, string resourceGroupName, string vaultName, string fabricName, string containerName, string protectedItemName, string filter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -95,13 +95,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
             {
                 case 200:
                     {
-                        ProtectedItemResourceData value = default;
+                        BackupProtectedItemData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ProtectedItemResourceData.DeserializeProtectedItemResourceData(document.RootElement);
+                        value = BackupProtectedItemData.DeserializeBackupProtectedItemData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((ProtectedItemResourceData)null, message.Response);
+                    return Response.FromValue((BackupProtectedItemData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/>, <paramref name="fabricName"/>, <paramref name="containerName"/> or <paramref name="protectedItemName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/>, <paramref name="fabricName"/>, <paramref name="containerName"/> or <paramref name="protectedItemName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ProtectedItemResourceData> Get(string subscriptionId, string resourceGroupName, string vaultName, string fabricName, string containerName, string protectedItemName, string filter = null, CancellationToken cancellationToken = default)
+        public Response<BackupProtectedItemData> Get(string subscriptionId, string resourceGroupName, string vaultName, string fabricName, string containerName, string protectedItemName, string filter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -136,19 +136,19 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
             {
                 case 200:
                     {
-                        ProtectedItemResourceData value = default;
+                        BackupProtectedItemData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ProtectedItemResourceData.DeserializeProtectedItemResourceData(document.RootElement);
+                        value = BackupProtectedItemData.DeserializeBackupProtectedItemData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((ProtectedItemResourceData)null, message.Response);
+                    return Response.FromValue((BackupProtectedItemData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string vaultName, string fabricName, string containerName, string protectedItemName, ProtectedItemResourceData data)
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string vaultName, string fabricName, string containerName, string protectedItemName, BackupProtectedItemData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/>, <paramref name="fabricName"/>, <paramref name="containerName"/>, <paramref name="protectedItemName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/>, <paramref name="fabricName"/>, <paramref name="containerName"/> or <paramref name="protectedItemName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ProtectedItemResourceData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string vaultName, string fabricName, string containerName, string protectedItemName, ProtectedItemResourceData data, CancellationToken cancellationToken = default)
+        public async Task<Response<BackupProtectedItemData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string vaultName, string fabricName, string containerName, string protectedItemName, BackupProtectedItemData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -208,13 +208,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
             {
                 case 200:
                     {
-                        ProtectedItemResourceData value = default;
+                        BackupProtectedItemData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ProtectedItemResourceData.DeserializeProtectedItemResourceData(document.RootElement);
+                        value = BackupProtectedItemData.DeserializeBackupProtectedItemData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 202:
-                    return Response.FromValue((ProtectedItemResourceData)null, message.Response);
+                    return Response.FromValue((BackupProtectedItemData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/>, <paramref name="fabricName"/>, <paramref name="containerName"/>, <paramref name="protectedItemName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/>, <paramref name="fabricName"/>, <paramref name="containerName"/> or <paramref name="protectedItemName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ProtectedItemResourceData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string vaultName, string fabricName, string containerName, string protectedItemName, ProtectedItemResourceData data, CancellationToken cancellationToken = default)
+        public Response<BackupProtectedItemData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string vaultName, string fabricName, string containerName, string protectedItemName, BackupProtectedItemData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -250,13 +250,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
             {
                 case 200:
                     {
-                        ProtectedItemResourceData value = default;
+                        BackupProtectedItemData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ProtectedItemResourceData.DeserializeProtectedItemResourceData(document.RootElement);
+                        value = BackupProtectedItemData.DeserializeBackupProtectedItemData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 202:
-                    return Response.FromValue((ProtectedItemResourceData)null, message.Response);
+                    return Response.FromValue((BackupProtectedItemData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
