@@ -47,14 +47,14 @@ namespace Microsoft.Azure.Management.RedisEnterprise
         public ServiceClientCredentials Credentials { get; private set; }
 
         /// <summary>
-        /// The ID of the target subscription.
-        /// </summary>
-        public string SubscriptionId { get; set; }
-
-        /// <summary>
         /// The API version to use for this operation.
         /// </summary>
         public string ApiVersion { get; private set; }
+
+        /// <summary>
+        /// The ID of the target subscription.
+        /// </summary>
+        public string SubscriptionId { get; set; }
 
         /// <summary>
         /// The preferred language for the response.
@@ -103,6 +103,11 @@ namespace Microsoft.Azure.Management.RedisEnterprise
         /// Gets the IPrivateLinkResourcesOperations.
         /// </summary>
         public virtual IPrivateLinkResourcesOperations PrivateLinkResources { get; private set; }
+
+        /// <summary>
+        /// Gets the ISkusOperations.
+        /// </summary>
+        public virtual ISkusOperations Skus { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the RedisEnterpriseManagementClient class.
@@ -351,8 +356,9 @@ namespace Microsoft.Azure.Management.RedisEnterprise
             Databases = new DatabasesOperations(this);
             PrivateEndpointConnections = new PrivateEndpointConnectionsOperations(this);
             PrivateLinkResources = new PrivateLinkResourcesOperations(this);
+            Skus = new SkusOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2022-01-01";
+            ApiVersion = "2023-03-01-preview";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;

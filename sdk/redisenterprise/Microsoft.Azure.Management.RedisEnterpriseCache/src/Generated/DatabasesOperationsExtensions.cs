@@ -504,6 +504,60 @@ namespace Microsoft.Azure.Management.RedisEnterprise
             }
 
             /// <summary>
+            /// Flushes all the keys in this database and also from its linked databases.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='clusterName'>
+            /// The name of the RedisEnterprise cluster.
+            /// </param>
+            /// <param name='databaseName'>
+            /// The name of the database.
+            /// </param>
+            /// <param name='ids'>
+            /// The resource identifiers of all the other database resources in the
+            /// georeplication group to be flushed
+            /// </param>
+            public static DatabasesFlushHeaders Flush(this IDatabasesOperations operations, string resourceGroupName, string clusterName, string databaseName, IList<string> ids = default(IList<string>))
+            {
+                return operations.FlushAsync(resourceGroupName, clusterName, databaseName, ids).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Flushes all the keys in this database and also from its linked databases.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='clusterName'>
+            /// The name of the RedisEnterprise cluster.
+            /// </param>
+            /// <param name='databaseName'>
+            /// The name of the database.
+            /// </param>
+            /// <param name='ids'>
+            /// The resource identifiers of all the other database resources in the
+            /// georeplication group to be flushed
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<DatabasesFlushHeaders> FlushAsync(this IDatabasesOperations operations, string resourceGroupName, string clusterName, string databaseName, IList<string> ids = default(IList<string>), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.FlushWithHttpMessagesAsync(resourceGroupName, clusterName, databaseName, ids, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Headers;
+                }
+            }
+
+            /// <summary>
             /// Creates a database
             /// </summary>
             /// <param name='operations'>
@@ -849,6 +903,60 @@ namespace Microsoft.Azure.Management.RedisEnterprise
             public static async Task BeginForceUnlinkAsync(this IDatabasesOperations operations, string resourceGroupName, string clusterName, string databaseName, IList<string> ids, CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.BeginForceUnlinkWithHttpMessagesAsync(resourceGroupName, clusterName, databaseName, ids, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// Flushes all the keys in this database and also from its linked databases.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='clusterName'>
+            /// The name of the RedisEnterprise cluster.
+            /// </param>
+            /// <param name='databaseName'>
+            /// The name of the database.
+            /// </param>
+            /// <param name='ids'>
+            /// The resource identifiers of all the other database resources in the
+            /// georeplication group to be flushed
+            /// </param>
+            public static DatabasesFlushHeaders BeginFlush(this IDatabasesOperations operations, string resourceGroupName, string clusterName, string databaseName, IList<string> ids = default(IList<string>))
+            {
+                return operations.BeginFlushAsync(resourceGroupName, clusterName, databaseName, ids).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Flushes all the keys in this database and also from its linked databases.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='clusterName'>
+            /// The name of the RedisEnterprise cluster.
+            /// </param>
+            /// <param name='databaseName'>
+            /// The name of the database.
+            /// </param>
+            /// <param name='ids'>
+            /// The resource identifiers of all the other database resources in the
+            /// georeplication group to be flushed
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<DatabasesFlushHeaders> BeginFlushAsync(this IDatabasesOperations operations, string resourceGroupName, string clusterName, string databaseName, IList<string> ids = default(IList<string>), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.BeginFlushWithHttpMessagesAsync(resourceGroupName, clusterName, databaseName, ids, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Headers;
+                }
             }
 
             /// <summary>

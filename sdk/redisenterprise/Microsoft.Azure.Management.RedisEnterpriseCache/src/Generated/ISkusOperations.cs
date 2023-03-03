@@ -19,18 +19,16 @@ namespace Microsoft.Azure.Management.RedisEnterprise
     using System.Threading.Tasks;
 
     /// <summary>
-    /// OperationsStatus operations.
+    /// SkusOperations operations.
     /// </summary>
-    public partial interface IOperationsStatus
+    public partial interface ISkusOperations
     {
         /// <summary>
-        /// Gets the status of operation.
+        /// Gets information about skus in specified location for the given
+        /// subscription id
         /// </summary>
         /// <param name='location'>
         /// The name of Azure region.
-        /// </param>
-        /// <param name='operationId'>
-        /// The ID of an ongoing async operation.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -47,6 +45,6 @@ namespace Microsoft.Azure.Management.RedisEnterprise
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<OperationStatus>> GetWithHttpMessagesAsync(string location, string operationId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IEnumerable<RegionSkuDetail>>> ListWithHttpMessagesAsync(string location, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

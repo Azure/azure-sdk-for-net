@@ -44,12 +44,17 @@ namespace Microsoft.Azure.Management.RedisEnterprise.Models
         /// <param name="type">The type of the resource. E.g.
         /// "Microsoft.Compute/virtualMachines" or
         /// "Microsoft.Storage/storageAccounts"</param>
+        /// <param name="systemData">Azure Resource Manager metadata containing
+        /// createdBy and modifiedBy information.</param>
         /// <param name="tags">Resource tags.</param>
         /// <param name="zones">The Availability Zones where this cluster will
         /// be deployed.</param>
+        /// <param name="identity">The identity of the resource.</param>
         /// <param name="minimumTlsVersion">The minimum TLS version for the
         /// cluster to support, e.g. '1.2'. Possible values include: '1.0',
         /// '1.1', '1.2'</param>
+        /// <param name="encryption">Encryption-at-rest configuration for the
+        /// cluster.</param>
         /// <param name="hostName">DNS name of the cluster endpoint</param>
         /// <param name="provisioningState">Current provisioning status of the
         /// cluster. Possible values include: 'Succeeded', 'Failed',
@@ -63,12 +68,14 @@ namespace Microsoft.Azure.Management.RedisEnterprise.Models
         /// <param name="privateEndpointConnections">List of private endpoint
         /// connections associated with the specified RedisEnterprise
         /// cluster</param>
-        public Cluster(string location, Sku sku, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), IList<string> zones = default(IList<string>), string minimumTlsVersion = default(string), string hostName = default(string), string provisioningState = default(string), string resourceState = default(string), string redisVersion = default(string), IList<PrivateEndpointConnection> privateEndpointConnections = default(IList<PrivateEndpointConnection>))
-            : base(location, id, name, type, tags)
+        public Cluster(string location, Sku sku, string id = default(string), string name = default(string), string type = default(string), SystemData systemData = default(SystemData), IDictionary<string, string> tags = default(IDictionary<string, string>), IList<string> zones = default(IList<string>), ManagedServiceIdentity identity = default(ManagedServiceIdentity), string minimumTlsVersion = default(string), ClusterPropertiesEncryption encryption = default(ClusterPropertiesEncryption), string hostName = default(string), string provisioningState = default(string), string resourceState = default(string), string redisVersion = default(string), IList<PrivateEndpointConnection> privateEndpointConnections = default(IList<PrivateEndpointConnection>))
+            : base(location, id, name, type, systemData, tags)
         {
             Sku = sku;
             Zones = zones;
+            Identity = identity;
             MinimumTlsVersion = minimumTlsVersion;
+            Encryption = encryption;
             HostName = hostName;
             ProvisioningState = provisioningState;
             ResourceState = resourceState;
@@ -97,11 +104,23 @@ namespace Microsoft.Azure.Management.RedisEnterprise.Models
         public IList<string> Zones { get; set; }
 
         /// <summary>
+        /// Gets or sets the identity of the resource.
+        /// </summary>
+        [JsonProperty(PropertyName = "identity")]
+        public ManagedServiceIdentity Identity { get; set; }
+
+        /// <summary>
         /// Gets or sets the minimum TLS version for the cluster to support,
         /// e.g. '1.2'. Possible values include: '1.0', '1.1', '1.2'
         /// </summary>
         [JsonProperty(PropertyName = "properties.minimumTlsVersion")]
         public string MinimumTlsVersion { get; set; }
+
+        /// <summary>
+        /// Gets or sets encryption-at-rest configuration for the cluster.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.encryption")]
+        public ClusterPropertiesEncryption Encryption { get; set; }
 
         /// <summary>
         /// Gets DNS name of the cluster endpoint

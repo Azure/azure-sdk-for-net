@@ -13,16 +13,19 @@ namespace Microsoft.Azure.Management.RedisEnterprise
     using Microsoft.Rest;
     using Microsoft.Rest.Azure;
     using Models;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Threading;
     using System.Threading.Tasks;
 
     /// <summary>
-    /// Extension methods for OperationsStatus.
+    /// Extension methods for SkusOperations.
     /// </summary>
-    public static partial class OperationsStatusExtensions
+    public static partial class SkusOperationsExtensions
     {
             /// <summary>
-            /// Gets the status of operation.
+            /// Gets information about skus in specified location for the given
+            /// subscription id
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -30,32 +33,27 @@ namespace Microsoft.Azure.Management.RedisEnterprise
             /// <param name='location'>
             /// The name of Azure region.
             /// </param>
-            /// <param name='operationId'>
-            /// The ID of an ongoing async operation.
-            /// </param>
-            public static OperationStatus Get(this IOperationsStatus operations, string location, string operationId)
+            public static IEnumerable<RegionSkuDetail> List(this ISkusOperations operations, string location)
             {
-                return operations.GetAsync(location, operationId).GetAwaiter().GetResult();
+                return operations.ListAsync(location).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Gets the status of operation.
+            /// Gets information about skus in specified location for the given
+            /// subscription id
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='location'>
             /// The name of Azure region.
-            /// </param>
-            /// <param name='operationId'>
-            /// The ID of an ongoing async operation.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<OperationStatus> GetAsync(this IOperationsStatus operations, string location, string operationId, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IEnumerable<RegionSkuDetail>> ListAsync(this ISkusOperations operations, string location, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetWithHttpMessagesAsync(location, operationId, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListWithHttpMessagesAsync(location, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

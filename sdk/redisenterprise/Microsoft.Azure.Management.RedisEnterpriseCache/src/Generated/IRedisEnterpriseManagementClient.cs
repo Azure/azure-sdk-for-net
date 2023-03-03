@@ -41,14 +41,14 @@ namespace Microsoft.Azure.Management.RedisEnterprise
         ServiceClientCredentials Credentials { get; }
 
         /// <summary>
-        /// The ID of the target subscription.
-        /// </summary>
-        string SubscriptionId { get; set; }
-
-        /// <summary>
         /// The API version to use for this operation.
         /// </summary>
         string ApiVersion { get; }
+
+        /// <summary>
+        /// The ID of the target subscription.
+        /// </summary>
+        string SubscriptionId { get; set; }
 
         /// <summary>
         /// The preferred language for the response.
@@ -98,6 +98,11 @@ namespace Microsoft.Azure.Management.RedisEnterprise
         /// Gets the IPrivateLinkResourcesOperations.
         /// </summary>
         IPrivateLinkResourcesOperations PrivateLinkResources { get; }
+
+        /// <summary>
+        /// Gets the ISkusOperations.
+        /// </summary>
+        ISkusOperations Skus { get; }
 
     }
 }

@@ -39,6 +39,8 @@ namespace Microsoft.Azure.Management.RedisEnterprise.Models
         /// <param name="minimumTlsVersion">The minimum TLS version for the
         /// cluster to support, e.g. '1.2'. Possible values include: '1.0',
         /// '1.1', '1.2'</param>
+        /// <param name="encryption">Encryption-at-rest configuration for the
+        /// cluster.</param>
         /// <param name="hostName">DNS name of the cluster endpoint</param>
         /// <param name="provisioningState">Current provisioning status of the
         /// cluster. Possible values include: 'Succeeded', 'Failed',
@@ -52,16 +54,19 @@ namespace Microsoft.Azure.Management.RedisEnterprise.Models
         /// <param name="privateEndpointConnections">List of private endpoint
         /// connections associated with the specified RedisEnterprise
         /// cluster</param>
+        /// <param name="identity">The identity of the resource.</param>
         /// <param name="tags">Resource tags.</param>
-        public ClusterUpdate(Sku sku = default(Sku), string minimumTlsVersion = default(string), string hostName = default(string), string provisioningState = default(string), string resourceState = default(string), string redisVersion = default(string), IList<PrivateEndpointConnection> privateEndpointConnections = default(IList<PrivateEndpointConnection>), IDictionary<string, string> tags = default(IDictionary<string, string>))
+        public ClusterUpdate(Sku sku = default(Sku), string minimumTlsVersion = default(string), ClusterPropertiesEncryption encryption = default(ClusterPropertiesEncryption), string hostName = default(string), string provisioningState = default(string), string resourceState = default(string), string redisVersion = default(string), IList<PrivateEndpointConnection> privateEndpointConnections = default(IList<PrivateEndpointConnection>), ManagedServiceIdentity identity = default(ManagedServiceIdentity), IDictionary<string, string> tags = default(IDictionary<string, string>))
         {
             Sku = sku;
             MinimumTlsVersion = minimumTlsVersion;
+            Encryption = encryption;
             HostName = hostName;
             ProvisioningState = provisioningState;
             ResourceState = resourceState;
             RedisVersion = redisVersion;
             PrivateEndpointConnections = privateEndpointConnections;
+            Identity = identity;
             Tags = tags;
             CustomInit();
         }
@@ -84,6 +89,12 @@ namespace Microsoft.Azure.Management.RedisEnterprise.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.minimumTlsVersion")]
         public string MinimumTlsVersion { get; set; }
+
+        /// <summary>
+        /// Gets or sets encryption-at-rest configuration for the cluster.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.encryption")]
+        public ClusterPropertiesEncryption Encryption { get; set; }
 
         /// <summary>
         /// Gets DNS name of the cluster endpoint
@@ -120,6 +131,12 @@ namespace Microsoft.Azure.Management.RedisEnterprise.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.privateEndpointConnections")]
         public IList<PrivateEndpointConnection> PrivateEndpointConnections { get; private set; }
+
+        /// <summary>
+        /// Gets or sets the identity of the resource.
+        /// </summary>
+        [JsonProperty(PropertyName = "identity")]
+        public ManagedServiceIdentity Identity { get; set; }
 
         /// <summary>
         /// Gets or sets resource tags.

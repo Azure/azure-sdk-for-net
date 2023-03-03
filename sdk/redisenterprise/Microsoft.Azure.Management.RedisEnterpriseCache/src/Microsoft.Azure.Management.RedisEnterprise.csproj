@@ -6,22 +6,19 @@
   <PropertyGroup>
     <PackageId>Microsoft.Azure.Management.RedisEnterprise</PackageId>
     <Description>Provides Redis Enterprise cache management capabilities for Microsoft Azure.</Description>
-    <Version>3.0.0</Version>
+    <Version>3.1.0</Version>
     <AssemblyName>Microsoft.Azure.Management.RedisEnterprise</AssemblyName>
     <PackageTags>Microsoft Azure Redis Enterprise cache management;Redis Enterprise Management;</PackageTags>
     <PackageReleaseNotes>
       <![CDATA[
-This SDK version is based on REST API version 2022-01-01
+This SDK version is based on REST API version 2023-03-01-preview
 
 New features:
-- Added support for active-georeplication
-- Added operation DatabasesOperations.begin_force_unlink
-- Model Database has a new parameter geo_replication
-- Model DatabaseUpdate has a new parameter geo_replication
+- Added support for flush operation for enterprise georeplicated caches
+- Added support for CMK for enterprise caches
 
 Breaking changes:
-- Model ImportClusterParameters has a new required parameter sas_uris
-- Model ImportClusterParameters no longer has parameter sas_uri
+- No breaking change
       ]]>
     </PackageReleaseNotes>
   </PropertyGroup>

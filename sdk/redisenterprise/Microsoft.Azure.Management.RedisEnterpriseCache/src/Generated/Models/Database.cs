@@ -40,6 +40,8 @@ namespace Microsoft.Azure.Management.RedisEnterprise.Models
         /// <param name="type">The type of the resource. E.g.
         /// "Microsoft.Compute/virtualMachines" or
         /// "Microsoft.Storage/storageAccounts"</param>
+        /// <param name="systemData">Azure Resource Manager metadata containing
+        /// createdBy and modifiedBy information.</param>
         /// <param name="clientProtocol">Specifies whether redis clients can
         /// connect using TLS-encrypted or plaintext redis protocols. Default
         /// is TLS-encrypted. Possible values include: 'Encrypted',
@@ -66,8 +68,8 @@ namespace Microsoft.Azure.Management.RedisEnterprise.Models
         /// this database - modules can only be added at creation time.</param>
         /// <param name="geoReplication">Optional set of properties to
         /// configure geo replication for this database.</param>
-        public Database(string id = default(string), string name = default(string), string type = default(string), string clientProtocol = default(string), int? port = default(int?), string provisioningState = default(string), string resourceState = default(string), string clusteringPolicy = default(string), string evictionPolicy = default(string), Persistence persistence = default(Persistence), IList<Module> modules = default(IList<Module>), DatabasePropertiesGeoReplication geoReplication = default(DatabasePropertiesGeoReplication))
-            : base(id, name, type)
+        public Database(string id = default(string), string name = default(string), string type = default(string), SystemData systemData = default(SystemData), string clientProtocol = default(string), int? port = default(int?), string provisioningState = default(string), string resourceState = default(string), string clusteringPolicy = default(string), string evictionPolicy = default(string), Persistence persistence = default(Persistence), IList<Module> modules = default(IList<Module>), DatabasePropertiesGeoReplication geoReplication = default(DatabasePropertiesGeoReplication))
+            : base(id, name, type, systemData)
         {
             ClientProtocol = clientProtocol;
             Port = port;
