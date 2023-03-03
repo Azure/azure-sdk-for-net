@@ -3,9 +3,10 @@
 
 using System;
 using System.Buffers;
+using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
-using System.Runtime.InteropServices.ComTypes;
+using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using System.Text.Json;
@@ -538,7 +539,22 @@ namespace Azure.Containers.ContainerRegistry.Specialized
         }
 
         /// <summary>
-        /// Downloads the manifest for an OCI artifact.
+        /// Downloads a manifest.
+        /// </summary>
+        /// <param name="tagOrDigest">The tag or digest of the manifest to download.</param>
+        /// <param name="mediaTypes">The set of media types to accept for the manifest being downloaded.</param>
+        /// <param name="cancellationToken">The cancellation token to use.</param>
+        /// <returns>The download manifest result.</returns>
+        public virtual Response<DownloadManifestResult> DownloadManifest(string tagOrDigest, IEnumerable<ManifestMediaType> mediaTypes, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(tagOrDigest, nameof(tagOrDigest));
+            Argument.AssertNotNull(mediaTypes, nameof(mediaTypes));
+
+            return DownloadManifest(tagOrDigest, string.Join(", ", mediaTypes), cancellationToken);
+        }
+
+        /// <summary>
+        /// Downloads a manifest.
         /// </summary>
         /// <param name="tagOrDigest">The tag or digest of the manifest to download.</param>
         /// <param name="mediaType">The media type of the manifest to download.  If not specified, all media types will be requested.</param>
@@ -581,7 +597,22 @@ namespace Azure.Containers.ContainerRegistry.Specialized
         }
 
         /// <summary>
-        /// Downloads the manifest for an OCI artifact.
+        /// Downloads a manifest.
+        /// </summary>
+        /// <param name="tagOrDigest">The tag or digest of the manifest to download.</param>
+        /// <param name="mediaTypes">The set of media types to accept for the manifest being downloaded.</param>
+        /// <param name="cancellationToken">The cancellation token to use.</param>
+        /// <returns>The download manifest result.</returns>
+        public virtual async Task<Response<DownloadManifestResult>> DownloadManifestAsync(string tagOrDigest, IEnumerable<ManifestMediaType> mediaTypes, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(tagOrDigest, nameof(tagOrDigest));
+            Argument.AssertNotNull(mediaTypes, nameof(mediaTypes));
+
+            return await DownloadManifestAsync(tagOrDigest, string.Join(", ", mediaTypes), cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Downloads a manifest.
         /// </summary>
         /// <param name="tagOrDigest">The tag or digest of the manifest to download.</param>
         /// <param name="mediaType">The media type of the manifest to download.  If not specified, all media types will be requested.</param>
