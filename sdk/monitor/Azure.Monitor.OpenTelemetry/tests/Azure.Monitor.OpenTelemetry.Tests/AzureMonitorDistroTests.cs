@@ -22,7 +22,7 @@ namespace Azure.Monitor.OpenTelemetry.Tests
             builder.Logging.ClearProviders();
             var mockResponse = new MockResponse(200).SetContent("Ok");
             var transport = new MockTransport(mockResponse);
-            builder.Services.AddAzureMonitorOpenTelemetry(o =>
+            builder.Services.AddAzureMonitor(o =>
             {
                 o.Transport = transport;
                 o.ConnectionString = "InstrumentationKey=00000000-0000-0000-0000-00000000CODE";
