@@ -8,18 +8,18 @@
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     /// <summary> Specific Databases to restore. </summary>
-    public partial class RestorableTableResourcesGetResult
+    public partial class RestorableTableResourceData
     {
-        /// <summary> Initializes a new instance of RestorableTableResourcesGetResult. </summary>
-        internal RestorableTableResourcesGetResult()
+        /// <summary> Initializes a new instance of RestorableTableResourceData. </summary>
+        internal RestorableTableResourceData()
         {
         }
 
-        /// <summary> Initializes a new instance of RestorableTableResourcesGetResult. </summary>
+        /// <summary> Initializes a new instance of RestorableTableResourceData. </summary>
         /// <param name="id"> The unique resource identifier of the ARM resource. </param>
         /// <param name="name"> The name of the Table. </param>
         /// <param name="resourceType"> The type of Azure resource. </param>
-        internal RestorableTableResourcesGetResult(string id, string name, string resourceType)
+        internal RestorableTableResourceData(string id, string name, string resourceType)
         {
             Id = id;
             Name = name;

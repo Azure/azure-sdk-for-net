@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
     {
         internal static RestorableGremlinResourcesListResult DeserializeRestorableGremlinResourcesListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<RestorableGremlinResourcesGetResult>> value = default;
+            Optional<IReadOnlyList<RestorableGremlinResourceData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -25,10 +25,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<RestorableGremlinResourcesGetResult> array = new List<RestorableGremlinResourcesGetResult>();
+                    List<RestorableGremlinResourceData> array = new List<RestorableGremlinResourceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RestorableGremlinResourcesGetResult.DeserializeRestorableGremlinResourcesGetResult(item));
+                        array.Add(RestorableGremlinResourceData.DeserializeRestorableGremlinResourceData(item));
                     }
                     value = array;
                     continue;

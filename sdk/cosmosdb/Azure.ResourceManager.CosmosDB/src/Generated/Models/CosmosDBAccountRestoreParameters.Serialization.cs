@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             Optional<string> restoreSource = default;
             Optional<DateTimeOffset> restoreTimestampInUtc = default;
             Optional<IList<DatabaseRestoreResourceInfo>> databasesToRestore = default;
-            Optional<IList<GremlinDatabaseRestoreResource>> gremlinDatabasesToRestore = default;
+            Optional<IList<GremlinDatabaseRestoreResourceInfo>> gremlinDatabasesToRestore = default;
             Optional<IList<string>> tablesToRestore = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -126,10 +126,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<GremlinDatabaseRestoreResource> array = new List<GremlinDatabaseRestoreResource>();
+                    List<GremlinDatabaseRestoreResourceInfo> array = new List<GremlinDatabaseRestoreResourceInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(GremlinDatabaseRestoreResource.DeserializeGremlinDatabaseRestoreResource(item));
+                        array.Add(GremlinDatabaseRestoreResourceInfo.DeserializeGremlinDatabaseRestoreResourceInfo(item));
                     }
                     gremlinDatabasesToRestore = array;
                     continue;

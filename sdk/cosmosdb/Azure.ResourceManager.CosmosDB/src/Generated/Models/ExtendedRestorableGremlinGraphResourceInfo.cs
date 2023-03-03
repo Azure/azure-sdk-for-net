@@ -8,26 +8,26 @@
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     /// <summary> The resource of an Azure Cosmos DB Gremlin graph event. </summary>
-    public partial class RestorableGremlinGraphPropertiesResource
+    public partial class ExtendedRestorableGremlinGraphResourceInfo
     {
-        /// <summary> Initializes a new instance of RestorableGremlinGraphPropertiesResource. </summary>
-        internal RestorableGremlinGraphPropertiesResource()
+        /// <summary> Initializes a new instance of ExtendedRestorableGremlinGraphResourceInfo. </summary>
+        internal ExtendedRestorableGremlinGraphResourceInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of RestorableGremlinGraphPropertiesResource. </summary>
+        /// <summary> Initializes a new instance of ExtendedRestorableGremlinGraphResourceInfo. </summary>
         /// <param name="rid"> A system generated property. A unique identifier. </param>
         /// <param name="operationType"> The operation type of this graph event. </param>
         /// <param name="eventTimestamp"> The time when this graph event happened. </param>
-        /// <param name="ownerId"> The name of this Gremlin graph. </param>
-        /// <param name="ownerResourceId"> The resource ID of this Gremlin graph. </param>
-        internal RestorableGremlinGraphPropertiesResource(string rid, CosmosDBOperationType? operationType, string eventTimestamp, string ownerId, string ownerResourceId)
+        /// <param name="graphName"> The name of this Gremlin graph. </param>
+        /// <param name="graphId"> The resource ID of this Gremlin graph. </param>
+        internal ExtendedRestorableGremlinGraphResourceInfo(string rid, CosmosDBOperationType? operationType, string eventTimestamp, string graphName, string graphId)
         {
             Rid = rid;
             OperationType = operationType;
             EventTimestamp = eventTimestamp;
-            OwnerId = ownerId;
-            OwnerResourceId = ownerResourceId;
+            GraphName = graphName;
+            GraphId = graphId;
         }
 
         /// <summary> A system generated property. A unique identifier. </summary>
@@ -37,8 +37,8 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> The time when this graph event happened. </summary>
         public string EventTimestamp { get; }
         /// <summary> The name of this Gremlin graph. </summary>
-        public string OwnerId { get; }
+        public string GraphName { get; }
         /// <summary> The resource ID of this Gremlin graph. </summary>
-        public string OwnerResourceId { get; }
+        public string GraphId { get; }
     }
 }

@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    public partial class RestorableTableResourcesGetResult
+    public partial class RestorableTableResourceData
     {
-        internal static RestorableTableResourcesGetResult DeserializeRestorableTableResourcesGetResult(JsonElement element)
+        internal static RestorableTableResourceData DeserializeRestorableTableResourceData(JsonElement element)
         {
             Optional<string> id = default;
             Optional<string> name = default;
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     continue;
                 }
             }
-            return new RestorableTableResourcesGetResult(id.Value, name.Value, type.Value);
+            return new RestorableTableResourceData(id.Value, name.Value, type.Value);
         }
     }
 }

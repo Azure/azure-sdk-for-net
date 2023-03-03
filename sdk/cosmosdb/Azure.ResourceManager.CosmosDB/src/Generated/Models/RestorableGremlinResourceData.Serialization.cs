@@ -12,9 +12,9 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    public partial class RestorableGremlinResourcesGetResult
+    public partial class RestorableGremlinResourceData
     {
-        internal static RestorableGremlinResourcesGetResult DeserializeRestorableGremlinResourcesGetResult(JsonElement element)
+        internal static RestorableGremlinResourceData DeserializeRestorableGremlinResourceData(JsonElement element)
         {
             Optional<string> databaseName = default;
             Optional<IReadOnlyList<string>> graphNames = default;
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     continue;
                 }
             }
-            return new RestorableGremlinResourcesGetResult(id, name, type, systemData.Value, databaseName.Value, Optional.ToList(graphNames));
+            return new RestorableGremlinResourceData(id, name, type, systemData.Value, databaseName.Value, Optional.ToList(graphNames));
         }
     }
 }

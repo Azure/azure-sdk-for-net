@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    public partial class RestorableGremlinGraphPropertiesResource
+    public partial class ExtendedRestorableGremlinDatabaseResourceInfo
     {
-        internal static RestorableGremlinGraphPropertiesResource DeserializeRestorableGremlinGraphPropertiesResource(JsonElement element)
+        internal static ExtendedRestorableGremlinDatabaseResourceInfo DeserializeExtendedRestorableGremlinDatabaseResourceInfo(JsonElement element)
         {
             Optional<string> rid = default;
             Optional<CosmosDBOperationType> operationType = default;
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     continue;
                 }
             }
-            return new RestorableGremlinGraphPropertiesResource(rid.Value, Optional.ToNullable(operationType), eventTimestamp.Value, ownerId.Value, ownerResourceId.Value);
+            return new ExtendedRestorableGremlinDatabaseResourceInfo(rid.Value, Optional.ToNullable(operationType), eventTimestamp.Value, ownerId.Value, ownerResourceId.Value);
         }
     }
 }

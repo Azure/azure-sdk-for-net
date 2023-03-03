@@ -148,6 +148,7 @@ rename-mapping:
   CassandraTableResource: CassandraTableResourceInfo
   CosmosTablePropertiesResource: ExtendedCosmosTableResourceInfo
   DatabaseRestoreResource: DatabaseRestoreResourceInfo
+  GremlinDatabaseRestoreResource: GremlinDatabaseRestoreResourceInfo
   GremlinDatabasePropertiesResource: ExtendedGremlinDatabaseResourceInfo
   GremlinDatabaseResource: GremlinDatabaseResourceInfo
   GremlinGraphPropertiesResource: ExtendedGremlinGraphResourceInfo
@@ -162,6 +163,9 @@ rename-mapping:
   RestorableMongodbDatabasePropertiesResource: ExtendedRestorableMongoDBDatabaseResourceInfo
   RestorableSqlContainerPropertiesResource: ExtendedRestorableSqlContainerResourceInfo
   RestorableSqlDatabasePropertiesResource: ExtendedRestorableSqlDatabaseResourceInfo
+  RestorableGremlinDatabasePropertiesResource: ExtendedRestorableGremlinDatabaseResourceInfo
+  RestorableGremlinGraphPropertiesResource: ExtendedRestorableGremlinGraphResourceInfo
+  RestorableTablePropertiesResource: ExtendedRestorableTableResourceInfo
   CosmosDBSqlContainerPropertiesResource: ExtendedCosmosDBSqlContainerResourceInfo
   SqlContainerResource: CosmosDBSqlContainerResourceInfo
   SqlDatabaseResource: CosmosDBSqlDatabaseResourceInfo
@@ -243,6 +247,12 @@ rename-mapping:
   RestorableSqlContainerPropertiesResource.ownerResourceId: ContainerId
   RestorableSqlDatabasePropertiesResource.ownerId: DatabaseName
   RestorableSqlDatabasePropertiesResource.ownerResourceId: DatabaseId
+  RestorableGremlinDatabasePropertiesResource.ownerId: DatabaseName
+  RestorableGremlinDatabasePropertiesResource.ownerResourceId: DatabaseId
+  RestorableGremlinGraphPropertiesResource.ownerId: GraphName
+  RestorableGremlinGraphPropertiesResource.ownerResourceId: GraphId
+  RestorableTablePropertiesResource.ownerId: TableName
+  RestorableTablePropertiesResource.ownerResourceId: TableId
   CosmosDBAccount.properties.enableFreeTier: IsFreeTierEnabled
   CosmosDBAccount.properties.enableAnalyticalStorage: IsAnalyticalStorageEnabled
   ContainerPartitionKey.systemKey: IsSystemKey
@@ -260,6 +270,8 @@ rename-mapping:
   PrimaryAggregationType: CosmosDBMetricPrimaryAggregationType
   RestorableSqlResourcesGetResult: RestorableSqlResourceData
   RestorableMongodbResourcesGetResult: RestorableMongoDBResourceData
+  RestorableGremlinResourcesGetResult : RestorableGremlinResourceData
+  RestorableTableResourcesGetResult: RestorableTableResourceData
   ServiceResourceProperties: CosmosDBServiceProperties
   ServiceResourceCreateUpdateParameters: CosmosDBServiceCreateUpdateParameters
   ServiceResource: CosmosDBService
@@ -506,6 +518,15 @@ directive:
 - rename-model:
     from: RestorableMongodbDatabaseGetResult
     to: RestorableMongoDBDatabase
+- rename-model:
+    from: RestorableGremlinDatabaseGetResult
+    to: RestorableGremlinDatabase
+- rename-model:
+    from: RestorableGremlinGraphGetResult
+    to: RestorableGremlinGraph
+- rename-model:
+    from: RestorableTableGetResult
+    to: RestorableTable
 # same as `Metric`
 - rename-model:
     from: Metric

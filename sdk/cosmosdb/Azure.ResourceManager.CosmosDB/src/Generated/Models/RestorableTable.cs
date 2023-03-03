@@ -11,25 +11,25 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     /// <summary> An Azure Cosmos DB Table event. </summary>
-    public partial class RestorableTableGetResult : ResourceData
+    public partial class RestorableTable : ResourceData
     {
-        /// <summary> Initializes a new instance of RestorableTableGetResult. </summary>
-        internal RestorableTableGetResult()
+        /// <summary> Initializes a new instance of RestorableTable. </summary>
+        internal RestorableTable()
         {
         }
 
-        /// <summary> Initializes a new instance of RestorableTableGetResult. </summary>
+        /// <summary> Initializes a new instance of RestorableTable. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="resource"> The resource of an Azure Cosmos DB Table event. </param>
-        internal RestorableTableGetResult(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, RestorableTablePropertiesResource resource) : base(id, name, resourceType, systemData)
+        internal RestorableTable(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ExtendedRestorableTableResourceInfo resource) : base(id, name, resourceType, systemData)
         {
             Resource = resource;
         }
 
         /// <summary> The resource of an Azure Cosmos DB Table event. </summary>
-        public RestorableTablePropertiesResource Resource { get; }
+        public ExtendedRestorableTableResourceInfo Resource { get; }
     }
 }

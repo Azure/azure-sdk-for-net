@@ -1,14 +1,8 @@
 # Release History
 
-## 1.3.0-beta.1 (Unreleased)
+## 1.3.0 (2023-02-16)
 
-### Features Added
-
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+-- Added table and gremlin restorable apis
 
 ## 1.2.1 (2023-02-13)
 

@@ -11,15 +11,15 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    public partial class RestorableGremlinGraphGetResult
+    public partial class RestorableGremlinGraph
     {
-        internal static RestorableGremlinGraphGetResult DeserializeRestorableGremlinGraphGetResult(JsonElement element)
+        internal static RestorableGremlinGraph DeserializeRestorableGremlinGraph(JsonElement element)
         {
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<RestorableGremlinGraphPropertiesResource> resource = default;
+            Optional<ExtendedRestorableGremlinGraphResourceInfo> resource = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -63,14 +63,14 @@ namespace Azure.ResourceManager.CosmosDB.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            resource = RestorableGremlinGraphPropertiesResource.DeserializeRestorableGremlinGraphPropertiesResource(property0.Value);
+                            resource = ExtendedRestorableGremlinGraphResourceInfo.DeserializeExtendedRestorableGremlinGraphResourceInfo(property0.Value);
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new RestorableGremlinGraphGetResult(id, name, type, systemData.Value, resource.Value);
+            return new RestorableGremlinGraph(id, name, type, systemData.Value, resource.Value);
         }
     }
 }

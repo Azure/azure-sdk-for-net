@@ -16,17 +16,17 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> Initializes a new instance of RestorableTablesListResult. </summary>
         internal RestorableTablesListResult()
         {
-            Value = new ChangeTrackingList<RestorableTableGetResult>();
+            Value = new ChangeTrackingList<RestorableTable>();
         }
 
         /// <summary> Initializes a new instance of RestorableTablesListResult. </summary>
         /// <param name="value"> List of Table events and their properties. </param>
-        internal RestorableTablesListResult(IReadOnlyList<RestorableTableGetResult> value)
+        internal RestorableTablesListResult(IReadOnlyList<RestorableTable> value)
         {
             Value = value;
         }
 
         /// <summary> List of Table events and their properties. </summary>
-        public IReadOnlyList<RestorableTableGetResult> Value { get; }
+        public IReadOnlyList<RestorableTable> Value { get; }
     }
 }

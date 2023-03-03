@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    public partial class GremlinDatabaseRestoreResource : IUtf8JsonSerializable
+    public partial class GremlinDatabaseRestoreResourceInfo : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             writer.WriteEndObject();
         }
 
-        internal static GremlinDatabaseRestoreResource DeserializeGremlinDatabaseRestoreResource(JsonElement element)
+        internal static GremlinDatabaseRestoreResourceInfo DeserializeGremlinDatabaseRestoreResourceInfo(JsonElement element)
         {
             Optional<string> databaseName = default;
             Optional<IList<string>> graphNames = default;
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     continue;
                 }
             }
-            return new GremlinDatabaseRestoreResource(databaseName.Value, Optional.ToList(graphNames));
+            return new GremlinDatabaseRestoreResourceInfo(databaseName.Value, Optional.ToList(graphNames));
         }
     }
 }

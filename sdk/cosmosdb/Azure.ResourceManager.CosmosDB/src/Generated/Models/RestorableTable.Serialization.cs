@@ -11,15 +11,15 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    public partial class RestorableTableGetResult
+    public partial class RestorableTable
     {
-        internal static RestorableTableGetResult DeserializeRestorableTableGetResult(JsonElement element)
+        internal static RestorableTable DeserializeRestorableTable(JsonElement element)
         {
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<RestorableTablePropertiesResource> resource = default;
+            Optional<ExtendedRestorableTableResourceInfo> resource = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -63,14 +63,14 @@ namespace Azure.ResourceManager.CosmosDB.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            resource = RestorableTablePropertiesResource.DeserializeRestorableTablePropertiesResource(property0.Value);
+                            resource = ExtendedRestorableTableResourceInfo.DeserializeExtendedRestorableTableResourceInfo(property0.Value);
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new RestorableTableGetResult(id, name, type, systemData.Value, resource.Value);
+            return new RestorableTable(id, name, type, systemData.Value, resource.Value);
         }
     }
 }

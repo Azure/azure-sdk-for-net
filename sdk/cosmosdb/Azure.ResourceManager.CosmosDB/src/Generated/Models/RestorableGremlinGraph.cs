@@ -11,25 +11,25 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     /// <summary> An Azure Cosmos DB Gremlin graph event. </summary>
-    public partial class RestorableGremlinGraphGetResult : ResourceData
+    public partial class RestorableGremlinGraph : ResourceData
     {
-        /// <summary> Initializes a new instance of RestorableGremlinGraphGetResult. </summary>
-        internal RestorableGremlinGraphGetResult()
+        /// <summary> Initializes a new instance of RestorableGremlinGraph. </summary>
+        internal RestorableGremlinGraph()
         {
         }
 
-        /// <summary> Initializes a new instance of RestorableGremlinGraphGetResult. </summary>
+        /// <summary> Initializes a new instance of RestorableGremlinGraph. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="resource"> The resource of an Azure Cosmos DB Gremlin graph event. </param>
-        internal RestorableGremlinGraphGetResult(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, RestorableGremlinGraphPropertiesResource resource) : base(id, name, resourceType, systemData)
+        internal RestorableGremlinGraph(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ExtendedRestorableGremlinGraphResourceInfo resource) : base(id, name, resourceType, systemData)
         {
             Resource = resource;
         }
 
         /// <summary> The resource of an Azure Cosmos DB Gremlin graph event. </summary>
-        public RestorableGremlinGraphPropertiesResource Resource { get; }
+        public ExtendedRestorableGremlinGraphResourceInfo Resource { get; }
     }
 }

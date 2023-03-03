@@ -12,22 +12,22 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     /// <summary> Specific Databases to restore. </summary>
-    public partial class RestorableGremlinResourcesGetResult : ResourceData
+    public partial class RestorableGremlinResourceData : ResourceData
     {
-        /// <summary> Initializes a new instance of RestorableGremlinResourcesGetResult. </summary>
-        internal RestorableGremlinResourcesGetResult()
+        /// <summary> Initializes a new instance of RestorableGremlinResourceData. </summary>
+        internal RestorableGremlinResourceData()
         {
             GraphNames = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of RestorableGremlinResourcesGetResult. </summary>
+        /// <summary> Initializes a new instance of RestorableGremlinResourceData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="databaseName"> The name of the gremlin database available for restore. </param>
         /// <param name="graphNames"> The names of the graphs available for restore. </param>
-        internal RestorableGremlinResourcesGetResult(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string databaseName, IReadOnlyList<string> graphNames) : base(id, name, resourceType, systemData)
+        internal RestorableGremlinResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string databaseName, IReadOnlyList<string> graphNames) : base(id, name, resourceType, systemData)
         {
             DatabaseName = databaseName;
             GraphNames = graphNames;

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
     {
         internal static RestorableTablesListResult DeserializeRestorableTablesListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<RestorableTableGetResult>> value = default;
+            Optional<IReadOnlyList<RestorableTable>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -25,10 +25,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<RestorableTableGetResult> array = new List<RestorableTableGetResult>();
+                    List<RestorableTable> array = new List<RestorableTable>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RestorableTableGetResult.DeserializeRestorableTableGetResult(item));
+                        array.Add(RestorableTable.DeserializeRestorableTable(item));
                     }
                     value = array;
                     continue;
