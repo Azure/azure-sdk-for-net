@@ -10,7 +10,7 @@ csharp: true
 library-name: Workloads
 namespace: Azure.ResourceManager.Workloads
 # default tag is a preview version
-require: https://github.com/Azure/azure-rest-api-specs/blob/519850b125f5b5257c6d73512ac0705dd6f26131/specification/workloads/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/37f79023301bddd4f0f206665d279cbb861771e8/specification/workloads/resource-manager/readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true
