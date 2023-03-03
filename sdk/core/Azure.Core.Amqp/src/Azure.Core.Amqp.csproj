@@ -2,9 +2,9 @@
   <PropertyGroup>
     <Description>This library contains AMQP model types used by Azure libraries.</Description>
     <AssemblyTitle>Microsoft Azure AMQP</AssemblyTitle>
-    <Version>1.3.0</Version>
+    <Version>1.4.0-beta.1</Version>
     <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
-    <ApiCompatVersion>1.2.0</ApiCompatVersion>
+    <ApiCompatVersion>1.3.0</ApiCompatVersion>
     <PackageTags>Microsoft Azure AMQP</PackageTags>
     <Nullable>enable</Nullable>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
