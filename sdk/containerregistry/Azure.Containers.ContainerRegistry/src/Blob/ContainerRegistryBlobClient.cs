@@ -5,6 +5,7 @@ using System;
 using System.Buffers;
 using System.Globalization;
 using System.IO;
+using System.Runtime.InteropServices.ComTypes;
 using System.Security.Cryptography;
 using System.Text;
 using System.Text.Json;
@@ -177,6 +178,8 @@ namespace Azure.Containers.ContainerRegistry.Specialized
         /// <returns></returns>
         public virtual Response<UploadManifestResult> UploadManifest(BinaryData content, string tag = default, ManifestMediaType? mediaType = default, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(content, nameof(content));
+
             return UploadManifest(content.ToStream(), tag, mediaType, cancellationToken);
         }
 
@@ -245,6 +248,8 @@ namespace Azure.Containers.ContainerRegistry.Specialized
         /// <returns></returns>
         public virtual async Task<Response<UploadManifestResult>> UploadManifestAsync(BinaryData content, string tag = default, ManifestMediaType? mediaType = default, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(content, nameof(content));
+
             return await UploadManifestAsync(content.ToStream(), tag, mediaType, cancellationToken).ConfigureAwait(false);
         }
 
@@ -340,18 +345,9 @@ namespace Azure.Containers.ContainerRegistry.Specialized
         /// <returns></returns>
         public virtual Response<UploadBlobResult> UploadBlob(BinaryData content, CancellationToken cancellationToken = default)
         {
-            return UploadBlob(content.ToStream(), cancellationToken);
-        }
+            Argument.AssertNotNull(content, nameof(content));
 
-        /// <summary>
-        /// Upload a container registry blob.
-        /// </summary>
-        /// <param name="content">The blob content.</param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns></returns>
-        public virtual async Task<Response<UploadBlobResult>> UploadBlobAsync(BinaryData content, CancellationToken cancellationToken = default)
-        {
-            return await UploadBlobAsync(content.ToStream(), cancellationToken).ConfigureAwait(false);
+            return UploadBlob(content.ToStream(), cancellationToken);
         }
 
         /// <summary>
@@ -385,6 +381,19 @@ namespace Azure.Containers.ContainerRegistry.Specialized
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary>
+        /// Upload a container registry blob.
+        /// </summary>
+        /// <param name="content">The blob content.</param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
+        public virtual async Task<Response<UploadBlobResult>> UploadBlobAsync(BinaryData content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            return await UploadBlobAsync(content.ToStream(), cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
