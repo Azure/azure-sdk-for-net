@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.StorageMover.Tests.Scenario
     public class EndpointCollectionTests : StorageMoverManagementTestBase
     {
         public EndpointCollectionTests(bool isAsync)
-            : base(isAsync, RecordedTestMode.Record)
+            : base(isAsync) //, RecordedTestMode.Record)
             {
             }
 

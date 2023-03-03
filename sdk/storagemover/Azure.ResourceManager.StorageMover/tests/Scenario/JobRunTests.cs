@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.StorageMover.Tests.Scenario
     public class JobRunTests : StorageMoverManagementTestBase
     {
         public JobRunTests(bool isAsync)
-            : base(isAsync, RecordedTestMode.Record)
+            : base(isAsync) //, RecordedTestMode.Record)
         {
         }
 
