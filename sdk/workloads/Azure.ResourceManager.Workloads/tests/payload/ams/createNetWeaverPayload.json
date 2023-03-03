@@ -7,7 +7,7 @@
             "sapSid": "L13",
             "sapPortNumber": "8000",
             "sapUsername": "AMSUSER",
-            "sapPassword": "Password@1234",
+            "sapPassword": "Sanitized",
             "sapInstanceNr": "00",
             "sapClientId": "000",
             "sapHostFileEntries": [

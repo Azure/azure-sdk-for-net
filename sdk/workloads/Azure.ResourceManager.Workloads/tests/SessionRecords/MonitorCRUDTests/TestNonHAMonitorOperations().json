@@ -906,7 +906,7 @@
             "dbName": "Sample",
             "dbPort": "25000",
             "dbUsername": "db2admin",
-            "dbPassword": "Password@123",
+            "dbPassword": "Sanitized",
             "sapSid": "OPA",
             "sslPreference": "Disabled",
             "providerType": "Db2"
@@ -1740,7 +1740,7 @@
             "dbName": "SYSTEMDB",
             "instanceNumber": "00",
             "dbUsername": "SYSTEM",
-            "dbPassword": "mX5Ext661bQN",
+            "dbPassword": "Sanitized",
             "sslPreference": "Disabled",
             "sapSid": "X00",
             "providerType": "SapHana"
@@ -3327,7 +3327,7 @@
               "10.0.82.5 l13ascsvm.ams.azure.com l13ascsvm"
             ],
             "sapUsername": "AMSUSER",
-            "sapPassword": "Password@1234",
+            "sapPassword": "Sanitized",
             "sapClientId": "000",
             "sapPortNumber": "8000",
             "sslPreference": "Disabled",
@@ -4020,7 +4020,7 @@
             "hostname": "10.1.14.5",
             "dbPort": "1433",
             "dbUsername": "ams",
-            "dbPassword": "Password@123",
+            "dbPassword": "Sanitized",
             "sapSid": "X00",
             "sslPreference": "Disabled",
             "providerType": "MsSqlServer"

@@ -7,7 +7,7 @@
             "sapSid": "X00",
             "dbPort": "1433",
             "dbUsername": "ams",
-            "dbPassword": "Password@123"
+            "dbPassword": "Sanitized"
         }
     }
 }

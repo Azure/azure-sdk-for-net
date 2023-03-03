@@ -178,7 +178,7 @@
                     "osConfiguration": {
                       "disablePasswordAuthentication": true,
                       "sshKeyPair": {
-                        "publicKey": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQC8k1K0mjpBtyBRcr\u002B74p6zShq09hMXmQZJJem41RlqV132kbGUy/EHcQLoOmp2qdv6Kz/jgz49YWM2WxxhB8G\u002BUh8G58feYFaGNkT\u002BWTrfE/XLHxFnXMghZgCEiV8vfNUROuHux7UfsxiDt6Nw2215fkJ8lQjQEduKPfS7OmoQQDUvGeg8rxUbwouYdR9z5MmcNKSiBC0Z3EEBWVkY0jsbASarE9iRLDT5JrXeeZWCSe\u002B/lg3Ofe7b28f\u002BnXo9LH/voRVc\u002BeKsx6T6reW9wVtm6ygEBXZbqvuEeqISgLvSFWXD7SsO2CbyJpmaOkzjIMbzlaHV126\u002BPYdAY2vf0gVhCwRt5wU/ueFloMmTb3HbLkyVczluBUsSfcJ3H5DYPECiCy5qKaPsGHDzFGByc/0Yy\u002BfNn2L/WrNgNuC3LaeszTZ7YqNVo/6tXTGSqOMrv8AD1rP71sX2HDSdlLf/HyLRgNjfJn/KR3ZE9QZ2Hl9TRcZ9DN\u002BV/wvc/lci/7nsSx0= generated-by-azure",
+                        "publicKey": "Sanitized",
                         "privateKey": "Sanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\n"
                       },
                       "osType": "Linux"
@@ -202,7 +202,7 @@
                     "osConfiguration": {
                       "disablePasswordAuthentication": true,
                       "sshKeyPair": {
-                        "publicKey": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQC8k1K0mjpBtyBRcr\u002B74p6zShq09hMXmQZJJem41RlqV132kbGUy/EHcQLoOmp2qdv6Kz/jgz49YWM2WxxhB8G\u002BUh8G58feYFaGNkT\u002BWTrfE/XLHxFnXMghZgCEiV8vfNUROuHux7UfsxiDt6Nw2215fkJ8lQjQEduKPfS7OmoQQDUvGeg8rxUbwouYdR9z5MmcNKSiBC0Z3EEBWVkY0jsbASarE9iRLDT5JrXeeZWCSe\u002B/lg3Ofe7b28f\u002BnXo9LH/voRVc\u002BeKsx6T6reW9wVtm6ygEBXZbqvuEeqISgLvSFWXD7SsO2CbyJpmaOkzjIMbzlaHV126\u002BPYdAY2vf0gVhCwRt5wU/ueFloMmTb3HbLkyVczluBUsSfcJ3H5DYPECiCy5qKaPsGHDzFGByc/0Yy\u002BfNn2L/WrNgNuC3LaeszTZ7YqNVo/6tXTGSqOMrv8AD1rP71sX2HDSdlLf/HyLRgNjfJn/KR3ZE9QZ2Hl9TRcZ9DN\u002BV/wvc/lci/7nsSx0= generated-by-azure",
+                        "publicKey": "Sanitized",
                         "privateKey": "Sanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\n"
                       },
                       "osType": "Linux"
@@ -226,7 +226,7 @@
                     "osConfiguration": {
                       "disablePasswordAuthentication": true,
                       "sshKeyPair": {
-                        "publicKey": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQC8k1K0mjpBtyBRcr\u002B74p6zShq09hMXmQZJJem41RlqV132kbGUy/EHcQLoOmp2qdv6Kz/jgz49YWM2WxxhB8G\u002BUh8G58feYFaGNkT\u002BWTrfE/XLHxFnXMghZgCEiV8vfNUROuHux7UfsxiDt6Nw2215fkJ8lQjQEduKPfS7OmoQQDUvGeg8rxUbwouYdR9z5MmcNKSiBC0Z3EEBWVkY0jsbASarE9iRLDT5JrXeeZWCSe\u002B/lg3Ofe7b28f\u002BnXo9LH/voRVc\u002BeKsx6T6reW9wVtm6ygEBXZbqvuEeqISgLvSFWXD7SsO2CbyJpmaOkzjIMbzlaHV126\u002BPYdAY2vf0gVhCwRt5wU/ueFloMmTb3HbLkyVczluBUsSfcJ3H5DYPECiCy5qKaPsGHDzFGByc/0Yy\u002BfNn2L/WrNgNuC3LaeszTZ7YqNVo/6tXTGSqOMrv8AD1rP71sX2HDSdlLf/HyLRgNjfJn/KR3ZE9QZ2Hl9TRcZ9DN\u002BV/wvc/lci/7nsSx0= generated-by-azure",
+                        "publicKey": "Sanitized",
                         "privateKey": "Sanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\nSanitized\n"
                       },
                       "osType": "Linux"
@@ -373,7 +373,7 @@
                       "osType": "Linux",
                       "disablePasswordAuthentication": true,
                       "sshKeyPair": {
-                        "publicKey": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQC8k1K0mjpBtyBRcr\u002B74p6zShq09hMXmQZJJem41RlqV132kbGUy/EHcQLoOmp2qdv6Kz/jgz49YWM2WxxhB8G\u002BUh8G58feYFaGNkT\u002BWTrfE/XLHxFnXMghZgCEiV8vfNUROuHux7UfsxiDt6Nw2215fkJ8lQjQEduKPfS7OmoQQDUvGeg8rxUbwouYdR9z5MmcNKSiBC0Z3EEBWVkY0jsbASarE9iRLDT5JrXeeZWCSe\u002B/lg3Ofe7b28f\u002BnXo9LH/voRVc\u002BeKsx6T6reW9wVtm6ygEBXZbqvuEeqISgLvSFWXD7SsO2CbyJpmaOkzjIMbzlaHV126\u002BPYdAY2vf0gVhCwRt5wU/ueFloMmTb3HbLkyVczluBUsSfcJ3H5DYPECiCy5qKaPsGHDzFGByc/0Yy\u002BfNn2L/WrNgNuC3LaeszTZ7YqNVo/6tXTGSqOMrv8AD1rP71sX2HDSdlLf/HyLRgNjfJn/KR3ZE9QZ2Hl9TRcZ9DN\u002BV/wvc/lci/7nsSx0= generated-by-azure"
+                        "publicKey": "Sanitized"
                       }
                     }
                   }
@@ -396,7 +396,7 @@
                       "osType": "Linux",
                       "disablePasswordAuthentication": true,
                       "sshKeyPair": {
-                        "publicKey": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQC8k1K0mjpBtyBRcr\u002B74p6zShq09hMXmQZJJem41RlqV132kbGUy/EHcQLoOmp2qdv6Kz/jgz49YWM2WxxhB8G\u002BUh8G58feYFaGNkT\u002BWTrfE/XLHxFnXMghZgCEiV8vfNUROuHux7UfsxiDt6Nw2215fkJ8lQjQEduKPfS7OmoQQDUvGeg8rxUbwouYdR9z5MmcNKSiBC0Z3EEBWVkY0jsbASarE9iRLDT5JrXeeZWCSe\u002B/lg3Ofe7b28f\u002BnXo9LH/voRVc\u002BeKsx6T6reW9wVtm6ygEBXZbqvuEeqISgLvSFWXD7SsO2CbyJpmaOkzjIMbzlaHV126\u002BPYdAY2vf0gVhCwRt5wU/ueFloMmTb3HbLkyVczluBUsSfcJ3H5DYPECiCy5qKaPsGHDzFGByc/0Yy\u002BfNn2L/WrNgNuC3LaeszTZ7YqNVo/6tXTGSqOMrv8AD1rP71sX2HDSdlLf/HyLRgNjfJn/KR3ZE9QZ2Hl9TRcZ9DN\u002BV/wvc/lci/7nsSx0= generated-by-azure"
+                        "publicKey": "Sanitized"
                       }
                     }
                   }
@@ -419,7 +419,7 @@
                       "osType": "Linux",
                       "disablePasswordAuthentication": true,
                       "sshKeyPair": {
-                        "publicKey": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQC8k1K0mjpBtyBRcr\u002B74p6zShq09hMXmQZJJem41RlqV132kbGUy/EHcQLoOmp2qdv6Kz/jgz49YWM2WxxhB8G\u002BUh8G58feYFaGNkT\u002BWTrfE/XLHxFnXMghZgCEiV8vfNUROuHux7UfsxiDt6Nw2215fkJ8lQjQEduKPfS7OmoQQDUvGeg8rxUbwouYdR9z5MmcNKSiBC0Z3EEBWVkY0jsbASarE9iRLDT5JrXeeZWCSe\u002B/lg3Ofe7b28f\u002BnXo9LH/voRVc\u002BeKsx6T6reW9wVtm6ygEBXZbqvuEeqISgLvSFWXD7SsO2CbyJpmaOkzjIMbzlaHV126\u002BPYdAY2vf0gVhCwRt5wU/ueFloMmTb3HbLkyVczluBUsSfcJ3H5DYPECiCy5qKaPsGHDzFGByc/0Yy\u002BfNn2L/WrNgNuC3LaeszTZ7YqNVo/6tXTGSqOMrv8AD1rP71sX2HDSdlLf/HyLRgNjfJn/KR3ZE9QZ2Hl9TRcZ9DN\u002BV/wvc/lci/7nsSx0= generated-by-azure"
+                        "publicKey": "Sanitized"
                       }
                     }
                   }
@@ -3130,7 +3130,7 @@
                       "osType": "Linux",
                       "disablePasswordAuthentication": true,
                       "sshKeyPair": {
-                        "publicKey": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQC8k1K0mjpBtyBRcr\u002B74p6zShq09hMXmQZJJem41RlqV132kbGUy/EHcQLoOmp2qdv6Kz/jgz49YWM2WxxhB8G\u002BUh8G58feYFaGNkT\u002BWTrfE/XLHxFnXMghZgCEiV8vfNUROuHux7UfsxiDt6Nw2215fkJ8lQjQEduKPfS7OmoQQDUvGeg8rxUbwouYdR9z5MmcNKSiBC0Z3EEBWVkY0jsbASarE9iRLDT5JrXeeZWCSe\u002B/lg3Ofe7b28f\u002BnXo9LH/voRVc\u002BeKsx6T6reW9wVtm6ygEBXZbqvuEeqISgLvSFWXD7SsO2CbyJpmaOkzjIMbzlaHV126\u002BPYdAY2vf0gVhCwRt5wU/ueFloMmTb3HbLkyVczluBUsSfcJ3H5DYPECiCy5qKaPsGHDzFGByc/0Yy\u002BfNn2L/WrNgNuC3LaeszTZ7YqNVo/6tXTGSqOMrv8AD1rP71sX2HDSdlLf/HyLRgNjfJn/KR3ZE9QZ2Hl9TRcZ9DN\u002BV/wvc/lci/7nsSx0= generated-by-azure"
+                        "publicKey": "Sanitized"
                       }
                     }
                   }
@@ -3153,7 +3153,7 @@
                       "osType": "Linux",
                       "disablePasswordAuthentication": true,
                       "sshKeyPair": {
-                        "publicKey": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQC8k1K0mjpBtyBRcr\u002B74p6zShq09hMXmQZJJem41RlqV132kbGUy/EHcQLoOmp2qdv6Kz/jgz49YWM2WxxhB8G\u002BUh8G58feYFaGNkT\u002BWTrfE/XLHxFnXMghZgCEiV8vfNUROuHux7UfsxiDt6Nw2215fkJ8lQjQEduKPfS7OmoQQDUvGeg8rxUbwouYdR9z5MmcNKSiBC0Z3EEBWVkY0jsbASarE9iRLDT5JrXeeZWCSe\u002B/lg3Ofe7b28f\u002BnXo9LH/voRVc\u002BeKsx6T6reW9wVtm6ygEBXZbqvuEeqISgLvSFWXD7SsO2CbyJpmaOkzjIMbzlaHV126\u002BPYdAY2vf0gVhCwRt5wU/ueFloMmTb3HbLkyVczluBUsSfcJ3H5DYPECiCy5qKaPsGHDzFGByc/0Yy\u002BfNn2L/WrNgNuC3LaeszTZ7YqNVo/6tXTGSqOMrv8AD1rP71sX2HDSdlLf/HyLRgNjfJn/KR3ZE9QZ2Hl9TRcZ9DN\u002BV/wvc/lci/7nsSx0= generated-by-azure"
+                        "publicKey": "Sanitized"
                       }
                     }
                   }
@@ -3176,7 +3176,7 @@
                       "osType": "Linux",
                       "disablePasswordAuthentication": true,
                       "sshKeyPair": {
-                        "publicKey": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQC8k1K0mjpBtyBRcr\u002B74p6zShq09hMXmQZJJem41RlqV132kbGUy/EHcQLoOmp2qdv6Kz/jgz49YWM2WxxhB8G\u002BUh8G58feYFaGNkT\u002BWTrfE/XLHxFnXMghZgCEiV8vfNUROuHux7UfsxiDt6Nw2215fkJ8lQjQEduKPfS7OmoQQDUvGeg8rxUbwouYdR9z5MmcNKSiBC0Z3EEBWVkY0jsbASarE9iRLDT5JrXeeZWCSe\u002B/lg3Ofe7b28f\u002BnXo9LH/voRVc\u002BeKsx6T6reW9wVtm6ygEBXZbqvuEeqISgLvSFWXD7SsO2CbyJpmaOkzjIMbzlaHV126\u002BPYdAY2vf0gVhCwRt5wU/ueFloMmTb3HbLkyVczluBUsSfcJ3H5DYPECiCy5qKaPsGHDzFGByc/0Yy\u002BfNn2L/WrNgNuC3LaeszTZ7YqNVo/6tXTGSqOMrv8AD1rP71sX2HDSdlLf/HyLRgNjfJn/KR3ZE9QZ2Hl9TRcZ9DN\u002BV/wvc/lci/7nsSx0= generated-by-azure"
+                        "publicKey": "Sanitized"
                       }
                     }
                   }
@@ -3330,7 +3330,7 @@
                       "osType": "Linux",
                       "disablePasswordAuthentication": true,
                       "sshKeyPair": {
-                        "publicKey": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQC8k1K0mjpBtyBRcr\u002B74p6zShq09hMXmQZJJem41RlqV132kbGUy/EHcQLoOmp2qdv6Kz/jgz49YWM2WxxhB8G\u002BUh8G58feYFaGNkT\u002BWTrfE/XLHxFnXMghZgCEiV8vfNUROuHux7UfsxiDt6Nw2215fkJ8lQjQEduKPfS7OmoQQDUvGeg8rxUbwouYdR9z5MmcNKSiBC0Z3EEBWVkY0jsbASarE9iRLDT5JrXeeZWCSe\u002B/lg3Ofe7b28f\u002BnXo9LH/voRVc\u002BeKsx6T6reW9wVtm6ygEBXZbqvuEeqISgLvSFWXD7SsO2CbyJpmaOkzjIMbzlaHV126\u002BPYdAY2vf0gVhCwRt5wU/ueFloMmTb3HbLkyVczluBUsSfcJ3H5DYPECiCy5qKaPsGHDzFGByc/0Yy\u002BfNn2L/WrNgNuC3LaeszTZ7YqNVo/6tXTGSqOMrv8AD1rP71sX2HDSdlLf/HyLRgNjfJn/KR3ZE9QZ2Hl9TRcZ9DN\u002BV/wvc/lci/7nsSx0= generated-by-azure"
+                        "publicKey": "Sanitized"
                       }
                     }
                   }
@@ -3353,7 +3353,7 @@
                       "osType": "Linux",
                       "disablePasswordAuthentication": true,
                       "sshKeyPair": {
-                        "publicKey": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQC8k1K0mjpBtyBRcr\u002B74p6zShq09hMXmQZJJem41RlqV132kbGUy/EHcQLoOmp2qdv6Kz/jgz49YWM2WxxhB8G\u002BUh8G58feYFaGNkT\u002BWTrfE/XLHxFnXMghZgCEiV8vfNUROuHux7UfsxiDt6Nw2215fkJ8lQjQEduKPfS7OmoQQDUvGeg8rxUbwouYdR9z5MmcNKSiBC0Z3EEBWVkY0jsbASarE9iRLDT5JrXeeZWCSe\u002B/lg3Ofe7b28f\u002BnXo9LH/voRVc\u002BeKsx6T6reW9wVtm6ygEBXZbqvuEeqISgLvSFWXD7SsO2CbyJpmaOkzjIMbzlaHV126\u002BPYdAY2vf0gVhCwRt5wU/ueFloMmTb3HbLkyVczluBUsSfcJ3H5DYPECiCy5qKaPsGHDzFGByc/0Yy\u002BfNn2L/WrNgNuC3LaeszTZ7YqNVo/6tXTGSqOMrv8AD1rP71sX2HDSdlLf/HyLRgNjfJn/KR3ZE9QZ2Hl9TRcZ9DN\u002BV/wvc/lci/7nsSx0= generated-by-azure"
+                        "publicKey": "Sanitized"
                       }
                     }
                   }
@@ -3376,7 +3376,7 @@
                       "osType": "Linux",
                       "disablePasswordAuthentication": true,
                       "sshKeyPair": {
-                        "publicKey": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQC8k1K0mjpBtyBRcr\u002B74p6zShq09hMXmQZJJem41RlqV132kbGUy/EHcQLoOmp2qdv6Kz/jgz49YWM2WxxhB8G\u002BUh8G58feYFaGNkT\u002BWTrfE/XLHxFnXMghZgCEiV8vfNUROuHux7UfsxiDt6Nw2215fkJ8lQjQEduKPfS7OmoQQDUvGeg8rxUbwouYdR9z5MmcNKSiBC0Z3EEBWVkY0jsbASarE9iRLDT5JrXeeZWCSe\u002B/lg3Ofe7b28f\u002BnXo9LH/voRVc\u002BeKsx6T6reW9wVtm6ygEBXZbqvuEeqISgLvSFWXD7SsO2CbyJpmaOkzjIMbzlaHV126\u002BPYdAY2vf0gVhCwRt5wU/ueFloMmTb3HbLkyVczluBUsSfcJ3H5DYPECiCy5qKaPsGHDzFGByc/0Yy\u002BfNn2L/WrNgNuC3LaeszTZ7YqNVo/6tXTGSqOMrv8AD1rP71sX2HDSdlLf/HyLRgNjfJn/KR3ZE9QZ2Hl9TRcZ9DN\u002BV/wvc/lci/7nsSx0= generated-by-azure"
+                        "publicKey": "Sanitized"
                       }
                     }
                   }
@@ -3539,7 +3539,7 @@
                       "osType": "Linux",
                       "disablePasswordAuthentication": true,
                       "sshKeyPair": {
-                        "publicKey": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQC8k1K0mjpBtyBRcr\u002B74p6zShq09hMXmQZJJem41RlqV132kbGUy/EHcQLoOmp2qdv6Kz/jgz49YWM2WxxhB8G\u002BUh8G58feYFaGNkT\u002BWTrfE/XLHxFnXMghZgCEiV8vfNUROuHux7UfsxiDt6Nw2215fkJ8lQjQEduKPfS7OmoQQDUvGeg8rxUbwouYdR9z5MmcNKSiBC0Z3EEBWVkY0jsbASarE9iRLDT5JrXeeZWCSe\u002B/lg3Ofe7b28f\u002BnXo9LH/voRVc\u002BeKsx6T6reW9wVtm6ygEBXZbqvuEeqISgLvSFWXD7SsO2CbyJpmaOkzjIMbzlaHV126\u002BPYdAY2vf0gVhCwRt5wU/ueFloMmTb3HbLkyVczluBUsSfcJ3H5DYPECiCy5qKaPsGHDzFGByc/0Yy\u002BfNn2L/WrNgNuC3LaeszTZ7YqNVo/6tXTGSqOMrv8AD1rP71sX2HDSdlLf/HyLRgNjfJn/KR3ZE9QZ2Hl9TRcZ9DN\u002BV/wvc/lci/7nsSx0= generated-by-azure"
+                        "publicKey": "Sanitized"
                       }
                     }
                   }
@@ -3562,7 +3562,7 @@
                       "osType": "Linux",
                       "disablePasswordAuthentication": true,
                       "sshKeyPair": {
-                        "publicKey": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQC8k1K0mjpBtyBRcr\u002B74p6zShq09hMXmQZJJem41RlqV132kbGUy/EHcQLoOmp2qdv6Kz/jgz49YWM2WxxhB8G\u002BUh8G58feYFaGNkT\u002BWTrfE/XLHxFnXMghZgCEiV8vfNUROuHux7UfsxiDt6Nw2215fkJ8lQjQEduKPfS7OmoQQDUvGeg8rxUbwouYdR9z5MmcNKSiBC0Z3EEBWVkY0jsbASarE9iRLDT5JrXeeZWCSe\u002B/lg3Ofe7b28f\u002BnXo9LH/voRVc\u002BeKsx6T6reW9wVtm6ygEBXZbqvuEeqISgLvSFWXD7SsO2CbyJpmaOkzjIMbzlaHV126\u002BPYdAY2vf0gVhCwRt5wU/ueFloMmTb3HbLkyVczluBUsSfcJ3H5DYPECiCy5qKaPsGHDzFGByc/0Yy\u002BfNn2L/WrNgNuC3LaeszTZ7YqNVo/6tXTGSqOMrv8AD1rP71sX2HDSdlLf/HyLRgNjfJn/KR3ZE9QZ2Hl9TRcZ9DN\u002BV/wvc/lci/7nsSx0= generated-by-azure"
+                        "publicKey": "Sanitized"
                       }
                     }
                   }
@@ -3585,7 +3585,7 @@
                       "osType": "Linux",
                       "disablePasswordAuthentication": true,
                       "sshKeyPair": {
-                        "publicKey": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQC8k1K0mjpBtyBRcr\u002B74p6zShq09hMXmQZJJem41RlqV132kbGUy/EHcQLoOmp2qdv6Kz/jgz49YWM2WxxhB8G\u002BUh8G58feYFaGNkT\u002BWTrfE/XLHxFnXMghZgCEiV8vfNUROuHux7UfsxiDt6Nw2215fkJ8lQjQEduKPfS7OmoQQDUvGeg8rxUbwouYdR9z5MmcNKSiBC0Z3EEBWVkY0jsbASarE9iRLDT5JrXeeZWCSe\u002B/lg3Ofe7b28f\u002BnXo9LH/voRVc\u002BeKsx6T6reW9wVtm6ygEBXZbqvuEeqISgLvSFWXD7SsO2CbyJpmaOkzjIMbzlaHV126\u002BPYdAY2vf0gVhCwRt5wU/ueFloMmTb3HbLkyVczluBUsSfcJ3H5DYPECiCy5qKaPsGHDzFGByc/0Yy\u002BfNn2L/WrNgNuC3LaeszTZ7YqNVo/6tXTGSqOMrv8AD1rP71sX2HDSdlLf/HyLRgNjfJn/KR3ZE9QZ2Hl9TRcZ9DN\u002BV/wvc/lci/7nsSx0= generated-by-azure"
+                        "publicKey": "Sanitized"
                       }
                     }
                   }
@@ -3753,7 +3753,7 @@
                           "osType": "Linux",
                           "disablePasswordAuthentication": true,
                           "sshKeyPair": {
-                            "publicKey": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQC8k1K0mjpBtyBRcr\u002B74p6zShq09hMXmQZJJem41RlqV132kbGUy/EHcQLoOmp2qdv6Kz/jgz49YWM2WxxhB8G\u002BUh8G58feYFaGNkT\u002BWTrfE/XLHxFnXMghZgCEiV8vfNUROuHux7UfsxiDt6Nw2215fkJ8lQjQEduKPfS7OmoQQDUvGeg8rxUbwouYdR9z5MmcNKSiBC0Z3EEBWVkY0jsbASarE9iRLDT5JrXeeZWCSe\u002B/lg3Ofe7b28f\u002BnXo9LH/voRVc\u002BeKsx6T6reW9wVtm6ygEBXZbqvuEeqISgLvSFWXD7SsO2CbyJpmaOkzjIMbzlaHV126\u002BPYdAY2vf0gVhCwRt5wU/ueFloMmTb3HbLkyVczluBUsSfcJ3H5DYPECiCy5qKaPsGHDzFGByc/0Yy\u002BfNn2L/WrNgNuC3LaeszTZ7YqNVo/6tXTGSqOMrv8AD1rP71sX2HDSdlLf/HyLRgNjfJn/KR3ZE9QZ2Hl9TRcZ9DN\u002BV/wvc/lci/7nsSx0= generated-by-azure"
+                            "publicKey": "Sanitized"
                           }
                         }
                       }
@@ -3776,7 +3776,7 @@
                           "osType": "Linux",
                           "disablePasswordAuthentication": true,
                           "sshKeyPair": {
-                            "publicKey": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQC8k1K0mjpBtyBRcr\u002B74p6zShq09hMXmQZJJem41RlqV132kbGUy/EHcQLoOmp2qdv6Kz/jgz49YWM2WxxhB8G\u002BUh8G58feYFaGNkT\u002BWTrfE/XLHxFnXMghZgCEiV8vfNUROuHux7UfsxiDt6Nw2215fkJ8lQjQEduKPfS7OmoQQDUvGeg8rxUbwouYdR9z5MmcNKSiBC0Z3EEBWVkY0jsbASarE9iRLDT5JrXeeZWCSe\u002B/lg3Ofe7b28f\u002BnXo9LH/voRVc\u002BeKsx6T6reW9wVtm6ygEBXZbqvuEeqISgLvSFWXD7SsO2CbyJpmaOkzjIMbzlaHV126\u002BPYdAY2vf0gVhCwRt5wU/ueFloMmTb3HbLkyVczluBUsSfcJ3H5DYPECiCy5qKaPsGHDzFGByc/0Yy\u002BfNn2L/WrNgNuC3LaeszTZ7YqNVo/6tXTGSqOMrv8AD1rP71sX2HDSdlLf/HyLRgNjfJn/KR3ZE9QZ2Hl9TRcZ9DN\u002BV/wvc/lci/7nsSx0= generated-by-azure"
+                            "publicKey": "Sanitized"
                           }
                         }
                       }
@@ -3799,7 +3799,7 @@
                           "osType": "Linux",
                           "disablePasswordAuthentication": true,
                           "sshKeyPair": {
-                            "publicKey": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQC8k1K0mjpBtyBRcr\u002B74p6zShq09hMXmQZJJem41RlqV132kbGUy/EHcQLoOmp2qdv6Kz/jgz49YWM2WxxhB8G\u002BUh8G58feYFaGNkT\u002BWTrfE/XLHxFnXMghZgCEiV8vfNUROuHux7UfsxiDt6Nw2215fkJ8lQjQEduKPfS7OmoQQDUvGeg8rxUbwouYdR9z5MmcNKSiBC0Z3EEBWVkY0jsbASarE9iRLDT5JrXeeZWCSe\u002B/lg3Ofe7b28f\u002BnXo9LH/voRVc\u002BeKsx6T6reW9wVtm6ygEBXZbqvuEeqISgLvSFWXD7SsO2CbyJpmaOkzjIMbzlaHV126\u002BPYdAY2vf0gVhCwRt5wU/ueFloMmTb3HbLkyVczluBUsSfcJ3H5DYPECiCy5qKaPsGHDzFGByc/0Yy\u002BfNn2L/WrNgNuC3LaeszTZ7YqNVo/6tXTGSqOMrv8AD1rP71sX2HDSdlLf/HyLRgNjfJn/KR3ZE9QZ2Hl9TRcZ9DN\u002BV/wvc/lci/7nsSx0= generated-by-azure"
+                            "publicKey": "Sanitized"
                           }
                         }
                       }

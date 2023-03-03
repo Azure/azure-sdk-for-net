@@ -5,6 +5,6 @@
     "sapBitsStorageAccountId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/yb-SapInstall/providers/Microsoft.Storage/storageAccounts/ybteststorageaccount",
     "highAvailabilitySoftwareConfiguration": {
         "fencingClientId": "fbc04a4f-9152-48a5-8d5e-17c7fa8f9156",
-        "fencingClientPassword": "Jrf8Q~oN63NYIUFwdJJQJ1p13jKgtpGUbGW~-bD1"
+        "fencingClientPassword": "Sanitized"
     }
 }
