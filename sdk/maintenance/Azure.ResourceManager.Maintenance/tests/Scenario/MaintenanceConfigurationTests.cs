@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Maintenance.Tests
                 Namespace = "Microsoft.Maintenance",
                 MaintenanceScope = MaintenanceScope.Host,
                 Visibility = MaintenanceConfigurationVisibility.Custom,
-                StartOn = DateTimeOffset.UtcNow,
+                StartOn = DateTimeOffset.Parse("2023-12-31 00:00"),
                 ExpireOn = DateTimeOffset.Parse("9999-12-31 00:00"),
                 Duration = TimeSpan.Parse("05:00"),
                 TimeZone = "Pacific Standard Time",
