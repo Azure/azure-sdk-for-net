@@ -9,9 +9,9 @@ Run `dotnet build /t:GenerateCode` in src directory to re-generate.
 ``` yaml
 title: Azure.Security.KeyVault.Administration
 input-file:
-- https://raw.githubusercontent.com/Azure/azure-rest-api-specs/56435032b69cc7ebb5c1052b66c7865d0c48f33c/specification/keyvault/data-plane/Microsoft.KeyVault/stable/7.4/rbac.json
-- https://raw.githubusercontent.com/Azure/azure-rest-api-specs/56435032b69cc7ebb5c1052b66c7865d0c48f33c/specification/keyvault/data-plane/Microsoft.KeyVault/stable/7.4/backuprestore.json
-- https://raw.githubusercontent.com/Azure/azure-rest-api-specs/56435032b69cc7ebb5c1052b66c7865d0c48f33c/specification/keyvault/data-plane/Microsoft.KeyVault/stable/7.4/settings.json
+- https://raw.githubusercontent.com/Azure/azure-rest-api-specs/551275acb80e1f8b39036b79dfc35a8f63b601a7/specification/keyvault/data-plane/Microsoft.KeyVault/stable/7.4/rbac.json
+- https://raw.githubusercontent.com/Azure/azure-rest-api-specs/551275acb80e1f8b39036b79dfc35a8f63b601a7/specification/keyvault/data-plane/Microsoft.KeyVault/stable/7.4/backuprestore.json
+- https://raw.githubusercontent.com/Azure/azure-rest-api-specs/551275acb80e1f8b39036b79dfc35a8f63b601a7/specification/keyvault/data-plane/Microsoft.KeyVault/stable/7.4/settings.json
 namespace: Azure.Security.KeyVault.Administration
 generation1-convenience-client: true
 include-csproj: disable
