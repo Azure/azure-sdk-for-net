@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ApiManagement
 {
-    /// <summary> A class representing the ApiManagementNamedValue data model. </summary>
+    /// <summary>
+    /// A class representing the ApiManagementNamedValue data model.
+    /// NamedValue details.
+    /// </summary>
     public partial class ApiManagementNamedValueData : ResourceData
     {
         /// <summary> Initializes a new instance of ApiManagementNamedValueData. </summary>

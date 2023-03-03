@@ -4,10 +4,11 @@ Run `dotnet build /t:GenerateCode` to generate code.
 
 ``` yaml
 azure-arm: true
+generate-model-factory: false
 csharp: true
 library-name: StorageMover
 namespace: Azure.ResourceManager.StorageMover
-require: https://github.com/Azure/azure-rest-api-specs/blob/e99a45d498a1c7fadc18229ecba5d84a471a8771/specification/storagemover/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/0b1805b3ce076549ba4e9285a4f0f8727caf53a5/specification/storagemover/resource-manager/readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true

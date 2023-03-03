@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.SignalR.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(AllowedOrigins))
             {
-                writer.WritePropertyName("allowedOrigins");
+                writer.WritePropertyName("allowedOrigins"u8);
                 writer.WriteStartArray();
                 foreach (var item in AllowedOrigins)
                 {
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.SignalR.Models
             Optional<IList<string>> allowedOrigins = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("allowedOrigins"))
+                if (property.NameEquals("allowedOrigins"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

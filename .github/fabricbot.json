@@ -1086,6 +1086,12 @@
           ]
         },
         {
+          "label": "Communication - Rooms",
+          "pathFilter": [
+            "/sdk/communication/Azure.Communication.Rooms/"
+          ]
+        },
+        {
           "label": "Mixed Reality",
           "pathFilter": [
             "/sdk/mixedreality/",
@@ -1915,7 +1921,7 @@
           ],
           "mentionees": [
             "sebrenna",
-            "mharlan", 
+            "mharlan",
             "chrissmiller"
           ]
         },
@@ -2058,13 +2064,8 @@
             "IoT"
           ],
           "mentionees": [
-            "drwill-ms",
-            "timtay-microsoft",
-            "abhipsaMisra",
-            "brycewang-microsoft",
-            "andyk-ms",
-            "tmahmood-microsoft",
-            "ngastelum-ms"
+            "ethanann-ms",
+            "vighatke"
           ]
         },
         {
@@ -2073,13 +2074,8 @@
             "IoTHub"
           ],
           "mentionees": [
-            "drwill-ms",
-            "timtay-microsoft",
-            "abhipsaMisra",
-            "brycewang-microsoft",
-            "andyk-ms",
-            "tmahmood-microsoft",
-            "ngastelum-ms"
+            "ethanann-ms",
+            "vighatke"
           ]
         },
         {
@@ -2954,6 +2950,19 @@
           "labels": [
             "Service Attention",
             "Monitor - Exporter"
+          ],
+          "mentionees": [
+            "cijothomas",
+            "reyang",
+            "rajkumar-rangaraj",
+            "TimothyMothra",
+            "vishweshbankwar"
+          ]
+        },
+        {
+          "labels": [
+            "Service Attention",
+            "Monitor - Distro"
           ],
           "mentionees": [
             "cijothomas",

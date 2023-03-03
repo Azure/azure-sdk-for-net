@@ -15,28 +15,28 @@ namespace Azure.ResourceManager.Logic.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("messageId");
+            writer.WritePropertyName("messageId"u8);
             writer.WriteStringValue(MessageId);
-            writer.WritePropertyName("messageVersion");
+            writer.WritePropertyName("messageVersion"u8);
             writer.WriteStringValue(MessageVersion);
-            writer.WritePropertyName("messageRelease");
+            writer.WritePropertyName("messageRelease"u8);
             writer.WriteStringValue(MessageRelease);
             if (Optional.IsDefined(SenderApplicationId))
             {
-                writer.WritePropertyName("senderApplicationId");
+                writer.WritePropertyName("senderApplicationId"u8);
                 writer.WriteStringValue(SenderApplicationId);
             }
             if (Optional.IsDefined(SenderApplicationQualifier))
             {
-                writer.WritePropertyName("senderApplicationQualifier");
+                writer.WritePropertyName("senderApplicationQualifier"u8);
                 writer.WriteStringValue(SenderApplicationQualifier);
             }
             if (Optional.IsDefined(AssociationAssignedCode))
             {
-                writer.WritePropertyName("associationAssignedCode");
+                writer.WritePropertyName("associationAssignedCode"u8);
                 writer.WriteStringValue(AssociationAssignedCode);
             }
-            writer.WritePropertyName("schemaName");
+            writer.WritePropertyName("schemaName"u8);
             writer.WriteStringValue(SchemaName);
             writer.WriteEndObject();
         }
@@ -52,37 +52,37 @@ namespace Azure.ResourceManager.Logic.Models
             string schemaName = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("messageId"))
+                if (property.NameEquals("messageId"u8))
                 {
                     messageId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("messageVersion"))
+                if (property.NameEquals("messageVersion"u8))
                 {
                     messageVersion = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("messageRelease"))
+                if (property.NameEquals("messageRelease"u8))
                 {
                     messageRelease = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("senderApplicationId"))
+                if (property.NameEquals("senderApplicationId"u8))
                 {
                     senderApplicationId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("senderApplicationQualifier"))
+                if (property.NameEquals("senderApplicationQualifier"u8))
                 {
                     senderApplicationQualifier = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("associationAssignedCode"))
+                if (property.NameEquals("associationAssignedCode"u8))
                 {
                     associationAssignedCode = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("schemaName"))
+                if (property.NameEquals("schemaName"u8))
                 {
                     schemaName = property.Value.GetString();
                     continue;

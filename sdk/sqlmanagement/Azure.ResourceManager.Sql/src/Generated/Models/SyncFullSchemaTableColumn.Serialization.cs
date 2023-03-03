@@ -23,22 +23,22 @@ namespace Azure.ResourceManager.Sql.Models
             Optional<string> quotedName = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("dataSize"))
+                if (property.NameEquals("dataSize"u8))
                 {
                     dataSize = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("dataType"))
+                if (property.NameEquals("dataType"u8))
                 {
                     dataType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("errorId"))
+                if (property.NameEquals("errorId"u8))
                 {
                     errorId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("hasError"))
+                if (property.NameEquals("hasError"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Sql.Models
                     hasError = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("isPrimaryKey"))
+                if (property.NameEquals("isPrimaryKey"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -58,12 +58,12 @@ namespace Azure.ResourceManager.Sql.Models
                     isPrimaryKey = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("quotedName"))
+                if (property.NameEquals("quotedName"u8))
                 {
                     quotedName = property.Value.GetString();
                     continue;

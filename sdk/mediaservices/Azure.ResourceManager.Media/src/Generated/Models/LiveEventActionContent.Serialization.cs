@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Media.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(RemoveOutputsOnStop))
             {
-                writer.WritePropertyName("removeOutputsOnStop");
+                writer.WritePropertyName("removeOutputsOnStop"u8);
                 writer.WriteBooleanValue(RemoveOutputsOnStop.Value);
             }
             writer.WriteEndObject();

@@ -21,17 +21,17 @@ namespace Azure.Communication.Chat
             Optional<DateTimeOffset> lastMessageReceivedOn = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("topic"))
+                if (property.NameEquals("topic"u8))
                 {
                     topic = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("deletedOn"))
+                if (property.NameEquals("deletedOn"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -41,7 +41,7 @@ namespace Azure.Communication.Chat
                     deletedOn = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("lastMessageReceivedOn"))
+                if (property.NameEquals("lastMessageReceivedOn"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

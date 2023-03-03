@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.MachineLearning
 {
-    /// <summary> A class representing the MachineLearningCompute data model. </summary>
+    /// <summary>
+    /// A class representing the MachineLearningCompute data model.
+    /// Machine Learning compute object wrapped into ARM resource envelope.
+    /// </summary>
     public partial class MachineLearningComputeData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of MachineLearningComputeData. </summary>

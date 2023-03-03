@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Network.Models
             Optional<NetworkSecurityGroupResult> networkSecurityGroupResult = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("profile"))
+                if (property.NameEquals("profile"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Network.Models
                     profile = NetworkConfigurationDiagnosticProfile.DeserializeNetworkConfigurationDiagnosticProfile(property.Value);
                     continue;
                 }
-                if (property.NameEquals("networkSecurityGroupResult"))
+                if (property.NameEquals("networkSecurityGroupResult"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Analysis.Models
             Optional<ResourceType> resourceType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("sku"))
+                if (property.NameEquals("sku"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Analysis.Models
                     sku = AnalysisResourceSku.DeserializeAnalysisResourceSku(property.Value);
                     continue;
                 }
-                if (property.NameEquals("resourceType"))
+                if (property.NameEquals("resourceType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

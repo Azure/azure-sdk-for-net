@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
             Optional<VirtualScsiSharing> sharing = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
                     type = new ScsiControllerType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("controllerKey"))
+                if (property.NameEquals("controllerKey"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
                     controllerKey = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("busNumber"))
+                if (property.NameEquals("busNumber"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
                     busNumber = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("scsiCtlrUnitNumber"))
+                if (property.NameEquals("scsiCtlrUnitNumber"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
                     scsiCtlrUnitNumber = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("sharing"))
+                if (property.NameEquals("sharing"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

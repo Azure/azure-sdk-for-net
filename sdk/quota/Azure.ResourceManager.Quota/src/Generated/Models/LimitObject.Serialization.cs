@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.Quota.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("value");
+            writer.WritePropertyName("value"u8);
             writer.WriteNumberValue(Value);
             if (Optional.IsDefined(LimitType))
             {
-                writer.WritePropertyName("limitType");
+                writer.WritePropertyName("limitType"u8);
                 writer.WriteStringValue(LimitType.Value.ToString());
             }
-            writer.WritePropertyName("limitObjectType");
+            writer.WritePropertyName("limitObjectType"u8);
             writer.WriteStringValue(LimitObjectType.ToString());
             writer.WriteEndObject();
         }
@@ -34,12 +34,12 @@ namespace Azure.ResourceManager.Quota.Models
             LimitType limitObjectType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     value = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("limitType"))
+                if (property.NameEquals("limitType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Quota.Models
                     limitType = new QuotaLimitType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("limitObjectType"))
+                if (property.NameEquals("limitObjectType"u8))
                 {
                     limitObjectType = new LimitType(property.Value.GetString());
                     continue;

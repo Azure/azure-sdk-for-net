@@ -22,10 +22,10 @@ namespace Azure.ResourceManager.CustomerInsights.Models
 
         public static EntityType ToEntityType(this string value)
         {
-            if (string.Equals(value, "None", StringComparison.InvariantCultureIgnoreCase)) return EntityType.None;
-            if (string.Equals(value, "Profile", StringComparison.InvariantCultureIgnoreCase)) return EntityType.Profile;
-            if (string.Equals(value, "Interaction", StringComparison.InvariantCultureIgnoreCase)) return EntityType.Interaction;
-            if (string.Equals(value, "Relationship", StringComparison.InvariantCultureIgnoreCase)) return EntityType.Relationship;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "None")) return EntityType.None;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Profile")) return EntityType.Profile;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Interaction")) return EntityType.Interaction;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Relationship")) return EntityType.Relationship;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown EntityType value.");
         }
     }

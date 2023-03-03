@@ -183,11 +183,8 @@ namespace Azure.Core.Pipeline
             {
                 if (buildOptions.ClientOptions.IsCustomTransportSet)
                 {
-                    if (AzureCoreEventSource.Singleton.IsEnabled())
-                    {
-                        // Log that we were unable to override the custom transport
-                        AzureCoreEventSource.Singleton.PipelineTransportOptionsNotApplied(buildOptions.ClientOptions?.GetType().FullName ?? String.Empty);
-                    }
+                    // Log that we were unable to override the custom transport
+                    AzureCoreEventSource.Singleton.PipelineTransportOptionsNotApplied(buildOptions.ClientOptions.GetType());
                 }
                 else
                 {

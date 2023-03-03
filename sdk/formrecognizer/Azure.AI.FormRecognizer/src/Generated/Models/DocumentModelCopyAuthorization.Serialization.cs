@@ -16,17 +16,17 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("targetResourceId");
+            writer.WritePropertyName("targetResourceId"u8);
             writer.WriteStringValue(TargetResourceId);
-            writer.WritePropertyName("targetResourceRegion");
+            writer.WritePropertyName("targetResourceRegion"u8);
             writer.WriteStringValue(TargetResourceRegion);
-            writer.WritePropertyName("targetModelId");
+            writer.WritePropertyName("targetModelId"u8);
             writer.WriteStringValue(TargetModelId);
-            writer.WritePropertyName("targetModelLocation");
+            writer.WritePropertyName("targetModelLocation"u8);
             writer.WriteStringValue(TargetModelLocation.AbsoluteUri);
-            writer.WritePropertyName("accessToken");
+            writer.WritePropertyName("accessToken"u8);
             writer.WriteStringValue(AccessToken);
-            writer.WritePropertyName("expirationDateTime");
+            writer.WritePropertyName("expirationDateTime"u8);
             writer.WriteStringValue(ExpiresOn, "O");
             writer.WriteEndObject();
         }
@@ -41,32 +41,32 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             DateTimeOffset expirationDateTime = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("targetResourceId"))
+                if (property.NameEquals("targetResourceId"u8))
                 {
                     targetResourceId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("targetResourceRegion"))
+                if (property.NameEquals("targetResourceRegion"u8))
                 {
                     targetResourceRegion = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("targetModelId"))
+                if (property.NameEquals("targetModelId"u8))
                 {
                     targetModelId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("targetModelLocation"))
+                if (property.NameEquals("targetModelLocation"u8))
                 {
                     targetModelLocation = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("accessToken"))
+                if (property.NameEquals("accessToken"u8))
                 {
                     accessToken = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("expirationDateTime"))
+                if (property.NameEquals("expirationDateTime"u8))
                 {
                     expirationDateTime = property.Value.GetDateTimeOffset("O");
                     continue;

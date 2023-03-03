@@ -19,11 +19,11 @@ namespace Azure.ResourceManager.CustomerInsights
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(DisplayName))
             {
-                writer.WritePropertyName("displayName");
+                writer.WritePropertyName("displayName"u8);
                 writer.WriteStartObject();
                 foreach (var item in DisplayName)
                 {
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.CustomerInsights
             }
             if (Optional.IsCollectionDefined(Description))
             {
-                writer.WritePropertyName("description");
+                writer.WritePropertyName("description"u8);
                 writer.WriteStartObject();
                 foreach (var item in Description)
                 {
@@ -45,12 +45,12 @@ namespace Azure.ResourceManager.CustomerInsights
             }
             if (Optional.IsDefined(Role))
             {
-                writer.WritePropertyName("role");
+                writer.WritePropertyName("role"u8);
                 writer.WriteStringValue(Role.Value.ToSerialString());
             }
             if (Optional.IsCollectionDefined(Principals))
             {
-                writer.WritePropertyName("principals");
+                writer.WritePropertyName("principals"u8);
                 writer.WriteStartArray();
                 foreach (var item in Principals)
                 {
@@ -60,67 +60,67 @@ namespace Azure.ResourceManager.CustomerInsights
             }
             if (Optional.IsDefined(Profiles))
             {
-                writer.WritePropertyName("profiles");
+                writer.WritePropertyName("profiles"u8);
                 writer.WriteObjectValue(Profiles);
             }
             if (Optional.IsDefined(Interactions))
             {
-                writer.WritePropertyName("interactions");
+                writer.WritePropertyName("interactions"u8);
                 writer.WriteObjectValue(Interactions);
             }
             if (Optional.IsDefined(Links))
             {
-                writer.WritePropertyName("links");
+                writer.WritePropertyName("links"u8);
                 writer.WriteObjectValue(Links);
             }
             if (Optional.IsDefined(Kpis))
             {
-                writer.WritePropertyName("kpis");
+                writer.WritePropertyName("kpis"u8);
                 writer.WriteObjectValue(Kpis);
             }
             if (Optional.IsDefined(SasPolicies))
             {
-                writer.WritePropertyName("sasPolicies");
+                writer.WritePropertyName("sasPolicies"u8);
                 writer.WriteObjectValue(SasPolicies);
             }
             if (Optional.IsDefined(Connectors))
             {
-                writer.WritePropertyName("connectors");
+                writer.WritePropertyName("connectors"u8);
                 writer.WriteObjectValue(Connectors);
             }
             if (Optional.IsDefined(Views))
             {
-                writer.WritePropertyName("views");
+                writer.WritePropertyName("views"u8);
                 writer.WriteObjectValue(Views);
             }
             if (Optional.IsDefined(RelationshipLinks))
             {
-                writer.WritePropertyName("relationshipLinks");
+                writer.WritePropertyName("relationshipLinks"u8);
                 writer.WriteObjectValue(RelationshipLinks);
             }
             if (Optional.IsDefined(Relationships))
             {
-                writer.WritePropertyName("relationships");
+                writer.WritePropertyName("relationships"u8);
                 writer.WriteObjectValue(Relationships);
             }
             if (Optional.IsDefined(WidgetTypes))
             {
-                writer.WritePropertyName("widgetTypes");
+                writer.WritePropertyName("widgetTypes"u8);
                 writer.WriteObjectValue(WidgetTypes);
             }
             if (Optional.IsDefined(RoleAssignments))
             {
-                writer.WritePropertyName("roleAssignments");
+                writer.WritePropertyName("roleAssignments"u8);
                 writer.WriteObjectValue(RoleAssignments);
             }
             if (Optional.IsDefined(ConflationPolicies))
             {
-                writer.WritePropertyName("conflationPolicies");
+                writer.WritePropertyName("conflationPolicies"u8);
                 writer.WriteObjectValue(ConflationPolicies);
             }
             if (Optional.IsDefined(Segments))
             {
-                writer.WritePropertyName("segments");
+                writer.WritePropertyName("segments"u8);
                 writer.WriteObjectValue(Segments);
             }
             writer.WriteEndObject();
@@ -155,22 +155,22 @@ namespace Azure.ResourceManager.CustomerInsights
             Optional<ResourceSetDescription> segments = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.CustomerInsights
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.CustomerInsights
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("tenantId"))
+                        if (property0.NameEquals("tenantId"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -199,12 +199,12 @@ namespace Azure.ResourceManager.CustomerInsights
                             tenantId = property0.Value.GetGuid();
                             continue;
                         }
-                        if (property0.NameEquals("assignmentName"))
+                        if (property0.NameEquals("assignmentName"u8))
                         {
                             assignmentName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("displayName"))
+                        if (property0.NameEquals("displayName"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.CustomerInsights
                             displayName = dictionary;
                             continue;
                         }
-                        if (property0.NameEquals("description"))
+                        if (property0.NameEquals("description"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.CustomerInsights
                             description = dictionary;
                             continue;
                         }
-                        if (property0.NameEquals("provisioningState"))
+                        if (property0.NameEquals("provisioningState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.CustomerInsights
                             provisioningState = new ProvisioningState(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("role"))
+                        if (property0.NameEquals("role"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.CustomerInsights
                             role = property0.Value.GetString().ToRoleType();
                             continue;
                         }
-                        if (property0.NameEquals("principals"))
+                        if (property0.NameEquals("principals"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -269,7 +269,7 @@ namespace Azure.ResourceManager.CustomerInsights
                             principals = array;
                             continue;
                         }
-                        if (property0.NameEquals("profiles"))
+                        if (property0.NameEquals("profiles"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -279,7 +279,7 @@ namespace Azure.ResourceManager.CustomerInsights
                             profiles = ResourceSetDescription.DeserializeResourceSetDescription(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("interactions"))
+                        if (property0.NameEquals("interactions"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -289,7 +289,7 @@ namespace Azure.ResourceManager.CustomerInsights
                             interactions = ResourceSetDescription.DeserializeResourceSetDescription(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("links"))
+                        if (property0.NameEquals("links"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -299,7 +299,7 @@ namespace Azure.ResourceManager.CustomerInsights
                             links = ResourceSetDescription.DeserializeResourceSetDescription(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("kpis"))
+                        if (property0.NameEquals("kpis"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -309,7 +309,7 @@ namespace Azure.ResourceManager.CustomerInsights
                             kpis = ResourceSetDescription.DeserializeResourceSetDescription(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("sasPolicies"))
+                        if (property0.NameEquals("sasPolicies"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -319,7 +319,7 @@ namespace Azure.ResourceManager.CustomerInsights
                             sasPolicies = ResourceSetDescription.DeserializeResourceSetDescription(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("connectors"))
+                        if (property0.NameEquals("connectors"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -329,7 +329,7 @@ namespace Azure.ResourceManager.CustomerInsights
                             connectors = ResourceSetDescription.DeserializeResourceSetDescription(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("views"))
+                        if (property0.NameEquals("views"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -339,7 +339,7 @@ namespace Azure.ResourceManager.CustomerInsights
                             views = ResourceSetDescription.DeserializeResourceSetDescription(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("relationshipLinks"))
+                        if (property0.NameEquals("relationshipLinks"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -349,7 +349,7 @@ namespace Azure.ResourceManager.CustomerInsights
                             relationshipLinks = ResourceSetDescription.DeserializeResourceSetDescription(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("relationships"))
+                        if (property0.NameEquals("relationships"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -359,7 +359,7 @@ namespace Azure.ResourceManager.CustomerInsights
                             relationships = ResourceSetDescription.DeserializeResourceSetDescription(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("widgetTypes"))
+                        if (property0.NameEquals("widgetTypes"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -369,7 +369,7 @@ namespace Azure.ResourceManager.CustomerInsights
                             widgetTypes = ResourceSetDescription.DeserializeResourceSetDescription(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("roleAssignments"))
+                        if (property0.NameEquals("roleAssignments"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -379,7 +379,7 @@ namespace Azure.ResourceManager.CustomerInsights
                             roleAssignments = ResourceSetDescription.DeserializeResourceSetDescription(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("conflationPolicies"))
+                        if (property0.NameEquals("conflationPolicies"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -389,7 +389,7 @@ namespace Azure.ResourceManager.CustomerInsights
                             conflationPolicies = ResourceSetDescription.DeserializeResourceSetDescription(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("segments"))
+                        if (property0.NameEquals("segments"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

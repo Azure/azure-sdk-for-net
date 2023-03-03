@@ -17,17 +17,17 @@ namespace Azure.ResourceManager.Analysis.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(FirewallRuleName))
             {
-                writer.WritePropertyName("firewallRuleName");
+                writer.WritePropertyName("firewallRuleName"u8);
                 writer.WriteStringValue(FirewallRuleName);
             }
             if (Optional.IsDefined(RangeStart))
             {
-                writer.WritePropertyName("rangeStart");
+                writer.WritePropertyName("rangeStart"u8);
                 writer.WriteStringValue(RangeStart);
             }
             if (Optional.IsDefined(RangeEnd))
             {
-                writer.WritePropertyName("rangeEnd");
+                writer.WritePropertyName("rangeEnd"u8);
                 writer.WriteStringValue(RangeEnd);
             }
             writer.WriteEndObject();
@@ -40,17 +40,17 @@ namespace Azure.ResourceManager.Analysis.Models
             Optional<string> rangeEnd = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("firewallRuleName"))
+                if (property.NameEquals("firewallRuleName"u8))
                 {
                     firewallRuleName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("rangeStart"))
+                if (property.NameEquals("rangeStart"u8))
                 {
                     rangeStart = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("rangeEnd"))
+                if (property.NameEquals("rangeEnd"u8))
                 {
                     rangeEnd = property.Value.GetString();
                     continue;

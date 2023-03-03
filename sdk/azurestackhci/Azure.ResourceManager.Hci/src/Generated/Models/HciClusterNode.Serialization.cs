@@ -17,21 +17,24 @@ namespace Azure.ResourceManager.Hci.Models
             Optional<string> name = default;
             Optional<float> id = default;
             Optional<WindowsServerSubscription> windowsServerSubscription = default;
+            Optional<ClusterNodeType> nodeType = default;
+            Optional<string> ehcResourceId = default;
             Optional<string> manufacturer = default;
             Optional<string> model = default;
             Optional<string> osName = default;
             Optional<string> osVersion = default;
+            Optional<string> osDisplayVersion = default;
             Optional<string> serialNumber = default;
             Optional<float> coreCount = default;
             Optional<float> memoryInGiB = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -41,7 +44,7 @@ namespace Azure.ResourceManager.Hci.Models
                     id = property.Value.GetSingle();
                     continue;
                 }
-                if (property.NameEquals("windowsServerSubscription"))
+                if (property.NameEquals("windowsServerSubscription"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -51,32 +54,52 @@ namespace Azure.ResourceManager.Hci.Models
                     windowsServerSubscription = new WindowsServerSubscription(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("manufacturer"))
+                if (property.NameEquals("nodeType"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    nodeType = new ClusterNodeType(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("ehcResourceId"u8))
+                {
+                    ehcResourceId = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("manufacturer"u8))
                 {
                     manufacturer = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("model"))
+                if (property.NameEquals("model"u8))
                 {
                     model = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("osName"))
+                if (property.NameEquals("osName"u8))
                 {
                     osName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("osVersion"))
+                if (property.NameEquals("osVersion"u8))
                 {
                     osVersion = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("serialNumber"))
+                if (property.NameEquals("osDisplayVersion"u8))
+                {
+                    osDisplayVersion = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("serialNumber"u8))
                 {
                     serialNumber = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("coreCount"))
+                if (property.NameEquals("coreCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -86,7 +109,7 @@ namespace Azure.ResourceManager.Hci.Models
                     coreCount = property.Value.GetSingle();
                     continue;
                 }
-                if (property.NameEquals("memoryInGiB"))
+                if (property.NameEquals("memoryInGiB"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -97,7 +120,7 @@ namespace Azure.ResourceManager.Hci.Models
                     continue;
                 }
             }
-            return new HciClusterNode(name.Value, Optional.ToNullable(id), Optional.ToNullable(windowsServerSubscription), manufacturer.Value, model.Value, osName.Value, osVersion.Value, serialNumber.Value, Optional.ToNullable(coreCount), Optional.ToNullable(memoryInGiB));
+            return new HciClusterNode(name.Value, Optional.ToNullable(id), Optional.ToNullable(windowsServerSubscription), Optional.ToNullable(nodeType), ehcResourceId.Value, manufacturer.Value, model.Value, osName.Value, osVersion.Value, osDisplayVersion.Value, serialNumber.Value, Optional.ToNullable(coreCount), Optional.ToNullable(memoryInGiB));
         }
     }
 }

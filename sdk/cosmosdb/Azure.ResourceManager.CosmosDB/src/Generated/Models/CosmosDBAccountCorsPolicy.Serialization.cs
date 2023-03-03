@@ -15,26 +15,26 @@ namespace Azure.ResourceManager.CosmosDB.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("allowedOrigins");
+            writer.WritePropertyName("allowedOrigins"u8);
             writer.WriteStringValue(AllowedOrigins);
             if (Optional.IsDefined(AllowedMethods))
             {
-                writer.WritePropertyName("allowedMethods");
+                writer.WritePropertyName("allowedMethods"u8);
                 writer.WriteStringValue(AllowedMethods);
             }
             if (Optional.IsDefined(AllowedHeaders))
             {
-                writer.WritePropertyName("allowedHeaders");
+                writer.WritePropertyName("allowedHeaders"u8);
                 writer.WriteStringValue(AllowedHeaders);
             }
             if (Optional.IsDefined(ExposedHeaders))
             {
-                writer.WritePropertyName("exposedHeaders");
+                writer.WritePropertyName("exposedHeaders"u8);
                 writer.WriteStringValue(ExposedHeaders);
             }
             if (Optional.IsDefined(MaxAgeInSeconds))
             {
-                writer.WritePropertyName("maxAgeInSeconds");
+                writer.WritePropertyName("maxAgeInSeconds"u8);
                 writer.WriteNumberValue(MaxAgeInSeconds.Value);
             }
             writer.WriteEndObject();
@@ -49,27 +49,27 @@ namespace Azure.ResourceManager.CosmosDB.Models
             Optional<long> maxAgeInSeconds = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("allowedOrigins"))
+                if (property.NameEquals("allowedOrigins"u8))
                 {
                     allowedOrigins = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("allowedMethods"))
+                if (property.NameEquals("allowedMethods"u8))
                 {
                     allowedMethods = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("allowedHeaders"))
+                if (property.NameEquals("allowedHeaders"u8))
                 {
                     allowedHeaders = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("exposedHeaders"))
+                if (property.NameEquals("exposedHeaders"u8))
                 {
                     exposedHeaders = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("maxAgeInSeconds"))
+                if (property.NameEquals("maxAgeInSeconds"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

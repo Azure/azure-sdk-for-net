@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/dotnet/sdk:6.0-cbl-mariner1.0 AS build-env 
+FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build-env
 
 # Copy in engineering system needed to build
 COPY ./eng/ /app/eng/
@@ -23,9 +23,9 @@ RUN dotnet build './sdk/eventhub/Azure.Messaging.EventHubs/stress/src/' --config
 # Copy in the dll files to be ready to run
 FROM build-env as publish
 WORKDIR /app
-COPY --from=build-env /app/artifacts/bin/Azure.Messaging.EventHubs.Stress/Release/net6.0/ /app/artifacts/bin/Azure.Messaging.EventHubs.Stress/Release/net6.0/
+COPY --from=build-env /app/artifacts/bin/Azure.Messaging.EventHubs.Stress/Release/net7.0/ /app/artifacts/bin/Azure.Messaging.EventHubs.Stress/Release/net7.0/
 
-WORKDIR /app/artifacts/bin/Azure.Messaging.EventHubs.Stress/Release/net6.0
+WORKDIR /app/artifacts/bin/Azure.Messaging.EventHubs.Stress/Release/net7.0
 
 # The default is running just the "EventProducerTest"
 ENTRYPOINT ["dotnet Azure.Messaging.EventHubs.Stress.dll", "--test"]

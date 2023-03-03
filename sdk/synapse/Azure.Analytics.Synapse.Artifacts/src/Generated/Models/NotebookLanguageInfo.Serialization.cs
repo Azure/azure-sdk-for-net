@@ -19,11 +19,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("name");
+            writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
             if (Optional.IsDefined(CodemirrorMode))
             {
-                writer.WritePropertyName("codemirror_mode");
+                writer.WritePropertyName("codemirror_mode"u8);
                 writer.WriteStringValue(CodemirrorMode);
             }
             foreach (var item in AdditionalProperties)
@@ -42,12 +42,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("codemirror_mode"))
+                if (property.NameEquals("codemirror_mode"u8))
                 {
                     codemirrorMode = property.Value.GetString();
                     continue;

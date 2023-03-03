@@ -14,7 +14,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataMigration
 {
-    /// <summary> A class representing the Project data model. </summary>
+    /// <summary>
+    /// A class representing the Project data model.
+    /// A project resource
+    /// </summary>
     public partial class ProjectData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of ProjectData. </summary>

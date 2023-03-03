@@ -22,12 +22,12 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             Optional<string> status = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("supportedStorageEditions"))
+                if (property.NameEquals("supportedStorageEditions"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     supportedStorageEditions = array;
                     continue;
                 }
-                if (property.NameEquals("supportedServerVersions"))
+                if (property.NameEquals("supportedServerVersions"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     supportedServerVersions = array;
                     continue;
                 }
-                if (property.NameEquals("supportedNodeTypes"))
+                if (property.NameEquals("supportedNodeTypes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     supportedNodeTypes = array;
                     continue;
                 }
-                if (property.NameEquals("status"))
+                if (property.NameEquals("status"u8))
                 {
                     status = property.Value.GetString();
                     continue;

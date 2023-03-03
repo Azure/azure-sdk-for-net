@@ -21,9 +21,9 @@ namespace Azure.ResourceManager.Monitor.Models
 
         public static PredictiveAutoscalePolicyScaleMode ToPredictiveAutoscalePolicyScaleMode(this string value)
         {
-            if (string.Equals(value, "Disabled", StringComparison.InvariantCultureIgnoreCase)) return PredictiveAutoscalePolicyScaleMode.Disabled;
-            if (string.Equals(value, "ForecastOnly", StringComparison.InvariantCultureIgnoreCase)) return PredictiveAutoscalePolicyScaleMode.ForecastOnly;
-            if (string.Equals(value, "Enabled", StringComparison.InvariantCultureIgnoreCase)) return PredictiveAutoscalePolicyScaleMode.Enabled;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Disabled")) return PredictiveAutoscalePolicyScaleMode.Disabled;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "ForecastOnly")) return PredictiveAutoscalePolicyScaleMode.ForecastOnly;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Enabled")) return PredictiveAutoscalePolicyScaleMode.Enabled;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown PredictiveAutoscalePolicyScaleMode value.");
         }
     }

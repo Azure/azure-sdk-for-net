@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Batch.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Placement))
             {
-                writer.WritePropertyName("placement");
+                writer.WritePropertyName("placement"u8);
                 writer.WriteStringValue(Placement.Value.ToString());
             }
             writer.WriteEndObject();
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Batch.Models
             Optional<BatchDiffDiskPlacement> placement = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("placement"))
+                if (property.NameEquals("placement"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

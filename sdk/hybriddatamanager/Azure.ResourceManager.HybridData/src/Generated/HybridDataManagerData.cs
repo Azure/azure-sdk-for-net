@@ -13,7 +13,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.HybridData
 {
-    /// <summary> A class representing the HybridDataManager data model. </summary>
+    /// <summary>
+    /// A class representing the HybridDataManager data model.
+    /// The DataManager resource.
+    /// </summary>
     public partial class HybridDataManagerData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of HybridDataManagerData. </summary>

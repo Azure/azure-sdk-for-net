@@ -1,21 +1,24 @@
 # Detecting the language of documents
+
 This sample demonstrates how to detect the language of one or more documents.
 
 ## Create a `TextAnalyticsClient`
-To create a new `TextAnalyticsClient`, you will need the service endpoint and credentials of your Language resource. To authenticate, you can use the [`DefaultAzureCredential`][DefaultAzureCredential], which combines credentials commonly used to authenticate when deployed on Azure, with credentials used to authenticate in a development environment. In this sample, however, you will use an `AzureKeyCredential`, which you can create simply with an API key.
+
+To create a new `TextAnalyticsClient`, you will need the service endpoint and credentials of your Language resource. To authenticate, you can use the [`DefaultAzureCredential`][DefaultAzureCredential], which combines credentials commonly used to authenticate when deployed on Azure, with credentials used to authenticate in a development environment. In this sample, however, you will use an `AzureKeyCredential`, which you can create with an API key.
 
 ```C# Snippet:CreateTextAnalyticsClient
-string endpoint = "<endpoint>";
-string apiKey = "<apiKey>";
-TextAnalyticsClient client = new(new Uri(endpoint), new AzureKeyCredential(apiKey));
+Uri endpoint = new("<endpoint>");
+AzureKeyCredential credential = new("<apiKey>");
+TextAnalyticsClient client = new(endpoint, credential);
 ```
 
 The values of the `endpoint` and `apiKey` variables can be retrieved from environment variables, configuration settings, or any other secure approach that works for your application.
 
 ## Detect the language of a single document
+
 To detect the language of a document, call `DetectLanguage` on the `TextAnalyticsClient`, which returns a `DetectedLanguage` object with the name of the language, a confidence score, and more.
 
-```C# Snippet:DetectLanguage
+```C# Snippet:Sample1_DetectLanguage
 string document =
     "Este documento está escrito en un lenguaje diferente al inglés. Su objectivo es demostrar cómo"
     + " invocar el método de Detección de Lenguaje del servicio de Text Analytics en Microsoft Azure."
@@ -28,7 +31,8 @@ try
 {
     Response<DetectedLanguage> response = client.DetectLanguage(document);
     DetectedLanguage language = response.Value;
-    Console.WriteLine($"Detected language {language.Name} with confidence score {language.ConfidenceScore}.");
+
+    Console.WriteLine($"Detected language is {language.Name} with a confidence score of {language.ConfidenceScore}.");
 }
 catch (RequestFailedException exception)
 {
@@ -38,9 +42,10 @@ catch (RequestFailedException exception)
 ```
 
 ## Detect the languages of multiple documents
+
 To detect the languages of multiple documents, call `DetectLanguageBatch` on the `TextAnalyticsClient` by passing the documents as an `IEnumerable<string>` parameter. This returns a `DetectLanguageResultCollection`.
 
-```C# Snippet:TextAnalyticsSample1DetectLanguagesConvenience
+```C# Snippet:Sample1_DetectLanguageBatchConvenience
 string documentA =
     "Este documento está escrito en un lenguaje diferente al inglés. Su objectivo es demostrar cómo"
     + " invocar el método de detección de lenguaje del servicio de Text Analytics en Microsoft Azure."
@@ -66,7 +71,9 @@ string documentC =
 
 string documentD = string.Empty;
 
-List<string> documents = new()
+// Prepare the input of the text analysis operation. You can add multiple documents to this list and
+// perform the same operation on all of them simultaneously.
+List<string> batchedDocuments = new()
 {
     documentA,
     documentB,
@@ -74,36 +81,35 @@ List<string> documents = new()
     documentD
 };
 
-Response<DetectLanguageResultCollection> response = client.DetectLanguageBatch(documents);
+Response<DetectLanguageResultCollection> response = client.DetectLanguageBatch(batchedDocuments);
 DetectLanguageResultCollection documentsLanguage = response.Value;
 
 int i = 0;
-Console.WriteLine($"Results of \"Detect Language\" Model, version: \"{documentsLanguage.ModelVersion}\"");
+Console.WriteLine($"Detect Language, model version: \"{documentsLanguage.ModelVersion}\"");
 Console.WriteLine();
 
-foreach (DetectLanguageResult documentLanguage in documentsLanguage)
+foreach (DetectLanguageResult documentResult in documentsLanguage)
 {
-    Console.WriteLine($"On document with Text: \"{documents[i++]}\"");
-    Console.WriteLine();
+    Console.WriteLine($"Result for document with Text = \"{batchedDocuments[i++]}\"");
 
-    if (documentLanguage.HasError)
+    if (documentResult.HasError)
     {
-        Console.WriteLine("  Error!");
-        Console.WriteLine($"  Document error code: {documentLanguage.Error.ErrorCode}.");
-        Console.WriteLine($"  Message: {documentLanguage.Error.Message}");
+        Console.WriteLine($"  Error!");
+        Console.WriteLine($"  Document error code: {documentResult.Error.ErrorCode}");
+        Console.WriteLine($"  Message: {documentResult.Error.Message}");
         Console.WriteLine();
         continue;
     }
 
-    Console.WriteLine($"  Detected language: {documentLanguage.PrimaryLanguage.Name}");
-    Console.WriteLine($"  Confidence score: {documentLanguage.PrimaryLanguage.ConfidenceScore}");
+    Console.WriteLine($"  Detected language: {documentResult.PrimaryLanguage.Name}");
+    Console.WriteLine($"  Confidence score: {documentResult.PrimaryLanguage.ConfidenceScore}");
     Console.WriteLine();
 }
 ```
 
 If the country where a document originates from is known, you can aid the language detection model if you call `DetectLanguageBatch` on the `TextAnalyticsClient` while passing the documents as an `IEnumerable<DetectLanguageInput>` parameter, having set the `CountryHint` property on each `DetectLanguageInput` object accordingly.
 
-```C# Snippet:TextAnalyticsSample1DetectLanguageBatch
+```C# Snippet:Sample1_DetectLanguageBatch
 string documentA =
     "Este documento está escrito en un lenguaje diferente al inglés. Su objectivo es demostrar cómo"
     + " invocar el método de detección de lenguaje del servicio de Text Analytics en Microsoft Azure."
@@ -133,7 +139,9 @@ string documentE = ":) :( :D";
 
 string documentF = string.Empty;
 
-List<DetectLanguageInput> documents = new()
+// Prepare the input of the text analysis operation. You can add multiple documents to this list and
+// perform the same operation on all of them simultaneously.
+List<DetectLanguageInput> batchedDocuments = new()
 {
     new DetectLanguageInput("1", documentA)
     {
@@ -162,24 +170,23 @@ List<DetectLanguageInput> documents = new()
 };
 
 TextAnalyticsRequestOptions options = new() { IncludeStatistics = true };
-
-Response<DetectLanguageResultCollection> response = client.DetectLanguageBatch(documents, options);
+Response<DetectLanguageResultCollection> response = client.DetectLanguageBatch(batchedDocuments, options);
 DetectLanguageResultCollection documentsLanguage = response.Value;
 
 int i = 0;
-Console.WriteLine($"Results of \"Detect Language\" Model, version: \"{documentsLanguage.ModelVersion}\"");
+Console.WriteLine($"Detect Language, model version: \"{documentsLanguage.ModelVersion}\"");
 Console.WriteLine();
 
 foreach (DetectLanguageResult documentLanguage in documentsLanguage)
 {
-    DetectLanguageInput document = documents[i++];
+    DetectLanguageInput document = batchedDocuments[i++];
 
-    Console.WriteLine($"On document (Id={document.Id}, CountryHint=\"{document.CountryHint}\"):");
+    Console.WriteLine($"Result for document with Id = \"{document.Id}\" and CountryHint = \"{document.CountryHint}\":");
 
     if (documentLanguage.HasError)
     {
-        Console.WriteLine("  Error!");
-        Console.WriteLine($"  Document error code: {documentLanguage.Error.ErrorCode}.");
+        Console.WriteLine($"  Error!");
+        Console.WriteLine($"  Document error code: {documentLanguage.Error.ErrorCode}");
         Console.WriteLine($"  Message: {documentLanguage.Error.Message}");
         Console.WriteLine();
         continue;
@@ -203,7 +210,7 @@ Console.WriteLine($"  Invalid document count: {documentsLanguage.Statistics.Inva
 Console.WriteLine($"  Transaction count: {documentsLanguage.Statistics.TransactionCount}");
 ```
 
-See the [README][README] of the Text Analytics client library for more information, including useful links and instructions.
+See the [README] of the Text Analytics client library for more information, including useful links and instructions.
 
 [DefaultAzureCredential]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/README.md
 [README]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/textanalytics/Azure.AI.TextAnalytics/README.md

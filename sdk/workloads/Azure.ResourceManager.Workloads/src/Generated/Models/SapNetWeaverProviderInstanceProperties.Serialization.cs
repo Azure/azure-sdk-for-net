@@ -19,22 +19,22 @@ namespace Azure.ResourceManager.Workloads.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(SapSid))
             {
-                writer.WritePropertyName("sapSid");
+                writer.WritePropertyName("sapSid"u8);
                 writer.WriteStringValue(SapSid);
             }
             if (Optional.IsDefined(SapHostname))
             {
-                writer.WritePropertyName("sapHostname");
+                writer.WritePropertyName("sapHostname"u8);
                 writer.WriteStringValue(SapHostname);
             }
             if (Optional.IsDefined(SapInstanceNr))
             {
-                writer.WritePropertyName("sapInstanceNr");
+                writer.WritePropertyName("sapInstanceNr"u8);
                 writer.WriteStringValue(SapInstanceNr);
             }
             if (Optional.IsCollectionDefined(SapHostFileEntries))
             {
-                writer.WritePropertyName("sapHostFileEntries");
+                writer.WritePropertyName("sapHostFileEntries"u8);
                 writer.WriteStartArray();
                 foreach (var item in SapHostFileEntries)
                 {
@@ -44,35 +44,35 @@ namespace Azure.ResourceManager.Workloads.Models
             }
             if (Optional.IsDefined(SapUsername))
             {
-                writer.WritePropertyName("sapUsername");
+                writer.WritePropertyName("sapUsername"u8);
                 writer.WriteStringValue(SapUsername);
             }
             if (Optional.IsDefined(SapPassword))
             {
-                writer.WritePropertyName("sapPassword");
+                writer.WritePropertyName("sapPassword"u8);
                 writer.WriteStringValue(SapPassword);
             }
             if (Optional.IsDefined(SapPasswordUri))
             {
-                writer.WritePropertyName("sapPasswordUri");
+                writer.WritePropertyName("sapPasswordUri"u8);
                 writer.WriteStringValue(SapPasswordUri.AbsoluteUri);
             }
             if (Optional.IsDefined(SapClientId))
             {
-                writer.WritePropertyName("sapClientId");
+                writer.WritePropertyName("sapClientId"u8);
                 writer.WriteStringValue(SapClientId);
             }
             if (Optional.IsDefined(SapPortNumber))
             {
-                writer.WritePropertyName("sapPortNumber");
+                writer.WritePropertyName("sapPortNumber"u8);
                 writer.WriteStringValue(SapPortNumber);
             }
             if (Optional.IsDefined(SapSslCertificateUri))
             {
-                writer.WritePropertyName("sapSslCertificateUri");
+                writer.WritePropertyName("sapSslCertificateUri"u8);
                 writer.WriteStringValue(SapSslCertificateUri.AbsoluteUri);
             }
-            writer.WritePropertyName("providerType");
+            writer.WritePropertyName("providerType"u8);
             writer.WriteStringValue(ProviderType);
             writer.WriteEndObject();
         }
@@ -92,22 +92,22 @@ namespace Azure.ResourceManager.Workloads.Models
             string providerType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("sapSid"))
+                if (property.NameEquals("sapSid"u8))
                 {
                     sapSid = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("sapHostname"))
+                if (property.NameEquals("sapHostname"u8))
                 {
                     sapHostname = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("sapInstanceNr"))
+                if (property.NameEquals("sapInstanceNr"u8))
                 {
                     sapInstanceNr = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("sapHostFileEntries"))
+                if (property.NameEquals("sapHostFileEntries"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -122,17 +122,17 @@ namespace Azure.ResourceManager.Workloads.Models
                     sapHostFileEntries = array;
                     continue;
                 }
-                if (property.NameEquals("sapUsername"))
+                if (property.NameEquals("sapUsername"u8))
                 {
                     sapUsername = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("sapPassword"))
+                if (property.NameEquals("sapPassword"u8))
                 {
                     sapPassword = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("sapPasswordUri"))
+                if (property.NameEquals("sapPasswordUri"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -142,17 +142,17 @@ namespace Azure.ResourceManager.Workloads.Models
                     sapPasswordUri = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("sapClientId"))
+                if (property.NameEquals("sapClientId"u8))
                 {
                     sapClientId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("sapPortNumber"))
+                if (property.NameEquals("sapPortNumber"u8))
                 {
                     sapPortNumber = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("sapSslCertificateUri"))
+                if (property.NameEquals("sapSslCertificateUri"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.Workloads.Models
                     sapSslCertificateUri = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("providerType"))
+                if (property.NameEquals("providerType"u8))
                 {
                     providerType = property.Value.GetString();
                     continue;

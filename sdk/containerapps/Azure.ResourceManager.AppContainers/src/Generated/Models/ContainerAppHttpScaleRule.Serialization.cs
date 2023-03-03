@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Metadata))
             {
-                writer.WritePropertyName("metadata");
+                writer.WritePropertyName("metadata"u8);
                 writer.WriteStartObject();
                 foreach (var item in Metadata)
                 {
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             }
             if (Optional.IsCollectionDefined(Auth))
             {
-                writer.WritePropertyName("auth");
+                writer.WritePropertyName("auth"u8);
                 writer.WriteStartArray();
                 foreach (var item in Auth)
                 {
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             Optional<IList<ContainerAppScaleRuleAuth>> auth = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("metadata"))
+                if (property.NameEquals("metadata"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     metadata = dictionary;
                     continue;
                 }
-                if (property.NameEquals("auth"))
+                if (property.NameEquals("auth"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

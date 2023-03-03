@@ -19,7 +19,7 @@ namespace Azure.AI.MetricsAdvisor.Models
             {
                 if (AzureCloud != null)
                 {
-                    writer.WritePropertyName("azureCloud");
+                    writer.WritePropertyName("azureCloud"u8);
                     writer.WriteStringValue(AzureCloud);
                 }
                 else
@@ -31,7 +31,7 @@ namespace Azure.AI.MetricsAdvisor.Models
             {
                 if (ApplicationId != null)
                 {
-                    writer.WritePropertyName("applicationId");
+                    writer.WritePropertyName("applicationId"u8);
                     writer.WriteStringValue(ApplicationId);
                 }
                 else
@@ -43,7 +43,7 @@ namespace Azure.AI.MetricsAdvisor.Models
             {
                 if (ApiKey != null)
                 {
-                    writer.WritePropertyName("apiKey");
+                    writer.WritePropertyName("apiKey"u8);
                     writer.WriteStringValue(ApiKey);
                 }
                 else
@@ -53,7 +53,7 @@ namespace Azure.AI.MetricsAdvisor.Models
             }
             if (Query != null)
             {
-                writer.WritePropertyName("query");
+                writer.WritePropertyName("query"u8);
                 writer.WriteStringValue(Query);
             }
             else
@@ -71,7 +71,7 @@ namespace Azure.AI.MetricsAdvisor.Models
             string query = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("azureCloud"))
+                if (property.NameEquals("azureCloud"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -81,7 +81,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                     azureCloud = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("applicationId"))
+                if (property.NameEquals("applicationId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -91,7 +91,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                     applicationId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("apiKey"))
+                if (property.NameEquals("apiKey"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -101,7 +101,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                     apiKey = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("query"))
+                if (property.NameEquals("query"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

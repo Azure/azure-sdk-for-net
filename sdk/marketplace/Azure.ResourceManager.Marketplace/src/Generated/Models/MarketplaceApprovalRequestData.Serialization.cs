@@ -18,21 +18,21 @@ namespace Azure.ResourceManager.Marketplace
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(OfferId))
             {
-                writer.WritePropertyName("offerId");
+                writer.WritePropertyName("offerId"u8);
                 writer.WriteStringValue(OfferId);
             }
             if (Optional.IsDefined(PublisherId))
             {
-                writer.WritePropertyName("publisherId");
+                writer.WritePropertyName("publisherId"u8);
                 writer.WriteStringValue(PublisherId);
             }
             if (Optional.IsCollectionDefined(PlansDetails))
             {
-                writer.WritePropertyName("plansDetails");
+                writer.WritePropertyName("plansDetails"u8);
                 writer.WriteStartArray();
                 foreach (var item in PlansDetails)
                 {
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Marketplace
             }
             if (Optional.IsDefined(MessageCode))
             {
-                writer.WritePropertyName("messageCode");
+                writer.WritePropertyName("messageCode"u8);
                 writer.WriteNumberValue(MessageCode.Value);
             }
             writer.WriteEndObject();
@@ -63,22 +63,22 @@ namespace Azure.ResourceManager.Marketplace
             Optional<long> messageCode = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Marketplace
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -97,22 +97,22 @@ namespace Azure.ResourceManager.Marketplace
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("offerId"))
+                        if (property0.NameEquals("offerId"u8))
                         {
                             offerId = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("offerDisplayName"))
+                        if (property0.NameEquals("offerDisplayName"u8))
                         {
                             offerDisplayName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("publisherId"))
+                        if (property0.NameEquals("publisherId"u8))
                         {
                             publisherId = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("plansDetails"))
+                        if (property0.NameEquals("plansDetails"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Marketplace
                             plansDetails = array;
                             continue;
                         }
-                        if (property0.NameEquals("isClosed"))
+                        if (property0.NameEquals("isClosed"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Marketplace
                             isClosed = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("messageCode"))
+                        if (property0.NameEquals("messageCode"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

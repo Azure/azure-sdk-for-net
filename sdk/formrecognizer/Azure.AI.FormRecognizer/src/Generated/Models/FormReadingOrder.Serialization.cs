@@ -20,8 +20,8 @@ namespace Azure.AI.FormRecognizer
 
         public static FormReadingOrder ToFormReadingOrder(this string value)
         {
-            if (string.Equals(value, "basic", StringComparison.InvariantCultureIgnoreCase)) return FormReadingOrder.Basic;
-            if (string.Equals(value, "natural", StringComparison.InvariantCultureIgnoreCase)) return FormReadingOrder.Natural;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "basic")) return FormReadingOrder.Basic;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "natural")) return FormReadingOrder.Natural;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown FormReadingOrder value.");
         }
     }

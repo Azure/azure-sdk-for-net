@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Network.Models
             Optional<bool> isPlatformReserved = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("available"))
+                if (property.NameEquals("available"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Network.Models
                     available = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("availableIPAddresses"))
+                if (property.NameEquals("availableIPAddresses"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Network.Models
                     availableIPAddresses = array;
                     continue;
                 }
-                if (property.NameEquals("isPlatformReserved"))
+                if (property.NameEquals("isPlatformReserved"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

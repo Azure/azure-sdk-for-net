@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Tags))
             {
-                writer.WritePropertyName("tags");
+                writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
                 foreach (var item in Tags)
                 {
@@ -26,36 +26,36 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 }
                 writer.WriteEndObject();
             }
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(Description))
             {
-                writer.WritePropertyName("description");
+                writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
             if (Optional.IsDefined(FriendlyName))
             {
-                writer.WritePropertyName("friendlyName");
+                writer.WritePropertyName("friendlyName"u8);
                 writer.WriteStringValue(FriendlyName);
             }
             if (Optional.IsDefined(TimeZone))
             {
-                writer.WritePropertyName("timeZone");
+                writer.WritePropertyName("timeZone"u8);
                 writer.WriteStringValue(TimeZone);
             }
             if (Optional.IsDefined(HostPoolType))
             {
-                writer.WritePropertyName("hostPoolType");
+                writer.WritePropertyName("hostPoolType"u8);
                 writer.WriteStringValue(HostPoolType.Value.ToString());
             }
             if (Optional.IsDefined(ExclusionTag))
             {
-                writer.WritePropertyName("exclusionTag");
+                writer.WritePropertyName("exclusionTag"u8);
                 writer.WriteStringValue(ExclusionTag);
             }
             if (Optional.IsCollectionDefined(Schedules))
             {
-                writer.WritePropertyName("schedules");
+                writer.WritePropertyName("schedules"u8);
                 writer.WriteStartArray();
                 foreach (var item in Schedules)
                 {
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             }
             if (Optional.IsCollectionDefined(HostPoolReferences))
             {
-                writer.WritePropertyName("hostPoolReferences");
+                writer.WritePropertyName("hostPoolReferences"u8);
                 writer.WriteStartArray();
                 foreach (var item in HostPoolReferences)
                 {

@@ -23,12 +23,12 @@ namespace Azure.Search.Documents.Models
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("@search.score"))
+                if (property.NameEquals("@search.score"u8))
                 {
                     searchScore = property.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("@search.rerankerScore"))
+                if (property.NameEquals("@search.rerankerScore"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -38,7 +38,7 @@ namespace Azure.Search.Documents.Models
                     searchRerankerScore = property.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("@search.highlights"))
+                if (property.NameEquals("@search.highlights"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -58,7 +58,7 @@ namespace Azure.Search.Documents.Models
                     searchHighlights = dictionary;
                     continue;
                 }
-                if (property.NameEquals("@search.captions"))
+                if (property.NameEquals("@search.captions"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

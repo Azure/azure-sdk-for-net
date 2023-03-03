@@ -20,7 +20,7 @@ namespace Azure.AI.TextAnalytics.Legacy
             Optional<IReadOnlyList<HealthcareEntityLink>> links = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("assertion"))
+                if (property.NameEquals("assertion"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -30,12 +30,12 @@ namespace Azure.AI.TextAnalytics.Legacy
                     assertion = HealthcareAssertion.DeserializeHealthcareAssertion(property.Value);
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("links"))
+                if (property.NameEquals("links"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

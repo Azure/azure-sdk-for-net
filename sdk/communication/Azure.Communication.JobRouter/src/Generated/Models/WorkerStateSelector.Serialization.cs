@@ -22,10 +22,10 @@ namespace Azure.Communication.JobRouter
 
         public static WorkerStateSelector ToWorkerStateSelector(this string value)
         {
-            if (string.Equals(value, "active", StringComparison.InvariantCultureIgnoreCase)) return WorkerStateSelector.Active;
-            if (string.Equals(value, "draining", StringComparison.InvariantCultureIgnoreCase)) return WorkerStateSelector.Draining;
-            if (string.Equals(value, "inactive", StringComparison.InvariantCultureIgnoreCase)) return WorkerStateSelector.Inactive;
-            if (string.Equals(value, "all", StringComparison.InvariantCultureIgnoreCase)) return WorkerStateSelector.All;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "active")) return WorkerStateSelector.Active;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "draining")) return WorkerStateSelector.Draining;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "inactive")) return WorkerStateSelector.Inactive;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "all")) return WorkerStateSelector.All;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown WorkerStateSelector value.");
         }
     }

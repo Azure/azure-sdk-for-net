@@ -17,27 +17,27 @@ namespace Azure.ResourceManager.Storage.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Multichannel))
             {
-                writer.WritePropertyName("multichannel");
+                writer.WritePropertyName("multichannel"u8);
                 writer.WriteObjectValue(Multichannel);
             }
             if (Optional.IsDefined(Versions))
             {
-                writer.WritePropertyName("versions");
+                writer.WritePropertyName("versions"u8);
                 writer.WriteStringValue(Versions);
             }
             if (Optional.IsDefined(AuthenticationMethods))
             {
-                writer.WritePropertyName("authenticationMethods");
+                writer.WritePropertyName("authenticationMethods"u8);
                 writer.WriteStringValue(AuthenticationMethods);
             }
             if (Optional.IsDefined(KerberosTicketEncryption))
             {
-                writer.WritePropertyName("kerberosTicketEncryption");
+                writer.WritePropertyName("kerberosTicketEncryption"u8);
                 writer.WriteStringValue(KerberosTicketEncryption);
             }
             if (Optional.IsDefined(ChannelEncryption))
             {
-                writer.WritePropertyName("channelEncryption");
+                writer.WritePropertyName("channelEncryption"u8);
                 writer.WriteStringValue(ChannelEncryption);
             }
             writer.WriteEndObject();
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Storage.Models
             Optional<string> channelEncryption = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("multichannel"))
+                if (property.NameEquals("multichannel"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -62,22 +62,22 @@ namespace Azure.ResourceManager.Storage.Models
                     multichannel = Multichannel.DeserializeMultichannel(property.Value);
                     continue;
                 }
-                if (property.NameEquals("versions"))
+                if (property.NameEquals("versions"u8))
                 {
                     versions = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("authenticationMethods"))
+                if (property.NameEquals("authenticationMethods"u8))
                 {
                     authenticationMethods = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("kerberosTicketEncryption"))
+                if (property.NameEquals("kerberosTicketEncryption"u8))
                 {
                     kerberosTicketEncryption = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("channelEncryption"))
+                if (property.NameEquals("channelEncryption"u8))
                 {
                     channelEncryption = property.Value.GetString();
                     continue;

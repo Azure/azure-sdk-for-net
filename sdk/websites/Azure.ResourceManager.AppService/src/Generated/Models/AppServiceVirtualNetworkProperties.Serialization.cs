@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<bool> isSwift = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("vnetResourceId"))
+                if (property.NameEquals("vnetResourceId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.AppService.Models
                     vnetResourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("certThumbprint"))
+                if (property.NameEquals("certThumbprint"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -45,12 +45,12 @@ namespace Azure.ResourceManager.AppService.Models
                     certThumbprint = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("certBlob"))
+                if (property.NameEquals("certBlob"u8))
                 {
                     certBlob = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("routes"))
+                if (property.NameEquals("routes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.AppService.Models
                     routes = array;
                     continue;
                 }
-                if (property.NameEquals("resyncRequired"))
+                if (property.NameEquals("resyncRequired"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -75,12 +75,12 @@ namespace Azure.ResourceManager.AppService.Models
                     resyncRequired = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("dnsServers"))
+                if (property.NameEquals("dnsServers"u8))
                 {
                     dnsServers = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("isSwift"))
+                if (property.NameEquals("isSwift"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

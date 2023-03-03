@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<string> powerShellVersion = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("use32BitWorkerProcess"))
+                if (property.NameEquals("use32BitWorkerProcess"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -30,17 +30,17 @@ namespace Azure.ResourceManager.AppService.Models
                     use32BitWorkerProcess = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("linuxFxVersion"))
+                if (property.NameEquals("linuxFxVersion"u8))
                 {
                     linuxFxVersion = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("javaVersion"))
+                if (property.NameEquals("javaVersion"u8))
                 {
                     javaVersion = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("powerShellVersion"))
+                if (property.NameEquals("powerShellVersion"u8))
                 {
                     powerShellVersion = property.Value.GetString();
                     continue;

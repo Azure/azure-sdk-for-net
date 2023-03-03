@@ -19,7 +19,7 @@ namespace Azure.Maps.Search.Models
             Optional<IReadOnlyList<SearchAddressResultItem>> results = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("summary"))
+                if (property.NameEquals("summary"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -29,7 +29,7 @@ namespace Azure.Maps.Search.Models
                     summary = SearchSummary.DeserializeSearchSummary(property.Value);
                     continue;
                 }
-                if (property.NameEquals("results"))
+                if (property.NameEquals("results"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -25,7 +25,7 @@ namespace Azure.Storage
         /// Gets the default service version to use when building shared access
         /// signatures.
         /// </summary>
-        public const string DefaultSasVersion = "2021-12-02";
+        public const string DefaultSasVersion = "2022-11-02";
 
         /// <summary>
         /// Max download range size while requesting a transactional hash.
@@ -187,6 +187,7 @@ namespace Azure.Storage
             public const string ContentRange = "Content-Range";
             public const string VersionId = "x-ms-version-id";
             public const string LeaseTime = "x-ms-lease-time";
+            public const string LeaseId = "x-ms-lease-id";
             public const string LastModified = "Last-Modified";
             public const string ETag = "ETag";
         }
@@ -378,6 +379,8 @@ namespace Azure.Storage
             public const string DeletionId = "deletionid";
 
             public const string DirectoryResourceType = "directory";
+
+            public const string EncryptionContextHeaderName = "x-ms-encryption-context";
         }
 
         /// <summary>

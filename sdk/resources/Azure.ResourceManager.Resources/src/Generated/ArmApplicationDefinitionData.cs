@@ -13,7 +13,10 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Resources
 {
-    /// <summary> A class representing the ArmApplicationDefinition data model. </summary>
+    /// <summary>
+    /// A class representing the ArmApplicationDefinition data model.
+    /// Information about managed application definition.
+    /// </summary>
     public partial class ArmApplicationDefinitionData : ArmApplicationResourceData
     {
         /// <summary> Initializes a new instance of ArmApplicationDefinitionData. </summary>
@@ -154,18 +157,7 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary> The managed application locking policy. </summary>
-        internal ArmApplicationPackageLockingPolicy LockingPolicy { get; set; }
-        /// <summary> The deny assignment excluded actions. </summary>
-        public IList<string> LockingAllowedActions
-        {
-            get
-            {
-                if (LockingPolicy is null)
-                    LockingPolicy = new ArmApplicationPackageLockingPolicy();
-                return LockingPolicy.AllowedActions;
-            }
-        }
-
+        public ArmApplicationPackageLockingPolicy LockingPolicy { get; set; }
         /// <summary> The managed application deployment policy. </summary>
         internal ArmApplicationDeploymentPolicy DeploymentPolicy { get; set; }
 

@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 if (StackMetaLearnerKWargs != null)
                 {
-                    writer.WritePropertyName("stackMetaLearnerKWargs");
+                    writer.WritePropertyName("stackMetaLearnerKWargs"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(StackMetaLearnerKWargs);
 #else
@@ -34,12 +34,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             if (Optional.IsDefined(StackMetaLearnerTrainPercentage))
             {
-                writer.WritePropertyName("stackMetaLearnerTrainPercentage");
+                writer.WritePropertyName("stackMetaLearnerTrainPercentage"u8);
                 writer.WriteNumberValue(StackMetaLearnerTrainPercentage.Value);
             }
             if (Optional.IsDefined(StackMetaLearnerType))
             {
-                writer.WritePropertyName("stackMetaLearnerType");
+                writer.WritePropertyName("stackMetaLearnerType"u8);
                 writer.WriteStringValue(StackMetaLearnerType.Value.ToString());
             }
             writer.WriteEndObject();
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Optional<MachineLearningStackMetaLearnerType> stackMetaLearnerType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("stackMetaLearnerKWargs"))
+                if (property.NameEquals("stackMetaLearnerKWargs"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     stackMetaLearnerKWargs = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("stackMetaLearnerTrainPercentage"))
+                if (property.NameEquals("stackMetaLearnerTrainPercentage"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     stackMetaLearnerTrainPercentage = property.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("stackMetaLearnerType"))
+                if (property.NameEquals("stackMetaLearnerType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

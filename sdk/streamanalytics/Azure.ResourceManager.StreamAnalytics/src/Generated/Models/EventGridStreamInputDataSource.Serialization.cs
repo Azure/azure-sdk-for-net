@@ -16,23 +16,23 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("type");
+            writer.WritePropertyName("type"u8);
             writer.WriteStringValue(StreamInputDataSourceType);
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(Subscriber))
             {
-                writer.WritePropertyName("subscriber");
+                writer.WritePropertyName("subscriber"u8);
                 writer.WriteObjectValue(Subscriber);
             }
             if (Optional.IsDefined(Schema))
             {
-                writer.WritePropertyName("schema");
+                writer.WritePropertyName("schema"u8);
                 writer.WriteStringValue(Schema.Value.ToString());
             }
             if (Optional.IsCollectionDefined(StorageAccounts))
             {
-                writer.WritePropertyName("storageAccounts");
+                writer.WritePropertyName("storageAccounts"u8);
                 writer.WriteStartArray();
                 foreach (var item in StorageAccounts)
                 {
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             }
             if (Optional.IsCollectionDefined(EventTypes))
             {
-                writer.WritePropertyName("eventTypes");
+                writer.WritePropertyName("eventTypes"u8);
                 writer.WriteStartArray();
                 foreach (var item in EventTypes)
                 {
@@ -63,12 +63,12 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             Optional<IList<string>> eventTypes = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("subscriber"))
+                        if (property0.NameEquals("subscriber"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                             subscriber = EventHubV2StreamInputDataSource.DeserializeEventHubV2StreamInputDataSource(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("schema"))
+                        if (property0.NameEquals("schema"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                             schema = new EventGridEventSchemaType(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("storageAccounts"))
+                        if (property0.NameEquals("storageAccounts"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                             storageAccounts = array;
                             continue;
                         }
-                        if (property0.NameEquals("eventTypes"))
+                        if (property0.NameEquals("eventTypes"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

@@ -15,13 +15,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("jobLimitsType");
+            writer.WritePropertyName("jobLimitsType"u8);
             writer.WriteStringValue(JobLimitsType.ToString());
             if (Optional.IsDefined(Timeout))
             {
                 if (Timeout != null)
                 {
-                    writer.WritePropertyName("timeout");
+                    writer.WritePropertyName("timeout"u8);
                     writer.WriteStringValue(Timeout.Value, "P");
                 }
                 else

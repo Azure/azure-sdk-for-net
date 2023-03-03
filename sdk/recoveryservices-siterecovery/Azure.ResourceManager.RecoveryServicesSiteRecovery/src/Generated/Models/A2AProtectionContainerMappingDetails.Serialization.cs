@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             string instanceType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("agentAutoUpdateStatus"))
+                if (property.NameEquals("agentAutoUpdateStatus"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -32,12 +32,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     agentAutoUpdateStatus = new AgentAutoUpdateStatus(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("automationAccountArmId"))
+                if (property.NameEquals("automationAccountArmId"u8))
                 {
                     automationAccountArmId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("automationAccountAuthenticationType"))
+                if (property.NameEquals("automationAccountAuthenticationType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -47,17 +47,17 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     automationAccountAuthenticationType = new AutomationAccountAuthenticationType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("scheduleName"))
+                if (property.NameEquals("scheduleName"u8))
                 {
                     scheduleName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("jobScheduleName"))
+                if (property.NameEquals("jobScheduleName"u8))
                 {
                     jobScheduleName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("instanceType"))
+                if (property.NameEquals("instanceType"u8))
                 {
                     instanceType = property.Value.GetString();
                     continue;

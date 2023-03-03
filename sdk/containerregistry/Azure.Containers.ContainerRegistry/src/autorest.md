@@ -118,6 +118,13 @@ directive:
   where: $.definitions.OCIManifest
   transform: >
     $["x-csharp-usage"] = "model,input,output,converter";
+    $["x-csharp-formats"] = "json";
+    delete $["x-accessibility"];
+    delete $["allOf"];
+    $.properties["schemaVersion"] = {
+          "type": "integer",
+          "description": "Schema version"
+        };
 ```
 
 # Take stream as manifest body
@@ -150,11 +157,46 @@ directive:
     delete $["x-accessibility"]
 ```
 
-# Make Manifest a public type
+# Add OciMediaType extensible enum
 ``` yaml
 directive:
   from: swagger-document
-  where: $.definitions["Manifest"]
+  where: $.definitions
   transform: >
-    delete $["x-accessibility"]
+    $["OciMediaType"] = {
+        "type": "string",
+        "enum": [
+            "application/vnd.oci.descriptor.v1+json",
+            "application/vnd.oci.image.manifest.v1+json",
+            "application/vnd.oci.image.config.v1+json",
+            "application/vnd.oci.image.layer.v1.tar",
+        ],
+        "x-ms-enum": {
+            "name": "OciMediaType",
+            "modelAsString": true,
+            "values": [
+            {
+                "value": "application/vnd.oci.descriptor.v1+json",
+                "name": "ContentDescriptor",
+                "description": ""
+            },
+            {
+                "value": "application/vnd.oci.image.manifest.v1+json",
+                "name": "ImageManifest",
+                "description": ""
+            },
+            {
+                "value": "application/vnd.oci.image.config.v1+json",
+                "name": "ImageConfig",
+                "description": ""
+            },
+            {
+                "value": "application/vnd.oci.image.layer.v1.tar",
+                "name": "ImageLayer",
+                "description": ""
+            }
+            ]
+        },
+        "x-accessibility": "public"
+        };
 ```

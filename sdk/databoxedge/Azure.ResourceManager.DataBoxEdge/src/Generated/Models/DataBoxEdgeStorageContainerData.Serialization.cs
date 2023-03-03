@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.DataBoxEdge
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            writer.WritePropertyName("dataFormat");
+            writer.WritePropertyName("dataFormat"u8);
             writer.WriteStringValue(DataFormat.ToString());
             writer.WriteEndObject();
             writer.WriteEndObject();
@@ -38,22 +38,22 @@ namespace Azure.ResourceManager.DataBoxEdge
             Optional<DateTimeOffset> createdDateTime = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("containerStatus"))
+                        if (property0.NameEquals("containerStatus"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -82,12 +82,12 @@ namespace Azure.ResourceManager.DataBoxEdge
                             containerStatus = new DataBoxEdgeStorageContainerStatus(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("dataFormat"))
+                        if (property0.NameEquals("dataFormat"u8))
                         {
                             dataFormat = new DataBoxEdgeStorageContainerDataFormat(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("refreshDetails"))
+                        if (property0.NameEquals("refreshDetails"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                             refreshDetails = DataBoxEdgeRefreshDetails.DeserializeDataBoxEdgeRefreshDetails(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("createdDateTime"))
+                        if (property0.NameEquals("createdDateTime"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

@@ -13,7 +13,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Chaos
 {
-    /// <summary> A class representing the ExperimentExecutionDetail data model. </summary>
+    /// <summary>
+    /// A class representing the ExperimentExecutionDetail data model.
+    /// Model that represents the execution details of a Experiment.
+    /// </summary>
     public partial class ExperimentExecutionDetailData : ResourceData
     {
         /// <summary> Initializes a new instance of ExperimentExecutionDetailData. </summary>

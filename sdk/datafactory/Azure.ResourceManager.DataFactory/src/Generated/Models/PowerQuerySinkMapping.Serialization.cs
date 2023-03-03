@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(QueryName))
             {
-                writer.WritePropertyName("queryName");
+                writer.WritePropertyName("queryName"u8);
                 writer.WriteStringValue(QueryName);
             }
             if (Optional.IsCollectionDefined(DataflowSinks))
             {
-                writer.WritePropertyName("dataflowSinks");
+                writer.WritePropertyName("dataflowSinks"u8);
                 writer.WriteStartArray();
                 foreach (var item in DataflowSinks)
                 {
@@ -40,12 +40,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<IList<PowerQuerySink>> dataflowSinks = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("queryName"))
+                if (property.NameEquals("queryName"u8))
                 {
                     queryName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("dataflowSinks"))
+                if (property.NameEquals("dataflowSinks"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

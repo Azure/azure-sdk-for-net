@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.LabServices.Models
 
         public static LabServicesRecurrenceFrequency ToLabServicesRecurrenceFrequency(this string value)
         {
-            if (string.Equals(value, "Daily", StringComparison.InvariantCultureIgnoreCase)) return LabServicesRecurrenceFrequency.Daily;
-            if (string.Equals(value, "Weekly", StringComparison.InvariantCultureIgnoreCase)) return LabServicesRecurrenceFrequency.Weekly;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Daily")) return LabServicesRecurrenceFrequency.Daily;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Weekly")) return LabServicesRecurrenceFrequency.Weekly;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown LabServicesRecurrenceFrequency value.");
         }
     }

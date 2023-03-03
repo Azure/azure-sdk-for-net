@@ -40,6 +40,14 @@
     <Compile Include="$(AzureCoreSharedSources)TaskExtensions.cs" LinkBase="SharedSource\Azure.Core" />
     <Compile Include="$(AzureCoreSharedSources)ValueStopwatch.cs" LinkBase="SharedSource\Azure.Core" />
     <Compile Include="$(AzureCoreSharedSources)ArrayBufferWriter.cs" LinkBase="SharedSource\Azure.Core" />
+    <Compile Include="$(AzureCoreSharedSources)MessagingClientDiagnostics.cs" LinkBase="SharedSource\Azure.Core" />
+    <Compile Include="$(AzureCoreSharedSources)MessagingDiagnosticOperation.cs" LinkBase="SharedSource\Azure.Core" />
+  </ItemGroup>
+
+  <!-- Import Azure.Core.Amqp shared source -->
+  <ItemGroup>
+    <Compile Include="$(AzureCoreAmqpSharedSources)AmqpAnnotatedMessageConverter.cs" LinkBase="SharedSource\Azure.Core.Amqp" />
+    <Compile Include="$(AzureCoreAmqpSharedSources)MessageBody.cs" LinkBase="SharedSource\Azure.Core.Amqp" />
   </ItemGroup>
 
   <!--Embed the shared resources -->
@@ -60,4 +68,9 @@
       <CustomToolNamespace>Azure.Messaging.EventHubs</CustomToolNamespace>
     </EmbeddedResource>
   </ItemGroup>
+  <!--  Start Temporary until next release of Azure.Core.Amqp-->
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\core\Azure.Core.Amqp\src\Azure.Core.Amqp.csproj" />
+  </ItemGroup>
+  <!--  End temporary until next release of Azure.Core.Amqp-->
 </Project>

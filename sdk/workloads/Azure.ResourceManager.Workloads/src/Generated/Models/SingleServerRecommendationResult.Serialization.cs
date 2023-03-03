@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.Workloads.Models
             SapDeploymentType deploymentType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("vmSku"))
+                if (property.NameEquals("vmSku"u8))
                 {
                     vmSku = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("deploymentType"))
+                if (property.NameEquals("deploymentType"u8))
                 {
                     deploymentType = new SapDeploymentType(property.Value.GetString());
                     continue;

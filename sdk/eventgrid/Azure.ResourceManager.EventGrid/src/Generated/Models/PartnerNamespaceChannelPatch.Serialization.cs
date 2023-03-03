@@ -15,16 +15,16 @@ namespace Azure.ResourceManager.EventGrid.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(ExpireOnIfNotActivated))
             {
-                writer.WritePropertyName("expirationTimeIfNotActivatedUtc");
+                writer.WritePropertyName("expirationTimeIfNotActivatedUtc"u8);
                 writer.WriteStringValue(ExpireOnIfNotActivated.Value, "O");
             }
             if (Optional.IsDefined(PartnerTopicInfo))
             {
-                writer.WritePropertyName("partnerTopicInfo");
+                writer.WritePropertyName("partnerTopicInfo"u8);
                 writer.WriteObjectValue(PartnerTopicInfo);
             }
             writer.WriteEndObject();

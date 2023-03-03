@@ -1,0 +1,19 @@
+Service: keyvault-secrets
+
+Project: sdk/keyvault/Azure.Security.KeyVault.Secrets/perf/Azure.Security.KeyVault.Secrets.Perf.csproj
+
+PackageVersions:
+- Azure.Security.KeyVault.Secrets: 4.2.0
+- Azure.Security.KeyVault.Secrets: source
+
+Tests:
+- Test: get-secret
+  Class: GetSecret
+  Arguments:
+  - --parallel 64
+
+- Test: list-secrets
+  Class: ListSecrets
+  Arguments:
+  - --count 5 --parallel 64
+  - --count 500 --parallel 32

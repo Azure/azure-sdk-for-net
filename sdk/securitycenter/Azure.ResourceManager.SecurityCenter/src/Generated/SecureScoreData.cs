@@ -10,7 +10,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.SecurityCenter
 {
-    /// <summary> A class representing the SecureScore data model. </summary>
+    /// <summary>
+    /// A class representing the SecureScore data model.
+    /// Secure score item data model
+    /// </summary>
     public partial class SecureScoreData : ResourceData
     {
         /// <summary> Initializes a new instance of SecureScoreData. </summary>

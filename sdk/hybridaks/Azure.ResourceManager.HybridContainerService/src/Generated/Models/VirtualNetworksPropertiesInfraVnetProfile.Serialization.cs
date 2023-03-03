@@ -17,17 +17,17 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Hci))
             {
-                writer.WritePropertyName("hci");
+                writer.WritePropertyName("hci"u8);
                 writer.WriteObjectValue(Hci);
             }
             if (Optional.IsDefined(Kubevirt))
             {
-                writer.WritePropertyName("kubevirt");
+                writer.WritePropertyName("kubevirt"u8);
                 writer.WriteObjectValue(Kubevirt);
             }
             if (Optional.IsDefined(Vmware))
             {
-                writer.WritePropertyName("vmware");
+                writer.WritePropertyName("vmware"u8);
                 writer.WriteObjectValue(Vmware);
             }
             writer.WriteEndObject();
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             Optional<VirtualNetworksPropertiesInfraVnetProfileVmware> vmware = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("hci"))
+                if (property.NameEquals("hci"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                     hci = VirtualNetworksPropertiesInfraVnetProfileHci.DeserializeVirtualNetworksPropertiesInfraVnetProfileHci(property.Value);
                     continue;
                 }
-                if (property.NameEquals("kubevirt"))
+                if (property.NameEquals("kubevirt"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                     kubevirt = VirtualNetworksPropertiesInfraVnetProfileKubevirt.DeserializeVirtualNetworksPropertiesInfraVnetProfileKubevirt(property.Value);
                     continue;
                 }
-                if (property.NameEquals("vmware"))
+                if (property.NameEquals("vmware"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

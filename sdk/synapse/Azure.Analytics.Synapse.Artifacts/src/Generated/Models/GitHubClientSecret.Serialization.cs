@@ -20,12 +20,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(ByoaSecretAkvUrl))
             {
-                writer.WritePropertyName("byoaSecretAkvUrl");
+                writer.WritePropertyName("byoaSecretAkvUrl"u8);
                 writer.WriteStringValue(ByoaSecretAkvUrl);
             }
             if (Optional.IsDefined(ByoaSecretName))
             {
-                writer.WritePropertyName("byoaSecretName");
+                writer.WritePropertyName("byoaSecretName"u8);
                 writer.WriteStringValue(ByoaSecretName);
             }
             writer.WriteEndObject();
@@ -37,12 +37,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Optional<string> byoaSecretName = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("byoaSecretAkvUrl"))
+                if (property.NameEquals("byoaSecretAkvUrl"u8))
                 {
                     byoaSecretAkvUrl = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("byoaSecretName"))
+                if (property.NameEquals("byoaSecretName"u8))
                 {
                     byoaSecretName = property.Value.GetString();
                     continue;

@@ -12,7 +12,10 @@ using Azure.ResourceManager.SecurityCenter.Models;
 
 namespace Azure.ResourceManager.SecurityCenter
 {
-    /// <summary> A class representing the SecurityAssessmentMetadata data model. </summary>
+    /// <summary>
+    /// A class representing the SecurityAssessmentMetadata data model.
+    /// Security assessment metadata response
+    /// </summary>
     public partial class SecurityAssessmentMetadataData : ResourceData
     {
         /// <summary> Initializes a new instance of SecurityAssessmentMetadataData. </summary>

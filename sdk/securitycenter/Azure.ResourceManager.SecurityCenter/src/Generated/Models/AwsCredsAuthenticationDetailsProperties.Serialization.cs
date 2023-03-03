@@ -16,11 +16,11 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("awsAccessKeyId");
+            writer.WritePropertyName("awsAccessKeyId"u8);
             writer.WriteStringValue(AwsAccessKeyId);
-            writer.WritePropertyName("awsSecretAccessKey");
+            writer.WritePropertyName("awsSecretAccessKey"u8);
             writer.WriteStringValue(AwsSecretAccessKey);
-            writer.WritePropertyName("authenticationType");
+            writer.WritePropertyName("authenticationType"u8);
             writer.WriteStringValue(AuthenticationType.ToString());
             writer.WriteEndObject();
         }
@@ -35,22 +35,22 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             AuthenticationType authenticationType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("accountId"))
+                if (property.NameEquals("accountId"u8))
                 {
                     accountId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("awsAccessKeyId"))
+                if (property.NameEquals("awsAccessKeyId"u8))
                 {
                     awsAccessKeyId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("awsSecretAccessKey"))
+                if (property.NameEquals("awsSecretAccessKey"u8))
                 {
                     awsSecretAccessKey = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("authenticationProvisioningState"))
+                if (property.NameEquals("authenticationProvisioningState"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     authenticationProvisioningState = new AuthenticationProvisioningState(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("grantedPermissions"))
+                if (property.NameEquals("grantedPermissions"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     grantedPermissions = array;
                     continue;
                 }
-                if (property.NameEquals("authenticationType"))
+                if (property.NameEquals("authenticationType"u8))
                 {
                     authenticationType = new AuthenticationType(property.Value.GetString());
                     continue;

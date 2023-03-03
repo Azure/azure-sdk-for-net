@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.CosmosDB
 {
-    /// <summary> A class representing the CassandraTable data model. </summary>
+    /// <summary>
+    /// A class representing the CassandraTable data model.
+    /// An Azure Cosmos DB Cassandra table.
+    /// </summary>
     public partial class CassandraTableData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of CassandraTableData. </summary>

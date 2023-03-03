@@ -20,17 +20,17 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<DateTimeOffset> kekCertExpiryDate = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("kekState"))
+                if (property.NameEquals("kekState"u8))
                 {
                     kekState = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("kekCertThumbprint"))
+                if (property.NameEquals("kekCertThumbprint"u8))
                 {
                     kekCertThumbprint = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("kekCertExpiryDate"))
+                if (property.NameEquals("kekCertExpiryDate"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

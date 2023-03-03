@@ -17,17 +17,17 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(HciStorageProfile))
             {
-                writer.WritePropertyName("hciStorageProfile");
+                writer.WritePropertyName("hciStorageProfile"u8);
                 writer.WriteObjectValue(HciStorageProfile);
             }
             if (Optional.IsDefined(VmwareStorageProfile))
             {
-                writer.WritePropertyName("vmwareStorageProfile");
+                writer.WritePropertyName("vmwareStorageProfile"u8);
                 writer.WriteObjectValue(VmwareStorageProfile);
             }
             if (Optional.IsDefined(Status))
             {
-                writer.WritePropertyName("status");
+                writer.WritePropertyName("status"u8);
                 writer.WriteObjectValue(Status);
             }
             writer.WriteEndObject();
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             Optional<StorageSpacesPropertiesStatus> status = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("hciStorageProfile"))
+                if (property.NameEquals("hciStorageProfile"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                     hciStorageProfile = StorageSpacesPropertiesHciStorageProfile.DeserializeStorageSpacesPropertiesHciStorageProfile(property.Value);
                     continue;
                 }
-                if (property.NameEquals("vmwareStorageProfile"))
+                if (property.NameEquals("vmwareStorageProfile"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                     vmwareStorageProfile = StorageSpacesPropertiesVmwareStorageProfile.DeserializeStorageSpacesPropertiesVmwareStorageProfile(property.Value);
                     continue;
                 }
-                if (property.NameEquals("provisioningState"))
+                if (property.NameEquals("provisioningState"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                     provisioningState = new ProvisioningState(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("status"))
+                if (property.NameEquals("status"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

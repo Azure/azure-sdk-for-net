@@ -17,17 +17,17 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(MocGroup))
             {
-                writer.WritePropertyName("mocGroup");
+                writer.WritePropertyName("mocGroup"u8);
                 writer.WriteStringValue(MocGroup);
             }
             if (Optional.IsDefined(MocLocation))
             {
-                writer.WritePropertyName("mocLocation");
+                writer.WritePropertyName("mocLocation"u8);
                 writer.WriteStringValue(MocLocation);
             }
             if (Optional.IsDefined(MocVnetName))
             {
-                writer.WritePropertyName("mocVnetName");
+                writer.WritePropertyName("mocVnetName"u8);
                 writer.WriteStringValue(MocVnetName);
             }
             writer.WriteEndObject();
@@ -40,17 +40,17 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             Optional<string> mocVnetName = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("mocGroup"))
+                if (property.NameEquals("mocGroup"u8))
                 {
                     mocGroup = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("mocLocation"))
+                if (property.NameEquals("mocLocation"u8))
                 {
                     mocLocation = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("mocVnetName"))
+                if (property.NameEquals("mocVnetName"u8))
                 {
                     mocVnetName = property.Value.GetString();
                     continue;

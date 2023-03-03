@@ -15,20 +15,20 @@ namespace Azure.AI.MetricsAdvisor.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("keyVaultEndpoint");
+            writer.WritePropertyName("keyVaultEndpoint"u8);
             writer.WriteStringValue(KeyVaultEndpoint);
-            writer.WritePropertyName("keyVaultClientId");
+            writer.WritePropertyName("keyVaultClientId"u8);
             writer.WriteStringValue(KeyVaultClientId);
             if (Optional.IsDefined(KeyVaultClientSecret))
             {
-                writer.WritePropertyName("keyVaultClientSecret");
+                writer.WritePropertyName("keyVaultClientSecret"u8);
                 writer.WriteStringValue(KeyVaultClientSecret);
             }
-            writer.WritePropertyName("servicePrincipalIdNameInKV");
+            writer.WritePropertyName("servicePrincipalIdNameInKV"u8);
             writer.WriteStringValue(ServicePrincipalIdNameInKV);
-            writer.WritePropertyName("servicePrincipalSecretNameInKV");
+            writer.WritePropertyName("servicePrincipalSecretNameInKV"u8);
             writer.WriteStringValue(ServicePrincipalSecretNameInKV);
-            writer.WritePropertyName("tenantId");
+            writer.WritePropertyName("tenantId"u8);
             writer.WriteStringValue(TenantId);
             writer.WriteEndObject();
         }
@@ -43,32 +43,32 @@ namespace Azure.AI.MetricsAdvisor.Models
             string tenantId = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("keyVaultEndpoint"))
+                if (property.NameEquals("keyVaultEndpoint"u8))
                 {
                     keyVaultEndpoint = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("keyVaultClientId"))
+                if (property.NameEquals("keyVaultClientId"u8))
                 {
                     keyVaultClientId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("keyVaultClientSecret"))
+                if (property.NameEquals("keyVaultClientSecret"u8))
                 {
                     keyVaultClientSecret = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("servicePrincipalIdNameInKV"))
+                if (property.NameEquals("servicePrincipalIdNameInKV"u8))
                 {
                     servicePrincipalIdNameInKV = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("servicePrincipalSecretNameInKV"))
+                if (property.NameEquals("servicePrincipalSecretNameInKV"u8))
                 {
                     servicePrincipalSecretNameInKV = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("tenantId"))
+                if (property.NameEquals("tenantId"u8))
                 {
                     tenantId = property.Value.GetString();
                     continue;
