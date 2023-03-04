@@ -106,6 +106,16 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("aadIssuer"u8);
                 writer.WriteStringValue(AadIssuer);
             }
+            if (Optional.IsCollectionDefined(VngClientConnectionConfigurations))
+            {
+                writer.WritePropertyName("vngClientConnectionConfigurations"u8);
+                writer.WriteStartArray();
+                foreach (var item in VngClientConnectionConfigurations)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
             writer.WriteEndObject();
         }
 
@@ -123,6 +133,7 @@ namespace Azure.ResourceManager.Network.Models
             Optional<string> aadTenant = default;
             Optional<string> aadAudience = default;
             Optional<string> aadIssuer = default;
+            Optional<IList<VngClientConnectionConfiguration>> vngClientConnectionConfigurations = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("vpnClientAddressPool"u8))
@@ -250,8 +261,23 @@ namespace Azure.ResourceManager.Network.Models
                     aadIssuer = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("vngClientConnectionConfigurations"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    List<VngClientConnectionConfiguration> array = new List<VngClientConnectionConfiguration>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(VngClientConnectionConfiguration.DeserializeVngClientConnectionConfiguration(item));
+                    }
+                    vngClientConnectionConfigurations = array;
+                    continue;
+                }
             }
-            return new VpnClientConfiguration(vpnClientAddressPool.Value, Optional.ToList(vpnClientRootCertificates), Optional.ToList(vpnClientRevokedCertificates), Optional.ToList(vpnClientProtocols), Optional.ToList(vpnAuthenticationTypes), Optional.ToList(vpnClientIPsecPolicies), radiusServerAddress.Value, radiusServerSecret.Value, Optional.ToList(radiusServers), aadTenant.Value, aadAudience.Value, aadIssuer.Value);
+            return new VpnClientConfiguration(vpnClientAddressPool.Value, Optional.ToList(vpnClientRootCertificates), Optional.ToList(vpnClientRevokedCertificates), Optional.ToList(vpnClientProtocols), Optional.ToList(vpnAuthenticationTypes), Optional.ToList(vpnClientIPsecPolicies), radiusServerAddress.Value, radiusServerSecret.Value, Optional.ToList(radiusServers), aadTenant.Value, aadAudience.Value, aadIssuer.Value, Optional.ToList(vngClientConnectionConfigurations));
         }
     }
 }

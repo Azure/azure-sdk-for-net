@@ -51,6 +51,7 @@ namespace Azure.ResourceManager.Network
             Optional<SystemData> systemData = default;
             Optional<Guid> resourceGuid = default;
             Optional<NetworkProvisioningState> provisioningState = default;
+            Optional<IReadOnlyList<WritableSubResource>> publicIPAddresses = default;
             Optional<IReadOnlyList<WritableSubResource>> virtualNetworks = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -138,6 +139,21 @@ namespace Azure.ResourceManager.Network
                             provisioningState = new NetworkProvisioningState(property0.Value.GetString());
                             continue;
                         }
+                        if (property0.NameEquals("publicIPAddresses"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            List<WritableSubResource> array = new List<WritableSubResource>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(JsonSerializer.Deserialize<WritableSubResource>(item.GetRawText()));
+                            }
+                            publicIPAddresses = array;
+                            continue;
+                        }
                         if (property0.NameEquals("virtualNetworks"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -157,7 +173,7 @@ namespace Azure.ResourceManager.Network
                     continue;
                 }
             }
-            return new DdosProtectionPlanData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(etag), Optional.ToNullable(resourceGuid), Optional.ToNullable(provisioningState), Optional.ToList(virtualNetworks));
+            return new DdosProtectionPlanData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(etag), Optional.ToNullable(resourceGuid), Optional.ToNullable(provisioningState), Optional.ToList(publicIPAddresses), Optional.ToList(virtualNetworks));
         }
     }
 }

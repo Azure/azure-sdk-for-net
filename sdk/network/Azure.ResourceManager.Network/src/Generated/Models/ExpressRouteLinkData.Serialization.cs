@@ -53,6 +53,7 @@ namespace Azure.ResourceManager.Network
             Optional<string> interfaceName = default;
             Optional<string> patchPanelId = default;
             Optional<string> rackId = default;
+            Optional<string> coloLocation = default;
             Optional<ExpressRouteLinkConnectorType> connectorType = default;
             Optional<ExpressRouteLinkAdminState> adminState = default;
             Optional<NetworkProvisioningState> provisioningState = default;
@@ -123,6 +124,11 @@ namespace Azure.ResourceManager.Network
                             rackId = property0.Value.GetString();
                             continue;
                         }
+                        if (property0.NameEquals("coloLocation"u8))
+                        {
+                            coloLocation = property0.Value.GetString();
+                            continue;
+                        }
                         if (property0.NameEquals("connectorType"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -167,7 +173,7 @@ namespace Azure.ResourceManager.Network
                     continue;
                 }
             }
-            return new ExpressRouteLinkData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(etag), routerName.Value, interfaceName.Value, patchPanelId.Value, rackId.Value, Optional.ToNullable(connectorType), Optional.ToNullable(adminState), Optional.ToNullable(provisioningState), macSecConfig.Value);
+            return new ExpressRouteLinkData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(etag), routerName.Value, interfaceName.Value, patchPanelId.Value, rackId.Value, coloLocation.Value, Optional.ToNullable(connectorType), Optional.ToNullable(adminState), Optional.ToNullable(provisioningState), macSecConfig.Value);
         }
     }
 }

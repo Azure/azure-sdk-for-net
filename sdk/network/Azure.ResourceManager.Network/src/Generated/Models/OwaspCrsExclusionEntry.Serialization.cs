@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
@@ -21,6 +22,16 @@ namespace Azure.ResourceManager.Network.Models
             writer.WriteStringValue(SelectorMatchOperator.ToString());
             writer.WritePropertyName("selector"u8);
             writer.WriteStringValue(Selector);
+            if (Optional.IsCollectionDefined(ExclusionManagedRuleSets))
+            {
+                writer.WritePropertyName("exclusionManagedRuleSets"u8);
+                writer.WriteStartArray();
+                foreach (var item in ExclusionManagedRuleSets)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
             writer.WriteEndObject();
         }
 
@@ -29,6 +40,7 @@ namespace Azure.ResourceManager.Network.Models
             OwaspCrsExclusionEntryMatchVariable matchVariable = default;
             OwaspCrsExclusionEntrySelectorMatchOperator selectorMatchOperator = default;
             string selector = default;
+            Optional<IList<ExclusionManagedRuleSet>> exclusionManagedRuleSets = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("matchVariable"u8))
@@ -46,8 +58,23 @@ namespace Azure.ResourceManager.Network.Models
                     selector = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("exclusionManagedRuleSets"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    List<ExclusionManagedRuleSet> array = new List<ExclusionManagedRuleSet>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(ExclusionManagedRuleSet.DeserializeExclusionManagedRuleSet(item));
+                    }
+                    exclusionManagedRuleSets = array;
+                    continue;
+                }
             }
-            return new OwaspCrsExclusionEntry(matchVariable, selectorMatchOperator, selector);
+            return new OwaspCrsExclusionEntry(matchVariable, selectorMatchOperator, selector, Optional.ToList(exclusionManagedRuleSets));
         }
     }
 }

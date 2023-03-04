@@ -36,8 +36,8 @@ namespace Azure.ResourceManager.Network
 
         private readonly ClientDiagnostics _virtualWanClientDiagnostics;
         private readonly VirtualWansRestOperations _virtualWanRestClient;
-        private readonly ClientDiagnostics _defaultClientDiagnostics;
-        private readonly NetworkManagementRestOperations _defaultRestClient;
+        private readonly ClientDiagnostics _expressRouteProviderPortClientDiagnostics;
+        private readonly NetworkManagementRestOperations _expressRouteProviderPortRestClient;
         private readonly ClientDiagnostics _vpnSitesConfigurationClientDiagnostics;
         private readonly VpnSitesConfigurationRestOperations _vpnSitesConfigurationRestClient;
         private readonly ClientDiagnostics _vpnServerConfigurationsAssociatedWithVirtualWanClientDiagnostics;
@@ -66,8 +66,9 @@ namespace Azure.ResourceManager.Network
             _virtualWanClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string virtualWanApiVersion);
             _virtualWanRestClient = new VirtualWansRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, virtualWanApiVersion);
-            _defaultClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-            _defaultRestClient = new NetworkManagementRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+            _expressRouteProviderPortClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ExpressRouteProviderPortResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ExpressRouteProviderPortResource.ResourceType, out string expressRouteProviderPortApiVersion);
+            _expressRouteProviderPortRestClient = new NetworkManagementRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, expressRouteProviderPortApiVersion);
             _vpnSitesConfigurationClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ProviderConstants.DefaultProviderNamespace, Diagnostics);
             _vpnSitesConfigurationRestClient = new VpnSitesConfigurationRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
             _vpnServerConfigurationsAssociatedWithVirtualWanClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ProviderConstants.DefaultProviderNamespace, Diagnostics);
@@ -317,11 +318,11 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<VirtualWanSecurityProviders>> SupportedSecurityProvidersAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _defaultClientDiagnostics.CreateScope("VirtualWanResource.SupportedSecurityProviders");
+            using var scope = _expressRouteProviderPortClientDiagnostics.CreateScope("VirtualWanResource.SupportedSecurityProviders");
             scope.Start();
             try
             {
-                var response = await _defaultRestClient.SupportedSecurityProvidersAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _expressRouteProviderPortRestClient.SupportedSecurityProvidersAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -347,11 +348,11 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<VirtualWanSecurityProviders> SupportedSecurityProviders(CancellationToken cancellationToken = default)
         {
-            using var scope = _defaultClientDiagnostics.CreateScope("VirtualWanResource.SupportedSecurityProviders");
+            using var scope = _expressRouteProviderPortClientDiagnostics.CreateScope("VirtualWanResource.SupportedSecurityProviders");
             scope.Start();
             try
             {
-                var response = _defaultRestClient.SupportedSecurityProviders(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                var response = _expressRouteProviderPortRestClient.SupportedSecurityProviders(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -382,12 +383,12 @@ namespace Azure.ResourceManager.Network
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _defaultClientDiagnostics.CreateScope("VirtualWanResource.Generatevirtualwanvpnserverconfigurationvpnprofile");
+            using var scope = _expressRouteProviderPortClientDiagnostics.CreateScope("VirtualWanResource.Generatevirtualwanvpnserverconfigurationvpnprofile");
             scope.Start();
             try
             {
-                var response = await _defaultRestClient.GeneratevirtualwanvpnserverconfigurationvpnprofileAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new NetworkArmOperation<VpnProfileResponse>(new VpnProfileResponseOperationSource(), _defaultClientDiagnostics, Pipeline, _defaultRestClient.CreateGeneratevirtualwanvpnserverconfigurationvpnprofileRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var response = await _expressRouteProviderPortRestClient.GeneratevirtualwanvpnserverconfigurationvpnprofileAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
+                var operation = new NetworkArmOperation<VpnProfileResponse>(new VpnProfileResponseOperationSource(), _expressRouteProviderPortClientDiagnostics, Pipeline, _expressRouteProviderPortRestClient.CreateGeneratevirtualwanvpnserverconfigurationvpnprofileRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -420,12 +421,12 @@ namespace Azure.ResourceManager.Network
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _defaultClientDiagnostics.CreateScope("VirtualWanResource.Generatevirtualwanvpnserverconfigurationvpnprofile");
+            using var scope = _expressRouteProviderPortClientDiagnostics.CreateScope("VirtualWanResource.Generatevirtualwanvpnserverconfigurationvpnprofile");
             scope.Start();
             try
             {
-                var response = _defaultRestClient.Generatevirtualwanvpnserverconfigurationvpnprofile(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
-                var operation = new NetworkArmOperation<VpnProfileResponse>(new VpnProfileResponseOperationSource(), _defaultClientDiagnostics, Pipeline, _defaultRestClient.CreateGeneratevirtualwanvpnserverconfigurationvpnprofileRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var response = _expressRouteProviderPortRestClient.Generatevirtualwanvpnserverconfigurationvpnprofile(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
+                var operation = new NetworkArmOperation<VpnProfileResponse>(new VpnProfileResponseOperationSource(), _expressRouteProviderPortClientDiagnostics, Pipeline, _expressRouteProviderPortRestClient.CreateGeneratevirtualwanvpnserverconfigurationvpnprofileRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
 
@@ -23,11 +22,15 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="associatedRouteTable"> The resource id RouteTable associated with this RoutingConfiguration. </param>
         /// <param name="propagatedRouteTables"> The list of RouteTables to advertise the routes to. </param>
         /// <param name="vnetRoutes"> List of routes that control routing from VirtualHub into a virtual network connection. </param>
-        internal RoutingConfiguration(WritableSubResource associatedRouteTable, PropagatedRouteTable propagatedRouteTables, VnetRoute vnetRoutes)
+        /// <param name="inboundRouteMap"> The resource id of the RouteMap associated with this RoutingConfiguration for inbound learned routes. </param>
+        /// <param name="outboundRouteMap"> The resource id of theRouteMap associated with this RoutingConfiguration for outbound advertised routes. </param>
+        internal RoutingConfiguration(WritableSubResource associatedRouteTable, PropagatedRouteTable propagatedRouteTables, VnetRoute vnetRoutes, WritableSubResource inboundRouteMap, WritableSubResource outboundRouteMap)
         {
             AssociatedRouteTable = associatedRouteTable;
             PropagatedRouteTables = propagatedRouteTables;
             VnetRoutes = vnetRoutes;
+            InboundRouteMap = inboundRouteMap;
+            OutboundRouteMap = outboundRouteMap;
         }
 
         /// <summary> The resource id RouteTable associated with this RoutingConfiguration. </summary>
@@ -47,15 +50,32 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> The list of RouteTables to advertise the routes to. </summary>
         public PropagatedRouteTable PropagatedRouteTables { get; set; }
         /// <summary> List of routes that control routing from VirtualHub into a virtual network connection. </summary>
-        internal VnetRoute VnetRoutes { get; set; }
-        /// <summary> List of all Static Routes. </summary>
-        public IList<StaticRoute> StaticRoutes
+        public VnetRoute VnetRoutes { get; set; }
+        /// <summary> The resource id of the RouteMap associated with this RoutingConfiguration for inbound learned routes. </summary>
+        internal WritableSubResource InboundRouteMap { get; set; }
+        /// <summary> Gets or sets Id. </summary>
+        public ResourceIdentifier InboundRouteMapId
         {
-            get
+            get => InboundRouteMap is null ? default : InboundRouteMap.Id;
+            set
             {
-                if (VnetRoutes is null)
-                    VnetRoutes = new VnetRoute();
-                return VnetRoutes.StaticRoutes;
+                if (InboundRouteMap is null)
+                    InboundRouteMap = new WritableSubResource();
+                InboundRouteMap.Id = value;
+            }
+        }
+
+        /// <summary> The resource id of theRouteMap associated with this RoutingConfiguration for outbound advertised routes. </summary>
+        internal WritableSubResource OutboundRouteMap { get; set; }
+        /// <summary> Gets or sets Id. </summary>
+        public ResourceIdentifier OutboundRouteMapId
+        {
+            get => OutboundRouteMap is null ? default : OutboundRouteMap.Id;
+            set
+            {
+                if (OutboundRouteMap is null)
+                    OutboundRouteMap = new WritableSubResource();
+                OutboundRouteMap.Id = value;
             }
         }
     }

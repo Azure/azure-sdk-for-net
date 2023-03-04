@@ -47,10 +47,25 @@ namespace Azure.ResourceManager.Network
                 writer.WritePropertyName("autoScaleConfiguration"u8);
                 writer.WriteObjectValue(AutoScaleConfiguration);
             }
+            if (Optional.IsCollectionDefined(ExpressRouteConnections))
+            {
+                writer.WritePropertyName("expressRouteConnections"u8);
+                writer.WriteStartArray();
+                foreach (var item in ExpressRouteConnections)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
             if (Optional.IsDefined(VirtualHub))
             {
                 writer.WritePropertyName("virtualHub"u8);
                 JsonSerializer.Serialize(writer, VirtualHub);
+            }
+            if (Optional.IsDefined(AllowNonVirtualWanTraffic))
+            {
+                writer.WritePropertyName("allowNonVirtualWanTraffic"u8);
+                writer.WriteBooleanValue(AllowNonVirtualWanTraffic.Value);
             }
             writer.WriteEndObject();
             writer.WriteEndObject();
@@ -65,9 +80,10 @@ namespace Azure.ResourceManager.Network
             Optional<AzureLocation> location = default;
             Optional<IDictionary<string, string>> tags = default;
             Optional<ExpressRouteGatewayPropertiesAutoScaleConfiguration> autoScaleConfiguration = default;
-            Optional<IReadOnlyList<ExpressRouteConnectionData>> expressRouteConnections = default;
+            Optional<IList<ExpressRouteConnectionData>> expressRouteConnections = default;
             Optional<NetworkProvisioningState> provisioningState = default;
             Optional<WritableSubResource> virtualHub = default;
+            Optional<bool> allowNonVirtualWanTraffic = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -184,11 +200,21 @@ namespace Azure.ResourceManager.Network
                             virtualHub = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
                             continue;
                         }
+                        if (property0.NameEquals("allowNonVirtualWanTraffic"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            allowNonVirtualWanTraffic = property0.Value.GetBoolean();
+                            continue;
+                        }
                     }
                     continue;
                 }
             }
-            return new ExpressRouteGatewayData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), Optional.ToNullable(etag), autoScaleConfiguration.Value, Optional.ToList(expressRouteConnections), Optional.ToNullable(provisioningState), virtualHub);
+            return new ExpressRouteGatewayData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), Optional.ToNullable(etag), autoScaleConfiguration.Value, Optional.ToList(expressRouteConnections), Optional.ToNullable(provisioningState), virtualHub, Optional.ToNullable(allowNonVirtualWanTraffic));
         }
     }
 }

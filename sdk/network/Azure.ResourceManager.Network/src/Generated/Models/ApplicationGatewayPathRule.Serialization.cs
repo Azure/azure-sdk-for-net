@@ -60,6 +60,11 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("rewriteRuleSet"u8);
                 JsonSerializer.Serialize(writer, RewriteRuleSet);
             }
+            if (Optional.IsDefined(LoadDistributionPolicy))
+            {
+                writer.WritePropertyName("loadDistributionPolicy"u8);
+                JsonSerializer.Serialize(writer, LoadDistributionPolicy);
+            }
             if (Optional.IsDefined(FirewallPolicy))
             {
                 writer.WritePropertyName("firewallPolicy"u8);
@@ -80,6 +85,7 @@ namespace Azure.ResourceManager.Network.Models
             Optional<WritableSubResource> backendHttpSettings = default;
             Optional<WritableSubResource> redirectConfiguration = default;
             Optional<WritableSubResource> rewriteRuleSet = default;
+            Optional<WritableSubResource> loadDistributionPolicy = default;
             Optional<NetworkProvisioningState> provisioningState = default;
             Optional<WritableSubResource> firewallPolicy = default;
             foreach (var property in element.EnumerateObject())
@@ -183,6 +189,16 @@ namespace Azure.ResourceManager.Network.Models
                             rewriteRuleSet = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
                             continue;
                         }
+                        if (property0.NameEquals("loadDistributionPolicy"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            loadDistributionPolicy = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
+                            continue;
+                        }
                         if (property0.NameEquals("provisioningState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -207,7 +223,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new ApplicationGatewayPathRule(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(etag), Optional.ToList(paths), backendAddressPool, backendHttpSettings, redirectConfiguration, rewriteRuleSet, Optional.ToNullable(provisioningState), firewallPolicy);
+            return new ApplicationGatewayPathRule(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(etag), Optional.ToList(paths), backendAddressPool, backendHttpSettings, redirectConfiguration, rewriteRuleSet, loadDistributionPolicy, Optional.ToNullable(provisioningState), firewallPolicy);
         }
     }
 }

@@ -82,6 +82,31 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsCollectionDefined(ApplicationSecurityGroups))
+            {
+                writer.WritePropertyName("applicationSecurityGroups"u8);
+                writer.WriteStartArray();
+                foreach (var item in ApplicationSecurityGroups)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(IPConfigurations))
+            {
+                writer.WritePropertyName("ipConfigurations"u8);
+                writer.WriteStartArray();
+                foreach (var item in IPConfigurations)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(CustomNetworkInterfaceName))
+            {
+                writer.WritePropertyName("customNetworkInterfaceName"u8);
+                writer.WriteStringValue(CustomNetworkInterfaceName);
+            }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
@@ -101,6 +126,9 @@ namespace Azure.ResourceManager.Network
             Optional<IList<NetworkPrivateLinkServiceConnection>> privateLinkServiceConnections = default;
             Optional<IList<NetworkPrivateLinkServiceConnection>> manualPrivateLinkServiceConnections = default;
             Optional<IList<CustomDnsConfigProperties>> customDnsConfigs = default;
+            Optional<IList<ApplicationSecurityGroupData>> applicationSecurityGroups = default;
+            Optional<IList<PrivateEndpointIPConfiguration>> ipConfigurations = default;
+            Optional<string> customNetworkInterfaceName = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("extendedLocation"u8))
@@ -262,11 +290,46 @@ namespace Azure.ResourceManager.Network
                             customDnsConfigs = array;
                             continue;
                         }
+                        if (property0.NameEquals("applicationSecurityGroups"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            List<ApplicationSecurityGroupData> array = new List<ApplicationSecurityGroupData>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(ApplicationSecurityGroupData.DeserializeApplicationSecurityGroupData(item));
+                            }
+                            applicationSecurityGroups = array;
+                            continue;
+                        }
+                        if (property0.NameEquals("ipConfigurations"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            List<PrivateEndpointIPConfiguration> array = new List<PrivateEndpointIPConfiguration>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(PrivateEndpointIPConfiguration.DeserializePrivateEndpointIPConfiguration(item));
+                            }
+                            ipConfigurations = array;
+                            continue;
+                        }
+                        if (property0.NameEquals("customNetworkInterfaceName"u8))
+                        {
+                            customNetworkInterfaceName = property0.Value.GetString();
+                            continue;
+                        }
                     }
                     continue;
                 }
             }
-            return new PrivateEndpointData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), extendedLocation, Optional.ToNullable(etag), subnet.Value, Optional.ToList(networkInterfaces), Optional.ToNullable(provisioningState), Optional.ToList(privateLinkServiceConnections), Optional.ToList(manualPrivateLinkServiceConnections), Optional.ToList(customDnsConfigs));
+            return new PrivateEndpointData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), extendedLocation, Optional.ToNullable(etag), subnet.Value, Optional.ToList(networkInterfaces), Optional.ToNullable(provisioningState), Optional.ToList(privateLinkServiceConnections), Optional.ToList(manualPrivateLinkServiceConnections), Optional.ToList(customDnsConfigs), Optional.ToList(applicationSecurityGroups), Optional.ToList(ipConfigurations), customNetworkInterfaceName.Value);
         }
     }
 }

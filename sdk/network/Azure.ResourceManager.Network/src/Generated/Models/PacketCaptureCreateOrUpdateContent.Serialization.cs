@@ -19,6 +19,16 @@ namespace Azure.ResourceManager.Network.Models
             writer.WriteStartObject();
             writer.WritePropertyName("target"u8);
             writer.WriteStringValue(Target);
+            if (Optional.IsDefined(Scope))
+            {
+                writer.WritePropertyName("scope"u8);
+                writer.WriteObjectValue(Scope);
+            }
+            if (Optional.IsDefined(TargetType))
+            {
+                writer.WritePropertyName("targetType"u8);
+                writer.WriteStringValue(TargetType.Value.ToSerialString());
+            }
             if (Optional.IsDefined(BytesToCapturePerPacket))
             {
                 writer.WritePropertyName("bytesToCapturePerPacket"u8);

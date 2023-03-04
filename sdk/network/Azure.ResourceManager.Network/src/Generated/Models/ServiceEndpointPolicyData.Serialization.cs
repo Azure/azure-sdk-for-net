@@ -52,6 +52,21 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsDefined(ServiceAlias))
+            {
+                writer.WritePropertyName("serviceAlias"u8);
+                writer.WriteStringValue(ServiceAlias);
+            }
+            if (Optional.IsCollectionDefined(ContextualServiceEndpointPolicies))
+            {
+                writer.WritePropertyName("contextualServiceEndpointPolicies"u8);
+                writer.WriteStartArray();
+                foreach (var item in ContextualServiceEndpointPolicies)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
@@ -69,6 +84,8 @@ namespace Azure.ResourceManager.Network
             Optional<IReadOnlyList<SubnetData>> subnets = default;
             Optional<Guid> resourceGuid = default;
             Optional<NetworkProvisioningState> provisioningState = default;
+            Optional<string> serviceAlias = default;
+            Optional<IList<string>> contextualServiceEndpointPolicies = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -195,11 +212,31 @@ namespace Azure.ResourceManager.Network
                             provisioningState = new NetworkProvisioningState(property0.Value.GetString());
                             continue;
                         }
+                        if (property0.NameEquals("serviceAlias"u8))
+                        {
+                            serviceAlias = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("contextualServiceEndpointPolicies"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            List<string> array = new List<string>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(item.GetString());
+                            }
+                            contextualServiceEndpointPolicies = array;
+                            continue;
+                        }
                     }
                     continue;
                 }
             }
-            return new ServiceEndpointPolicyData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), Optional.ToNullable(etag), kind.Value, Optional.ToList(serviceEndpointPolicyDefinitions), Optional.ToList(subnets), Optional.ToNullable(resourceGuid), Optional.ToNullable(provisioningState));
+            return new ServiceEndpointPolicyData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), Optional.ToNullable(etag), kind.Value, Optional.ToList(serviceEndpointPolicyDefinitions), Optional.ToList(subnets), Optional.ToNullable(resourceGuid), Optional.ToNullable(provisioningState), serviceAlias.Value, Optional.ToList(contextualServiceEndpointPolicies));
         }
     }
 }

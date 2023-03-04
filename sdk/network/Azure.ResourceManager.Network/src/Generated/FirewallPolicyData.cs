@@ -45,11 +45,13 @@ namespace Azure.ResourceManager.Network
         /// <param name="threatIntelWhitelist"> ThreatIntel Whitelist for Firewall Policy. </param>
         /// <param name="insights"> Insights on Firewall Policy. </param>
         /// <param name="snat"> The private IP addresses/IP ranges to which traffic will not be SNAT. </param>
+        /// <param name="sql"> SQL Settings definition. </param>
         /// <param name="dnsSettings"> DNS Proxy Settings definition. </param>
+        /// <param name="explicitProxy"> Explicit Proxy Settings definition. </param>
         /// <param name="intrusionDetection"> The configuration for Intrusion detection. </param>
         /// <param name="transportSecurity"> TLS Configuration definition. </param>
         /// <param name="sku"> The Firewall Policy SKU. </param>
-        internal FirewallPolicyData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, ETag? etag, ManagedServiceIdentity identity, IReadOnlyList<WritableSubResource> ruleCollectionGroups, NetworkProvisioningState? provisioningState, WritableSubResource basePolicy, IReadOnlyList<WritableSubResource> firewalls, IReadOnlyList<WritableSubResource> childPolicies, AzureFirewallThreatIntelMode? threatIntelMode, FirewallPolicyThreatIntelWhitelist threatIntelWhitelist, FirewallPolicyInsights insights, FirewallPolicySnat snat, DnsSettings dnsSettings, FirewallPolicyIntrusionDetection intrusionDetection, FirewallPolicyTransportSecurity transportSecurity, FirewallPolicySku sku) : base(id, name, resourceType, location, tags)
+        internal FirewallPolicyData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, ETag? etag, ManagedServiceIdentity identity, IReadOnlyList<WritableSubResource> ruleCollectionGroups, NetworkProvisioningState? provisioningState, WritableSubResource basePolicy, IReadOnlyList<WritableSubResource> firewalls, IReadOnlyList<WritableSubResource> childPolicies, AzureFirewallThreatIntelMode? threatIntelMode, FirewallPolicyThreatIntelWhitelist threatIntelWhitelist, FirewallPolicyInsights insights, FirewallPolicySnat snat, FirewallPolicySQL sql, DnsSettings dnsSettings, ExplicitProxy explicitProxy, FirewallPolicyIntrusionDetection intrusionDetection, FirewallPolicyTransportSecurity transportSecurity, FirewallPolicySku sku) : base(id, name, resourceType, location, tags)
         {
             ETag = etag;
             Identity = identity;
@@ -62,7 +64,9 @@ namespace Azure.ResourceManager.Network
             ThreatIntelWhitelist = threatIntelWhitelist;
             Insights = insights;
             Snat = snat;
+            Sql = sql;
             DnsSettings = dnsSettings;
+            ExplicitProxy = explicitProxy;
             IntrusionDetection = intrusionDetection;
             TransportSecurity = transportSecurity;
             Sku = sku;
@@ -101,20 +105,25 @@ namespace Azure.ResourceManager.Network
         /// <summary> Insights on Firewall Policy. </summary>
         public FirewallPolicyInsights Insights { get; set; }
         /// <summary> The private IP addresses/IP ranges to which traffic will not be SNAT. </summary>
-        internal FirewallPolicySnat Snat { get; set; }
-        /// <summary> List of private IP addresses/IP address ranges to not be SNAT. </summary>
-        public IList<string> SnatPrivateRanges
+        public FirewallPolicySnat Snat { get; set; }
+        /// <summary> SQL Settings definition. </summary>
+        internal FirewallPolicySQL Sql { get; set; }
+        /// <summary> A flag to indicate if SQL Redirect traffic filtering is enabled. Turning on the flag requires no rule using port 11000-11999. </summary>
+        public bool? AllowSqlRedirect
         {
-            get
+            get => Sql is null ? default : Sql.AllowSqlRedirect;
+            set
             {
-                if (Snat is null)
-                    Snat = new FirewallPolicySnat();
-                return Snat.PrivateRanges;
+                if (Sql is null)
+                    Sql = new FirewallPolicySQL();
+                Sql.AllowSqlRedirect = value;
             }
         }
 
         /// <summary> DNS Proxy Settings definition. </summary>
         public DnsSettings DnsSettings { get; set; }
+        /// <summary> Explicit Proxy Settings definition. </summary>
+        public ExplicitProxy ExplicitProxy { get; set; }
         /// <summary> The configuration for Intrusion detection. </summary>
         public FirewallPolicyIntrusionDetection IntrusionDetection { get; set; }
         /// <summary> TLS Configuration definition. </summary>

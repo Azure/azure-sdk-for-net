@@ -24,6 +24,8 @@ namespace Azure.ResourceManager.Network
             ResourceType type = default;
             Optional<SystemData> systemData = default;
             Optional<string> target = default;
+            Optional<PacketCaptureMachineScope> scope = default;
+            Optional<PacketCaptureTargetType> targetType = default;
             Optional<long> bytesToCapturePerPacket = default;
             Optional<long> totalBytesPerSession = default;
             Optional<int> timeLimitInSeconds = default;
@@ -79,6 +81,26 @@ namespace Azure.ResourceManager.Network
                         if (property0.NameEquals("target"u8))
                         {
                             target = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("scope"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            scope = PacketCaptureMachineScope.DeserializePacketCaptureMachineScope(property0.Value);
+                            continue;
+                        }
+                        if (property0.NameEquals("targetType"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            targetType = property0.Value.GetString().ToPacketCaptureTargetType();
                             continue;
                         }
                         if (property0.NameEquals("bytesToCapturePerPacket"u8))
@@ -150,7 +172,7 @@ namespace Azure.ResourceManager.Network
                     continue;
                 }
             }
-            return new PacketCaptureData(id, name, type, systemData.Value, Optional.ToNullable(etag), target.Value, Optional.ToNullable(bytesToCapturePerPacket), Optional.ToNullable(totalBytesPerSession), Optional.ToNullable(timeLimitInSeconds), storageLocation.Value, Optional.ToList(filters), Optional.ToNullable(provisioningState));
+            return new PacketCaptureData(id, name, type, systemData.Value, Optional.ToNullable(etag), target.Value, scope.Value, Optional.ToNullable(targetType), Optional.ToNullable(bytesToCapturePerPacket), Optional.ToNullable(totalBytesPerSession), Optional.ToNullable(timeLimitInSeconds), storageLocation.Value, Optional.ToList(filters), Optional.ToNullable(provisioningState));
         }
     }
 }
