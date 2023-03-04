@@ -347,10 +347,6 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
 
             private async Task TriggerExecute(EventData[] events, EventProcessorHostPartition context, CancellationToken cancellationToken)
             {
-                if (events.Length == 0)
-                {
-                    throw new Exception("received 0");
-                }
                 var triggerInput = new EventHubTriggerInput
                 {
                     Events = events,
@@ -370,16 +366,18 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
                 _storedEventsBackgroundTask = null;
             }
 
-            public async Task MonitorStoredEvents(CancellationToken cancellationToken)
+            private async Task MonitorStoredEvents(CancellationToken cancellationToken)
             {
                 try
                 {
                     _currentCycle = ValueStopwatch.StartNew();
-                    var timeElapsed = _currentCycle.GetElapsedTime();
-                    //var remainingTime = _maxWaitTime - timeElapsed;
-                    var remainingTime = RemainingTime(timeElapsed);
 
-                    await Task.Delay(remainingTime, cancellationToken).ConfigureAwait(false);
+                    while (_currentCycle.GetElapsedTime() < _maxWaitTime)
+                    {
+                        var remainingTime = RemainingTime(_currentCycle.GetElapsedTime());
+                        await Task.Delay(remainingTime, cancellationToken).ConfigureAwait(false);
+                    }
+
                     var triggerEvents = _storedEventsManager.ProcessWithStoredEvents(_mostRecentPartitionContext, timerTrigger: true, cancellationToken: cancellationToken);
 
                     if (triggerEvents.Length > 0)
@@ -410,6 +408,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
 
             private void UpdateCheckpointContext(EventData[] events, EventProcessorHostPartition context)
             {
+                _batchCounter++;
                 var isCheckpointingAfterInvocation = false;
 
                 if (events != null && events.Length > 0)
@@ -421,7 +420,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
                     else
                     {
                         // only checkpoint every N batches
-                        if (_batchCounter + 1 >= _batchCheckpointFrequency)
+                        if (_batchCounter >= _batchCheckpointFrequency)
                         {
                             isCheckpointingAfterInvocation = true;
                         }
@@ -433,8 +432,6 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
 
             private async Task CheckpointAsync(EventData checkpointEvent, EventProcessorHostPartition context)
             {
-                _batchCounter++;
-
                 if (context.PartitionContext.IsCheckpointingAfterInvocation)
                 {
                     await context.CheckpointAsync(checkpointEvent).ConfigureAwait(false);
