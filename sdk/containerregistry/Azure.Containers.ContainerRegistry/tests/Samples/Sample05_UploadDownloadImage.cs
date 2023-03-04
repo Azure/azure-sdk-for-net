@@ -2,15 +2,17 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 using Azure.Containers.ContainerRegistry.Specialized;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
+using NUnit.Framework.Interfaces;
 
 namespace Azure.Containers.ContainerRegistry.Tests.Samples
 {
-    public partial class UploadOciImageSample : ContainerRegistrySamplesBase
+    public partial class UploadDownloadImageSample : ContainerRegistrySamplesBase
     {
         [Test]
         [AsyncOnly]
@@ -129,6 +131,94 @@ namespace Azure.Containers.ContainerRegistry.Tests.Samples
                 }
 
                 return digest;
+            }
+
+            #endregion
+        }
+
+        [Test]
+        [AsyncOnly]
+        public async Task UploadDockerManifestAsync()
+        {
+            Environment.SetEnvironmentVariable("REGISTRY_ENDPOINT", TestEnvironment.Endpoint);
+
+            // Get the service endpoint from the environment
+            Uri endpoint = new(Environment.GetEnvironmentVariable("REGISTRY_ENDPOINT"));
+
+            string repository = "library/hello-world";
+
+            // Create a new ContainerRegistryBlobClient
+            ContainerRegistryBlobClient client = new ContainerRegistryBlobClient(endpoint, repository, new DefaultAzureCredential(), new ContainerRegistryClientOptions()
+            {
+                Audience = ContainerRegistryAudience.AzureResourceManagerPublicCloud
+            });
+
+            #region Snippet:ContainerRegistry_Samples_UploadCustomManifestAsync
+
+            // Create a manifest file in the Docker v2 Manifest List format
+            var manifestList = new
+            {
+                schemaVersion = 2,
+                mediaType = ManifestMediaType.DockerManifestList.ToString(),
+                manifests = new[]
+                {
+                    new
+                    {
+                        digest = "sha256:f54a58bc1aac5ea1a25d796ae155dc228b3f0e11d046ae276b39c4bf2f13d8c4",
+                        mediaType = ManifestMediaType.DockerManifest.ToString(),
+                        platform = new {
+                            architecture = ArtifactArchitecture.Amd64.ToString(),
+                            os = ArtifactOperatingSystem.Linux.ToString()
+                        }
+                    }
+                }
+            };
+
+            // Finally, upload the manifest file
+            BinaryData content = BinaryData.FromObjectAsJson(manifestList);
+            await client.UploadManifestAsync(content, tag: "sample", ManifestMediaType.DockerManifestList);
+
+            #endregion
+        }
+
+        [Test]
+        [AsyncOnly]
+        public async Task DownloadCustomManifestAsync()
+        {
+            Environment.SetEnvironmentVariable("REGISTRY_ENDPOINT", TestEnvironment.Endpoint);
+
+            // Get the service endpoint from the environment
+            Uri endpoint = new(Environment.GetEnvironmentVariable("REGISTRY_ENDPOINT"));
+
+            string repository = "library/hello-world";
+            string path = Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "custom-manifest");
+            Directory.CreateDirectory(path);
+
+            // Create a new ContainerRegistryBlobClient
+            ContainerRegistryBlobClient client = new ContainerRegistryBlobClient(endpoint, repository, new DefaultAzureCredential(), new ContainerRegistryClientOptions()
+            {
+                Audience = ContainerRegistryAudience.AzureResourceManagerPublicCloud
+            });
+
+            #region Snippet:ContainerRegistry_Samples_DownloadCustomManifestAsync
+
+            // Pass multiple media types if the media type of the manifest to download is unknown
+            List<ManifestMediaType> mediaTypes = new() {
+                "application/vnd.docker.distribution.manifest.list.v2+json",
+                "application/vnd.oci.image.index.v1+json" };
+
+            DownloadManifestResult result = await client.DownloadManifestAsync("sample", mediaTypes);
+
+            switch (result.MediaType)
+            {
+                case "application/vnd.docker.distribution.manifest.list.v2+json":
+                    Console.WriteLine("Received Docker manifest list.");
+                    break;
+                case "application/vnd.oci.image.index.v1+json":
+                    Console.WriteLine("Received OCI index.");
+                    break;
+                default:
+                    throw new InvalidOperationException("Unexpected manifest media type.");
             }
 
             #endregion

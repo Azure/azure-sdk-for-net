@@ -1,10 +1,10 @@
-# Azure.Containers.ContainerRegistry Samples - Upload an OCI Image
+# Azure.Containers.ContainerRegistry Samples - Upload and Download Images
 
-The following sample illustrates how to upload an OCI Image to an Azure Container Registry instance.
+The following sample illustrates how to upload and download OCI and Docker Images to an Azure Container Registry instance.
 
 ## Overview
 
-An OCI image consists of a manifest file, config file, and one or more layer files.  The following samples illustrate how to upload and download these files to effectively "push" and "pull" the images. For more details regarding the OCI image format, please see the [OCI Image Format Specification](https://github.com/opencontainers/image-spec/blob/main/spec.md).
+An image consists of a manifest file, config file, and one or more layer files.  The following samples illustrate how to upload and download these files to effectively "push" and "pull" the images. For more details regarding image formats, please see the [OCI Image Format](https://github.com/opencontainers/image-spec/blob/main/spec.md) and [Docker Registry API](https://docs.docker.com/registry/spec/api/#pulling-an-image) docs.
 
 ## Create Client
 
@@ -24,9 +24,10 @@ ContainerRegistryBlobClient client = new ContainerRegistryBlobClient(endpoint, r
 });
 ```
 
-## Upload Image
+## Upload an OCI Image
 
-To upload an image, upload its config file, layers, and manifest.  In this sample, the manifest is updated with information about each file associated with the image, and then uploaded as a final step.
+To upload an OCI image, upload its config file, layers, and manifest.
+In this sample, the manifest is updated with information about each file associated with the image, and then uploaded as a final step.
 
 ```C# Snippet:ContainerRegistry_Samples_UploadOciImageAsync
 // Create a manifest to list files in this image
@@ -60,9 +61,10 @@ manifest.Layers.Add(new OciBlobDescriptor()
 await client.UploadManifestAsync(manifest, tag);
 ```
 
-## Download Image
+## Download an OCI Image
 
-To download an image, first download its manifest.  The manifest describes the files that need to be downloaded to pull the full image.
+To download an OCI image, first download its manifest.
+The manifest describes the files that will need to be downloaded to pull the full image.
 
 ```C# Snippet:ContainerRegistry_Samples_DownloadOciImageAsync
 // Download the manifest to obtain the list of files in the image
@@ -105,3 +107,9 @@ static string TrimSha(string digest)
     return digest;
 }
 ```
+
+## Upload a custom manifest
+
+
+
+## Download a custom manifest
