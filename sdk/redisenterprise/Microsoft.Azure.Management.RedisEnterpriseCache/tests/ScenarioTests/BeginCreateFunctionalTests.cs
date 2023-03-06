@@ -66,7 +66,7 @@ namespace AzureRedisEnterpriseCache.Tests
                                             parameters: new Database
                                             {
                                                 ClientProtocol = Protocol.Encrypted,
-                                                ClusteringPolicy = ClusteringPolicy.OSSCluster,
+                                                ClusteringPolicy = ClusteringPolicy.EnterpriseCluster,
                                                 EvictionPolicy = EvictionPolicy.NoEviction,
                                                 Persistence = new Persistence()
                                                 {
@@ -97,7 +97,7 @@ namespace AzureRedisEnterpriseCache.Tests
                 Assert.Equal("Microsoft.Cache/redisEnterprise/databases", databaseResponse.Type);
                 Assert.Equal(ResourceState.Running, databaseResponse.ResourceState, ignoreCase: true);
                 Assert.Equal(Protocol.Encrypted, databaseResponse.ClientProtocol);
-                Assert.Equal(ClusteringPolicy.OSSCluster, databaseResponse.ClusteringPolicy);
+                Assert.Equal(ClusteringPolicy.EnterpriseCluster, databaseResponse.ClusteringPolicy);
                 Assert.Equal(EvictionPolicy.NoEviction, databaseResponse.EvictionPolicy);
                 Assert.Equal(3, databaseResponse.Modules.Count);
 

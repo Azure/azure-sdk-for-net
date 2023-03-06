@@ -35,7 +35,7 @@ namespace Microsoft.Azure.Management.RedisEnterprise
       public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/main/specification/redisenterprise/resource-manager/readme.md --csharp --version=2.0.4421 --reflect-api-versions --csharp-sdks-folder=C:\\Users\\revanthballa\\Desktop\\Projects\\dotnet-sdk\\track1\\azure-sdk-for-net\\sdk";
       public static readonly String GithubForkName = "Azure";
       public static readonly String GithubBranchName = "main";
-      public static readonly String GithubCommidId = "37f79023301bddd4f0f206665d279cbb861771e8";
+      public static readonly String GithubCommidId = "241e964afe675a7be98aa6a2e171a3c5f830816c";
       public static readonly String CodeGenerationErrors = "";
       public static readonly String GithubRepoName = "azure-rest-api-specs";
       // END: Code Generation Metadata Section
