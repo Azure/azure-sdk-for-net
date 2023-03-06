@@ -1937,7 +1937,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/ee787b9b-a25f-4d20-86e9-45fcea5253dd/resourceGroups/sdk-test6704/providers/Microsoft.Search/searchServices/search1403/deleteQueryKey/4h4xdg4BZO2VviKaaKXTbpNZXtYBCmhfKuYQqFAfgnAzSeBzm1Mt?api-version=2022-09-01",
+      "RequestUri": "https://management.azure.com/subscriptions/ee787b9b-a25f-4d20-86e9-45fcea5253dd/resourceGroups/sdk-test6704/providers/Microsoft.Search/searchServices/search1403/deleteQueryKey/Sanitized?api-version=2022-09-01",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Accept": "application/json",
