@@ -6,9 +6,13 @@
 
 ### Breaking Changes
 
+- Service version "7.4-preview.1" is not supported.
+
 ### Bugs Fixed
 
 ### Other Changes
+
+- The default service version is now "7.4".
 
 ## 4.3.0-beta.1 (2022-11-09)
 

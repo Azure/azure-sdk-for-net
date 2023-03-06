@@ -23,6 +23,7 @@ namespace Azure.ResourceManager.Hci
         /// <param name="location"> The location. </param>
         public HciClusterData(AzureLocation location) : base(location)
         {
+            UserAssignedIdentities = new ChangeTrackingDictionary<string, UserAssignedIdentity>();
         }
 
         /// <summary> Initializes a new instance of HciClusterData. </summary>
@@ -40,6 +41,7 @@ namespace Azure.ResourceManager.Hci
         /// <param name="aadTenantId"> Tenant id of cluster AAD identity. </param>
         /// <param name="aadApplicationObjectId"> Object id of cluster AAD identity. </param>
         /// <param name="aadServicePrincipalObjectId"> Id of cluster identity service principal. </param>
+        /// <param name="softwareAssuranceProperties"> Software Assurance properties of the cluster. </param>
         /// <param name="desiredProperties"> Desired properties of the cluster. </param>
         /// <param name="reportedProperties"> Properties reported by cluster agent. </param>
         /// <param name="trialDaysRemaining"> Number of days remaining in the trial period. </param>
@@ -48,7 +50,12 @@ namespace Azure.ResourceManager.Hci
         /// <param name="lastSyncTimestamp"> Most recent cluster sync timestamp. </param>
         /// <param name="lastBillingTimestamp"> Most recent billing meter timestamp. </param>
         /// <param name="serviceEndpoint"> Region specific DataPath Endpoint of the cluster. </param>
-        internal HciClusterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, HciProvisioningState? provisioningState, HciClusterStatus? status, Guid? cloudId, string cloudManagementEndpoint, Guid? aadClientId, Guid? aadTenantId, Guid? aadApplicationObjectId, Guid? aadServicePrincipalObjectId, HciClusterDesiredProperties desiredProperties, HciClusterReportedProperties reportedProperties, float? trialDaysRemaining, string billingModel, DateTimeOffset? registrationTimestamp, DateTimeOffset? lastSyncTimestamp, DateTimeOffset? lastBillingTimestamp, string serviceEndpoint) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="resourceProviderObjectId"> Object id of RP Service Principal. </param>
+        /// <param name="principalId"> The service principal ID of the system assigned identity. This property will only be provided for a system assigned identity. </param>
+        /// <param name="tenantId"> The tenant ID of the system assigned identity. This property will only be provided for a system assigned identity. </param>
+        /// <param name="typeIdentityType"> Type of managed service identity (where both SystemAssigned and UserAssigned types are allowed). </param>
+        /// <param name="userAssignedIdentities"> The set of user assigned identities associated with the resource. The userAssignedIdentities dictionary keys will be ARM resource ids in the form: &apos;/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}. The dictionary values can be empty objects ({}) in requests. </param>
+        internal HciClusterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, HciProvisioningState? provisioningState, HciClusterStatus? status, Guid? cloudId, string cloudManagementEndpoint, Guid? aadClientId, Guid? aadTenantId, Guid? aadApplicationObjectId, Guid? aadServicePrincipalObjectId, SoftwareAssuranceProperties softwareAssuranceProperties, HciClusterDesiredProperties desiredProperties, HciClusterReportedProperties reportedProperties, float? trialDaysRemaining, string billingModel, DateTimeOffset? registrationTimestamp, DateTimeOffset? lastSyncTimestamp, DateTimeOffset? lastBillingTimestamp, string serviceEndpoint, string resourceProviderObjectId, Guid? principalId, Guid? tenantId, HciManagedServiceIdentityType? typeIdentityType, IDictionary<string, UserAssignedIdentity> userAssignedIdentities) : base(id, name, resourceType, systemData, tags, location)
         {
             ProvisioningState = provisioningState;
             Status = status;
@@ -58,6 +65,7 @@ namespace Azure.ResourceManager.Hci
             AadTenantId = aadTenantId;
             AadApplicationObjectId = aadApplicationObjectId;
             AadServicePrincipalObjectId = aadServicePrincipalObjectId;
+            SoftwareAssuranceProperties = softwareAssuranceProperties;
             DesiredProperties = desiredProperties;
             ReportedProperties = reportedProperties;
             TrialDaysRemaining = trialDaysRemaining;
@@ -66,6 +74,11 @@ namespace Azure.ResourceManager.Hci
             LastSyncTimestamp = lastSyncTimestamp;
             LastBillingTimestamp = lastBillingTimestamp;
             ServiceEndpoint = serviceEndpoint;
+            ResourceProviderObjectId = resourceProviderObjectId;
+            PrincipalId = principalId;
+            TenantId = tenantId;
+            TypeIdentityType = typeIdentityType;
+            UserAssignedIdentities = userAssignedIdentities;
         }
 
         /// <summary> Provisioning state. </summary>
@@ -84,6 +97,8 @@ namespace Azure.ResourceManager.Hci
         public Guid? AadApplicationObjectId { get; set; }
         /// <summary> Id of cluster identity service principal. </summary>
         public Guid? AadServicePrincipalObjectId { get; set; }
+        /// <summary> Software Assurance properties of the cluster. </summary>
+        public SoftwareAssuranceProperties SoftwareAssuranceProperties { get; set; }
         /// <summary> Desired properties of the cluster. </summary>
         public HciClusterDesiredProperties DesiredProperties { get; set; }
         /// <summary> Properties reported by cluster agent. </summary>
@@ -100,5 +115,15 @@ namespace Azure.ResourceManager.Hci
         public DateTimeOffset? LastBillingTimestamp { get; }
         /// <summary> Region specific DataPath Endpoint of the cluster. </summary>
         public string ServiceEndpoint { get; }
+        /// <summary> Object id of RP Service Principal. </summary>
+        public string ResourceProviderObjectId { get; }
+        /// <summary> The service principal ID of the system assigned identity. This property will only be provided for a system assigned identity. </summary>
+        public Guid? PrincipalId { get; }
+        /// <summary> The tenant ID of the system assigned identity. This property will only be provided for a system assigned identity. </summary>
+        public Guid? TenantId { get; }
+        /// <summary> Type of managed service identity (where both SystemAssigned and UserAssigned types are allowed). </summary>
+        public HciManagedServiceIdentityType? TypeIdentityType { get; set; }
+        /// <summary> The set of user assigned identities associated with the resource. The userAssignedIdentities dictionary keys will be ARM resource ids in the form: &apos;/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}. The dictionary values can be empty objects ({}) in requests. </summary>
+        public IDictionary<string, UserAssignedIdentity> UserAssignedIdentities { get; }
     }
 }

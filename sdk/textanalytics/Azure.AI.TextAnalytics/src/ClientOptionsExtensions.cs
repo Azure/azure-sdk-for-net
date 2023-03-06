@@ -16,6 +16,7 @@ namespace Azure.AI.TextAnalytics
             loggedHeaderNames.Add("apim-request-id");
             loggedHeaderNames.Add("Strict-Transport-Security");
             loggedHeaderNames.Add("x-content-type-options");
+            loggedHeaderNames.Add("warn-text");
 
             clientOptions.Diagnostics.LoggedQueryParameters.Add("jobId");
             clientOptions.Diagnostics.LoggedQueryParameters.Add("$top");

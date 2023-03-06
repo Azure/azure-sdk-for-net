@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Communication.Email.Models;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -18,7 +17,7 @@ namespace Azure.Communication.Email
     internal partial class EmailRestClient
     {
         private readonly HttpPipeline _pipeline;
-        private readonly string _endpoint;
+        private readonly Uri _endpoint;
         private readonly string _apiVersion;
 
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
@@ -30,7 +29,7 @@ namespace Azure.Communication.Email
         /// <param name="endpoint"> The communication resource, for example https://my-resource.communication.azure.com. </param>
         /// <param name="apiVersion"> Api Version. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="clientDiagnostics"/>, <paramref name="pipeline"/>, <paramref name="endpoint"/> or <paramref name="apiVersion"/> is null. </exception>
-        public EmailRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint, string apiVersion = "2021-10-01-preview")
+        public EmailRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion = "2023-01-15-preview")
         {
             ClientDiagnostics = clientDiagnostics ?? throw new ArgumentNullException(nameof(clientDiagnostics));
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
@@ -38,43 +37,42 @@ namespace Azure.Communication.Email
             _apiVersion = apiVersion ?? throw new ArgumentNullException(nameof(apiVersion));
         }
 
-        internal HttpMessage CreateGetSendStatusRequest(string messageId)
+        internal HttpMessage CreateGetSendResultRequest(string operationId)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_endpoint, false);
-            uri.AppendPath("/emails/", false);
-            uri.AppendPath(messageId, true);
-            uri.AppendPath("/status", false);
+            uri.Reset(_endpoint);
+            uri.AppendPath("/emails/operations/", false);
+            uri.AppendPath(operationId, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
         }
 
-        /// <summary> Gets the status of a message sent previously. </summary>
-        /// <param name="messageId"> System generated message id (GUID) returned from a previous call to send email. </param>
+        /// <summary> Gets the status of the email send operation. </summary>
+        /// <param name="operationId"> ID of the long running operation (GUID) returned from a previous call to send email. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="messageId"/> is null. </exception>
-        public async Task<ResponseWithHeaders<SendStatusResult, EmailGetSendStatusHeaders>> GetSendStatusAsync(string messageId, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
+        public async Task<ResponseWithHeaders<EmailSendResult, EmailGetSendResultHeaders>> GetSendResultAsync(string operationId, CancellationToken cancellationToken = default)
         {
-            if (messageId == null)
+            if (operationId == null)
             {
-                throw new ArgumentNullException(nameof(messageId));
+                throw new ArgumentNullException(nameof(operationId));
             }
 
-            using var message = CreateGetSendStatusRequest(messageId);
+            using var message = CreateGetSendResultRequest(operationId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            var headers = new EmailGetSendStatusHeaders(message.Response);
+            var headers = new EmailGetSendResultHeaders(message.Response);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        SendStatusResult value = default;
+                        EmailSendResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = SendStatusResult.DeserializeSendStatusResult(document.RootElement);
+                        value = EmailSendResult.DeserializeEmailSendResult(document.RootElement);
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
@@ -82,27 +80,27 @@ namespace Azure.Communication.Email
             }
         }
 
-        /// <summary> Gets the status of a message sent previously. </summary>
-        /// <param name="messageId"> System generated message id (GUID) returned from a previous call to send email. </param>
+        /// <summary> Gets the status of the email send operation. </summary>
+        /// <param name="operationId"> ID of the long running operation (GUID) returned from a previous call to send email. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="messageId"/> is null. </exception>
-        public ResponseWithHeaders<SendStatusResult, EmailGetSendStatusHeaders> GetSendStatus(string messageId, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
+        public ResponseWithHeaders<EmailSendResult, EmailGetSendResultHeaders> GetSendResult(string operationId, CancellationToken cancellationToken = default)
         {
-            if (messageId == null)
+            if (operationId == null)
             {
-                throw new ArgumentNullException(nameof(messageId));
+                throw new ArgumentNullException(nameof(operationId));
             }
 
-            using var message = CreateGetSendStatusRequest(messageId);
+            using var message = CreateGetSendResultRequest(operationId);
             _pipeline.Send(message, cancellationToken);
-            var headers = new EmailGetSendStatusHeaders(message.Response);
+            var headers = new EmailGetSendResultHeaders(message.Response);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        SendStatusResult value = default;
+                        EmailSendResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = SendStatusResult.DeserializeSendStatusResult(document.RootElement);
+                        value = EmailSendResult.DeserializeEmailSendResult(document.RootElement);
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
@@ -110,89 +108,73 @@ namespace Azure.Communication.Email
             }
         }
 
-        internal HttpMessage CreateSendRequest(string repeatabilityRequestId, string repeatabilityFirstSent, EmailMessage emailMessage)
+        internal HttpMessage CreateSendRequest(EmailMessage message, Guid? operationId)
         {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
+            var message0 = _pipeline.CreateMessage();
+            var request = message0.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_endpoint, false);
+            uri.Reset(_endpoint);
             uri.AppendPath("/emails:send", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
-            request.Headers.Add("repeatability-request-id", repeatabilityRequestId);
-            request.Headers.Add("repeatability-first-sent", repeatabilityFirstSent);
+            if (operationId != null)
+            {
+                request.Headers.Add("Operation-Id", operationId.Value);
+            }
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(emailMessage);
+            content.JsonWriter.WriteObjectValue(message);
             request.Content = content;
-            return message;
+            return message0;
         }
 
         /// <summary> Queues an email message to be sent to one or more recipients. </summary>
-        /// <param name="repeatabilityRequestId"> If specified, the client directs that the request is repeatable; that is, that the client can make the request multiple times with the same Repeatability-Request-Id and get back an appropriate response without the server executing the request multiple times. The value of the Repeatability-Request-Id is an opaque string representing a client-generated, globally unique for all time, identifier for the request. It is recommended to use version 4 (random) UUIDs. </param>
-        /// <param name="repeatabilityFirstSent"> Must be sent by clients to specify that a request is repeatable. Repeatability-First-Sent is used to specify the date and time at which the request was first created in the IMF-fix date form of HTTP-date as defined in RFC7231. eg- Tue, 26 Mar 2019 16:06:51 GMT. </param>
-        /// <param name="emailMessage"> Message payload for sending an email. </param>
+        /// <param name="message"> Message payload for sending an email. </param>
+        /// <param name="operationId"> This is the ID used by the status monitor for this long running operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="repeatabilityRequestId"/>, <paramref name="repeatabilityFirstSent"/> or <paramref name="emailMessage"/> is null. </exception>
-        public async Task<ResponseWithHeaders<EmailSendHeaders>> SendAsync(string repeatabilityRequestId, string repeatabilityFirstSent, EmailMessage emailMessage, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="message"/> is null. </exception>
+        public async Task<ResponseWithHeaders<EmailSendHeaders>> SendAsync(EmailMessage message, Guid? operationId = null, CancellationToken cancellationToken = default)
         {
-            if (repeatabilityRequestId == null)
+            if (message == null)
             {
-                throw new ArgumentNullException(nameof(repeatabilityRequestId));
-            }
-            if (repeatabilityFirstSent == null)
-            {
-                throw new ArgumentNullException(nameof(repeatabilityFirstSent));
-            }
-            if (emailMessage == null)
-            {
-                throw new ArgumentNullException(nameof(emailMessage));
+                throw new ArgumentNullException(nameof(message));
             }
 
-            using var message = CreateSendRequest(repeatabilityRequestId, repeatabilityFirstSent, emailMessage);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            var headers = new EmailSendHeaders(message.Response);
-            switch (message.Response.Status)
+            using var message0 = CreateSendRequest(message, operationId);
+            await _pipeline.SendAsync(message0, cancellationToken).ConfigureAwait(false);
+            var headers = new EmailSendHeaders(message0.Response);
+            switch (message0.Response.Status)
             {
                 case 202:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
+                    return ResponseWithHeaders.FromValue(headers, message0.Response);
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message0.Response).ConfigureAwait(false);
             }
         }
 
         /// <summary> Queues an email message to be sent to one or more recipients. </summary>
-        /// <param name="repeatabilityRequestId"> If specified, the client directs that the request is repeatable; that is, that the client can make the request multiple times with the same Repeatability-Request-Id and get back an appropriate response without the server executing the request multiple times. The value of the Repeatability-Request-Id is an opaque string representing a client-generated, globally unique for all time, identifier for the request. It is recommended to use version 4 (random) UUIDs. </param>
-        /// <param name="repeatabilityFirstSent"> Must be sent by clients to specify that a request is repeatable. Repeatability-First-Sent is used to specify the date and time at which the request was first created in the IMF-fix date form of HTTP-date as defined in RFC7231. eg- Tue, 26 Mar 2019 16:06:51 GMT. </param>
-        /// <param name="emailMessage"> Message payload for sending an email. </param>
+        /// <param name="message"> Message payload for sending an email. </param>
+        /// <param name="operationId"> This is the ID used by the status monitor for this long running operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="repeatabilityRequestId"/>, <paramref name="repeatabilityFirstSent"/> or <paramref name="emailMessage"/> is null. </exception>
-        public ResponseWithHeaders<EmailSendHeaders> Send(string repeatabilityRequestId, string repeatabilityFirstSent, EmailMessage emailMessage, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="message"/> is null. </exception>
+        public ResponseWithHeaders<EmailSendHeaders> Send(EmailMessage message, Guid? operationId = null, CancellationToken cancellationToken = default)
         {
-            if (repeatabilityRequestId == null)
+            if (message == null)
             {
-                throw new ArgumentNullException(nameof(repeatabilityRequestId));
-            }
-            if (repeatabilityFirstSent == null)
-            {
-                throw new ArgumentNullException(nameof(repeatabilityFirstSent));
-            }
-            if (emailMessage == null)
-            {
-                throw new ArgumentNullException(nameof(emailMessage));
+                throw new ArgumentNullException(nameof(message));
             }
 
-            using var message = CreateSendRequest(repeatabilityRequestId, repeatabilityFirstSent, emailMessage);
-            _pipeline.Send(message, cancellationToken);
-            var headers = new EmailSendHeaders(message.Response);
-            switch (message.Response.Status)
+            using var message0 = CreateSendRequest(message, operationId);
+            _pipeline.Send(message0, cancellationToken);
+            var headers = new EmailSendHeaders(message0.Response);
+            switch (message0.Response.Status)
             {
                 case 202:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
+                    return ResponseWithHeaders.FromValue(headers, message0.Response);
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message0.Response);
             }
         }
     }
