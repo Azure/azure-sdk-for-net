@@ -97,6 +97,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static OrcSink DeserializeOrcSink(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<StoreWriteSettings> storeSettings = default;
             Optional<OrcWriteSettings> formatSettings = default;
             string type = default;

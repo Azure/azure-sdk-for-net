@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.Dns.Models
 
         internal static DnsMXRecordInfo DeserializeDnsMXRecordInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> preference = default;
             Optional<string> exchange = default;
             foreach (var property in element.EnumerateObject())

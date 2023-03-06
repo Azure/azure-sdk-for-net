@@ -36,6 +36,10 @@ namespace Azure.ResourceManager.DevTestLabs.Models
 
         internal static DevTestLabEnvironmentDeployment DeserializeDevTestLabEnvironmentDeployment(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ResourceIdentifier> armTemplateId = default;
             Optional<IList<DevTestLabArmTemplateParameter>> parameters = default;
             foreach (var property in element.EnumerateObject())

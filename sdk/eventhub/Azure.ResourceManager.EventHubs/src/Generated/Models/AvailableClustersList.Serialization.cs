@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.EventHubs.Models
     {
         internal static AvailableClustersList DeserializeAvailableClustersList(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<AvailableCluster>> value = default;
             foreach (var property in element.EnumerateObject())
             {

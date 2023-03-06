@@ -56,6 +56,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static ManagedPrivateEndpoint DeserializeManagedPrivateEndpoint(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ConnectionStateProperties> connectionState = default;
             Optional<IList<string>> fqdns = default;
             Optional<string> groupId = default;

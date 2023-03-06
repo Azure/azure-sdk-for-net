@@ -36,6 +36,10 @@ namespace Azure.ResourceManager.DevCenter
 
         internal static EnvironmentTypeData DeserializeEnvironmentTypeData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IDictionary<string, string>> tags = default;
             ResourceIdentifier id = default;
             string name = default;

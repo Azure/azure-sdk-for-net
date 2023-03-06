@@ -17,6 +17,10 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     {
         internal static AcsChatParticipantAddedToThreadEventData DeserializeAcsChatParticipantAddedToThreadEventData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DateTimeOffset> time = default;
             Optional<CommunicationIdentifierModel> addedByCommunicationIdentifier = default;
             Optional<AcsChatThreadParticipantProperties> participantAdded = default;

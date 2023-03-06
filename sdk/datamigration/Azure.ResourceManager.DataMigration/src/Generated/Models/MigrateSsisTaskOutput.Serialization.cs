@@ -13,6 +13,10 @@ namespace Azure.ResourceManager.DataMigration.Models
     {
         internal static MigrateSsisTaskOutput DeserializeMigrateSsisTaskOutput(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             if (element.TryGetProperty("resultType", out JsonElement discriminator))
             {
                 switch (discriminator.GetString())

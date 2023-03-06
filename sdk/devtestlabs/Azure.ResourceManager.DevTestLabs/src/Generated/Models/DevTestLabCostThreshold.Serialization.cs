@@ -45,6 +45,10 @@ namespace Azure.ResourceManager.DevTestLabs.Models
 
         internal static DevTestLabCostThreshold DeserializeDevTestLabCostThreshold(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> thresholdId = default;
             Optional<PercentageCostThresholdProperties> percentageThreshold = default;
             Optional<DevTestLabCostThresholdStatus> displayOnChart = default;

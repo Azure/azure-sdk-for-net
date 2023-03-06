@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.DataMigration.Models
     {
         internal static ConnectToTargetSqlDBTaskOutput DeserializeConnectToTargetSqlDBTaskOutput(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> id = default;
             Optional<string> databases = default;
             Optional<string> targetServerVersion = default;
