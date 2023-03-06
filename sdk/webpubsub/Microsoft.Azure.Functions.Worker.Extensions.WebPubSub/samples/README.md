@@ -11,7 +11,8 @@ description: Samples for the Microsoft.Azure.Functions.Worker.Extensions.WebPubS
 
 # Azure Web PubSub isolated worker process client SDK samples
 
- - [Negotiate](./Sample1_Negotiate.md)
- - [SendMessage](./Sample2_SendMessage.md)
- - [EventNotification](./Sample3_EventNotification.md)
- - [Input Binding under `HttpTrigger`](./Sample4_HttpTriggerInputBinding.md)
+<!-- TODO: update to sdk main after first check-in -->
+ - [Negotiate](https://github.com/JialinXin/azure-sdk-for-net/blob/awps/isolated-func/sdk/webpubsub/Microsoft.Azure.Functions.Worker.Extensions.WebPubSub/samples/Sample1_Negotiate.md)
+ - [SendMessage](https://github.com/JialinXin/azure-sdk-for-net/blob/awps/isolated-func/sdk/webpubsub/Microsoft.Azure.Functions.Worker.Extensions.WebPubSub/samples/Sample2_SendMessage.md)
+ - [EventNotification](https://github.com/JialinXin/azure-sdk-for-net/blob/awps/isolated-func/sdk/webpubsub/Microsoft.Azure.Functions.Worker.Extensions.WebPubSub/samples/Sample3_EventNotification.md)
+ - [Input Binding under `HttpTrigger`](https://github.com/JialinXin/azure-sdk-for-net/blob/awps/isolated-func/sdk/webpubsub/Microsoft.Azure.Functions.Worker.Extensions.WebPubSub/samples/Sample4_HttpTriggerInputBinding.md)
