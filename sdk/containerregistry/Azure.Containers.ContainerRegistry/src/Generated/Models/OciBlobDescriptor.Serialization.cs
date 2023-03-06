@@ -22,10 +22,10 @@ namespace Azure.Containers.ContainerRegistry.Specialized
                 writer.WritePropertyName("mediaType"u8);
                 writer.WriteStringValue(MediaType);
             }
-            if (Optional.IsDefined(Size))
+            if (Optional.IsDefined(SizeInBytes))
             {
                 writer.WritePropertyName("size"u8);
-                writer.WriteNumberValue(Size.Value);
+                writer.WriteNumberValue(SizeInBytes.Value);
             }
             if (Optional.IsDefined(Digest))
             {

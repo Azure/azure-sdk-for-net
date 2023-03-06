@@ -13,8 +13,8 @@ using Azure.Core;
 
 namespace Azure.Containers.ContainerRegistry.Specialized
 {
-    [JsonConverter(typeof(OciManifestConverter))]
-    public partial class OciManifest : IUtf8JsonSerializable
+    [JsonConverter(typeof(OciImageManifestConverter))]
+    public partial class OciImageManifest : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -54,7 +54,7 @@ namespace Azure.Containers.ContainerRegistry.Specialized
             writer.WriteEndObject();
         }
 
-        internal static OciManifest DeserializeOciManifest(JsonElement element)
+        internal static OciImageManifest DeserializeOciImageManifest(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -112,19 +112,19 @@ namespace Azure.Containers.ContainerRegistry.Specialized
                     continue;
                 }
             }
-            return new OciManifest(config.Value, Optional.ToList(layers), annotations.Value, Optional.ToNullable(schemaVersion));
+            return new OciImageManifest(config.Value, Optional.ToList(layers), annotations.Value, Optional.ToNullable(schemaVersion));
         }
 
-        internal partial class OciManifestConverter : JsonConverter<OciManifest>
+        internal partial class OciImageManifestConverter : JsonConverter<OciImageManifest>
         {
-            public override void Write(Utf8JsonWriter writer, OciManifest model, JsonSerializerOptions options)
+            public override void Write(Utf8JsonWriter writer, OciImageManifest model, JsonSerializerOptions options)
             {
                 writer.WriteObjectValue(model);
             }
-            public override OciManifest Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            public override OciImageManifest Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);
-                return DeserializeOciManifest(document.RootElement);
+                return DeserializeOciImageManifest(document.RootElement);
             }
         }
     }

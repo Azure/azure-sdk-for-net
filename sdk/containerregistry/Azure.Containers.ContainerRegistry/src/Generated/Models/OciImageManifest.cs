@@ -11,15 +11,15 @@ using Azure.Core;
 namespace Azure.Containers.ContainerRegistry.Specialized
 {
     /// <summary> Returns the requested OCI Manifest file. </summary>
-    public partial class OciManifest
+    public partial class OciImageManifest
     {
 
-        /// <summary> Initializes a new instance of OciManifest. </summary>
+        /// <summary> Initializes a new instance of OciImageManifest. </summary>
         /// <param name="config"> V2 image config descriptor. </param>
         /// <param name="layers"> List of V2 image layer information. </param>
         /// <param name="annotations"> Additional information provided through arbitrary metadata. </param>
         /// <param name="schemaVersion"> Schema version. </param>
-        internal OciManifest(OciBlobDescriptor config, IList<OciBlobDescriptor> layers, OciAnnotations annotations, int? schemaVersion)
+        internal OciImageManifest(OciBlobDescriptor config, IList<OciBlobDescriptor> layers, OciAnnotations annotations, int? schemaVersion)
         {
             Config = config;
             Layers = layers;
