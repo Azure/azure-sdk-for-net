@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
     {
         internal static CertificateVerificationCodeResult DeserializeCertificateVerificationCodeResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ETag> etag = default;
             Optional<CertificateVerificationCodeProperties> properties = default;
             ResourceIdentifier id = default;

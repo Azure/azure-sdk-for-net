@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         internal static X509CertificateName DeserializeX509CertificateName(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<string> issuerCertificateThumbprint = default;
             foreach (var property in element.EnumerateObject())

@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     {
         internal static MdeOnboardingDataList DeserializeMdeOnboardingDataList(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<MdeOnboarding>> value = default;
             foreach (var property in element.EnumerateObject())
             {

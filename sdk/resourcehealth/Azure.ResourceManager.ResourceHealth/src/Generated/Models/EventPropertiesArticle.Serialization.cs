@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.ResourceHealth.Models
     {
         internal static EventPropertiesArticle DeserializeEventPropertiesArticle(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> articleContent = default;
             foreach (var property in element.EnumerateObject())
             {

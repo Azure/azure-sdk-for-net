@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.CustomerInsights.Models
     {
         internal static PredictionSystemGeneratedEntities DeserializePredictionSystemGeneratedEntities(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<string>> generatedInteractionTypes = default;
             Optional<IReadOnlyList<string>> generatedLinks = default;
             Optional<IReadOnlyDictionary<string, string>> generatedKpis = default;

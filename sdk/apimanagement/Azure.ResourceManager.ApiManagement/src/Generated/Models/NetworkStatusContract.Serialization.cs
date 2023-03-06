@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
     {
         internal static NetworkStatusContract DeserializeNetworkStatusContract(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IReadOnlyList<string> dnsServers = default;
             IReadOnlyList<ConnectivityStatusContract> connectivityStatus = default;
             foreach (var property in element.EnumerateObject())

@@ -14,6 +14,10 @@ namespace Azure.Maps.Routing.Models
     {
         internal static RouteOptimizedWaypoint DeserializeRouteOptimizedWaypoint(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> providedIndex = default;
             Optional<int> optimizedIndex = default;
             foreach (var property in element.EnumerateObject())

@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.CustomerInsights.Models
     {
         internal static RelationshipLinkListResult DeserializeRelationshipLinkListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<RelationshipLinkResourceFormatData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

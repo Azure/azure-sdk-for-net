@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal static VirtualNetworkPeeringListResult DeserializeVirtualNetworkPeeringListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<VirtualNetworkPeeringData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

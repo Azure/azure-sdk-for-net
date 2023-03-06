@@ -24,6 +24,10 @@ namespace Azure.ResourceManager.Cdn.Models
 
         internal static CdnCertificateSource DeserializeCdnCertificateSource(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             CdnCertificateSourceType typeName = default;
             CdnManagedCertificateType certificateType = default;
             foreach (var property in element.EnumerateObject())

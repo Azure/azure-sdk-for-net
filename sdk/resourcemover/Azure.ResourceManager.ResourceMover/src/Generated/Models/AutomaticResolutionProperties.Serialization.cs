@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.ResourceMover.Models
     {
         internal static AutomaticResolutionProperties DeserializeAutomaticResolutionProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ResourceIdentifier> moveResourceId = default;
             foreach (var property in element.EnumerateObject())
             {

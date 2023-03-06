@@ -38,6 +38,10 @@ namespace Azure.ResourceManager.EventGrid.Models
 
         internal static NumberInAdvancedFilter DeserializeNumberInAdvancedFilter(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<double>> values = default;
             AdvancedFilterOperatorType operatorType = default;
             Optional<string> key = default;

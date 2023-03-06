@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.AppService.Models
     {
         internal static AppServiceSkuResult DeserializeAppServiceSkuResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ResourceType> resourceType = default;
             Optional<IReadOnlyList<GlobalCsmSkuDescription>> skus = default;
             foreach (var property in element.EnumerateObject())

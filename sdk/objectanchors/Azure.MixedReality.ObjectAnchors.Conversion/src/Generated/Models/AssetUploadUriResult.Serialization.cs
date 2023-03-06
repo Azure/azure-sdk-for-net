@@ -14,6 +14,10 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
     {
         internal static AssetUploadUriResult DeserializeAssetUploadUriResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string inputAssetUri = default;
             foreach (var property in element.EnumerateObject())
             {

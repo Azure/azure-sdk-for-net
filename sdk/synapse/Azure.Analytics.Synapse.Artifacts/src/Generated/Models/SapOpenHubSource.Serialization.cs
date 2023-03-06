@@ -76,6 +76,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static SapOpenHubSource DeserializeSapOpenHubSource(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<object> excludeLastRequest = default;
             Optional<object> baseRequestId = default;
             Optional<object> customRfcReadTableFunctionModule = default;

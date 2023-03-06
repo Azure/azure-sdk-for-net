@@ -43,6 +43,10 @@ namespace Azure.ResourceManager.NotificationHubs.Models
 
         internal static NotificationHubMpnsCredential DeserializeNotificationHubMpnsCredential(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> mpnsCertificate = default;
             Optional<string> certificateKey = default;
             Optional<BinaryData> thumbprint = default;

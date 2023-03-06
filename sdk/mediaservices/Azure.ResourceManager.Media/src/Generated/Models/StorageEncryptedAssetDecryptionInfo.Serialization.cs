@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.Media.Models
     {
         internal static StorageEncryptedAssetDecryptionInfo DeserializeStorageEncryptedAssetDecryptionInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<byte[]> key = default;
             Optional<IReadOnlyList<MediaAssetFileEncryptionMetadata>> assetFileEncryptionMetadata = default;
             foreach (var property in element.EnumerateObject())

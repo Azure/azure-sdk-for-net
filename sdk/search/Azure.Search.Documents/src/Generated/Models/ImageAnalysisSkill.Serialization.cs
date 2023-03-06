@@ -84,6 +84,10 @@ namespace Azure.Search.Documents.Indexes.Models
 
         internal static ImageAnalysisSkill DeserializeImageAnalysisSkill(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ImageAnalysisSkillLanguage?> defaultLanguageCode = default;
             Optional<IList<VisualFeature>> visualFeatures = default;
             Optional<IList<ImageDetail>> details = default;

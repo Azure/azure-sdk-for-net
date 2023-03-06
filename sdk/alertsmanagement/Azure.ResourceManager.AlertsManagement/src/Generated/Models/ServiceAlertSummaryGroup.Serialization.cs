@@ -46,6 +46,10 @@ namespace Azure.ResourceManager.AlertsManagement.Models
 
         internal static ServiceAlertSummaryGroup DeserializeServiceAlertSummaryGroup(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<long> total = default;
             Optional<long> smartGroupsCount = default;
             Optional<string> groupedby = default;

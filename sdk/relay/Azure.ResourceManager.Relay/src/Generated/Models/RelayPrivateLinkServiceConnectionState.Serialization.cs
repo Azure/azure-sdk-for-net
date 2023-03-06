@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.Relay.Models
 
         internal static RelayPrivateLinkServiceConnectionState DeserializeRelayPrivateLinkServiceConnectionState(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<RelayPrivateLinkConnectionStatus> status = default;
             Optional<string> description = default;
             foreach (var property in element.EnumerateObject())

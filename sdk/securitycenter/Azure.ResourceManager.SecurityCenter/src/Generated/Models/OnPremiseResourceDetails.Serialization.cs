@@ -31,6 +31,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         internal static OnPremiseResourceDetails DeserializeOnPremiseResourceDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             if (element.TryGetProperty("source", out JsonElement discriminator))
             {
                 switch (discriminator.GetString())

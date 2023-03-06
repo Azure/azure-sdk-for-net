@@ -63,6 +63,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static TableVerticalLimitSettings DeserializeTableVerticalLimitSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> enableEarlyTermination = default;
             Optional<double?> exitScore = default;
             Optional<int> maxConcurrentTrials = default;

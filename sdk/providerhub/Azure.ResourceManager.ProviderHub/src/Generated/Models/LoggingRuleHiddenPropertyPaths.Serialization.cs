@@ -41,6 +41,10 @@ namespace Azure.ResourceManager.ProviderHub.Models
 
         internal static LoggingRuleHiddenPropertyPaths DeserializeLoggingRuleHiddenPropertyPaths(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<string>> hiddenPathsOnRequest = default;
             Optional<IList<string>> hiddenPathsOnResponse = default;
             foreach (var property in element.EnumerateObject())

@@ -42,6 +42,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         internal static LongTermRetentionPolicy DeserializeLongTermRetentionPolicy(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DailyRetentionSchedule> dailySchedule = default;
             Optional<WeeklyRetentionSchedule> weeklySchedule = default;
             Optional<MonthlyRetentionSchedule> monthlySchedule = default;

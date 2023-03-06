@@ -24,6 +24,10 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
 
         internal static DataBoxEdgeMetricDimension DeserializeDataBoxEdgeMetricDimension(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string sourceType = default;
             string sourceName = default;
             foreach (var property in element.EnumerateObject())

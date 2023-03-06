@@ -34,6 +34,10 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static WebAppBackupSchedule DeserializeWebAppBackupSchedule(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             int frequencyInterval = default;
             BackupFrequencyUnit frequencyUnit = default;
             bool keepAtLeastOneBackup = default;

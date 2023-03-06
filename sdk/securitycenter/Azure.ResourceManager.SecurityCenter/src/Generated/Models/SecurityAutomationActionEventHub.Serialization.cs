@@ -32,6 +32,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         internal static SecurityAutomationActionEventHub DeserializeSecurityAutomationActionEventHub(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ResourceIdentifier> eventHubResourceId = default;
             Optional<string> sasPolicyName = default;
             Optional<string> connectionString = default;

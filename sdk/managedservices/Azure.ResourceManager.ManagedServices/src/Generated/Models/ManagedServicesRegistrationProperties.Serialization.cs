@@ -51,6 +51,10 @@ namespace Azure.ResourceManager.ManagedServices.Models
 
         internal static ManagedServicesRegistrationProperties DeserializeManagedServicesRegistrationProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> description = default;
             IList<ManagedServicesAuthorization> authorizations = default;
             Optional<IList<ManagedServicesEligibleAuthorization>> eligibleAuthorizations = default;

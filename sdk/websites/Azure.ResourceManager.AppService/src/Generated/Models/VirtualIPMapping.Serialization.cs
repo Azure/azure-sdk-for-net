@@ -45,6 +45,10 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static VirtualIPMapping DeserializeVirtualIPMapping(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> virtualIP = default;
             Optional<int> internalHttpPort = default;
             Optional<int> internalHttpsPort = default;

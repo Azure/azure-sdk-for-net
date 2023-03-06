@@ -48,6 +48,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         internal static GenericRecoveryPoint DeserializeGenericRecoveryPoint(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> friendlyName = default;
             Optional<string> recoveryPointType = default;
             Optional<DateTimeOffset> recoveryPointTime = default;

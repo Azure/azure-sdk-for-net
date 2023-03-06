@@ -60,6 +60,10 @@ namespace Azure.ResourceManager.DataBoxEdge
 
         internal static DataBoxEdgeDeviceData DeserializeDataBoxEdgeDeviceData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DataBoxEdgeSku> sku = default;
             Optional<ETag> etag = default;
             Optional<ManagedServiceIdentity> identity = default;

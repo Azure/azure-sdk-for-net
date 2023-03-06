@@ -430,6 +430,11 @@ namespace Azure.ResourceManager.DataFactory
                 foreach (var item in parameterValueSpecification)
                 {
                     content.JsonWriter.WritePropertyName(item.Key);
+                    if (item.Value == null)
+                    {
+                        content.JsonWriter.WriteNullValue();
+                        continue;
+                    }
 #if NET6_0_OR_GREATER
 				content.JsonWriter.WriteRawValue(item.Value);
 #else

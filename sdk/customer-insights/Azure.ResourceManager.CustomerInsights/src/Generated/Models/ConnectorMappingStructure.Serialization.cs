@@ -34,6 +34,10 @@ namespace Azure.ResourceManager.CustomerInsights.Models
 
         internal static ConnectorMappingStructure DeserializeConnectorMappingStructure(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string propertyName = default;
             string columnName = default;
             Optional<string> customFormatSpecifier = default;

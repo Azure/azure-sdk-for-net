@@ -22,6 +22,10 @@ namespace Azure.Communication.MediaComposition
 
         internal static UnknownMediaOutput DeserializeUnknownMediaOutput(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             MediaOutputType kind = "Unknown";
             foreach (var property in element.EnumerateObject())
             {

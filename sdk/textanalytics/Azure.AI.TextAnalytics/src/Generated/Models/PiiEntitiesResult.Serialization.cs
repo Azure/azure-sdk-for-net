@@ -43,6 +43,10 @@ namespace Azure.AI.TextAnalytics
 
         internal static PiiEntitiesResult DeserializePiiEntitiesResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IList<PIIResultWithDetectedLanguage> documents = default;
             IList<InputError> errors = default;
             Optional<TextDocumentBatchStatistics> statistics = default;

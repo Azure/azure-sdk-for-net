@@ -14,6 +14,10 @@ namespace Azure.Maps.Search.Models
     {
         internal static FacilityEntryPoint DeserializeFacilityEntryPoint(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<EntryPointType> type = default;
             Optional<LatLongPairAbbreviated> position = default;
             foreach (var property in element.EnumerateObject())

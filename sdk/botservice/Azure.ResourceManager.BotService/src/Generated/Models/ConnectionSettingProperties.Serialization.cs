@@ -71,6 +71,10 @@ namespace Azure.ResourceManager.BotService.Models
 
         internal static ConnectionSettingProperties DeserializeConnectionSettingProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> id = default;
             Optional<string> name = default;
             Optional<string> clientId = default;

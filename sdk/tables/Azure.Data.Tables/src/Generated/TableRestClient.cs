@@ -599,7 +599,14 @@ namespace Azure.Data.Tables
                         Dictionary<string, object> dictionary = new Dictionary<string, object>();
                         foreach (var property in document.RootElement.EnumerateObject())
                         {
-                            dictionary.Add(property.Name, property.Value.GetObject());
+                            if (property.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                dictionary.Add(property.Name, null);
+                            }
+                            else
+                            {
+                                dictionary.Add(property.Name, property.Value.GetObject());
+                            }
                         }
                         value = dictionary;
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
@@ -644,7 +651,14 @@ namespace Azure.Data.Tables
                         Dictionary<string, object> dictionary = new Dictionary<string, object>();
                         foreach (var property in document.RootElement.EnumerateObject())
                         {
-                            dictionary.Add(property.Name, property.Value.GetObject());
+                            if (property.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                dictionary.Add(property.Name, null);
+                            }
+                            else
+                            {
+                                dictionary.Add(property.Name, property.Value.GetObject());
+                            }
                         }
                         value = dictionary;
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
@@ -729,6 +743,11 @@ namespace Azure.Data.Tables
                 foreach (var item in tableEntityProperties)
                 {
                     content.JsonWriter.WritePropertyName(item.Key);
+                    if (item.Value == null)
+                    {
+                        content.JsonWriter.WriteNullValue();
+                        continue;
+                    }
                     content.JsonWriter.WriteObjectValue(item.Value);
                 }
                 content.JsonWriter.WriteEndObject();
@@ -849,6 +868,11 @@ namespace Azure.Data.Tables
                 foreach (var item in tableEntityProperties)
                 {
                     content.JsonWriter.WritePropertyName(item.Key);
+                    if (item.Value == null)
+                    {
+                        content.JsonWriter.WriteNullValue();
+                        continue;
+                    }
                     content.JsonWriter.WriteObjectValue(item.Value);
                 }
                 content.JsonWriter.WriteEndObject();
@@ -1074,6 +1098,11 @@ namespace Azure.Data.Tables
                 foreach (var item in tableEntityProperties)
                 {
                     content.JsonWriter.WritePropertyName(item.Key);
+                    if (item.Value == null)
+                    {
+                        content.JsonWriter.WriteNullValue();
+                        continue;
+                    }
                     content.JsonWriter.WriteObjectValue(item.Value);
                 }
                 content.JsonWriter.WriteEndObject();
@@ -1109,7 +1138,14 @@ namespace Azure.Data.Tables
                         Dictionary<string, object> dictionary = new Dictionary<string, object>();
                         foreach (var property in document.RootElement.EnumerateObject())
                         {
-                            dictionary.Add(property.Name, property.Value.GetObject());
+                            if (property.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                dictionary.Add(property.Name, null);
+                            }
+                            else
+                            {
+                                dictionary.Add(property.Name, property.Value.GetObject());
+                            }
                         }
                         value = dictionary;
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
@@ -1148,7 +1184,14 @@ namespace Azure.Data.Tables
                         Dictionary<string, object> dictionary = new Dictionary<string, object>();
                         foreach (var property in document.RootElement.EnumerateObject())
                         {
-                            dictionary.Add(property.Name, property.Value.GetObject());
+                            if (property.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                dictionary.Add(property.Name, null);
+                            }
+                            else
+                            {
+                                dictionary.Add(property.Name, property.Value.GetObject());
+                            }
                         }
                         value = dictionary;
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);

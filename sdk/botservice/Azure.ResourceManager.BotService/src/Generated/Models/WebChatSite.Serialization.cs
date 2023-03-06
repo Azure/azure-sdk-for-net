@@ -93,6 +93,10 @@ namespace Azure.ResourceManager.BotService.Models
 
         internal static WebChatSite DeserializeWebChatSite(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> siteId = default;
             string siteName = default;
             Optional<string> key = default;

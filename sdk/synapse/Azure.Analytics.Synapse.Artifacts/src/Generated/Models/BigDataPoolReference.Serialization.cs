@@ -27,6 +27,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static BigDataPoolReference DeserializeBigDataPoolReference(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             BigDataPoolReferenceType type = default;
             string referenceName = default;
             foreach (var property in element.EnumerateObject())

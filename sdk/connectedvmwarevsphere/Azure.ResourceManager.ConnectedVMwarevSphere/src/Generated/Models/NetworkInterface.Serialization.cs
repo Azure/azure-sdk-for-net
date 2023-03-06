@@ -51,6 +51,10 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
 
         internal static NetworkInterface DeserializeNetworkInterface(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<string> label = default;
             Optional<IReadOnlyList<string>> ipAddresses = default;

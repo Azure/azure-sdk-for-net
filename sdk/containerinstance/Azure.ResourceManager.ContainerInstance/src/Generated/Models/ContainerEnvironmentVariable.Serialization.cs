@@ -32,6 +32,10 @@ namespace Azure.ResourceManager.ContainerInstance.Models
 
         internal static ContainerEnvironmentVariable DeserializeContainerEnvironmentVariable(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string name = default;
             Optional<string> value = default;
             Optional<string> secureValue = default;

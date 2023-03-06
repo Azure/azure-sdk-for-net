@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.BotService.Models
     {
         internal static QnAMakerEndpointKeysResponse DeserializeQnAMakerEndpointKeysResponse(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> primaryEndpointKey = default;
             Optional<string> secondaryEndpointKey = default;
             Optional<string> installedVersion = default;

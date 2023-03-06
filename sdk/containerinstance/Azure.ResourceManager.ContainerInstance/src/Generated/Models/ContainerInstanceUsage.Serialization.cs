@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.ContainerInstance.Models
     {
         internal static ContainerInstanceUsage DeserializeContainerInstanceUsage(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> id = default;
             Optional<string> unit = default;
             Optional<int> currentValue = default;

@@ -43,6 +43,10 @@ namespace Azure.ResourceManager.Logic.Models
 
         internal static X12EnvelopeOverride DeserializeX12EnvelopeOverride(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string targetNamespace = default;
             string protocolVersion = default;
             string messageId = default;

@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Storage.Models
     {
         internal static LegalHoldProperties DeserializeLegalHoldProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> hasLegalHold = default;
             Optional<IReadOnlyList<LegalHoldTag>> tags = default;
             Optional<ProtectedAppendWritesHistory> protectedAppendWritesHistory = default;

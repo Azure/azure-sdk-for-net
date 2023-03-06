@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.ResourceHealth.Models
     {
         internal static ImpactedServiceRegion DeserializeImpactedServiceRegion(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> impactedRegion = default;
             Optional<EventStatusValue> status = default;
             Optional<IReadOnlyList<string>> impactedSubscriptions = default;

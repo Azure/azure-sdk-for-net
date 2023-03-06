@@ -41,6 +41,10 @@ namespace Azure.ResourceManager.Media.Models
 
         internal static LiveEventTranscription DeserializeLiveEventTranscription(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> language = default;
             Optional<IList<LiveEventInputTrackSelection>> inputTrackSelection = default;
             Optional<LiveEventOutputTranscriptionTrack> outputTranscriptionTrack = default;

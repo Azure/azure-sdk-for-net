@@ -8,20 +8,14 @@ namespace Azure.Containers.ContainerRegistry.Specialized
     /// </summary>
     public class UploadBlobResult
     {
-        internal UploadBlobResult(string digest, long size)
+        internal UploadBlobResult(string digest)
         {
             Digest = digest;
-            Size = size;
         }
 
         /// <summary>
         /// The digest of the uploaded blob, calculated by the registry.
         /// </summary>
         public string Digest { get; }
-
-        /// <summary>
-        /// The size of the uploaded blob.
-        /// </summary>
-        public long Size { get; }
     }
 }

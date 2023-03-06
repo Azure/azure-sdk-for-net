@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal static PeerExpressRouteCircuitConnectionListResult DeserializePeerExpressRouteCircuitConnectionListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<PeerExpressRouteCircuitConnectionData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

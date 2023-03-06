@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     {
         internal static SecurityInsightsIPEntityGeoLocation DeserializeSecurityInsightsIPEntityGeoLocation(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> asn = default;
             Optional<string> city = default;
             Optional<string> countryCode = default;

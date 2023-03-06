@@ -22,6 +22,10 @@ namespace Azure.ResourceManager.EventGrid.Models
 
         internal static EventGridInputSchemaMapping DeserializeEventGridInputSchemaMapping(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             if (element.TryGetProperty("inputSchemaMappingType", out JsonElement discriminator))
             {
                 switch (discriminator.GetString())

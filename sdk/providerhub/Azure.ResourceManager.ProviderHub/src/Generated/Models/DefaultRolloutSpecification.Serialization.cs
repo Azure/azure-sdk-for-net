@@ -72,6 +72,10 @@ namespace Azure.ResourceManager.ProviderHub.Models
 
         internal static DefaultRolloutSpecification DeserializeDefaultRolloutSpecification(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DefaultRolloutSpecificationExpeditedRollout> expeditedRollout = default;
             Optional<DefaultRolloutSpecificationCanary> canary = default;
             Optional<DefaultRolloutSpecificationLowTraffic> lowTraffic = default;

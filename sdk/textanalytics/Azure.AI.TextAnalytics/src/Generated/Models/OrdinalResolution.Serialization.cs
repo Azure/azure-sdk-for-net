@@ -29,6 +29,10 @@ namespace Azure.AI.TextAnalytics
 
         internal static OrdinalResolution DeserializeOrdinalResolution(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string offset = default;
             RelativeTo relativeTo = default;
             string value = default;

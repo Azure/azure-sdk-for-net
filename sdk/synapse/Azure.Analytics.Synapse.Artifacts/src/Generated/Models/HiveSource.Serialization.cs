@@ -61,6 +61,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static HiveSource DeserializeHiveSource(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<object> query = default;
             Optional<object> queryTimeout = default;
             Optional<object> additionalColumns = default;

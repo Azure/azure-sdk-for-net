@@ -16,6 +16,10 @@ namespace Azure.Containers.ContainerRegistry
     {
         internal static ArtifactManifestProperties DeserializeArtifactManifestProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> registry = default;
             Optional<string> imageName = default;
             string digest = default;

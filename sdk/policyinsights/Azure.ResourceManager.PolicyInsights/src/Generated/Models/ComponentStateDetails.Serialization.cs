@@ -17,6 +17,10 @@ namespace Azure.ResourceManager.PolicyInsights.Models
     {
         internal static ComponentStateDetails DeserializeComponentStateDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DateTimeOffset> timestamp = default;
             Optional<string> complianceState = default;
             ResourceIdentifier id = default;

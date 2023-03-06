@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static LinuxPatchSettings DeserializeLinuxPatchSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<LinuxVmGuestPatchMode> patchMode = default;
             Optional<LinuxPatchAssessmentMode> assessmentMode = default;
             Optional<LinuxVmGuestPatchAutomaticByPlatformSettings> automaticByPlatformSettings = default;

@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.Sql
 
         internal static SqlServerVirtualNetworkRuleData DeserializeSqlServerVirtualNetworkRuleData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;

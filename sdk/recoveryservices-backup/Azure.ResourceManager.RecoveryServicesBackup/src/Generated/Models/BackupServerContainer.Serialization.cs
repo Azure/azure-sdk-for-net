@@ -93,6 +93,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         internal static BackupServerContainer DeserializeBackupServerContainer(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> canReRegister = default;
             Optional<string> containerId = default;
             Optional<long> protectedItemCount = default;

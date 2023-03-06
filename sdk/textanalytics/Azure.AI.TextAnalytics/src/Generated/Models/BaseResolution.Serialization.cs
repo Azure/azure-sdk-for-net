@@ -23,6 +23,10 @@ namespace Azure.AI.TextAnalytics
 
         internal static BaseResolution DeserializeBaseResolution(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             if (element.TryGetProperty("resolutionKind", out JsonElement discriminator))
             {
                 switch (discriminator.GetString())

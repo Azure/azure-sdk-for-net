@@ -16,6 +16,10 @@ namespace Azure.AI.OpenAI
     {
         internal static EmbeddingItem DeserializeEmbeddingItem(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IReadOnlyList<float> embedding = default;
             int index = default;
             foreach (var property in element.EnumerateObject())

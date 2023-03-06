@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.Kusto.Models
     {
         internal static KustoPrivateLinkResourceListResult DeserializeKustoPrivateLinkResourceListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<KustoPrivateLinkResourceData>> value = default;
             foreach (var property in element.EnumerateObject())
             {

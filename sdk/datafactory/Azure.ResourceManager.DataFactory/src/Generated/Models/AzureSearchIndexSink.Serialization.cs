@@ -92,6 +92,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static AzureSearchIndexSink DeserializeAzureSearchIndexSink(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<AzureSearchIndexWriteBehaviorType> writeBehavior = default;
             string type = default;
             Optional<BinaryData> writeBatchSize = default;

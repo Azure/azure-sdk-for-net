@@ -31,6 +31,10 @@ namespace Azure.ResourceManager.DataShare.Models
 
         internal static KustoTableDataSet DeserializeKustoTableDataSet(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             DataSetKind kind = default;
             ResourceIdentifier id = default;
             string name = default;

@@ -16,6 +16,10 @@ namespace Azure.Communication.CallingServer
     {
         internal static ParticipantsUpdatedInternal DeserializeParticipantsUpdatedInternal(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> eventSource = default;
             Optional<IReadOnlyList<CommunicationIdentifierModel>> participants = default;
             Optional<string> version = default;

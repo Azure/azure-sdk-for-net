@@ -40,6 +40,10 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
 
         internal static SpatialAnalysisPersonCountEvent DeserializeSpatialAnalysisPersonCountEvent(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<SpatialAnalysisPersonCountEventTrigger> trigger = default;
             Optional<string> outputFrequency = default;
             Optional<string> threshold = default;

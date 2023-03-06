@@ -66,6 +66,10 @@ namespace Azure.ResourceManager.Batch
 
         internal static BatchAccountData DeserializeBatchAccountData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ManagedServiceIdentity> identity = default;
             Optional<AzureLocation> location = default;
             Optional<IDictionary<string, string>> tags = default;

@@ -76,6 +76,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static AzureTableSink DeserializeAzureTableSink(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<object> azureTableDefaultPartitionKeyValue = default;
             Optional<object> azureTablePartitionKeyName = default;
             Optional<object> azureTableRowKeyName = default;

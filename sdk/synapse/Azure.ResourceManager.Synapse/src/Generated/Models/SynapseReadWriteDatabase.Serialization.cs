@@ -42,6 +42,10 @@ namespace Azure.ResourceManager.Synapse.Models
 
         internal static SynapseReadWriteDatabase DeserializeSynapseReadWriteDatabase(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<AzureLocation> location = default;
             SynapseKind kind = default;
             ResourceIdentifier id = default;

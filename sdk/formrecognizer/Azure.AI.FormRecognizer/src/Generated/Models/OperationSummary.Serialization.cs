@@ -16,6 +16,10 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
     {
         internal static OperationSummary DeserializeOperationSummary(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string operationId = default;
             DocumentOperationStatus status = default;
             Optional<int> percentCompleted = default;

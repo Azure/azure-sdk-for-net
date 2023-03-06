@@ -24,6 +24,10 @@ namespace Azure.ResourceManager.StorageCache.Models
 
         internal static StorageCacheActiveDirectorySettingsCredentials DeserializeStorageCacheActiveDirectorySettingsCredentials(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string username = default;
             string password = default;
             foreach (var property in element.EnumerateObject())

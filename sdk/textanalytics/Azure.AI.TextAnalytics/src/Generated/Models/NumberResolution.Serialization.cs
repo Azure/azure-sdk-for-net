@@ -27,6 +27,10 @@ namespace Azure.AI.TextAnalytics
 
         internal static NumberResolution DeserializeNumberResolution(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             NumberKind numberKind = default;
             double value = default;
             ResolutionKind resolutionKind = default;

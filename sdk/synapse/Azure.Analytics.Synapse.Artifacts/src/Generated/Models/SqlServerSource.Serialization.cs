@@ -92,6 +92,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static SqlServerSource DeserializeSqlServerSource(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<object> sqlReaderQuery = default;
             Optional<object> sqlReaderStoredProcedureName = default;
             Optional<IDictionary<string, StoredProcedureParameter>> storedProcedureParameters = default;

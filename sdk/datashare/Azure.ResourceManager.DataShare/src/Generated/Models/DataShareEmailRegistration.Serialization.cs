@@ -26,6 +26,10 @@ namespace Azure.ResourceManager.DataShare.Models
 
         internal static DataShareEmailRegistration DeserializeDataShareEmailRegistration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> activationCode = default;
             Optional<DateTimeOffset> activationExpirationDate = default;
             Optional<string> email = default;

@@ -22,10 +22,10 @@ namespace Azure.Containers.ContainerRegistry.Specialized
                 writer.WritePropertyName("mediaType"u8);
                 writer.WriteStringValue(MediaType);
             }
-            if (Optional.IsDefined(Size))
+            if (Optional.IsDefined(SizeInBytes))
             {
                 writer.WritePropertyName("size"u8);
-                writer.WriteNumberValue(Size.Value);
+                writer.WriteNumberValue(SizeInBytes.Value);
             }
             if (Optional.IsDefined(Digest))
             {
@@ -38,6 +38,11 @@ namespace Azure.Containers.ContainerRegistry.Specialized
                 writer.WriteStartArray();
                 foreach (var item in Urls)
                 {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStringValue(item.AbsoluteUri);
                 }
                 writer.WriteEndArray();
@@ -59,6 +64,10 @@ namespace Azure.Containers.ContainerRegistry.Specialized
 
         internal static OciBlobDescriptor DeserializeOciBlobDescriptor(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> mediaType = default;
             Optional<long> size = default;
             Optional<string> digest = default;
@@ -96,7 +105,14 @@ namespace Azure.Containers.ContainerRegistry.Specialized
                     List<Uri> array = new List<Uri>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(new Uri(item.GetString()));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(new Uri(item.GetString()));
+                        }
                     }
                     urls = array;
                     continue;

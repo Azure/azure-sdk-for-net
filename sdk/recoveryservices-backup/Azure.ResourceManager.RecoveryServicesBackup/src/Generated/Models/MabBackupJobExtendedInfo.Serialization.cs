@@ -47,6 +47,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         internal static MabBackupJobExtendedInfo DeserializeMabBackupJobExtendedInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<MabBackupJobTaskDetails>> tasksList = default;
             Optional<IDictionary<string, string>> propertyBag = default;
             Optional<string> dynamicErrorMessage = default;

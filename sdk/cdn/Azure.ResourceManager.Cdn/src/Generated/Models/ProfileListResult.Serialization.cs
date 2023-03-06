@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.Cdn.Models
     {
         internal static ProfileListResult DeserializeProfileListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<ProfileData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

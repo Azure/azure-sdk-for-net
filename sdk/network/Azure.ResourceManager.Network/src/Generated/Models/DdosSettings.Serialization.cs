@@ -36,6 +36,10 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static DdosSettings DeserializeDdosSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<WritableSubResource> ddosCustomPolicy = default;
             Optional<DdosSettingsProtectionCoverage> protectionCoverage = default;
             Optional<bool> protectedIP = default;

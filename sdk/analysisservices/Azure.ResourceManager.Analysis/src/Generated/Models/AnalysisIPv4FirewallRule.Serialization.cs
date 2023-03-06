@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.Analysis.Models
 
         internal static AnalysisIPv4FirewallRule DeserializeAnalysisIPv4FirewallRule(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> firewallRuleName = default;
             Optional<string> rangeStart = default;
             Optional<string> rangeEnd = default;

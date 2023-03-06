@@ -32,6 +32,10 @@ namespace Azure.ResourceManager.Media.Models
 
         internal static MediaServicesStorageAccount DeserializeMediaServicesStorageAccount(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ResourceIdentifier> id = default;
             MediaServicesStorageAccountType type = default;
             Optional<ResourceIdentity> identity = default;

@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Synapse.Models
     {
         internal static SynapseIntegrationRuntimeMonitoringResult DeserializeSynapseIntegrationRuntimeMonitoringResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<IReadOnlyList<SynapseIntegrationRuntimeNodeMonitoringResult>> nodes = default;
             foreach (var property in element.EnumerateObject())

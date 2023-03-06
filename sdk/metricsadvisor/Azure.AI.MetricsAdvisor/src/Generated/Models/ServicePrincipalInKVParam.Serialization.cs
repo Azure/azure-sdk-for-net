@@ -35,6 +35,10 @@ namespace Azure.AI.MetricsAdvisor.Models
 
         internal static ServicePrincipalInKVParam DeserializeServicePrincipalInKVParam(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string keyVaultEndpoint = default;
             string keyVaultClientId = default;
             Optional<string> keyVaultClientSecret = default;

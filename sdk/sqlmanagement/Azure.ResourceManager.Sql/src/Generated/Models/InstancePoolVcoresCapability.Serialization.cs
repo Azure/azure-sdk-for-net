@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.Sql.Models
     {
         internal static InstancePoolVcoresCapability DeserializeInstancePoolVcoresCapability(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<int> value = default;
             Optional<MaxSizeCapability> storageLimit = default;

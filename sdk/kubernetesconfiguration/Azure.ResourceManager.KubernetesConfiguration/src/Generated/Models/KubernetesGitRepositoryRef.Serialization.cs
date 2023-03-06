@@ -68,6 +68,10 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
 
         internal static KubernetesGitRepositoryRef DeserializeKubernetesGitRepositoryRef(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> branch = default;
             Optional<string> tag = default;
             Optional<string> semver = default;

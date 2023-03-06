@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     {
         internal static ProtectedItemResourceList DeserializeProtectedItemResourceList(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<BackupProtectedItemData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

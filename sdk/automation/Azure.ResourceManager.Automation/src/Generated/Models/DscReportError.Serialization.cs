@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.Automation.Models
     {
         internal static DscReportError DeserializeDscReportError(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> errorSource = default;
             Optional<string> resourceId = default;
             Optional<string> errorCode = default;

@@ -173,6 +173,10 @@ namespace Azure.ResourceManager.BotService.Models
 
         internal static BotProperties DeserializeBotProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string displayName = default;
             Optional<string> description = default;
             Optional<Uri> iconUrl = default;

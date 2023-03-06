@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.Billing.Models
     {
         internal static BillingSubscriptionsListResult DeserializeBillingSubscriptionsListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<BillingSubscriptionData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

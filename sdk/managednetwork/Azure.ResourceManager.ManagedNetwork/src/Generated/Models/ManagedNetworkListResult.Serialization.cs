@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.ManagedNetwork.Models
     {
         internal static ManagedNetworkListResult DeserializeManagedNetworkListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<ManagedNetworkData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

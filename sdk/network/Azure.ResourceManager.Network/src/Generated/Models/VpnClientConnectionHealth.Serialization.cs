@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal static VpnClientConnectionHealth DeserializeVpnClientConnectionHealth(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<long> totalIngressBytesTransferred = default;
             Optional<long> totalEgressBytesTransferred = default;
             Optional<int> vpnClientConnectionsCount = default;

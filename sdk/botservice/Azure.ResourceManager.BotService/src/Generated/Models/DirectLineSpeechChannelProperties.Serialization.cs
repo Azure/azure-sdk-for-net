@@ -69,6 +69,10 @@ namespace Azure.ResourceManager.BotService.Models
 
         internal static DirectLineSpeechChannelProperties DeserializeDirectLineSpeechChannelProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> cognitiveServiceResourceId = default;
             Optional<string> cognitiveServiceRegion = default;
             Optional<string> cognitiveServiceSubscriptionKey = default;
