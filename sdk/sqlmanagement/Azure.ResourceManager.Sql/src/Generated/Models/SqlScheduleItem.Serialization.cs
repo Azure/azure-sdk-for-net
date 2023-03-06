@@ -28,6 +28,10 @@ namespace Azure.ResourceManager.Sql.Models
 
         internal static SqlScheduleItem DeserializeSqlScheduleItem(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             SqlDayOfWeek startDay = default;
             string startTime = default;
             SqlDayOfWeek stopDay = default;

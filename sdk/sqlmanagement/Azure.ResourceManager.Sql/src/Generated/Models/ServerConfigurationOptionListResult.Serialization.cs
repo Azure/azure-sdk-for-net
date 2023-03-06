@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.Sql.Models
     {
         internal static ServerConfigurationOptionListResult DeserializeServerConfigurationOptionListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<ManagedInstanceServerConfigurationOptionData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

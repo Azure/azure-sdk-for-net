@@ -21,6 +21,10 @@ namespace Azure.ResourceManager.Sql.Models
 
         internal static SqlDatabaseKey DeserializeSqlDatabaseKey(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<SqlDatabaseKeyType> type = default;
             Optional<string> thumbprint = default;
             Optional<DateTimeOffset> creationDate = default;

@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Sql.Models
     {
         internal static SqlOutboundEnvironmentEndpoint DeserializeSqlOutboundEnvironmentEndpoint(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> category = default;
             Optional<IReadOnlyList<ManagedInstanceEndpointDependency>> endpoints = default;
             foreach (var property in element.EnumerateObject())

@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Sql.Models
     {
         internal static ManagedInstanceEndpointDependency DeserializeManagedInstanceEndpointDependency(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> domainName = default;
             Optional<IReadOnlyList<ManagedInstanceEndpointDetail>> endpointDetails = default;
             foreach (var property in element.EnumerateObject())

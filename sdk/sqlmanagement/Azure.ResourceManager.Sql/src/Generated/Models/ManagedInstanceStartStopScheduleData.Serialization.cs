@@ -46,6 +46,10 @@ namespace Azure.ResourceManager.Sql
 
         internal static ManagedInstanceStartStopScheduleData DeserializeManagedInstanceStartStopScheduleData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
