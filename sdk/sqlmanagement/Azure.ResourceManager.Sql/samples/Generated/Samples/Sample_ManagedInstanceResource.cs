@@ -432,7 +432,7 @@ namespace Azure.ResourceManager.Sql.Samples
         // Gets the collection of outbound network dependencies for the given managed instance.
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetOutboundNetworkDependenciesByManagedInstance_GetsTheCollectionOfOutboundNetworkDependenciesForTheGivenManagedInstance()
+        public async Task GetOutboundNetworkDependencies_GetsTheCollectionOfOutboundNetworkDependenciesForTheGivenManagedInstance()
         {
             // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2022-08-01-preview/examples/ListOutboundNetworkDependenciesByManagedInstance.json
             // this example is just showing the usage of "ManagedInstances_ListOutboundNetworkDependenciesByManagedInstance" operation, for the dependent resources, they will have to be created separately.
@@ -451,7 +451,7 @@ namespace Azure.ResourceManager.Sql.Samples
             ManagedInstanceResource managedInstance = client.GetManagedInstanceResource(managedInstanceResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (OutboundEnvironmentEndpoint item in managedInstance.GetOutboundNetworkDependenciesByManagedInstanceAsync())
+            await foreach (SqlOutboundEnvironmentEndpoint item in managedInstance.GetOutboundNetworkDependenciesAsync())
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
