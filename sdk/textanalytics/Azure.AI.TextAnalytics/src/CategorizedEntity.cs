@@ -77,7 +77,7 @@ namespace Azure.AI.TextAnalytics
         /// <see cref="DateTimeResolution"/>, <see cref="InformationResolution"/>, <see cref="LengthResolution"/>,
         /// <see cref="NumberResolution"/>, <see cref="NumericRangeResolution"/>, <see cref="OrdinalResolution"/>,
         /// <see cref="SpeedResolution"/>, <see cref="TemperatureResolution"/>, <see cref="TemporalSpanResolution"/>,
-        /// <see cref="VolumeResolution"/> and <see cref="WeightResolution"/>. To learn more, see
+        /// <see cref="VolumeResolution"/>, and <see cref="WeightResolution"/>. To learn more, see
         /// <see href=" https://aka.ms/azsdk/language/ner-resolutions"/>
         /// </summary>
         public IReadOnlyCollection<BaseResolution> Resolutions { get; }
