@@ -76,6 +76,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static SapOdpSource DeserializeSapOdpSource(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<object> extractionMode = default;
             Optional<object> subscriberProcess = default;
             Optional<object> selection = default;

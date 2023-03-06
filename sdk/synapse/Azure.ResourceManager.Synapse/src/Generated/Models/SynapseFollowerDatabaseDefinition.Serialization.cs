@@ -24,6 +24,10 @@ namespace Azure.ResourceManager.Synapse.Models
 
         internal static SynapseFollowerDatabaseDefinition DeserializeSynapseFollowerDatabaseDefinition(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier clusterResourceId = default;
             string attachedDatabaseConfigurationName = default;
             Optional<string> databaseName = default;

@@ -35,6 +35,10 @@ namespace Azure.AI.TextAnalytics
 
         internal static HealthcareEntityAssertion DeserializeHealthcareEntityAssertion(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<EntityConditionality> conditionality = default;
             Optional<EntityCertainty> certainty = default;
             Optional<EntityAssociation> association = default;

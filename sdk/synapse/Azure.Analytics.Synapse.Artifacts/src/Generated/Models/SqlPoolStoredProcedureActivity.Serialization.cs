@@ -76,6 +76,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static SqlPoolStoredProcedureActivity DeserializeSqlPoolStoredProcedureActivity(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             SqlPoolReference sqlPool = default;
             string name = default;
             string type = default;

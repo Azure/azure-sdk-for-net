@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.Search.Models
     {
         internal static SharedPrivateLinkResourceListResult DeserializeSharedPrivateLinkResourceListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<SharedSearchServicePrivateLinkResourceData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

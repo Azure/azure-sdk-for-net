@@ -41,6 +41,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         internal static AdditionalWorkspacesProperties DeserializeAdditionalWorkspacesProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> workspace = default;
             Optional<AdditionalWorkspaceType> type = default;
             Optional<IList<AdditionalWorkspaceDataType>> dataTypes = default;

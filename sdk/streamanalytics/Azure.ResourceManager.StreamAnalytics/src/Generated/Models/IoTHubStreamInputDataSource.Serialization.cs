@@ -50,6 +50,10 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
 
         internal static IoTHubStreamInputDataSource DeserializeIoTHubStreamInputDataSource(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string type = default;
             Optional<string> iotHubNamespace = default;
             Optional<string> sharedAccessPolicyName = default;

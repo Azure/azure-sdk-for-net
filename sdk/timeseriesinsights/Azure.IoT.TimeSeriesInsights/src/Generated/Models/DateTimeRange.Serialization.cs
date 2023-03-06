@@ -25,6 +25,10 @@ namespace Azure.IoT.TimeSeriesInsights
 
         internal static DateTimeRange DeserializeDateTimeRange(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             DateTimeOffset @from = default;
             DateTimeOffset to = default;
             foreach (var property in element.EnumerateObject())

@@ -24,6 +24,10 @@ namespace Azure.AI.TextAnalytics
 
         internal static EntityDataSource DeserializeEntityDataSource(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string dataSource = default;
             string id = default;
             foreach (var property in element.EnumerateObject())

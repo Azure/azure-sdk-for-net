@@ -31,6 +31,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         internal static ServicePrincipalProperties DeserializeServicePrincipalProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<Guid> applicationId = default;
             Optional<string> secret = default;
             foreach (var property in element.EnumerateObject())
