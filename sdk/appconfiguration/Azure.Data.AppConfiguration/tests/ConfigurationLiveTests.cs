@@ -1665,7 +1665,7 @@ namespace Azure.Data.AppConfiguration.Tests
                 Assert.NotNull(createdSnapshot);
                 Assert.AreEqual("some_snapshot", createdSnapshot.Name);
 
-                ConfigurationSettingsSnapshot retrievedSnapshot = await service.GetSnapshotAsync("some_snapshot");
+                ConfigurationSettingsSnapshot retrievedSnapshot = await service.GetSnapshot("some_snapshot");
 
                 Assert.NotNull(retrievedSnapshot);
                 Assert.AreEqual(createdSnapshot.Name, retrievedSnapshot.Name);

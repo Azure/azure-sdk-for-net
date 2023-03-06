@@ -6,7 +6,7 @@ Run `dotnet build /t:GenerateCode` to generate code.
 > see https://aka.ms/autorest
 ``` yaml
 input-file:
-- https://github.com/Azure/azure-rest-api-specs/blob/b06d0e410f6bc96169664bf456e84f8fa2f60b23/specification/appconfiguration/data-plane/Microsoft.AppConfiguration/preview/2022-11-01-preview/appconfiguration.json
+- https://github.com/Azure/azure-rest-api-specs/blob/c1bf995dbab472761ba4da53ed33c7b621ff8bd9/specification/appconfiguration/data-plane/Microsoft.AppConfiguration/preview/2022-11-01-preview/appconfiguration.json
 namespace: Azure.Data.AppConfiguration
 title: ConfigurationClient
 ```
@@ -43,4 +43,89 @@ directive:
 - rename-operation:
     from: UpdateSnapshot
     to: UpdateSnapshotStatus
+```
+
+## Internalize operations
+``` yaml
+directive:
+- from: swagger-document
+  where: $..[?(@.operationId=='CreateSnapshot')]
+  transform: >
+    $["x-accessibility"] = "internal";
+- from: swagger-document
+  where: $..[?(@.operationId=='GetSnapshot')]
+  transform: >
+    $["x-accessibility"] = "internal";
+- from: swagger-document
+  where: $..[?(@.operationId=='GetSnapshots')]
+  transform: >
+    $["x-accessibility"] = "internal";
+- from: swagger-document
+  where: $..[?(@.operationId=='UpdateSnapshot')]
+  transform: >
+    $["x-accessibility"] = "internal";
+- from: swagger-document
+  where: $..[?(@.operationId=='CheckSnapshots')]
+  transform: >
+    $["x-accessibility"] = "internal";
+- from: swagger-document
+  where: $..[?(@.operationId=='CheckSnapshot')]
+  transform: >
+    $["x-accessibility"] = "internal";
+- from: swagger-document
+  where: $..[?(@.operationId=='CheckKeyValues')]
+  transform: >
+    $["x-accessibility"] = "internal";
+- from: swagger-document
+  where: $..[?(@.operationId=='CheckKeyValue')]
+  transform: >
+    $["x-accessibility"] = "internal";
+- from: swagger-document
+  where: $..[?(@.operationId=='CheckKeys')]
+  transform: >
+    $["x-accessibility"] = "internal";
+- from: swagger-document
+  where: $..[?(@.operationId=='CheckLabels')]
+  transform: >
+    $["x-accessibility"] = "internal";
+- from: swagger-document
+  where: $..[?(@.operationId=='CheckRevisions')]
+  transform: >
+    $["x-accessibility"] = "internal";
+- from: swagger-document
+  where: $..[?(@.operationId=='CreateReadOnlyLock')]
+  transform: >
+    $["x-accessibility"] = "internal";
+- from: swagger-document
+  where: $..[?(@.operationId=='DeleteReadOnlyLock')]
+  transform: >
+    $["x-accessibility"] = "internal";
+- from: swagger-document
+  where: $..[?(@.operationId=='SetConfigurationSetting')]
+  transform: >
+    $["x-accessibility"] = "internal";
+- from: swagger-document
+  where: $..[?(@.operationId=='DeleteConfigurationSetting')]
+  transform: >
+    $["x-accessibility"] = "internal";
+- from: swagger-document
+  where: $..[?(@.operationId=='GetKeyValue')]
+  transform: >
+    $["x-accessibility"] = "internal";
+- from: swagger-document
+  where: $..[?(@.operationId=='GetKeyValues')]
+  transform: >
+    $["x-accessibility"] = "internal";
+- from: swagger-document
+  where: $..[?(@.operationId=='GetKeys')]
+  transform: >
+    $["x-accessibility"] = "internal";
+- from: swagger-document
+  where: $..[?(@.operationId=='GetLabels')]
+  transform: >
+    $["x-accessibility"] = "internal";
+- from: swagger-document
+  where: $..[?(@.operationId=='GetRevisions')]
+  transform: >
+    $["x-accessibility"] = "internal";
 ```
