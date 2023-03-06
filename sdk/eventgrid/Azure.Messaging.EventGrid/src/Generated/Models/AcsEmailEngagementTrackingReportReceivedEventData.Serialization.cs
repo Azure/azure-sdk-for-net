@@ -17,6 +17,10 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     {
         internal static AcsEmailEngagementTrackingReportReceivedEventData DeserializeAcsEmailEngagementTrackingReportReceivedEventData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> sender = default;
             Optional<string> messageId = default;
             Optional<DateTimeOffset> userActionTimeStamp = default;
