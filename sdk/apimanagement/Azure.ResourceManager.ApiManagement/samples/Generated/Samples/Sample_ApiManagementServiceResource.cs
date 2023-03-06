@@ -207,7 +207,7 @@ new HttpHeaderConfiguration("Authorization","Bearer myPreciousToken")
 
             // invoke the operation
             string contentTypeId = "page";
-            ApiManagementContentType result = await apiManagementService.CreateOrUpdateContentTypeAsync(contentTypeId);
+            ApiManagementContentType result = await apiManagementService.CreateOrUpdateContentTypeAsync(contentTypeId, new ApiManagementContentType());
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -354,7 +354,7 @@ new HttpHeaderConfiguration("Authorization","Bearer myPreciousToken")
             // invoke the operation
             string contentTypeId = "page";
             string contentItemId = "4e3cf6a5-574a-ba08-1f23-2e7a38faa6d8";
-            ApiManagementContentItem result = await apiManagementService.CreateOrUpdateContentItemAsync(contentTypeId, contentItemId);
+            ApiManagementContentItem result = await apiManagementService.CreateOrUpdateContentItemAsync(contentTypeId, contentItemId, new ApiManagementContentItem());
 
             Console.WriteLine($"Succeeded: {result}");
         }
