@@ -7,10 +7,10 @@
 
 using System;
 using Azure.Core;
-using Azure.ResourceManager.LiftrQumulo.Models;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Qumulo.Models;
 
-namespace Azure.ResourceManager.LiftrQumulo
+namespace Azure.ResourceManager.Qumulo
 {
     /// <summary> A class representing the QumuloJobRun data model. </summary>
     public partial class QumuloJobRunData : ResourceData

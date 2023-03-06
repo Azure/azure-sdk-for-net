@@ -18,7 +18,7 @@ using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
-namespace Azure.ResourceManager.LiftrQumulo
+namespace Azure.ResourceManager.Qumulo
 {
     /// <summary>
     /// A class representing a collection of <see cref="QumuloStorageMoverResource" /> and their operations.
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.LiftrQumulo
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal QumuloStorageMoverCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _qumuloQumuloStorageMoverStorageMoversClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.LiftrQumulo", QumuloStorageMoverResource.ResourceType.Namespace, Diagnostics);
+            _qumuloQumuloStorageMoverStorageMoversClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Qumulo", QumuloStorageMoverResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(QumuloStorageMoverResource.ResourceType, out string qumuloQumuloStorageMoverStorageMoversApiVersion);
             _qumuloQumuloStorageMoverStorageMoversRestClient = new StorageMoversRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, qumuloQumuloStorageMoverStorageMoversApiVersion);
 #if DEBUG
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.LiftrQumulo
             try
             {
                 var response = await _qumuloQumuloStorageMoverStorageMoversRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, qumuloStorageMoverName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new LiftrQumuloArmOperation<QumuloStorageMoverResource>(Response.FromValue(new QumuloStorageMoverResource(Client, response), response.GetRawResponse()));
+                var operation = new QumuloArmOperation<QumuloStorageMoverResource>(Response.FromValue(new QumuloStorageMoverResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.LiftrQumulo
             try
             {
                 var response = _qumuloQumuloStorageMoverStorageMoversRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, qumuloStorageMoverName, data, cancellationToken);
-                var operation = new LiftrQumuloArmOperation<QumuloStorageMoverResource>(Response.FromValue(new QumuloStorageMoverResource(Client, response), response.GetRawResponse()));
+                var operation = new QumuloArmOperation<QumuloStorageMoverResource>(Response.FromValue(new QumuloStorageMoverResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

@@ -14,7 +14,7 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 
-namespace Azure.ResourceManager.LiftrQumulo
+namespace Azure.ResourceManager.Qumulo
 {
     /// <summary> A class to add extension methods to SubscriptionResource. </summary>
     internal partial class SubscriptionResourceExtensionClient : ArmResource
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.LiftrQumulo
         {
         }
 
-        private ClientDiagnostics QumuloStorageMoverStorageMoversClientDiagnostics => _qumuloQumuloStorageMoverStorageMoversClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.LiftrQumulo", QumuloStorageMoverResource.ResourceType.Namespace, Diagnostics);
+        private ClientDiagnostics QumuloStorageMoverStorageMoversClientDiagnostics => _qumuloQumuloStorageMoverStorageMoversClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Qumulo", QumuloStorageMoverResource.ResourceType.Namespace, Diagnostics);
         private StorageMoversRestOperations QumuloStorageMoverStorageMoversRestClient => _qumuloQumuloStorageMoverStorageMoversRestClient ??= new StorageMoversRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(QumuloStorageMoverResource.ResourceType));
 
         private string GetApiVersionOrNull(ResourceType resourceType)

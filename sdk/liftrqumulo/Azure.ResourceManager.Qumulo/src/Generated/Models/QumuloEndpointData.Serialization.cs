@@ -7,10 +7,10 @@
 
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.LiftrQumulo.Models;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Qumulo.Models;
 
-namespace Azure.ResourceManager.LiftrQumulo
+namespace Azure.ResourceManager.Qumulo
 {
     public partial class QumuloEndpointData : IUtf8JsonSerializable
     {

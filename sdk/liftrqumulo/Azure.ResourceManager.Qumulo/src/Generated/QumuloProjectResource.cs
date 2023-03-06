@@ -13,9 +13,9 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.LiftrQumulo.Models;
+using Azure.ResourceManager.Qumulo.Models;
 
-namespace Azure.ResourceManager.LiftrQumulo
+namespace Azure.ResourceManager.Qumulo
 {
     /// <summary>
     /// A Class representing a QumuloProject along with the instance operations that can be performed on it.
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.LiftrQumulo
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal QumuloProjectResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _qumuloQumuloProjectProjectsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.LiftrQumulo", ResourceType.Namespace, Diagnostics);
+            _qumuloQumuloProjectProjectsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Qumulo", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string qumuloQumuloProjectProjectsApiVersion);
             _qumuloQumuloProjectProjectsRestClient = new ProjectsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, qumuloQumuloProjectProjectsApiVersion);
 #if DEBUG
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.LiftrQumulo
             try
             {
                 var response = await _qumuloQumuloProjectProjectsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new LiftrQumuloArmOperation(_qumuloQumuloProjectProjectsClientDiagnostics, Pipeline, _qumuloQumuloProjectProjectsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new QumuloArmOperation(_qumuloQumuloProjectProjectsClientDiagnostics, Pipeline, _qumuloQumuloProjectProjectsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.LiftrQumulo
             try
             {
                 var response = _qumuloQumuloProjectProjectsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new LiftrQumuloArmOperation(_qumuloQumuloProjectProjectsClientDiagnostics, Pipeline, _qumuloQumuloProjectProjectsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new QumuloArmOperation(_qumuloQumuloProjectProjectsClientDiagnostics, Pipeline, _qumuloQumuloProjectProjectsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;

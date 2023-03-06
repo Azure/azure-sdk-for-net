@@ -17,7 +17,7 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 
-namespace Azure.ResourceManager.LiftrQumulo
+namespace Azure.ResourceManager.Qumulo
 {
     /// <summary>
     /// A class representing a collection of <see cref="JobDefinitionResource" /> and their operations.
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.LiftrQumulo
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal JobDefinitionCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _jobDefinitionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.LiftrQumulo", JobDefinitionResource.ResourceType.Namespace, Diagnostics);
+            _jobDefinitionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Qumulo", JobDefinitionResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(JobDefinitionResource.ResourceType, out string jobDefinitionApiVersion);
             _jobDefinitionRestClient = new JobDefinitionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, jobDefinitionApiVersion);
 #if DEBUG
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.LiftrQumulo
             try
             {
                 var response = await _jobDefinitionRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, jobDefinitionName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new LiftrQumuloArmOperation<JobDefinitionResource>(Response.FromValue(new JobDefinitionResource(Client, response), response.GetRawResponse()));
+                var operation = new QumuloArmOperation<JobDefinitionResource>(Response.FromValue(new JobDefinitionResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.LiftrQumulo
             try
             {
                 var response = _jobDefinitionRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, jobDefinitionName, data, cancellationToken);
-                var operation = new LiftrQumuloArmOperation<JobDefinitionResource>(Response.FromValue(new JobDefinitionResource(Client, response), response.GetRawResponse()));
+                var operation = new QumuloArmOperation<JobDefinitionResource>(Response.FromValue(new JobDefinitionResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

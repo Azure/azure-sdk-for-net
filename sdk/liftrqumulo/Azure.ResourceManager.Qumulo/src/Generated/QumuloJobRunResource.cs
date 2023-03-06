@@ -14,7 +14,7 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 
-namespace Azure.ResourceManager.LiftrQumulo
+namespace Azure.ResourceManager.Qumulo
 {
     /// <summary>
     /// A Class representing a QumuloJobRun along with the instance operations that can be performed on it.
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.LiftrQumulo
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal QumuloJobRunResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _qumuloQumuloJobRunJobRunsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.LiftrQumulo", ResourceType.Namespace, Diagnostics);
+            _qumuloQumuloJobRunJobRunsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Qumulo", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string qumuloQumuloJobRunJobRunsApiVersion);
             _qumuloQumuloJobRunJobRunsRestClient = new JobRunsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, qumuloQumuloJobRunJobRunsApiVersion);
 #if DEBUG

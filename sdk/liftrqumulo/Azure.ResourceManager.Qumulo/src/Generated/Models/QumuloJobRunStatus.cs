@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.ResourceManager.LiftrQumulo.Models
+namespace Azure.ResourceManager.Qumulo.Models
 {
     /// <summary> The current status of the Job Run in a non-terminal state, if exists. </summary>
     public readonly partial struct QumuloJobRunStatus : IEquatable<QumuloJobRunStatus>

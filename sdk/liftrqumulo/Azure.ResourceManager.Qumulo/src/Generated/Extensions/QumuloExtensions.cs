@@ -13,10 +13,10 @@ using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
-namespace Azure.ResourceManager.LiftrQumulo
+namespace Azure.ResourceManager.Qumulo
 {
-    /// <summary> A class to add extension methods to Azure.ResourceManager.LiftrQumulo. </summary>
-    public static partial class LiftrQumuloExtensions
+    /// <summary> A class to add extension methods to Azure.ResourceManager.Qumulo. </summary>
+    public static partial class QumuloExtensions
     {
         private static SubscriptionResourceExtensionClient GetExtensionClient(SubscriptionResource subscriptionResource)
         {

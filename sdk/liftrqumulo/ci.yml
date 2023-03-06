@@ -28,5 +28,5 @@ extends:
     ServiceDirectory: liftrqumulo
     ArtifactName: packages
     Artifacts:
-    - name: Azure.ResourceManager.LiftrQumulo
-      safeName: AzureResourceManagerLiftrQumulo
+    - name: Azure.ResourceManager.Qumulo
+      safeName: AzureResourceManagerQumulo

@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.ResourceManager.LiftrQumulo.Models
+namespace Azure.ResourceManager.Qumulo.Models
 {
     /// <summary> Response that identifies a Job Run. </summary>
     public partial class QumuloJobRunResourceId

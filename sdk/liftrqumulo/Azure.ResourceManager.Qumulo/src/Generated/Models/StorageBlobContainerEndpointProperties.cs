@@ -8,7 +8,7 @@
 using System;
 using Azure.Core;
 
-namespace Azure.ResourceManager.LiftrQumulo.Models
+namespace Azure.ResourceManager.Qumulo.Models
 {
     /// <summary> The StorageBlobContainerEndpointProperties. </summary>
     public partial class StorageBlobContainerEndpointProperties : QumuloEndpointBaseProperties

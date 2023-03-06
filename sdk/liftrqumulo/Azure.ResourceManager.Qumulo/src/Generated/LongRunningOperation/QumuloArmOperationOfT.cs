@@ -13,28 +13,28 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 
-namespace Azure.ResourceManager.LiftrQumulo
+namespace Azure.ResourceManager.Qumulo
 {
 #pragma warning disable SA1649 // File name should match first type name
-    internal class LiftrQumuloArmOperation<T> : ArmOperation<T>
+    internal class QumuloArmOperation<T> : ArmOperation<T>
 #pragma warning restore SA1649 // File name should match first type name
     {
         private readonly OperationInternal<T> _operation;
 
-        /// <summary> Initializes a new instance of LiftrQumuloArmOperation for mocking. </summary>
-        protected LiftrQumuloArmOperation()
+        /// <summary> Initializes a new instance of QumuloArmOperation for mocking. </summary>
+        protected QumuloArmOperation()
         {
         }
 
-        internal LiftrQumuloArmOperation(Response<T> response)
+        internal QumuloArmOperation(Response<T> response)
         {
             _operation = OperationInternal<T>.Succeeded(response.GetRawResponse(), response.Value);
         }
 
-        internal LiftrQumuloArmOperation(IOperationSource<T> source, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response, OperationFinalStateVia finalStateVia)
+        internal QumuloArmOperation(IOperationSource<T> source, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response, OperationFinalStateVia finalStateVia)
         {
             var nextLinkOperation = NextLinkOperationImplementation.Create(source, pipeline, request.Method, request.Uri.ToUri(), response, finalStateVia);
-            _operation = new OperationInternal<T>(clientDiagnostics, nextLinkOperation, response, "LiftrQumuloArmOperation", fallbackStrategy: new ExponentialDelayStrategy());
+            _operation = new OperationInternal<T>(clientDiagnostics, nextLinkOperation, response, "QumuloArmOperation", fallbackStrategy: new ExponentialDelayStrategy());
         }
 
         /// <inheritdoc />

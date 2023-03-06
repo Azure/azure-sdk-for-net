@@ -14,10 +14,10 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.LiftrQumulo.Models;
+using Azure.ResourceManager.Qumulo.Models;
 using Azure.ResourceManager.Resources;
 
-namespace Azure.ResourceManager.LiftrQumulo
+namespace Azure.ResourceManager.Qumulo
 {
     /// <summary>
     /// A Class representing a QumuloStorageMover along with the instance operations that can be performed on it.
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.LiftrQumulo
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal QumuloStorageMoverResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _qumuloQumuloStorageMoverStorageMoversClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.LiftrQumulo", ResourceType.Namespace, Diagnostics);
+            _qumuloQumuloStorageMoverStorageMoversClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Qumulo", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string qumuloQumuloStorageMoverStorageMoversApiVersion);
             _qumuloQumuloStorageMoverStorageMoversRestClient = new StorageMoversRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, qumuloQumuloStorageMoverStorageMoversApiVersion);
 #if DEBUG
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.LiftrQumulo
             try
             {
                 var response = await _qumuloQumuloStorageMoverStorageMoversRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new LiftrQumuloArmOperation(_qumuloQumuloStorageMoverStorageMoversClientDiagnostics, Pipeline, _qumuloQumuloStorageMoverStorageMoversRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new QumuloArmOperation(_qumuloQumuloStorageMoverStorageMoversClientDiagnostics, Pipeline, _qumuloQumuloStorageMoverStorageMoversRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.LiftrQumulo
             try
             {
                 var response = _qumuloQumuloStorageMoverStorageMoversRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new LiftrQumuloArmOperation(_qumuloQumuloStorageMoverStorageMoversClientDiagnostics, Pipeline, _qumuloQumuloStorageMoverStorageMoversRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new QumuloArmOperation(_qumuloQumuloStorageMoverStorageMoversClientDiagnostics, Pipeline, _qumuloQumuloStorageMoverStorageMoversRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;

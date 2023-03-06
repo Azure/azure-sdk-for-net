@@ -17,7 +17,7 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 
-namespace Azure.ResourceManager.LiftrQumulo
+namespace Azure.ResourceManager.Qumulo
 {
     /// <summary>
     /// A class representing a collection of <see cref="QumuloAgentResource" /> and their operations.
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.LiftrQumulo
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal QumuloAgentCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _qumuloQumuloAgentAgentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.LiftrQumulo", QumuloAgentResource.ResourceType.Namespace, Diagnostics);
+            _qumuloQumuloAgentAgentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Qumulo", QumuloAgentResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(QumuloAgentResource.ResourceType, out string qumuloQumuloAgentAgentsApiVersion);
             _qumuloQumuloAgentAgentsRestClient = new AgentsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, qumuloQumuloAgentAgentsApiVersion);
 #if DEBUG
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.LiftrQumulo
             try
             {
                 var response = await _qumuloQumuloAgentAgentsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, qumuloAgentName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new LiftrQumuloArmOperation<QumuloAgentResource>(Response.FromValue(new QumuloAgentResource(Client, response), response.GetRawResponse()));
+                var operation = new QumuloArmOperation<QumuloAgentResource>(Response.FromValue(new QumuloAgentResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.LiftrQumulo
             try
             {
                 var response = _qumuloQumuloAgentAgentsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, qumuloAgentName, data, cancellationToken);
-                var operation = new LiftrQumuloArmOperation<QumuloAgentResource>(Response.FromValue(new QumuloAgentResource(Client, response), response.GetRawResponse()));
+                var operation = new QumuloArmOperation<QumuloAgentResource>(Response.FromValue(new QumuloAgentResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

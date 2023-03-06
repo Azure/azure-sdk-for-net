@@ -6,10 +6,10 @@
 #nullable disable
 
 using Azure.Core;
-using Azure.ResourceManager.LiftrQumulo.Models;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Qumulo.Models;
 
-namespace Azure.ResourceManager.LiftrQumulo
+namespace Azure.ResourceManager.Qumulo
 {
     /// <summary> A class representing the QumuloProject data model. </summary>
     public partial class QumuloProjectData : ResourceData

@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.ResourceManager.LiftrQumulo.Models
+namespace Azure.ResourceManager.Qumulo.Models
 {
     /// <summary> Strategy to use for copy. </summary>
     public readonly partial struct CopyMode : IEquatable<CopyMode>

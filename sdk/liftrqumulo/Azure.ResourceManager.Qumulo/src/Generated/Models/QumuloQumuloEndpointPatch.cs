@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.ResourceManager.LiftrQumulo.Models
+namespace Azure.ResourceManager.Qumulo.Models
 {
     /// <summary> The Endpoint resource. </summary>
     public partial class QumuloQumuloEndpointPatch

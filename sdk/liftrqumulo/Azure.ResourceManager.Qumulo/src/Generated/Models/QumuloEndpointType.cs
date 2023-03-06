@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.ResourceManager.LiftrQumulo.Models
+namespace Azure.ResourceManager.Qumulo.Models
 {
     /// <summary> The Endpoint resource type. </summary>
     internal readonly partial struct QumuloEndpointType : IEquatable<QumuloEndpointType>

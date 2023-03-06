@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.ResourceManager.LiftrQumulo.Models
+namespace Azure.ResourceManager.Qumulo.Models
 {
     /// <summary> The status of Agent&apos;s scanning of source. </summary>
     public readonly partial struct QumuloJobRunScanStatus : IEquatable<QumuloJobRunScanStatus>

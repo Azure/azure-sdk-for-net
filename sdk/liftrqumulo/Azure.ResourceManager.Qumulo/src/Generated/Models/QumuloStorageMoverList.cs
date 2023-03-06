@@ -7,9 +7,9 @@
 
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.LiftrQumulo;
+using Azure.ResourceManager.Qumulo;
 
-namespace Azure.ResourceManager.LiftrQumulo.Models
+namespace Azure.ResourceManager.Qumulo.Models
 {
     /// <summary> List of Storage Movers. </summary>
     internal partial class QumuloStorageMoverList

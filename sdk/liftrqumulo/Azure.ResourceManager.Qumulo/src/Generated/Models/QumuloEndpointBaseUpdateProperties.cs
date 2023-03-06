@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.ResourceManager.LiftrQumulo.Models
+namespace Azure.ResourceManager.Qumulo.Models
 {
     /// <summary> The Endpoint resource, which contains information about file sources and targets. </summary>
     internal partial class QumuloEndpointBaseUpdateProperties

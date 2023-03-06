@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.ResourceManager.LiftrQumulo.Models
+namespace Azure.ResourceManager.Qumulo.Models
 {
     /// <summary> The provisioning state of this resource. </summary>
     public readonly partial struct ProvisioningState : IEquatable<ProvisioningState>

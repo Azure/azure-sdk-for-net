@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.ResourceManager.LiftrQumulo.Models
+namespace Azure.ResourceManager.Qumulo.Models
 {
     /// <summary> The QumuloAgentPropertiesErrorDetails. </summary>
     public partial class QumuloAgentPropertiesErrorDetails

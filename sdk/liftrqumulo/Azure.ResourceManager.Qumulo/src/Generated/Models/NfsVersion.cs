@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.ResourceManager.LiftrQumulo.Models
+namespace Azure.ResourceManager.Qumulo.Models
 {
     /// <summary> The NFS protocol version. </summary>
     public readonly partial struct NfsVersion : IEquatable<NfsVersion>
