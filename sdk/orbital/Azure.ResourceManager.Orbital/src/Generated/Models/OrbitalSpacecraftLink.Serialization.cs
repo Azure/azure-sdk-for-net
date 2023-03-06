@@ -31,6 +31,10 @@ namespace Azure.ResourceManager.Orbital.Models
 
         internal static OrbitalSpacecraftLink DeserializeOrbitalSpacecraftLink(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string name = default;
             float centerFrequencyMHz = default;
             float bandwidthMHz = default;

@@ -51,6 +51,10 @@ namespace Azure.ResourceManager.Monitor.Models
 
         internal static DataFlow DeserializeDataFlow(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<DataFlowStream>> streams = default;
             Optional<IList<string>> destinations = default;
             Optional<string> transformKql = default;

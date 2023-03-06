@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.NetworkFunction.Models
 
         internal static IngestionSourcesPropertiesFormat DeserializeIngestionSourcesPropertiesFormat(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IngestionSourceType> sourceType = default;
             Optional<string> resourceId = default;
             foreach (var property in element.EnumerateObject())

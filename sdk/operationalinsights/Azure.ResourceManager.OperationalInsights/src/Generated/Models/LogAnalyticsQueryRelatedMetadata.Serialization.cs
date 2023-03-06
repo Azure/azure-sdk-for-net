@@ -51,6 +51,10 @@ namespace Azure.ResourceManager.OperationalInsights.Models
 
         internal static LogAnalyticsQueryRelatedMetadata DeserializeLogAnalyticsQueryRelatedMetadata(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<string>> categories = default;
             Optional<IList<string>> resourceTypes = default;
             Optional<IList<string>> solutions = default;

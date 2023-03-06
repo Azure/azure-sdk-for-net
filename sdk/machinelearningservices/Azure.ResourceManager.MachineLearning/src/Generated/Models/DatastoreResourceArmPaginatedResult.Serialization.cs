@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
     {
         internal static DatastoreResourceArmPaginatedResult DeserializeDatastoreResourceArmPaginatedResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> nextLink = default;
             Optional<IReadOnlyList<MachineLearningDatastoreData>> value = default;
             foreach (var property in element.EnumerateObject())

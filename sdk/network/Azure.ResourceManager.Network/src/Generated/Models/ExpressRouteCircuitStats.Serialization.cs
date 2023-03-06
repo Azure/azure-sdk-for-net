@@ -40,6 +40,10 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static ExpressRouteCircuitStats DeserializeExpressRouteCircuitStats(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<long> primarybytesIn = default;
             Optional<long> primarybytesOut = default;
             Optional<long> secondarybytesIn = default;

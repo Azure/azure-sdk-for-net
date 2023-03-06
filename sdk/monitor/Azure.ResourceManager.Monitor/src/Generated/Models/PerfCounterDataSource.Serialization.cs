@@ -51,6 +51,10 @@ namespace Azure.ResourceManager.Monitor.Models
 
         internal static PerfCounterDataSource DeserializePerfCounterDataSource(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<PerfCounterDataSourceStream>> streams = default;
             Optional<int> samplingFrequencyInSeconds = default;
             Optional<IList<string>> counterSpecifiers = default;

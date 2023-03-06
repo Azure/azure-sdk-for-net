@@ -51,6 +51,10 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static VirtualHubRouteV2 DeserializeVirtualHubRouteV2(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> destinationType = default;
             Optional<IList<string>> destinations = default;
             Optional<string> nextHopType = default;

@@ -166,6 +166,10 @@ namespace Azure.AI.MetricsAdvisor.Models
 
         internal static MySqlDataFeed DeserializeMySqlDataFeed(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             SqlSourceParameter dataSourceParameter = default;
             DataFeedSourceKind dataSourceType = default;
             Optional<string> dataFeedId = default;

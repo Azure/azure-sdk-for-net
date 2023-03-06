@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static FirewallPolicyCertificateAuthority DeserializeFirewallPolicyCertificateAuthority(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> keyVaultSecretId = default;
             Optional<string> name = default;
             foreach (var property in element.EnumerateObject())
