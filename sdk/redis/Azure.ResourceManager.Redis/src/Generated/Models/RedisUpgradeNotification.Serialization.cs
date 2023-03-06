@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.Redis.Models
     {
         internal static RedisUpgradeNotification DeserializeRedisUpgradeNotification(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<DateTimeOffset> timestamp = default;
             Optional<IReadOnlyDictionary<string, string>> upsellNotification = default;

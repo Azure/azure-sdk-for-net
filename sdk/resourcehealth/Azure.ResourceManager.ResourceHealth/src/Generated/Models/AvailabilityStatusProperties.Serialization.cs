@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.ResourceHealth.Models
     {
         internal static AvailabilityStatusProperties DeserializeAvailabilityStatusProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<AvailabilityStateValue> availabilityState = default;
             Optional<string> title = default;
             Optional<string> summary = default;

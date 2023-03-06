@@ -68,6 +68,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         internal static IaasVmBackupJobExtendedInfo DeserializeIaasVmBackupJobExtendedInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<IaasVmBackupJobTaskDetails>> tasksList = default;
             Optional<IDictionary<string, string>> propertyBag = default;
             Optional<IDictionary<string, string>> internalPropertyBag = default;

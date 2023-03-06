@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Reservations.Models
     {
         internal static SubscriptionScopeProperties DeserializeSubscriptionScopeProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<ScopeProperties>> scopes = default;
             foreach (var property in element.EnumerateObject())
             {

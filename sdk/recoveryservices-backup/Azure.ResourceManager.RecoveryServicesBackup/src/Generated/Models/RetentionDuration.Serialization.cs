@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         internal static RetentionDuration DeserializeRetentionDuration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> count = default;
             Optional<RetentionDurationType> durationType = default;
             foreach (var property in element.EnumerateObject())

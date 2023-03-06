@@ -41,6 +41,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 
         internal static NewProtectionProfile DeserializeNewProtectionProfile(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string policyName = default;
             Optional<int> recoveryPointHistory = default;
             Optional<int> crashConsistentFrequencyInMinutes = default;

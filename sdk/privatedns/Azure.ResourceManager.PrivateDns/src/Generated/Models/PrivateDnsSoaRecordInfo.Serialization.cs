@@ -55,6 +55,10 @@ namespace Azure.ResourceManager.PrivateDns.Models
 
         internal static PrivateDnsSoaRecordInfo DeserializePrivateDnsSoaRecordInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> host = default;
             Optional<string> email = default;
             Optional<long> serialNumber = default;

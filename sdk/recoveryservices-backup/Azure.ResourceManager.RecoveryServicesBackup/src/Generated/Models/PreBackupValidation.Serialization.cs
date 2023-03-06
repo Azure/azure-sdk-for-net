@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         internal static PreBackupValidation DeserializePreBackupValidation(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<InquiryStatus> status = default;
             Optional<string> code = default;
             Optional<string> message = default;
