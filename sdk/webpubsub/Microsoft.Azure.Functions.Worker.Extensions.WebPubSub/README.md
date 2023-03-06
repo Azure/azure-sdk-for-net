@@ -127,7 +127,7 @@ public static UserEventResponse Run(
 }
 ```
 
-For more details see the [samples README](./samples/README.md).
+For more details see the [samples README][samples].
 
 ## Troubleshooting
 
