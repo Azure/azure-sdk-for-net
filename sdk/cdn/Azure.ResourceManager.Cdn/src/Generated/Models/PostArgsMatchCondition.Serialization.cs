@@ -55,6 +55,10 @@ namespace Azure.ResourceManager.Cdn.Models
 
         internal static PostArgsMatchCondition DeserializePostArgsMatchCondition(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             PostArgsMatchConditionType typeName = default;
             Optional<string> selector = default;
             PostArgsOperator @operator = default;

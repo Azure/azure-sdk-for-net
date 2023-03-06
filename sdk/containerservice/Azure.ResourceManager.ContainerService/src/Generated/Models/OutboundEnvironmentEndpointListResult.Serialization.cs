@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.ContainerService.Models
     {
         internal static OutboundEnvironmentEndpointListResult DeserializeOutboundEnvironmentEndpointListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IReadOnlyList<ContainerServiceOutboundEnvironmentEndpoint> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

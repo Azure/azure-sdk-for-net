@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
     {
         internal static CommitmentCost DeserializeCommitmentCost(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> commitmentMeterId = default;
             Optional<string> overageMeterId = default;
             foreach (var property in element.EnumerateObject())

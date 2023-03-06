@@ -33,6 +33,10 @@ namespace Azure.ResourceManager.AppPlatform.Models
 
         internal static AppInstanceExecAction DeserializeAppInstanceExecAction(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<string>> command = default;
             ProbeActionType type = default;
             foreach (var property in element.EnumerateObject())

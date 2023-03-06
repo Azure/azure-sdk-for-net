@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
 
         internal static ContainerRegistryEncryption DeserializeContainerRegistryEncryption(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ContainerRegistryEncryptionStatus> status = default;
             Optional<ContainerRegistryKeyVaultProperties> keyVaultProperties = default;
             foreach (var property in element.EnumerateObject())

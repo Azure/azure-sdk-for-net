@@ -16,6 +16,10 @@ namespace Azure.Communication.Sms.Models
     {
         internal static SmsSendResponse DeserializeSmsSendResponse(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IReadOnlyList<SmsSendResult> value = default;
             foreach (var property in element.EnumerateObject())
             {

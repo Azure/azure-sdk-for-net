@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
 
         internal static HardwareProfile DeserializeHardwareProfile(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> memorySizeMB = default;
             Optional<int> numCpus = default;
             Optional<int> numCoresPerSocket = default;

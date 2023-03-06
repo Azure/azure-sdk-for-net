@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Automation.Models
     {
         internal static AutomationAccountStatisticsListResult DeserializeAutomationAccountStatisticsListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<AutomationAccountStatistics>> value = default;
             foreach (var property in element.EnumerateObject())
             {

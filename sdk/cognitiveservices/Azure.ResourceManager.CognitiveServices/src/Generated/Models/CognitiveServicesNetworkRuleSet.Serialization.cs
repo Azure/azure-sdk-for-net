@@ -46,6 +46,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 
         internal static CognitiveServicesNetworkRuleSet DeserializeCognitiveServicesNetworkRuleSet(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<CognitiveServicesNetworkRuleAction> defaultAction = default;
             Optional<IList<CognitiveServicesIPRule>> ipRules = default;
             Optional<IList<CognitiveServicesVirtualNetworkRule>> virtualNetworkRules = default;

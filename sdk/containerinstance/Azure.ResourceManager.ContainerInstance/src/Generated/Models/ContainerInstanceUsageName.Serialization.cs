@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.ContainerInstance.Models
     {
         internal static ContainerInstanceUsageName DeserializeContainerInstanceUsageName(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> value = default;
             Optional<string> localizedValue = default;
             foreach (var property in element.EnumerateObject())

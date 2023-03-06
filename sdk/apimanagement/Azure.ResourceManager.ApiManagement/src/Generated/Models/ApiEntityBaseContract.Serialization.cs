@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
     {
         internal static ApiEntityBaseContract DeserializeApiEntityBaseContract(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> description = default;
             Optional<AuthenticationSettingsContract> authenticationSettings = default;
             Optional<SubscriptionKeyParameterNamesContract> subscriptionKeyParameterNames = default;

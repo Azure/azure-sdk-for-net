@@ -37,6 +37,10 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
 
         internal static UnknownRunRequest DeserializeUnknownRunRequest(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string type = "Unknown";
             Optional<bool> isArchiveEnabled = default;
             Optional<string> agentPoolName = default;

@@ -21,6 +21,10 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
 
         internal static MachineExtensionInstanceViewStatus DeserializeMachineExtensionInstanceViewStatus(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> code = default;
             Optional<MachineExtensionStatusLevelType> level = default;
             Optional<string> displayStatus = default;

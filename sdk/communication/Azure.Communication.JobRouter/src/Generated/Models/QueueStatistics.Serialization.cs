@@ -15,6 +15,10 @@ namespace Azure.Communication.JobRouter.Models
     {
         internal static QueueStatistics DeserializeQueueStatistics(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string queueId = default;
             int length = default;
             Optional<IReadOnlyDictionary<string, double>> estimatedWaitTimeMinutes = default;

@@ -41,6 +41,10 @@ namespace Azure.ResourceManager.Batch.Models
 
         internal static BatchInboundNatPool DeserializeBatchInboundNatPool(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string name = default;
             BatchInboundEndpointProtocol protocol = default;
             int backendPort = default;

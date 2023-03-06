@@ -40,6 +40,10 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         internal static ContainerAppRegistryCredentials DeserializeContainerAppRegistryCredentials(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> server = default;
             Optional<string> username = default;
             Optional<string> passwordSecretRef = default;
