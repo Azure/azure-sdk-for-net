@@ -76,6 +76,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat
 
         internal const string AttachStatsbeatMeterName = "AttachStatsbeatMeter";
 
-        internal const string AttachStatsbeatInstrumentName = "Attach";
+        internal const string AttachStatsbeatMetricName = "Attach";
     }
 }
