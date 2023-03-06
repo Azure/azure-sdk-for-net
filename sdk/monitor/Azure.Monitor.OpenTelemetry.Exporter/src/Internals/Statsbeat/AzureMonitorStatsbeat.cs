@@ -16,7 +16,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat
 {
     internal sealed class AzureMonitorStatsbeat : IDisposable
     {
-        private static readonly Meter s_myMeter = new("AttachStatsbeatMeter", "1.0");
+        private static readonly Meter s_myMeter = new(StatsbeatConstants.AttachStatsbeatMeterName, "1.0");
 
         internal string? _statsbeat_ConnectionString;
 
@@ -48,7 +48,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat
 
             _customer_Ikey = connectionStringVars?.InstrumentationKey;
 
-            s_myMeter.CreateObservableGauge("AttachStatsbeat", () => GetAttachStatsbeat());
+            s_myMeter.CreateObservableGauge(StatsbeatConstants.AttachStatsbeatInstrumentName, () => GetAttachStatsbeat());
 
             // Configure for attach statsbeat which has collection
             // schedule of 24 hrs == 86400000 milliseconds.
@@ -62,7 +62,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat
             };
 
             _attachStatsbeatMeterProvider = Sdk.CreateMeterProviderBuilder()
-                .AddMeter("AttachStatsbeatMeter")
+                .AddMeter(StatsbeatConstants.AttachStatsbeatMeterName)
                 .AddReader(new PeriodicExportingMetricReader(new AzureMonitorMetricExporter(exporterOptions), StatsbeatConstants.AttachStatsbeatInterval)
                 { TemporalityPreference = MetricReaderTemporalityPreference.Delta })
                 .Build();
