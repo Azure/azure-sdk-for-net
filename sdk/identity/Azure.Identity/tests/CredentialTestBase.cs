@@ -9,7 +9,6 @@ using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
-using Azure.Core.Pipeline;
 using Azure.Core.TestFramework;
 using Azure.Identity.Tests.Mock;
 using Microsoft.Identity.Client;
@@ -177,6 +176,7 @@ namespace Azure.Identity.Tests
             // Configure mock cache to return a token for the expected user
             bool calledRemoveUser = false;
             bool cacheAccessed = false;
+            bool cacheClearValidated = false;
             config.ResolvedTenantId = config.RequestContext.TenantId ?? config.TenantId ?? TenantId;
             byte[] mockBytes = null;
             var tokenCacheOptions = new MockTokenCache(
@@ -196,6 +196,7 @@ namespace Azure.Identity.Tests
                     if (calledRemoveUser)
                     {
                         Assert.AreEqual(0, accessTokenCount, "The cache should be empty after calling RemoveUser");
+                        cacheClearValidated = true;
                     }
                     else
                     {
@@ -217,6 +218,7 @@ namespace Azure.Identity.Tests
                 calledRemoveUser = true;
                 await clearCacheCredential.LogoutAsync();
                 Assert.IsTrue(cacheAccessed, "The cache should have been accessed.");
+                Assert.IsTrue(cacheClearValidated, "The cache should have been cleared.");
             }
             else
             {

@@ -49,7 +49,7 @@ namespace Azure.Identity
     /// perform the authentication using these details. Please consult the
     /// documentation of that class for more details.
     /// </summary>
-    public class EnvironmentCredential : TokenCredential, ISupportsLogout
+    public class EnvironmentCredential : TokenCredential
     {
         private const string UnavailableErrorMessage = "EnvironmentCredential authentication unavailable. Environment variables are not fully configured. See the troubleshooting guide for more information. https://aka.ms/azsdk/net/identity/environmentcredential/troubleshoot";
         private readonly CredentialPipeline _pipeline;
@@ -157,28 +157,6 @@ namespace Azure.Identity
         {
             return await GetTokenImplAsync(true, requestContext, cancellationToken).ConfigureAwait(false);
         }
-
-#pragma warning disable CA2119 // Seal methods that satisfy private interfaces
-        /// <inheritdoc/>
-        [ForwardsClientCalls(true)]
-        public virtual async Task LogoutAsync(CancellationToken cancellationToken = default)
-        {
-            if (Credential is ISupportsLogout supportsClearAccountCache)
-            {
-                await supportsClearAccountCache.LogoutAsync(cancellationToken).ConfigureAwait(false);
-            }
-        }
-
-        /// <inheritdoc/>
-        [ForwardsClientCalls(true)]
-        public virtual void Logout(CancellationToken cancellationToken = default)
-        {
-            if (Credential is ISupportsLogout supportsClearAccountCache)
-            {
-                supportsClearAccountCache.Logout(cancellationToken);
-            }
-        }
-#pragma warning restore CA2119 // Seal methods that satisfy private interfaces
 
         private async ValueTask<AccessToken> GetTokenImplAsync(bool async, TokenRequestContext requestContext, CancellationToken cancellationToken)
         {

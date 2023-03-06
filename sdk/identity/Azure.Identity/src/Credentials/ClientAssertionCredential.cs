@@ -2,8 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -15,7 +13,7 @@ namespace Azure.Identity
     /// <summary>
     /// Enables authentication of an AAD service principal using a signed client assertion.
     /// </summary>
-    public class ClientAssertionCredential : TokenCredential, ISupportsLogout
+    public class ClientAssertionCredential : TokenCredential
     {
         internal readonly string[] AdditionallyAllowedTenantIds;
 
@@ -24,7 +22,6 @@ namespace Azure.Identity
         internal MsalConfidentialClient Client { get; }
         internal CredentialPipeline Pipeline { get; }
         internal bool AllowMultiTenantAuthentication { get; }
-        private IAccount _account;
 
         /// <summary>
         /// Protected constructor for mocking.
@@ -85,7 +82,6 @@ namespace Azure.Identity
                 var tenantId = TenantIdResolver.Resolve(TenantId, requestContext, AdditionallyAllowedTenantIds);
 
                 AuthenticationResult result = Client.AcquireTokenForClientAsync(requestContext.Scopes, tenantId, false, cancellationToken).EnsureCompleted();
-                _account = result.Account;
 
                 return scope.Succeeded(new AccessToken(result.AccessToken, result.ExpiresOn));
             }
@@ -110,7 +106,6 @@ namespace Azure.Identity
                 var tenantId = TenantIdResolver.Resolve(TenantId, requestContext, AdditionallyAllowedTenantIds);
 
                 AuthenticationResult result = await Client.AcquireTokenForClientAsync(requestContext.Scopes, tenantId, true, cancellationToken).ConfigureAwait(false);
-                _account = result.Account;
 
                 return scope.Succeeded(new AccessToken(result.AccessToken, result.ExpiresOn));
             }
@@ -119,31 +114,5 @@ namespace Azure.Identity
                 throw scope.FailWrapAndThrow(e);
             }
         }
-
-#pragma warning disable CA2119 // Seal methods that satisfy private interfaces
-        /// <inheritdoc/>
-        [ForwardsClientCalls(true)]
-        public virtual async Task LogoutAsync(CancellationToken cancellationToken = default)
-        {
-            if (_account != null)
-            {
-                return;
-            }
-            await Client.RemoveUserAsync(_account, cancellationToken).ConfigureAwait(false);
-            _account = null;
-        }
-
-        /// <inheritdoc/>
-        [ForwardsClientCalls(true)]
-        public virtual void Logout(CancellationToken cancellationToken = default)
-        {
-            if (_account != null)
-            {
-                return;
-            }
-            Client.RemoveUser(_account, cancellationToken);
-            _account = null;
-        }
-#pragma warning restore CA2119 // Seal methods that satisfy private interfaces
     }
 }

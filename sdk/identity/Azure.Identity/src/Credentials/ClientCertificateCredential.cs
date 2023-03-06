@@ -17,7 +17,7 @@ namespace Azure.Identity
     /// on how to configure certificate authentication can be found here:
     /// https://docs.microsoft.com/azure/active-directory/develop/active-directory-certificate-credentials#register-your-certificate-with-azure-ad
     /// </summary>
-    public class ClientCertificateCredential : TokenCredential, ISupportsLogout
+    public class ClientCertificateCredential : TokenCredential
     {
         internal const string Troubleshooting = "See the troubleshooting guide for more information. https://aka.ms/azsdk/net/identity/clientcertificatecredential/troubleshoot";
 
@@ -38,8 +38,6 @@ namespace Azure.Identity
         private readonly CredentialPipeline _pipeline;
 
         internal readonly string[] AdditionallyAllowedTenantIds;
-
-        private IAccount _account;
 
         /// <summary>
         /// Protected constructor for mocking.
@@ -189,8 +187,6 @@ namespace Azure.Identity
                 var tenantId = TenantIdResolver.Resolve(TenantId, requestContext, AdditionallyAllowedTenantIds);
                 AuthenticationResult result = Client.AcquireTokenForClientAsync(requestContext.Scopes, tenantId, false, cancellationToken).EnsureCompleted();
 
-                _account = result.Account;
-
                 return scope.Succeeded(new AccessToken(result.AccessToken, result.ExpiresOn));
             }
             catch (Exception e)
@@ -218,8 +214,6 @@ namespace Azure.Identity
                     .AcquireTokenForClientAsync(requestContext.Scopes, tenantId, true, cancellationToken)
                     .ConfigureAwait(false);
 
-                _account = result.Account;
-
                 return scope.Succeeded(new AccessToken(result.AccessToken, result.ExpiresOn));
             }
             catch (Exception e)
@@ -227,31 +221,5 @@ namespace Azure.Identity
                 throw scope.FailWrapAndThrow(e);
             }
         }
-
-#pragma warning disable CA2119 // Seal methods that satisfy private interfaces
-        /// <inheritdoc/>
-        [ForwardsClientCalls(true)]
-        public virtual async Task LogoutAsync(CancellationToken cancellationToken = default)
-        {
-            if (_account != null)
-            {
-                return;
-            }
-            await Client.RemoveUserAsync(_account, cancellationToken).ConfigureAwait(false);
-            _account = null;
-        }
-
-        /// <inheritdoc/>
-        [ForwardsClientCalls(true)]
-        public virtual void Logout(CancellationToken cancellationToken = default)
-        {
-            if (_account != null)
-            {
-                return;
-            }
-            Client.RemoveUser(_account, cancellationToken);
-            _account = null;
-        }
-#pragma warning restore CA2119 // Seal methods that satisfy private interfaces
     }
 }
