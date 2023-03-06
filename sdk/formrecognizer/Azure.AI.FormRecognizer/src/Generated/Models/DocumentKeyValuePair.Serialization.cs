@@ -14,6 +14,10 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
     {
         internal static DocumentKeyValuePair DeserializeDocumentKeyValuePair(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             DocumentKeyValueElement key = default;
             Optional<DocumentKeyValueElement> value = default;
             float confidence = default;

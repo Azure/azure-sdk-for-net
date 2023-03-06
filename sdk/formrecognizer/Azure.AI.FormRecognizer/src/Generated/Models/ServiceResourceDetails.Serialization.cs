@@ -14,6 +14,10 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
     {
         internal static ServiceResourceDetails DeserializeServiceResourceDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             CustomDocumentModelsDetails customDocumentModels = default;
             foreach (var property in element.EnumerateObject())
             {

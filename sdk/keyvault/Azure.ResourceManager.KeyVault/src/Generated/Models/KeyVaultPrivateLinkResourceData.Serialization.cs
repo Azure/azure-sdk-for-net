@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.KeyVault.Models
 
         internal static KeyVaultPrivateLinkResourceData DeserializeKeyVaultPrivateLinkResourceData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<AzureLocation> location = default;
             Optional<IReadOnlyDictionary<string, string>> tags = default;
             ResourceIdentifier id = default;

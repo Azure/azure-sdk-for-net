@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.HealthcareApis.Models
 
         internal static FhirServiceImportConfiguration DeserializeFhirServiceImportConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> integrationDataStore = default;
             Optional<bool> initialImportMode = default;
             Optional<bool> enabled = default;

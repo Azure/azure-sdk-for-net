@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.FluidRelay.Models
 
         internal static CmkIdentity DeserializeCmkIdentity(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<CmkIdentityType> identityType = default;
             Optional<ResourceIdentifier> userAssignedIdentityResourceId = default;
             foreach (var property in element.EnumerateObject())

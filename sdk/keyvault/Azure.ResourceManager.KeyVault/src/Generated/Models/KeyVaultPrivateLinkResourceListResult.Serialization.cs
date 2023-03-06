@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.KeyVault.Models
     {
         internal static KeyVaultPrivateLinkResourceListResult DeserializeKeyVaultPrivateLinkResourceListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<KeyVaultPrivateLinkResourceData>> value = default;
             foreach (var property in element.EnumerateObject())
             {

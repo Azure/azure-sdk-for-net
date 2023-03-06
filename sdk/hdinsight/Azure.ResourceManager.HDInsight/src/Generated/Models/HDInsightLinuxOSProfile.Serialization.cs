@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.HDInsight.Models
 
         internal static HDInsightLinuxOSProfile DeserializeHDInsightLinuxOSProfile(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> username = default;
             Optional<string> password = default;
             Optional<SshProfile> sshProfile = default;

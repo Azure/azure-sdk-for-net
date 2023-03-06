@@ -26,6 +26,10 @@ namespace Azure.ResourceManager.HybridCompute.Models
 
         internal static HybridComputePrivateLinkScopeProperties DeserializeHybridComputePrivateLinkScopeProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<PublicNetworkAccessType> publicNetworkAccess = default;
             Optional<string> provisioningState = default;
             Optional<string> privateLinkScopeId = default;

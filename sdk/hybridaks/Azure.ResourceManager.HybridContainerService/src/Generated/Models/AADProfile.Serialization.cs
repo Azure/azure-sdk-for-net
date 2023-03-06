@@ -62,6 +62,10 @@ namespace Azure.ResourceManager.HybridContainerService.Models
 
         internal static AADProfile DeserializeAADProfile(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<string>> adminGroupObjectIds = default;
             Optional<string> clientAppId = default;
             Optional<bool> enableAzureRbac = default;

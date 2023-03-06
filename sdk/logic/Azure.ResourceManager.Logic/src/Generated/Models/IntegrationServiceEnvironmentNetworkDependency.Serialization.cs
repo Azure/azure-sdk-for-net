@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Logic.Models
     {
         internal static IntegrationServiceEnvironmentNetworkDependency DeserializeIntegrationServiceEnvironmentNetworkDependency(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IntegrationServiceEnvironmentNetworkDependencyCategoryType> category = default;
             Optional<string> displayName = default;
             Optional<IReadOnlyList<IntegrationServiceEnvironmentNetworkEndpoint>> endpoints = default;
