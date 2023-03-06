@@ -13,7 +13,7 @@ using Azure.Core.Pipeline;
 using Azure.ResourceManager.Maintenance.Models;
 
 // In the swagger this delete operation is defined to returen a `MaintenanceConfigurationData` model, but actually the service doesn't return, that cause exception when try to descerialize the response payload .
-// As this lib has already GAed, so here using custom code to retriece the data before running the delete operation that can keep backward compatibility.
+// As this lib has already GAed, so here using custom code to retrieve the data before running the delete operation that can keep backward compatibility.
 
 namespace Azure.ResourceManager.Maintenance
 {
