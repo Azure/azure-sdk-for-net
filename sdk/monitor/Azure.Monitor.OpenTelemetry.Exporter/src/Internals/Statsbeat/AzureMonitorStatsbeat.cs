@@ -48,7 +48,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat
 
             _customer_Ikey = connectionStringVars?.InstrumentationKey;
 
-            s_myMeter.CreateObservableGauge(StatsbeatConstants.AttachStatsbeatInstrumentName, () => GetAttachStatsbeat());
+            s_myMeter.CreateObservableGauge(StatsbeatConstants.AttachStatsbeatMetricName, () => GetAttachStatsbeat());
 
             // Configure for attach statsbeat which has collection
             // schedule of 24 hrs == 86400000 milliseconds.
