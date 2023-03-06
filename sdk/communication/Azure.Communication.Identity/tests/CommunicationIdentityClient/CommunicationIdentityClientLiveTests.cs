@@ -311,7 +311,7 @@ namespace Azure.Communication.Identity.Tests
         {
             if (TestEnvironment.ShouldIgnoreIdentityExchangeTokenTest)
             {
-                Assert.Ignore("Ignore exchange teams token test if flag is enabled.");
+                Assert.Pass("Ignore exchange teams token test if flag is enabled.");
             }
 
             CommunicationIdentityClient client = CreateClient();
@@ -388,7 +388,7 @@ namespace Azure.Communication.Identity.Tests
         {
             if (TestEnvironment.ShouldIgnoreIdentityExchangeTokenTest)
             {
-                Assert.Ignore("Ignore exchange teams token test if flag is enabled.");
+                Assert.Pass("Ignore exchange teams token test if flag is enabled.");
             }
 
             try
@@ -411,7 +411,7 @@ namespace Azure.Communication.Identity.Tests
         {
             if (TestEnvironment.ShouldIgnoreIdentityExchangeTokenTest)
             {
-                Assert.Ignore("Ignore exchange teams token test if flag is enabled.");
+                Assert.Pass("Ignore exchange teams token test if flag is enabled.");
             }
 
             try
@@ -436,7 +436,7 @@ namespace Azure.Communication.Identity.Tests
         {
             if (TestEnvironment.ShouldIgnoreIdentityExchangeTokenTest)
             {
-                Assert.Ignore("Ignore exchange teams token test if flag is enabled.");
+                Assert.Pass("Ignore exchange teams token test if flag is enabled.");
             }
 
             try
@@ -459,7 +459,7 @@ namespace Azure.Communication.Identity.Tests
         {
             if (TestEnvironment.ShouldIgnoreIdentityExchangeTokenTest)
             {
-                Assert.Ignore("Ignore exchange teams token test if flag is enabled.");
+                Assert.Pass("Ignore exchange teams token test if flag is enabled.");
             }
 
             try
