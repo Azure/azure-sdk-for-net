@@ -10,6 +10,9 @@ using Azure.Core;
 using Azure.ResourceManager.Maintenance.Models;
 using Azure.ResourceManager.Models;
 
+// Custom code to support custom datetime format for the 2 properties startDateTime and expirationDateTime
+// Here is an issue https://github.com/Azure/autorest.csharp/issues/3184 to track if codegen can support custom datetime format in the furture.
+
 [assembly: CodeGenSuppressType("MaintenanceConfigurationData")]
 
 namespace Azure.ResourceManager.Maintenance
