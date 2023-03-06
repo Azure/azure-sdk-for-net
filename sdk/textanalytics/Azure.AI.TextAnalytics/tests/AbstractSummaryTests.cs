@@ -73,7 +73,7 @@ namespace Azure.AI.TextAnalytics.Tests
             }
         };
 
-        private const int MaxSentenceCount = 3;
+        private const int AbstractiveSummarizationSentenceCount = 3;
 
         [RecordedTest]
         public async Task AbstractSummaryWithAADTest()
@@ -141,7 +141,7 @@ namespace Azure.AI.TextAnalytics.Tests
 
             AbstractSummaryOptions options = new AbstractSummaryOptions()
             {
-                MaxSentenceCount = MaxSentenceCount,
+                SentenceCount = AbstractiveSummarizationSentenceCount,
                 IncludeStatistics = true,
             };
 
@@ -154,7 +154,7 @@ namespace Azure.AI.TextAnalytics.Tests
 
             // Take the first page.
             AbstractSummaryResultCollection resultCollection = resultInPages.FirstOrDefault();
-            ValidateSummaryBatchResult(resultCollection, MaxSentenceCount, true);
+            ValidateSummaryBatchResult(resultCollection, true);
         }
 
         [RecordedTest]
@@ -181,7 +181,7 @@ namespace Azure.AI.TextAnalytics.Tests
 
             AbstractSummaryOptions options = new AbstractSummaryOptions()
             {
-                MaxSentenceCount = MaxSentenceCount,
+                SentenceCount = AbstractiveSummarizationSentenceCount,
                 IncludeStatistics = true,
             };
 
@@ -194,7 +194,7 @@ namespace Azure.AI.TextAnalytics.Tests
 
             // Take the first page.
             AbstractSummaryResultCollection resultCollection = resultInPages.FirstOrDefault();
-            ValidateSummaryBatchResult(resultCollection, MaxSentenceCount, true);
+            ValidateSummaryBatchResult(resultCollection, true);
         }
 
         [RecordedTest]
@@ -258,7 +258,6 @@ namespace Azure.AI.TextAnalytics.Tests
 
         private void ValidateSummaryBatchResult(
             AbstractSummaryResultCollection results,
-            int? maxSentenceCount = default,
             bool includeStatistics = default,
             bool isLanguageAutoDetected = default)
         {
@@ -317,13 +316,9 @@ namespace Azure.AI.TextAnalytics.Tests
                     Assert.That(summary.Text, Is.Not.Null.And.Not.Empty);
                     Assert.Less(summary.Text.Length, originalDocument.Length);
 
-                    if (maxSentenceCount is not null)
-                    {
-                        char[] separators = { '.', '!', '?' };
-                        string[] sentences = summary.Text.Split(separators, StringSplitOptions.RemoveEmptyEntries);
-                        // BUGBUG: https://github.com/Azure/azure-sdk-for-net/issues/34518
-                        // Assert.LessOrEqual(sentences.Count(), maxSentenceCount);
-                    }
+                    char[] separators = { '.', '!', '?' };
+                    string[] sentences = summary.Text.Split(separators, StringSplitOptions.RemoveEmptyEntries);
+                    Assert.Greater(sentences.Length, 0);
 
                     Assert.IsNotNull(summary.Contexts);
                     Assert.Greater(summary.Contexts.Count, 0);
