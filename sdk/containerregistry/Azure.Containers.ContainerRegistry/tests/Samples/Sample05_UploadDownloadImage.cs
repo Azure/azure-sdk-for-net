@@ -8,7 +8,6 @@ using System.Threading.Tasks;
 using Azure.Containers.ContainerRegistry.Specialized;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
-using NUnit.Framework.Interfaces;
 
 namespace Azure.Containers.ContainerRegistry.Tests.Samples
 {
@@ -29,7 +28,7 @@ namespace Azure.Containers.ContainerRegistry.Tests.Samples
             string tag = "demo";
 
             // Create a new ContainerRegistryBlobClient
-            ContainerRegistryBlobClient client = new ContainerRegistryBlobClient(endpoint, repository, new DefaultAzureCredential(), new ContainerRegistryClientOptions()
+            ContainerRegistryBlobClient client = new(endpoint, repository, new DefaultAzureCredential(), new ContainerRegistryClientOptions()
             {
                 Audience = ContainerRegistryAudience.AzureResourceManagerPublicCloud
             });
@@ -78,7 +77,7 @@ namespace Azure.Containers.ContainerRegistry.Tests.Samples
             Environment.SetEnvironmentVariable("REGISTRY_ENDPOINT", TestEnvironment.Endpoint);
 
             // Get the service endpoint from the environment
-            Uri endpoint = new Uri(Environment.GetEnvironmentVariable("REGISTRY_ENDPOINT"));
+            Uri endpoint = new(Environment.GetEnvironmentVariable("REGISTRY_ENDPOINT"));
 
             string repository = "sample-oci-image";
             string tag = "demo";
@@ -195,7 +194,7 @@ namespace Azure.Containers.ContainerRegistry.Tests.Samples
             Directory.CreateDirectory(path);
 
             // Create a new ContainerRegistryBlobClient
-            ContainerRegistryBlobClient client = new ContainerRegistryBlobClient(endpoint, repository, new DefaultAzureCredential(), new ContainerRegistryClientOptions()
+            ContainerRegistryBlobClient client = new(endpoint, repository, new DefaultAzureCredential(), new ContainerRegistryClientOptions()
             {
                 Audience = ContainerRegistryAudience.AzureResourceManagerPublicCloud
             });
@@ -209,16 +208,13 @@ namespace Azure.Containers.ContainerRegistry.Tests.Samples
 
             DownloadManifestResult result = await client.DownloadManifestAsync("sample", mediaTypes);
 
-            switch (result.MediaType)
+            if (result.MediaType == "application/vnd.docker.distribution.manifest.list.v2+json")
             {
-                case "application/vnd.docker.distribution.manifest.list.v2+json":
-                    Console.WriteLine("Received Docker manifest list.");
-                    break;
-                case "application/vnd.oci.image.index.v1+json":
-                    Console.WriteLine("Received OCI index.");
-                    break;
-                default:
-                    throw new InvalidOperationException("Unexpected manifest media type.");
+                Console.WriteLine("Manifest is a Docker manifest list.");
+            }
+            else if (result.MediaType == "application/vnd.oci.image.index.v1+json")
+            {
+                Console.WriteLine("Manifest is an OCI index.");
             }
 
             #endregion
