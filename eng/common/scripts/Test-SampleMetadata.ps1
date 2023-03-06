@@ -321,7 +321,6 @@ begin {
         "azure-vpn-gateway",
         "azure-web-application-firewall",
         "azure-web-apps",
-        "azure-web-pubsub",
         "azure-webapp-containers",
         "blazor-server",
         "blazor-webassembly",
