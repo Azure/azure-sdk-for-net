@@ -41,6 +41,10 @@ namespace Azure.ResourceManager.Kusto.Models
 
         internal static KustoDatabasePrincipal DeserializeKustoDatabasePrincipal(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             KustoDatabasePrincipalRole role = default;
             string name = default;
             KustoDatabasePrincipalType type = default;

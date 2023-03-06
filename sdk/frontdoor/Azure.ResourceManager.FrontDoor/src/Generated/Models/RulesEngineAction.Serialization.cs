@@ -53,6 +53,10 @@ namespace Azure.ResourceManager.FrontDoor.Models
 
         internal static RulesEngineAction DeserializeRulesEngineAction(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<RulesEngineHeaderAction>> requestHeaderActions = default;
             Optional<IList<RulesEngineHeaderAction>> responseHeaderActions = default;
             Optional<RouteConfiguration> routeConfigurationOverride = default;

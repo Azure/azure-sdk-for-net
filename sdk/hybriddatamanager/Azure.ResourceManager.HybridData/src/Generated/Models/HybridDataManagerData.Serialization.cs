@@ -47,6 +47,10 @@ namespace Azure.ResourceManager.HybridData
 
         internal static HybridDataManagerData DeserializeHybridDataManagerData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ETag> etag = default;
             Optional<HybridDataSku> sku = default;
             Optional<IDictionary<string, string>> tags = default;

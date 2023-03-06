@@ -21,6 +21,10 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
 
         internal static GuestConfigurationVmssVmInfo DeserializeGuestConfigurationVmssVmInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<Guid> vmId = default;
             Optional<ResourceIdentifier> vmResourceId = default;
             Optional<AssignedGuestConfigurationMachineComplianceStatus> complianceStatus = default;

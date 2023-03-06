@@ -22,6 +22,10 @@ namespace Azure.ResourceManager.HealthcareApis.Models
 
         internal static FhirServiceAccessPolicyEntry DeserializeFhirServiceAccessPolicyEntry(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string objectId = default;
             foreach (var property in element.EnumerateObject())
             {

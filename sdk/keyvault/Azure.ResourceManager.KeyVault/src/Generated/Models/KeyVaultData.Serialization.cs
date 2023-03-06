@@ -38,6 +38,10 @@ namespace Azure.ResourceManager.KeyVault
 
         internal static KeyVaultData DeserializeKeyVaultData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Models.KeyVaultProperties properties = default;
             Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;

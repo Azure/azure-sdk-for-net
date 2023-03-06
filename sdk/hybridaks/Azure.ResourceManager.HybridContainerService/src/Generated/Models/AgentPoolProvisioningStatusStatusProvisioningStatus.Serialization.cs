@@ -40,6 +40,10 @@ namespace Azure.ResourceManager.HybridContainerService.Models
 
         internal static AgentPoolProvisioningStatusStatusProvisioningStatus DeserializeAgentPoolProvisioningStatusStatusProvisioningStatus(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<AgentPoolProvisioningStatusError> error = default;
             Optional<string> operationId = default;
             Optional<string> phase = default;

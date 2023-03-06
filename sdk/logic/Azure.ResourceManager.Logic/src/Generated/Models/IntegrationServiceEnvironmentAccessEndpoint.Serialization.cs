@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.Logic.Models
 
         internal static IntegrationServiceEnvironmentAccessEndpoint DeserializeIntegrationServiceEnvironmentAccessEndpoint(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IntegrationServiceEnvironmentAccessEndpointType> type = default;
             foreach (var property in element.EnumerateObject())
             {
