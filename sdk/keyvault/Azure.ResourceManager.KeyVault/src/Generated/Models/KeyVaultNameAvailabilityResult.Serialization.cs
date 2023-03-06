@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.KeyVault.Models
     {
         internal static KeyVaultNameAvailabilityResult DeserializeKeyVaultNameAvailabilityResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> nameAvailable = default;
             Optional<KeyVaultNameUnavailableReason> reason = default;
             Optional<string> message = default;

@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Compute.Models
     {
         internal static UpdateDomainListResult DeserializeUpdateDomainListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IReadOnlyList<UpdateDomainIdentifier> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

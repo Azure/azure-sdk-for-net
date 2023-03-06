@@ -253,6 +253,10 @@ namespace Azure.ResourceManager.NetApp
 
         internal static NetAppVolumeData DeserializeNetAppVolumeData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ETag> etag = default;
             Optional<IList<string>> zones = default;
             Optional<IDictionary<string, string>> tags = default;

@@ -77,6 +77,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static TextClassificationMultilabel DeserializeTextClassificationMultilabel(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ClassificationMultilabelPrimaryMetric> primaryMetric = default;
             Optional<NlpVerticalFeaturizationSettings> featurizationSettings = default;
             Optional<NlpVerticalLimitSettings> limitSettings = default;

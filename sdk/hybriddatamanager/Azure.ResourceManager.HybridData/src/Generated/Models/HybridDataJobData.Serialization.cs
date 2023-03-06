@@ -77,6 +77,10 @@ namespace Azure.ResourceManager.HybridData
 
         internal static HybridDataJobData DeserializeHybridDataJobData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             HybridDataJobStatus status = default;
             DateTimeOffset startTime = default;
             Optional<DateTimeOffset> endTime = default;

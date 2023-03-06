@@ -40,6 +40,10 @@ namespace Azure.ResourceManager.Dns.Models
 
         internal static DnsSrvRecordInfo DeserializeDnsSrvRecordInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> priority = default;
             Optional<int> weight = default;
             Optional<int> port = default;

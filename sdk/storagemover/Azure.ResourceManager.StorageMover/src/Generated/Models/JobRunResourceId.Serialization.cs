@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.StorageMover.Models
     {
         internal static JobRunResourceId DeserializeJobRunResourceId(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ResourceIdentifier> jobRunResourceId = default;
             foreach (var property in element.EnumerateObject())
             {

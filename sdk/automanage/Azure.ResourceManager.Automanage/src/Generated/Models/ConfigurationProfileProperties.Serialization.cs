@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.Automanage.Models
 
         internal static ConfigurationProfileProperties DeserializeConfigurationProfileProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<BinaryData> configuration = default;
             foreach (var property in element.EnumerateObject())
             {

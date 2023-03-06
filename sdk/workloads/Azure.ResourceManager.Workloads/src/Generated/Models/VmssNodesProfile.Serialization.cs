@@ -52,6 +52,10 @@ namespace Azure.ResourceManager.Workloads.Models
 
         internal static VmssNodesProfile DeserializeVmssNodesProfile(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> autoScaleMinCount = default;
             Optional<int> autoScaleMaxCount = default;
             Optional<string> name = default;
@@ -127,7 +131,14 @@ namespace Azure.ResourceManager.Workloads.Models
                     List<ResourceIdentifier> array = new List<ResourceIdentifier>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(new ResourceIdentifier(item.GetString()));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(new ResourceIdentifier(item.GetString()));
+                        }
                     }
                     nodeResourceIds = array;
                     continue;

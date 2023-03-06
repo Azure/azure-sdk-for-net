@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Consumption.Models
     {
         internal static PriceSheetProperties DeserializePriceSheetProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ResourceIdentifier> billingPeriodId = default;
             Optional<Guid> meterId = default;
             Optional<ConsumptionMeterDetails> meterDetails = default;

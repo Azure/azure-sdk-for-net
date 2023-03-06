@@ -49,6 +49,10 @@ namespace Azure.ResourceManager.DeploymentManager.Models
 
         internal static RestHealthCheckStepAttributes DeserializeRestHealthCheckStepAttributes(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string type = default;
             Optional<TimeSpan> waitDuration = default;
             Optional<TimeSpan> maxElasticDuration = default;

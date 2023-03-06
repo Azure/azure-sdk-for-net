@@ -42,6 +42,10 @@ namespace Azure.ResourceManager.HealthcareApis
 
         internal static HealthcareApisIotFhirDestinationData DeserializeHealthcareApisIotFhirDestinationData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<AzureLocation> location = default;
             Optional<ETag> etag = default;
             ResourceIdentifier id = default;

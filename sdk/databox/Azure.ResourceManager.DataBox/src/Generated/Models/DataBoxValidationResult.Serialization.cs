@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.DataBox.Models
     {
         internal static DataBoxValidationResult DeserializeDataBoxValidationResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<OverallValidationStatus> status = default;
             Optional<IReadOnlyList<DataBoxValidationInputResult>> individualResponseDetails = default;
             foreach (var property in element.EnumerateObject())

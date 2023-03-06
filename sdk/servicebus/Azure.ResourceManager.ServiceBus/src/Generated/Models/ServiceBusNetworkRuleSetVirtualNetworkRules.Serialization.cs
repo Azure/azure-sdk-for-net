@@ -31,6 +31,10 @@ namespace Azure.ResourceManager.ServiceBus.Models
 
         internal static ServiceBusNetworkRuleSetVirtualNetworkRules DeserializeServiceBusNetworkRuleSetVirtualNetworkRules(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<WritableSubResource> subnet = default;
             Optional<bool> ignoreMissingVnetServiceEndpoint = default;
             foreach (var property in element.EnumerateObject())

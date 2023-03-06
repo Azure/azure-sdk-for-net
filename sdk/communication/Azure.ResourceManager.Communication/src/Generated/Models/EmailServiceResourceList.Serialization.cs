@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.Communication.Models
     {
         internal static EmailServiceResourceList DeserializeEmailServiceResourceList(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<EmailServiceResourceData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

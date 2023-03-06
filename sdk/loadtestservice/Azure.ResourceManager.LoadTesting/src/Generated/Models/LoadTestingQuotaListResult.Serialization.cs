@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.LoadTesting.Models
     {
         internal static LoadTestingQuotaListResult DeserializeLoadTestingQuotaListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<LoadTestingQuotaData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

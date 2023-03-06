@@ -37,6 +37,10 @@ namespace Azure.ResourceManager.DataMigration.Models
 
         internal static ConnectToSourceMySqlTaskInput DeserializeConnectToSourceMySqlTaskInput(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             MySqlConnectionInfo sourceConnectionInfo = default;
             Optional<MySqlTargetPlatformType> targetPlatform = default;
             Optional<ServerLevelPermissionsGroup> checkPermissionsGroup = default;

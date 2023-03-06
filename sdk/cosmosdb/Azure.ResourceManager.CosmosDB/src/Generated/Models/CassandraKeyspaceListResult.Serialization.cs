@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
     {
         internal static CassandraKeyspaceListResult DeserializeCassandraKeyspaceListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<CassandraKeyspaceData>> value = default;
             foreach (var property in element.EnumerateObject())
             {

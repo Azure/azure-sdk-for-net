@@ -27,6 +27,10 @@ namespace Azure.ResourceManager.DevSpaces.Models
 
         internal static DevSpacesSku DeserializeDevSpacesSku(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             DevSpacesSkuName name = default;
             Optional<DevSpacesSkuTier> tier = default;
             foreach (var property in element.EnumerateObject())

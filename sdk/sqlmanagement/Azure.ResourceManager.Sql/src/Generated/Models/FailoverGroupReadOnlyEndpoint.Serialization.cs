@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.Sql.Models
 
         internal static FailoverGroupReadOnlyEndpoint DeserializeFailoverGroupReadOnlyEndpoint(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ReadOnlyEndpointFailoverPolicy> failoverPolicy = default;
             foreach (var property in element.EnumerateObject())
             {

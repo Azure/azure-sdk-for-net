@@ -48,6 +48,10 @@ namespace Azure.AI.TextAnalytics.Models
 
         internal static EntityLinkingResultWithDetectedLanguage DeserializeEntityLinkingResultWithDetectedLanguage(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DetectedLanguageInternal> detectedLanguage = default;
             IList<LinkedEntity> entities = default;
             string id = default;

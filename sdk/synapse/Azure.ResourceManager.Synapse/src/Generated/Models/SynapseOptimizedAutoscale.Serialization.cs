@@ -28,6 +28,10 @@ namespace Azure.ResourceManager.Synapse.Models
 
         internal static SynapseOptimizedAutoscale DeserializeSynapseOptimizedAutoscale(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             int version = default;
             bool isEnabled = default;
             int minimum = default;

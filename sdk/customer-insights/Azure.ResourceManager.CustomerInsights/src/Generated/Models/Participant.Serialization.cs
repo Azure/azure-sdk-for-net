@@ -59,6 +59,10 @@ namespace Azure.ResourceManager.CustomerInsights.Models
 
         internal static Participant DeserializeParticipant(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string profileTypeName = default;
             IList<ParticipantPropertyReference> participantPropertyReferences = default;
             string participantName = default;

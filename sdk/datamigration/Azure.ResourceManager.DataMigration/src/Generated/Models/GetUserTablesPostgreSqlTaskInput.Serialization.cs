@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.DataMigration.Models
 
         internal static GetUserTablesPostgreSqlTaskInput DeserializeGetUserTablesPostgreSqlTaskInput(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             PostgreSqlConnectionInfo connectionInfo = default;
             IList<string> selectedDatabases = default;
             foreach (var property in element.EnumerateObject())

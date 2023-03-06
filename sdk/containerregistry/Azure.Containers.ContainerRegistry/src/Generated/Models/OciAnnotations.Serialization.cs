@@ -87,6 +87,10 @@ namespace Azure.Containers.ContainerRegistry.Specialized
 
         internal static OciAnnotations DeserializeOciAnnotations(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DateTimeOffset> orgOpencontainersImageCreated = default;
             Optional<string> orgOpencontainersImageAuthors = default;
             Optional<string> orgOpencontainersImageUrl = default;

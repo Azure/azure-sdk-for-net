@@ -26,6 +26,10 @@ namespace Azure.IoT.TimeSeriesInsights
 
         internal static InterpolationBoundary DeserializeInterpolationBoundary(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<TimeSpan> span = default;
             foreach (var property in element.EnumerateObject())
             {

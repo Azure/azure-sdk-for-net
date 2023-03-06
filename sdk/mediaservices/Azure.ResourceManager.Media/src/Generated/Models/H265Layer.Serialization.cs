@@ -88,6 +88,10 @@ namespace Azure.ResourceManager.Media.Models
 
         internal static H265Layer DeserializeH265Layer(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<H265VideoProfile> profile = default;
             Optional<string> level = default;
             Optional<TimeSpan> bufferWindow = default;

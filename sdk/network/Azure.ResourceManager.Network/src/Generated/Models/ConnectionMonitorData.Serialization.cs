@@ -19,6 +19,10 @@ namespace Azure.ResourceManager.Network
     {
         internal static ConnectionMonitorData DeserializeConnectionMonitorData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ETag> etag = default;
             Optional<AzureLocation> location = default;
             Optional<IReadOnlyDictionary<string, string>> tags = default;

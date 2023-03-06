@@ -49,6 +49,10 @@ namespace Azure.ResourceManager.DnsResolver
 
         internal static DnsForwardingRulesetData DeserializeDnsForwardingRulesetData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ETag> etag = default;
             Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;

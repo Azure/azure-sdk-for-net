@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.DevTestLabs.Models
 
         internal static DevTestLabDataDiskProperties DeserializeDevTestLabDataDiskProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<AttachNewDataDiskDetails> attachNewDataDiskOptions = default;
             Optional<ResourceIdentifier> existingLabDiskId = default;
             Optional<DevTestLabHostCachingOption> hostCaching = default;

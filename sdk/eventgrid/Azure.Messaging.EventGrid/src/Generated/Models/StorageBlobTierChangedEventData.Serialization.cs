@@ -17,6 +17,10 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     {
         internal static StorageBlobTierChangedEventData DeserializeStorageBlobTierChangedEventData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> api = default;
             Optional<string> clientRequestId = default;
             Optional<string> requestId = default;

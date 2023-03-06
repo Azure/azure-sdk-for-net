@@ -48,6 +48,10 @@ namespace Azure.AI.TextAnalytics.Models
 
         internal static CustomLabelClassificationResultDocumentsItem DeserializeCustomLabelClassificationResultDocumentsItem(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DetectedLanguageInternal> detectedLanguage = default;
             IList<ClassificationResult> @class = default;
             string id = default;

@@ -15,6 +15,10 @@ namespace Azure.Analytics.Synapse.Spark.Models
     {
         internal static SparkBatchJob DeserializeSparkBatchJob(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<SparkBatchJobState> livyInfo = default;
             Optional<string> name = default;
             Optional<string> workspaceName = default;

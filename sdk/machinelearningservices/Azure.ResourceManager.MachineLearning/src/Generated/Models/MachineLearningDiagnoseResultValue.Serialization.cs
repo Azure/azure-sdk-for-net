@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
     {
         internal static MachineLearningDiagnoseResultValue DeserializeMachineLearningDiagnoseResultValue(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<MachineLearningDiagnoseResult>> userDefinedRouteResults = default;
             Optional<IReadOnlyList<MachineLearningDiagnoseResult>> networkSecurityRuleResults = default;
             Optional<IReadOnlyList<MachineLearningDiagnoseResult>> resourceLockResults = default;

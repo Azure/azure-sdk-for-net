@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.EdgeOrder.Models
     {
         internal static EdgeOrderStageDetails DeserializeEdgeOrderStageDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<EdgeOrderStageStatus> stageStatus = default;
             Optional<EdgeOrderStageName> stageName = default;
             Optional<string> displayName = default;

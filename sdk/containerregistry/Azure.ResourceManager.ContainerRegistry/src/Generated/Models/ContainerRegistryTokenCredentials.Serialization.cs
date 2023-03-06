@@ -41,6 +41,10 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
 
         internal static ContainerRegistryTokenCredentials DeserializeContainerRegistryTokenCredentials(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<ContainerRegistryTokenCertificate>> certificates = default;
             Optional<IList<ContainerRegistryTokenPassword>> passwords = default;
             foreach (var property in element.EnumerateObject())

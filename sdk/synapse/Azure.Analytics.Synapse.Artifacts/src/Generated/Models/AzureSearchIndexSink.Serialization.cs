@@ -61,6 +61,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static AzureSearchIndexSink DeserializeAzureSearchIndexSink(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<AzureSearchIndexWriteBehaviorType> writeBehavior = default;
             string type = default;
             Optional<object> writeBatchSize = default;

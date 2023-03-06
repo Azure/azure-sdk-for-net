@@ -52,6 +52,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         internal static DefenderForServersAwsOffering DeserializeDefenderForServersAwsOffering(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<AwsDefenderForServersInfo> defenderForServers = default;
             Optional<DefenderForServersAwsOfferingArcAutoProvisioning> arcAutoProvisioning = default;
             Optional<DefenderForServersAwsOfferingVulnerabilityAssessmentAutoProvisioning> vaAutoProvisioning = default;

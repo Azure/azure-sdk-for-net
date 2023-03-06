@@ -86,6 +86,10 @@ namespace Azure.ResourceManager.HDInsight.Models
 
         internal static HDInsightClusterRole DeserializeHDInsightClusterRole(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<int> minInstanceCount = default;
             Optional<int> targetInstanceCount = default;

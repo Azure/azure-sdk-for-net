@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.LabServices.Models
     {
         internal static LabServicesUsageName DeserializeLabServicesUsageName(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> localizedValue = default;
             Optional<IReadOnlyList<string>> skuInstances = default;
             Optional<string> value = default;

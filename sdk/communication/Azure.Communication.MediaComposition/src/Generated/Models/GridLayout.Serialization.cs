@@ -25,6 +25,11 @@ namespace Azure.Communication.MediaComposition
             writer.WriteStartArray();
             foreach (var item in InputIds)
             {
+                if (item == null)
+                {
+                    writer.WriteNullValue();
+                    continue;
+                }
                 writer.WriteStartArray();
                 foreach (var item0 in item)
                 {
@@ -55,6 +60,10 @@ namespace Azure.Communication.MediaComposition
 
         internal static GridLayout DeserializeGridLayout(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             int rows = default;
             int columns = default;
             IList<IList<string>> inputIds = default;
@@ -79,12 +88,19 @@ namespace Azure.Communication.MediaComposition
                     List<IList<string>> array = new List<IList<string>>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        List<string> array0 = new List<string>();
-                        foreach (var item0 in item.EnumerateArray())
+                        if (item.ValueKind == JsonValueKind.Null)
                         {
-                            array0.Add(item0.GetString());
+                            array.Add(null);
                         }
-                        array.Add(array0);
+                        else
+                        {
+                            List<string> array0 = new List<string>();
+                            foreach (var item0 in item.EnumerateArray())
+                            {
+                                array0.Add(item0.GetString());
+                            }
+                            array.Add(array0);
+                        }
                     }
                     inputIds = array;
                     continue;

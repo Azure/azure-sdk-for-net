@@ -51,6 +51,10 @@ namespace Azure.ResourceManager.DataBox.Models
 
         internal static BlobFilterDetails DeserializeBlobFilterDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<string>> blobPrefixList = default;
             Optional<IList<string>> blobPathList = default;
             Optional<IList<string>> containerList = default;

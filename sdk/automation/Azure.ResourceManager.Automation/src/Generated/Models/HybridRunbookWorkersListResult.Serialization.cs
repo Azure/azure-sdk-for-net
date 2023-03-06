@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.Automation.Models
     {
         internal static HybridRunbookWorkersListResult DeserializeHybridRunbookWorkersListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<HybridRunbookWorkerData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

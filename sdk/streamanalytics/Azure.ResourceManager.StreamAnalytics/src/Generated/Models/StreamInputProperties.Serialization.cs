@@ -48,6 +48,10 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
 
         internal static StreamInputProperties DeserializeStreamInputProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<StreamInputDataSource> datasource = default;
             string type = default;
             Optional<StreamAnalyticsDataSerialization> serialization = default;

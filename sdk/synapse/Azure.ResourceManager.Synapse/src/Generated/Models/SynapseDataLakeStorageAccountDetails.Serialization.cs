@@ -41,6 +41,10 @@ namespace Azure.ResourceManager.Synapse.Models
 
         internal static SynapseDataLakeStorageAccountDetails DeserializeSynapseDataLakeStorageAccountDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<Uri> accountUrl = default;
             Optional<string> filesystem = default;
             Optional<ResourceIdentifier> resourceId = default;

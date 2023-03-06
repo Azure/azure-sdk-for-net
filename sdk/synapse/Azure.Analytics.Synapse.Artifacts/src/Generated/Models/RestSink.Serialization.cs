@@ -81,6 +81,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static RestSink DeserializeRestSink(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<object> requestMethod = default;
             Optional<object> additionalHeaders = default;
             Optional<object> httpRequestTimeout = default;

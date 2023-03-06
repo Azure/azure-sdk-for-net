@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal static TroubleshootingRecommendedActions DeserializeTroubleshootingRecommendedActions(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> actionId = default;
             Optional<string> actionText = default;
             Optional<Uri> actionUri = default;

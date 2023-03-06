@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static VpnLinkProviderProperties DeserializeVpnLinkProviderProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> linkProviderName = default;
             Optional<int> linkSpeedInMbps = default;
             foreach (var property in element.EnumerateObject())

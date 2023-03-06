@@ -40,6 +40,10 @@ namespace Azure.ResourceManager.BotService.Models
 
         internal static UnknownChannel DeserializeUnknownChannel(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string channelName = "Unknown";
             Optional<ETag?> etag = default;
             Optional<string> provisioningState = default;

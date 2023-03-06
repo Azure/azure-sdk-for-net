@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.DataBox.Models
     {
         internal static DataCenterAddressLocationResult DeserializeDataCenterAddressLocationResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> contactPersonName = default;
             Optional<string> company = default;
             Optional<string> street1 = default;

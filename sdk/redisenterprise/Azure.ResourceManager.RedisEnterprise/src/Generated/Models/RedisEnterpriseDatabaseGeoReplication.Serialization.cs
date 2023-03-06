@@ -36,6 +36,10 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
 
         internal static RedisEnterpriseDatabaseGeoReplication DeserializeRedisEnterpriseDatabaseGeoReplication(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> groupNickname = default;
             Optional<IList<RedisEnterpriseLinkedDatabase>> linkedDatabases = default;
             foreach (var property in element.EnumerateObject())

@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     {
         internal static VmResourceFeatureSupportResult DeserializeVmResourceFeatureSupportResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<VmResourceFeatureSupportStatus> supportStatus = default;
             foreach (var property in element.EnumerateObject())
             {

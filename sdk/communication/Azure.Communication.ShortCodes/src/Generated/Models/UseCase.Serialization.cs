@@ -36,6 +36,10 @@ namespace Azure.Communication.ShortCodes.Models
 
         internal static UseCase DeserializeUseCase(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<MessageContentCategory> contentCategory = default;
             Optional<IList<MessageExampleSequence>> examples = default;
             foreach (var property in element.EnumerateObject())

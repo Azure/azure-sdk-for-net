@@ -46,6 +46,10 @@ namespace Azure.AI.TextAnalytics.Models
 
         internal static ExtractiveSummarizationTaskParameters DeserializeExtractiveSummarizationTaskParameters(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> sentenceCount = default;
             Optional<SummarySentencesOrder> sortBy = default;
             Optional<StringIndexType> stringIndexType = default;

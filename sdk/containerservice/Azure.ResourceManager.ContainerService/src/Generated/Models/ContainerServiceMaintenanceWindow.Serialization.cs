@@ -47,6 +47,10 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         internal static ContainerServiceMaintenanceWindow DeserializeContainerServiceMaintenanceWindow(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ContainerServiceMaintenanceSchedule schedule = default;
             int durationHours = default;
             Optional<string> utcOffset = default;

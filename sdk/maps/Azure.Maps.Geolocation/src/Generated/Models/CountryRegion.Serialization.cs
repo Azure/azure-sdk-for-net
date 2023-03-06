@@ -14,6 +14,10 @@ namespace Azure.Maps.Geolocation
     {
         internal static CountryRegion DeserializeCountryRegion(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> isoCode = default;
             foreach (var property in element.EnumerateObject())
             {

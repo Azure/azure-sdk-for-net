@@ -46,6 +46,10 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 
         internal static ManagedClusterClientCertificate DeserializeManagedClusterClientCertificate(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             bool isAdmin = default;
             Optional<BinaryData> thumbprint = default;
             Optional<string> commonName = default;

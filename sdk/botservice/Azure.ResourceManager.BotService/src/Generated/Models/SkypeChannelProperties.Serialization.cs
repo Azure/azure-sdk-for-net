@@ -67,6 +67,10 @@ namespace Azure.ResourceManager.BotService.Models
 
         internal static SkypeChannelProperties DeserializeSkypeChannelProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> enableMessaging = default;
             Optional<bool> enableMediaCards = default;
             Optional<bool> enableVideo = default;

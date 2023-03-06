@@ -71,6 +71,10 @@ namespace Azure.ResourceManager.Monitor.Models
 
         internal static ScheduledQueryRuleCondition DeserializeScheduledQueryRuleCondition(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> query = default;
             Optional<ScheduledQueryRuleTimeAggregationType> timeAggregation = default;
             Optional<string> metricMeasureColumn = default;
