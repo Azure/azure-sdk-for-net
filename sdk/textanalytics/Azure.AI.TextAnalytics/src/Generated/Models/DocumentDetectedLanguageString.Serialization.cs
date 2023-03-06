@@ -25,6 +25,10 @@ namespace Azure.AI.TextAnalytics.Models
 
         internal static DocumentDetectedLanguageString DeserializeDocumentDetectedLanguageString(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> detectedLanguage = default;
             foreach (var property in element.EnumerateObject())
             {

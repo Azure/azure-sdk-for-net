@@ -81,6 +81,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static IntegrationRuntimeSsisProperties DeserializeIntegrationRuntimeSsisProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IntegrationRuntimeSsisCatalogInfo> catalogInfo = default;
             Optional<IntegrationRuntimeLicenseType> licenseType = default;
             Optional<IntegrationRuntimeCustomSetupScriptProperties> customSetupScriptProperties = default;

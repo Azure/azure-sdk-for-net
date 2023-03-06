@@ -67,6 +67,10 @@ namespace Azure.ResourceManager.Hci.Models
 
         internal static HciUpdateStep DeserializeHciUpdateStep(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<string> description = default;
             Optional<string> errorMessage = default;

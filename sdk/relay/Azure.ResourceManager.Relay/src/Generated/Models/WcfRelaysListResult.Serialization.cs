@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.Relay.Models
     {
         internal static WcfRelaysListResult DeserializeWcfRelaysListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<WcfRelayData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

@@ -27,6 +27,10 @@ namespace Azure.ResourceManager.Avs.Models
 
         internal static AddonSrmProperties DeserializeAddonSrmProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> licenseKey = default;
             AddonType addonType = default;
             Optional<AddonProvisioningState> provisioningState = default;

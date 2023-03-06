@@ -15,6 +15,10 @@ namespace Azure.Communication.PhoneNumbers
     {
         internal static PurchasedPhoneNumbers DeserializePurchasedPhoneNumbers(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IReadOnlyList<PurchasedPhoneNumber> phoneNumbers = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

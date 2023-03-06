@@ -54,6 +54,10 @@ namespace Azure.ResourceManager.StorageCache.Models
 
         internal static NfsAccessRule DeserializeNfsAccessRule(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             NfsAccessRuleScope scope = default;
             Optional<string> filter = default;
             NfsAccessRuleAccess access = default;

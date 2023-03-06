@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
     {
         internal static RequestReportRecordContract DeserializeRequestReportRecordContract(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> apiId = default;
             Optional<string> operationId = default;
             Optional<string> productId = default;

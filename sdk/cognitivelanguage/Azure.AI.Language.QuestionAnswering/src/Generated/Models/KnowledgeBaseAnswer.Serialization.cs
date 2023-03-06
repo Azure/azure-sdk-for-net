@@ -15,6 +15,10 @@ namespace Azure.AI.Language.QuestionAnswering
     {
         internal static KnowledgeBaseAnswer DeserializeKnowledgeBaseAnswer(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<string>> questions = default;
             Optional<string> answer = default;
             Optional<double> confidenceScore = default;

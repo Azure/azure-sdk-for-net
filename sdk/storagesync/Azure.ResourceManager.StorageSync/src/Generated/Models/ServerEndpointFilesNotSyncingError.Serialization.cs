@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.StorageSync.Models
     {
         internal static ServerEndpointFilesNotSyncingError DeserializeServerEndpointFilesNotSyncingError(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> errorCode = default;
             Optional<long> persistentCount = default;
             Optional<long> transientCount = default;

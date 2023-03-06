@@ -55,6 +55,11 @@ namespace Azure.DigitalTwins.Core
             content.JsonWriter.WriteStartArray();
             foreach (var item in models)
             {
+                if (item == null)
+                {
+                    content.JsonWriter.WriteNullValue();
+                    continue;
+                }
                 content.JsonWriter.WriteObjectValue(item);
             }
             content.JsonWriter.WriteEndArray();
@@ -355,6 +360,11 @@ namespace Azure.DigitalTwins.Core
             content.JsonWriter.WriteStartArray();
             foreach (var item in updateModel)
             {
+                if (item == null)
+                {
+                    content.JsonWriter.WriteNullValue();
+                    continue;
+                }
                 content.JsonWriter.WriteObjectValue(item);
             }
             content.JsonWriter.WriteEndArray();

@@ -27,6 +27,10 @@ namespace Azure.ResourceManager.DataProtectionBackup
 
         internal static DataProtectionBackupRecoveryPointData DeserializeDataProtectionBackupRecoveryPointData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DataProtectionBackupRecoveryPointProperties> properties = default;
             ResourceIdentifier id = default;
             string name = default;

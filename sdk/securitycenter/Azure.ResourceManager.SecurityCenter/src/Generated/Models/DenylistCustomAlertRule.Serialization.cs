@@ -32,6 +32,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         internal static DenylistCustomAlertRule DeserializeDenylistCustomAlertRule(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IList<string> denylistValues = default;
             Optional<SecurityValueType> valueType = default;
             Optional<string> displayName = default;

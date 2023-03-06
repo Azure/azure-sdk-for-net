@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static DisallowedConfiguration DeserializeDisallowedConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<VirtualMachineDiskType> vmDiskType = default;
             foreach (var property in element.EnumerateObject())
             {

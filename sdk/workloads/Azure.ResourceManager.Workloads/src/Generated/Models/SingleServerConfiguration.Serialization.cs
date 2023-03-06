@@ -38,6 +38,10 @@ namespace Azure.ResourceManager.Workloads.Models
 
         internal static SingleServerConfiguration DeserializeSingleServerConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<NetworkConfiguration> networkConfiguration = default;
             Optional<SapDatabaseType> databaseType = default;
             ResourceIdentifier subnetId = default;

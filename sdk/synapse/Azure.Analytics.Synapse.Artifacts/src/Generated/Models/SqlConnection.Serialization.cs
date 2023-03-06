@@ -49,6 +49,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static SqlConnection DeserializeSqlConnection(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<SqlConnectionType> type = default;
             Optional<string> name = default;
             Optional<string> poolName = default;

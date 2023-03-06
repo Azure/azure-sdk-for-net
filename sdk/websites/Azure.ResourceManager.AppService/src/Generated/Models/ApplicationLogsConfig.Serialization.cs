@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static ApplicationLogsConfig DeserializeApplicationLogsConfig(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<FileSystemApplicationLogsConfig> fileSystem = default;
             Optional<AppServiceTableStorageApplicationLogsConfig> azureTableStorage = default;
             Optional<AppServiceBlobStorageApplicationLogsConfig> azureBlobStorage = default;

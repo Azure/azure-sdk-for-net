@@ -27,6 +27,10 @@ namespace Azure.Communication.MediaComposition
 
         internal static SrtOutput DeserializeSrtOutput(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             LayoutResolution resolution = default;
             string streamUrl = default;
             MediaOutputType kind = default;

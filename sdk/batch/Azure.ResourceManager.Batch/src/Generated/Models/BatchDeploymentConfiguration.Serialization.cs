@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.Batch.Models
 
         internal static BatchDeploymentConfiguration DeserializeBatchDeploymentConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<BatchCloudServiceConfiguration> cloudServiceConfiguration = default;
             Optional<BatchVmConfiguration> virtualMachineConfiguration = default;
             foreach (var property in element.EnumerateObject())

@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Sql.Models
     {
         internal static InstancePoolEditionCapability DeserializeInstancePoolEditionCapability(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<IReadOnlyList<InstancePoolFamilyCapability>> supportedFamilies = default;
             Optional<SqlCapabilityStatus> status = default;

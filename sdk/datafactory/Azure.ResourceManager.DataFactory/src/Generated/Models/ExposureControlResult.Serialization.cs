@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.DataFactory.Models
     {
         internal static ExposureControlResult DeserializeExposureControlResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> featureName = default;
             Optional<string> value = default;
             foreach (var property in element.EnumerateObject())

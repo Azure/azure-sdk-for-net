@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.DataBox.Models
     {
         internal static DataLocationToServiceLocationMap DeserializeDataLocationToServiceLocationMap(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<AzureLocation> dataLocation = default;
             Optional<AzureLocation> serviceLocation = default;
             foreach (var property in element.EnumerateObject())

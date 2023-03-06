@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.Hci.Models
     {
         internal static HciPublisherList DeserializeHciPublisherList(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<PublisherData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

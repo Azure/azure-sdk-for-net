@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     {
         internal static SecurityTaskList DeserializeSecurityTaskList(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<SecurityTaskData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

@@ -28,6 +28,10 @@ namespace Azure.ResourceManager.ProviderHub.Models
 
         internal static ProviderHubMetadataProviderAuthentication DeserializeProviderHubMetadataProviderAuthentication(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IList<string> allowedAudiences = default;
             foreach (var property in element.EnumerateObject())
             {

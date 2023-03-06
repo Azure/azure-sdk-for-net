@@ -60,6 +60,10 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static StaticSiteBuildProperties DeserializeStaticSiteBuildProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> appLocation = default;
             Optional<string> apiLocation = default;
             Optional<string> appArtifactLocation = default;

@@ -28,6 +28,10 @@ namespace Azure.ResourceManager.EdgeOrder.Models
 
         internal static ProductDetails DeserializeProductDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ProductDisplayInfo> displayInfo = default;
             HierarchyInformation hierarchyInformation = default;
             Optional<int> count = default;

@@ -89,6 +89,10 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
 
         internal static Kustomization DeserializeKustomization(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<string> path = default;
             Optional<IList<string>> dependsOn = default;

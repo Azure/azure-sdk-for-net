@@ -31,6 +31,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 
         internal static ServiceAccountModelDeprecationInfo DeserializeServiceAccountModelDeprecationInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DateTimeOffset> fineTune = default;
             Optional<DateTimeOffset> inference = default;
             foreach (var property in element.EnumerateObject())

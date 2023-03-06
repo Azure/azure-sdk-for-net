@@ -63,6 +63,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static MachineLearningAksCompute DeserializeMachineLearningAksCompute(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<MachineLearningAksComputeProperties> properties = default;
             ComputeType computeType = default;
             Optional<string> computeLocation = default;

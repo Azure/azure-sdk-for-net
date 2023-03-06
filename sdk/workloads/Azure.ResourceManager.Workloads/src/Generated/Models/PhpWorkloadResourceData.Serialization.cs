@@ -116,6 +116,10 @@ namespace Azure.ResourceManager.Workloads
 
         internal static PhpWorkloadResourceData DeserializePhpWorkloadResourceData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             WorkloadKind kind = default;
             Optional<WorkloadsSku> sku = default;
             Optional<PhpWorkloadResourceIdentity> identity = default;

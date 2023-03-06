@@ -27,6 +27,10 @@ namespace Azure.ResourceManager.EdgeOrder.Models
 
         internal static EdgeOrderItemAddressProperties DeserializeEdgeOrderItemAddressProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<EdgeOrderShippingAddress> shippingAddress = default;
             EdgeOrderAddressContactDetails contactDetails = default;
             Optional<EdgeOrderAddressValidationStatus> addressValidationStatus = default;

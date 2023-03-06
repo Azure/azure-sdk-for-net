@@ -108,6 +108,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static DeleteActivity DeserializeDeleteActivity(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<FactoryLinkedServiceReference> linkedServiceName = default;
             Optional<ActivityPolicy> policy = default;
             string name = default;

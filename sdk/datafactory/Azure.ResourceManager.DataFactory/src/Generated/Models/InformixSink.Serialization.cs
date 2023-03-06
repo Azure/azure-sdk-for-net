@@ -96,6 +96,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static InformixSink DeserializeInformixSink(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<BinaryData> preCopyScript = default;
             string type = default;
             Optional<BinaryData> writeBatchSize = default;

@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.Relay.Models
     {
         internal static RelayNameAvailabilityResult DeserializeRelayNameAvailabilityResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> message = default;
             Optional<bool> nameAvailable = default;
             Optional<RelayNameUnavailableReason> reason = default;

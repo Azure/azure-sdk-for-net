@@ -120,6 +120,10 @@ namespace Azure.ResourceManager.Sql
 
         internal static ManagedDatabaseData DeserializeManagedDatabaseData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;

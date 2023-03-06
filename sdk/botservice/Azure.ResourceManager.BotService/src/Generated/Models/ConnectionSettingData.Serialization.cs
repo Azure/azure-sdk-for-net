@@ -64,6 +64,10 @@ namespace Azure.ResourceManager.BotService
 
         internal static ConnectionSettingData DeserializeConnectionSettingData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ConnectionSettingProperties> properties = default;
             Optional<BotServiceSku> sku = default;
             Optional<BotServiceKind?> kind = default;

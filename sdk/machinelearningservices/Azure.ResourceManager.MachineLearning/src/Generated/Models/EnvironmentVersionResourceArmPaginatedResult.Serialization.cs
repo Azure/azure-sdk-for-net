@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
     {
         internal static EnvironmentVersionResourceArmPaginatedResult DeserializeEnvironmentVersionResourceArmPaginatedResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> nextLink = default;
             Optional<IReadOnlyList<MachineLearningEnvironmentVersionData>> value = default;
             foreach (var property in element.EnumerateObject())

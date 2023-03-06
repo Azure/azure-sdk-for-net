@@ -28,6 +28,10 @@ namespace Azure.ResourceManager.DnsResolver.Models
 
         internal static TargetDnsServer DeserializeTargetDnsServer(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IPAddress ipAddress = default;
             Optional<int> port = default;
             foreach (var property in element.EnumerateObject())

@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static BreakOutCategoryPolicies DeserializeBreakOutCategoryPolicies(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> allow = default;
             Optional<bool> optimize = default;
             Optional<bool> @default = default;

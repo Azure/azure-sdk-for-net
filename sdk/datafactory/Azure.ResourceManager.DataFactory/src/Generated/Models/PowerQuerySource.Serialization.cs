@@ -52,6 +52,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static PowerQuerySource DeserializePowerQuerySource(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> script = default;
             Optional<FactoryLinkedServiceReference> schemaLinkedService = default;
             string name = default;

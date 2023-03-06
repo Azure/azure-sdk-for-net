@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.HealthcareApis.Models
     {
         internal static WorkspaceList DeserializeWorkspaceList(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> nextLink = default;
             Optional<IReadOnlyList<HealthcareApisWorkspaceData>> value = default;
             foreach (var property in element.EnumerateObject())

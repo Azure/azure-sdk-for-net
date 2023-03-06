@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.Kubernetes.Models
     {
         internal static ConnectedClusterList DeserializeConnectedClusterList(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<ConnectedClusterData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

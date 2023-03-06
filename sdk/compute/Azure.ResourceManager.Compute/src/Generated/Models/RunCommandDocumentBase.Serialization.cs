@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.Compute.Models
     {
         internal static RunCommandDocumentBase DeserializeRunCommandDocumentBase(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string schema = default;
             string id = default;
             SupportedOperatingSystemType osType = default;

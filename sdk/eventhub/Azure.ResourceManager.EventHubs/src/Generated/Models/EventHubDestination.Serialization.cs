@@ -59,6 +59,10 @@ namespace Azure.ResourceManager.EventHubs.Models
 
         internal static EventHubDestination DeserializeEventHubDestination(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<ResourceIdentifier> storageAccountResourceId = default;
             Optional<string> blobContainer = default;

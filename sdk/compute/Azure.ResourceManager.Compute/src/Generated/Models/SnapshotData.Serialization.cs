@@ -136,6 +136,10 @@ namespace Azure.ResourceManager.Compute
 
         internal static SnapshotData DeserializeSnapshotData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> managedBy = default;
             Optional<SnapshotSku> sku = default;
             Optional<ExtendedLocation> extendedLocation = default;

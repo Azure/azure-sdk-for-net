@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     {
         internal static InMageBasePolicyDetails DeserializeInMageBasePolicyDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> recoveryPointThresholdInMinutes = default;
             Optional<int> recoveryPointHistory = default;
             Optional<int> appConsistentFrequencyInMinutes = default;

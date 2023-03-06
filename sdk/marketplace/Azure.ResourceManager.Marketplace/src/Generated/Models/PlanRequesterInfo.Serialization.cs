@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.Marketplace.Models
     {
         internal static PlanRequesterInfo DeserializePlanRequesterInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> user = default;
             Optional<string> date = default;
             Optional<string> justification = default;

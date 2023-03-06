@@ -17,6 +17,10 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     {
         internal static ResourceActionSuccessEventData DeserializeResourceActionSuccessEventData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> tenantId = default;
             Optional<string> subscriptionId = default;
             Optional<string> resourceGroup = default;

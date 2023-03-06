@@ -71,6 +71,10 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
 
         internal static SqlReferenceInputDataSource DeserializeSqlReferenceInputDataSource(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string type = default;
             Optional<string> server = default;
             Optional<string> database = default;

@@ -60,6 +60,10 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         internal static ContainerAppDaprConfiguration DeserializeContainerAppDaprConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> enabled = default;
             Optional<string> appId = default;
             Optional<ContainerAppProtocol> appProtocol = default;

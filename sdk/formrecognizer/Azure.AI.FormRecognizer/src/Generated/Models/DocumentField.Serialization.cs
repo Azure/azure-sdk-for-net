@@ -16,6 +16,10 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
     {
         internal static DocumentField DeserializeDocumentField(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             DocumentFieldType type = default;
             Optional<string> valueString = default;
             Optional<DateTimeOffset> valueDate = default;

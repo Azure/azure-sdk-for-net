@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.Workloads.Models
     {
         internal static SapDiskConfiguration DeserializeSapDiskConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> volume = default;
             Optional<string> diskType = default;
             Optional<long> diskCount = default;

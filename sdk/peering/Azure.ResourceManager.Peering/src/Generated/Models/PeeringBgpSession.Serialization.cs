@@ -66,6 +66,10 @@ namespace Azure.ResourceManager.Peering.Models
 
         internal static PeeringBgpSession DeserializePeeringBgpSession(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> sessionPrefixV4 = default;
             Optional<string> sessionPrefixV6 = default;
             Optional<IPAddress> microsoftSessionIPv4Address = default;

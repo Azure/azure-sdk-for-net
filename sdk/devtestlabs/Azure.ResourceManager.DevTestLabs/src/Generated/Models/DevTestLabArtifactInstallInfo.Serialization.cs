@@ -62,6 +62,10 @@ namespace Azure.ResourceManager.DevTestLabs.Models
 
         internal static DevTestLabArtifactInstallInfo DeserializeDevTestLabArtifactInstallInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> artifactId = default;
             Optional<string> artifactTitle = default;
             Optional<IList<DevTestLabArtifactParameter>> parameters = default;

@@ -42,6 +42,10 @@ namespace Azure.ResourceManager.Workloads.Models
 
         internal static WorkloadsSku DeserializeWorkloadsSku(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string name = default;
             Optional<WorkloadsSkuTier> tier = default;
             Optional<string> size = default;

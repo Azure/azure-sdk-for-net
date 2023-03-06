@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.Compute.Models
     {
         internal static RestorePointSourceMetadata DeserializeRestorePointSourceMetadata(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<VirtualMachineHardwareProfile> hardwareProfile = default;
             Optional<RestorePointSourceVmStorageProfile> storageProfile = default;
             Optional<VirtualMachineOSProfile> osProfile = default;

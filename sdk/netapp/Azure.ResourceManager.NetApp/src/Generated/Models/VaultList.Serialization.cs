@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.NetApp.Models
     {
         internal static VaultList DeserializeVaultList(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<NetAppVault>> value = default;
             foreach (var property in element.EnumerateObject())
             {

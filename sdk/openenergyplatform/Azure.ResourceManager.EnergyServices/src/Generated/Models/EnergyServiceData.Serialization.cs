@@ -41,6 +41,10 @@ namespace Azure.ResourceManager.EnergyServices
 
         internal static EnergyServiceData DeserializeEnergyServiceData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<EnergyServiceProperties> properties = default;
             Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;

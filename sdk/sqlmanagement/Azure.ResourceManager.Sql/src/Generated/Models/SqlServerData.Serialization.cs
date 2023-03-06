@@ -96,6 +96,10 @@ namespace Azure.ResourceManager.Sql
 
         internal static SqlServerData DeserializeSqlServerData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ManagedServiceIdentity> identity = default;
             Optional<string> kind = default;
             Optional<IDictionary<string, string>> tags = default;

@@ -15,6 +15,10 @@ namespace Azure.Maps.Routing.Models
     {
         internal static RouteRange DeserializeRouteRange(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<LatLongPair> center = default;
             Optional<IReadOnlyList<LatLongPair>> boundary = default;
             foreach (var property in element.EnumerateObject())

@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Resources.Models
     {
         internal static ArmApplicationDetails DeserializeArmApplicationDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<Guid> oid = default;
             Optional<string> puid = default;
             Optional<Guid> applicationId = default;

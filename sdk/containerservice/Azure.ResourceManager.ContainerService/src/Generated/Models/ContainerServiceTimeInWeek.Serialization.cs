@@ -36,6 +36,10 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         internal static ContainerServiceTimeInWeek DeserializeContainerServiceTimeInWeek(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ContainerServiceWeekDay> day = default;
             Optional<IList<int>> hourSlots = default;
             foreach (var property in element.EnumerateObject())

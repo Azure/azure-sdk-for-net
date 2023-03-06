@@ -57,6 +57,10 @@ namespace Azure.ResourceManager.CognitiveServices
 
         internal static CognitiveServicesAccountData DeserializeCognitiveServicesAccountData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> kind = default;
             Optional<CognitiveServicesSku> sku = default;
             Optional<ManagedServiceIdentity> identity = default;

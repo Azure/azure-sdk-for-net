@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     {
         internal static BackupJobExtendedInfo DeserializeBackupJobExtendedInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyDictionary<string, string>> additionalDetails = default;
             Optional<string> backupInstanceState = default;
             Optional<double> dataTransferredInBytes = default;

@@ -27,6 +27,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         internal static SecurityAssessmentPublishDates DeserializeSecurityAssessmentPublishDates(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> ga = default;
             string @public = default;
             foreach (var property in element.EnumerateObject())

@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         internal static ProxyServerProperties DeserializeProxyServerProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> ip = default;
             Optional<string> port = default;
             foreach (var property in element.EnumerateObject())

@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static ExpressRouteCircuitServiceProviderProperties DeserializeExpressRouteCircuitServiceProviderProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> serviceProviderName = default;
             Optional<string> peeringLocation = default;
             Optional<int> bandwidthInMbps = default;

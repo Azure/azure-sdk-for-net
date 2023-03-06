@@ -27,6 +27,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         internal static SecurityInsightsPropertyConditionProperties DeserializeSecurityInsightsPropertyConditionProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<AutomationRulePropertyValuesCondition> conditionProperties = default;
             ConditionType conditionType = default;
             foreach (var property in element.EnumerateObject())

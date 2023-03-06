@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.Reservations.Models
     {
         internal static ReservationRefundBillingInformation DeserializeReservationRefundBillingInformation(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ReservationBillingPlan> billingPlan = default;
             Optional<int> completedTransactions = default;
             Optional<int> totalTransactions = default;

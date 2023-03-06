@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static DedicatedHostGroupPropertiesAdditionalCapabilities DeserializeDedicatedHostGroupPropertiesAdditionalCapabilities(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> ultraSsdEnabled = default;
             foreach (var property in element.EnumerateObject())
             {

@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.Storage.Models
 
         internal static StorageAccountEncryptionIdentity DeserializeStorageAccountEncryptionIdentity(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> userAssignedIdentity = default;
             Optional<string> federatedIdentityClientId = default;
             foreach (var property in element.EnumerateObject())

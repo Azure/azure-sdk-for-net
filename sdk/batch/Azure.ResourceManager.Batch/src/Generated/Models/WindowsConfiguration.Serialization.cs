@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.Batch.Models
 
         internal static WindowsConfiguration DeserializeWindowsConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> enableAutomaticUpdates = default;
             foreach (var property in element.EnumerateObject())
             {

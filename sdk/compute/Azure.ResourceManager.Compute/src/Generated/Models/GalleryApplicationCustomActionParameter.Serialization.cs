@@ -42,6 +42,10 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static GalleryApplicationCustomActionParameter DeserializeGalleryApplicationCustomActionParameter(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string name = default;
             Optional<bool> required = default;
             Optional<GalleryApplicationCustomActionParameterType> type = default;

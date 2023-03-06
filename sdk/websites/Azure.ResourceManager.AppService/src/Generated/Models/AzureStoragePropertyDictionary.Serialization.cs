@@ -38,6 +38,10 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static AzureStoragePropertyDictionary DeserializeAzureStoragePropertyDictionary(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IDictionary<string, AppServiceStorageAccessInfo>> properties = default;
             Optional<string> kind = default;
             ResourceIdentifier id = default;
