@@ -5,8 +5,10 @@
 
 #nullable disable
 
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Workloads.Models
 {
@@ -20,6 +22,7 @@ namespace Azure.ResourceManager.Workloads.Models
             }
             Optional<CentralServerVirtualMachineType> type = default;
             Optional<ResourceIdentifier> virtualMachineId = default;
+            Optional<IReadOnlyList<SubResource>> storageDetails = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -42,8 +45,23 @@ namespace Azure.ResourceManager.Workloads.Models
                     virtualMachineId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
+                if (property.NameEquals("storageDetails"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    List<SubResource> array = new List<SubResource>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(JsonSerializer.Deserialize<SubResource>(item.GetRawText()));
+                    }
+                    storageDetails = array;
+                    continue;
+                }
             }
-            return new CentralServerVmDetails(Optional.ToNullable(type), virtualMachineId.Value);
+            return new CentralServerVmDetails(Optional.ToNullable(type), virtualMachineId.Value, Optional.ToList(storageDetails));
         }
     }
 }

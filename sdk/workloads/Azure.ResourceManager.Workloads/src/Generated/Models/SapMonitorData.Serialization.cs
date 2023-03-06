@@ -19,6 +19,11 @@ namespace Azure.ResourceManager.Workloads
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
+            if (Optional.IsDefined(Identity))
+            {
+                writer.WritePropertyName("identity"u8);
+                writer.WriteObjectValue(Identity);
+            }
             if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
@@ -43,6 +48,11 @@ namespace Azure.ResourceManager.Workloads
             {
                 writer.WritePropertyName("routingPreference"u8);
                 writer.WriteStringValue(RoutingPreference.Value.ToString());
+            }
+            if (Optional.IsDefined(ZoneRedundancyPreference))
+            {
+                writer.WritePropertyName("zoneRedundancyPreference"u8);
+                writer.WriteStringValue(ZoneRedundancyPreference);
             }
             if (Optional.IsDefined(ManagedResourceGroupConfiguration))
             {
@@ -69,6 +79,7 @@ namespace Azure.ResourceManager.Workloads
             {
                 return null;
             }
+            Optional<UserAssignedServiceIdentity> identity = default;
             Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
@@ -79,12 +90,24 @@ namespace Azure.ResourceManager.Workloads
             Optional<ResponseError> errors = default;
             Optional<AzureLocation> appLocation = default;
             Optional<RoutingPreference> routingPreference = default;
+            Optional<string> zoneRedundancyPreference = default;
             Optional<ManagedRGConfiguration> managedResourceGroupConfiguration = default;
             Optional<ResourceIdentifier> logAnalyticsWorkspaceArmId = default;
             Optional<ResourceIdentifier> monitorSubnet = default;
             Optional<ResourceIdentifier> msiArmId = default;
+            Optional<string> storageAccountArmId = default;
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("identity"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    identity = UserAssignedServiceIdentity.DeserializeUserAssignedServiceIdentity(property.Value);
+                    continue;
+                }
                 if (property.NameEquals("tags"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -179,6 +202,11 @@ namespace Azure.ResourceManager.Workloads
                             routingPreference = new RoutingPreference(property0.Value.GetString());
                             continue;
                         }
+                        if (property0.NameEquals("zoneRedundancyPreference"u8))
+                        {
+                            zoneRedundancyPreference = property0.Value.GetString();
+                            continue;
+                        }
                         if (property0.NameEquals("managedResourceGroupConfiguration"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -219,11 +247,16 @@ namespace Azure.ResourceManager.Workloads
                             msiArmId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
+                        if (property0.NameEquals("storageAccountArmId"u8))
+                        {
+                            storageAccountArmId = property0.Value.GetString();
+                            continue;
+                        }
                     }
                     continue;
                 }
             }
-            return new SapMonitorData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(provisioningState), errors.Value, Optional.ToNullable(appLocation), Optional.ToNullable(routingPreference), managedResourceGroupConfiguration.Value, logAnalyticsWorkspaceArmId.Value, monitorSubnet.Value, msiArmId.Value);
+            return new SapMonitorData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity.Value, Optional.ToNullable(provisioningState), errors.Value, Optional.ToNullable(appLocation), Optional.ToNullable(routingPreference), zoneRedundancyPreference.Value, managedResourceGroupConfiguration.Value, logAnalyticsWorkspaceArmId.Value, monitorSubnet.Value, msiArmId.Value, storageAccountArmId.Value);
         }
     }
 }
