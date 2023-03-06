@@ -36,6 +36,10 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static AppServiceBlobStorageApplicationLogsConfig DeserializeAppServiceBlobStorageApplicationLogsConfig(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<WebAppLogLevel> level = default;
             Optional<Uri> sasUrl = default;
             Optional<int> retentionInDays = default;

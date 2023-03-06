@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Workloads.Models
     {
         internal static SkuLocationAndZones DeserializeSkuLocationAndZones(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<AzureLocation> location = default;
             Optional<IReadOnlyList<string>> zones = default;
             Optional<IReadOnlyList<SkuZoneDetail>> zoneDetails = default;

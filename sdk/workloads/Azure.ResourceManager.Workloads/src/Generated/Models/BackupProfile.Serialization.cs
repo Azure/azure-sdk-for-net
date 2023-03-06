@@ -22,6 +22,10 @@ namespace Azure.ResourceManager.Workloads.Models
 
         internal static BackupProfile DeserializeBackupProfile(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             EnableBackup backupEnabled = default;
             Optional<ResourceIdentifier> vaultResourceId = default;
             foreach (var property in element.EnumerateObject())

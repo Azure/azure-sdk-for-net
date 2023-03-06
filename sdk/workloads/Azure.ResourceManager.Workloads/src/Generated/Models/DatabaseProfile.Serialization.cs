@@ -66,6 +66,10 @@ namespace Azure.ResourceManager.Workloads.Models
 
         internal static DatabaseProfile DeserializeDatabaseProfile(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             DatabaseType type = default;
             Optional<string> serverName = default;
             Optional<string> version = default;

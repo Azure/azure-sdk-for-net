@@ -53,6 +53,10 @@ namespace Azure.ResourceManager.Workloads.Models
 
         internal static MsSqlServerProviderInstanceProperties DeserializeMsSqlServerProviderInstanceProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> hostname = default;
             Optional<string> dbPort = default;
             Optional<string> dbUsername = default;

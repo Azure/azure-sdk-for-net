@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Workloads.Models
     {
         internal static SkuZoneDetail DeserializeSkuZoneDetail(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<string>> zones = default;
             Optional<IReadOnlyList<SkuCapability>> capabilities = default;
             foreach (var property in element.EnumerateObject())

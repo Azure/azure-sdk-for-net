@@ -22,6 +22,10 @@ namespace Azure.ResourceManager.Workloads.Models
 
         internal static SoftwareConfiguration DeserializeSoftwareConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             if (element.TryGetProperty("softwareInstallationType", out JsonElement discriminator))
             {
                 switch (discriminator.GetString())

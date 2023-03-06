@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.Workloads.Models
 
         internal static SiteProfile DeserializeSiteProfile(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> domainName = default;
             foreach (var property in element.EnumerateObject())
             {
