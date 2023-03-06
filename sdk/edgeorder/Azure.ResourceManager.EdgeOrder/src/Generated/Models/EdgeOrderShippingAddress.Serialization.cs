@@ -64,6 +64,10 @@ namespace Azure.ResourceManager.EdgeOrder.Models
 
         internal static EdgeOrderShippingAddress DeserializeEdgeOrderShippingAddress(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string streetAddress1 = default;
             Optional<string> streetAddress2 = default;
             Optional<string> streetAddress3 = default;

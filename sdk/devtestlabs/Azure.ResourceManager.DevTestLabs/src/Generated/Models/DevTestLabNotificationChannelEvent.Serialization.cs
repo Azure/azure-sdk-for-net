@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.DevTestLabs.Models
 
         internal static DevTestLabNotificationChannelEvent DeserializeDevTestLabNotificationChannelEvent(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DevTestLabNotificationChannelEventType> eventName = default;
             foreach (var property in element.EnumerateObject())
             {

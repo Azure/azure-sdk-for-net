@@ -42,6 +42,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static SqlAlwaysEncryptedProperties DeserializeSqlAlwaysEncryptedProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             SqlAlwaysEncryptedAkvAuthType alwaysEncryptedAkvAuthType = default;
             Optional<BinaryData> servicePrincipalId = default;
             Optional<FactorySecretBaseDefinition> servicePrincipalKey = default;

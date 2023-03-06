@@ -28,6 +28,10 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
 
         internal static DeviceProvisioningServicesPrivateEndpointConnectionProperties DeserializeDeviceProvisioningServicesPrivateEndpointConnectionProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<SubResource> privateEndpoint = default;
             DeviceProvisioningServicesPrivateLinkServiceConnectionState privateLinkServiceConnectionState = default;
             foreach (var property in element.EnumerateObject())

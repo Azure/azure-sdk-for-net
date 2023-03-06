@@ -46,6 +46,10 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
 
         internal static EdgeKubernetesRole DeserializeEdgeKubernetesRole(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             DataBoxEdgeRoleType kind = default;
             ResourceIdentifier id = default;
             string name = default;

@@ -62,6 +62,10 @@ namespace Azure.ResourceManager.DataMigration.Models
 
         internal static MigrateSqlServerSqlDBDatabaseInput DeserializeMigrateSqlServerSqlDBDatabaseInput(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<string> targetDatabaseName = default;
             Optional<bool> makeSourceDBReadOnly = default;

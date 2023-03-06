@@ -14,6 +14,10 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     {
         internal static AcsChatThreadParticipantProperties DeserializeAcsChatThreadParticipantProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> displayName = default;
             Optional<CommunicationIdentifierModel> participantCommunicationIdentifier = default;
             foreach (var property in element.EnumerateObject())

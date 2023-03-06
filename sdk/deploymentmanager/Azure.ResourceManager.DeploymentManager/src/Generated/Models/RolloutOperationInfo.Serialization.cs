@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.DeploymentManager.Models
     {
         internal static RolloutOperationInfo DeserializeRolloutOperationInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> retryAttempt = default;
             Optional<bool> skipSucceededOnRetry = default;
             Optional<DateTimeOffset> startTime = default;

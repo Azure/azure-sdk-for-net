@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
     {
         internal static DeviceProvisioningServicesPrivateLinkResourceData DeserializeDeviceProvisioningServicesPrivateLinkResourceData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             DeviceProvisioningServicesPrivateLinkResourceProperties properties = default;
             ResourceIdentifier id = default;
             string name = default;

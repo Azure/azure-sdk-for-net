@@ -37,6 +37,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static LogSettings DeserializeLogSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<BinaryData> enableCopyActivityLog = default;
             Optional<CopyActivityLogSettings> copyActivityLogSettings = default;
             LogLocationSettings logLocationSettings = default;
