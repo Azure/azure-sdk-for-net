@@ -1,4 +1,4 @@
-# Use `WebPubSubOutput` to invoke service do operations
+# Use `WebPubSubOutput` to invoke service to do actions
 
 This sample demonstrates how to work with `WebPubSubOutput` to invoke service do operations including send messages and manage clients. You can get the Web PubSub connection string from Azure Portal and set it in the `local.settings.json` with a preferred `web_pubsub_connection_name`. Then replace it with the `Connection` parameter in the binding attribute. Then when this function is triggered, it will leverage data plane REST APIs to operate required actions.
 

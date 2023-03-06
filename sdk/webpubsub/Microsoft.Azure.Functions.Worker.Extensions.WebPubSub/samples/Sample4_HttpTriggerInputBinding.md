@@ -1,6 +1,6 @@
-# Use `WebPubSubTrigger` to get service notifications
+# Use `WebPubSubContextInput` to get service notifications
 
-This sample demonstrates how to work with `WebPubSubContextInput` to get service notification. This is useful when work with Static Web Apps which supports `HttpTrigger` functions only. When work with `WebPubSubContextInput`, the event handler settings in the Web PubSub service should be like `https://<FUNCTIONAPP_NAME>.azurewebsites.net/api/{event}}`. The reserved `{event}` is service defined events, and should be mapped to the function's name. See [How to configure event handler](https://learn.microsoft.com/azure/azure-web-pubsub/howto-develop-eventhandler) for details.
+This sample demonstrates how to work with `WebPubSubContextInput` to get service notification. This is useful when work with Static Web Apps which supports `HttpTrigger` functions only. With `WebPubSubContextInput`, the event handler settings in the Web PubSub service should be like `https://<FUNCTIONAPP_NAME>.azurewebsites.net/api/{event}}`. The reserved `{event}` is service defined events, and should be mapped to the function's name. See [How to configure event handler](https://learn.microsoft.com/azure/azure-web-pubsub/howto-develop-eventhandler) for details.
 
 This sample is listen to the abuse protection event, that to validate the upstream is a valid one. When the Web PubSub service is configured with `api/{event}`, it'll send to `api/validate` of this request as the first call to validate it.
 
