@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Purview.Models
     {
         internal static PurviewPrivateLinkResourceProperties DeserializePurviewPrivateLinkResourceProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> groupId = default;
             Optional<IReadOnlyList<string>> requiredMembers = default;
             Optional<IReadOnlyList<string>> requiredZoneNames = default;

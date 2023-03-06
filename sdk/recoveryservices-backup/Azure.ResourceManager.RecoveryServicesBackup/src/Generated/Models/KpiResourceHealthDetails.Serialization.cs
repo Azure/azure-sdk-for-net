@@ -36,6 +36,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         internal static KpiResourceHealthDetails DeserializeKpiResourceHealthDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ResourceHealthStatus> resourceHealthStatus = default;
             Optional<IList<ResourceHealthDetails>> resourceHealthDetails = default;
             foreach (var property in element.EnumerateObject())

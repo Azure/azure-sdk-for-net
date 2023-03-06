@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.RecoveryServices.Models
     {
         internal static RecoveryServicesPrivateEndpointConnectionVaultProperties DeserializeRecoveryServicesPrivateEndpointConnectionVaultProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<RecoveryServicesPrivateEndpointConnection> properties = default;
             Optional<AzureLocation> location = default;
             ResourceIdentifier id = default;

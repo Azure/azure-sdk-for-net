@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.PolicyInsights.Models
     {
         internal static PolicyAssignmentSummary DeserializePolicyAssignmentSummary(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ResourceIdentifier> policyAssignmentId = default;
             Optional<ResourceIdentifier> policySetDefinitionId = default;
             Optional<PolicySummaryResults> results = default;

@@ -14,6 +14,10 @@ namespace Azure.Quantum.Jobs.Models
     {
         internal static RestError DeserializeRestError(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ErrorData> error = default;
             foreach (var property in element.EnumerateObject())
             {

@@ -61,6 +61,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         internal static BackupEngineExtendedInfo DeserializeBackupEngineExtendedInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> databaseName = default;
             Optional<int> protectedItemsCount = default;
             Optional<int> protectedServersCount = default;

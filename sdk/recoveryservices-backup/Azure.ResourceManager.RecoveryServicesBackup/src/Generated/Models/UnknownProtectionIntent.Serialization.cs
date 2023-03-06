@@ -47,6 +47,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         internal static UnknownProtectionIntent DeserializeUnknownProtectionIntent(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ProtectionIntentItemType protectionIntentItemType = "Unknown";
             Optional<BackupManagementType> backupManagementType = default;
             Optional<ResourceIdentifier> sourceResourceId = default;

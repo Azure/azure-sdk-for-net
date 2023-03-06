@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.RecoveryServices.Models
 
         internal static VaultPropertiesEncryption DeserializeVaultPropertiesEncryption(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<CmkKeyVaultProperties> keyVaultProperties = default;
             Optional<CmkKekIdentity> kekIdentity = default;
             Optional<InfrastructureEncryptionState> infrastructureEncryption = default;

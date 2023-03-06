@@ -124,6 +124,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         internal static DpmProtectedItem DeserializeDpmProtectedItem(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> friendlyName = default;
             Optional<string> backupEngineName = default;
             Optional<ProtectedItemState> protectionState = default;

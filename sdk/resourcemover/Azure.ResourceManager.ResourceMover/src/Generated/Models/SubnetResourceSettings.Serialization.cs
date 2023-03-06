@@ -42,6 +42,10 @@ namespace Azure.ResourceManager.ResourceMover.Models
 
         internal static SubnetResourceSettings DeserializeSubnetResourceSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<string> addressPrefix = default;
             Optional<NetworkSecurityGroupResourceReferenceInfo> networkSecurityGroup = default;

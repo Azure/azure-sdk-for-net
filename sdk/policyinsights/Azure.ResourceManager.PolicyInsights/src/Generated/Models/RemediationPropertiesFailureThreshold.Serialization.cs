@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.PolicyInsights.Models
 
         internal static RemediationPropertiesFailureThreshold DeserializeRemediationPropertiesFailureThreshold(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<float> percentage = default;
             foreach (var property in element.EnumerateObject())
             {
