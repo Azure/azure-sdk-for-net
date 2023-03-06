@@ -1,0 +1,501 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e?api-version=2021-01-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-a90316d793ba7646ad4457fbeebdddac-70909c41d6f8a74e-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET Framework 4.8.4614.0; Microsoft Windows 10.0.19045 )",
+        "x-ms-client-request-id": "4546c76b881e046bf47f2857c7b22f93",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "411",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 02 Mar 2023 14:20:49 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "6b9f6793-acff-4ccc-b513-6205cdf75684",
+        "x-ms-ratelimit-remaining-subscription-reads": "11967",
+        "x-ms-request-id": "6b9f6793-acff-4ccc-b513-6205cdf75684",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20230302T142049Z:6b9f6793-acff-4ccc-b513-6205cdf75684"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e",
+        "authorizationSource": "RoleBased",
+        "managedByTenants": [],
+        "subscriptionId": "45b60d85-fd72-427a-a708-f994d26e593e",
+        "tenantId": "72f988bf-86f1-41af-91ab-2d7cd011db47",
+        "displayName": "AzureStorage_DMStaging_10041369",
+        "state": "Enabled",
+        "subscriptionPolicies": {
+          "locationPlacementId": "Internal_2014-09-01",
+          "quotaId": "Internal_2014-09-01",
+          "spendingLimit": "Off"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourcegroups/testsmrg-3141?api-version=**",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "21",
+        "Content-Type": "application/json",
+        "traceparent": "00-631c051a0cdf3d4fbd70bb9a0f2f23ef-481b35dce2c1f140-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET Framework 4.8.4614.0; Microsoft Windows 10.0.19045 )",
+        "x-ms-client-request-id": "a584e29e0be2edd5ca491a6eaa671fdb",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "location": "eastus"
+      },
+      "StatusCode": 201,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "223",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 02 Mar 2023 14:20:52 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "6473f400-d169-45f2-9742-e7471d3efa80",
+        "x-ms-ratelimit-remaining-subscription-writes": "1195",
+        "x-ms-request-id": "6473f400-d169-45f2-9742-e7471d3efa80",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20230302T142052Z:6473f400-d169-45f2-9742-e7471d3efa80"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/testsmrg-3141",
+        "name": "testsmrg-3141",
+        "type": "Microsoft.Resources/resourceGroups",
+        "location": "eastus",
+        "properties": {
+          "provisioningState": "Succeeded"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/testsmrg-3141/providers/Microsoft.StorageMover/storageMovers/testsm-837?api-version=2023-03-01",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "105",
+        "Content-Type": "application/json",
+        "traceparent": "00-15b29aa41a5ec3438651c82c17008616-9009e4d914966649-00",
+        "User-Agent": "azsdk-net-ResourceManager.StorageMover/1.0.0-alpha.20230302.1 (.NET Framework 4.8.4614.0; Microsoft Windows 10.0.19045 )",
+        "x-ms-client-request-id": "06ba5fa4736cddcad6991329a029f7ed",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "tags": {
+          "tag1": "value1"
+        },
+        "location": "eastus",
+        "properties": {
+          "description": "This is a new storage mover"
+        }
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "627",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 02 Mar 2023 14:20:59 GMT",
+        "ETag": "\u002207000894-0000-0100-0000-6400b0c90000\u0022",
+        "Expires": "-1",
+        "mise-correlation-id": "b7bc3abe-3a1b-4c70-9d06-7bf76c4a63c0",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "06ba5fa4736cddcad6991329a029f7ed",
+        "x-ms-correlation-request-id": "95678b9d-5e45-4a6d-b516-386cbc4300c4",
+        "x-ms-providerhub-traffic": "True",
+        "x-ms-ratelimit-remaining-subscription-writes": "1194",
+        "x-ms-request-id": "c9e12940-474e-4578-965e-f2a4ed6111c2",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20230302T142059Z:95678b9d-5e45-4a6d-b516-386cbc4300c4"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/testsmrg-3141/providers/Microsoft.StorageMover/storageMovers/testsm-837",
+        "name": "testsm-837",
+        "type": "microsoft.storagemover/storagemovers",
+        "location": "eastus",
+        "tags": {
+          "tag1": "value1"
+        },
+        "systemData": {
+          "createdBy": "a000255f-5f09-45e0-a970-9d9ed9cc6453",
+          "createdByType": "Application",
+          "createdAt": "2023-03-02T14:20:56.5315515Z",
+          "lastModifiedBy": "a000255f-5f09-45e0-a970-9d9ed9cc6453",
+          "lastModifiedByType": "Application",
+          "lastModifiedAt": "2023-03-02T14:20:56.5315515Z"
+        },
+        "properties": {
+          "description": "This is a new storage mover",
+          "provisioningState": "Succeeded"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/testsmrg-3141/providers/Microsoft.StorageMover/storageMovers/testsm-2243?api-version=2023-03-01",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "105",
+        "Content-Type": "application/json",
+        "traceparent": "00-57978146c6de4d4583e31edc5590c988-295e214052e6814a-00",
+        "User-Agent": "azsdk-net-ResourceManager.StorageMover/1.0.0-alpha.20230302.1 (.NET Framework 4.8.4614.0; Microsoft Windows 10.0.19045 )",
+        "x-ms-client-request-id": "1fd55c0fbc885870543e51954917087c",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "tags": {
+          "tag1": "value1"
+        },
+        "location": "eastus",
+        "properties": {
+          "description": "This is a new storage mover"
+        }
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "629",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 02 Mar 2023 14:21:03 GMT",
+        "ETag": "\u002207000994-0000-0100-0000-6400b0cd0000\u0022",
+        "Expires": "-1",
+        "mise-correlation-id": "5b240dbb-4d76-4c40-bc28-84c6326bdab6",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "1fd55c0fbc885870543e51954917087c",
+        "x-ms-correlation-request-id": "1021d5ac-4a63-40fd-aad6-859364c5b178",
+        "x-ms-providerhub-traffic": "True",
+        "x-ms-ratelimit-remaining-subscription-writes": "1193",
+        "x-ms-request-id": "00bd2eb2-aa4b-40fa-ac3c-0e754ddeb1a5",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20230302T142104Z:1021d5ac-4a63-40fd-aad6-859364c5b178"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/testsmrg-3141/providers/Microsoft.StorageMover/storageMovers/testsm-2243",
+        "name": "testsm-2243",
+        "type": "microsoft.storagemover/storagemovers",
+        "location": "eastus",
+        "tags": {
+          "tag1": "value1"
+        },
+        "systemData": {
+          "createdBy": "a000255f-5f09-45e0-a970-9d9ed9cc6453",
+          "createdByType": "Application",
+          "createdAt": "2023-03-02T14:21:01.7034239Z",
+          "lastModifiedBy": "a000255f-5f09-45e0-a970-9d9ed9cc6453",
+          "lastModifiedByType": "Application",
+          "lastModifiedAt": "2023-03-02T14:21:01.7034239Z"
+        },
+        "properties": {
+          "description": "This is a new storage mover",
+          "provisioningState": "Succeeded"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/testsmrg-3141/providers/Microsoft.StorageMover/storageMovers/testsm-837?api-version=2023-03-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-a6c3d17908a9f64e826d7ca9aacc0690-6bf9481518dc7d4b-00",
+        "User-Agent": "azsdk-net-ResourceManager.StorageMover/1.0.0-alpha.20230302.1 (.NET Framework 4.8.4614.0; Microsoft Windows 10.0.19045 )",
+        "x-ms-client-request-id": "338ad8bc97c91076db05343bdaa1a9f0",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "627",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 02 Mar 2023 14:21:03 GMT",
+        "ETag": "\u002207000894-0000-0100-0000-6400b0c90000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "338ad8bc97c91076db05343bdaa1a9f0",
+        "x-ms-correlation-request-id": "5ea2bf0f-7078-4781-a2f8-b6a694bc28b8",
+        "x-ms-providerhub-traffic": "True",
+        "x-ms-ratelimit-remaining-subscription-reads": "11966",
+        "x-ms-request-id": "946495e3-af08-4b44-94bb-1e4c46880878",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20230302T142104Z:5ea2bf0f-7078-4781-a2f8-b6a694bc28b8"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/testsmrg-3141/providers/Microsoft.StorageMover/storageMovers/testsm-837",
+        "name": "testsm-837",
+        "type": "microsoft.storagemover/storagemovers",
+        "location": "eastus",
+        "tags": {
+          "tag1": "value1"
+        },
+        "systemData": {
+          "createdBy": "a000255f-5f09-45e0-a970-9d9ed9cc6453",
+          "createdByType": "Application",
+          "createdAt": "2023-03-02T14:20:56.5315515Z",
+          "lastModifiedBy": "a000255f-5f09-45e0-a970-9d9ed9cc6453",
+          "lastModifiedByType": "Application",
+          "lastModifiedAt": "2023-03-02T14:20:56.5315515Z"
+        },
+        "properties": {
+          "description": "This is a new storage mover",
+          "provisioningState": "Succeeded"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/testsmrg-3141/providers/Microsoft.StorageMover/storageMovers?api-version=2023-03-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-24bf09325b51984596645a2ea24a5da4-8be723221d5ba842-00",
+        "User-Agent": "azsdk-net-ResourceManager.StorageMover/1.0.0-alpha.20230302.1 (.NET Framework 4.8.4614.0; Microsoft Windows 10.0.19045 )",
+        "x-ms-client-request-id": "c358bd77eb06e851ee62b22d213493be",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "1269",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 02 Mar 2023 14:21:05 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "cfec5287-1fde-4533-8a5e-e23cd4f0f344",
+        "x-ms-original-request-ids": [
+          "72b1fffd-734d-4064-b038-4279295d6e69",
+          "3f295d99-48b3-4e87-af53-ef4c1436740a",
+          "e01d9bb7-fd4c-4467-bb5b-54be36034f17",
+          "b1263316-6d1c-4038-94b8-7d3f5f9775e7",
+          "93218362-5506-4b25-b799-3385b3c23715"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": "11965",
+        "x-ms-request-id": "cfec5287-1fde-4533-8a5e-e23cd4f0f344",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20230302T142105Z:cfec5287-1fde-4533-8a5e-e23cd4f0f344"
+      },
+      "ResponseBody": {
+        "value": [
+          {
+            "id": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/testsmrg-3141/providers/Microsoft.StorageMover/storageMovers/testsm-837",
+            "name": "testsm-837",
+            "type": "microsoft.storagemover/storagemovers",
+            "location": "eastus",
+            "tags": {
+              "tag1": "value1"
+            },
+            "systemData": {
+              "createdBy": "a000255f-5f09-45e0-a970-9d9ed9cc6453",
+              "createdByType": "Application",
+              "createdAt": "2023-03-02T14:20:56.5315515Z",
+              "lastModifiedBy": "a000255f-5f09-45e0-a970-9d9ed9cc6453",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-03-02T14:20:56.5315515Z"
+            },
+            "properties": {
+              "description": "This is a new storage mover",
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/testsmrg-3141/providers/Microsoft.StorageMover/storageMovers/testsm-2243",
+            "name": "testsm-2243",
+            "type": "microsoft.storagemover/storagemovers",
+            "location": "eastus",
+            "tags": {
+              "tag1": "value1"
+            },
+            "systemData": {
+              "createdBy": "a000255f-5f09-45e0-a970-9d9ed9cc6453",
+              "createdByType": "Application",
+              "createdAt": "2023-03-02T14:21:01.7034239Z",
+              "lastModifiedBy": "a000255f-5f09-45e0-a970-9d9ed9cc6453",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-03-02T14:21:01.7034239Z"
+            },
+            "properties": {
+              "description": "This is a new storage mover",
+              "provisioningState": "Succeeded"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/testsmrg-3141/providers/Microsoft.StorageMover/storageMovers/testsm-837?api-version=2023-03-01",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "110",
+        "Content-Type": "application/json",
+        "traceparent": "00-2cc5e14bddbf684086757cafafa7f55b-f9204317307f6840-00",
+        "User-Agent": "azsdk-net-ResourceManager.StorageMover/1.0.0-alpha.20230302.1 (.NET Framework 4.8.4614.0; Microsoft Windows 10.0.19045 )",
+        "x-ms-client-request-id": "c76d9691c49e7723e6c4448387347db3",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "tags": {
+          "tag1": "value1"
+        },
+        "location": "eastus",
+        "properties": {
+          "description": "This is an updated storage mover"
+        }
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "632",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 02 Mar 2023 14:21:05 GMT",
+        "ETag": "\u002207000c94-0000-0100-0000-6400b0d20000\u0022",
+        "Expires": "-1",
+        "mise-correlation-id": "59dda703-425f-40e1-ac00-1accfcd4c21c",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "c76d9691c49e7723e6c4448387347db3",
+        "x-ms-correlation-request-id": "b7a289d9-3a4c-4db6-9008-f14da0a98fae",
+        "x-ms-providerhub-traffic": "True",
+        "x-ms-ratelimit-remaining-subscription-writes": "1192",
+        "x-ms-request-id": "ec346524-bb01-4fc7-a664-ad2dd8a565d8",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20230302T142106Z:b7a289d9-3a4c-4db6-9008-f14da0a98fae"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/testsmrg-3141/providers/Microsoft.StorageMover/storageMovers/testsm-837",
+        "name": "testsm-837",
+        "type": "microsoft.storagemover/storagemovers",
+        "location": "eastus",
+        "tags": {
+          "tag1": "value1"
+        },
+        "systemData": {
+          "createdBy": "a000255f-5f09-45e0-a970-9d9ed9cc6453",
+          "createdByType": "Application",
+          "createdAt": "2023-03-02T14:20:56.5315515Z",
+          "lastModifiedBy": "a000255f-5f09-45e0-a970-9d9ed9cc6453",
+          "lastModifiedByType": "Application",
+          "lastModifiedAt": "2023-03-02T14:21:06.0785023Z"
+        },
+        "properties": {
+          "description": "This is an updated storage mover",
+          "provisioningState": "Succeeded"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/testsmrg-3141/providers/Microsoft.StorageMover/storageMovers/testsm-837?api-version=2023-03-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-5c63f4506c09a24081372f0c41388379-8c132dd92c5b6b42-00",
+        "User-Agent": "azsdk-net-ResourceManager.StorageMover/1.0.0-alpha.20230302.1 (.NET Framework 4.8.4614.0; Microsoft Windows 10.0.19045 )",
+        "x-ms-client-request-id": "8c1e609545bed07687a24467e549efa6",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "632",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 02 Mar 2023 14:21:06 GMT",
+        "ETag": "\u002207000c94-0000-0100-0000-6400b0d20000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "8c1e609545bed07687a24467e549efa6",
+        "x-ms-correlation-request-id": "60fb0fd2-b647-4e8a-a3ed-c5e64d88eabf",
+        "x-ms-providerhub-traffic": "True",
+        "x-ms-ratelimit-remaining-subscription-reads": "11964",
+        "x-ms-request-id": "2638314e-0fe2-460b-9b60-224d853763d7",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20230302T142107Z:60fb0fd2-b647-4e8a-a3ed-c5e64d88eabf"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/testsmrg-3141/providers/Microsoft.StorageMover/storageMovers/testsm-837",
+        "name": "testsm-837",
+        "type": "microsoft.storagemover/storagemovers",
+        "location": "eastus",
+        "tags": {
+          "tag1": "value1"
+        },
+        "systemData": {
+          "createdBy": "a000255f-5f09-45e0-a970-9d9ed9cc6453",
+          "createdByType": "Application",
+          "createdAt": "2023-03-02T14:20:56.5315515Z",
+          "lastModifiedBy": "a000255f-5f09-45e0-a970-9d9ed9cc6453",
+          "lastModifiedByType": "Application",
+          "lastModifiedAt": "2023-03-02T14:21:06.0785023Z"
+        },
+        "properties": {
+          "description": "This is an updated storage mover",
+          "provisioningState": "Succeeded"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/testsmrg-3141/providers/Microsoft.StorageMover/storageMovers/testsm-837111?api-version=2023-03-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-2fe3a81c3d812d48b2ea0b96917eae19-1d28d3c53fe0174e-00",
+        "User-Agent": "azsdk-net-ResourceManager.StorageMover/1.0.0-alpha.20230302.1 (.NET Framework 4.8.4614.0; Microsoft Windows 10.0.19045 )",
+        "x-ms-client-request-id": "43aa7571e133b35199e0dd41a6cd60ba",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 404,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "235",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 02 Mar 2023 14:21:06 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "4f80b89f-d812-41ac-aea4-4ba003279e1a",
+        "x-ms-failure-cause": "gateway",
+        "x-ms-request-id": "4f80b89f-d812-41ac-aea4-4ba003279e1a",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20230302T142107Z:4f80b89f-d812-41ac-aea4-4ba003279e1a"
+      },
+      "ResponseBody": {
+        "error": {
+          "code": "ResourceNotFound",
+          "message": "The Resource \u0027Microsoft.StorageMover/storageMovers/testsm-837111\u0027 under resource group \u0027testsmrg-3141\u0027 was not found. For more details please go to https://aka.ms/ARMResourceNotFoundFix"
+        }
+      }
+    }
+  ],
+  "Variables": {
+    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
+    "RandomSeed": "897002266",
+    "RESOURCE_MANAGER_URL": null,
+    "SUBSCRIPTION_ID": "45b60d85-fd72-427a-a708-f994d26e593e"
+  }
+}
