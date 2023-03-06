@@ -65,9 +65,9 @@ namespace Azure.ResourceManager.Search
     public partial class SearchServiceData : Azure.ResourceManager.Models.TrackedResourceData
     {
         public SearchServiceData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
-        public Azure.ResourceManager.Search.Models.DataPlaneAuthOptions AuthOptions { get { throw null; } set { } }
+        public Azure.ResourceManager.Search.Models.SearchAadAuthDataPlaneAuthOptions AuthOptions { get { throw null; } set { } }
         public bool? DisableLocalAuth { get { throw null; } set { } }
-        public Azure.ResourceManager.Search.Models.EncryptionWithCmk EncryptionWithCmk { get { throw null; } set { } }
+        public Azure.ResourceManager.Search.Models.SearchEncryptionWithCmk EncryptionWithCmk { get { throw null; } set { } }
         public Azure.ResourceManager.Search.Models.SearchServiceHostingMode? HostingMode { get { throw null; } set { } }
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Search.Models.SearchServiceIPRule> IPRules { get { throw null; } }
@@ -156,51 +156,29 @@ namespace Azure.ResourceManager.Search
 }
 namespace Azure.ResourceManager.Search.Models
 {
-    public enum AadAuthFailureMode
+    public partial class SearchAadAuthDataPlaneAuthOptions
+    {
+        public SearchAadAuthDataPlaneAuthOptions() { }
+        public Azure.ResourceManager.Search.Models.SearchAadAuthFailureMode? AadAuthFailureMode { get { throw null; } set { } }
+        public System.BinaryData ApiKeyOnly { get { throw null; } set { } }
+    }
+    public enum SearchAadAuthFailureMode
     {
         Http403 = 0,
         Http401WithBearerChallenge = 1,
-    }
-    public partial class DataPlaneAuthOptions
-    {
-        public DataPlaneAuthOptions() { }
-        public Azure.ResourceManager.Search.Models.AadAuthFailureMode? AadAuthFailureMode { get { throw null; } set { } }
-        public System.BinaryData ApiKeyOnly { get { throw null; } set { } }
-    }
-    public partial class EncryptionWithCmk
-    {
-        public EncryptionWithCmk() { }
-        public Azure.ResourceManager.Search.Models.SearchEncryptionComplianceStatus? EncryptionComplianceStatus { get { throw null; } }
-        public Azure.ResourceManager.Search.Models.SearchEncryptionWithCmk? Enforcement { get { throw null; } set { } }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct PrivateLinkServiceConnectionProvisioningState : System.IEquatable<Azure.ResourceManager.Search.Models.PrivateLinkServiceConnectionProvisioningState>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public PrivateLinkServiceConnectionProvisioningState(string value) { throw null; }
-        public static Azure.ResourceManager.Search.Models.PrivateLinkServiceConnectionProvisioningState Canceled { get { throw null; } }
-        public static Azure.ResourceManager.Search.Models.PrivateLinkServiceConnectionProvisioningState Deleting { get { throw null; } }
-        public static Azure.ResourceManager.Search.Models.PrivateLinkServiceConnectionProvisioningState Failed { get { throw null; } }
-        public static Azure.ResourceManager.Search.Models.PrivateLinkServiceConnectionProvisioningState Incomplete { get { throw null; } }
-        public static Azure.ResourceManager.Search.Models.PrivateLinkServiceConnectionProvisioningState Succeeded { get { throw null; } }
-        public static Azure.ResourceManager.Search.Models.PrivateLinkServiceConnectionProvisioningState Updating { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Search.Models.PrivateLinkServiceConnectionProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Search.Models.PrivateLinkServiceConnectionProvisioningState left, Azure.ResourceManager.Search.Models.PrivateLinkServiceConnectionProvisioningState right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Search.Models.PrivateLinkServiceConnectionProvisioningState (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Search.Models.PrivateLinkServiceConnectionProvisioningState left, Azure.ResourceManager.Search.Models.PrivateLinkServiceConnectionProvisioningState right) { throw null; }
-        public override string ToString() { throw null; }
     }
     public enum SearchEncryptionComplianceStatus
     {
         Compliant = 0,
         NonCompliant = 1,
     }
-    public enum SearchEncryptionWithCmk
+    public partial class SearchEncryptionWithCmk
+    {
+        public SearchEncryptionWithCmk() { }
+        public Azure.ResourceManager.Search.Models.SearchEncryptionComplianceStatus? EncryptionComplianceStatus { get { throw null; } }
+        public Azure.ResourceManager.Search.Models.SearchEncryptionWithCmkEnforcement? Enforcement { get { throw null; } set { } }
+    }
+    public enum SearchEncryptionWithCmkEnforcement
     {
         Unspecified = 0,
         Disabled = 1,
@@ -223,6 +201,28 @@ namespace Azure.ResourceManager.Search.Models
         public System.Collections.Generic.IReadOnlyList<string> RequiredMembers { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> RequiredZoneNames { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Search.Models.ShareableSearchServicePrivateLinkResourceType> ShareablePrivateLinkResourceTypes { get { throw null; } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct SearchPrivateLinkServiceConnectionProvisioningState : System.IEquatable<Azure.ResourceManager.Search.Models.SearchPrivateLinkServiceConnectionProvisioningState>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public SearchPrivateLinkServiceConnectionProvisioningState(string value) { throw null; }
+        public static Azure.ResourceManager.Search.Models.SearchPrivateLinkServiceConnectionProvisioningState Canceled { get { throw null; } }
+        public static Azure.ResourceManager.Search.Models.SearchPrivateLinkServiceConnectionProvisioningState Deleting { get { throw null; } }
+        public static Azure.ResourceManager.Search.Models.SearchPrivateLinkServiceConnectionProvisioningState Failed { get { throw null; } }
+        public static Azure.ResourceManager.Search.Models.SearchPrivateLinkServiceConnectionProvisioningState Incomplete { get { throw null; } }
+        public static Azure.ResourceManager.Search.Models.SearchPrivateLinkServiceConnectionProvisioningState Succeeded { get { throw null; } }
+        public static Azure.ResourceManager.Search.Models.SearchPrivateLinkServiceConnectionProvisioningState Updating { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Search.Models.SearchPrivateLinkServiceConnectionProvisioningState other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Search.Models.SearchPrivateLinkServiceConnectionProvisioningState left, Azure.ResourceManager.Search.Models.SearchPrivateLinkServiceConnectionProvisioningState right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Search.Models.SearchPrivateLinkServiceConnectionProvisioningState (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Search.Models.SearchPrivateLinkServiceConnectionProvisioningState left, Azure.ResourceManager.Search.Models.SearchPrivateLinkServiceConnectionProvisioningState right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public enum SearchServiceAdminKeyKind
     {
@@ -279,9 +279,9 @@ namespace Azure.ResourceManager.Search.Models
     public partial class SearchServicePatch : Azure.ResourceManager.Models.TrackedResourceData
     {
         public SearchServicePatch(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
-        public Azure.ResourceManager.Search.Models.DataPlaneAuthOptions AuthOptions { get { throw null; } set { } }
+        public Azure.ResourceManager.Search.Models.SearchAadAuthDataPlaneAuthOptions AuthOptions { get { throw null; } set { } }
         public bool? DisableLocalAuth { get { throw null; } set { } }
-        public Azure.ResourceManager.Search.Models.EncryptionWithCmk EncryptionWithCmk { get { throw null; } set { } }
+        public Azure.ResourceManager.Search.Models.SearchEncryptionWithCmk EncryptionWithCmk { get { throw null; } set { } }
         public Azure.ResourceManager.Search.Models.SearchServiceHostingMode? HostingMode { get { throw null; } set { } }
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Search.Models.SearchServiceIPRule> IPRules { get { throw null; } }
@@ -301,7 +301,7 @@ namespace Azure.ResourceManager.Search.Models
         public Azure.ResourceManager.Search.Models.SearchServicePrivateLinkServiceConnectionState ConnectionState { get { throw null; } set { } }
         public string GroupId { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier PrivateEndpointId { get { throw null; } set { } }
-        public Azure.ResourceManager.Search.Models.PrivateLinkServiceConnectionProvisioningState? ProvisioningState { get { throw null; } set { } }
+        public Azure.ResourceManager.Search.Models.SearchPrivateLinkServiceConnectionProvisioningState? ProvisioningState { get { throw null; } set { } }
     }
     public partial class SearchServicePrivateLinkServiceConnectionState
     {
