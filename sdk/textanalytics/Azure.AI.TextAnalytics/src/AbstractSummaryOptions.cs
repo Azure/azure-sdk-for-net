@@ -28,9 +28,9 @@ namespace Azure.AI.TextAnalytics
         public string AutoDetectionDefaultLanguage { get; set; }
 
         /// <summary>
-        /// The maximum number of sentences that the resulting summaries can have. If not set, the service default is
-        /// used.
+        /// The desired number of sentences in the resulting summaries, which the service will attempt to approximate.
+        /// If not set, the service default is used.
         /// </summary>
-        public int? MaxSentenceCount { get; set; }
+        public int? SentenceCount { get; set; }
     }
 }

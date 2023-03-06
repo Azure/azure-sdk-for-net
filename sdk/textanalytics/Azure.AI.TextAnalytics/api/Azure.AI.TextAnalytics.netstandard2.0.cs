@@ -14,8 +14,8 @@ namespace Azure.AI.TextAnalytics
         public AbstractSummaryAction(Azure.AI.TextAnalytics.AbstractSummaryOptions options) { }
         public string ActionName { get { throw null; } set { } }
         public bool? DisableServiceLogs { get { throw null; } set { } }
-        public int? MaxSentenceCount { get { throw null; } set { } }
         public string ModelVersion { get { throw null; } set { } }
+        public int? SentenceCount { get { throw null; } set { } }
     }
     public partial class AbstractSummaryActionResult : Azure.AI.TextAnalytics.TextAnalyticsActionResult
     {
@@ -49,7 +49,7 @@ namespace Azure.AI.TextAnalytics
         public AbstractSummaryOptions() { }
         public string AutoDetectionDefaultLanguage { get { throw null; } set { } }
         public string DisplayName { get { throw null; } set { } }
-        public int? MaxSentenceCount { get { throw null; } set { } }
+        public int? SentenceCount { get { throw null; } set { } }
     }
     public partial class AbstractSummaryResult : Azure.AI.TextAnalytics.TextAnalyticsResult
     {
