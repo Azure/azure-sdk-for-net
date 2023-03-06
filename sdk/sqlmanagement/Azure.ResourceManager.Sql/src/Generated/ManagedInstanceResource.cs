@@ -1588,12 +1588,12 @@ namespace Azure.ResourceManager.Sql
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="OutboundEnvironmentEndpoint" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<OutboundEnvironmentEndpoint> GetOutboundNetworkDependenciesByManagedInstanceAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="SqlOutboundEnvironmentEndpoint" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<SqlOutboundEnvironmentEndpoint> GetOutboundNetworkDependenciesAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _managedInstanceRestClient.CreateListOutboundNetworkDependenciesByManagedInstanceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _managedInstanceRestClient.CreateListOutboundNetworkDependenciesByManagedInstanceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, OutboundEnvironmentEndpoint.DeserializeOutboundEnvironmentEndpoint, _managedInstanceClientDiagnostics, Pipeline, "ManagedInstanceResource.GetOutboundNetworkDependenciesByManagedInstance", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, SqlOutboundEnvironmentEndpoint.DeserializeSqlOutboundEnvironmentEndpoint, _managedInstanceClientDiagnostics, Pipeline, "ManagedInstanceResource.GetOutboundNetworkDependencies", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -1610,12 +1610,12 @@ namespace Azure.ResourceManager.Sql
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="OutboundEnvironmentEndpoint" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<OutboundEnvironmentEndpoint> GetOutboundNetworkDependenciesByManagedInstance(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="SqlOutboundEnvironmentEndpoint" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<SqlOutboundEnvironmentEndpoint> GetOutboundNetworkDependencies(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _managedInstanceRestClient.CreateListOutboundNetworkDependenciesByManagedInstanceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _managedInstanceRestClient.CreateListOutboundNetworkDependenciesByManagedInstanceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, OutboundEnvironmentEndpoint.DeserializeOutboundEnvironmentEndpoint, _managedInstanceClientDiagnostics, Pipeline, "ManagedInstanceResource.GetOutboundNetworkDependenciesByManagedInstance", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, SqlOutboundEnvironmentEndpoint.DeserializeSqlOutboundEnvironmentEndpoint, _managedInstanceClientDiagnostics, Pipeline, "ManagedInstanceResource.GetOutboundNetworkDependencies", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

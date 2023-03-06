@@ -11,25 +11,25 @@ using Azure.Core;
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> A collection of endpoints that the managed instance service requires outbound network access to. </summary>
-    internal partial class OutboundEnvironmentEndpointCollection
+    internal partial class SqlOutboundEnvironmentEndpointCollection
     {
-        /// <summary> Initializes a new instance of OutboundEnvironmentEndpointCollection. </summary>
-        internal OutboundEnvironmentEndpointCollection()
+        /// <summary> Initializes a new instance of SqlOutboundEnvironmentEndpointCollection. </summary>
+        internal SqlOutboundEnvironmentEndpointCollection()
         {
-            Value = new ChangeTrackingList<OutboundEnvironmentEndpoint>();
+            Value = new ChangeTrackingList<SqlOutboundEnvironmentEndpoint>();
         }
 
-        /// <summary> Initializes a new instance of OutboundEnvironmentEndpointCollection. </summary>
+        /// <summary> Initializes a new instance of SqlOutboundEnvironmentEndpointCollection. </summary>
         /// <param name="value"> Array of results. </param>
         /// <param name="nextLink"> Link to retrieve next page of results. </param>
-        internal OutboundEnvironmentEndpointCollection(IReadOnlyList<OutboundEnvironmentEndpoint> value, string nextLink)
+        internal SqlOutboundEnvironmentEndpointCollection(IReadOnlyList<SqlOutboundEnvironmentEndpoint> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> Array of results. </summary>
-        public IReadOnlyList<OutboundEnvironmentEndpoint> Value { get; }
+        public IReadOnlyList<SqlOutboundEnvironmentEndpoint> Value { get; }
         /// <summary> Link to retrieve next page of results. </summary>
         public string NextLink { get; }
     }

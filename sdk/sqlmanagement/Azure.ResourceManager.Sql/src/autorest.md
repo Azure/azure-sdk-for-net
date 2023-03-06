@@ -143,6 +143,7 @@ override-operation-name:
   ServerTrustGroups_ListByInstance: GetSqlServerTrustGroups
   ManagedInstances_ListByManagedInstance: GetTopQueries
   ManagedDatabases_ListInaccessibleByInstance: GetInaccessibleManagedDatabases
+  ManagedInstances_ListOutboundNetworkDependenciesByManagedInstance: GetOutboundNetworkDependencies
   ManagedDatabaseQueries_ListByQuery: GetQueryStatistics
   Metrics_ListDatabase: GetMetrics
   MetricDefinitions_ListDatabase: GetMetricDefinitions
@@ -325,6 +326,8 @@ rename-mapping:
   ScheduleItem: SqlScheduleItem
   ServerConfigurationOptionName: ManagedInstanceServerConfigurationOptionName
   ServerConfigurationOption: ManagedInstanceServerConfigurationOption
+  OutboundEnvironmentEndpoint: SqlOutboundEnvironmentEndpoint
+  OutboundEnvironmentEndpointCollection: SqlOutboundEnvironmentEndpointCollection
 
 prompted-enum-values:
   - Default

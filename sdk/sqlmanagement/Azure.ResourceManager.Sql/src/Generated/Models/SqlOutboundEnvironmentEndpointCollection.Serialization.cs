@@ -11,11 +11,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    internal partial class OutboundEnvironmentEndpointCollection
+    internal partial class SqlOutboundEnvironmentEndpointCollection
     {
-        internal static OutboundEnvironmentEndpointCollection DeserializeOutboundEnvironmentEndpointCollection(JsonElement element)
+        internal static SqlOutboundEnvironmentEndpointCollection DeserializeSqlOutboundEnvironmentEndpointCollection(JsonElement element)
         {
-            Optional<IReadOnlyList<OutboundEnvironmentEndpoint>> value = default;
+            Optional<IReadOnlyList<SqlOutboundEnvironmentEndpoint>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -26,10 +26,10 @@ namespace Azure.ResourceManager.Sql.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<OutboundEnvironmentEndpoint> array = new List<OutboundEnvironmentEndpoint>();
+                    List<SqlOutboundEnvironmentEndpoint> array = new List<SqlOutboundEnvironmentEndpoint>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(OutboundEnvironmentEndpoint.DeserializeOutboundEnvironmentEndpoint(item));
+                        array.Add(SqlOutboundEnvironmentEndpoint.DeserializeSqlOutboundEnvironmentEndpoint(item));
                     }
                     value = array;
                     continue;
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Sql.Models
                     continue;
                 }
             }
-            return new OutboundEnvironmentEndpointCollection(Optional.ToList(value), nextLink.Value);
+            return new SqlOutboundEnvironmentEndpointCollection(Optional.ToList(value), nextLink.Value);
         }
     }
 }

@@ -1765,8 +1765,8 @@ namespace Azure.ResourceManager.Sql
         public virtual Azure.ResourceManager.Sql.ManagedServerSecurityAlertPolicyCollection GetManagedServerSecurityAlertPolicies() { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Sql.ManagedServerSecurityAlertPolicyResource> GetManagedServerSecurityAlertPolicy(Azure.ResourceManager.Sql.Models.SqlSecurityAlertPolicyName securityAlertPolicyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.ManagedServerSecurityAlertPolicyResource>> GetManagedServerSecurityAlertPolicyAsync(Azure.ResourceManager.Sql.Models.SqlSecurityAlertPolicyName securityAlertPolicyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.Sql.Models.OutboundEnvironmentEndpoint> GetOutboundNetworkDependenciesByManagedInstance(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.Sql.Models.OutboundEnvironmentEndpoint> GetOutboundNetworkDependenciesByManagedInstanceAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Sql.Models.SqlOutboundEnvironmentEndpoint> GetOutboundNetworkDependencies(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Sql.Models.SqlOutboundEnvironmentEndpoint> GetOutboundNetworkDependenciesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Sql.RecoverableManagedDatabaseResource> GetRecoverableManagedDatabase(string recoverableDatabaseName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.RecoverableManagedDatabaseResource>> GetRecoverableManagedDatabaseAsync(string recoverableDatabaseName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.Sql.RecoverableManagedDatabaseCollection GetRecoverableManagedDatabases() { throw null; }
@@ -7016,12 +7016,6 @@ namespace Azure.ResourceManager.Sql.Models
         public Azure.Core.ResourceIdentifier SqlServerResourceId { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier StorageAccountResourceId { get { throw null; } set { } }
     }
-    public partial class OutboundEnvironmentEndpoint
-    {
-        internal OutboundEnvironmentEndpoint() { }
-        public string Category { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Sql.Models.ManagedInstanceEndpointDependency> Endpoints { get { throw null; } }
-    }
     public partial class PartnerRegionInfo
     {
         public PartnerRegionInfo() { }
@@ -8216,6 +8210,12 @@ namespace Azure.ResourceManager.Sql.Models
     {
         Invalid = 0,
         AlreadyExists = 1,
+    }
+    public partial class SqlOutboundEnvironmentEndpoint
+    {
+        internal SqlOutboundEnvironmentEndpoint() { }
+        public string Category { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Sql.Models.ManagedInstanceEndpointDependency> Endpoints { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct SqlPrivateEndpointProvisioningState : System.IEquatable<Azure.ResourceManager.Sql.Models.SqlPrivateEndpointProvisioningState>

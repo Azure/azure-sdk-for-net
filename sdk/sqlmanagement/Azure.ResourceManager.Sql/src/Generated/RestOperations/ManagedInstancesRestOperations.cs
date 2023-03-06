@@ -695,7 +695,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="managedInstanceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="managedInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<OutboundEnvironmentEndpointCollection>> ListOutboundNetworkDependenciesByManagedInstanceAsync(string subscriptionId, string resourceGroupName, string managedInstanceName, CancellationToken cancellationToken = default)
+        public async Task<Response<SqlOutboundEnvironmentEndpointCollection>> ListOutboundNetworkDependenciesByManagedInstanceAsync(string subscriptionId, string resourceGroupName, string managedInstanceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -707,9 +707,9 @@ namespace Azure.ResourceManager.Sql
             {
                 case 200:
                     {
-                        OutboundEnvironmentEndpointCollection value = default;
+                        SqlOutboundEnvironmentEndpointCollection value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = OutboundEnvironmentEndpointCollection.DeserializeOutboundEnvironmentEndpointCollection(document.RootElement);
+                        value = SqlOutboundEnvironmentEndpointCollection.DeserializeSqlOutboundEnvironmentEndpointCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -724,7 +724,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="managedInstanceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="managedInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<OutboundEnvironmentEndpointCollection> ListOutboundNetworkDependenciesByManagedInstance(string subscriptionId, string resourceGroupName, string managedInstanceName, CancellationToken cancellationToken = default)
+        public Response<SqlOutboundEnvironmentEndpointCollection> ListOutboundNetworkDependenciesByManagedInstance(string subscriptionId, string resourceGroupName, string managedInstanceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -736,9 +736,9 @@ namespace Azure.ResourceManager.Sql
             {
                 case 200:
                     {
-                        OutboundEnvironmentEndpointCollection value = default;
+                        SqlOutboundEnvironmentEndpointCollection value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = OutboundEnvironmentEndpointCollection.DeserializeOutboundEnvironmentEndpointCollection(document.RootElement);
+                        value = SqlOutboundEnvironmentEndpointCollection.DeserializeSqlOutboundEnvironmentEndpointCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1247,7 +1247,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="managedInstanceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="managedInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<OutboundEnvironmentEndpointCollection>> ListOutboundNetworkDependenciesByManagedInstanceNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string managedInstanceName, CancellationToken cancellationToken = default)
+        public async Task<Response<SqlOutboundEnvironmentEndpointCollection>> ListOutboundNetworkDependenciesByManagedInstanceNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string managedInstanceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -1260,9 +1260,9 @@ namespace Azure.ResourceManager.Sql
             {
                 case 200:
                     {
-                        OutboundEnvironmentEndpointCollection value = default;
+                        SqlOutboundEnvironmentEndpointCollection value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = OutboundEnvironmentEndpointCollection.DeserializeOutboundEnvironmentEndpointCollection(document.RootElement);
+                        value = SqlOutboundEnvironmentEndpointCollection.DeserializeSqlOutboundEnvironmentEndpointCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1278,7 +1278,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="managedInstanceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="managedInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<OutboundEnvironmentEndpointCollection> ListOutboundNetworkDependenciesByManagedInstanceNextPage(string nextLink, string subscriptionId, string resourceGroupName, string managedInstanceName, CancellationToken cancellationToken = default)
+        public Response<SqlOutboundEnvironmentEndpointCollection> ListOutboundNetworkDependenciesByManagedInstanceNextPage(string nextLink, string subscriptionId, string resourceGroupName, string managedInstanceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -1291,9 +1291,9 @@ namespace Azure.ResourceManager.Sql
             {
                 case 200:
                     {
-                        OutboundEnvironmentEndpointCollection value = default;
+                        SqlOutboundEnvironmentEndpointCollection value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = OutboundEnvironmentEndpointCollection.DeserializeOutboundEnvironmentEndpointCollection(document.RootElement);
+                        value = SqlOutboundEnvironmentEndpointCollection.DeserializeSqlOutboundEnvironmentEndpointCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

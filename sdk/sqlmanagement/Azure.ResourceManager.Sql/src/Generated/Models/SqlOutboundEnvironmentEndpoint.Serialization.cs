@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    public partial class OutboundEnvironmentEndpoint
+    public partial class SqlOutboundEnvironmentEndpoint
     {
-        internal static OutboundEnvironmentEndpoint DeserializeOutboundEnvironmentEndpoint(JsonElement element)
+        internal static SqlOutboundEnvironmentEndpoint DeserializeSqlOutboundEnvironmentEndpoint(JsonElement element)
         {
             Optional<string> category = default;
             Optional<IReadOnlyList<ManagedInstanceEndpointDependency>> endpoints = default;
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Sql.Models
                     continue;
                 }
             }
-            return new OutboundEnvironmentEndpoint(category.Value, Optional.ToList(endpoints));
+            return new SqlOutboundEnvironmentEndpoint(category.Value, Optional.ToList(endpoints));
         }
     }
 }
