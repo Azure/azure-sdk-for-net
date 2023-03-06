@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
 
         internal static ContainerRegistryAgentProperties DeserializeContainerRegistryAgentProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> cpu = default;
             foreach (var property in element.EnumerateObject())
             {

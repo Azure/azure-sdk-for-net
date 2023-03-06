@@ -62,6 +62,10 @@ namespace Azure.ResourceManager.BotService.Models
 
         internal static ChannelSettings DeserializeChannelSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> extensionKey1 = default;
             Optional<string> extensionKey2 = default;
             Optional<IList<Site>> sites = default;

@@ -70,6 +70,10 @@ namespace Azure.ResourceManager.ArcScVmm.Models
 
         internal static VirtualDisk DeserializeVirtualDisk(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<string> displayName = default;
             Optional<string> diskId = default;

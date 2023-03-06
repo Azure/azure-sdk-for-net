@@ -62,6 +62,10 @@ namespace Azure.AI.AnomalyDetector
 
         internal static ModelState DeserializeModelState(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<int>> epochIds = default;
             Optional<IList<float>> trainLosses = default;
             Optional<IList<float>> validationLosses = default;

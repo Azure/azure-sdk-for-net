@@ -56,6 +56,10 @@ namespace Azure.Containers.ContainerRegistry.Specialized
 
         internal static OciManifest DeserializeOciManifest(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<OciBlobDescriptor> config = default;
             Optional<IList<OciBlobDescriptor>> layers = default;
             Optional<OciAnnotations> annotations = default;

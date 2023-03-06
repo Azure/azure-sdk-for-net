@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Consumption.Models
     {
         internal static Events DeserializeEvents(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<ConsumptionEventSummary>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

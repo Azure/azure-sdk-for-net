@@ -42,6 +42,10 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         internal static ContainerAppDiagnosticsMetadata DeserializeContainerAppDiagnosticsMetadata(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> description = default;
             Optional<string> author = default;
             Optional<string> category = default;

@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.BotService.Models
     {
         internal static ServiceProviderProperties DeserializeServiceProviderProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> id = default;
             Optional<string> displayName = default;
             Optional<string> serviceProviderName = default;

@@ -108,6 +108,10 @@ namespace Azure.Security.Attestation
 
         internal static JsonWebKey DeserializeJsonWebKey(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> alg = default;
             Optional<string> crv = default;
             Optional<string> d = default;

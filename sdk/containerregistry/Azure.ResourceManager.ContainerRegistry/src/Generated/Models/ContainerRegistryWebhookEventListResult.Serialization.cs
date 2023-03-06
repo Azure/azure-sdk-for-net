@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
     {
         internal static ContainerRegistryWebhookEventListResult DeserializeContainerRegistryWebhookEventListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<ContainerRegistryWebhookEvent>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

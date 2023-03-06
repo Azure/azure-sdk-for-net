@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.ArcScVmm.Models
 
         internal static OSProfile DeserializeOSProfile(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> adminPassword = default;
             Optional<string> computerName = default;
             Optional<OSType> osType = default;

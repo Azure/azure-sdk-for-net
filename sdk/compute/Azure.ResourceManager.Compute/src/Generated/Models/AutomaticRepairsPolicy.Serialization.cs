@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static AutomaticRepairsPolicy DeserializeAutomaticRepairsPolicy(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> enabled = default;
             Optional<string> gracePeriod = default;
             Optional<RepairAction> repairAction = default;

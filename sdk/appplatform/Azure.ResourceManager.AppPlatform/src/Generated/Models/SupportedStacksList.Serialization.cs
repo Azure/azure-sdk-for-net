@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.AppPlatform.Models
     {
         internal static SupportedStacksList DeserializeSupportedStacksList(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<AppPlatformSupportedStackData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

@@ -27,6 +27,10 @@ namespace Azure.ResourceManager.AppPlatform
 
         internal static AppPlatformApiPortalCustomDomainData DeserializeAppPlatformApiPortalCustomDomainData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ApiPortalCustomDomainProperties> properties = default;
             ResourceIdentifier id = default;
             string name = default;

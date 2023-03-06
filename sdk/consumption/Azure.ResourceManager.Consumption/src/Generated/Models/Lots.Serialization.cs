@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Consumption.Models
     {
         internal static Lots DeserializeLots(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<ConsumptionLotSummary>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
