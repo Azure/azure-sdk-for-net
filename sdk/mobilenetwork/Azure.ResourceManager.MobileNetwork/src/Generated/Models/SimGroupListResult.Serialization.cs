@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.MobileNetwork.Models
     {
         internal static SimGroupListResult DeserializeSimGroupListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<SimGroupData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

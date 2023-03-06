@@ -70,6 +70,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static MachineLearningSynapseSparkProperties DeserializeMachineLearningSynapseSparkProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<MachineLearningAutoScaleProperties> autoScaleProperties = default;
             Optional<MachineLearningAutoPauseProperties> autoPauseProperties = default;
             Optional<string> sparkVersion = default;

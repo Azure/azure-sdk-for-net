@@ -42,6 +42,10 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
 
         internal static AssetConversionProperties DeserializeAssetConversionProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> clientErrorDetails = default;
             Optional<string> serverErrorDetails = default;
             Optional<ConversionErrorCode> errorCode = default;

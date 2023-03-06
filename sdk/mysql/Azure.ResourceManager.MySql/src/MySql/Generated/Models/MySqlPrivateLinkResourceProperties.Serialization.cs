@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.MySql.Models
     {
         internal static MySqlPrivateLinkResourceProperties DeserializeMySqlPrivateLinkResourceProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> groupId = default;
             Optional<IReadOnlyList<string>> requiredMembers = default;
             foreach (var property in element.EnumerateObject())

@@ -32,6 +32,10 @@ namespace Azure.ResourceManager.Media.Models
 
         internal static AccountEncryption DeserializeAccountEncryption(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             AccountEncryptionKeyType type = default;
             Optional<KeyVaultProperties> keyVaultProperties = default;
             Optional<ResourceIdentity> identity = default;

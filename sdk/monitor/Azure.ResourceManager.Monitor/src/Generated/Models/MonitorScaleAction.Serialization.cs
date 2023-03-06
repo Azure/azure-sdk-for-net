@@ -32,6 +32,10 @@ namespace Azure.ResourceManager.Monitor.Models
 
         internal static MonitorScaleAction DeserializeMonitorScaleAction(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             MonitorScaleDirection direction = default;
             MonitorScaleType type = default;
             Optional<string> value = default;

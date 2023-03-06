@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.Media.Models
     {
         internal static StreamingEndpointCapacity DeserializeStreamingEndpointCapacity(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> scaleType = default;
             Optional<int> @default = default;
             Optional<int> minimum = default;

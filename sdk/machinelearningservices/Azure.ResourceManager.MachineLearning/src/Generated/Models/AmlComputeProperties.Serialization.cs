@@ -116,6 +116,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static AmlComputeProperties DeserializeAmlComputeProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<MachineLearningOSType> osType = default;
             Optional<string> vmSize = default;
             Optional<MachineLearningVmPriority> vmPriority = default;

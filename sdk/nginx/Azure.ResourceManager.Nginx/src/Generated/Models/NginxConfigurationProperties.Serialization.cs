@@ -51,6 +51,10 @@ namespace Azure.ResourceManager.Nginx.Models
 
         internal static NginxConfigurationProperties DeserializeNginxConfigurationProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ProvisioningState> provisioningState = default;
             Optional<IList<NginxConfigurationFile>> files = default;
             Optional<IList<NginxConfigurationFile>> protectedFiles = default;

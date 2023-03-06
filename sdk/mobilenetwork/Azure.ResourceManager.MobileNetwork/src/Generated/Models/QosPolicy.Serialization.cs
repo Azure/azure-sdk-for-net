@@ -42,6 +42,10 @@ namespace Azure.ResourceManager.MobileNetwork.Models
 
         internal static QosPolicy DeserializeQosPolicy(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> _5qi = default;
             Optional<int> allocationAndRetentionPriorityLevel = default;
             Optional<PreemptionCapability> preemptionCapability = default;

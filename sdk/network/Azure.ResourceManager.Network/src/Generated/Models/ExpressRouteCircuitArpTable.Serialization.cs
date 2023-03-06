@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal static ExpressRouteCircuitArpTable DeserializeExpressRouteCircuitArpTable(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> age = default;
             Optional<string> @interface = default;
             Optional<string> ipAddress = default;

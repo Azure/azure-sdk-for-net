@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal static ServiceTagInformationPropertiesFormat DeserializeServiceTagInformationPropertiesFormat(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> changeNumber = default;
             Optional<string> region = default;
             Optional<string> systemService = default;

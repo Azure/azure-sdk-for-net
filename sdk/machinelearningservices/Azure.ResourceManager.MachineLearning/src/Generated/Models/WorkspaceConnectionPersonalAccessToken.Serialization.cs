@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static WorkspaceConnectionPersonalAccessToken DeserializeWorkspaceConnectionPersonalAccessToken(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> pat = default;
             foreach (var property in element.EnumerateObject())
             {

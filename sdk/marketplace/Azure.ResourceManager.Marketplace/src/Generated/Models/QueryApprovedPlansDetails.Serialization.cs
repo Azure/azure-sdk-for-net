@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Marketplace.Models
     {
         internal static QueryApprovedPlansDetails DeserializeQueryApprovedPlansDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> planId = default;
             Optional<IReadOnlyList<string>> subscriptionIds = default;
             Optional<bool> allSubscriptions = default;

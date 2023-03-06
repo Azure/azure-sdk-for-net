@@ -64,6 +64,10 @@ namespace Azure.ResourceManager.Media.Models
 
         internal static ContentKeyPolicyPlayReadyLicense DeserializeContentKeyPolicyPlayReadyLicense(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             bool allowTestDevices = default;
             Optional<PlayReadySecurityLevel> securityLevel = default;
             Optional<DateTimeOffset> beginDate = default;

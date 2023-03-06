@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal static NetworkSecurityGroupListResult DeserializeNetworkSecurityGroupListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<NetworkSecurityGroupData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

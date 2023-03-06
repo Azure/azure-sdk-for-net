@@ -69,6 +69,10 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static ApplicationGatewayWebApplicationFirewallConfiguration DeserializeApplicationGatewayWebApplicationFirewallConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             bool enabled = default;
             ApplicationGatewayFirewallMode firewallMode = default;
             string ruleSetType = default;

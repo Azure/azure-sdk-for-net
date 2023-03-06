@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static ConnectionMonitorTcpConfiguration DeserializeConnectionMonitorTcpConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> port = default;
             Optional<bool> disableTraceRoute = default;
             Optional<DestinationPortBehavior> destinationPortBehavior = default;

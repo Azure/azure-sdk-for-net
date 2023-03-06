@@ -47,6 +47,10 @@ namespace Azure.ResourceManager.MobileNetwork.Models
 
         internal static PccRuleQosPolicy DeserializePccRuleQosPolicy(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<Ambr> guaranteedBitRate = default;
             Optional<int> _5qi = default;
             Optional<int> allocationAndRetentionPriorityLevel = default;

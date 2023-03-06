@@ -41,6 +41,10 @@ namespace Azure.ResourceManager.Nginx
 
         internal static NginxConfigurationData DeserializeNginxConfigurationData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<NginxConfigurationProperties> properties = default;
             Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
