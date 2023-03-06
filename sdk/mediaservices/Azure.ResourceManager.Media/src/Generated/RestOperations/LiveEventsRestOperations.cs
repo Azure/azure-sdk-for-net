@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Media
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2022-08-01";
+            _apiVersion = apiVersion ?? "2022-11-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -766,6 +766,243 @@ namespace Azure.ResourceManager.Media
             {
                 case 200:
                 case 202:
+                    return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateListGetStatusRequest(string subscriptionId, string resourceGroupName, string accountName, string liveEventName)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Media/mediaservices/", false);
+            uri.AppendPath(accountName, true);
+            uri.AppendPath("/liveEvents/", false);
+            uri.AppendPath(liveEventName, true);
+            uri.AppendPath("/getStatus", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        /// <summary> Gets status telemetry of a live event. </summary>
+        /// <param name="subscriptionId"> The unique identifier for a Microsoft Azure subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group within the Azure subscription. </param>
+        /// <param name="accountName"> The Media Services account name. </param>
+        /// <param name="liveEventName"> The name of the live event, maximum length is 32. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="liveEventName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="liveEventName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response> ListGetStatusAsync(string subscriptionId, string resourceGroupName, string accountName, string liveEventName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
+            Argument.AssertNotNullOrEmpty(liveEventName, nameof(liveEventName));
+
+            using var message = CreateListGetStatusRequest(subscriptionId, resourceGroupName, accountName, liveEventName);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                case 202:
+                case 304:
+                    return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Gets status telemetry of a live event. </summary>
+        /// <param name="subscriptionId"> The unique identifier for a Microsoft Azure subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group within the Azure subscription. </param>
+        /// <param name="accountName"> The Media Services account name. </param>
+        /// <param name="liveEventName"> The name of the live event, maximum length is 32. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="liveEventName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="liveEventName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response ListGetStatus(string subscriptionId, string resourceGroupName, string accountName, string liveEventName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
+            Argument.AssertNotNullOrEmpty(liveEventName, nameof(liveEventName));
+
+            using var message = CreateListGetStatusRequest(subscriptionId, resourceGroupName, accountName, liveEventName);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                case 202:
+                case 304:
+                    return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateListGetStreamEventsRequest(string subscriptionId, string resourceGroupName, string accountName, string liveEventName)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Media/mediaservices/", false);
+            uri.AppendPath(accountName, true);
+            uri.AppendPath("/liveEvents/", false);
+            uri.AppendPath(liveEventName, true);
+            uri.AppendPath("/getStreamEvents", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        /// <summary> Get stream events telemetry of a live event. </summary>
+        /// <param name="subscriptionId"> The unique identifier for a Microsoft Azure subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group within the Azure subscription. </param>
+        /// <param name="accountName"> The Media Services account name. </param>
+        /// <param name="liveEventName"> The name of the live event, maximum length is 32. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="liveEventName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="liveEventName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response> ListGetStreamEventsAsync(string subscriptionId, string resourceGroupName, string accountName, string liveEventName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
+            Argument.AssertNotNullOrEmpty(liveEventName, nameof(liveEventName));
+
+            using var message = CreateListGetStreamEventsRequest(subscriptionId, resourceGroupName, accountName, liveEventName);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                case 202:
+                case 304:
+                    return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Get stream events telemetry of a live event. </summary>
+        /// <param name="subscriptionId"> The unique identifier for a Microsoft Azure subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group within the Azure subscription. </param>
+        /// <param name="accountName"> The Media Services account name. </param>
+        /// <param name="liveEventName"> The name of the live event, maximum length is 32. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="liveEventName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="liveEventName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response ListGetStreamEvents(string subscriptionId, string resourceGroupName, string accountName, string liveEventName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
+            Argument.AssertNotNullOrEmpty(liveEventName, nameof(liveEventName));
+
+            using var message = CreateListGetStreamEventsRequest(subscriptionId, resourceGroupName, accountName, liveEventName);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                case 202:
+                case 304:
+                    return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateListGetTrackIngestHeartbeatsRequest(string subscriptionId, string resourceGroupName, string accountName, string liveEventName)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Media/mediaservices/", false);
+            uri.AppendPath(accountName, true);
+            uri.AppendPath("/liveEvents/", false);
+            uri.AppendPath(liveEventName, true);
+            uri.AppendPath("/getTrackIngestHeartbeats", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        /// <summary> Get track ingest heartbeat events telemetry of a live event. </summary>
+        /// <param name="subscriptionId"> The unique identifier for a Microsoft Azure subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group within the Azure subscription. </param>
+        /// <param name="accountName"> The Media Services account name. </param>
+        /// <param name="liveEventName"> The name of the live event, maximum length is 32. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="liveEventName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="liveEventName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response> ListGetTrackIngestHeartbeatsAsync(string subscriptionId, string resourceGroupName, string accountName, string liveEventName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
+            Argument.AssertNotNullOrEmpty(liveEventName, nameof(liveEventName));
+
+            using var message = CreateListGetTrackIngestHeartbeatsRequest(subscriptionId, resourceGroupName, accountName, liveEventName);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                case 202:
+                case 304:
+                    return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Get track ingest heartbeat events telemetry of a live event. </summary>
+        /// <param name="subscriptionId"> The unique identifier for a Microsoft Azure subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group within the Azure subscription. </param>
+        /// <param name="accountName"> The Media Services account name. </param>
+        /// <param name="liveEventName"> The name of the live event, maximum length is 32. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="liveEventName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="liveEventName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response ListGetTrackIngestHeartbeats(string subscriptionId, string resourceGroupName, string accountName, string liveEventName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
+            Argument.AssertNotNullOrEmpty(liveEventName, nameof(liveEventName));
+
+            using var message = CreateListGetTrackIngestHeartbeatsRequest(subscriptionId, resourceGroupName, accountName, liveEventName);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                case 202:
+                case 304:
                     return message.Response;
                 default:
                     throw new RequestFailedException(message.Response);

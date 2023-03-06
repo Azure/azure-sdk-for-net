@@ -43,7 +43,8 @@ namespace Azure.ResourceManager.Media
         /// <param name="publicNetworkAccess"> Whether or not public network access is allowed for resources under the Media Services account. </param>
         /// <param name="provisioningState"> Provisioning state of the Media Services account. </param>
         /// <param name="privateEndpointConnections"> The Private Endpoint Connections created for the Media Service account. </param>
-        internal MediaServicesAccountData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, Guid? mediaServicesAccountId, IList<MediaServicesStorageAccount> storageAccounts, MediaStorageAuthentication? storageAuthentication, AccountEncryption encryption, MediaKeyDelivery keyDelivery, MediaServicesPublicNetworkAccess? publicNetworkAccess, MediaServicesProvisioningState? provisioningState, IReadOnlyList<MediaServicesPrivateEndpointConnectionData> privateEndpointConnections) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="minimumTlsVersion"> The minimum TLS version allowed for this account&apos;s requests. This is an optional property. If unspecified, a secure default value will be used. </param>
+        internal MediaServicesAccountData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, Guid? mediaServicesAccountId, IList<MediaServicesStorageAccount> storageAccounts, MediaStorageAuthentication? storageAuthentication, AccountEncryption encryption, MediaKeyDelivery keyDelivery, MediaServicesPublicNetworkAccess? publicNetworkAccess, MediaServicesProvisioningState? provisioningState, IReadOnlyList<MediaServicesPrivateEndpointConnectionData> privateEndpointConnections, MinimumTlsVersion? minimumTlsVersion) : base(id, name, resourceType, systemData, tags, location)
         {
             Identity = identity;
             MediaServicesAccountId = mediaServicesAccountId;
@@ -54,6 +55,7 @@ namespace Azure.ResourceManager.Media
             PublicNetworkAccess = publicNetworkAccess;
             ProvisioningState = provisioningState;
             PrivateEndpointConnections = privateEndpointConnections;
+            MinimumTlsVersion = minimumTlsVersion;
         }
 
         /// <summary> The Managed Identity for the Media Services account. </summary>
@@ -86,5 +88,7 @@ namespace Azure.ResourceManager.Media
         public MediaServicesProvisioningState? ProvisioningState { get; }
         /// <summary> The Private Endpoint Connections created for the Media Service account. </summary>
         public IReadOnlyList<MediaServicesPrivateEndpointConnectionData> PrivateEndpointConnections { get; }
+        /// <summary> The minimum TLS version allowed for this account&apos;s requests. This is an optional property. If unspecified, a secure default value will be used. </summary>
+        public MinimumTlsVersion? MinimumTlsVersion { get; set; }
     }
 }

@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Media.Models
 {
-    /// <summary> Provisioning state of the Media Services account. </summary>
+    /// <summary> Provisioning state of the asset track. </summary>
     public readonly partial struct MediaServicesProvisioningState : IEquatable<MediaServicesProvisioningState>
     {
         private readonly string _value;

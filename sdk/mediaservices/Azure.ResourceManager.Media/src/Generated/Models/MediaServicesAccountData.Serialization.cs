@@ -83,6 +83,11 @@ namespace Azure.ResourceManager.Media
                     writer.WriteNull("publicNetworkAccess");
                 }
             }
+            if (Optional.IsDefined(MinimumTlsVersion))
+            {
+                writer.WritePropertyName("minimumTlsVersion"u8);
+                writer.WriteStringValue(MinimumTlsVersion.Value.ToString());
+            }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
@@ -108,6 +113,7 @@ namespace Azure.ResourceManager.Media
             Optional<MediaServicesPublicNetworkAccess?> publicNetworkAccess = default;
             Optional<MediaServicesProvisioningState> provisioningState = default;
             Optional<IReadOnlyList<MediaServicesPrivateEndpointConnectionData>> privateEndpointConnections = default;
+            Optional<MinimumTlsVersion> minimumTlsVersion = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("identity"u8))
@@ -264,11 +270,21 @@ namespace Azure.ResourceManager.Media
                             privateEndpointConnections = array;
                             continue;
                         }
+                        if (property0.NameEquals("minimumTlsVersion"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            minimumTlsVersion = new MinimumTlsVersion(property0.Value.GetString());
+                            continue;
+                        }
                     }
                     continue;
                 }
             }
-            return new MediaServicesAccountData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity, Optional.ToNullable(mediaServiceId), Optional.ToList(storageAccounts), Optional.ToNullable(storageAuthentication), encryption.Value, keyDelivery.Value, Optional.ToNullable(publicNetworkAccess), Optional.ToNullable(provisioningState), Optional.ToList(privateEndpointConnections));
+            return new MediaServicesAccountData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity, Optional.ToNullable(mediaServiceId), Optional.ToList(storageAccounts), Optional.ToNullable(storageAuthentication), encryption.Value, keyDelivery.Value, Optional.ToNullable(publicNetworkAccess), Optional.ToNullable(provisioningState), Optional.ToList(privateEndpointConnections), Optional.ToNullable(minimumTlsVersion));
         }
     }
 }

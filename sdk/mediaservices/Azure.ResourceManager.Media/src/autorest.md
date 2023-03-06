@@ -9,7 +9,7 @@ generate-model-factory: false
 csharp: true
 library-name: Media
 namespace: Azure.ResourceManager.Media
-require: https://github.com/Azure/azure-rest-api-specs/blob/c91eca4e2081703002581da6f58f9d9332e1afd1/specification/mediaservices/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/51d4c24a011e300b9713179e0515fef35bf3f678/specification/mediaservices/resource-manager/readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true
@@ -27,6 +27,9 @@ override-operation-name:
   StreamingLocators_ListPaths: GetStreamingPaths
   Locations_CheckNameAvailability: CheckMediaServicesNameAvailability
   Assets_ListContainerSas: GetStorageContainerUris
+  LiveEvents_ListGetStatus: GetStatus
+  LiveEvents_ListGetTrackIngestHeartbeats: GetTrackIngestHeartbeats
+  LiveEvents_ListGetStreamEvents: GetStreamEvents
 
 format-by-name-rules:
   'tenantId': 'uuid'
@@ -224,6 +227,10 @@ rename-mapping:
   Video: MediaVideoBase
   VideoLayer.adaptiveBFrame: UseAdaptiveBFrame
   Visibility: PlayerVisibility
+  LiveEventStreamEventData.previousFragmentDuration: PreviousFragmentDurationInTimescale
+  LiveEventStreamEventData.fragmentOneDuration: FragmentOneDurationInTimescale
+  LiveEventStreamEventData.fragmentTwoDuration: FragmentTwoDurationInTimescale
+  LiveEventStreamEventData.duration: DurationInTimescale
 
 directive:
   - remove-operation: OperationResults_Get
@@ -257,6 +264,18 @@ directive:
           "itemName": "streamingLocators",
           "nextLinkName": null
         };
+  - from: streamingservice.json
+    where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaservices/{accountName}/liveEvents/{liveEventName}/getStatus'].post
+    transform: >
+        delete $['x-ms-pageable']
+  - from: streamingservice.json
+    where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaservices/{accountName}/liveEvents/{liveEventName}/getTrackIngestHeartbeats'].post
+    transform: >
+        delete $['x-ms-pageable']
+  - from: streamingservice.json
+    where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaservices/{accountName}/liveEvents/{liveEventName}/getStreamEvents'].post
+    transform: >
+        delete $['x-ms-pageable']
   - from: StreamingPoliciesAndStreamingLocators.json
     where: $.paths
     transform: >

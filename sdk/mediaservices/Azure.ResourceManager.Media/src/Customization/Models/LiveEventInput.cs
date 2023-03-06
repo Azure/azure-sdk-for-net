@@ -20,6 +20,7 @@ namespace Azure.ResourceManager.Media.Models
         {
             StreamingProtocol = streamingProtocol;
             Endpoints = new ChangeTrackingList<LiveEventEndpoint>();
+            TimedMetadataEndpoints = new ChangeTrackingList<LiveEventTimedMetadataEndpoint>();
         }
 
         /// <summary> Initializes a new instance of LiveEventInput. </summary>
@@ -28,13 +29,15 @@ namespace Azure.ResourceManager.Media.Models
         /// <param name="keyFrameIntervalDuration"> ISO 8601 time duration of the key frame interval duration of the input. This value sets the EXT-X-TARGETDURATION property in the HLS output. For example, use PT2S to indicate 2 seconds. Leave the value empty for encoding live events. </param>
         /// <param name="accessToken"> A UUID in string form to uniquely identify the stream. This can be specified at creation time but cannot be updated. If omitted, the service will generate a unique value. </param>
         /// <param name="endpoints"> The input endpoints for the live event. </param>
-        internal LiveEventInput(LiveEventInputProtocol streamingProtocol, LiveEventInputAccessControl accessControl, TimeSpan? keyFrameIntervalDuration, string accessToken, IList<LiveEventEndpoint> endpoints)
+        /// <param name="timedMetadataEndpoints"> The metadata endpoints for the live event. </param>
+        internal LiveEventInput(LiveEventInputProtocol streamingProtocol, LiveEventInputAccessControl accessControl, TimeSpan? keyFrameIntervalDuration, string accessToken, IList<LiveEventEndpoint> endpoints, IList<LiveEventTimedMetadataEndpoint> timedMetadataEndpoints)
         {
             StreamingProtocol = streamingProtocol;
             AccessControl = accessControl;
             KeyFrameIntervalDuration = keyFrameIntervalDuration;
             AccessToken = accessToken;
             Endpoints = endpoints;
+            TimedMetadataEndpoints = timedMetadataEndpoints;
         }
 
         /// <summary> The input protocol for the live event. This is specified at creation time and cannot be updated. </summary>
@@ -58,5 +61,7 @@ namespace Azure.ResourceManager.Media.Models
         public string AccessToken { get; set; }
         /// <summary> The input endpoints for the live event. </summary>
         public IList<LiveEventEndpoint> Endpoints { get; }
+        /// <summary> The metadata endpoints for the live event. </summary>
+        public IList<LiveEventTimedMetadataEndpoint> TimedMetadataEndpoints { get; }
     }
 }

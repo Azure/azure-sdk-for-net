@@ -630,6 +630,210 @@ namespace Azure.ResourceManager.Media
         }
 
         /// <summary>
+        /// Gets status telemetry of a live event.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaservices/{accountName}/liveEvents/{liveEventName}/getStatus</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>LiveEvents_ListGetStatus</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<ArmOperation<LiveEventGetStatusResult>> GetStatusAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        {
+            using var scope = _mediaLiveEventLiveEventsClientDiagnostics.CreateScope("MediaLiveEventResource.GetStatus");
+            scope.Start();
+            try
+            {
+                var response = await _mediaLiveEventLiveEventsRestClient.ListGetStatusAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new MediaArmOperation<LiveEventGetStatusResult>(new LiveEventGetStatusResultOperationSource(), _mediaLiveEventLiveEventsClientDiagnostics, Pipeline, _mediaLiveEventLiveEventsRestClient.CreateListGetStatusRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets status telemetry of a live event.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaservices/{accountName}/liveEvents/{liveEventName}/getStatus</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>LiveEvents_ListGetStatus</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual ArmOperation<LiveEventGetStatusResult> GetStatus(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        {
+            using var scope = _mediaLiveEventLiveEventsClientDiagnostics.CreateScope("MediaLiveEventResource.GetStatus");
+            scope.Start();
+            try
+            {
+                var response = _mediaLiveEventLiveEventsRestClient.ListGetStatus(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var operation = new MediaArmOperation<LiveEventGetStatusResult>(new LiveEventGetStatusResultOperationSource(), _mediaLiveEventLiveEventsClientDiagnostics, Pipeline, _mediaLiveEventLiveEventsRestClient.CreateListGetStatusRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Get stream events telemetry of a live event.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaservices/{accountName}/liveEvents/{liveEventName}/getStreamEvents</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>LiveEvents_ListGetStreamEvents</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<ArmOperation<LiveEventGetStreamEventsResult>> GetStreamEventsAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        {
+            using var scope = _mediaLiveEventLiveEventsClientDiagnostics.CreateScope("MediaLiveEventResource.GetStreamEvents");
+            scope.Start();
+            try
+            {
+                var response = await _mediaLiveEventLiveEventsRestClient.ListGetStreamEventsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new MediaArmOperation<LiveEventGetStreamEventsResult>(new LiveEventGetStreamEventsResultOperationSource(), _mediaLiveEventLiveEventsClientDiagnostics, Pipeline, _mediaLiveEventLiveEventsRestClient.CreateListGetStreamEventsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Get stream events telemetry of a live event.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaservices/{accountName}/liveEvents/{liveEventName}/getStreamEvents</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>LiveEvents_ListGetStreamEvents</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual ArmOperation<LiveEventGetStreamEventsResult> GetStreamEvents(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        {
+            using var scope = _mediaLiveEventLiveEventsClientDiagnostics.CreateScope("MediaLiveEventResource.GetStreamEvents");
+            scope.Start();
+            try
+            {
+                var response = _mediaLiveEventLiveEventsRestClient.ListGetStreamEvents(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var operation = new MediaArmOperation<LiveEventGetStreamEventsResult>(new LiveEventGetStreamEventsResultOperationSource(), _mediaLiveEventLiveEventsClientDiagnostics, Pipeline, _mediaLiveEventLiveEventsRestClient.CreateListGetStreamEventsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Get track ingest heartbeat events telemetry of a live event.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaservices/{accountName}/liveEvents/{liveEventName}/getTrackIngestHeartbeats</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>LiveEvents_ListGetTrackIngestHeartbeats</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<ArmOperation<LiveEventGetTrackIngestHeartbeatsResult>> GetTrackIngestHeartbeatsAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        {
+            using var scope = _mediaLiveEventLiveEventsClientDiagnostics.CreateScope("MediaLiveEventResource.GetTrackIngestHeartbeats");
+            scope.Start();
+            try
+            {
+                var response = await _mediaLiveEventLiveEventsRestClient.ListGetTrackIngestHeartbeatsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new MediaArmOperation<LiveEventGetTrackIngestHeartbeatsResult>(new LiveEventGetTrackIngestHeartbeatsResultOperationSource(), _mediaLiveEventLiveEventsClientDiagnostics, Pipeline, _mediaLiveEventLiveEventsRestClient.CreateListGetTrackIngestHeartbeatsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Get track ingest heartbeat events telemetry of a live event.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaservices/{accountName}/liveEvents/{liveEventName}/getTrackIngestHeartbeats</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>LiveEvents_ListGetTrackIngestHeartbeats</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual ArmOperation<LiveEventGetTrackIngestHeartbeatsResult> GetTrackIngestHeartbeats(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        {
+            using var scope = _mediaLiveEventLiveEventsClientDiagnostics.CreateScope("MediaLiveEventResource.GetTrackIngestHeartbeats");
+            scope.Start();
+            try
+            {
+                var response = _mediaLiveEventLiveEventsRestClient.ListGetTrackIngestHeartbeats(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var operation = new MediaArmOperation<LiveEventGetTrackIngestHeartbeatsResult>(new LiveEventGetTrackIngestHeartbeatsResultOperationSource(), _mediaLiveEventLiveEventsClientDiagnostics, Pipeline, _mediaLiveEventLiveEventsRestClient.CreateListGetTrackIngestHeartbeatsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
         /// Add a tag to the current resource.
         /// <list type="bullet">
         /// <item>

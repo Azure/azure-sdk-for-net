@@ -1,14 +1,12 @@
 # Release History
 
-## 1.2.0-beta.1 (Unreleased)
+## 1.2.0 (2023-03-07)
 
 ### Features Added
 
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- Added support for health APIs on live event with new GetStatus, GetStreamEvents and GetTrackIngestHeartbeats APIs
+- Added TimedMetadataEndpoints to LiveEvent
+- Added MinimumTlsVersion property to MediaService
 
 ## 1.1.0 (2023-01-27)
 

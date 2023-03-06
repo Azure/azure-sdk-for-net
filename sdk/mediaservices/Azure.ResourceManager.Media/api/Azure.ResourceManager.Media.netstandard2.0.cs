@@ -286,6 +286,12 @@ namespace Azure.ResourceManager.Media
         public virtual Azure.Response<Azure.ResourceManager.Media.MediaLiveOutputResource> GetMediaLiveOutput(string liveOutputName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Media.MediaLiveOutputResource>> GetMediaLiveOutputAsync(string liveOutputName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.Media.MediaLiveOutputCollection GetMediaLiveOutputs() { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Media.Models.LiveEventGetStatusResult> GetStatus(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Media.Models.LiveEventGetStatusResult>> GetStatusAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Media.Models.LiveEventGetStreamEventsResult> GetStreamEvents(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Media.Models.LiveEventGetStreamEventsResult>> GetStreamEventsAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Media.Models.LiveEventGetTrackIngestHeartbeatsResult> GetTrackIngestHeartbeats(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Media.Models.LiveEventGetTrackIngestHeartbeatsResult>> GetTrackIngestHeartbeatsAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Media.MediaLiveEventResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Media.MediaLiveEventResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation Reset(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -365,6 +371,7 @@ namespace Azure.ResourceManager.Media
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public Azure.ResourceManager.Media.Models.MediaAccessControl KeyDeliveryAccessControl { get { throw null; } set { } }
         public System.Guid? MediaServicesAccountId { get { throw null; } }
+        public Azure.ResourceManager.Media.Models.MinimumTlsVersion? MinimumTlsVersion { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Media.MediaServicesPrivateEndpointConnectionData> PrivateEndpointConnections { get { throw null; } }
         public Azure.ResourceManager.Media.Models.MediaServicesProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.Media.Models.MediaServicesPublicNetworkAccess? PublicNetworkAccess { get { throw null; } set { } }
@@ -1692,6 +1699,57 @@ namespace Azure.ResourceManager.Media.Models
         public string Protocol { get { throw null; } set { } }
         public System.Uri Uri { get { throw null; } set { } }
     }
+    public partial class LiveEventGetStatusResult
+    {
+        internal LiveEventGetStatusResult() { }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Media.Models.LiveEventStatus> Value { get { throw null; } }
+    }
+    public partial class LiveEventGetStreamEventsResult
+    {
+        internal LiveEventGetStreamEventsResult() { }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Media.Models.LiveEventStreamEvent> Value { get { throw null; } }
+    }
+    public partial class LiveEventGetTrackIngestHeartbeatsResult
+    {
+        internal LiveEventGetTrackIngestHeartbeatsResult() { }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Media.Models.LiveEventTrackEvent> Value { get { throw null; } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct LiveEventHealthStatus : System.IEquatable<Azure.ResourceManager.Media.Models.LiveEventHealthStatus>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public LiveEventHealthStatus(string value) { throw null; }
+        public static Azure.ResourceManager.Media.Models.LiveEventHealthStatus Excellent { get { throw null; } }
+        public static Azure.ResourceManager.Media.Models.LiveEventHealthStatus Good { get { throw null; } }
+        public static Azure.ResourceManager.Media.Models.LiveEventHealthStatus Poor { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Media.Models.LiveEventHealthStatus other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Media.Models.LiveEventHealthStatus left, Azure.ResourceManager.Media.Models.LiveEventHealthStatus right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Media.Models.LiveEventHealthStatus (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Media.Models.LiveEventHealthStatus left, Azure.ResourceManager.Media.Models.LiveEventHealthStatus right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class LiveEventIngestInterruption
+    {
+        internal LiveEventIngestInterruption() { }
+        public System.DateTimeOffset? Begin { get { throw null; } }
+        public System.TimeSpan? Duration { get { throw null; } }
+        public System.DateTimeOffset? End { get { throw null; } }
+        public string Reason { get { throw null; } }
+    }
+    public partial class LiveEventIngestion
+    {
+        internal LiveEventIngestion() { }
+        public System.DateTimeOffset? Begin { get { throw null; } }
+        public System.DateTimeOffset? End { get { throw null; } }
+        public string EndReason { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Media.Models.LiveEventIngestInterruption> IngestInterruptions { get { throw null; } }
+        public string StreamName { get { throw null; } }
+    }
     public partial class LiveEventInput
     {
         public LiveEventInput(Azure.ResourceManager.Media.Models.LiveEventInputProtocol streamingProtocol) { }
@@ -1700,6 +1758,7 @@ namespace Azure.ResourceManager.Media.Models
         public System.Collections.Generic.IList<Azure.ResourceManager.Media.Models.IPRange> IPAllowedIPs { get { throw null; } }
         public System.TimeSpan? KeyFrameIntervalDuration { get { throw null; } set { } }
         public Azure.ResourceManager.Media.Models.LiveEventInputProtocol StreamingProtocol { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Media.Models.LiveEventTimedMetadataEndpoint> TimedMetadataEndpoints { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct LiveEventInputProtocol : System.IEquatable<Azure.ResourceManager.Media.Models.LiveEventInputProtocol>
@@ -1756,6 +1815,250 @@ namespace Azure.ResourceManager.Media.Models
         public static bool operator ==(Azure.ResourceManager.Media.Models.LiveEventResourceState left, Azure.ResourceManager.Media.Models.LiveEventResourceState right) { throw null; }
         public static implicit operator Azure.ResourceManager.Media.Models.LiveEventResourceState (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Media.Models.LiveEventResourceState left, Azure.ResourceManager.Media.Models.LiveEventResourceState right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct LiveEventState : System.IEquatable<Azure.ResourceManager.Media.Models.LiveEventState>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public LiveEventState(string value) { throw null; }
+        public static Azure.ResourceManager.Media.Models.LiveEventState Running { get { throw null; } }
+        public static Azure.ResourceManager.Media.Models.LiveEventState Stopped { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Media.Models.LiveEventState other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Media.Models.LiveEventState left, Azure.ResourceManager.Media.Models.LiveEventState right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Media.Models.LiveEventState (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Media.Models.LiveEventState left, Azure.ResourceManager.Media.Models.LiveEventState right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class LiveEventStatus
+    {
+        internal LiveEventStatus() { }
+        public System.Collections.Generic.IReadOnlyList<string> HealthDescriptions { get { throw null; } }
+        public Azure.ResourceManager.Media.Models.LiveEventHealthStatus? HealthStatus { get { throw null; } }
+        public Azure.ResourceManager.Media.Models.LiveEventIngestion Ingestion { get { throw null; } }
+        public System.DateTimeOffset? LastUpdatedOn { get { throw null; } }
+        public Azure.ResourceManager.Media.Models.LiveEventState? State { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Media.Models.LiveEventTrackStatus> TrackStatus { get { throw null; } }
+    }
+    public partial class LiveEventStreamEvent
+    {
+        internal LiveEventStreamEvent() { }
+        public Azure.ResourceManager.Media.Models.LiveEventStreamEventData Data { get { throw null; } }
+        public Azure.ResourceManager.Media.Models.LiveEventStreamEventLevel? EventLevel { get { throw null; } }
+        public System.DateTimeOffset? EventOn { get { throw null; } }
+        public Azure.ResourceManager.Media.Models.LiveEventStreamEventType? EventType { get { throw null; } }
+    }
+    public partial class LiveEventStreamEventData
+    {
+        internal LiveEventStreamEventData() { }
+        public long? Bitrate { get { throw null; } }
+        public string CurrentFragmentTimestamp { get { throw null; } }
+        public long? DiscontinuityGap { get { throw null; } }
+        public string DurationInTimescale { get { throw null; } }
+        public string FragmentDropReason { get { throw null; } }
+        public string FragmentOneDurationInTimescale { get { throw null; } }
+        public string FragmentOneTimestamp { get { throw null; } }
+        public string FragmentTwoDurationInTimescale { get { throw null; } }
+        public string FragmentTwoTimestamp { get { throw null; } }
+        public string MaxTime { get { throw null; } }
+        public Azure.ResourceManager.Media.Models.LiveEventStreamEventMaxTimeMediaType? MaxTimeMediaType { get { throw null; } }
+        public string MediaTimestamp { get { throw null; } }
+        public Azure.ResourceManager.Media.Models.LiveEventStreamEventMediaType? MediaType { get { throw null; } }
+        public string MinTime { get { throw null; } }
+        public Azure.ResourceManager.Media.Models.LiveEventStreamEventMinTimeMediaType? MinTimeMediaType { get { throw null; } }
+        public string PreviousFragmentDurationInTimescale { get { throw null; } }
+        public string PreviousFragmentTimestamp { get { throw null; } }
+        public string RemoteIP { get { throw null; } }
+        public string RemotePort { get { throw null; } }
+        public string Resolution { get { throw null; } }
+        public string ResultCode { get { throw null; } }
+        public string ResultMessage { get { throw null; } }
+        public string StreamId { get { throw null; } }
+        public string StreamName { get { throw null; } }
+        public string Timescale { get { throw null; } }
+        public string TimescaleOfMaxTime { get { throw null; } }
+        public string TimescaleOfMinTime { get { throw null; } }
+        public int? TrackId { get { throw null; } }
+        public string TrackName { get { throw null; } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct LiveEventStreamEventLevel : System.IEquatable<Azure.ResourceManager.Media.Models.LiveEventStreamEventLevel>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public LiveEventStreamEventLevel(string value) { throw null; }
+        public static Azure.ResourceManager.Media.Models.LiveEventStreamEventLevel Critical { get { throw null; } }
+        public static Azure.ResourceManager.Media.Models.LiveEventStreamEventLevel Error { get { throw null; } }
+        public static Azure.ResourceManager.Media.Models.LiveEventStreamEventLevel Information { get { throw null; } }
+        public static Azure.ResourceManager.Media.Models.LiveEventStreamEventLevel Warning { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Media.Models.LiveEventStreamEventLevel other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Media.Models.LiveEventStreamEventLevel left, Azure.ResourceManager.Media.Models.LiveEventStreamEventLevel right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Media.Models.LiveEventStreamEventLevel (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Media.Models.LiveEventStreamEventLevel left, Azure.ResourceManager.Media.Models.LiveEventStreamEventLevel right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct LiveEventStreamEventMaxTimeMediaType : System.IEquatable<Azure.ResourceManager.Media.Models.LiveEventStreamEventMaxTimeMediaType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public LiveEventStreamEventMaxTimeMediaType(string value) { throw null; }
+        public static Azure.ResourceManager.Media.Models.LiveEventStreamEventMaxTimeMediaType Audio { get { throw null; } }
+        public static Azure.ResourceManager.Media.Models.LiveEventStreamEventMaxTimeMediaType Video { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Media.Models.LiveEventStreamEventMaxTimeMediaType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Media.Models.LiveEventStreamEventMaxTimeMediaType left, Azure.ResourceManager.Media.Models.LiveEventStreamEventMaxTimeMediaType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Media.Models.LiveEventStreamEventMaxTimeMediaType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Media.Models.LiveEventStreamEventMaxTimeMediaType left, Azure.ResourceManager.Media.Models.LiveEventStreamEventMaxTimeMediaType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct LiveEventStreamEventMediaType : System.IEquatable<Azure.ResourceManager.Media.Models.LiveEventStreamEventMediaType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public LiveEventStreamEventMediaType(string value) { throw null; }
+        public static Azure.ResourceManager.Media.Models.LiveEventStreamEventMediaType Audio { get { throw null; } }
+        public static Azure.ResourceManager.Media.Models.LiveEventStreamEventMediaType Video { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Media.Models.LiveEventStreamEventMediaType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Media.Models.LiveEventStreamEventMediaType left, Azure.ResourceManager.Media.Models.LiveEventStreamEventMediaType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Media.Models.LiveEventStreamEventMediaType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Media.Models.LiveEventStreamEventMediaType left, Azure.ResourceManager.Media.Models.LiveEventStreamEventMediaType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct LiveEventStreamEventMinTimeMediaType : System.IEquatable<Azure.ResourceManager.Media.Models.LiveEventStreamEventMinTimeMediaType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public LiveEventStreamEventMinTimeMediaType(string value) { throw null; }
+        public static Azure.ResourceManager.Media.Models.LiveEventStreamEventMinTimeMediaType Audio { get { throw null; } }
+        public static Azure.ResourceManager.Media.Models.LiveEventStreamEventMinTimeMediaType Video { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Media.Models.LiveEventStreamEventMinTimeMediaType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Media.Models.LiveEventStreamEventMinTimeMediaType left, Azure.ResourceManager.Media.Models.LiveEventStreamEventMinTimeMediaType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Media.Models.LiveEventStreamEventMinTimeMediaType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Media.Models.LiveEventStreamEventMinTimeMediaType left, Azure.ResourceManager.Media.Models.LiveEventStreamEventMinTimeMediaType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct LiveEventStreamEventType : System.IEquatable<Azure.ResourceManager.Media.Models.LiveEventStreamEventType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public LiveEventStreamEventType(string value) { throw null; }
+        public static Azure.ResourceManager.Media.Models.LiveEventStreamEventType StreamEventBeginIngest { get { throw null; } }
+        public static Azure.ResourceManager.Media.Models.LiveEventStreamEventType StreamEventChunkDropped { get { throw null; } }
+        public static Azure.ResourceManager.Media.Models.LiveEventStreamEventType StreamEventDiscontinuity { get { throw null; } }
+        public static Azure.ResourceManager.Media.Models.LiveEventStreamEventType StreamEventEndIngest { get { throw null; } }
+        public static Azure.ResourceManager.Media.Models.LiveEventStreamEventType StreamEventFirstChunkReceived { get { throw null; } }
+        public static Azure.ResourceManager.Media.Models.LiveEventStreamEventType StreamEventInvalidConnection { get { throw null; } }
+        public static Azure.ResourceManager.Media.Models.LiveEventStreamEventType StreamEventUnalignedKeyFrames { get { throw null; } }
+        public static Azure.ResourceManager.Media.Models.LiveEventStreamEventType StreamEventUnalignedPresentation { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Media.Models.LiveEventStreamEventType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Media.Models.LiveEventStreamEventType left, Azure.ResourceManager.Media.Models.LiveEventStreamEventType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Media.Models.LiveEventStreamEventType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Media.Models.LiveEventStreamEventType left, Azure.ResourceManager.Media.Models.LiveEventStreamEventType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class LiveEventTimedMetadataEndpoint
+    {
+        public LiveEventTimedMetadataEndpoint() { }
+        public System.Uri Uri { get { throw null; } set { } }
+    }
+    public partial class LiveEventTrackEvent
+    {
+        internal LiveEventTrackEvent() { }
+        public Azure.ResourceManager.Media.Models.LiveEventTrackEventData Data { get { throw null; } }
+        public System.DateTimeOffset? EventOn { get { throw null; } }
+        public Azure.ResourceManager.Media.Models.LiveEventTrackEventType? EventType { get { throw null; } }
+    }
+    public partial class LiveEventTrackEventData
+    {
+        internal LiveEventTrackEventData() { }
+        public long? Bitrate { get { throw null; } }
+        public long? DiscontinuityCount { get { throw null; } }
+        public bool? Healthy { get { throw null; } }
+        public long? IncomingBitrate { get { throw null; } }
+        public string IngestDriftValue { get { throw null; } }
+        public System.DateTimeOffset? LastFragmentArrivalOn { get { throw null; } }
+        public string LastTimestamp { get { throw null; } }
+        public long? NonincreasingCount { get { throw null; } }
+        public long? OverlapCount { get { throw null; } }
+        public string State { get { throw null; } }
+        public string Timescale { get { throw null; } }
+        public string TrackName { get { throw null; } }
+        public Azure.ResourceManager.Media.Models.LiveEventTrackType? TrackType { get { throw null; } }
+        public string TranscriptionLanguage { get { throw null; } }
+        public string TranscriptionState { get { throw null; } }
+        public bool? UnexpectedBitrate { get { throw null; } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct LiveEventTrackEventType : System.IEquatable<Azure.ResourceManager.Media.Models.LiveEventTrackEventType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public LiveEventTrackEventType(string value) { throw null; }
+        public static Azure.ResourceManager.Media.Models.LiveEventTrackEventType TrackEventIngestHeartbeat { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Media.Models.LiveEventTrackEventType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Media.Models.LiveEventTrackEventType left, Azure.ResourceManager.Media.Models.LiveEventTrackEventType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Media.Models.LiveEventTrackEventType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Media.Models.LiveEventTrackEventType left, Azure.ResourceManager.Media.Models.LiveEventTrackEventType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class LiveEventTrackStatus
+    {
+        internal LiveEventTrackStatus() { }
+        public long? ExpectedBitrate { get { throw null; } }
+        public long? IncomingBitrate { get { throw null; } }
+        public string IngestDrift { get { throw null; } }
+        public long? RequestReceived { get { throw null; } }
+        public long? RequestSucceeded { get { throw null; } }
+        public string TrackId { get { throw null; } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct LiveEventTrackType : System.IEquatable<Azure.ResourceManager.Media.Models.LiveEventTrackType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public LiveEventTrackType(string value) { throw null; }
+        public static Azure.ResourceManager.Media.Models.LiveEventTrackType Audio { get { throw null; } }
+        public static Azure.ResourceManager.Media.Models.LiveEventTrackType Video { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Media.Models.LiveEventTrackType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Media.Models.LiveEventTrackType left, Azure.ResourceManager.Media.Models.LiveEventTrackType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Media.Models.LiveEventTrackType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Media.Models.LiveEventTrackType left, Azure.ResourceManager.Media.Models.LiveEventTrackType right) { throw null; }
         public override string ToString() { throw null; }
     }
     public partial class LiveEventTranscription
@@ -2145,6 +2448,7 @@ namespace Azure.ResourceManager.Media.Models
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public Azure.ResourceManager.Media.Models.MediaAccessControl KeyDeliveryAccessControl { get { throw null; } set { } }
         public System.Guid? MediaServiceId { get { throw null; } }
+        public Azure.ResourceManager.Media.Models.MinimumTlsVersion? MinimumTlsVersion { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Media.MediaServicesPrivateEndpointConnectionData> PrivateEndpointConnections { get { throw null; } }
         public Azure.ResourceManager.Media.Models.MediaServicesProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.Media.Models.MediaServicesPublicNetworkAccess? PublicNetworkAccess { get { throw null; } set { } }
@@ -2291,6 +2595,26 @@ namespace Azure.ResourceManager.Media.Models
         public System.TimeSpan? KeyFrameInterval { get { throw null; } set { } }
         public Azure.ResourceManager.Media.Models.InputVideoStretchMode? StretchMode { get { throw null; } set { } }
         public Azure.ResourceManager.Media.Models.VideoSyncMode? SyncMode { get { throw null; } set { } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct MinimumTlsVersion : System.IEquatable<Azure.ResourceManager.Media.Models.MinimumTlsVersion>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public MinimumTlsVersion(string value) { throw null; }
+        public static Azure.ResourceManager.Media.Models.MinimumTlsVersion Tls10 { get { throw null; } }
+        public static Azure.ResourceManager.Media.Models.MinimumTlsVersion Tls11 { get { throw null; } }
+        public static Azure.ResourceManager.Media.Models.MinimumTlsVersion Tls12 { get { throw null; } }
+        public static Azure.ResourceManager.Media.Models.MinimumTlsVersion Tls13 { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Media.Models.MinimumTlsVersion other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Media.Models.MinimumTlsVersion left, Azure.ResourceManager.Media.Models.MinimumTlsVersion right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Media.Models.MinimumTlsVersion (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Media.Models.MinimumTlsVersion left, Azure.ResourceManager.Media.Models.MinimumTlsVersion right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class Mp4Format : Azure.ResourceManager.Media.Models.MultiBitrateFormat
     {
