@@ -17,6 +17,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Azure.Monitor.OpenTelemetry.Exporter\src\Azure.Monitor.OpenTelemetry.Exporter.csproj" />
+    <ProjectReference Include="..\..\..\Azure.Monitor.OpenTelemetry.Exporter\src\Azure.Monitor.OpenTelemetry.Exporter.csproj" />
   </ItemGroup>
 </Project>
