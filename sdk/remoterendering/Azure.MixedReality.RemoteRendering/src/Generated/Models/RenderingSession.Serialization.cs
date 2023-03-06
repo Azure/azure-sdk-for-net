@@ -15,6 +15,10 @@ namespace Azure.MixedReality.RemoteRendering
     {
         internal static RenderingSession DeserializeRenderingSession(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string id = default;
             Optional<int> arrInspectorPort = default;
             Optional<int> handshakePort = default;

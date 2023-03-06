@@ -39,6 +39,10 @@ namespace Azure.ResourceManager.DataMigration.Models
 
         internal static GetUserTablesMySqlTaskProperties DeserializeGetUserTablesMySqlTaskProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<GetUserTablesMySqlTaskInput> input = default;
             Optional<IReadOnlyList<GetUserTablesMySqlTaskOutput>> output = default;
             TaskType taskType = default;

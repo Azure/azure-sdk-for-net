@@ -43,6 +43,10 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 
         internal static ManagedClusterLoadBalancingRule DeserializeManagedClusterLoadBalancingRule(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             int frontendPort = default;
             int backendPort = default;
             ManagedClusterLoadBalancingRuleTransportProtocol protocol = default;

@@ -37,6 +37,10 @@ namespace Azure.ResourceManager.BotService.Models
 
         internal static ConnectionSettingParameter DeserializeConnectionSettingParameter(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> key = default;
             Optional<string> value = default;
             foreach (var property in element.EnumerateObject())

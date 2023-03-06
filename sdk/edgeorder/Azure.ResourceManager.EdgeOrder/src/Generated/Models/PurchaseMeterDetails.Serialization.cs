@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.EdgeOrder.Models
     {
         internal static PurchaseMeterDetails DeserializePurchaseMeterDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> productId = default;
             Optional<string> skuId = default;
             Optional<string> termId = default;

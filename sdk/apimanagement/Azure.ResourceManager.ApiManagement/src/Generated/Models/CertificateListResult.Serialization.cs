@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
     {
         internal static CertificateListResult DeserializeCertificateListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<ApiManagementCertificateData>> value = default;
             Optional<long> count = default;
             Optional<string> nextLink = default;

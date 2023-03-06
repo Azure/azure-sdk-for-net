@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.ResourceMover.Models
     {
         internal static RequiredForResourcesList DeserializeRequiredForResourcesList(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<string>> sourceIds = default;
             foreach (var property in element.EnumerateObject())
             {

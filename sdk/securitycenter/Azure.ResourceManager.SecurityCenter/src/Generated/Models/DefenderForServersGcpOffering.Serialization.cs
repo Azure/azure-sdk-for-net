@@ -47,6 +47,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         internal static DefenderForServersGcpOffering DeserializeDefenderForServersGcpOffering(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<GcpDefenderForServersInfo> defenderForServers = default;
             Optional<DefenderForServersGcpOfferingArcAutoProvisioning> arcAutoProvisioning = default;
             Optional<DefenderForServersGcpOfferingVulnerabilityAssessmentAutoProvisioning> vaAutoProvisioning = default;

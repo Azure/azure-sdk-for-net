@@ -17,6 +17,10 @@ namespace Azure.Security.Attestation
     {
         internal static AttestationResult DeserializeAttestationResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> jti = default;
             Optional<string> iss = default;
             Optional<double> iat = default;

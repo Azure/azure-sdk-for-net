@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.OperationalInsights.Models
     {
         internal static OperationalInsightsUsageMetric DeserializeOperationalInsightsUsageMetric(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<OperationalInsightsMetricName> name = default;
             Optional<string> unit = default;
             Optional<double> currentValue = default;

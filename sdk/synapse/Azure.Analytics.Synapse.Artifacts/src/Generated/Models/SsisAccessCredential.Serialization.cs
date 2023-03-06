@@ -29,6 +29,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static SsisAccessCredential DeserializeSsisAccessCredential(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             object domain = default;
             object userName = default;
             SecretBase password = default;

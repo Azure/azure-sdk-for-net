@@ -33,6 +33,10 @@ namespace Azure.Communication.NetworkTraversal
 
         internal static CommunicationRelayConfiguration DeserializeCommunicationRelayConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             DateTimeOffset expiresOn = default;
             IList<CommunicationIceServer> iceServers = default;
             foreach (var property in element.EnumerateObject())

@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.Monitor.Models
 
         internal static MonitorPrivateLinkAccessModeSettingsExclusion DeserializeMonitorPrivateLinkAccessModeSettingsExclusion(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> privateEndpointConnectionName = default;
             Optional<MonitorPrivateLinkAccessMode> queryAccessMode = default;
             Optional<MonitorPrivateLinkAccessMode> ingestionAccessMode = default;

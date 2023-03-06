@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         internal static GovernanceAssignmentAdditionalInfo DeserializeGovernanceAssignmentAdditionalInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> ticketNumber = default;
             Optional<string> ticketLink = default;
             Optional<string> ticketStatus = default;

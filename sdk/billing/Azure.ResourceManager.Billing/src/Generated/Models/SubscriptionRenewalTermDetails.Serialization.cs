@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Billing.Models
     {
         internal static SubscriptionRenewalTermDetails DeserializeSubscriptionRenewalTermDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> billingFrequency = default;
             Optional<string> productTypeId = default;
             Optional<long> quantity = default;

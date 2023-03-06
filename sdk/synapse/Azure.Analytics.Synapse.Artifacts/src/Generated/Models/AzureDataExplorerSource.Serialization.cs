@@ -63,6 +63,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static AzureDataExplorerSource DeserializeAzureDataExplorerSource(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             object query = default;
             Optional<object> noTruncation = default;
             Optional<object> queryTimeout = default;

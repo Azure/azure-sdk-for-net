@@ -46,6 +46,10 @@ namespace Azure.ResourceManager.LabServices.Models
 
         internal static LabRosterProfile DeserializeLabRosterProfile(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> activeDirectoryGroupId = default;
             Optional<string> ltiContextId = default;
             Optional<Uri> lmsInstance = default;

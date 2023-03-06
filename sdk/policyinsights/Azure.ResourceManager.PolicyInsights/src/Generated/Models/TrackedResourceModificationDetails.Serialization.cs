@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.PolicyInsights.Models
     {
         internal static TrackedResourceModificationDetails DeserializeTrackedResourceModificationDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<PolicyDetails> policyDetails = default;
             Optional<ResourceIdentifier> deploymentId = default;
             Optional<DateTimeOffset> deploymentTime = default;

@@ -77,6 +77,10 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static VirtualMachineOSDisk DeserializeVirtualMachineOSDisk(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<SupportedOperatingSystemType> osType = default;
             Optional<DiskEncryptionSettings> encryptionSettings = default;
             Optional<string> name = default;

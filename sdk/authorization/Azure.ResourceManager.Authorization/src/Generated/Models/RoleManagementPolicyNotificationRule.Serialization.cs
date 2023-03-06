@@ -63,6 +63,10 @@ namespace Azure.ResourceManager.Authorization.Models
 
         internal static RoleManagementPolicyNotificationRule DeserializeRoleManagementPolicyNotificationRule(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<NotificationDeliveryType> notificationType = default;
             Optional<RoleManagementPolicyNotificationLevel> notificationLevel = default;
             Optional<RoleManagementPolicyRecipientType> recipientType = default;

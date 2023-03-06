@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.DevCenter.Models
     {
         internal static RecommendedMachineConfiguration DeserializeRecommendedMachineConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ResourceRange> memory = default;
             Optional<ResourceRange> vCpus = default;
             foreach (var property in element.EnumerateObject())

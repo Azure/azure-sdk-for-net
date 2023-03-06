@@ -24,6 +24,10 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         internal static ContainerServiceLinuxProfile DeserializeContainerServiceLinuxProfile(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string adminUsername = default;
             ContainerServiceSshConfiguration ssh = default;
             foreach (var property in element.EnumerateObject())

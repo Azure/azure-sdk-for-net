@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.Hci.Models
     {
         internal static UpdateRunList DeserializeUpdateRunList(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<UpdateRunData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

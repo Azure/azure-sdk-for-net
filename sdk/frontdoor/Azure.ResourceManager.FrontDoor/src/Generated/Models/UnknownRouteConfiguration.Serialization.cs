@@ -22,6 +22,10 @@ namespace Azure.ResourceManager.FrontDoor.Models
 
         internal static UnknownRouteConfiguration DeserializeUnknownRouteConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string odataType = "Unknown";
             foreach (var property in element.EnumerateObject())
             {

@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.ResourceHealth.Models
     {
         internal static Link DeserializeLink(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<LinkTypeValue> type = default;
             Optional<LinkDisplayText> displayText = default;
             Optional<string> extensionName = default;

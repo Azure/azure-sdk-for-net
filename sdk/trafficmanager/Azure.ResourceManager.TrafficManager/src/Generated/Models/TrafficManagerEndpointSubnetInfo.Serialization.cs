@@ -36,6 +36,10 @@ namespace Azure.ResourceManager.TrafficManager.Models
 
         internal static TrafficManagerEndpointSubnetInfo DeserializeTrafficManagerEndpointSubnetInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IPAddress> first = default;
             Optional<IPAddress> last = default;
             Optional<int> scope = default;

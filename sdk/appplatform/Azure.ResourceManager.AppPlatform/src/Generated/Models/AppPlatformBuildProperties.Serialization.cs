@@ -53,6 +53,10 @@ namespace Azure.ResourceManager.AppPlatform.Models
 
         internal static AppPlatformBuildProperties DeserializeAppPlatformBuildProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> relativePath = default;
             Optional<string> builder = default;
             Optional<string> agentPool = default;

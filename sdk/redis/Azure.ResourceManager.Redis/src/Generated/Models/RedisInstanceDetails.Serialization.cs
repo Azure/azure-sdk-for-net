@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.Redis.Models
     {
         internal static RedisInstanceDetails DeserializeRedisInstanceDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> sslPort = default;
             Optional<int> nonSslPort = default;
             Optional<string> zone = default;

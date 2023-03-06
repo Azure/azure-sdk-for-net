@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Compute.Models
     {
         internal static MaintenanceRedeployStatus DeserializeMaintenanceRedeployStatus(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> isCustomerInitiatedMaintenanceAllowed = default;
             Optional<DateTimeOffset> preMaintenanceWindowStartTime = default;
             Optional<DateTimeOffset> preMaintenanceWindowEndTime = default;

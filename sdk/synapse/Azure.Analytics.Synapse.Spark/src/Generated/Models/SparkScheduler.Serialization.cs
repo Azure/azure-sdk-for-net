@@ -15,6 +15,10 @@ namespace Azure.Analytics.Synapse.Spark.Models
     {
         internal static SparkScheduler DeserializeSparkScheduler(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DateTimeOffset?> submittedAt = default;
             Optional<DateTimeOffset?> scheduledAt = default;
             Optional<DateTimeOffset?> endedAt = default;

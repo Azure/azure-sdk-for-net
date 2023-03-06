@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static SupportedCapabilities DeserializeSupportedCapabilities(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> diskControllerTypes = default;
             Optional<bool> acceleratedNetwork = default;
             Optional<ArchitectureType> architecture = default;

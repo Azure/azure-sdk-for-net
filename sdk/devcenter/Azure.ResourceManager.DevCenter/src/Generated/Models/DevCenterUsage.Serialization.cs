@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.DevCenter.Models
     {
         internal static DevCenterUsage DeserializeDevCenterUsage(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<long> currentValue = default;
             Optional<long> limit = default;
             Optional<UsageUnit> unit = default;

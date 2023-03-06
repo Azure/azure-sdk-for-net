@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Authorization.Models
     {
         internal static DenyAssignmentPermission DeserializeDenyAssignmentPermission(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<string>> actions = default;
             Optional<IReadOnlyList<string>> notActions = default;
             Optional<IReadOnlyList<string>> dataActions = default;

@@ -22,6 +22,10 @@ namespace Azure.ResourceManager.Sql
 
         internal static ManagedInstancePrivateLinkData DeserializeManagedInstancePrivateLinkData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ManagedInstancePrivateLinkProperties> properties = default;
             ResourceIdentifier id = default;
             string name = default;

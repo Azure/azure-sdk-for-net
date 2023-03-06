@@ -16,6 +16,10 @@ namespace Azure.Containers.ContainerRegistry
     {
         internal static V2Manifest DeserializeV2Manifest(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> mediaType = default;
             Optional<OciBlobDescriptor> config = default;
             Optional<IReadOnlyList<OciBlobDescriptor>> layers = default;

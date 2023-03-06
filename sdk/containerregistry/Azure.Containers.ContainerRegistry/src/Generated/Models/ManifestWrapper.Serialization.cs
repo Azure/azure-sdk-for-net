@@ -16,6 +16,10 @@ namespace Azure.Containers.ContainerRegistry
     {
         internal static ManifestWrapper DeserializeManifestWrapper(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> mediaType = default;
             Optional<IReadOnlyList<ManifestListAttributes>> manifests = default;
             Optional<OciBlobDescriptor> config = default;

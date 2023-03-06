@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.ManagementPartner.Models
     {
         internal static OperationDisplay DeserializeOperationDisplay(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> provider = default;
             Optional<string> resource = default;
             Optional<string> operation = default;

@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.IotCentral.Models
     {
         internal static IotCentralAppNameAvailabilityResponse DeserializeIotCentralAppNameAvailabilityResponse(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> nameAvailable = default;
             Optional<string> reason = default;
             Optional<string> message = default;

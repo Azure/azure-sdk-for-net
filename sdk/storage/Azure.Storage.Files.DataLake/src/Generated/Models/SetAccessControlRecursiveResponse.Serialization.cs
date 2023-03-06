@@ -15,6 +15,10 @@ namespace Azure.Storage.Files.DataLake.Models
     {
         internal static SetAccessControlRecursiveResponse DeserializeSetAccessControlRecursiveResponse(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> directoriesSuccessful = default;
             Optional<int> filesSuccessful = default;
             Optional<int> failureCount = default;

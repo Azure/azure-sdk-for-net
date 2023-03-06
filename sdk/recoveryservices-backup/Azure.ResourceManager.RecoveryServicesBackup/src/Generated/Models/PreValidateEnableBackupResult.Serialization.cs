@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     {
         internal static PreValidateEnableBackupResult DeserializePreValidateEnableBackupResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<BackupValidationStatus> status = default;
             Optional<string> errorCode = default;
             Optional<string> errorMessage = default;

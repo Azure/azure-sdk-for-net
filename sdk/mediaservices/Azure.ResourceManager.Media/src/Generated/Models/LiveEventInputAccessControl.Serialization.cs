@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.Media.Models
 
         internal static LiveEventInputAccessControl DeserializeLiveEventInputAccessControl(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IPAccessControl> ip = default;
             foreach (var property in element.EnumerateObject())
             {

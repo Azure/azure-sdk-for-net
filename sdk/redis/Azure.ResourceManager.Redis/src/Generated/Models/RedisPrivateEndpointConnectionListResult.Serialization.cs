@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.Redis.Models
     {
         internal static RedisPrivateEndpointConnectionListResult DeserializeRedisPrivateEndpointConnectionListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<RedisPrivateEndpointConnectionData>> value = default;
             foreach (var property in element.EnumerateObject())
             {

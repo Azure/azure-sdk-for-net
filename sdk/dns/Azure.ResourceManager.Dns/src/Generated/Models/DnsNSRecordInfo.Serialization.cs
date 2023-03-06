@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.Dns.Models
 
         internal static DnsNSRecordInfo DeserializeDnsNSRecordInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> nsdname = default;
             foreach (var property in element.EnumerateObject())
             {

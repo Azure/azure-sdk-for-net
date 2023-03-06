@@ -55,6 +55,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static ColumnTransformer DeserializeColumnTransformer(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<string>> fields = default;
             Optional<BinaryData> parameters = default;
             foreach (var property in element.EnumerateObject())

@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.DataFactory.Models
     {
         internal static FactoryDataPlaneAccessPolicyResult DeserializeFactoryDataPlaneAccessPolicyResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<FactoryDataPlaneUserAccessPolicy> policy = default;
             Optional<string> accessToken = default;
             Optional<Uri> dataPlaneUrl = default;

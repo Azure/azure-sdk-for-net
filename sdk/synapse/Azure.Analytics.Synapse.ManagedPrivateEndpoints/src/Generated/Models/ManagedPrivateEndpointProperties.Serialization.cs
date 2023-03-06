@@ -56,6 +56,10 @@ namespace Azure.Analytics.Synapse.ManagedPrivateEndpoints.Models
 
         internal static ManagedPrivateEndpointProperties DeserializeManagedPrivateEndpointProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<string> privateLinkResourceId = default;
             Optional<string> groupId = default;

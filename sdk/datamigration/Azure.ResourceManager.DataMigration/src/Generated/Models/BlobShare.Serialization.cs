@@ -26,6 +26,10 @@ namespace Azure.ResourceManager.DataMigration.Models
 
         internal static BlobShare DeserializeBlobShare(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<Uri> sasUri = default;
             foreach (var property in element.EnumerateObject())
             {

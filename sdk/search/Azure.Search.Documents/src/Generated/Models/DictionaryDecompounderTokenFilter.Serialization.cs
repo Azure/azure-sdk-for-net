@@ -52,6 +52,10 @@ namespace Azure.Search.Documents.Indexes.Models
 
         internal static DictionaryDecompounderTokenFilter DeserializeDictionaryDecompounderTokenFilter(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IList<string> wordList = default;
             Optional<int> minWordSize = default;
             Optional<int> minSubwordSize = default;

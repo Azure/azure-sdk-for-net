@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     {
         internal static VMwareVirtualMachineDetails DeserializeVMwareVirtualMachineDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> agentGeneratedId = default;
             Optional<string> agentInstalled = default;
             Optional<string> osType = default;

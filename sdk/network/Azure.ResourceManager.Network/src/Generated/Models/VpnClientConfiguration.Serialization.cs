@@ -111,6 +111,10 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static VpnClientConfiguration DeserializeVpnClientConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<AddressSpace> vpnClientAddressPool = default;
             Optional<IList<VpnClientRootCertificate>> vpnClientRootCertificates = default;
             Optional<IList<VpnClientRevokedCertificate>> vpnClientRevokedCertificates = default;

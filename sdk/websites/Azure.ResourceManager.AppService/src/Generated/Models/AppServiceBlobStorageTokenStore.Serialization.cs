@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static AppServiceBlobStorageTokenStore DeserializeAppServiceBlobStorageTokenStore(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> sasUrlSettingName = default;
             foreach (var property in element.EnumerateObject())
             {

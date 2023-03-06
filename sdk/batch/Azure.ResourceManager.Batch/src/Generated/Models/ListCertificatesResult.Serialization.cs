@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.Batch.Models
     {
         internal static ListCertificatesResult DeserializeListCertificatesResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<BatchAccountCertificateData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

@@ -30,6 +30,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static VariableSpecification DeserializeVariableSpecification(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             VariableType type = default;
             Optional<object> defaultValue = default;
             foreach (var property in element.EnumerateObject())

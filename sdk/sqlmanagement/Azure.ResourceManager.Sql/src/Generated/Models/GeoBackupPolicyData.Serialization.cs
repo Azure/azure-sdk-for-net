@@ -27,6 +27,10 @@ namespace Azure.ResourceManager.Sql
 
         internal static GeoBackupPolicyData DeserializeGeoBackupPolicyData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> kind = default;
             Optional<AzureLocation> location = default;
             ResourceIdentifier id = default;

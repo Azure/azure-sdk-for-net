@@ -113,6 +113,10 @@ namespace Azure.ResourceManager.TrafficManager
 
         internal static TrafficManagerProfileData DeserializeTrafficManagerProfileData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IDictionary<string, string>> tags = default;
             Optional<AzureLocation> location = default;
             Optional<ResourceIdentifier> id = default;

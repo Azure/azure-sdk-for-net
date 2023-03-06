@@ -24,6 +24,10 @@ namespace Azure.ResourceManager.Cdn.Models
 
         internal static DeliveryRuleRequestUriCondition DeserializeDeliveryRuleRequestUriCondition(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             RequestUriMatchCondition parameters = default;
             MatchVariable name = default;
             foreach (var property in element.EnumerateObject())

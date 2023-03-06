@@ -57,6 +57,10 @@ namespace Azure.AI.TextAnalytics.Models
 
         internal static HealthcareEntityInternal DeserializeHealthcareEntityInternal(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string text = default;
             HealthcareEntityCategory category = default;
             Optional<string> subcategory = default;

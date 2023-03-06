@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Synapse.Models
     {
         internal static SynapseDataSourceResourceSkuListResult DeserializeSynapseDataSourceResourceSkuListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<SynapseDataSourceResourceSku>> value = default;
             foreach (var property in element.EnumerateObject())
             {

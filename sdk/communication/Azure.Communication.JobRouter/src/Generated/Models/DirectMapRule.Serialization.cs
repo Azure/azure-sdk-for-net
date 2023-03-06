@@ -22,6 +22,10 @@ namespace Azure.Communication.JobRouter
 
         internal static DirectMapRule DeserializeDirectMapRule(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string kind = default;
             foreach (var property in element.EnumerateObject())
             {

@@ -26,6 +26,10 @@ namespace Azure.ResourceManager.AppPlatform.Models
 
         internal static AppPlatformStorageAccount DeserializeAppPlatformStorageAccount(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string accountName = default;
             string accountKey = default;
             StorageType storageType = default;

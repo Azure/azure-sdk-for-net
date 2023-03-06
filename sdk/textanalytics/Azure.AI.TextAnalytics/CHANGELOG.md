@@ -4,8 +4,12 @@
 
 ### Features Added
 
+- Added support for logging the "warn-text" response header.
+
 ### Breaking Changes
+
 > Note: The following breaking changes only apply when upgrading from the previous beta version (5.3.0-beta.1) and do not impact stable versions.
+
 - Renamed the `WellKnownFhirVersion` enum to `FhirVersion`.
 - Changed the type of the `AnalyzeHealthcareEntitiesResult.FhirBundle` property from `IReadOnlyDictionary<string, object>` to `BinaryData`.
 - Removed the `options` parameter from the following methods for consistency: `TextAnalyticsClient.DynamicClassify` and `TextAnalyticsClient.DynamicClassifyAsync`.
@@ -19,6 +23,7 @@
 ## 5.3.0-beta.1 (2022-12-01)
 
 ### Features Added
+
 - Added support for dynamic classification.
   - Added the following methods: `TextAnalyticsClient.DynamicClassify` and `TextAnalyticsClient.DynamicClassifyAsync`.
   - Added the following methods: `TextAnalyticsClient.DynamicClassifyBatch` and `TextAnalyticsClient.DynamicClassifyBatchAsync`.
@@ -63,6 +68,7 @@
   - Added the `ScriptKind` enum.
 
 ### Other Changes
+
 The client now defaults to targeting service API version `2022-10-01-preview`.
 
 ## 5.2.0 (2022-09-08)

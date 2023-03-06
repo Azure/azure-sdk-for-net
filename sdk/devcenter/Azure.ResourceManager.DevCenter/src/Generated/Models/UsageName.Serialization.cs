@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.DevCenter.Models
     {
         internal static UsageName DeserializeUsageName(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> localizedValue = default;
             Optional<string> value = default;
             foreach (var property in element.EnumerateObject())

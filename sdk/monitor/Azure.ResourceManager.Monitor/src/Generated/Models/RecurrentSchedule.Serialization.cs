@@ -44,6 +44,10 @@ namespace Azure.ResourceManager.Monitor.Models
 
         internal static RecurrentSchedule DeserializeRecurrentSchedule(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string timeZone = default;
             IList<MonitorDayOfWeek> days = default;
             IList<int> hours = default;

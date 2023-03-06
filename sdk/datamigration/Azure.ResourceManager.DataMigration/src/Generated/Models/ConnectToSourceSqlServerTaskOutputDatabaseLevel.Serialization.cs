@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.DataMigration.Models
     {
         internal static ConnectToSourceSqlServerTaskOutputDatabaseLevel DeserializeConnectToSourceSqlServerTaskOutputDatabaseLevel(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<double> sizeMB = default;
             Optional<IReadOnlyList<DatabaseFileInfo>> databaseFiles = default;

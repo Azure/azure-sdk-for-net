@@ -21,6 +21,10 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
 
         internal static GuestConfigurationVmInfo DeserializeGuestConfigurationVmInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ResourceIdentifier> id = default;
             Optional<Guid> uuid = default;
             foreach (var property in element.EnumerateObject())

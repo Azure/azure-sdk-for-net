@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
     {
         internal static OperationalizationClusterCredentials DeserializeOperationalizationClusterCredentials(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<StorageAccountCredentials> storageAccount = default;
             Optional<ContainerRegistryCredentials> containerRegistry = default;
             Optional<ContainerServiceCredentials> containerService = default;

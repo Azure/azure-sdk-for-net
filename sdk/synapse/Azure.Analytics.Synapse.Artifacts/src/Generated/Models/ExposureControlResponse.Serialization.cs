@@ -23,6 +23,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static ExposureControlResponse DeserializeExposureControlResponse(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> featureName = default;
             Optional<string> value = default;
             foreach (var property in element.EnumerateObject())

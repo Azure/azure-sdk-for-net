@@ -41,6 +41,10 @@ namespace Azure.ResourceManager.ServiceBus.Models
 
         internal static ServiceBusEncryption DeserializeServiceBusEncryption(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<ServiceBusKeyVaultProperties>> keyVaultProperties = default;
             Optional<ServiceBusEncryptionKeySource> keySource = default;
             Optional<bool> requireInfrastructureEncryption = default;

@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     {
         internal static A2AReplicationDetails DeserializeA2AReplicationDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> fabricObjectId = default;
             Optional<string> initialPrimaryZone = default;
             Optional<string> initialPrimaryFabricLocation = default;

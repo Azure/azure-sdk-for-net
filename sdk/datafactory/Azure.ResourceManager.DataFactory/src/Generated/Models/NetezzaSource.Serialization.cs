@@ -110,6 +110,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static NetezzaSource DeserializeNetezzaSource(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<BinaryData> query = default;
             Optional<BinaryData> partitionOption = default;
             Optional<NetezzaPartitionSettings> partitionSettings = default;

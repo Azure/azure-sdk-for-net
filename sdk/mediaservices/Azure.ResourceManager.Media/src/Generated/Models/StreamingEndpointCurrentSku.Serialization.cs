@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.Media.Models
 
         internal static StreamingEndpointCurrentSku DeserializeStreamingEndpointCurrentSku(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<int> capacity = default;
             foreach (var property in element.EnumerateObject())

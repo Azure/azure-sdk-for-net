@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.IotCentral.Models
     {
         internal static IotCentralPrivateLinkResourceListResult DeserializeIotCentralPrivateLinkResourceListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<IotCentralPrivateLinkResourceData>> value = default;
             foreach (var property in element.EnumerateObject())
             {

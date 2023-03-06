@@ -15,6 +15,10 @@ namespace Azure.Communication.PhoneNumbers
     {
         internal static PurchasedPhoneNumber DeserializePurchasedPhoneNumber(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string id = default;
             string phoneNumber = default;
             string countryCode = default;

@@ -47,6 +47,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         internal static StorageBackupJobExtendedInfo DeserializeStorageBackupJobExtendedInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<StorageBackupJobTaskDetails>> tasksList = default;
             Optional<IDictionary<string, string>> propertyBag = default;
             Optional<string> dynamicErrorMessage = default;

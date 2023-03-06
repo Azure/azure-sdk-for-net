@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     {
         internal static InMageRcmSyncDetails DeserializeInMageRcmSyncDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DiskReplicationProgressHealth> progressHealth = default;
             Optional<long> transferredBytes = default;
             Optional<long> last15MinutesTransferredBytes = default;

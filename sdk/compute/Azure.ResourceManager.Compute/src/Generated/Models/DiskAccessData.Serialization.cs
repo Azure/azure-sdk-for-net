@@ -45,6 +45,10 @@ namespace Azure.ResourceManager.Compute
 
         internal static DiskAccessData DeserializeDiskAccessData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ExtendedLocation> extendedLocation = default;
             Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;

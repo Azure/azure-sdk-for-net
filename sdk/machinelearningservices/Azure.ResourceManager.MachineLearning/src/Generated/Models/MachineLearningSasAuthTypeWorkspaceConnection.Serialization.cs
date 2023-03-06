@@ -47,6 +47,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static MachineLearningSasAuthTypeWorkspaceConnection DeserializeMachineLearningSasAuthTypeWorkspaceConnection(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<WorkspaceConnectionSharedAccessSignature> credentials = default;
             MachineLearningConnectionAuthType authType = default;
             Optional<MachineLearningConnectionCategory> category = default;

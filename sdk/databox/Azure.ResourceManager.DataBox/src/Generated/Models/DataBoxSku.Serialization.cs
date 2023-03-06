@@ -32,6 +32,10 @@ namespace Azure.ResourceManager.DataBox.Models
 
         internal static DataBoxSku DeserializeDataBoxSku(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             DataBoxSkuName name = default;
             Optional<string> displayName = default;
             Optional<string> family = default;

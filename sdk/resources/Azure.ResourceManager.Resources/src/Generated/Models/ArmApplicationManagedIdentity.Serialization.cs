@@ -38,6 +38,10 @@ namespace Azure.ResourceManager.Resources.Models
 
         internal static ArmApplicationManagedIdentity DeserializeArmApplicationManagedIdentity(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<Guid> principalId = default;
             Optional<Guid> tenantId = default;
             Optional<ArmApplicationManagedIdentityType> type = default;

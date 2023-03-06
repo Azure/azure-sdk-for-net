@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.Resources.Models
     {
         internal static DataPolicyManifestListResult DeserializeDataPolicyManifestListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<DataPolicyManifestData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
