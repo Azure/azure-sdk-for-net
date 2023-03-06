@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.Workloads.Models
 
         internal static PhpWorkloadResourceIdentity DeserializePhpWorkloadResourceIdentity(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ManagedServiceIdentityType type = default;
             Optional<IDictionary<string, UserAssignedIdentity>> userAssignedIdentities = default;
             foreach (var property in element.EnumerateObject())

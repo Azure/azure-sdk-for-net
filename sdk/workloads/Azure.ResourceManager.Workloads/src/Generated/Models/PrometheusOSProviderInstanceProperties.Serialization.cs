@@ -28,6 +28,10 @@ namespace Azure.ResourceManager.Workloads.Models
 
         internal static PrometheusOSProviderInstanceProperties DeserializePrometheusOSProviderInstanceProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<Uri> prometheusUrl = default;
             string providerType = default;
             foreach (var property in element.EnumerateObject())

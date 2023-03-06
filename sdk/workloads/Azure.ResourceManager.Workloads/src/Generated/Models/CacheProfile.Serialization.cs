@@ -31,6 +31,10 @@ namespace Azure.ResourceManager.Workloads.Models
 
         internal static CacheProfile DeserializeCacheProfile(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             string skuName = default;
             RedisCacheFamily family = default;

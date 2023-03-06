@@ -27,6 +27,10 @@ namespace Azure.ResourceManager.Workloads.Models
 
         internal static DiskInfo DeserializeDiskInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             DiskStorageType storageType = default;
             Optional<long> sizeInGB = default;
             foreach (var property in element.EnumerateObject())

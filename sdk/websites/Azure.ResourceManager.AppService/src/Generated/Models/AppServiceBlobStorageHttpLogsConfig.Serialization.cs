@@ -36,6 +36,10 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static AppServiceBlobStorageHttpLogsConfig DeserializeAppServiceBlobStorageHttpLogsConfig(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<Uri> sasUrl = default;
             Optional<int> retentionInDays = default;
             Optional<bool> enabled = default;

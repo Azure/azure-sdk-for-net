@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.Workloads.Models
     {
         internal static ProviderInstanceListResult DeserializeProviderInstanceListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<SapProviderInstanceData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

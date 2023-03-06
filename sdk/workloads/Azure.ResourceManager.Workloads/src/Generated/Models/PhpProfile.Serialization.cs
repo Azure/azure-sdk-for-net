@@ -22,6 +22,10 @@ namespace Azure.ResourceManager.Workloads.Models
 
         internal static PhpProfile DeserializePhpProfile(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             PhpVersion version = default;
             foreach (var property in element.EnumerateObject())
             {

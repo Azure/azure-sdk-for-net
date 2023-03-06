@@ -40,6 +40,10 @@ namespace Azure.ResourceManager.Workloads.Models
 
         internal static OSImageProfile DeserializeOSImageProfile(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<OSImagePublisher> publisher = default;
             Optional<OSImageOffer> offer = default;
             Optional<OSImageSku> sku = default;

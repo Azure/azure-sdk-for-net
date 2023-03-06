@@ -29,6 +29,10 @@ namespace Azure.ResourceManager.Workloads.Models
 
         internal static FileshareProfile DeserializeFileshareProfile(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             FileShareType shareType = default;
             FileShareStorageType storageType = default;
             Optional<long> shareSizeInGB = default;

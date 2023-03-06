@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Workloads.Models
     {
         internal static SkuRestriction DeserializeSkuRestriction(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<SkuRestrictionType> type = default;
             Optional<IReadOnlyList<string>> values = default;
             Optional<RestrictionInfo> restrictionInfo = default;

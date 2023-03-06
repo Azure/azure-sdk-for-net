@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.AppService.Models
     {
         internal static LinuxJavaContainerSettings DeserializeLinuxJavaContainerSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> java11Runtime = default;
             Optional<string> java8Runtime = default;
             Optional<bool> isPreview = default;

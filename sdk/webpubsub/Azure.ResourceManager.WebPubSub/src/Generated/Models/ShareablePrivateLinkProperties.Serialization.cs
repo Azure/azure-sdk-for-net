@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.WebPubSub.Models
 
         internal static ShareablePrivateLinkProperties DeserializeShareablePrivateLinkProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> description = default;
             Optional<string> groupId = default;
             Optional<string> type = default;
