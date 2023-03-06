@@ -29,7 +29,6 @@ namespace Azure.AI.TextAnalytics
 
         /// <summary>
         /// The desired number of sentences in the resulting summaries, which the service will attempt to approximate.
-        /// If not set, the service default is used.
         /// </summary>
         public int? SentenceCount { get; set; }
     }
