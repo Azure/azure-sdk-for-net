@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30309.148
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{908B57EB-9094-4155-846F-9D449B3B3807}") = "Azure.ResourceManager.LiftrQumulo", "src\Azure.ResourceManager.LiftrQumulo.csproj", "{6DB5171F-212F-4A13-985B-8931915B3AD3}"
+Project("{908B57EB-9094-4155-846F-9D449B3B3807}") = "Azure.ResourceManager.Qumulo", "src\Azure.ResourceManager.Qumulo.csproj", "{6DB5171F-212F-4A13-985B-8931915B3AD3}"
 EndProject
-Project("{908B57EB-9094-4155-846F-9D449B3B3807}") = "Azure.ResourceManager.LiftrQumulo.Tests", "tests\Azure.ResourceManager.LiftrQumulo.Tests.csproj", "{D682639C-3EE1-4745-822E-8827B9A92885}"
+#Project("{908B57EB-9094-4155-846F-9D449B3B3807}") = "Azure.ResourceManager.Qumulo.Tests", "tests\Azure.ResourceManager.Qumulo.Tests.csproj", "{D682639C-3EE1-4745-822E-8827B9A92885}"
 EndProject
 Global
 	GlobalSection(SolutionProperties) = preSolution
