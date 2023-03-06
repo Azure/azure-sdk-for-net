@@ -371,6 +371,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
                 try
                 {
                     _currentCycle = ValueStopwatch.StartNew();
+                    Console.WriteLine($"Starting a new monitoring cycle at {DateTime.Now}");
 
                     while (_currentCycle.GetElapsedTime() < _maxWaitTime)
                     {
@@ -382,6 +383,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
 
                     if (triggerEvents.Length > 0)
                     {
+                        Console.WriteLine($"Invoking a timer trigger after {_currentCycle.GetElapsedTime()}");
                         await TriggerExecute(triggerEvents, _mostRecentPartitionContext, cancellationToken).ConfigureAwait(false);
                         await CheckpointAsync(triggerEvents.Last(), _mostRecentPartitionContext).ConfigureAwait(false);
                     }

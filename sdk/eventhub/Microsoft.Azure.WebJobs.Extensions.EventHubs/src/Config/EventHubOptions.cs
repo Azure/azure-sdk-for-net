@@ -230,6 +230,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs
                 {
                     { nameof(MaxEventBatchSize), MaxEventBatchSize },
                     { nameof(MinEventBatchSize), MinEventBatchSize },
+                    { nameof(MaxWaitTime), MaxWaitTime },
                     { nameof(BatchCheckpointFrequency), BatchCheckpointFrequency },
                     { nameof(TransportType),  TransportType.ToString()},
                     { nameof(WebProxy),  WebProxy is WebProxy proxy ? proxy.Address.AbsoluteUri : string.Empty },
