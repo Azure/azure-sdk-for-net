@@ -50,6 +50,10 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
 
         internal static FunctionOutputDataSource DeserializeFunctionOutputDataSource(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string type = default;
             Optional<string> functionAppName = default;
             Optional<string> functionName = default;

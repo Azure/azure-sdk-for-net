@@ -22,6 +22,10 @@ namespace Azure.ResourceManager.Sql.Models
 
         internal static PartnerServerInfo DeserializePartnerServerInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier id = default;
             Optional<AzureLocation> location = default;
             Optional<FailoverGroupReplicationRole> replicationRole = default;

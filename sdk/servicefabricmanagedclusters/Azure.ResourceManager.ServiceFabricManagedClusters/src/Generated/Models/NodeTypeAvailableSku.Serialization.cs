@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
     {
         internal static NodeTypeAvailableSku DeserializeNodeTypeAvailableSku(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ResourceType> resourceType = default;
             Optional<NodeTypeSupportedSku> sku = default;
             Optional<NodeTypeSkuCapacity> capacity = default;

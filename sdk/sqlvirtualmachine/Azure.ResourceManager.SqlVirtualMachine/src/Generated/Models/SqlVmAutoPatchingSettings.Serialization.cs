@@ -40,6 +40,10 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
 
         internal static SqlVmAutoPatchingSettings DeserializeSqlVmAutoPatchingSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> enable = default;
             Optional<SqlVmAutoPatchingDayOfWeek> dayOfWeek = default;
             Optional<int> maintenanceWindowStartingHour = default;

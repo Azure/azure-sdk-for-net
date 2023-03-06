@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.StorageCache.Models
     {
         internal static StorageCacheUpgradeStatus DeserializeStorageCacheUpgradeStatus(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> currentFirmwareVersion = default;
             Optional<StorageCacheFirmwareStatusType> firmwareUpdateStatus = default;
             Optional<DateTimeOffset> firmwareUpdateDeadline = default;

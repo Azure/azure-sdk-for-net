@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.Sql.Models
     {
         internal static SqlMetricDefinition DeserializeSqlMetricDefinition(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<SqlMetricName> name = default;
             Optional<SqlMetricPrimaryAggregationType> primaryAggregationType = default;
             Optional<Uri> resourceUri = default;

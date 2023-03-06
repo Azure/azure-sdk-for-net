@@ -41,6 +41,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static ParquetFormat DeserializeParquetFormat(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string type = default;
             Optional<object> serializer = default;
             Optional<object> deserializer = default;

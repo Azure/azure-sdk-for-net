@@ -22,6 +22,10 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
 
         internal static StreamingCompression DeserializeStreamingCompression(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             StreamingCompressionType type = default;
             foreach (var property in element.EnumerateObject())
             {

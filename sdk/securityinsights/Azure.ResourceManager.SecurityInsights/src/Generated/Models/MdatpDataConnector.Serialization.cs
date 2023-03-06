@@ -43,6 +43,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         internal static MdatpDataConnector DeserializeMdatpDataConnector(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             DataConnectorKind kind = default;
             Optional<ETag> etag = default;
             ResourceIdentifier id = default;

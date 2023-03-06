@@ -31,6 +31,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         internal static DataExportSettings DeserializeDataExportSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             SettingKind kind = default;
             ResourceIdentifier id = default;
             string name = default;

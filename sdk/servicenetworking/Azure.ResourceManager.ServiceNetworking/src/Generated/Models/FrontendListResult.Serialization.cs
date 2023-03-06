@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
     {
         internal static FrontendListResult DeserializeFrontendListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IReadOnlyList<FrontendData> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

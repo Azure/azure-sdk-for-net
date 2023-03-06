@@ -103,6 +103,10 @@ namespace Azure.ResourceManager.SecurityInsights
 
         internal static SecurityInsightsBookmarkData DeserializeSecurityInsightsBookmarkData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ETag> etag = default;
             ResourceIdentifier id = default;
             string name = default;

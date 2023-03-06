@@ -423,6 +423,11 @@ namespace Azure.Analytics.Synapse.Artifacts
                 foreach (var item in parameters)
                 {
                     content.JsonWriter.WritePropertyName(item.Key);
+                    if (item.Value == null)
+                    {
+                        content.JsonWriter.WriteNullValue();
+                        continue;
+                    }
                     content.JsonWriter.WriteObjectValue(item.Value);
                 }
                 content.JsonWriter.WriteEndObject();

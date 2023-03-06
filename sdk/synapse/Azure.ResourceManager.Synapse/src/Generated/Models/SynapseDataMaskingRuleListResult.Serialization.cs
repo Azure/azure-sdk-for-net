@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.Synapse.Models
     {
         internal static SynapseDataMaskingRuleListResult DeserializeSynapseDataMaskingRuleListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<SynapseDataMaskingRuleData>> value = default;
             foreach (var property in element.EnumerateObject())
             {

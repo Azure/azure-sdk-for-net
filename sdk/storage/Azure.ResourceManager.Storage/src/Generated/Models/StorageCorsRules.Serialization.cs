@@ -31,6 +31,10 @@ namespace Azure.ResourceManager.Storage.Models
 
         internal static StorageCorsRules DeserializeStorageCorsRules(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<StorageCorsRule>> corsRules = default;
             foreach (var property in element.EnumerateObject())
             {

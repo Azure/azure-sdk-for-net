@@ -43,6 +43,10 @@ namespace Azure.AI.TextAnalytics.Models
 
         internal static DynamicClassificationResultDocumentsItem DeserializeDynamicClassificationResultDocumentsItem(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IList<ClassificationResult> classifications = default;
             string id = default;
             IList<DocumentWarning> warnings = default;

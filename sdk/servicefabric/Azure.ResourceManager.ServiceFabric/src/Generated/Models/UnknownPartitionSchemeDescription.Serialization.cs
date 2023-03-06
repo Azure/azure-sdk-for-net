@@ -22,6 +22,10 @@ namespace Azure.ResourceManager.ServiceFabric.Models
 
         internal static UnknownPartitionSchemeDescription DeserializeUnknownPartitionSchemeDescription(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ApplicationPartitionScheme partitionScheme = "Unknown";
             foreach (var property in element.EnumerateObject())
             {

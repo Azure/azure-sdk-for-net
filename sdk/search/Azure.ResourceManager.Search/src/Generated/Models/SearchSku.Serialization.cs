@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.Search.Models
 
         internal static SearchSku DeserializeSearchSku(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<SearchSkuName> name = default;
             foreach (var property in element.EnumerateObject())
             {

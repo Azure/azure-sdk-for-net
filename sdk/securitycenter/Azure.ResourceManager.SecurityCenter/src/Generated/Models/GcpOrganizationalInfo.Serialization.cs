@@ -22,6 +22,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         internal static GcpOrganizationalInfo DeserializeGcpOrganizationalInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             if (element.TryGetProperty("organizationMembershipType", out JsonElement discriminator))
             {
                 switch (discriminator.GetString())

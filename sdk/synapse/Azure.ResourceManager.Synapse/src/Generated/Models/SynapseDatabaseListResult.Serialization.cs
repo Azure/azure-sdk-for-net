@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.Synapse.Models
     {
         internal static SynapseDatabaseListResult DeserializeSynapseDatabaseListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<SynapseDatabaseData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
