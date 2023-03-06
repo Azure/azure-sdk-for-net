@@ -11,7 +11,7 @@ public static class WebPubSubOutputFunction
 {
     #region Snippet:WebPubSubOutputFunction
     [Function("Notification")]
-    [WebPubSubOutput(Hub = "notification")]
+    [WebPubSubOutput(Hub = "<web_pubsub_hub>", Connection = "<web_pubsub_connection_name>")]
     public static WebPubSubAction Run([HttpTrigger(AuthorizationLevel.Function, "get", "post")] HttpRequestData req)
     {
         return new SendToAllAction
@@ -22,6 +22,7 @@ public static class WebPubSubOutputFunction
     }
     #endregion
 
+    #region Snippet:WebPubSubOutputFunction_Multiple
     // multiple output
     [Function("Notification1")]
     public static MultipleActions MultipleActions([HttpTrigger(AuthorizationLevel.Function, "get", "post")] HttpRequestData req)
@@ -43,9 +44,10 @@ public static class WebPubSubOutputFunction
     
     public class MultipleActions
     {
-        [WebPubSubOutput(Hub = "notification")]
+        [WebPubSubOutput(Hub = "<web_pubsub_hub>")]
         public SendToAllAction SendToAll { get; set; }
-        [WebPubSubOutput(Hub = "notification")]
+        [WebPubSubOutput(Hub = "<web_pubsub_hub>")]
         public AddUserToGroupAction AddUserToGroup { get; set; }
     }
+    #endregion
 }

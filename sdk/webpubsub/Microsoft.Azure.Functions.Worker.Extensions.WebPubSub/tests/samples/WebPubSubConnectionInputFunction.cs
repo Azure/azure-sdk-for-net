@@ -12,7 +12,7 @@ public static class WebPubSubConnectionInputFunction
     #region Snippet:WebPubSubConnectionInputFunction
     [Function("Negotiate")]
     public static HttpResponseData Run([HttpTrigger(AuthorizationLevel.Anonymous)] HttpRequestData req,
-    [WebPubSubConnectionInput(Hub = "chat")] WebPubSubConnection connectionInfo)
+    [WebPubSubConnectionInput(Hub = "<web_pubsub_hub>", Connection = "<web_pubsub_connection_name>")] WebPubSubConnection connectionInfo)
     {
         var response = req.CreateResponse(HttpStatusCode.OK);
         response.WriteAsJsonAsync(connectionInfo);

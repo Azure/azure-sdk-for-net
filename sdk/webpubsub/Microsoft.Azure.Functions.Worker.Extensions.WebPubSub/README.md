@@ -67,7 +67,7 @@ Use `WebPubSubConnectionInput` to build the client negotiate URL.
 ```C# Snippet:WebPubSubConnectionInputFunction
 [Function("Negotiate")]
 public static HttpResponseData Run([HttpTrigger(AuthorizationLevel.Anonymous)] HttpRequestData req,
-[WebPubSubConnectionInput(Hub = "chat")] WebPubSubConnection connectionInfo)
+[WebPubSubConnectionInput(Hub = "<web_pubsub_hub>", Connection = "<web_pubsub_connection_name>")] WebPubSubConnection connectionInfo)
 {
     var response = req.CreateResponse(HttpStatusCode.OK);
     response.WriteAsJsonAsync(connectionInfo);
@@ -105,7 +105,7 @@ private static HttpResponseData BuildHttpResponseData(HttpRequestData request, S
 
 ```C# Snippet:WebPubSubOutputFunction
 [Function("Notification")]
-[WebPubSubOutput(Hub = "notification")]
+[WebPubSubOutput(Hub = "<web_pubsub_hub>", Connection = "<web_pubsub_connection_name>")]
 public static WebPubSubAction Run([HttpTrigger(AuthorizationLevel.Function, "get", "post")] HttpRequestData req)
 {
     return new SendToAllAction
@@ -121,11 +121,13 @@ public static WebPubSubAction Run([HttpTrigger(AuthorizationLevel.Function, "get
 ```C# Snippet:WebPubSubTriggerUserEventFunction
 [Function("Broadcast")]
 public static UserEventResponse Run(
-[WebPubSubTrigger("chat", WebPubSubEventType.User, "message")] UserEventRequest request)
+[WebPubSubTrigger("<web_pubsub_hub>", WebPubSubEventType.User, "message")] UserEventRequest request)
 {
-    return new UserEventResponse($"[SYSTEM ACK] Received client message. From: {request.ConnectionContext.ConnectionId}, Data: {request.Data}");
+    return new UserEventResponse("[SYSTEM ACK] Received.");
 }
 ```
+
+For more details see the [samples README](./samples/README.md).
 
 ## Troubleshooting
 
