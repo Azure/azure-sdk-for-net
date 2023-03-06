@@ -31,6 +31,10 @@ namespace Azure.ResourceManager.Storage.Models
 
         internal static StorageAccountResourceAccessRule DeserializeStorageAccountResourceAccessRule(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<Guid> tenantId = default;
             Optional<ResourceIdentifier> resourceId = default;
             foreach (var property in element.EnumerateObject())

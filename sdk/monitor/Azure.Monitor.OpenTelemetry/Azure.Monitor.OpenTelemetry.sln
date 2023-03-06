@@ -18,6 +18,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Monitor.OpenTelemetry
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Monitor.OpenTelemetry.Demo", "tests\Azure.Monitor.OpenTelemetry.Demo\Azure.Monitor.OpenTelemetry.Demo.csproj", "{6F094CAA-F6BB-4A9C-9D1F-1165F0758C99}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Monitor.OpenTelemetry.Tests", "tests\Azure.Monitor.OpenTelemetry.Tests\Azure.Monitor.OpenTelemetry.Tests.csproj", "{E047E7C5-F248-49DF-BC2C-A690BC5F0F71}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Core.TestFramework", "..\..\core\Azure.Core.TestFramework\src\Azure.Core.TestFramework.csproj", "{3E77BE70-A052-44F1-9E79-CB6D266DB1B3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -36,6 +40,14 @@ Global
 		{6F094CAA-F6BB-4A9C-9D1F-1165F0758C99}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6F094CAA-F6BB-4A9C-9D1F-1165F0758C99}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6F094CAA-F6BB-4A9C-9D1F-1165F0758C99}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E047E7C5-F248-49DF-BC2C-A690BC5F0F71}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E047E7C5-F248-49DF-BC2C-A690BC5F0F71}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E047E7C5-F248-49DF-BC2C-A690BC5F0F71}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E047E7C5-F248-49DF-BC2C-A690BC5F0F71}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3E77BE70-A052-44F1-9E79-CB6D266DB1B3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3E77BE70-A052-44F1-9E79-CB6D266DB1B3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3E77BE70-A052-44F1-9E79-CB6D266DB1B3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3E77BE70-A052-44F1-9E79-CB6D266DB1B3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

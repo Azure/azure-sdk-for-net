@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.Automation.Models
     {
         internal static DscNodeReport DeserializeDscNodeReport(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DateTimeOffset?> endTime = default;
             Optional<DateTimeOffset> lastModifiedTime = default;
             Optional<DateTimeOffset?> startTime = default;

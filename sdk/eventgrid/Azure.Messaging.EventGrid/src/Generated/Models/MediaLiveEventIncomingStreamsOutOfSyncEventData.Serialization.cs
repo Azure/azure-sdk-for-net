@@ -17,6 +17,10 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     {
         internal static MediaLiveEventIncomingStreamsOutOfSyncEventData DeserializeMediaLiveEventIncomingStreamsOutOfSyncEventData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> minLastTimestamp = default;
             Optional<string> typeOfStreamWithMinLastTimestamp = default;
             Optional<string> maxLastTimestamp = default;

@@ -27,6 +27,10 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static UserArtifactSource DeserializeUserArtifactSource(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string mediaLink = default;
             Optional<string> defaultConfigurationLink = default;
             foreach (var property in element.EnumerateObject())

@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.Reservations.Models
     {
         internal static PurchasePrice DeserializePurchasePrice(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> currencyCode = default;
             Optional<double> amount = default;
             foreach (var property in element.EnumerateObject())

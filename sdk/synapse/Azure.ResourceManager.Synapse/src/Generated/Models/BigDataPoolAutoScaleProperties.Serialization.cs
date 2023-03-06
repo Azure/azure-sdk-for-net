@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.Synapse.Models
 
         internal static BigDataPoolAutoScaleProperties DeserializeBigDataPoolAutoScaleProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> minNodeCount = default;
             Optional<bool> enabled = default;
             Optional<int> maxNodeCount = default;

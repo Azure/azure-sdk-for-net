@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.Avs.Models
     {
         internal static ScriptParameter DeserializeScriptParameter(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ScriptParameterType> type = default;
             Optional<string> name = default;
             Optional<string> description = default;

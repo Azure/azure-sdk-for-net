@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         internal static SqlDataDirectory DeserializeSqlDataDirectory(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<SqlDataDirectoryType> type = default;
             Optional<string> path = default;
             Optional<string> logicalName = default;

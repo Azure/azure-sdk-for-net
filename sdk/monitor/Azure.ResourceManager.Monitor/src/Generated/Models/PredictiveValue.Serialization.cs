@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Monitor.Models
     {
         internal static PredictiveValue DeserializePredictiveValue(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             DateTimeOffset timeStamp = default;
             double value = default;
             foreach (var property in element.EnumerateObject())

@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.Storage.Models
 
         internal static ManagementPolicyAction DeserializeManagementPolicyAction(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ManagementPolicyBaseBlob> baseBlob = default;
             Optional<ManagementPolicySnapShot> snapshot = default;
             Optional<ManagementPolicyVersion> version = default;

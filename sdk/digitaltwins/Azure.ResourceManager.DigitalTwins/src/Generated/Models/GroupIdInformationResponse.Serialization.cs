@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.DigitalTwins.Models
     {
         internal static GroupIdInformationResponse DeserializeGroupIdInformationResponse(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<DigitalTwinsPrivateLinkResourceData>> value = default;
             foreach (var property in element.EnumerateObject())
             {

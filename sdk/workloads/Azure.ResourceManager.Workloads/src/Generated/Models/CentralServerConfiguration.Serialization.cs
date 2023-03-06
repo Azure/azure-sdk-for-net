@@ -26,6 +26,10 @@ namespace Azure.ResourceManager.Workloads.Models
 
         internal static CentralServerConfiguration DeserializeCentralServerConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier subnetId = default;
             VirtualMachineConfiguration virtualMachineConfiguration = default;
             long instanceCount = default;

@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         internal static WorkloadBackupJobTaskDetails DeserializeWorkloadBackupJobTaskDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> taskId = default;
             Optional<string> status = default;
             foreach (var property in element.EnumerateObject())

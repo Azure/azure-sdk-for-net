@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
 
         internal static MachineLearningServiceInputColumn DeserializeMachineLearningServiceInputColumn(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<string> dataType = default;
             Optional<int> mapTo = default;

@@ -31,6 +31,10 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
 
         internal static SystemData DeserializeSystemData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DateTimeOffset> createdAt = default;
             Optional<DateTimeOffset> lastModifiedAt = default;
             foreach (var property in element.EnumerateObject())

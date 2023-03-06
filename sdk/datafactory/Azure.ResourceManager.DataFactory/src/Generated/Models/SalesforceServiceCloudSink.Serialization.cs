@@ -110,6 +110,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static SalesforceServiceCloudSink DeserializeSalesforceServiceCloudSink(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<SalesforceSinkWriteBehavior> writeBehavior = default;
             Optional<BinaryData> externalIdFieldName = default;
             Optional<BinaryData> ignoreNullValues = default;

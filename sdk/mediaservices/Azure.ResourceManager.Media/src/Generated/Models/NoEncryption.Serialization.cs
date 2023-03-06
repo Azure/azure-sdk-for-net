@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.Media.Models
 
         internal static NoEncryption DeserializeNoEncryption(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<MediaEnabledProtocols> enabledProtocols = default;
             foreach (var property in element.EnumerateObject())
             {

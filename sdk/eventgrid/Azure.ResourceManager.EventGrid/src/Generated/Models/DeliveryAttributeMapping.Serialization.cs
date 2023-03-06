@@ -27,6 +27,10 @@ namespace Azure.ResourceManager.EventGrid.Models
 
         internal static DeliveryAttributeMapping DeserializeDeliveryAttributeMapping(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             if (element.TryGetProperty("type", out JsonElement discriminator))
             {
                 switch (discriminator.GetString())

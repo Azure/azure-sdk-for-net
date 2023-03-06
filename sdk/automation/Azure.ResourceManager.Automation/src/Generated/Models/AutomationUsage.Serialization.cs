@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.Automation.Models
     {
         internal static AutomationUsage DeserializeAutomationUsage(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> id = default;
             Optional<AutomationUsageCounterName> name = default;
             Optional<string> unit = default;

@@ -118,6 +118,10 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 
         internal static StatefulServiceProperties DeserializeStatefulServiceProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> hasPersistedState = default;
             Optional<int> targetReplicaSetSize = default;
             Optional<int> minReplicaSetSize = default;

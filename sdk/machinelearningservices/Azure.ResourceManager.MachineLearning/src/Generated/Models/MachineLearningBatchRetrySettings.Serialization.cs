@@ -31,6 +31,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static MachineLearningBatchRetrySettings DeserializeMachineLearningBatchRetrySettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> maxRetries = default;
             Optional<TimeSpan> timeout = default;
             foreach (var property in element.EnumerateObject())

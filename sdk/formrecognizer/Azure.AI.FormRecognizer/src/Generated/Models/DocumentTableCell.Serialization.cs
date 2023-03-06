@@ -15,6 +15,10 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
     {
         internal static DocumentTableCell DeserializeDocumentTableCell(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DocumentTableCellKind> kind = default;
             int rowIndex = default;
             int columnIndex = default;

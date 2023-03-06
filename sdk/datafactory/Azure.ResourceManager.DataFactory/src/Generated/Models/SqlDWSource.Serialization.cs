@@ -128,6 +128,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static SqlDWSource DeserializeSqlDWSource(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<BinaryData> sqlReaderQuery = default;
             Optional<BinaryData> sqlReaderStoredProcedureName = default;
             Optional<BinaryData> storedProcedureParameters = default;

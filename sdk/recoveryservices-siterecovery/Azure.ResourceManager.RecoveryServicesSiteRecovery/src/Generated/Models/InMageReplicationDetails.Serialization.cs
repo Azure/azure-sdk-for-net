@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     {
         internal static InMageReplicationDetails DeserializeInMageReplicationDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> activeSiteType = default;
             Optional<int> sourceVmCpuCount = default;
             Optional<int> sourceVmRamSizeInMB = default;

@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.DevCenter.Models
     {
         internal static HealthCheck DeserializeHealthCheck(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<HealthCheckStatus> status = default;
             Optional<string> displayName = default;
             Optional<DateTimeOffset> startDateTime = default;

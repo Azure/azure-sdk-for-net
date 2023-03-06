@@ -40,6 +40,10 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static GitHubActionConfiguration DeserializeGitHubActionConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<GitHubActionCodeConfiguration> codeConfiguration = default;
             Optional<GitHubActionContainerConfiguration> containerConfiguration = default;
             Optional<bool> isLinux = default;

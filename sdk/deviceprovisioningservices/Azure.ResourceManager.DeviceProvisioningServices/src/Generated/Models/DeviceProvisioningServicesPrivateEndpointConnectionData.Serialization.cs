@@ -24,6 +24,10 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
 
         internal static DeviceProvisioningServicesPrivateEndpointConnectionData DeserializeDeviceProvisioningServicesPrivateEndpointConnectionData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             DeviceProvisioningServicesPrivateEndpointConnectionProperties properties = default;
             ResourceIdentifier id = default;
             string name = default;

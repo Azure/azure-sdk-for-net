@@ -29,6 +29,10 @@ namespace Azure.ResourceManager.Sql
 
         internal static SqlServerCommunicationLinkData DeserializeSqlServerCommunicationLinkData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<AzureLocation> location = default;
             Optional<string> kind = default;
             ResourceIdentifier id = default;

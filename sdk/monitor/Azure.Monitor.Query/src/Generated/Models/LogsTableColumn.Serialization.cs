@@ -14,6 +14,10 @@ namespace Azure.Monitor.Query.Models
     {
         internal static LogsTableColumn DeserializeLogsTableColumn(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string name = default;
             LogsColumnType type = default;
             foreach (var property in element.EnumerateObject())

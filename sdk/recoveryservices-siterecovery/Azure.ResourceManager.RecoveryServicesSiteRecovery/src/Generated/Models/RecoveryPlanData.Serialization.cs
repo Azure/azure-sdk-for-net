@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
     {
         internal static RecoveryPlanData DeserializeRecoveryPlanData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<RecoveryPlanProperties> properties = default;
             Optional<AzureLocation> location = default;
             ResourceIdentifier id = default;

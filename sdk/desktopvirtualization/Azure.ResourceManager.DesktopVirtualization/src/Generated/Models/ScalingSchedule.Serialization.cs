@@ -117,6 +117,10 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
 
         internal static ScalingSchedule DeserializeScalingSchedule(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<IList<ScalingScheduleDaysOfWeekItem>> daysOfWeek = default;
             Optional<DateTimeOffset> rampUpStartTime = default;

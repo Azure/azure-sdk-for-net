@@ -14,6 +14,10 @@ namespace Azure.IoT.Hub.Service.Models
     {
         internal static DeviceRegistryOperationError DeserializeDeviceRegistryOperationError(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> deviceId = default;
             Optional<DeviceRegistryOperationErrorCode> errorCode = default;
             Optional<string> errorStatus = default;

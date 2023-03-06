@@ -22,6 +22,10 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static VirtualMachinePublicIPAddressDnsSettingsConfiguration DeserializeVirtualMachinePublicIPAddressDnsSettingsConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string domainNameLabel = default;
             foreach (var property in element.EnumerateObject())
             {

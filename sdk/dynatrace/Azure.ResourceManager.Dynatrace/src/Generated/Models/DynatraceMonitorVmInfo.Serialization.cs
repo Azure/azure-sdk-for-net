@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.Dynatrace.Models
     {
         internal static DynatraceMonitorVmInfo DeserializeDynatraceMonitorVmInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ResourceIdentifier> resourceId = default;
             Optional<string> version = default;
             Optional<DynatraceOneAgentMonitoringType> monitoringType = default;

@@ -22,14 +22,14 @@ namespace Azure.Containers.ContainerRegistry.Specialized
 
         /// <summary> Initializes a new instance of OciBlobDescriptor. </summary>
         /// <param name="mediaType"> Layer media type. </param>
-        /// <param name="size"> Layer size. </param>
+        /// <param name="sizeInBytes"> Layer size. </param>
         /// <param name="digest"> Layer digest. </param>
         /// <param name="urls"> Specifies a list of URIs from which this object may be downloaded. </param>
         /// <param name="annotations"> Additional information provided through arbitrary metadata. </param>
-        internal OciBlobDescriptor(string mediaType, long? size, string digest, IList<Uri> urls, OciAnnotations annotations)
+        internal OciBlobDescriptor(string mediaType, long? sizeInBytes, string digest, IList<Uri> urls, OciAnnotations annotations)
         {
             MediaType = mediaType;
-            Size = size;
+            SizeInBytes = sizeInBytes;
             Digest = digest;
             Urls = urls;
             Annotations = annotations;

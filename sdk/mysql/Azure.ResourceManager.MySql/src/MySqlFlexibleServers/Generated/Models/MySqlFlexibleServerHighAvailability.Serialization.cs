@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
 
         internal static MySqlFlexibleServerHighAvailability DeserializeMySqlFlexibleServerHighAvailability(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<MySqlFlexibleServerHighAvailabilityMode> mode = default;
             Optional<MySqlFlexibleServerHighAvailabilityState> state = default;
             Optional<string> standbyAvailabilityZone = default;

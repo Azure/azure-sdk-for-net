@@ -41,6 +41,10 @@ namespace Azure.ResourceManager.Peering.Models
 
         internal static DirectPeeringLocationProperties DeserializeDirectPeeringLocationProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<DirectPeeringFacility>> peeringFacilities = default;
             Optional<IList<PeeringBandwidthOffer>> bandwidthOffers = default;
             foreach (var property in element.EnumerateObject())

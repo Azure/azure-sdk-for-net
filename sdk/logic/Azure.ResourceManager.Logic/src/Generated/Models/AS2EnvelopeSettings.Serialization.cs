@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.Logic.Models
 
         internal static AS2EnvelopeSettings DeserializeAS2EnvelopeSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ContentType messageContentType = default;
             bool transmitFileNameInMimeHeader = default;
             string fileNameTemplate = default;

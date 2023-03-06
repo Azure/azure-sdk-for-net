@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.Billing.Models
     {
         internal static BillingSubscriptionValidateMoveEligibilityResult DeserializeBillingSubscriptionValidateMoveEligibilityResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> isMoveEligible = default;
             Optional<BillingSubscriptionValidateMoveEligibilityError> errorDetails = default;
             foreach (var property in element.EnumerateObject())

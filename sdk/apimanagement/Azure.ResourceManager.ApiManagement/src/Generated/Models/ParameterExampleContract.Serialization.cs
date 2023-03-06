@@ -45,6 +45,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         internal static ParameterExampleContract DeserializeParameterExampleContract(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> summary = default;
             Optional<string> description = default;
             Optional<BinaryData> value = default;

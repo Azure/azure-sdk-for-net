@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.DataBox.Models
     {
         internal static UnknownValidationInputResponse DeserializeUnknownValidationInputResponse(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             DataBoxValidationInputDiscriminator validationType = default;
             Optional<ResponseError> error = default;
             foreach (var property in element.EnumerateObject())

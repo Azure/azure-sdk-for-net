@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.Logic.Models
 
         internal static IntegrationAccountPartnerContent DeserializeIntegrationAccountPartnerContent(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<B2BPartnerContent> b2b = default;
             foreach (var property in element.EnumerateObject())
             {

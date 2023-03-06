@@ -43,6 +43,10 @@ namespace Azure.AI.TextAnalytics.Models
 
         internal static LinkedEntitiesDocumentResult DeserializeLinkedEntitiesDocumentResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IList<LinkedEntity> entities = default;
             string id = default;
             IList<DocumentWarning> warnings = default;

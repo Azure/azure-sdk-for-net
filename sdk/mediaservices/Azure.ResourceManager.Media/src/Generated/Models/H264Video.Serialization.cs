@@ -69,6 +69,10 @@ namespace Azure.ResourceManager.Media.Models
 
         internal static H264Video DeserializeH264Video(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<H264Complexity> complexity = default;
             Optional<IList<H264Layer>> layers = default;
             Optional<H264RateControlMode> rateControlMode = default;

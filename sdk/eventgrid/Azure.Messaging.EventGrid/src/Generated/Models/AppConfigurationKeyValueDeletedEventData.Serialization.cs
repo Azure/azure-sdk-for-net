@@ -17,6 +17,10 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     {
         internal static AppConfigurationKeyValueDeletedEventData DeserializeAppConfigurationKeyValueDeletedEventData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> key = default;
             Optional<string> label = default;
             Optional<string> etag = default;

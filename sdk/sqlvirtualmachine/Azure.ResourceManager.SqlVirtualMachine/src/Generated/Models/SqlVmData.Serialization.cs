@@ -115,6 +115,10 @@ namespace Azure.ResourceManager.SqlVirtualMachine
 
         internal static SqlVmData DeserializeSqlVmData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ManagedServiceIdentity> identity = default;
             Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;

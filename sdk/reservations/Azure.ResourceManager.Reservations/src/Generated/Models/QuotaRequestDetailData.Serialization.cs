@@ -18,6 +18,10 @@ namespace Azure.ResourceManager.Reservations
     {
         internal static QuotaRequestDetailData DeserializeQuotaRequestDetailData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;

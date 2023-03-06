@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         internal static AuthenticationSettingsContract DeserializeAuthenticationSettingsContract(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<OAuth2AuthenticationSettingsContract> oAuth2 = default;
             Optional<OpenIdAuthenticationSettingsContract> openid = default;
             foreach (var property in element.EnumerateObject())

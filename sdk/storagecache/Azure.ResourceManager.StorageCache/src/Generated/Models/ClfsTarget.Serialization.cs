@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.StorageCache.Models
 
         internal static ClfsTarget DeserializeClfsTarget(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ResourceIdentifier> target = default;
             foreach (var property in element.EnumerateObject())
             {

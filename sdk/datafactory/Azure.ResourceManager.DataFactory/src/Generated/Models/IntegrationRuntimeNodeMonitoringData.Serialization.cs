@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.DataFactory.Models
     {
         internal static IntegrationRuntimeNodeMonitoringData DeserializeIntegrationRuntimeNodeMonitoringData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> nodeName = default;
             Optional<int> availableMemoryInMB = default;
             Optional<int> cpuUtilization = default;

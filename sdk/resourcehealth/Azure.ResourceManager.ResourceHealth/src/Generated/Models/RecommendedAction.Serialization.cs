@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.ResourceHealth.Models
     {
         internal static RecommendedAction DeserializeRecommendedAction(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> action = default;
             Optional<Uri> actionUrl = default;
             Optional<string> actionUrlText = default;

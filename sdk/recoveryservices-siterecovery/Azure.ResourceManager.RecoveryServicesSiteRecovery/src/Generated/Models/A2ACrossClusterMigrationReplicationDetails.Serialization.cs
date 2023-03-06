@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     {
         internal static A2ACrossClusterMigrationReplicationDetails DeserializeA2ACrossClusterMigrationReplicationDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> fabricObjectId = default;
             Optional<string> primaryFabricLocation = default;
             Optional<string> osType = default;

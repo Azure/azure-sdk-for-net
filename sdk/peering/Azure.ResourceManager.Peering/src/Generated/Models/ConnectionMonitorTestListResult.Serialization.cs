@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.Peering.Models
     {
         internal static ConnectionMonitorTestListResult DeserializeConnectionMonitorTestListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<ConnectionMonitorTestData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

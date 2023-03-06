@@ -24,6 +24,10 @@ namespace Azure.ResourceManager.Media.Models
 
         internal static ContentKeyPolicyWidevineConfiguration DeserializeContentKeyPolicyWidevineConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string widevineTemplate = default;
             string odataType = default;
             foreach (var property in element.EnumerateObject())

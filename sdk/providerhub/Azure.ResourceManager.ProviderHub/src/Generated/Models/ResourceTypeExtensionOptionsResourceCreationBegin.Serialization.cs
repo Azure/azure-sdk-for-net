@@ -41,6 +41,10 @@ namespace Azure.ResourceManager.ProviderHub.Models
 
         internal static ResourceTypeExtensionOptionsResourceCreationBegin DeserializeResourceTypeExtensionOptionsResourceCreationBegin(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<ExtensionOptionType>> request = default;
             Optional<IList<ExtensionOptionType>> response = default;
             foreach (var property in element.EnumerateObject())

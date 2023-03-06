@@ -183,6 +183,10 @@ namespace Azure.ResourceManager.Logic.Models
 
         internal static EdifactEnvelopeSettings DeserializeEdifactEnvelopeSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> groupAssociationAssignedCode = default;
             Optional<string> communicationAgreementId = default;
             bool applyDelimiterStringAdvice = default;

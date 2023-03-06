@@ -14,6 +14,10 @@ namespace Azure.DigitalTwins.Core
     {
         internal static IncomingRelationship DeserializeIncomingRelationship(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> relationshipId = default;
             Optional<string> sourceId = default;
             Optional<string> relationshipName = default;

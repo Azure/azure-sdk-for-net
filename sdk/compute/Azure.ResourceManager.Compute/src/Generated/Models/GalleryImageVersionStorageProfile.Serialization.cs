@@ -41,6 +41,10 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static GalleryImageVersionStorageProfile DeserializeGalleryImageVersionStorageProfile(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<GalleryArtifactVersionFullSource> source = default;
             Optional<GalleryOSDiskImage> osDiskImage = default;
             Optional<IList<GalleryDataDiskImage>> dataDiskImages = default;

@@ -27,6 +27,10 @@ namespace Azure.ResourceManager.AppPlatform
 
         internal static AppPlatformGatewayCustomDomainData DeserializeAppPlatformGatewayCustomDomainData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<GatewayCustomDomainProperties> properties = default;
             ResourceIdentifier id = default;
             string name = default;

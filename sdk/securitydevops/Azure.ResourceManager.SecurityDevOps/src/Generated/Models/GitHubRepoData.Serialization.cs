@@ -27,6 +27,10 @@ namespace Azure.ResourceManager.SecurityDevOps
 
         internal static GitHubRepoData DeserializeGitHubRepoData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<GitHubRepoProperties> properties = default;
             ResourceIdentifier id = default;
             string name = default;

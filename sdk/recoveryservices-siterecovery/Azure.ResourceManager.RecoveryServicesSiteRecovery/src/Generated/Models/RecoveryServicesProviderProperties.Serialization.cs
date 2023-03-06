@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     {
         internal static RecoveryServicesProviderProperties DeserializeRecoveryServicesProviderProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> fabricType = default;
             Optional<string> friendlyName = default;
             Optional<string> providerVersion = default;

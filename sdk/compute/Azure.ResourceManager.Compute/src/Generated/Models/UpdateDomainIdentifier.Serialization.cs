@@ -20,6 +20,10 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static UpdateDomainIdentifier DeserializeUpdateDomainIdentifier(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ResourceIdentifier> id = default;
             Optional<string> name = default;
             foreach (var property in element.EnumerateObject())

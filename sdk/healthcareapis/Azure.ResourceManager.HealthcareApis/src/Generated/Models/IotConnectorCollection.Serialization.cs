@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.HealthcareApis.Models
     {
         internal static IotConnectorCollection DeserializeIotConnectorCollection(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> nextLink = default;
             Optional<IReadOnlyList<HealthcareApisIotConnectorData>> value = default;
             foreach (var property in element.EnumerateObject())

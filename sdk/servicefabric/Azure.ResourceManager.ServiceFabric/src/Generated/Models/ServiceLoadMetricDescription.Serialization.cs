@@ -42,6 +42,10 @@ namespace Azure.ResourceManager.ServiceFabric.Models
 
         internal static ServiceLoadMetricDescription DeserializeServiceLoadMetricDescription(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string name = default;
             Optional<ServiceLoadMetricWeight> weight = default;
             Optional<int> primaryDefaultLoad = default;

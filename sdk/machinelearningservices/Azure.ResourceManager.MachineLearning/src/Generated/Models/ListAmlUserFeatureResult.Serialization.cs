@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
     {
         internal static ListAmlUserFeatureResult DeserializeListAmlUserFeatureResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<MachineLearningUserFeature>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

@@ -32,6 +32,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         internal static PeriodicModeBackupPolicy DeserializePeriodicModeBackupPolicy(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<PeriodicModeProperties> periodicModeProperties = default;
             BackupPolicyType type = default;
             Optional<BackupPolicyMigrationState> migrationState = default;
