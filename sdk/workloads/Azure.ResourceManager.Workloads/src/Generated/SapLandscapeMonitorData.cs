@@ -12,7 +12,10 @@ using Azure.ResourceManager.Workloads.Models;
 
 namespace Azure.ResourceManager.Workloads
 {
-    /// <summary> A class representing the SapLandscapeMonitor data model. </summary>
+    /// <summary>
+    /// A class representing the SapLandscapeMonitor data model.
+    /// configuration associated with SAP Landscape Monitor Dashboard.
+    /// </summary>
     public partial class SapLandscapeMonitorData : ResourceData
     {
         /// <summary> Initializes a new instance of SapLandscapeMonitorData. </summary>

@@ -62,6 +62,10 @@ namespace Azure.ResourceManager.HDInsight
 
         internal static HDInsightClusterData DeserializeHDInsightClusterData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ETag> etag = default;
             Optional<IList<string>> zones = default;
             Optional<HDInsightClusterProperties> properties = default;

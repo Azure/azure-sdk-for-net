@@ -52,6 +52,10 @@ namespace Azure.AI.MetricsAdvisor.Models
 
         internal static AnomalyDetectionConfiguration DeserializeAnomalyDetectionConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> anomalyDetectionConfigurationId = default;
             string name = default;
             Optional<string> description = default;

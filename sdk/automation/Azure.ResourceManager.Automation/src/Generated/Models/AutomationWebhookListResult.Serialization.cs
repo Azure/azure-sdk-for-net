@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.Automation.Models
     {
         internal static AutomationWebhookListResult DeserializeAutomationWebhookListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<AutomationWebhookData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

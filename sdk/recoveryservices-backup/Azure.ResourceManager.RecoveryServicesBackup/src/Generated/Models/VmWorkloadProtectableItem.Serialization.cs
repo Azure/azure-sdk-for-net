@@ -82,6 +82,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         internal static VmWorkloadProtectableItem DeserializeVmWorkloadProtectableItem(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             if (element.TryGetProperty("protectableItemType", out JsonElement discriminator))
             {
                 switch (discriminator.GetString())

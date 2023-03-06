@@ -28,6 +28,10 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 
         internal static PartitionInstanceCountScalingMechanism DeserializePartitionInstanceCountScalingMechanism(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             int minInstanceCount = default;
             int maxInstanceCount = default;
             int scaleIncrement = default;

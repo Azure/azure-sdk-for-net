@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static VirtualNetworkGatewaySku DeserializeVirtualNetworkGatewaySku(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<VirtualNetworkGatewaySkuName> name = default;
             Optional<VirtualNetworkGatewaySkuTier> tier = default;
             Optional<int> capacity = default;

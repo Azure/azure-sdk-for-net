@@ -58,6 +58,10 @@ namespace Azure.ResourceManager.VoiceServices.Models
 
         internal static PrimaryRegionProperties DeserializePrimaryRegionProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IList<string> operatorAddresses = default;
             Optional<IList<string>> esrpAddresses = default;
             Optional<IList<string>> allowedSignalingSourceAddressPrefixes = default;

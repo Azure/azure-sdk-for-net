@@ -26,6 +26,10 @@ namespace Azure.ResourceManager.DataMigration.Models
 
         internal static MigrateSsisTaskInput DeserializeMigrateSsisTaskInput(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             SsisMigrationInfo ssisMigrationInfo = default;
             SqlConnectionInfo sourceConnectionInfo = default;
             SqlConnectionInfo targetConnectionInfo = default;

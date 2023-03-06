@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
     {
         internal static CognitiveServicesPrivateEndpointConnectionListResult DeserializeCognitiveServicesPrivateEndpointConnectionListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<CognitiveServicesPrivateEndpointConnectionData>> value = default;
             foreach (var property in element.EnumerateObject())
             {

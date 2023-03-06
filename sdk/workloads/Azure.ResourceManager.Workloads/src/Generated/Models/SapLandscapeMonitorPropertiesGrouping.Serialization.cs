@@ -41,6 +41,10 @@ namespace Azure.ResourceManager.Workloads.Models
 
         internal static SapLandscapeMonitorPropertiesGrouping DeserializeSapLandscapeMonitorPropertiesGrouping(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<SapLandscapeMonitorSidMapping>> landscape = default;
             Optional<IList<SapLandscapeMonitorSidMapping>> sapApplication = default;
             foreach (var property in element.EnumerateObject())

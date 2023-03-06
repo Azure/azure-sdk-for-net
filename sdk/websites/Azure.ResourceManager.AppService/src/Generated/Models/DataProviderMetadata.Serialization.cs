@@ -26,6 +26,10 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static DataProviderMetadata DeserializeDataProviderMetadata(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> providerName = default;
             Optional<IReadOnlyList<DataProviderKeyValuePair>> propertyBag = default;
             foreach (var property in element.EnumerateObject())

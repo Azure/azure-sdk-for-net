@@ -81,6 +81,10 @@ namespace Azure.ResourceManager.Hci.Models
 
         internal static HciPrecheckResult DeserializeHciPrecheckResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<HciPrecheckResultTags> tags = default;
             Optional<string> title = default;

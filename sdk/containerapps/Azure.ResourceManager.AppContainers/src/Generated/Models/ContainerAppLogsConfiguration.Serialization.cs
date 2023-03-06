@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         internal static ContainerAppLogsConfiguration DeserializeContainerAppLogsConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> destination = default;
             Optional<ContainerAppLogAnalyticsConfiguration> logAnalyticsConfiguration = default;
             foreach (var property in element.EnumerateObject())

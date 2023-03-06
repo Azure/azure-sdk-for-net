@@ -39,6 +39,10 @@ namespace Azure.ResourceManager.Monitor.Models
 
         internal static MonitorEventHubReceiver DeserializeMonitorEventHubReceiver(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string name = default;
             string eventHubNameSpace = default;
             string eventHubName = default;

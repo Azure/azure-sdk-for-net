@@ -60,6 +60,10 @@ namespace Azure.ResourceManager.WebPubSub.Models
 
         internal static WebPubSubPrivateLink DeserializeWebPubSubPrivateLink(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;

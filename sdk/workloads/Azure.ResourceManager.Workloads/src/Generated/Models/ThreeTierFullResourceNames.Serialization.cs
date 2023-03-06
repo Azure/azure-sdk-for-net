@@ -42,6 +42,10 @@ namespace Azure.ResourceManager.Workloads.Models
 
         internal static ThreeTierFullResourceNames DeserializeThreeTierFullResourceNames(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<CentralServerFullResourceNames> centralServer = default;
             Optional<ApplicationServerFullResourceNames> applicationServer = default;
             Optional<DatabaseServerFullResourceNames> databaseServer = default;

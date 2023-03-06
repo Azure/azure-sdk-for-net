@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         internal static SecurityContactPropertiesAlertNotifications DeserializeSecurityContactPropertiesAlertNotifications(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<SecurityAlertNotificationState> state = default;
             Optional<SecurityAlertMinimalSeverity> minimalSeverity = default;
             foreach (var property in element.EnumerateObject())

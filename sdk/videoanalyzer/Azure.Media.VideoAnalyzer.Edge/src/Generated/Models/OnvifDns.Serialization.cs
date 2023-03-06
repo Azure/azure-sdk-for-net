@@ -46,6 +46,10 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
 
         internal static OnvifDns DeserializeOnvifDns(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> fromDhcp = default;
             Optional<IList<string>> ipv4Address = default;
             Optional<IList<string>> ipv6Address = default;

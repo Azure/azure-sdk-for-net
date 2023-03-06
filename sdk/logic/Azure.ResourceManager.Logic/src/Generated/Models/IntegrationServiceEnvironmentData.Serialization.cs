@@ -51,6 +51,10 @@ namespace Azure.ResourceManager.Logic
 
         internal static IntegrationServiceEnvironmentData DeserializeIntegrationServiceEnvironmentData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IntegrationServiceEnvironmentProperties> properties = default;
             Optional<IntegrationServiceEnvironmentSku> sku = default;
             Optional<ManagedServiceIdentity> identity = default;

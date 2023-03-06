@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.AppService.Models
     {
         internal static WebAppMinorVersion DeserializeWebAppMinorVersion(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> displayText = default;
             Optional<string> value = default;
             Optional<WebAppRuntimes> stackSettings = default;

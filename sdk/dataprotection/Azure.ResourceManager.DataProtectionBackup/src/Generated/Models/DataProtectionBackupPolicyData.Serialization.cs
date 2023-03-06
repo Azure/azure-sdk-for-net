@@ -27,6 +27,10 @@ namespace Azure.ResourceManager.DataProtectionBackup
 
         internal static DataProtectionBackupPolicyData DeserializeDataProtectionBackupPolicyData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DataProtectionBackupPolicyPropertiesBase> properties = default;
             ResourceIdentifier id = default;
             string name = default;

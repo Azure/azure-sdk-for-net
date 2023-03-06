@@ -151,6 +151,10 @@ namespace Azure.ResourceManager.HDInsight.Models
 
         internal static HDInsightClusterProperties DeserializeHDInsightClusterProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> clusterVersion = default;
             Optional<string> clusterHdpVersion = default;
             Optional<HDInsightOSType> osType = default;

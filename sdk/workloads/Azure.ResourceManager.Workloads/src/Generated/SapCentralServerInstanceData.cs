@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Workloads
 {
     /// <summary>
     /// A class representing the SapCentralServerInstance data model.
-    /// Define the SAP Central Server Instance.
+    /// Define the SAP Central Services Instance resource.
     /// </summary>
     public partial class SapCentralServerInstanceData : TrackedResourceData
     {

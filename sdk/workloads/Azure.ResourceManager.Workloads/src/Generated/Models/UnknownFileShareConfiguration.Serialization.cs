@@ -22,6 +22,10 @@ namespace Azure.ResourceManager.Workloads.Models
 
         internal static UnknownFileShareConfiguration DeserializeUnknownFileShareConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ConfigurationType configurationType = "Unknown";
             foreach (var property in element.EnumerateObject())
             {

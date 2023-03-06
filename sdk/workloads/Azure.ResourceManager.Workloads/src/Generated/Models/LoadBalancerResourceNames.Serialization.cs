@@ -56,6 +56,10 @@ namespace Azure.ResourceManager.Workloads.Models
 
         internal static LoadBalancerResourceNames DeserializeLoadBalancerResourceNames(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> loadBalancerName = default;
             Optional<IList<string>> frontendIPConfigurationNames = default;
             Optional<IList<string>> backendPoolNames = default;

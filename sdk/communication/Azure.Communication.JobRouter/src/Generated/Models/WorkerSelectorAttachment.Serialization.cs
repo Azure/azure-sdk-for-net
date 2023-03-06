@@ -22,6 +22,10 @@ namespace Azure.Communication.JobRouter
 
         internal static WorkerSelectorAttachment DeserializeWorkerSelectorAttachment(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             if (element.TryGetProperty("kind", out JsonElement discriminator))
             {
                 switch (discriminator.GetString())

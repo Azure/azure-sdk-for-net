@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.Workloads.Models
     {
         internal static SapLandscapeMonitorListResult DeserializeSapLandscapeMonitorListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<SapLandscapeMonitorData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

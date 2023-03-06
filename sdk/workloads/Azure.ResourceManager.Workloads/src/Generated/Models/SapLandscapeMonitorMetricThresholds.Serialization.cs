@@ -40,6 +40,10 @@ namespace Azure.ResourceManager.Workloads.Models
 
         internal static SapLandscapeMonitorMetricThresholds DeserializeSapLandscapeMonitorMetricThresholds(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<float> green = default;
             Optional<float> yellow = default;

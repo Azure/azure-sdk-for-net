@@ -160,6 +160,10 @@ namespace Azure.ResourceManager.Kusto.Models
 
         internal static KustoClusterPatch DeserializeKustoClusterPatch(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<KustoSku> sku = default;
             Optional<ManagedServiceIdentity> identity = default;
             Optional<IDictionary<string, string>> tags = default;

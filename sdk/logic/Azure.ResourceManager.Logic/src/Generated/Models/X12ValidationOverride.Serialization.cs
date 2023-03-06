@@ -34,6 +34,10 @@ namespace Azure.ResourceManager.Logic.Models
 
         internal static X12ValidationOverride DeserializeX12ValidationOverride(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string messageId = default;
             bool validateEdiTypes = default;
             bool validateXsdTypes = default;

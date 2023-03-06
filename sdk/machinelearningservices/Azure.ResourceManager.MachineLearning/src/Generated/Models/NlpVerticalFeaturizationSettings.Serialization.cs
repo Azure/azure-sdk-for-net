@@ -32,6 +32,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static NlpVerticalFeaturizationSettings DeserializeNlpVerticalFeaturizationSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> datasetLanguage = default;
             foreach (var property in element.EnumerateObject())
             {

@@ -63,6 +63,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         internal static BackendServiceFabricClusterProperties DeserializeBackendServiceFabricClusterProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> clientCertificateId = default;
             Optional<string> clientCertificatethumbprint = default;
             Optional<int> maxPartitionResolutionRetries = default;

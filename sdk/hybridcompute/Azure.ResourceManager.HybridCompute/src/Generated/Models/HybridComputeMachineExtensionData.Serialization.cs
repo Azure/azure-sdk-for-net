@@ -41,6 +41,10 @@ namespace Azure.ResourceManager.HybridCompute
 
         internal static HybridComputeMachineExtensionData DeserializeHybridComputeMachineExtensionData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<MachineExtensionProperties> properties = default;
             Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;

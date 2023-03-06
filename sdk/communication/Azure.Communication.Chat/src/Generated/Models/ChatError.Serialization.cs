@@ -15,6 +15,10 @@ namespace Azure.Communication.Chat
     {
         internal static ChatError DeserializeChatError(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string code = default;
             string message = default;
             Optional<string> target = default;

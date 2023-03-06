@@ -78,6 +78,10 @@ namespace Azure.ResourceManager.Workloads.Models
 
         internal static HanaDBProviderInstanceProperties DeserializeHanaDBProviderInstanceProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> hostname = default;
             Optional<string> dbName = default;
             Optional<string> sqlPort = default;

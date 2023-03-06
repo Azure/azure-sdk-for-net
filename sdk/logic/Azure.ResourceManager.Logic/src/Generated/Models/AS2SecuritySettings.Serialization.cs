@@ -49,6 +49,10 @@ namespace Azure.ResourceManager.Logic.Models
 
         internal static AS2SecuritySettings DeserializeAS2SecuritySettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             bool overrideGroupSigningCertificate = default;
             Optional<string> signingCertificateName = default;
             Optional<string> encryptionCertificateName = default;

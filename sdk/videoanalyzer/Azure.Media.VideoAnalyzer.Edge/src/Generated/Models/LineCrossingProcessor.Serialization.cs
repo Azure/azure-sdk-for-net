@@ -39,6 +39,10 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
 
         internal static LineCrossingProcessor DeserializeLineCrossingProcessor(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IList<NamedLineBase> lines = default;
             string type = default;
             string name = default;

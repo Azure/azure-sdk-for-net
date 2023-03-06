@@ -38,6 +38,10 @@ namespace Azure.AI.TextAnalytics.Models
 
         internal static CustomResult DeserializeCustomResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IList<DocumentError> errors = default;
             Optional<TextDocumentBatchStatistics> statistics = default;
             string projectName = default;

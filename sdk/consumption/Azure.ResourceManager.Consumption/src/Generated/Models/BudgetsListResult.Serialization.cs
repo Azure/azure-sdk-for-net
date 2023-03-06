@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.Consumption.Models
     {
         internal static BudgetsListResult DeserializeBudgetsListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<ConsumptionBudgetData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

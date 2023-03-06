@@ -15,6 +15,10 @@ namespace Azure.Communication.Chat
     {
         internal static ChatMessagesCollection DeserializeChatMessagesCollection(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IReadOnlyList<ChatMessageInternal> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

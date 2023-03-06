@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         internal static BackendTlsProperties DeserializeBackendTlsProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> validateCertificateChain = default;
             Optional<bool> validateCertificateName = default;
             foreach (var property in element.EnumerateObject())

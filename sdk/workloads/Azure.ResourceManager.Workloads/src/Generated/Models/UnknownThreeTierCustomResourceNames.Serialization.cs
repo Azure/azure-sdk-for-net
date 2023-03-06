@@ -22,6 +22,10 @@ namespace Azure.ResourceManager.Workloads.Models
 
         internal static UnknownThreeTierCustomResourceNames DeserializeUnknownThreeTierCustomResourceNames(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             NamingPatternType namingPatternType = "Unknown";
             foreach (var property in element.EnumerateObject())
             {

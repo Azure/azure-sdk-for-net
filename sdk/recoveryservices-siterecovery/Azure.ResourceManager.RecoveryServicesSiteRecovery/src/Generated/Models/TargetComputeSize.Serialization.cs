@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     {
         internal static TargetComputeSize DeserializeTargetComputeSize(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<TargetComputeSizeProperties> properties = default;
             ResourceIdentifier id = default;
             string name = default;

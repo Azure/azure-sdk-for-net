@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal static EndpointServiceResult DeserializeEndpointServiceResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<ResourceType> type = default;
             Optional<ResourceIdentifier> id = default;

@@ -61,6 +61,10 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static RampUpRule DeserializeRampUpRule(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> actionHostName = default;
             Optional<double> reroutePercentage = default;
             Optional<double> changeStep = default;

@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         internal static SamplingSettings DeserializeSamplingSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<SamplingType> samplingType = default;
             Optional<double> percentage = default;
             foreach (var property in element.EnumerateObject())

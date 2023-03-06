@@ -26,6 +26,10 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
 
         internal static NamedPolygonString DeserializeNamedPolygonString(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string polygon = default;
             string type = default;
             string name = default;

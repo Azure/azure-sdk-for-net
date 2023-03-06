@@ -95,6 +95,10 @@ namespace Azure.ResourceManager.CustomerInsights.Models
 
         internal static PropertyDefinition DeserializePropertyDefinition(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> arrayValueSeparator = default;
             Optional<IList<ProfileEnumValidValuesFormat>> enumValidValues = default;
             string fieldName = default;

@@ -48,6 +48,11 @@ namespace Azure.ResourceManager.Workloads.Models
                 foreach (var item in DataDiskNames)
                 {
                     writer.WritePropertyName(item.Key);
+                    if (item.Value == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStartArray();
                     foreach (var item0 in item.Value)
                     {
@@ -62,6 +67,10 @@ namespace Azure.ResourceManager.Workloads.Models
 
         internal static VirtualMachineResourceNames DeserializeVirtualMachineResourceNames(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> vmName = default;
             Optional<string> hostName = default;
             Optional<IList<NetworkInterfaceResourceNames>> networkInterfaces = default;
@@ -109,12 +118,19 @@ namespace Azure.ResourceManager.Workloads.Models
                     Dictionary<string, IList<string>> dictionary = new Dictionary<string, IList<string>>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        List<string> array = new List<string>();
-                        foreach (var item in property0.Value.EnumerateArray())
+                        if (property0.Value.ValueKind == JsonValueKind.Null)
                         {
-                            array.Add(item.GetString());
+                            dictionary.Add(property0.Name, null);
                         }
-                        dictionary.Add(property0.Name, array);
+                        else
+                        {
+                            List<string> array = new List<string>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(item.GetString());
+                            }
+                            dictionary.Add(property0.Name, array);
+                        }
                     }
                     dataDiskNames = dictionary;
                     continue;

@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.Workloads.Models
 
         internal static StorageConfiguration DeserializeStorageConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<FileShareConfiguration> transportFileShareConfiguration = default;
             foreach (var property in element.EnumerateObject())
             {

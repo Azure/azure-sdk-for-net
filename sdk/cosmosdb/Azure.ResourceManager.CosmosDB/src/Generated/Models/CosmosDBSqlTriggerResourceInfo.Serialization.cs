@@ -37,6 +37,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         internal static CosmosDBSqlTriggerResourceInfo DeserializeCosmosDBSqlTriggerResourceInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string id = default;
             Optional<string> body = default;
             Optional<CosmosDBSqlTriggerType> triggerType = default;

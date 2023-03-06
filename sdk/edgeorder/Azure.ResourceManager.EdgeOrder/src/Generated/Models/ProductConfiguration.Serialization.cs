@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.EdgeOrder.Models
     {
         internal static ProductConfiguration DeserializeProductConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> displayName = default;
             Optional<ProductDescription> description = default;
             Optional<IReadOnlyList<EdgeOrderProductImageInformation>> imageInformation = default;

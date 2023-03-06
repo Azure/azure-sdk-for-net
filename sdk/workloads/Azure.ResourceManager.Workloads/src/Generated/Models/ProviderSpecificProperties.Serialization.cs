@@ -22,6 +22,10 @@ namespace Azure.ResourceManager.Workloads.Models
 
         internal static ProviderSpecificProperties DeserializeProviderSpecificProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             if (element.TryGetProperty("providerType", out JsonElement discriminator))
             {
                 switch (discriminator.GetString())

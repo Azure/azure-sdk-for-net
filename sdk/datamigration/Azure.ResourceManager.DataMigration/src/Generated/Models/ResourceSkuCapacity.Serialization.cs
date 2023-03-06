@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.DataMigration.Models
     {
         internal static ResourceSkuCapacity DeserializeResourceSkuCapacity(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<long> minimum = default;
             Optional<long> maximum = default;
             Optional<long> @default = default;

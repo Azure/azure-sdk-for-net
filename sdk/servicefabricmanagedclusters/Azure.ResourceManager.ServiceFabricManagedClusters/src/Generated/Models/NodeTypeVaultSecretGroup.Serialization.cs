@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 
         internal static NodeTypeVaultSecretGroup DeserializeNodeTypeVaultSecretGroup(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             WritableSubResource sourceVault = default;
             IList<NodeTypeVaultCertificate> vaultCertificates = default;
             foreach (var property in element.EnumerateObject())

@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     {
         internal static UnknownFeatureValidationResponseBase DeserializeUnknownFeatureValidationResponseBase(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string objectType = "Unknown";
             foreach (var property in element.EnumerateObject())
             {

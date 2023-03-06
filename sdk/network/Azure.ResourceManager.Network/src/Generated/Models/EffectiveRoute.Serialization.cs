@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal static EffectiveRoute DeserializeEffectiveRoute(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<bool> disableBgpRoutePropagation = default;
             Optional<EffectiveRouteSource> source = default;

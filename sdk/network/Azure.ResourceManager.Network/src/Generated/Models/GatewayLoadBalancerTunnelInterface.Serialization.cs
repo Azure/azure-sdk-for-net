@@ -40,6 +40,10 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static GatewayLoadBalancerTunnelInterface DeserializeGatewayLoadBalancerTunnelInterface(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> port = default;
             Optional<int> identifier = default;
             Optional<GatewayLoadBalancerTunnelProtocol> protocol = default;

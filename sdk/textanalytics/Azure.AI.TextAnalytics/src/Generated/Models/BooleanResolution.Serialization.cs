@@ -25,6 +25,10 @@ namespace Azure.AI.TextAnalytics
 
         internal static BooleanResolution DeserializeBooleanResolution(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             bool value = default;
             ResolutionKind resolutionKind = default;
             foreach (var property in element.EnumerateObject())

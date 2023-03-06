@@ -53,6 +53,10 @@ namespace Azure.ResourceManager.Workloads.Models
 
         internal static PrometheusHAClusterProviderInstanceProperties DeserializePrometheusHAClusterProviderInstanceProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<Uri> prometheusUrl = default;
             Optional<string> hostname = default;
             Optional<string> sid = default;

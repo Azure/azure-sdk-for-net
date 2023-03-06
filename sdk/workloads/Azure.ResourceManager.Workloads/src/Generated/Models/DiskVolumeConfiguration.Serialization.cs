@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.Workloads.Models
 
         internal static DiskVolumeConfiguration DeserializeDiskVolumeConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<long> count = default;
             Optional<long> sizeGB = default;
             Optional<DiskSku> sku = default;

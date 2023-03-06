@@ -36,6 +36,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         internal static BekDetails DeserializeBekDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<Uri> secretUrl = default;
             Optional<ResourceIdentifier> secretVaultId = default;
             Optional<string> secretData = default;

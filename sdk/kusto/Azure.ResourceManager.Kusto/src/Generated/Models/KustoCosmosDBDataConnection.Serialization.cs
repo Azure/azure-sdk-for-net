@@ -67,6 +67,10 @@ namespace Azure.ResourceManager.Kusto.Models
 
         internal static KustoCosmosDBDataConnection DeserializeKustoCosmosDBDataConnection(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<AzureLocation> location = default;
             DataConnectionKind kind = default;
             ResourceIdentifier id = default;

@@ -14,6 +14,10 @@ namespace Azure.AI.TextAnalytics.Models
     {
         internal static DynamicClassificationTaskResult DeserializeDynamicClassificationTaskResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             DynamicClassificationResult results = default;
             AnalyzeTextTaskResultsKind kind = default;
             foreach (var property in element.EnumerateObject())

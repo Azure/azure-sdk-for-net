@@ -26,6 +26,10 @@ namespace Azure.ResourceManager.Workloads.Models
 
         internal static MountFileShareConfiguration DeserializeMountFileShareConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string id = default;
             string privateEndpointId = default;
             ConfigurationType configurationType = default;

@@ -71,6 +71,10 @@ namespace Azure.ResourceManager.Logic.Models
 
         internal static LogicWorkflowRecurrenceSchedule DeserializeLogicWorkflowRecurrenceSchedule(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<int>> minutes = default;
             Optional<IList<int>> hours = default;
             Optional<IList<LogicWorkflowDayOfWeek>> weekDays = default;

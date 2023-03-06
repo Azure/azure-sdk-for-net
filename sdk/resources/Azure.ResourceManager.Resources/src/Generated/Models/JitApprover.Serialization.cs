@@ -32,6 +32,10 @@ namespace Azure.ResourceManager.Resources.Models
 
         internal static JitApprover DeserializeJitApprover(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string id = default;
             Optional<JitApproverType> type = default;
             Optional<string> displayName = default;

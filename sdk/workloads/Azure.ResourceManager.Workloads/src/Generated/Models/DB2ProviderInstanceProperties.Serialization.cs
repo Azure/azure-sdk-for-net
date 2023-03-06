@@ -68,6 +68,10 @@ namespace Azure.ResourceManager.Workloads.Models
 
         internal static DB2ProviderInstanceProperties DeserializeDB2ProviderInstanceProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> hostname = default;
             Optional<string> dbName = default;
             Optional<string> dbPort = default;

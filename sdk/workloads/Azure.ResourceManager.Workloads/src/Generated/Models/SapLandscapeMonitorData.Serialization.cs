@@ -41,6 +41,10 @@ namespace Azure.ResourceManager.Workloads
 
         internal static SapLandscapeMonitorData DeserializeSapLandscapeMonitorData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;

@@ -48,6 +48,10 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
 
         internal static DataBoxEdgeMetricCounter DeserializeDataBoxEdgeMetricCounter(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string name = default;
             Optional<string> instance = default;
             Optional<IList<DataBoxEdgeMetricDimension>> dimensionFilter = default;

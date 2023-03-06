@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal static AvailablePrivateEndpointTypesResult DeserializeAvailablePrivateEndpointTypesResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<AvailablePrivateEndpointType>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

@@ -27,6 +27,10 @@ namespace Azure.ResourceManager.Workloads.Models
 
         internal static ExternalInstallationSoftwareConfiguration DeserializeExternalInstallationSoftwareConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> centralServerVmId = default;
             SapSoftwareInstallationType softwareInstallationType = default;
             foreach (var property in element.EnumerateObject())

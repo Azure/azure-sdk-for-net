@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Workloads
 {
     /// <summary>
     /// A class representing the SapVirtualInstance data model.
-    /// Define the Virtual Instance for SAP.
+    /// Define the Virtual Instance for SAP solutions resource.
     /// </summary>
     public partial class SapVirtualInstanceData : TrackedResourceData
     {

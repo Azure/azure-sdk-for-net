@@ -40,6 +40,10 @@ namespace Azure.ResourceManager.DevCenter.Models
 
         internal static ImageReference DeserializeImageReference(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> id = default;
             Optional<string> exactVersion = default;
             Optional<string> publisher = default;

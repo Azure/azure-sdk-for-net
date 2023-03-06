@@ -27,6 +27,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static AzPowerShellSetup DeserializeAzPowerShellSetup(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string type = default;
             string version = default;
             foreach (var property in element.EnumerateObject())

@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.BotService.Models
     {
         internal static CheckNameAvailabilityResponseBody DeserializeCheckNameAvailabilityResponseBody(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> valid = default;
             Optional<string> message = default;
             foreach (var property in element.EnumerateObject())

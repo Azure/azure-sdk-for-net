@@ -29,6 +29,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         internal static RecipientEmailContract DeserializeRecipientEmailContract(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;

@@ -22,6 +22,10 @@ namespace Azure.ResourceManager.Workloads.Models
 
         internal static ThreeTierCustomResourceNames DeserializeThreeTierCustomResourceNames(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             if (element.TryGetProperty("namingPatternType", out JsonElement discriminator))
             {
                 switch (discriminator.GetString())

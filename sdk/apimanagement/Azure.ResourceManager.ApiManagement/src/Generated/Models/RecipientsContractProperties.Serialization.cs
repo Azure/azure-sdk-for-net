@@ -41,6 +41,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         internal static RecipientsContractProperties DeserializeRecipientsContractProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<string>> emails = default;
             Optional<IList<string>> users = default;
             foreach (var property in element.EnumerateObject())

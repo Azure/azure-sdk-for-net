@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
     {
         internal static PrivateEndpointConnectionProxyListResult DeserializePrivateEndpointConnectionProxyListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<PrivateEndpointConnectionProxyData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

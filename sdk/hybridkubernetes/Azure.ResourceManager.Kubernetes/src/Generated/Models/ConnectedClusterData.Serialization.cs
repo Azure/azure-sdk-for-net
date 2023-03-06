@@ -68,6 +68,10 @@ namespace Azure.ResourceManager.Kubernetes
 
         internal static ConnectedClusterData DeserializeConnectedClusterData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ManagedServiceIdentity identity = default;
             Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;

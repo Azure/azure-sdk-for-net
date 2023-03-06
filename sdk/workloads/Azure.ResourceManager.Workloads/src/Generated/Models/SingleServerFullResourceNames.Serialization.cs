@@ -27,6 +27,10 @@ namespace Azure.ResourceManager.Workloads.Models
 
         internal static SingleServerFullResourceNames DeserializeSingleServerFullResourceNames(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<VirtualMachineResourceNames> virtualMachine = default;
             NamingPatternType namingPatternType = default;
             foreach (var property in element.EnumerateObject())

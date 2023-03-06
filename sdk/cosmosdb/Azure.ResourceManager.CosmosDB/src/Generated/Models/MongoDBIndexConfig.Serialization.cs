@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         internal static MongoDBIndexConfig DeserializeMongoDBIndexConfig(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> expireAfterSeconds = default;
             Optional<bool> unique = default;
             foreach (var property in element.EnumerateObject())

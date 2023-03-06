@@ -32,6 +32,10 @@ namespace Azure.ResourceManager.Workloads.Models
 
         internal static CreateAndMountFileShareConfiguration DeserializeCreateAndMountFileShareConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> resourceGroup = default;
             Optional<string> storageAccountName = default;
             ConfigurationType configurationType = default;

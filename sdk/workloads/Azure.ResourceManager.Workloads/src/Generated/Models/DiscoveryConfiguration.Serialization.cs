@@ -32,6 +32,10 @@ namespace Azure.ResourceManager.Workloads.Models
 
         internal static DiscoveryConfiguration DeserializeDiscoveryConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> centralServerVmId = default;
             Optional<string> managedRgStorageAccountName = default;
             Optional<AzureLocation> appLocation = default;

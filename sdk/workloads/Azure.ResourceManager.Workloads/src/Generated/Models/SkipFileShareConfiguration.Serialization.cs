@@ -22,6 +22,10 @@ namespace Azure.ResourceManager.Workloads.Models
 
         internal static SkipFileShareConfiguration DeserializeSkipFileShareConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ConfigurationType configurationType = default;
             foreach (var property in element.EnumerateObject())
             {

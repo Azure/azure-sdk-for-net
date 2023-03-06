@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     {
         internal static ThreatIntelligenceMetricsList DeserializeThreatIntelligenceMetricsList(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IReadOnlyList<ThreatIntelligenceMetrics> value = default;
             foreach (var property in element.EnumerateObject())
             {

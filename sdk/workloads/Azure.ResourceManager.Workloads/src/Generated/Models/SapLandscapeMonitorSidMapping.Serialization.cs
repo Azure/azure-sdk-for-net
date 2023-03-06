@@ -36,6 +36,10 @@ namespace Azure.ResourceManager.Workloads.Models
 
         internal static SapLandscapeMonitorSidMapping DeserializeSapLandscapeMonitorSidMapping(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<IList<string>> topSid = default;
             foreach (var property in element.EnumerateObject())

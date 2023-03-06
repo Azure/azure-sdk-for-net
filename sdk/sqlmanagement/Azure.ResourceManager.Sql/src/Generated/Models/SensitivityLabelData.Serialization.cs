@@ -50,6 +50,10 @@ namespace Azure.ResourceManager.Sql
 
         internal static SensitivityLabelData DeserializeSensitivityLabelData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> managedBy = default;
             ResourceIdentifier id = default;
             string name = default;

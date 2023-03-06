@@ -68,6 +68,10 @@ namespace Azure.ResourceManager.OperationalInsights
 
         internal static StorageInsightData DeserializeStorageInsightData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ETag> eTag = default;
             Optional<IDictionary<string, string>> tags = default;
             ResourceIdentifier id = default;

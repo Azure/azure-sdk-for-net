@@ -34,6 +34,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static MachineLearningCertificateDatastoreSecrets DeserializeMachineLearningCertificateDatastoreSecrets(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> certificate = default;
             SecretsType secretsType = default;
             foreach (var property in element.EnumerateObject())

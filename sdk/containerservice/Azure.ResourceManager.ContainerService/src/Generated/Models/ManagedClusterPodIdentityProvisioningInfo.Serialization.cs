@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.ContainerService.Models
     {
         internal static ManagedClusterPodIdentityProvisioningInfo DeserializeManagedClusterPodIdentityProvisioningInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ManagedClusterPodIdentityProvisioningError> error = default;
             foreach (var property in element.EnumerateObject())
             {

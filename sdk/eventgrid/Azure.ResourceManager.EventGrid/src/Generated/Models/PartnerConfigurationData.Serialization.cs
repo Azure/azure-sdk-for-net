@@ -49,6 +49,10 @@ namespace Azure.ResourceManager.EventGrid
 
         internal static PartnerConfigurationData DeserializePartnerConfigurationData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;

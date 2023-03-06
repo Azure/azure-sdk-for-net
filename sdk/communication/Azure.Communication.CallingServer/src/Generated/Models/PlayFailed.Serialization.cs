@@ -14,6 +14,10 @@ namespace Azure.Communication.CallingServer
     {
         internal static PlayFailed DeserializePlayFailed(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> eventSource = default;
             Optional<string> operationContext = default;
             Optional<ResultInformation> resultInformation = default;

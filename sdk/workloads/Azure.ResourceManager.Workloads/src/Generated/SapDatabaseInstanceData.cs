@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Workloads
 {
     /// <summary>
     /// A class representing the SapDatabaseInstance data model.
-    /// Define the SAP Database Instance.
+    /// Define the Database resource.
     /// </summary>
     public partial class SapDatabaseInstanceData : TrackedResourceData
     {

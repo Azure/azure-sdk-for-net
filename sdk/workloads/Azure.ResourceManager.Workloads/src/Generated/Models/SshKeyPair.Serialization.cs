@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.Workloads.Models
 
         internal static SshKeyPair DeserializeSshKeyPair(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> publicKey = default;
             Optional<string> privateKey = default;
             foreach (var property in element.EnumerateObject())

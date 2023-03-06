@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static VirtualApplianceSkuProperties DeserializeVirtualApplianceSkuProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> vendor = default;
             Optional<string> bundledScaleUnit = default;
             Optional<string> marketPlaceVersion = default;

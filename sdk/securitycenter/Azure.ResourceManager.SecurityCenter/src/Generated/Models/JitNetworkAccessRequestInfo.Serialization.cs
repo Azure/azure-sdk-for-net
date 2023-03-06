@@ -38,6 +38,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         internal static JitNetworkAccessRequestInfo DeserializeJitNetworkAccessRequestInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IList<JitNetworkAccessRequestVirtualMachine> virtualMachines = default;
             DateTimeOffset startTimeUtc = default;
             string requestor = default;

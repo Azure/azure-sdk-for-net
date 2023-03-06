@@ -45,6 +45,10 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         internal static ContainerAppAvailableWorkloadProfileProperties DeserializeContainerAppAvailableWorkloadProfileProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ContainerAppBillingMeterCategory> billingMeterCategory = default;
             Optional<ContainerAppAvailableWorkloadProfileApplicability> applicability = default;
             Optional<int> cores = default;

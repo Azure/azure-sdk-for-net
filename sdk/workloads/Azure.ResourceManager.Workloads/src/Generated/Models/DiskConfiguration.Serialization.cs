@@ -32,6 +32,10 @@ namespace Azure.ResourceManager.Workloads.Models
 
         internal static DiskConfiguration DeserializeDiskConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IDictionary<string, DiskVolumeConfiguration>> diskVolumeConfigurations = default;
             foreach (var property in element.EnumerateObject())
             {

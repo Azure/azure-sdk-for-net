@@ -39,6 +39,10 @@ namespace Azure.Search.Documents.Indexes.Models
 
         internal static MicrosoftLanguageStemmingTokenizer DeserializeMicrosoftLanguageStemmingTokenizer(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> maxTokenLength = default;
             Optional<bool> isSearchTokenizer = default;
             Optional<MicrosoftStemmingTokenizerLanguage> language = default;

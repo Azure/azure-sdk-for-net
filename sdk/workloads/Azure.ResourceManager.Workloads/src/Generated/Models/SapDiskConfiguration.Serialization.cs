@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Workloads.Models
     {
         internal static SapDiskConfiguration DeserializeSapDiskConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DiskVolumeConfiguration> recommendedConfiguration = default;
             Optional<IReadOnlyList<SupportedConfigurationsDiskDetails>> supportedConfigurations = default;
             foreach (var property in element.EnumerateObject())

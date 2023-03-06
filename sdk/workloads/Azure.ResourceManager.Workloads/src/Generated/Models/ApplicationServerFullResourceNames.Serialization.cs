@@ -36,6 +36,10 @@ namespace Azure.ResourceManager.Workloads.Models
 
         internal static ApplicationServerFullResourceNames DeserializeApplicationServerFullResourceNames(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<VirtualMachineResourceNames>> virtualMachines = default;
             Optional<string> availabilitySetName = default;
             foreach (var property in element.EnumerateObject())

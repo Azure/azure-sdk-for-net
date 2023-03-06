@@ -27,6 +27,10 @@ namespace Azure.ResourceManager.Search
 
         internal static SearchPrivateEndpointConnectionData DeserializeSearchPrivateEndpointConnectionData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<SearchServicePrivateEndpointConnectionProperties> properties = default;
             ResourceIdentifier id = default;
             string name = default;

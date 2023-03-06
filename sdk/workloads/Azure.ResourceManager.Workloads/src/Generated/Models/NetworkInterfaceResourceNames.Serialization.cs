@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.Workloads.Models
 
         internal static NetworkInterfaceResourceNames DeserializeNetworkInterfaceResourceNames(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> networkInterfaceName = default;
             foreach (var property in element.EnumerateObject())
             {

@@ -43,6 +43,10 @@ namespace Azure.ResourceManager.WebPubSub.Models
 
         internal static PrivateEndpointAcl DeserializePrivateEndpointAcl(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string name = default;
             Optional<IList<WebPubSubRequestType>> allow = default;
             Optional<IList<WebPubSubRequestType>> deny = default;

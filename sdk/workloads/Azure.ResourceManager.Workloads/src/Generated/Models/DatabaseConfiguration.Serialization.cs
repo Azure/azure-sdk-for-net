@@ -36,6 +36,10 @@ namespace Azure.ResourceManager.Workloads.Models
 
         internal static DatabaseConfiguration DeserializeDatabaseConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<SapDatabaseType> databaseType = default;
             ResourceIdentifier subnetId = default;
             VirtualMachineConfiguration virtualMachineConfiguration = default;

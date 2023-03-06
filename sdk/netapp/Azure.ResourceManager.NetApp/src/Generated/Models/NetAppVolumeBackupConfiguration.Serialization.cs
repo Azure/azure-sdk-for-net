@@ -40,6 +40,10 @@ namespace Azure.ResourceManager.NetApp.Models
 
         internal static NetAppVolumeBackupConfiguration DeserializeNetAppVolumeBackupConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ResourceIdentifier> backupPolicyId = default;
             Optional<bool> policyEnforced = default;
             Optional<ResourceIdentifier> vaultId = default;

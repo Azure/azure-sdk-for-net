@@ -75,6 +75,10 @@ namespace Azure.ResourceManager.Workloads
 
         internal static SapMonitorData DeserializeSapMonitorData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<UserAssignedServiceIdentity> identity = default;
             Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;

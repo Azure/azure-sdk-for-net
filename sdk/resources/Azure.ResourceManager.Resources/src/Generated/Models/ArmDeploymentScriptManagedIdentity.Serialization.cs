@@ -39,6 +39,10 @@ namespace Azure.ResourceManager.Resources.Models
 
         internal static ArmDeploymentScriptManagedIdentity DeserializeArmDeploymentScriptManagedIdentity(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ArmDeploymentScriptManagedIdentityType> type = default;
             Optional<Guid> tenantId = default;
             Optional<IDictionary<string, UserAssignedIdentity>> userAssignedIdentities = default;

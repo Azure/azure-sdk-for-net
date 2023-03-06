@@ -54,6 +54,10 @@ namespace Azure.ResourceManager.ArcScVmm
 
         internal static ScVmmAvailabilitySetData DeserializeScVmmAvailabilitySetData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ExtendedLocation> extendedLocation = default;
             Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;

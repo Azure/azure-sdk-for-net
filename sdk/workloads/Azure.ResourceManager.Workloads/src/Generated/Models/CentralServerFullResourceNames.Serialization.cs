@@ -41,6 +41,10 @@ namespace Azure.ResourceManager.Workloads.Models
 
         internal static CentralServerFullResourceNames DeserializeCentralServerFullResourceNames(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<VirtualMachineResourceNames>> virtualMachines = default;
             Optional<string> availabilitySetName = default;
             Optional<LoadBalancerResourceNames> loadBalancer = default;

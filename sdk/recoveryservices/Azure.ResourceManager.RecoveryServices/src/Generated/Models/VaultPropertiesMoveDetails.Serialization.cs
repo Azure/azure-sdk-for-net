@@ -21,6 +21,10 @@ namespace Azure.ResourceManager.RecoveryServices.Models
 
         internal static VaultPropertiesMoveDetails DeserializeVaultPropertiesMoveDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> operationId = default;
             Optional<DateTimeOffset> startTimeUtc = default;
             Optional<DateTimeOffset> completionTimeUtc = default;

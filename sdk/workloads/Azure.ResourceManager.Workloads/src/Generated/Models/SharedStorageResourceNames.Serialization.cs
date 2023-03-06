@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.Workloads.Models
 
         internal static SharedStorageResourceNames DeserializeSharedStorageResourceNames(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> sharedStorageAccountName = default;
             Optional<string> sharedStorageAccountPrivateEndPointName = default;
             foreach (var property in element.EnumerateObject())

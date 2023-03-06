@@ -36,6 +36,10 @@ namespace Azure.ResourceManager.AppPlatform.Models
 
         internal static AppPlatformServiceProperties DeserializeAppPlatformServiceProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<AppPlatformServiceProvisioningState> provisioningState = default;
             Optional<AppPlatformServiceNetworkProfile> networkProfile = default;
             Optional<ServiceVnetAddons> vnetAddons = default;

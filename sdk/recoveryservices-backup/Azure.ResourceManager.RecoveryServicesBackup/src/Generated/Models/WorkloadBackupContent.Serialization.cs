@@ -38,6 +38,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         internal static WorkloadBackupContent DeserializeWorkloadBackupContent(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<BackupType> backupType = default;
             Optional<bool> enableCompression = default;
             Optional<DateTimeOffset> recoveryPointExpiryTimeInUTC = default;

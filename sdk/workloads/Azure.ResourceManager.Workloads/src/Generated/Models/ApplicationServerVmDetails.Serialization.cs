@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.Workloads.Models
     {
         internal static ApplicationServerVmDetails DeserializeApplicationServerVmDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ApplicationServerVirtualMachineType> type = default;
             Optional<ResourceIdentifier> virtualMachineId = default;
             Optional<IReadOnlyList<SubResource>> storageDetails = default;

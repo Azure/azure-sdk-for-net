@@ -36,6 +36,10 @@ namespace Azure.ResourceManager.Workloads
 
         internal static SapProviderInstanceData DeserializeSapProviderInstanceData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<UserAssignedServiceIdentity> identity = default;
             ResourceIdentifier id = default;
             string name = default;

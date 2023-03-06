@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 
         internal static PostgreSqlFlexibleServerNetwork DeserializePostgreSqlFlexibleServerNetwork(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<PostgreSqlFlexibleServerPublicNetworkAccessState> publicNetworkAccess = default;
             Optional<ResourceIdentifier> delegatedSubnetResourceId = default;
             Optional<ResourceIdentifier> privateDnsZoneArmResourceId = default;

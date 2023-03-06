@@ -28,6 +28,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static CustomerManagedKeyDetails DeserializeCustomerManagedKeyDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> status = default;
             Optional<WorkspaceKeyDetails> key = default;
             foreach (var property in element.EnumerateObject())

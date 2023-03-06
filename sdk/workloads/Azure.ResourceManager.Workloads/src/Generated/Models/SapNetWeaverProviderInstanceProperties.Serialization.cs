@@ -84,6 +84,10 @@ namespace Azure.ResourceManager.Workloads.Models
 
         internal static SapNetWeaverProviderInstanceProperties DeserializeSapNetWeaverProviderInstanceProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> sapSid = default;
             Optional<string> sapHostname = default;
             Optional<string> sapInstanceNr = default;

@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.EventHubs.Models
     {
         internal static EventHubsNspAccessRule DeserializeEventHubsNspAccessRule(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<EventHubsNspAccessRuleProperties> properties = default;
             ResourceIdentifier id = default;
             string name = default;

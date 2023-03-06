@@ -38,6 +38,10 @@ namespace Azure.Communication.MediaComposition
 
         internal static UnknownLayout DeserializeUnknownLayout(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             LayoutType kind = "Unknown";
             Optional<LayoutResolution> resolution = default;
             Optional<string> placeholderImageUri = default;

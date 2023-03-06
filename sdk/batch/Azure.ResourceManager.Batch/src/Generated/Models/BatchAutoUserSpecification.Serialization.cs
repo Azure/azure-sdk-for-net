@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.Batch.Models
 
         internal static BatchAutoUserSpecification DeserializeBatchAutoUserSpecification(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<BatchAutoUserScope> scope = default;
             Optional<BatchUserAccountElevationLevel> elevationLevel = default;
             foreach (var property in element.EnumerateObject())
