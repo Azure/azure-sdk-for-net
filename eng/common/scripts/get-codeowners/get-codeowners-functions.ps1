@@ -82,11 +82,15 @@ function Get-Codeowners(
   [string] $DevOpsFeed = "https://pkgs.dev.azure.com/azure-sdk/public/_packaging/azure-sdk-for-net/nuget/v3/index.json",
   [string] $ToolVersion = "1.0.0-dev.20230306.3",
   [string] $VsoVariable = "",
-  # The default path assumes the script is located in azure-sdk-tools/eng/common/scripts/get-codeowners/get-codeowners.ps1
-  [string] $CodeownersFileLocation = (Resolve-Path $PSScriptRoot/../../../../.github/CODEOWNERS),
+  [string] $CodeownersFileLocation = $null,
   [bool] $IncludeNonUserAliases = $false
   )
 {
+  if ($null -eq $CodeownersFileLocation) {
+    # The default path assumes the script is located in azure-sdk-tools/eng/common/scripts/get-codeowners/get-codeowners.ps1
+    $CodeOwnersFileLocation = (Resolve-Path $PSScriptRoot/../../../../.github/CODEOWNERS)
+  }
+
   # Backward compaitiblity: if $TargetPath is not provided, fall-back to the legacy $TargetDirectory
   if ([string]::IsNullOrWhiteSpace($TargetPath)) {
     $TargetPath = $TargetDirectory
