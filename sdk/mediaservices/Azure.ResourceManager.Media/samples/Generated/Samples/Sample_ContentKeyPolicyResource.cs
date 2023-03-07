@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Media.Samples
             // this example assumes you already have this ContentKeyPolicyResource created on azure
             // for more information of creating ContentKeyPolicyResource, please refer to the document of ContentKeyPolicyResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            string resourceGroupName = "contoso";
+            string resourceGroupName = "contosorg";
             string accountName = "contosomedia";
             string contentKeyPolicyName = "PolicyWithMultipleOptions";
             ResourceIdentifier contentKeyPolicyResourceId = ContentKeyPolicyResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName, contentKeyPolicyName);
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Media.Samples
             // this example assumes you already have this ContentKeyPolicyResource created on azure
             // for more information of creating ContentKeyPolicyResource, please refer to the document of ContentKeyPolicyResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            string resourceGroupName = "contoso";
+            string resourceGroupName = "contosorg";
             string accountName = "contosomedia";
             string contentKeyPolicyName = "PolicyWithPlayReadyOptionAndOpenRestriction";
             ResourceIdentifier contentKeyPolicyResourceId = ContentKeyPolicyResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName, contentKeyPolicyName);
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Media.Samples
             // this example assumes you already have this ContentKeyPolicyResource created on azure
             // for more information of creating ContentKeyPolicyResource, please refer to the document of ContentKeyPolicyResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            string resourceGroupName = "contoso";
+            string resourceGroupName = "contosorg";
             string accountName = "contosomedia";
             string contentKeyPolicyName = "PolicyWithClearKeyOptionAndTokenRestriction";
             ResourceIdentifier contentKeyPolicyResourceId = ContentKeyPolicyResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName, contentKeyPolicyName);
@@ -137,7 +137,7 @@ Name = "ClearKeyOption",
             // this example assumes you already have this ContentKeyPolicyResource created on azure
             // for more information of creating ContentKeyPolicyResource, please refer to the document of ContentKeyPolicyResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            string resourceGroupName = "contoso";
+            string resourceGroupName = "contosorg";
             string accountName = "contosomedia";
             string contentKeyPolicyName = "PolicyWithMultipleOptions";
             ResourceIdentifier contentKeyPolicyResourceId = ContentKeyPolicyResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName, contentKeyPolicyName);

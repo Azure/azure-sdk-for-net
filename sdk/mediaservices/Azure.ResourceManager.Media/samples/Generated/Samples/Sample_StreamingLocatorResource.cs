@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Media.Samples
             // this example assumes you already have this StreamingLocatorResource created on azure
             // for more information of creating StreamingLocatorResource, please refer to the document of StreamingLocatorResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            string resourceGroupName = "contoso";
+            string resourceGroupName = "contosorg";
             string accountName = "contosomedia";
             string streamingLocatorName = "clearStreamingLocator";
             ResourceIdentifier streamingLocatorResourceId = StreamingLocatorResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName, streamingLocatorName);
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Media.Samples
             // this example assumes you already have this StreamingLocatorResource created on azure
             // for more information of creating StreamingLocatorResource, please refer to the document of StreamingLocatorResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            string resourceGroupName = "contoso";
+            string resourceGroupName = "contosorg";
             string accountName = "contosomedia";
             string streamingLocatorName = "UserCreatedClearStreamingLocator";
             ResourceIdentifier streamingLocatorResourceId = StreamingLocatorResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName, streamingLocatorName);
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Media.Samples
             // this example assumes you already have this StreamingLocatorResource created on azure
             // for more information of creating StreamingLocatorResource, please refer to the document of StreamingLocatorResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            string resourceGroupName = "contoso";
+            string resourceGroupName = "contosorg";
             string accountName = "contosomedia";
             string streamingLocatorName = "UserCreatedSecureStreamingLocator";
             ResourceIdentifier streamingLocatorResourceId = StreamingLocatorResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName, streamingLocatorName);
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Media.Samples
                 AssetName = "ClimbingMountRainier",
                 StartOn = DateTimeOffset.Parse("2018-03-01T00:00:00Z"),
                 EndOn = DateTimeOffset.Parse("2028-12-31T23:59:59.9999999Z"),
-                StreamingPolicyName = "secureStreamingPolicy",
+                StreamingPolicyName = "UserCreatedSecureStreamingPolicy",
             };
             ArmOperation<StreamingLocatorResource> lro = await streamingLocator.UpdateAsync(WaitUntil.Completed, data);
             StreamingLocatorResource result = lro.Value;
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.Media.Samples
             // this example assumes you already have this StreamingLocatorResource created on azure
             // for more information of creating StreamingLocatorResource, please refer to the document of StreamingLocatorResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            string resourceGroupName = "contoso";
+            string resourceGroupName = "contosorg";
             string accountName = "contosomedia";
             string streamingLocatorName = "UserCreatedSecureStreamingLocatorWithUserDefinedContentKeys";
             ResourceIdentifier streamingLocatorResourceId = StreamingLocatorResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName, streamingLocatorName);
@@ -199,7 +199,7 @@ Value = "7UqLohAfWsEGkULYxHjYZg==",
             // this example assumes you already have this StreamingLocatorResource created on azure
             // for more information of creating StreamingLocatorResource, please refer to the document of StreamingLocatorResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            string resourceGroupName = "contoso";
+            string resourceGroupName = "contosorg";
             string accountName = "contosomedia";
             string streamingLocatorName = "clearStreamingLocator";
             ResourceIdentifier streamingLocatorResourceId = StreamingLocatorResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName, streamingLocatorName);
@@ -227,7 +227,7 @@ Value = "7UqLohAfWsEGkULYxHjYZg==",
             // this example assumes you already have this StreamingLocatorResource created on azure
             // for more information of creating StreamingLocatorResource, please refer to the document of StreamingLocatorResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            string resourceGroupName = "contoso";
+            string resourceGroupName = "contosorg";
             string accountName = "contosomedia";
             string streamingLocatorName = "secureStreamingLocator";
             ResourceIdentifier streamingLocatorResourceId = StreamingLocatorResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName, streamingLocatorName);
@@ -258,7 +258,7 @@ Value = "7UqLohAfWsEGkULYxHjYZg==",
             // this example assumes you already have this StreamingLocatorResource created on azure
             // for more information of creating StreamingLocatorResource, please refer to the document of StreamingLocatorResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            string resourceGroupName = "contoso";
+            string resourceGroupName = "contosorg";
             string accountName = "contosomedia";
             string streamingLocatorName = "clearStreamingLocator";
             ResourceIdentifier streamingLocatorResourceId = StreamingLocatorResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName, streamingLocatorName);
@@ -286,7 +286,7 @@ Value = "7UqLohAfWsEGkULYxHjYZg==",
             // this example assumes you already have this StreamingLocatorResource created on azure
             // for more information of creating StreamingLocatorResource, please refer to the document of StreamingLocatorResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            string resourceGroupName = "contoso";
+            string resourceGroupName = "contosorg";
             string accountName = "contosomedia";
             string streamingLocatorName = "secureStreamingLocator";
             ResourceIdentifier streamingLocatorResourceId = StreamingLocatorResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName, streamingLocatorName);

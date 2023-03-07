@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Media.Samples
             // this example assumes you already have this MediaAssetFilterResource created on azure
             // for more information of creating MediaAssetFilterResource, please refer to the document of MediaAssetFilterResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            string resourceGroupName = "contoso";
+            string resourceGroupName = "contosorg";
             string accountName = "contosomedia";
             string assetName = "ClimbingMountRainer";
             string filterName = "assetFilterWithTimeWindowAndTrack";
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Media.Samples
             // this example assumes you already have this MediaAssetFilterResource created on azure
             // for more information of creating MediaAssetFilterResource, please refer to the document of MediaAssetFilterResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            string resourceGroupName = "contoso";
+            string resourceGroupName = "contosorg";
             string accountName = "contosomedia";
             string assetName = "ClimbingMountRainer";
             string filterName = "assetFilterWithTimeWindowAndTrack";
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Media.Samples
             // this example assumes you already have this MediaAssetFilterResource created on azure
             // for more information of creating MediaAssetFilterResource, please refer to the document of MediaAssetFilterResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            string resourceGroupName = "contoso";
+            string resourceGroupName = "contosorg";
             string accountName = "contosomedia";
             string assetName = "ClimbingMountRainer";
             string filterName = "assetFilterWithTimeWindowAndTrack";

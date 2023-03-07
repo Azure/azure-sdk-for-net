@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Media.Samples
             // this example assumes you already have this MediaAssetResource created on azure
             // for more information of creating MediaAssetResource, please refer to the document of MediaAssetResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            string resourceGroupName = "contoso";
+            string resourceGroupName = "contosorg";
             string accountName = "contosomedia";
             string assetName = "ClimbingMountRainer";
             ResourceIdentifier mediaAssetResourceId = MediaAssetResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName, assetName);
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Media.Samples
             // this example assumes you already have this MediaAssetResource created on azure
             // for more information of creating MediaAssetResource, please refer to the document of MediaAssetResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            string resourceGroupName = "contoso";
+            string resourceGroupName = "contosorg";
             string accountName = "contosomedia";
             string assetName = "ClimbingMountRainer";
             ResourceIdentifier mediaAssetResourceId = MediaAssetResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName, assetName);
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Media.Samples
             // this example assumes you already have this MediaAssetResource created on azure
             // for more information of creating MediaAssetResource, please refer to the document of MediaAssetResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            string resourceGroupName = "contoso";
+            string resourceGroupName = "contosorg";
             string accountName = "contosomedia";
             string assetName = "ClimbingMountRainer";
             ResourceIdentifier mediaAssetResourceId = MediaAssetResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName, assetName);
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.Media.Samples
             // this example assumes you already have this MediaAssetResource created on azure
             // for more information of creating MediaAssetResource, please refer to the document of MediaAssetResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            string resourceGroupName = "contoso";
+            string resourceGroupName = "contosorg";
             string accountName = "contosomedia";
             string assetName = "ClimbingMountRainer";
             ResourceIdentifier mediaAssetResourceId = MediaAssetResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName, assetName);

@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Media.Samples
             // this example assumes you already have this StreamingPolicyResource created on azure
             // for more information of creating StreamingPolicyResource, please refer to the document of StreamingPolicyResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            string resourceGroupName = "contoso";
+            string resourceGroupName = "contosorg";
             string accountName = "contosomedia";
             string streamingPolicyName = "clearStreamingPolicy";
             ResourceIdentifier streamingPolicyResourceId = StreamingPolicyResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName, streamingPolicyName);
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Media.Samples
             // this example assumes you already have this StreamingPolicyResource created on azure
             // for more information of creating StreamingPolicyResource, please refer to the document of StreamingPolicyResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            string resourceGroupName = "contoso";
+            string resourceGroupName = "contosorg";
             string accountName = "contosomedia";
             string streamingPolicyName = "UserCreatedSecureStreamingPolicyWithCommonEncryptionCbcsOnly";
             ResourceIdentifier streamingPolicyResourceId = StreamingPolicyResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName, streamingPolicyName);
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.Media.Samples
             // this example assumes you already have this StreamingPolicyResource created on azure
             // for more information of creating StreamingPolicyResource, please refer to the document of StreamingPolicyResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            string resourceGroupName = "contoso";
+            string resourceGroupName = "contosorg";
             string accountName = "contosomedia";
             string streamingPolicyName = "UserCreatedSecureStreamingPolicyWithCommonEncryptionCencOnly";
             ResourceIdentifier streamingPolicyResourceId = StreamingPolicyResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName, streamingPolicyName);
@@ -177,9 +177,9 @@ Value = "hev1",
             // this example assumes you already have this StreamingPolicyResource created on azure
             // for more information of creating StreamingPolicyResource, please refer to the document of StreamingPolicyResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            string resourceGroupName = "contoso";
+            string resourceGroupName = "contosorg";
             string accountName = "contosomedia";
-            string streamingPolicyName = "UserCreatedClearStreamingPolicy";
+            string streamingPolicyName = "clearStreamingPolicy";
             ResourceIdentifier streamingPolicyResourceId = StreamingPolicyResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName, streamingPolicyName);
             StreamingPolicyResource streamingPolicy = client.GetStreamingPolicyResource(streamingPolicyResourceId);
 
@@ -214,7 +214,7 @@ Value = "hev1",
             // this example assumes you already have this StreamingPolicyResource created on azure
             // for more information of creating StreamingPolicyResource, please refer to the document of StreamingPolicyResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            string resourceGroupName = "contoso";
+            string resourceGroupName = "contosorg";
             string accountName = "contosomedia";
             string streamingPolicyName = "UserCreatedSecureStreamingPolicyWithCommonEncryptionCbcsOnly";
             ResourceIdentifier streamingPolicyResourceId = StreamingPolicyResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName, streamingPolicyName);
@@ -269,7 +269,7 @@ Value = "hev1",
             // this example assumes you already have this StreamingPolicyResource created on azure
             // for more information of creating StreamingPolicyResource, please refer to the document of StreamingPolicyResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            string resourceGroupName = "contoso";
+            string resourceGroupName = "contosorg";
             string accountName = "contosomedia";
             string streamingPolicyName = "UserCreatedSecureStreamingPolicyWithCommonEncryptionCencOnly";
             ResourceIdentifier streamingPolicyResourceId = StreamingPolicyResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName, streamingPolicyName);
@@ -339,7 +339,7 @@ Value = "hev1",
             // this example assumes you already have this StreamingPolicyResource created on azure
             // for more information of creating StreamingPolicyResource, please refer to the document of StreamingPolicyResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            string resourceGroupName = "contoso";
+            string resourceGroupName = "contosorg";
             string accountName = "contosomedia";
             string streamingPolicyName = "UserCreatedSecureStreamingPolicyWithEnvelopeEncryptionOnly";
             ResourceIdentifier streamingPolicyResourceId = StreamingPolicyResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName, streamingPolicyName);
@@ -388,7 +388,7 @@ Value = "hev1",
             // this example assumes you already have this StreamingPolicyResource created on azure
             // for more information of creating StreamingPolicyResource, please refer to the document of StreamingPolicyResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            string resourceGroupName = "contoso";
+            string resourceGroupName = "contosorg";
             string accountName = "contosomedia";
             string streamingPolicyName = "UserCreatedSecureStreamingPolicy";
             ResourceIdentifier streamingPolicyResourceId = StreamingPolicyResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName, streamingPolicyName);
@@ -488,7 +488,7 @@ Value = "hev1",
             // this example assumes you already have this StreamingPolicyResource created on azure
             // for more information of creating StreamingPolicyResource, please refer to the document of StreamingPolicyResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            string resourceGroupName = "contoso";
+            string resourceGroupName = "contosorg";
             string accountName = "contosomedia";
             string streamingPolicyName = "secureStreamingPolicyWithCommonEncryptionCbcsOnly";
             ResourceIdentifier streamingPolicyResourceId = StreamingPolicyResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName, streamingPolicyName);
