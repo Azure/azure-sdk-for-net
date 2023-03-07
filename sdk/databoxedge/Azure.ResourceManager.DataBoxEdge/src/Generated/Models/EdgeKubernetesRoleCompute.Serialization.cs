@@ -22,6 +22,10 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
 
         internal static EdgeKubernetesRoleCompute DeserializeEdgeKubernetesRoleCompute(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string vmProfile = default;
             Optional<long> memoryInBytes = default;
             Optional<int> processorCount = default;

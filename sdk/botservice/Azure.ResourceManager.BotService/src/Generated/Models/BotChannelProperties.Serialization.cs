@@ -39,6 +39,10 @@ namespace Azure.ResourceManager.BotService.Models
 
         internal static BotChannelProperties DeserializeBotChannelProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             if (element.TryGetProperty("channelName", out JsonElement discriminator))
             {
                 switch (discriminator.GetString())

@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.DataMigration.Models
     {
         internal static MigrationStatusDetails DeserializeMigrationStatusDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> migrationState = default;
             Optional<SqlBackupSetInfo> fullBackupSetInfo = default;
             Optional<SqlBackupSetInfo> lastRestoredBackupSetInfo = default;

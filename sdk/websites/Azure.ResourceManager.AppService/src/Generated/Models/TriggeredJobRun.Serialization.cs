@@ -76,6 +76,10 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static TriggeredJobRun DeserializeTriggeredJobRun(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> webJobId = default;
             Optional<string> webJobName = default;
             Optional<TriggeredWebJobStatus> status = default;

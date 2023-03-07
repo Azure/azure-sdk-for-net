@@ -72,6 +72,10 @@ namespace Azure.ResourceManager.IotCentral
 
         internal static IotCentralAppData DeserializeIotCentralAppData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IotCentralAppSkuInfo sku = default;
             Optional<ManagedServiceIdentity> identity = default;
             Optional<IDictionary<string, string>> tags = default;

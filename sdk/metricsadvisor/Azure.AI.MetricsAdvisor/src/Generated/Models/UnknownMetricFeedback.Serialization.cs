@@ -28,6 +28,10 @@ namespace Azure.AI.MetricsAdvisor.Models
 
         internal static UnknownMetricFeedback DeserializeUnknownMetricFeedback(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             MetricFeedbackKind feedbackType = "Unknown";
             Optional<string> feedbackId = default;
             Optional<DateTimeOffset> createdTime = default;

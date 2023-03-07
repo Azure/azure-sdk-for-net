@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.BotService.Models
 
         internal static LineRegistration DeserializeLineRegistration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> generatedId = default;
             Optional<string> channelSecret = default;
             Optional<string> channelAccessToken = default;

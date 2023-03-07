@@ -39,6 +39,10 @@ namespace Azure.ResourceManager.ApiManagement
 
         internal static ApiIssueAttachmentData DeserializeApiIssueAttachmentData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;

@@ -94,6 +94,10 @@ namespace Azure.ResourceManager.BotService.Models
 
         internal static TelephonyChannelProperties DeserializeTelephonyChannelProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<TelephonyPhoneNumbers>> phoneNumbers = default;
             Optional<IList<TelephonyChannelResourceApiConfiguration>> apiConfigurations = default;
             Optional<string> cognitiveServiceSubscriptionKey = default;

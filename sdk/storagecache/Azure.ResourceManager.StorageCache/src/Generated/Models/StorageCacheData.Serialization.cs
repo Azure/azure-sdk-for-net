@@ -95,6 +95,10 @@ namespace Azure.ResourceManager.StorageCache
 
         internal static StorageCacheData DeserializeStorageCacheData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ManagedServiceIdentity> identity = default;
             Optional<StorageCacheSkuInfo> sku = default;
             Optional<IDictionary<string, string>> tags = default;
@@ -223,7 +227,14 @@ namespace Azure.ResourceManager.StorageCache
                             List<IPAddress> array = new List<IPAddress>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(IPAddress.Parse(item.GetString()));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(IPAddress.Parse(item.GetString()));
+                                }
                             }
                             mountAddresses = array;
                             continue;

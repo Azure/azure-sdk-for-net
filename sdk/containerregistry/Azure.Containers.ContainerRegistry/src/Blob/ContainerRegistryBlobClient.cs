@@ -3,8 +3,10 @@
 
 using System;
 using System.Buffers;
+using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
+using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using System.Text.Json;
@@ -148,7 +150,7 @@ namespace Azure.Containers.ContainerRegistry.Specialized
         /// a default value of "application/vnd.oci.image.manifest.v1+json".</param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        public virtual Response<UploadManifestResult> UploadManifest(OciManifest manifest, string tag = default, ManifestMediaType? mediaType = default, CancellationToken cancellationToken = default)
+        public virtual Response<UploadManifestResult> UploadManifest(OciImageManifest manifest, string tag = default, ManifestMediaType? mediaType = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(manifest, nameof(manifest));
 
@@ -169,22 +171,38 @@ namespace Azure.Containers.ContainerRegistry.Specialized
         /// <summary>
         /// Uploads an artifact manifest.
         /// </summary>
-        /// <param name="manifestStream">The <see cref="Stream"/> manifest to upload.</param>
+        /// <param name="content">The <see cref="BinaryData"/> containing the serialized manifest to upload.</param>
         /// <param name="tag">A optional tag to assign to the artifact this manifest represents.</param>
         /// <param name="mediaType">The media type of the manifest.  If not specified, this value will be set to
         /// a default value of "application/vnd.oci.image.manifest.v1+json".</param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        public virtual Response<UploadManifestResult> UploadManifest(Stream manifestStream, string tag = default, ManifestMediaType? mediaType = default, CancellationToken cancellationToken = default)
+        public virtual Response<UploadManifestResult> UploadManifest(BinaryData content, string tag = default, ManifestMediaType? mediaType = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(manifestStream, nameof(manifestStream));
+            Argument.AssertNotNull(content, nameof(content));
+
+            return UploadManifest(content.ToStream(), tag, mediaType, cancellationToken);
+        }
+
+        /// <summary>
+        /// Uploads an artifact manifest.
+        /// </summary>
+        /// <param name="stream">The <see cref="Stream"/> containing the serialized manifest to upload.</param>
+        /// <param name="tag">A optional tag to assign to the artifact this manifest represents.</param>
+        /// <param name="mediaType">The media type of the manifest.  If not specified, this value will be set to
+        /// a default value of "application/vnd.oci.image.manifest.v1+json".</param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
+        public virtual Response<UploadManifestResult> UploadManifest(Stream stream, string tag = default, ManifestMediaType? mediaType = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(stream, nameof(stream));
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ContainerRegistryBlobClient)}.{nameof(UploadManifest)}");
             scope.Start();
             try
             {
-                using MemoryStream stream = CopyStreamAsync(manifestStream, false).EnsureCompleted();
-                return UploadManifestInternalAsync(stream, tag, mediaType, false, cancellationToken).EnsureCompleted();
+                using MemoryStream manifestStream = CopyStreamAsync(stream, false).EnsureCompleted();
+                return UploadManifestInternalAsync(manifestStream, tag, mediaType, false, cancellationToken).EnsureCompleted();
             }
             catch (Exception e)
             {
@@ -202,7 +220,7 @@ namespace Azure.Containers.ContainerRegistry.Specialized
         /// a default value of "application/vnd.oci.image.manifest.v1+json".</param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        public virtual async Task<Response<UploadManifestResult>> UploadManifestAsync(OciManifest manifest, string tag = default, ManifestMediaType? mediaType = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<UploadManifestResult>> UploadManifestAsync(OciImageManifest manifest, string tag = default, ManifestMediaType? mediaType = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(manifest, nameof(manifest));
 
@@ -223,22 +241,38 @@ namespace Azure.Containers.ContainerRegistry.Specialized
         /// <summary>
         /// Uploads an artifact manifest.
         /// </summary>
-        /// <param name="manifestStream">The <see cref="Stream"/> manifest to upload.</param>
+        /// <param name="content">The <see cref="BinaryData"/> containing the serialized manifest to upload.</param>
         /// <param name="tag">A optional tag to assign to the artifact this manifest represents.</param>
         /// <param name="mediaType">The media type of the manifest.  If not specified, this value will be set to
         /// a default value of "application/vnd.oci.image.manifest.v1+json".</param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        public virtual async Task<Response<UploadManifestResult>> UploadManifestAsync(Stream manifestStream, string tag = default, ManifestMediaType? mediaType = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<UploadManifestResult>> UploadManifestAsync(BinaryData content, string tag = default, ManifestMediaType? mediaType = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(manifestStream, nameof(manifestStream));
+            Argument.AssertNotNull(content, nameof(content));
+
+            return await UploadManifestAsync(content.ToStream(), tag, mediaType, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Uploads an artifact manifest.
+        /// </summary>
+        /// <param name="stream">The <see cref="Stream"/> containing the serialized manifest to upload.</param>
+        /// <param name="tag">A optional tag to assign to the artifact this manifest represents.</param>
+        /// <param name="mediaType">The media type of the manifest.  If not specified, this value will be set to
+        /// a default value of "application/vnd.oci.image.manifest.v1+json".</param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
+        public virtual async Task<Response<UploadManifestResult>> UploadManifestAsync(Stream stream, string tag = default, ManifestMediaType? mediaType = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(stream, nameof(stream));
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ContainerRegistryBlobClient)}.{nameof(UploadManifest)}");
             scope.Start();
             try
             {
-                using MemoryStream stream = await CopyStreamAsync(manifestStream, true).ConfigureAwait(false);
-                return await UploadManifestInternalAsync(stream, tag, mediaType, true, cancellationToken).ConfigureAwait(false);
+                using MemoryStream manifestStream = await CopyStreamAsync(stream, true).ConfigureAwait(false);
+                return await UploadManifestInternalAsync(manifestStream, tag, mediaType, true, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -251,7 +285,7 @@ namespace Azure.Containers.ContainerRegistry.Specialized
         {
             string contentDigest = BlobHelper.ComputeDigest(stream);
             string tagOrDigest = tag ?? contentDigest;
-            string contentType = mediaType.HasValue ? mediaType.ToString() : ManifestMediaType.OciManifest.ToString();
+            string contentType = mediaType.HasValue ? mediaType.ToString() : ManifestMediaType.OciImageManifest.ToString();
 
             ResponseWithHeaders<ContainerRegistryCreateManifestHeaders> response = async ?
                 await _restClient.CreateManifestAsync(_repositoryName, tagOrDigest, stream, contentType, cancellationToken).ConfigureAwait(false) :
@@ -286,7 +320,7 @@ namespace Azure.Containers.ContainerRegistry.Specialized
             return copy;
         }
 
-        private static MemoryStream SerializeManifest(OciManifest manifest)
+        private static MemoryStream SerializeManifest(OciImageManifest manifest)
         {
             MemoryStream stream = new();
             Utf8JsonWriter jsonWriter = new(stream);
@@ -298,20 +332,32 @@ namespace Azure.Containers.ContainerRegistry.Specialized
             return stream;
         }
 
-        private static OciManifest DeserializeManifest(Stream stream)
+        private static OciImageManifest DeserializeManifest(Stream stream)
         {
             using var document = JsonDocument.Parse(stream);
-            return OciManifest.DeserializeOciManifest(document.RootElement);
+            return OciImageManifest.DeserializeOciImageManifest(document.RootElement);
         }
 
         /// <summary>
-        /// Upload an artifact blob.
+        /// Upload a container registry blob.
         /// </summary>
-        /// <param name="stream">The stream containing the blob data.</param>
-        /// <param name="options">Options for the blob upload.</param>
+        /// <param name="content">The blob content.</param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        public virtual Response<UploadBlobResult> UploadBlob(Stream stream, UploadBlobOptions options = default, CancellationToken cancellationToken = default)
+        public virtual Response<UploadBlobResult> UploadBlob(BinaryData content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            return UploadBlob(content.ToStream(), cancellationToken);
+        }
+
+        /// <summary>
+        /// Upload a container registry blob.
+        /// </summary>
+        /// <param name="stream">The stream containing the blob data.</param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
+        public virtual Response<UploadBlobResult> UploadBlob(Stream stream, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(stream, nameof(stream));
 
@@ -329,7 +375,7 @@ namespace Azure.Containers.ContainerRegistry.Specialized
 
                 ValidateDigest(result.Digest, completeUploadResult.Headers.DockerContentDigest);
 
-                return Response.FromValue(new UploadBlobResult(completeUploadResult.Headers.DockerContentDigest, result.Size), completeUploadResult.GetRawResponse());
+                return Response.FromValue(new UploadBlobResult(completeUploadResult.Headers.DockerContentDigest), completeUploadResult.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -339,13 +385,25 @@ namespace Azure.Containers.ContainerRegistry.Specialized
         }
 
         /// <summary>
-        /// Upload an artifact blob.
+        /// Upload a container registry blob.
         /// </summary>
-        /// <param name="stream">The stream containing the blob data.</param>
-        /// <param name="options">Options for the blob upload.</param>
+        /// <param name="content">The blob content.</param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        public virtual async Task<Response<UploadBlobResult>> UploadBlobAsync(Stream stream, UploadBlobOptions options = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<UploadBlobResult>> UploadBlobAsync(BinaryData content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            return await UploadBlobAsync(content.ToStream(), cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Upload a container registry blob.
+        /// </summary>
+        /// <param name="stream">The stream containing the blob data.</param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
+        public virtual async Task<Response<UploadBlobResult>> UploadBlobAsync(Stream stream, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(stream, nameof(stream));
 
@@ -363,7 +421,7 @@ namespace Azure.Containers.ContainerRegistry.Specialized
 
                 ValidateDigest(result.Digest, completeUploadResult.Headers.DockerContentDigest);
 
-                return Response.FromValue(new UploadBlobResult(completeUploadResult.Headers.DockerContentDigest, result.Size), completeUploadResult.GetRawResponse());
+                return Response.FromValue(new UploadBlobResult(completeUploadResult.Headers.DockerContentDigest), completeUploadResult.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -481,7 +539,22 @@ namespace Azure.Containers.ContainerRegistry.Specialized
         }
 
         /// <summary>
-        /// Downloads the manifest for an OCI artifact.
+        /// Downloads a manifest.
+        /// </summary>
+        /// <param name="tagOrDigest">The tag or digest of the manifest to download.</param>
+        /// <param name="mediaTypes">The set of media types to accept for the manifest being downloaded.</param>
+        /// <param name="cancellationToken">The cancellation token to use.</param>
+        /// <returns>The download manifest result.</returns>
+        public virtual Response<DownloadManifestResult> DownloadManifest(string tagOrDigest, IEnumerable<ManifestMediaType> mediaTypes, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(tagOrDigest, nameof(tagOrDigest));
+            Argument.AssertNotNull(mediaTypes, nameof(mediaTypes));
+
+            return DownloadManifest(tagOrDigest, string.Join(", ", mediaTypes), cancellationToken);
+        }
+
+        /// <summary>
+        /// Downloads a manifest.
         /// </summary>
         /// <param name="tagOrDigest">The tag or digest of the manifest to download.</param>
         /// <param name="mediaType">The media type of the manifest to download.  If not specified, all media types will be requested.</param>
@@ -524,7 +597,22 @@ namespace Azure.Containers.ContainerRegistry.Specialized
         }
 
         /// <summary>
-        /// Downloads the manifest for an OCI artifact.
+        /// Downloads a manifest.
+        /// </summary>
+        /// <param name="tagOrDigest">The tag or digest of the manifest to download.</param>
+        /// <param name="mediaTypes">The set of media types to accept for the manifest being downloaded.</param>
+        /// <param name="cancellationToken">The cancellation token to use.</param>
+        /// <returns>The download manifest result.</returns>
+        public virtual async Task<Response<DownloadManifestResult>> DownloadManifestAsync(string tagOrDigest, IEnumerable<ManifestMediaType> mediaTypes, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(tagOrDigest, nameof(tagOrDigest));
+            Argument.AssertNotNull(mediaTypes, nameof(mediaTypes));
+
+            return await DownloadManifestAsync(tagOrDigest, string.Join(", ", mediaTypes), cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Downloads a manifest.
         /// </summary>
         /// <param name="tagOrDigest">The tag or digest of the manifest to download.</param>
         /// <param name="mediaType">The media type of the manifest to download.  If not specified, all media types will be requested.</param>
@@ -581,7 +669,7 @@ namespace Azure.Containers.ContainerRegistry.Specialized
             sb.Append(", ");
             sb.Append(ManifestMediaType.DockerManifestV1);
             sb.Append(", ");
-            sb.Append(ManifestMediaType.OciManifest);
+            sb.Append(ManifestMediaType.OciImageManifest);
             sb.Append(", ");
             sb.Append(ManifestMediaType.OciIndex);
 
@@ -604,7 +692,7 @@ namespace Azure.Containers.ContainerRegistry.Specialized
         }
 
         /// <summary>
-        /// Download an artifact blob.
+        /// Download a container registry blob.
         /// This API is a prefered way to fetch blobs that can fit into memory.
         /// The content is provided as <see cref="BinaryData"/> that provides a lightweight abstraction for a payload of bytes.
         /// It provides convenient helper methods to get out commonly used primitives, such as streams, strings, or bytes.
@@ -631,7 +719,7 @@ namespace Azure.Containers.ContainerRegistry.Specialized
         }
 
         /// <summary>
-        /// Download an artifact blob.
+        /// Download a container registry blob.
         /// This API is a prefered way to fetch blobs that can fit into memory.
         /// The content is provided as <see cref="BinaryData"/> that provides a lightweight abstraction for a payload of bytes.
         /// It provides convenient helper methods to get out commonly used primitives, such as streams, strings, or bytes.

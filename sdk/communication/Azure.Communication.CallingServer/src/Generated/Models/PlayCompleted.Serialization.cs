@@ -14,6 +14,10 @@ namespace Azure.Communication.CallingServer
     {
         internal static PlayCompleted DeserializePlayCompleted(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> operationContext = default;
             Optional<ResultInformation> resultInformation = default;
             Optional<string> version = default;

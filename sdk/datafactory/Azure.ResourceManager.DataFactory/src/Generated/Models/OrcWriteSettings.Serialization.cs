@@ -51,6 +51,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static OrcWriteSettings DeserializeOrcWriteSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<BinaryData> maxRowsPerFile = default;
             Optional<BinaryData> fileNamePrefix = default;
             string type = default;

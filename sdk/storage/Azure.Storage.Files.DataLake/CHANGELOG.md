@@ -1,6 +1,7 @@
 # Release History
 
 ## 12.14.0-beta.1 (Unreleased)
+- Fixed bug where sticky bit and execution bit were not formed and parsed correctly in PathPermissions
 - Added support for service version 2022-11-02.
 - Added support for Encryption Context.
 

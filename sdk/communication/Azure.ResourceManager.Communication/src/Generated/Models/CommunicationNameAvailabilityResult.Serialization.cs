@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.Communication.Models
     {
         internal static CommunicationNameAvailabilityResult DeserializeCommunicationNameAvailabilityResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> nameAvailable = default;
             Optional<CommunicationNameAvailabilityReason> reason = default;
             Optional<string> message = default;

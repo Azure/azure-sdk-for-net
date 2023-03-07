@@ -23,6 +23,10 @@ namespace Azure.ResourceManager.DataShare.Models
 
         internal static ShareSubscriptionSynchronization DeserializeShareSubscriptionSynchronization(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> durationMs = default;
             Optional<DateTimeOffset> endTime = default;
             Optional<string> message = default;

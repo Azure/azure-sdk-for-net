@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
     {
         internal static DeviceProvisioningServicesNameAvailabilityResult DeserializeDeviceProvisioningServicesNameAvailabilityResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> nameAvailable = default;
             Optional<DeviceProvisioningServicesNameUnavailableReason> reason = default;
             Optional<string> message = default;

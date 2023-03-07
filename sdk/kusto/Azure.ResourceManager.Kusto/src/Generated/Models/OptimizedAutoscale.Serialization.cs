@@ -28,6 +28,10 @@ namespace Azure.ResourceManager.Kusto.Models
 
         internal static OptimizedAutoscale DeserializeOptimizedAutoscale(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             int version = default;
             bool isEnabled = default;
             int minimum = default;

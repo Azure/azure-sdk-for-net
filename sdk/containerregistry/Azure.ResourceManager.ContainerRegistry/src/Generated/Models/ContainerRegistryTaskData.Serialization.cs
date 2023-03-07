@@ -95,6 +95,10 @@ namespace Azure.ResourceManager.ContainerRegistry
 
         internal static ContainerRegistryTaskData DeserializeContainerRegistryTaskData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ManagedServiceIdentity> identity = default;
             Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;

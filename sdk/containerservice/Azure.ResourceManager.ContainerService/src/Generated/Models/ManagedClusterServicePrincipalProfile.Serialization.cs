@@ -27,6 +27,10 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         internal static ManagedClusterServicePrincipalProfile DeserializeManagedClusterServicePrincipalProfile(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string clientId = default;
             Optional<string> secret = default;
             foreach (var property in element.EnumerateObject())

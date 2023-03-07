@@ -38,6 +38,10 @@ namespace Azure.AI.OpenAI
 
         internal static EmbeddingsOptions DeserializeEmbeddingsOptions(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> user = default;
             Optional<string> inputType = default;
             Optional<string> model = default;

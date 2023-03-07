@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.BotService.Models
     {
         internal static BotServiceHostSettingsResult DeserializeBotServiceHostSettingsResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<Uri> oAuthUrl = default;
             Optional<Uri> toBotFromChannelOpenIdMetadataUrl = default;
             Optional<string> toBotFromChannelTokenIssuer = default;

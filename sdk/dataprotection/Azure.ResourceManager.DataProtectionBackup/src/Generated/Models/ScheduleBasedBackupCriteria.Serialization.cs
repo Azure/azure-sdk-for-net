@@ -84,6 +84,10 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 
         internal static ScheduleBasedBackupCriteria DeserializeScheduleBasedBackupCriteria(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<BackupAbsoluteMarker>> absoluteCriteria = default;
             Optional<IList<DataProtectionBackupDay>> daysOfMonth = default;
             Optional<IList<DataProtectionBackupDayOfWeek>> daysOfTheWeek = default;

@@ -22,6 +22,10 @@ namespace Azure.ResourceManager.HealthcareApis.Models
 
         internal static HealthcareApisServiceAccessPolicyEntry DeserializeHealthcareApisServiceAccessPolicyEntry(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string objectId = default;
             foreach (var property in element.EnumerateObject())
             {

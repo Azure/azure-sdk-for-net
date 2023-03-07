@@ -46,6 +46,10 @@ namespace Azure.ResourceManager.Automation.Models
 
         internal static AzureQueryProperties DeserializeAzureQueryProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<string>> scope = default;
             Optional<IList<AzureLocation>> locations = default;
             Optional<QueryTagSettingsProperties> tagSettings = default;

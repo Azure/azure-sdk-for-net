@@ -46,6 +46,10 @@ namespace Azure.ResourceManager.Sql.Models
 
         internal static SqlServerJobSchedule DeserializeSqlServerJobSchedule(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DateTimeOffset> startTime = default;
             Optional<DateTimeOffset> endTime = default;
             Optional<SqlServerJobScheduleType> type = default;

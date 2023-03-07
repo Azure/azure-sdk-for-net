@@ -22,6 +22,10 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
 
         internal static IotHubSettings DeserializeIotHubSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string resourceId = default;
             foreach (var property in element.EnumerateObject())
             {

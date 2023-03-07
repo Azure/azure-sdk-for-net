@@ -27,6 +27,10 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
 
         internal static EdgeKubernetesRoleResources DeserializeEdgeKubernetesRoleResources(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<EdgeKubernetesRoleStorage> storage = default;
             EdgeKubernetesRoleCompute compute = default;
             Optional<EdgeKubernetesRoleNetwork> network = default;

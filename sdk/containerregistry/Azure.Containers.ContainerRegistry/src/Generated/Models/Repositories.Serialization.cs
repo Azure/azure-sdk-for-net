@@ -15,6 +15,10 @@ namespace Azure.Containers.ContainerRegistry
     {
         internal static Repositories DeserializeRepositories(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<string>> repositories = default;
             Optional<string> link = default;
             foreach (var property in element.EnumerateObject())

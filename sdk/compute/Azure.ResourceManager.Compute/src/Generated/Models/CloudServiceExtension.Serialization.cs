@@ -88,6 +88,10 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static CloudServiceExtension DeserializeCloudServiceExtension(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<string> publisher = default;
             Optional<string> type = default;

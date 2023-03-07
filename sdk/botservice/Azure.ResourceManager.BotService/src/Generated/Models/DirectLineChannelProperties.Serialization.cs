@@ -46,6 +46,10 @@ namespace Azure.ResourceManager.BotService.Models
 
         internal static DirectLineChannelProperties DeserializeDirectLineChannelProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<DirectLineSite>> sites = default;
             Optional<string> extensionKey1 = default;
             Optional<string> extensionKey2 = default;

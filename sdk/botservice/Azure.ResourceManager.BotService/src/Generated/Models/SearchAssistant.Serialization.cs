@@ -40,6 +40,10 @@ namespace Azure.ResourceManager.BotService.Models
 
         internal static SearchAssistant DeserializeSearchAssistant(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string channelName = default;
             Optional<ETag?> etag = default;
             Optional<string> provisioningState = default;

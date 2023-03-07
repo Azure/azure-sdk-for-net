@@ -52,6 +52,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         internal static ResourceProtectionIntent DeserializeResourceProtectionIntent(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> friendlyName = default;
             ProtectionIntentItemType protectionIntentItemType = default;
             Optional<BackupManagementType> backupManagementType = default;

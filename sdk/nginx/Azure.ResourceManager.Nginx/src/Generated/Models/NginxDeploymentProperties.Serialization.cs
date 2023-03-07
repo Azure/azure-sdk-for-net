@@ -40,6 +40,10 @@ namespace Azure.ResourceManager.Nginx.Models
 
         internal static NginxDeploymentProperties DeserializeNginxDeploymentProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ProvisioningState> provisioningState = default;
             Optional<string> nginxVersion = default;
             Optional<string> managedResourceGroup = default;

@@ -47,6 +47,10 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
 
         internal static MotionDetectionProcessor DeserializeMotionDetectionProcessor(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<MotionDetectionSensitivity> sensitivity = default;
             Optional<bool> outputMotionRegion = default;
             Optional<string> eventAggregationWindow = default;

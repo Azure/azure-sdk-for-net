@@ -36,6 +36,10 @@ namespace Azure.ResourceManager.EventGrid.Models
 
         internal static PartnerAuthorization DeserializePartnerAuthorization(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> defaultMaximumExpirationTimeInDays = default;
             Optional<IList<EventGridPartnerContent>> authorizedPartnersList = default;
             foreach (var property in element.EnumerateObject())

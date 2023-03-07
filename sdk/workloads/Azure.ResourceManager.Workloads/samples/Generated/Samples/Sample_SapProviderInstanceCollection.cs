@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Workloads.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetAll_ListAllSAPMonitorsProvidersInASubscription()
         {
-            // Generated from example definition: specification/workloads/resource-manager/Microsoft.Workloads/preview/2021-12-01-preview/examples/workloadmonitor/ProviderInstances_List.json
+            // Generated from example definition: specification/workloads/resource-manager/Microsoft.Workloads/preview/2022-11-01-preview/examples/workloadmonitor/ProviderInstances_List.json
             // this example is just showing the usage of "ProviderInstances_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Workloads.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_GetPropertiesOfADb2Provider()
         {
-            // Generated from example definition: specification/workloads/resource-manager/Microsoft.Workloads/preview/2021-12-01-preview/examples/workloadmonitor/Db2ProviderInstances_Get.json
+            // Generated from example definition: specification/workloads/resource-manager/Microsoft.Workloads/preview/2022-11-01-preview/examples/workloadmonitor/Db2ProviderInstances_Get.json
             // this example is just showing the usage of "ProviderInstances_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Workloads.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Exists_GetPropertiesOfADb2Provider()
         {
-            // Generated from example definition: specification/workloads/resource-manager/Microsoft.Workloads/preview/2021-12-01-preview/examples/workloadmonitor/Db2ProviderInstances_Get.json
+            // Generated from example definition: specification/workloads/resource-manager/Microsoft.Workloads/preview/2022-11-01-preview/examples/workloadmonitor/Db2ProviderInstances_Get.json
             // this example is just showing the usage of "ProviderInstances_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Workloads.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_GetPropertiesOfAMsSqlServerProvider()
         {
-            // Generated from example definition: specification/workloads/resource-manager/Microsoft.Workloads/preview/2021-12-01-preview/examples/workloadmonitor/MsSqlServerProviderInstance_Get.json
+            // Generated from example definition: specification/workloads/resource-manager/Microsoft.Workloads/preview/2022-11-01-preview/examples/workloadmonitor/MsSqlServerProviderInstance_Get.json
             // this example is just showing the usage of "ProviderInstances_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.Workloads.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Exists_GetPropertiesOfAMsSqlServerProvider()
         {
-            // Generated from example definition: specification/workloads/resource-manager/Microsoft.Workloads/preview/2021-12-01-preview/examples/workloadmonitor/MsSqlServerProviderInstance_Get.json
+            // Generated from example definition: specification/workloads/resource-manager/Microsoft.Workloads/preview/2022-11-01-preview/examples/workloadmonitor/MsSqlServerProviderInstance_Get.json
             // this example is just showing the usage of "ProviderInstances_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.Workloads.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_GetPropertiesOfAOSProvider()
         {
-            // Generated from example definition: specification/workloads/resource-manager/Microsoft.Workloads/preview/2021-12-01-preview/examples/workloadmonitor/PrometheusOSProviderInstances_Get.json
+            // Generated from example definition: specification/workloads/resource-manager/Microsoft.Workloads/preview/2022-11-01-preview/examples/workloadmonitor/PrometheusOSProviderInstances_Get.json
             // this example is just showing the usage of "ProviderInstances_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.Workloads.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Exists_GetPropertiesOfAOSProvider()
         {
-            // Generated from example definition: specification/workloads/resource-manager/Microsoft.Workloads/preview/2021-12-01-preview/examples/workloadmonitor/PrometheusOSProviderInstances_Get.json
+            // Generated from example definition: specification/workloads/resource-manager/Microsoft.Workloads/preview/2022-11-01-preview/examples/workloadmonitor/PrometheusOSProviderInstances_Get.json
             // this example is just showing the usage of "ProviderInstances_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -258,7 +258,7 @@ namespace Azure.ResourceManager.Workloads.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_GetPropertiesOfAPrometheusHaClusterProvider()
         {
-            // Generated from example definition: specification/workloads/resource-manager/Microsoft.Workloads/preview/2021-12-01-preview/examples/workloadmonitor/PrometheusHaClusterProviderInstances_Get.json
+            // Generated from example definition: specification/workloads/resource-manager/Microsoft.Workloads/preview/2022-11-01-preview/examples/workloadmonitor/PrometheusHaClusterProviderInstances_Get.json
             // this example is just showing the usage of "ProviderInstances_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.Workloads.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Exists_GetPropertiesOfAPrometheusHaClusterProvider()
         {
-            // Generated from example definition: specification/workloads/resource-manager/Microsoft.Workloads/preview/2021-12-01-preview/examples/workloadmonitor/PrometheusHaClusterProviderInstances_Get.json
+            // Generated from example definition: specification/workloads/resource-manager/Microsoft.Workloads/preview/2022-11-01-preview/examples/workloadmonitor/PrometheusHaClusterProviderInstances_Get.json
             // this example is just showing the usage of "ProviderInstances_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -324,7 +324,7 @@ namespace Azure.ResourceManager.Workloads.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_GetPropertiesOfASAPMonitorHanaProvider()
         {
-            // Generated from example definition: specification/workloads/resource-manager/Microsoft.Workloads/preview/2021-12-01-preview/examples/workloadmonitor/ProviderInstances_Get.json
+            // Generated from example definition: specification/workloads/resource-manager/Microsoft.Workloads/preview/2022-11-01-preview/examples/workloadmonitor/ProviderInstances_Get.json
             // this example is just showing the usage of "ProviderInstances_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -359,7 +359,7 @@ namespace Azure.ResourceManager.Workloads.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Exists_GetPropertiesOfASAPMonitorHanaProvider()
         {
-            // Generated from example definition: specification/workloads/resource-manager/Microsoft.Workloads/preview/2021-12-01-preview/examples/workloadmonitor/ProviderInstances_Get.json
+            // Generated from example definition: specification/workloads/resource-manager/Microsoft.Workloads/preview/2022-11-01-preview/examples/workloadmonitor/ProviderInstances_Get.json
             // this example is just showing the usage of "ProviderInstances_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -390,7 +390,7 @@ namespace Azure.ResourceManager.Workloads.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_GetPropertiesOfASAPMonitorNetWeaverProvider()
         {
-            // Generated from example definition: specification/workloads/resource-manager/Microsoft.Workloads/preview/2021-12-01-preview/examples/workloadmonitor/NetWeaverProviderInstances_Get.json
+            // Generated from example definition: specification/workloads/resource-manager/Microsoft.Workloads/preview/2022-11-01-preview/examples/workloadmonitor/NetWeaverProviderInstances_Get.json
             // this example is just showing the usage of "ProviderInstances_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -425,7 +425,7 @@ namespace Azure.ResourceManager.Workloads.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Exists_GetPropertiesOfASAPMonitorNetWeaverProvider()
         {
-            // Generated from example definition: specification/workloads/resource-manager/Microsoft.Workloads/preview/2021-12-01-preview/examples/workloadmonitor/NetWeaverProviderInstances_Get.json
+            // Generated from example definition: specification/workloads/resource-manager/Microsoft.Workloads/preview/2022-11-01-preview/examples/workloadmonitor/NetWeaverProviderInstances_Get.json
             // this example is just showing the usage of "ProviderInstances_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -456,7 +456,7 @@ namespace Azure.ResourceManager.Workloads.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_CreateADb2Provider()
         {
-            // Generated from example definition: specification/workloads/resource-manager/Microsoft.Workloads/preview/2021-12-01-preview/examples/workloadmonitor/Db2ProviderInstances_Create.json
+            // Generated from example definition: specification/workloads/resource-manager/Microsoft.Workloads/preview/2022-11-01-preview/examples/workloadmonitor/Db2ProviderInstances_Create.json
             // this example is just showing the usage of "ProviderInstances_Create" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -488,6 +488,58 @@ namespace Azure.ResourceManager.Workloads.Samples
                     DBPassword = "password",
                     DBPasswordUri = new Uri(""),
                     SapSid = "SID",
+                    SslPreference = SslPreference.ServerCertificate,
+                    SslCertificateUri = new Uri("https://storageaccount.blob.core.windows.net/containername/filename"),
+                },
+            };
+            ArmOperation<SapProviderInstanceResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, providerInstanceName, data);
+            SapProviderInstanceResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            SapProviderInstanceData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        // Create a Db2 provider with Root Certificate
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task CreateOrUpdate_CreateADb2ProviderWithRootCertificate()
+        {
+            // Generated from example definition: specification/workloads/resource-manager/Microsoft.Workloads/preview/2022-11-01-preview/examples/workloadmonitor/Db2ProviderInstances_Create_Root_Certificate.json
+            // this example is just showing the usage of "ProviderInstances_Create" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this SapMonitorResource created on azure
+            // for more information of creating SapMonitorResource, please refer to the document of SapMonitorResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "myResourceGroup";
+            string monitorName = "mySapMonitor";
+            ResourceIdentifier sapMonitorResourceId = SapMonitorResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, monitorName);
+            SapMonitorResource sapMonitor = client.GetSapMonitorResource(sapMonitorResourceId);
+
+            // get the collection of this SapProviderInstanceResource
+            SapProviderInstanceCollection collection = sapMonitor.GetSapProviderInstances();
+
+            // invoke the operation
+            string providerInstanceName = "myProviderInstance";
+            SapProviderInstanceData data = new SapProviderInstanceData()
+            {
+                ProviderSettings = new DB2ProviderInstanceProperties()
+                {
+                    Hostname = "hostname",
+                    DBName = "dbName",
+                    DBPort = "dbPort",
+                    DBUsername = "username",
+                    DBPassword = "password",
+                    DBPasswordUri = new Uri(""),
+                    SapSid = "SID",
+                    SslPreference = SslPreference.RootCertificate,
                 },
             };
             ArmOperation<SapProviderInstanceResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, providerInstanceName, data);
@@ -505,7 +557,7 @@ namespace Azure.ResourceManager.Workloads.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_CreateAMsSqlServerProvider()
         {
-            // Generated from example definition: specification/workloads/resource-manager/Microsoft.Workloads/preview/2021-12-01-preview/examples/workloadmonitor/MsSqlServerProviderInstance_Create.json
+            // Generated from example definition: specification/workloads/resource-manager/Microsoft.Workloads/preview/2022-11-01-preview/examples/workloadmonitor/MsSqlServerProviderInstance_Create.json
             // this example is just showing the usage of "ProviderInstances_Create" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -536,6 +588,57 @@ namespace Azure.ResourceManager.Workloads.Samples
                     DBPassword = "****",
                     DBPasswordUri = new Uri(""),
                     SapSid = "sid",
+                    SslPreference = SslPreference.ServerCertificate,
+                    SslCertificateUri = new Uri("https://storageaccount.blob.core.windows.net/containername/filename"),
+                },
+            };
+            ArmOperation<SapProviderInstanceResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, providerInstanceName, data);
+            SapProviderInstanceResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            SapProviderInstanceData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        // Create a MsSqlServer provider with Root Certificate
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task CreateOrUpdate_CreateAMsSqlServerProviderWithRootCertificate()
+        {
+            // Generated from example definition: specification/workloads/resource-manager/Microsoft.Workloads/preview/2022-11-01-preview/examples/workloadmonitor/MsSqlServerProviderInstance_Create_Root_Certificate.json
+            // this example is just showing the usage of "ProviderInstances_Create" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this SapMonitorResource created on azure
+            // for more information of creating SapMonitorResource, please refer to the document of SapMonitorResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "myResourceGroup";
+            string monitorName = "mySapMonitor";
+            ResourceIdentifier sapMonitorResourceId = SapMonitorResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, monitorName);
+            SapMonitorResource sapMonitor = client.GetSapMonitorResource(sapMonitorResourceId);
+
+            // get the collection of this SapProviderInstanceResource
+            SapProviderInstanceCollection collection = sapMonitor.GetSapProviderInstances();
+
+            // invoke the operation
+            string providerInstanceName = "myProviderInstance";
+            SapProviderInstanceData data = new SapProviderInstanceData()
+            {
+                ProviderSettings = new MsSqlServerProviderInstanceProperties()
+                {
+                    Hostname = "hostname",
+                    DBPort = "5912",
+                    DBUsername = "user",
+                    DBPassword = "****",
+                    DBPasswordUri = new Uri(""),
+                    SapSid = "sid",
+                    SslPreference = SslPreference.RootCertificate,
                 },
             };
             ArmOperation<SapProviderInstanceResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, providerInstanceName, data);
@@ -553,7 +656,7 @@ namespace Azure.ResourceManager.Workloads.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_CreateAOSProvider()
         {
-            // Generated from example definition: specification/workloads/resource-manager/Microsoft.Workloads/preview/2021-12-01-preview/examples/workloadmonitor/PrometheusOSProviderInstances_Create.json
+            // Generated from example definition: specification/workloads/resource-manager/Microsoft.Workloads/preview/2022-11-01-preview/examples/workloadmonitor/PrometheusOSProviderInstances_Create.json
             // this example is just showing the usage of "ProviderInstances_Create" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -579,6 +682,54 @@ namespace Azure.ResourceManager.Workloads.Samples
                 ProviderSettings = new PrometheusOSProviderInstanceProperties()
                 {
                     PrometheusUri = new Uri("http://192.168.0.0:9090/metrics"),
+                    SslPreference = SslPreference.ServerCertificate,
+                    SslCertificateUri = new Uri("https://storageaccount.blob.core.windows.net/containername/filename"),
+                    SapSid = "SID",
+                },
+            };
+            ArmOperation<SapProviderInstanceResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, providerInstanceName, data);
+            SapProviderInstanceResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            SapProviderInstanceData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        // Create a OS provider with Root Certificate
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task CreateOrUpdate_CreateAOSProviderWithRootCertificate()
+        {
+            // Generated from example definition: specification/workloads/resource-manager/Microsoft.Workloads/preview/2022-11-01-preview/examples/workloadmonitor/PrometheusOSProviderInstances_Create_Root_Certificate.json
+            // this example is just showing the usage of "ProviderInstances_Create" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this SapMonitorResource created on azure
+            // for more information of creating SapMonitorResource, please refer to the document of SapMonitorResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "myResourceGroup";
+            string monitorName = "mySapMonitor";
+            ResourceIdentifier sapMonitorResourceId = SapMonitorResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, monitorName);
+            SapMonitorResource sapMonitor = client.GetSapMonitorResource(sapMonitorResourceId);
+
+            // get the collection of this SapProviderInstanceResource
+            SapProviderInstanceCollection collection = sapMonitor.GetSapProviderInstances();
+
+            // invoke the operation
+            string providerInstanceName = "myProviderInstance";
+            SapProviderInstanceData data = new SapProviderInstanceData()
+            {
+                ProviderSettings = new PrometheusOSProviderInstanceProperties()
+                {
+                    PrometheusUri = new Uri("http://192.168.0.0:9090/metrics"),
+                    SslPreference = SslPreference.RootCertificate,
+                    SapSid = "SID",
                 },
             };
             ArmOperation<SapProviderInstanceResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, providerInstanceName, data);
@@ -596,7 +747,7 @@ namespace Azure.ResourceManager.Workloads.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_CreateAPrometheusHaClusterProvider()
         {
-            // Generated from example definition: specification/workloads/resource-manager/Microsoft.Workloads/preview/2021-12-01-preview/examples/workloadmonitor/PrometheusHaClusterProviderInstances_Create.json
+            // Generated from example definition: specification/workloads/resource-manager/Microsoft.Workloads/preview/2022-11-01-preview/examples/workloadmonitor/PrometheusHaClusterProviderInstances_Create.json
             // this example is just showing the usage of "ProviderInstances_Create" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -625,6 +776,55 @@ namespace Azure.ResourceManager.Workloads.Samples
                     Hostname = "hostname",
                     Sid = "sid",
                     ClusterName = "clusterName",
+                    SslPreference = SslPreference.ServerCertificate,
+                    SslCertificateUri = new Uri("https://storageaccount.blob.core.windows.net/containername/filename"),
+                },
+            };
+            ArmOperation<SapProviderInstanceResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, providerInstanceName, data);
+            SapProviderInstanceResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            SapProviderInstanceData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        // Create a PrometheusHaCluster provider with Root Certificate
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task CreateOrUpdate_CreateAPrometheusHaClusterProviderWithRootCertificate()
+        {
+            // Generated from example definition: specification/workloads/resource-manager/Microsoft.Workloads/preview/2022-11-01-preview/examples/workloadmonitor/PrometheusHaClusterProviderInstances_Create_Root_Certificate.json
+            // this example is just showing the usage of "ProviderInstances_Create" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this SapMonitorResource created on azure
+            // for more information of creating SapMonitorResource, please refer to the document of SapMonitorResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "myResourceGroup";
+            string monitorName = "mySapMonitor";
+            ResourceIdentifier sapMonitorResourceId = SapMonitorResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, monitorName);
+            SapMonitorResource sapMonitor = client.GetSapMonitorResource(sapMonitorResourceId);
+
+            // get the collection of this SapProviderInstanceResource
+            SapProviderInstanceCollection collection = sapMonitor.GetSapProviderInstances();
+
+            // invoke the operation
+            string providerInstanceName = "myProviderInstance";
+            SapProviderInstanceData data = new SapProviderInstanceData()
+            {
+                ProviderSettings = new PrometheusHAClusterProviderInstanceProperties()
+                {
+                    PrometheusUri = new Uri("http://192.168.0.0:9090/metrics"),
+                    Hostname = "hostname",
+                    Sid = "sid",
+                    ClusterName = "clusterName",
+                    SslPreference = SslPreference.RootCertificate,
                 },
             };
             ArmOperation<SapProviderInstanceResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, providerInstanceName, data);
@@ -642,7 +842,7 @@ namespace Azure.ResourceManager.Workloads.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_CreateASAPMonitorHanaProvider()
         {
-            // Generated from example definition: specification/workloads/resource-manager/Microsoft.Workloads/preview/2021-12-01-preview/examples/workloadmonitor/ProviderInstances_Create.json
+            // Generated from example definition: specification/workloads/resource-manager/Microsoft.Workloads/preview/2022-11-01-preview/examples/workloadmonitor/ProviderInstances_Create.json
             // this example is just showing the usage of "ProviderInstances_Create" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -674,8 +874,62 @@ namespace Azure.ResourceManager.Workloads.Samples
                     DBUsername = "user",
                     DBPassword = "****",
                     DBPasswordUri = new Uri(""),
-                    DBSslCertificateUri = new Uri("https://storageaccount.blob.core.windows.net/containername/filename"),
+                    SslCertificateUri = new Uri("https://storageaccount.blob.core.windows.net/containername/filename"),
                     SslHostNameInCertificate = "xyz.domain.com",
+                    SslPreference = SslPreference.ServerCertificate,
+                    SapSid = "SID",
+                },
+            };
+            ArmOperation<SapProviderInstanceResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, providerInstanceName, data);
+            SapProviderInstanceResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            SapProviderInstanceData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        // Create a SAP monitor Hana provider with Root Certificate
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task CreateOrUpdate_CreateASAPMonitorHanaProviderWithRootCertificate()
+        {
+            // Generated from example definition: specification/workloads/resource-manager/Microsoft.Workloads/preview/2022-11-01-preview/examples/workloadmonitor/ProviderInstances_Create_Root_Certificate.json
+            // this example is just showing the usage of "ProviderInstances_Create" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this SapMonitorResource created on azure
+            // for more information of creating SapMonitorResource, please refer to the document of SapMonitorResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "myResourceGroup";
+            string monitorName = "mySapMonitor";
+            ResourceIdentifier sapMonitorResourceId = SapMonitorResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, monitorName);
+            SapMonitorResource sapMonitor = client.GetSapMonitorResource(sapMonitorResourceId);
+
+            // get the collection of this SapProviderInstanceResource
+            SapProviderInstanceCollection collection = sapMonitor.GetSapProviderInstances();
+
+            // invoke the operation
+            string providerInstanceName = "myProviderInstance";
+            SapProviderInstanceData data = new SapProviderInstanceData()
+            {
+                ProviderSettings = new HanaDBProviderInstanceProperties()
+                {
+                    Hostname = "name",
+                    DBName = "db",
+                    SqlPort = "0000",
+                    InstanceNumber = "00",
+                    DBUsername = "user",
+                    DBPassword = "****",
+                    DBPasswordUri = new Uri(""),
+                    SslHostNameInCertificate = "xyz.domain.com",
+                    SslPreference = SslPreference.RootCertificate,
+                    SapSid = "SID",
                 },
             };
             ArmOperation<SapProviderInstanceResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, providerInstanceName, data);
@@ -693,7 +947,7 @@ namespace Azure.ResourceManager.Workloads.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_CreateASAPMonitorNetWeaverProvider()
         {
-            // Generated from example definition: specification/workloads/resource-manager/Microsoft.Workloads/preview/2021-12-01-preview/examples/workloadmonitor/NetWeaverProviderInstances_Create.json
+            // Generated from example definition: specification/workloads/resource-manager/Microsoft.Workloads/preview/2022-11-01-preview/examples/workloadmonitor/NetWeaverProviderInstances_Create.json
             // this example is just showing the usage of "ProviderInstances_Create" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -730,7 +984,63 @@ namespace Azure.ResourceManager.Workloads.Samples
                     SapPasswordUri = new Uri(""),
                     SapClientId = "111",
                     SapPortNumber = "1234",
-                    SapSslCertificateUri = new Uri("https://storageaccount.blob.core.windows.net/containername/filename"),
+                    SslCertificateUri = new Uri("https://storageaccount.blob.core.windows.net/containername/filename"),
+                    SslPreference = SslPreference.ServerCertificate,
+                },
+            };
+            ArmOperation<SapProviderInstanceResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, providerInstanceName, data);
+            SapProviderInstanceResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            SapProviderInstanceData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        // Create a SAP monitor NetWeaver provider with Root Certificate
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task CreateOrUpdate_CreateASAPMonitorNetWeaverProviderWithRootCertificate()
+        {
+            // Generated from example definition: specification/workloads/resource-manager/Microsoft.Workloads/preview/2022-11-01-preview/examples/workloadmonitor/NetWeaverProviderInstances_Create_Root_Certificate.json
+            // this example is just showing the usage of "ProviderInstances_Create" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this SapMonitorResource created on azure
+            // for more information of creating SapMonitorResource, please refer to the document of SapMonitorResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "myResourceGroup";
+            string monitorName = "mySapMonitor";
+            ResourceIdentifier sapMonitorResourceId = SapMonitorResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, monitorName);
+            SapMonitorResource sapMonitor = client.GetSapMonitorResource(sapMonitorResourceId);
+
+            // get the collection of this SapProviderInstanceResource
+            SapProviderInstanceCollection collection = sapMonitor.GetSapProviderInstances();
+
+            // invoke the operation
+            string providerInstanceName = "myProviderInstance";
+            SapProviderInstanceData data = new SapProviderInstanceData()
+            {
+                ProviderSettings = new SapNetWeaverProviderInstanceProperties()
+                {
+                    SapSid = "SID",
+                    SapHostname = "name",
+                    SapInstanceNr = "00",
+                    SapHostFileEntries =
+{
+"127.0.0.1 name fqdn"
+},
+                    SapUsername = "username",
+                    SapPassword = "****",
+                    SapPasswordUri = new Uri(""),
+                    SapClientId = "111",
+                    SapPortNumber = "1234",
+                    SslPreference = SslPreference.RootCertificate,
                 },
             };
             ArmOperation<SapProviderInstanceResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, providerInstanceName, data);

@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         internal static MongoDBRole DeserializeMongoDBRole(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> db = default;
             Optional<string> role = default;
             foreach (var property in element.EnumerateObject())

@@ -85,6 +85,10 @@ namespace Azure.ResourceManager.BotService.Models
 
         internal static TelephonyChannelResourceApiConfiguration DeserializeTelephonyChannelResourceApiConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> id = default;
             Optional<string> providerName = default;
             Optional<string> cognitiveServiceSubscriptionKey = default;

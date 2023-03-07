@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Kusto.Models
     {
         internal static FollowerDatabaseListResult DeserializeFollowerDatabaseListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<KustoFollowerDatabaseDefinition>> value = default;
             foreach (var property in element.EnumerateObject())
             {

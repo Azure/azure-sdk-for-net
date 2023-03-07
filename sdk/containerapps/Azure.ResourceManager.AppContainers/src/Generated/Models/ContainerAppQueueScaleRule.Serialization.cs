@@ -41,6 +41,10 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         internal static ContainerAppQueueScaleRule DeserializeContainerAppQueueScaleRule(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> queueName = default;
             Optional<int> queueLength = default;
             Optional<IList<ContainerAppScaleRuleAuth>> auth = default;

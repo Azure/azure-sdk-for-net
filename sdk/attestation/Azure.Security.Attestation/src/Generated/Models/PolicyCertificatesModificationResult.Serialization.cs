@@ -33,6 +33,10 @@ namespace Azure.Security.Attestation
 
         internal static PolicyCertificatesModificationResult DeserializePolicyCertificatesModificationResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> xMsCertificateThumbprint = default;
             Optional<PolicyCertificateResolution> xMsPolicycertificatesResult = default;
             foreach (var property in element.EnumerateObject())

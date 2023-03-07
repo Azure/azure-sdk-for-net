@@ -126,6 +126,10 @@ namespace Azure.ResourceManager.BotService.Models
 
         internal static TelephonyPhoneNumbers DeserializeTelephonyPhoneNumbers(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> id = default;
             Optional<string> phoneNumber = default;
             Optional<string> acsEndpoint = default;

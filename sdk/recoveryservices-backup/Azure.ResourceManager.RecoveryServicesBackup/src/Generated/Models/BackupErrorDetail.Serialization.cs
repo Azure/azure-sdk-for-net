@@ -21,6 +21,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         internal static BackupErrorDetail DeserializeBackupErrorDetail(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> code = default;
             Optional<string> message = default;
             Optional<IReadOnlyList<string>> recommendations = default;

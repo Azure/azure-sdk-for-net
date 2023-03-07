@@ -52,6 +52,10 @@ namespace Azure.AI.TextAnalytics.Models
 
         internal static PiiTaskParameters DeserializePiiTaskParameters(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<PiiDomain> domain = default;
             Optional<IList<PiiEntityCategory>> piiCategories = default;
             Optional<StringIndexType> stringIndexType = default;

@@ -31,6 +31,10 @@ namespace Azure.ResourceManager.ElasticSan.Models
 
         internal static ElasticSanVolumeDataSourceInfo DeserializeElasticSanVolumeDataSourceInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ElasticSanVolumeCreateOption> createSource = default;
             Optional<Uri> sourceUri = default;
             foreach (var property in element.EnumerateObject())

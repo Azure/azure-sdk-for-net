@@ -104,6 +104,10 @@ namespace Azure.ResourceManager.BotService.Models
 
         internal static DirectLineSite DeserializeDirectLineSite(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<Guid> tenantId = default;
             Optional<string> siteId = default;
             string siteName = default;

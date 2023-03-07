@@ -32,6 +32,10 @@ namespace Azure.ResourceManager.Media.Models
 
         internal static ContentKeyPolicyX509CertificateTokenKey DeserializeContentKeyPolicyX509CertificateTokenKey(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             byte[] rawBody = default;
             string odataType = default;
             foreach (var property in element.EnumerateObject())

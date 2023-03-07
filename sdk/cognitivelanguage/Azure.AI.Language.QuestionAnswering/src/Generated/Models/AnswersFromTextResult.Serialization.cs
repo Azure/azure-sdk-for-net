@@ -15,6 +15,10 @@ namespace Azure.AI.Language.QuestionAnswering
     {
         internal static AnswersFromTextResult DeserializeAnswersFromTextResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<TextAnswer>> answers = default;
             foreach (var property in element.EnumerateObject())
             {

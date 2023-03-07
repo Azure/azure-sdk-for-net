@@ -24,6 +24,10 @@ namespace Azure.MixedReality.RemoteRendering
 
         internal static AssetConversionOptions DeserializeAssetConversionOptions(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             AssetConversionInputOptions inputLocation = default;
             AssetConversionOutputOptions outputLocation = default;
             foreach (var property in element.EnumerateObject())

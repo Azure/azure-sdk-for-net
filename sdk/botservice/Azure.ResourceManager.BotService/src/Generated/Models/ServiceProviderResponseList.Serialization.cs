@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.BotService.Models
     {
         internal static ServiceProviderResponseList DeserializeServiceProviderResponseList(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> nextLink = default;
             Optional<IReadOnlyList<BotServiceProvider>> value = default;
             foreach (var property in element.EnumerateObject())

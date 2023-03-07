@@ -15,6 +15,10 @@ namespace Azure.AI.FormRecognizer.Models
     {
         internal static ModelsSummary DeserializeModelsSummary(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             int count = default;
             int limit = default;
             DateTimeOffset lastUpdatedDateTime = default;

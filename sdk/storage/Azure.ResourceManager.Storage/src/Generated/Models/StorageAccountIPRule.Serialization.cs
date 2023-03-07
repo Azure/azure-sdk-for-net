@@ -27,6 +27,10 @@ namespace Azure.ResourceManager.Storage.Models
 
         internal static StorageAccountIPRule DeserializeStorageAccountIPRule(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string value = default;
             Optional<StorageAccountNetworkRuleAction> action = default;
             foreach (var property in element.EnumerateObject())

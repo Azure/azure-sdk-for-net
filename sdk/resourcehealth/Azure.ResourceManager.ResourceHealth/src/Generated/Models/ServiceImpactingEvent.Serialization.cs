@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.ResourceHealth.Models
     {
         internal static ServiceImpactingEvent DeserializeServiceImpactingEvent(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DateTimeOffset> eventStartTime = default;
             Optional<DateTimeOffset> eventStatusLastModifiedTime = default;
             Optional<string> correlationId = default;

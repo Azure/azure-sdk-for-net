@@ -71,6 +71,10 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
 
         internal static NumaNodeInfo DeserializeNumaNodeInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> numaNodeIndex = default;
             Optional<long> totalMemoryInMb = default;
             Optional<int> logicalCoreCountPerCore = default;

@@ -56,6 +56,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         internal static BackupResourceEncryptionConfigExtendedProperties DeserializeBackupResourceEncryptionConfigExtendedProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ResourceIdentifier> userAssignedIdentity = default;
             Optional<bool> useSystemAssignedIdentity = default;
             Optional<BackupEncryptionAtRestType> encryptionAtRestType = default;

@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.BotService.Models
     {
         internal static BotServicePrivateLinkResourceListResult DeserializeBotServicePrivateLinkResourceListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<BotServicePrivateLinkResourceData>> value = default;
             foreach (var property in element.EnumerateObject())
             {

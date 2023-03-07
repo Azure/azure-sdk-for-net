@@ -56,6 +56,10 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static WebAppLoginInfo DeserializeWebAppLoginInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<LoginRoutes> routes = default;
             Optional<AppServiceTokenStore> tokenStore = default;
             Optional<bool> preserveUrlFragmentsForLogins = default;

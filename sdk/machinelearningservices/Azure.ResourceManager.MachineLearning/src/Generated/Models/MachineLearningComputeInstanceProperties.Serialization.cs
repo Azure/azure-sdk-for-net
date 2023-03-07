@@ -96,6 +96,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static MachineLearningComputeInstanceProperties DeserializeMachineLearningComputeInstanceProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> vmSize = default;
             Optional<ResourceId> subnet = default;
             Optional<MachineLearningApplicationSharingPolicy> applicationSharingPolicy = default;

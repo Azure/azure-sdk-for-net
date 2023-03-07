@@ -47,6 +47,10 @@ namespace Azure.ResourceManager.DataShare.Models
 
         internal static SqlDWTableDataSet DeserializeSqlDWTableDataSet(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             DataSetKind kind = default;
             ResourceIdentifier id = default;
             string name = default;

@@ -15,6 +15,10 @@ namespace Azure.DigitalTwins.Core
     {
         internal static IncomingRelationshipCollection DeserializeIncomingRelationshipCollection(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IReadOnlyList<IncomingRelationship> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

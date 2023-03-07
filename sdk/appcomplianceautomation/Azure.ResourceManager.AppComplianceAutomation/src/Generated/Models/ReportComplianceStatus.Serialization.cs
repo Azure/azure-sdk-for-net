@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
     {
         internal static ReportComplianceStatus DeserializeReportComplianceStatus(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<OverviewStatus> m365 = default;
             foreach (var property in element.EnumerateObject())
             {

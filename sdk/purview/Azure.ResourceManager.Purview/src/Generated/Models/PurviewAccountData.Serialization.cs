@@ -60,6 +60,10 @@ namespace Azure.ResourceManager.Purview
 
         internal static PurviewAccountData DeserializePurviewAccountData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<PurviewAccountSku> sku = default;
             Optional<ManagedServiceIdentity> identity = default;
             Optional<IDictionary<string, string>> tags = default;

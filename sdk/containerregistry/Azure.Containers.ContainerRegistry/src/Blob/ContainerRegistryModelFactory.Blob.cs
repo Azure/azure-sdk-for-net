@@ -28,11 +28,10 @@ namespace Azure.Containers.ContainerRegistry
 
         /// <summary> Initializes a new instance of <see cref="Specialized.UploadBlobResult" />. </summary>
         /// <param name="digest"> The digest of the uploaded blob, calculated by the registry. </param>
-        /// <param name="size"> The size of the uploaded blob. </param>
         /// <returns> A new <see cref="Specialized.UploadBlobResult"/> instance for mocking. </returns>
-        public static UploadBlobResult UploadBlobResult(string digest, long size)
+        public static UploadBlobResult UploadBlobResult(string digest)
         {
-            return new UploadBlobResult(digest, size);
+            return new UploadBlobResult(digest);
         }
 
         /// <summary> Initializes a new instance of <see cref="Specialized.DownloadBlobResult" />. </summary>

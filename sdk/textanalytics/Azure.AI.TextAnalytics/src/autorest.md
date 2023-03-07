@@ -75,3 +75,20 @@ directive:
     $.properties.id["x-nullable"] = true;
     $.properties.text["x-nullable"] = true;
 ```
+
+### Remove BooleanResolution
+
+BooleanResolution is not supported in Text Analytics.
+
+``` yaml
+directive:
+- from: swagger-document
+  where: $.definitions
+  transform: >
+    delete $["BooleanResolution"]
+- from: swagger-document
+  where: $.definitions.BaseResolution.properties.resolutionKind.enum
+  transform: >
+    $.splice($.indexOf("BooleanResolution"), 1);
+    return $;
+```

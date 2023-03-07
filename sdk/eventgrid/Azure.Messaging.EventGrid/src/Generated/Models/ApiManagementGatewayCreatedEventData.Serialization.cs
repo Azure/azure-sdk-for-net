@@ -17,6 +17,10 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     {
         internal static ApiManagementGatewayCreatedEventData DeserializeApiManagementGatewayCreatedEventData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> resourceUri = default;
             foreach (var property in element.EnumerateObject())
             {

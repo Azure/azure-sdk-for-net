@@ -32,6 +32,10 @@ namespace Azure.AI.MetricsAdvisor.Models
 
         internal static DataFeedMetric DeserializeDataFeedMetric(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> metricId = default;
             string metricName = default;
             Optional<string> metricDisplayName = default;

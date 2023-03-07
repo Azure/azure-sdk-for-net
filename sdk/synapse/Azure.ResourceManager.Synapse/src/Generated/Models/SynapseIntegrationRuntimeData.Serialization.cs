@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.Synapse
 
         internal static SynapseIntegrationRuntimeData DeserializeSynapseIntegrationRuntimeData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             SynapseIntegrationRuntimeProperties properties = default;
             Optional<ETag> etag = default;
             ResourceIdentifier id = default;

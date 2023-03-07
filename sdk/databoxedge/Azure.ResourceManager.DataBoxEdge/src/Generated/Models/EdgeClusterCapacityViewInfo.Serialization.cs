@@ -46,6 +46,10 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
 
         internal static EdgeClusterCapacityViewInfo DeserializeEdgeClusterCapacityViewInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> fqdn = default;
             Optional<EdgeClusterGpuCapacity> gpuCapacity = default;
             Optional<EdgeClusterMemoryCapacity> memoryCapacity = default;

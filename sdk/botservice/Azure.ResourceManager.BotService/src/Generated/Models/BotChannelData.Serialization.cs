@@ -64,6 +64,10 @@ namespace Azure.ResourceManager.BotService
 
         internal static BotChannelData DeserializeBotChannelData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<BotChannelProperties> properties = default;
             Optional<BotServiceSku> sku = default;
             Optional<BotServiceKind?> kind = default;

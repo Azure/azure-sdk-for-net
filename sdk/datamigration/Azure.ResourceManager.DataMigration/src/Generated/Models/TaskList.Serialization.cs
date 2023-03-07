@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.DataMigration.Models
     {
         internal static TaskList DeserializeTaskList(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<ProjectTaskData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

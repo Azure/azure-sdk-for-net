@@ -29,6 +29,10 @@ namespace Azure.ResourceManager.Synapse.Models
 
         internal static SynapseEnvironmentVariableSetup DeserializeSynapseEnvironmentVariableSetup(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string type = default;
             string variableName = default;
             string variableValue = default;

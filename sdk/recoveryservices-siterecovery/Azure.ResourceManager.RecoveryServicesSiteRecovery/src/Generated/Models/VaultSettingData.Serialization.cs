@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
     {
         internal static VaultSettingData DeserializeVaultSettingData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<VaultSettingProperties> properties = default;
             Optional<AzureLocation> location = default;
             ResourceIdentifier id = default;

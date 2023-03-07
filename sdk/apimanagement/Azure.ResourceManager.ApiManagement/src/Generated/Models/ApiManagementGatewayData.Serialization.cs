@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.ApiManagement
 
         internal static ApiManagementGatewayData DeserializeApiManagementGatewayData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;

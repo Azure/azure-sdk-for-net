@@ -15,6 +15,10 @@ namespace Azure.Monitor.Query.Models
     {
         internal static MetricDefinition DeserializeMetricDefinition(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> isDimensionRequired = default;
             Optional<string> resourceId = default;
             Optional<string> @namespace = default;

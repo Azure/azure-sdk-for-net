@@ -36,6 +36,10 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static AppServiceAadLoginFlow DeserializeAppServiceAadLoginFlow(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<string>> loginParameters = default;
             Optional<bool> disableWWWAuthenticate = default;
             foreach (var property in element.EnumerateObject())

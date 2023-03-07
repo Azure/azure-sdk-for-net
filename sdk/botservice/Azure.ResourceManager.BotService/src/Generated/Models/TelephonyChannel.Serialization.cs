@@ -45,6 +45,10 @@ namespace Azure.ResourceManager.BotService.Models
 
         internal static TelephonyChannel DeserializeTelephonyChannel(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<TelephonyChannelProperties> properties = default;
             string channelName = default;
             Optional<ETag?> etag = default;

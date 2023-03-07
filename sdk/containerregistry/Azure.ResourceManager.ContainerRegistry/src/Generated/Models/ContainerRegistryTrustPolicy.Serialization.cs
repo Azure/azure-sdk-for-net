@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
 
         internal static ContainerRegistryTrustPolicy DeserializeContainerRegistryTrustPolicy(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ContainerRegistryTrustPolicyType> type = default;
             Optional<ContainerRegistryPolicyStatus> status = default;
             foreach (var property in element.EnumerateObject())

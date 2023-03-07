@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Monitor.Models
     {
         internal static NotificationActionDetail DeserializeNotificationActionDetail(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> mechanismType = default;
             Optional<string> name = default;
             Optional<string> status = default;

@@ -30,6 +30,10 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
 
         internal static OnvifHostName DeserializeOnvifHostName(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> fromDhcp = default;
             Optional<string> hostname = default;
             foreach (var property in element.EnumerateObject())

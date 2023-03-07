@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.DigitalTwins.Models
     {
         internal static PrivateEndpointConnectionsResponse DeserializePrivateEndpointConnectionsResponse(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<DigitalTwinsPrivateEndpointConnectionData>> value = default;
             foreach (var property in element.EnumerateObject())
             {

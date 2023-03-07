@@ -54,6 +54,10 @@ namespace Azure.ResourceManager.BotService.Models
 
         internal static MsTeamsChannelProperties DeserializeMsTeamsChannelProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> enableCalling = default;
             Optional<string> callingWebhook = default;
             bool isEnabled = default;

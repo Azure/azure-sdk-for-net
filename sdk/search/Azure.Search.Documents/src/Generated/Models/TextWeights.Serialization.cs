@@ -29,6 +29,10 @@ namespace Azure.Search.Documents.Indexes.Models
 
         internal static TextWeights DeserializeTextWeights(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IDictionary<string, double> weights = default;
             foreach (var property in element.EnumerateObject())
             {

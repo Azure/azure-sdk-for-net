@@ -34,6 +34,10 @@ namespace Azure.ResourceManager.Monitor.Models
 
         internal static MonitorAzureFunctionReceiver DeserializeMonitorAzureFunctionReceiver(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string name = default;
             ResourceIdentifier functionAppResourceId = default;
             string functionName = default;

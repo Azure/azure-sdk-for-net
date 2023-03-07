@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.HealthcareApis.Models
     {
         internal static IotFhirDestinationCollection DeserializeIotFhirDestinationCollection(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> nextLink = default;
             Optional<IReadOnlyList<HealthcareApisIotFhirDestinationData>> value = default;
             foreach (var property in element.EnumerateObject())

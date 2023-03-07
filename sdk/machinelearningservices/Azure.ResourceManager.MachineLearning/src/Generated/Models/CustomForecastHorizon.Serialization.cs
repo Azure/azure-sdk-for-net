@@ -24,6 +24,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static CustomForecastHorizon DeserializeCustomForecastHorizon(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             int value = default;
             ForecastHorizonMode mode = default;
             foreach (var property in element.EnumerateObject())

@@ -20,6 +20,10 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         internal static ContainerAppDiagnosticSupportTopic DeserializeContainerAppDiagnosticSupportTopic(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> id = default;
             Optional<string> pesId = default;
             foreach (var property in element.EnumerateObject())
