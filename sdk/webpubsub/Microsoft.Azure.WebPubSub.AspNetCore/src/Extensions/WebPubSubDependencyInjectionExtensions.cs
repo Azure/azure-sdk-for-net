@@ -16,8 +16,8 @@ namespace Microsoft.Extensions.DependencyInjection
         /// </summary>
         /// <param name="services">The <see cref="IServiceCollection"/>.</param>
         /// <param name="configure">A callback to configure the <see cref="WebPubSubOptions"/>.</param>
-        /// <returns>The same instance of the <see cref="IWebPubSubServerBuilder"/>.</returns>
-        public static IWebPubSubServerBuilder AddWebPubSub(this IServiceCollection services, Action<WebPubSubOptions> configure)
+        /// <returns>The same instance of the <see cref="IServiceCollection"/>.</returns>
+        public static IServiceCollection AddWebPubSub(this IServiceCollection services, Action<WebPubSubOptions> configure)
         {
             if (services == null)
             {
@@ -38,8 +38,8 @@ namespace Microsoft.Extensions.DependencyInjection
         /// Adds the minimum essential Azure Web PubSub services to the <see cref="IServiceCollection"/>.
         /// </summary>
         /// <param name="services">The <see cref="IServiceCollection"/>.</param>
-        /// <returns>The same instance of the <see cref="IWebPubSubServerBuilder"/>.</returns>
-        public static IWebPubSubServerBuilder AddWebPubSub(this IServiceCollection services)
+        /// <returns>The same instance of the <see cref="IServiceCollection"/>.</returns>
+        public static IServiceCollection AddWebPubSub(this IServiceCollection services)
         {
             if (services == null)
             {
@@ -55,27 +55,26 @@ namespace Microsoft.Extensions.DependencyInjection
         /// Adds the Web PubSub service clients to be able to inject in <see cref="WebPubSubHub"/> and invoke service.
         /// </summary>
         /// <typeparam name="THub">User implemented <see cref="WebPubSubHub"/>.</typeparam>
-        /// <param name="builder">The <see cref="IWebPubSubServerBuilder"/>.</param>
-        /// <returns>The same instance of the <see cref="IWebPubSubServerBuilder"/>.</returns>
-        public static IWebPubSubServerBuilder AddWebPubSubServiceClient<THub>(this IWebPubSubServerBuilder builder) where THub : WebPubSubHub
+        /// <param name="services">The <see cref="IServiceCollection"/>.</param>
+        /// <returns>The same instance of the <see cref="IServiceCollection"/>.</returns>
+        public static IServiceCollection AddWebPubSubServiceClient<THub>(this IServiceCollection services) where THub : WebPubSubHub
         {
-            builder.Services.AddSingleton(typeof(WebPubSubServiceClient<THub>), sp =>
+            services.AddSingleton(typeof(WebPubSubServiceClient<THub>), sp =>
             {
                 var factory = sp.GetRequiredService<WebPubSubServiceClientFactory>();
                 return factory.Create<THub>();
             });
-            return builder;
+            return services;
         }
 
-        private static IWebPubSubServerBuilder AddWebPubSubCore(this IServiceCollection services)
+        private static IServiceCollection AddWebPubSubCore(this IServiceCollection services)
         {
             services.AddSingleton<ServiceRequestHandlerAdapter>()
                 .AddSingleton<WebPubSubMarkerService>()
                 .AddSingleton<WebPubSubServiceClientFactory>()
                 .AddSingleton<RequestValidator>();
 
-            var builder = new WebPubSubServerBuilder(services);
-            return builder;
+            return services;
         }
     }
 }

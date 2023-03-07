@@ -19,9 +19,9 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore.Tests
             var testHost = "webpubsub.azure.net";
             var services = new ServiceCollection();
             var serviceProvider = services
-                .AddWebPubSub(o => o.ServiceEndpoint = new ServiceEndpoint($"Endpoint=https://{testHost};AccessKey=7aab239577fd4f24bc919802fb629f5f;Version=1.0;"))
+                .AddWebPubSub(o => o.ServiceEndpoint = new WebPubSubServiceEndpoint($"Endpoint=https://{testHost};AccessKey=7aab239577fd4f24bc919802fb629f5f;Version=1.0;"))
                 .AddWebPubSubServiceClient<TestHub>()
-                .Services.BuildServiceProvider();
+                .BuildServiceProvider();
             var validator = serviceProvider.GetRequiredService<RequestValidator>();
 
             Assert.NotNull(validator);
@@ -37,7 +37,7 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore.Tests
             var services = new ServiceCollection();
             var serviceProvider = services
                 .AddWebPubSub()
-                .Services.BuildServiceProvider();
+                .BuildServiceProvider();
             var wpsOptions = serviceProvider.GetRequiredService<IOptions<WebPubSubOptions>>();
 
             // no throws
@@ -52,7 +52,6 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore.Tests
             var serviceProvider = new ServiceCollection()
                 .AddWebPubSub()
                 .AddWebPubSubServiceClient<TestHub>()
-                .Services
                 .BuildServiceProvider();
             var clientFactory = serviceProvider.GetRequiredService<WebPubSubServiceClientFactory>();
 

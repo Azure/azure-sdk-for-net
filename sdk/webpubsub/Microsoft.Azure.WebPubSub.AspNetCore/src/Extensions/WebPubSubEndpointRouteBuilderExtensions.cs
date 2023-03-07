@@ -29,14 +29,9 @@ namespace Microsoft.AspNetCore.Builder
                 throw new ArgumentNullException(nameof(endpoints));
             }
 
-            var marker = endpoints.ServiceProvider.GetService<WebPubSubMarkerService>();
-
-            if (marker == null)
-            {
-                throw new InvalidOperationException(
+            var marker = endpoints.ServiceProvider.GetService<WebPubSubMarkerService>() ?? throw new InvalidOperationException(
                     "Unable to find the required services. Please add all the required services by calling " +
                     "'IServiceCollection.AddWebPubSub' inside the call to 'ConfigureServices(...)' in the application startup code.");
-            }
 
             var adaptor = endpoints.ServiceProvider.GetService<ServiceRequestHandlerAdapter>();
             adaptor.RegisterHub<THub>();

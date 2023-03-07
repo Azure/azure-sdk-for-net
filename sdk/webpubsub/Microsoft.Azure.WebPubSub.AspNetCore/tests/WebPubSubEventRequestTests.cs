@@ -210,7 +210,7 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore.Tests
                 null, null, "0f9c97a2f0bf4706afe87a14e0797b11",
                 signature: "sha256=7767effcb3946f3e1de039df4b986ef02c110b1469d02c0a06f41b3b727ab561",
                 origin: TestUri.Host);
-            var options = new RequestValidator(Options.Create(new WebPubSubOptions { ServiceEndpoint = new ServiceEndpoint($"Endpoint={TestUri};AccessKey={accessKey};Version=1.0;") }));
+            var options = new RequestValidator(Options.Create(new WebPubSubOptions { ServiceEndpoint = new WebPubSubServiceEndpoint($"Endpoint={TestUri};AccessKey={accessKey};Version=1.0;") }));
             var result = options.IsValidSignature(connectionContext);
             Assert.AreEqual(valid, result);
         }
@@ -235,7 +235,7 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore.Tests
                 null, null, "0f9c97a2f0bf4706afe87a14e0797b11",
                 signature: "sha256=7767effcb3946f3e1de039df4b986ef02c110b1469d02c0a06f41b3b727ab561",
                 origin: TestUri.Host);
-            var validator = new RequestValidator(Options.Create(new WebPubSubOptions{ ServiceEndpoint = new ServiceEndpoint($"Endpoint={TestUri};Version=1.0;") }));
+            var validator = new RequestValidator(Options.Create(new WebPubSubOptions{ ServiceEndpoint = new WebPubSubServiceEndpoint($"Endpoint={TestUri};Version=1.0;") }));
             var result = validator.IsValidSignature(connectionContext);
             Assert.True(result);
         }
@@ -247,7 +247,7 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore.Tests
                 WebPubSubEventType.System,
                 null, null, "0f9c97a2f0bf4706afe87a14e0797b11",
                 origin: TestUri.Host);
-            var validator = new RequestValidator(Options.Create(new WebPubSubOptions { ServiceEndpoint = new ServiceEndpoint($"Endpoint={TestUri};AccessKey=7aab239577fd4f24bc919802fb629f5f;Version=1.0;") }));
+            var validator = new RequestValidator(Options.Create(new WebPubSubOptions { ServiceEndpoint = new WebPubSubServiceEndpoint($"Endpoint={TestUri};AccessKey=7aab239577fd4f24bc919802fb629f5f;Version=1.0;") }));
             var result = validator.IsValidSignature(connectionContext);
             Assert.False(result);
         }
@@ -275,7 +275,7 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore.Tests
         [TestCase("http://localhost", false)]
         public void TestAbuseProtectionCompare(string requestHost, bool expected)
         {
-            var validator = new RequestValidator(Options.Create(new WebPubSubOptions { ServiceEndpoint = new ServiceEndpoint($"Endpoint=https://my-host.com;AccessKey=7aab239577fd4f24bc919802fb629f5f;Version=1.0;") }));
+            var validator = new RequestValidator(Options.Create(new WebPubSubOptions { ServiceEndpoint = new WebPubSubServiceEndpoint($"Endpoint=https://my-host.com;AccessKey=7aab239577fd4f24bc919802fb629f5f;Version=1.0;") }));
 
             Assert.AreEqual(expected, validator.IsValidOrigin(new List<string> { requestHost }));
         }
