@@ -140,9 +140,10 @@ namespace Azure.Core.Dynamic
         public override T ConvertTo<T>()
         {
             // TODO: is this better at the root?
-            if (CastFromOperators.TryGetValue(typeof(T), out MethodInfo? _))
+            if (CastFromOperators.TryGetValue(typeof(T), out MethodInfo? method))
             {
-                return (T)(dynamic)this;
+                // TODO: don't use reflection
+                return (T)method.Invoke(null, new object[] { this })!;
             }
 
 #if NET6_0_OR_GREATER
