@@ -293,18 +293,12 @@ namespace Azure.AI.TextAnalytics.Tests
         public async Task SingleLabelClassifyBatchConvenienceWithAutoDetectedLanguageTest()
         {
             TextAnalyticsClient client = GetClient(useStaticResource: true);
-            SingleLabelClassifyOptions options = new()
-            {
-                AutoDetectionDefaultLanguage = "en"
-            };
 
             ClassifyDocumentOperation operation = await client.StartSingleLabelClassifyAsync(
                 s_singleLabelClassifyBatchConvenienceDocuments,
                 TestEnvironment.SingleClassificationProjectName,
                 TestEnvironment.SingleClassificationDeploymentName,
-                "auto",
-                options);
-
+                "auto");
             await operation.WaitForCompletionAsync();
 
             // Take the first page.
@@ -337,29 +331,6 @@ namespace Azure.AI.TextAnalytics.Tests
 
             ClassifyDocumentResultCollection results = actionResults.FirstOrDefault().DocumentsResults;
             ValidateSummaryBatchResult(results, isLanguageAutoDetected: true);
-        }
-
-        [RecordedTest]
-        [ServiceVersion(Max = TextAnalyticsClientOptions.ServiceVersion.V2022_05_01)]
-        public void SingleLabelClassifyBatchWithDefaultLanguageThrows()
-        {
-            TestDiagnostics = false;
-
-            TextAnalyticsClient client = GetClient();
-            SingleLabelClassifyOptions options = new()
-            {
-                AutoDetectionDefaultLanguage = "en"
-            };
-
-            NotSupportedException ex = Assert.ThrowsAsync<NotSupportedException>(
-                async () => await client.StartSingleLabelClassifyAsync(
-                s_singleLabelClassifyBatchConvenienceDocuments,
-                TestEnvironment.SingleClassificationProjectName,
-                TestEnvironment.SingleClassificationDeploymentName,
-                "auto",
-                options));
-
-            Assert.That(ex.Message.EndsWith("Use service API version 2022-10-01-preview or newer."));
         }
 
         private void ValidateSummaryDocumentResult(ClassificationCategory? classification)
