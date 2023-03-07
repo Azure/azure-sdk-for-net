@@ -55,6 +55,14 @@ namespace Azure.Core.Tests.Public
             // TODO: Standardize Exception types.
             Assert.Throws<InvalidOperationException>(() => { var model = (int)data; });
             Assert.Throws<InvalidOperationException>(() => { var model = (bool)data; });
+
+            // This doesn't throw in this implementation.
+            // Basically, we would now be saying, if you cast to a string, I will call
+            // ToString() for you - we are changing the cast semantics away from maintaining
+            // consistency with the GetString()/JsonElement APIs.
+            // The caller can call ToString() themselves if their intention is to use
+            // ToString() instead of getting the value of the JSON element as a string.
+            // So, I don't think we want to use this approach.
             Assert.Throws<InvalidOperationException>(() => { var model = (string)data; });
             Assert.Throws<JsonException>(() => { var model = (DateTime)data; });
         }
