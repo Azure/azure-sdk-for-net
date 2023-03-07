@@ -5,7 +5,6 @@ using System;
 using System.Collections;
 using System.Dynamic;
 using System.Linq.Expressions;
-using System.Reflection;
 
 namespace Azure.Core.Dynamic
 {
@@ -58,12 +57,6 @@ namespace Azure.Core.Dynamic
                     UnaryExpression makeIDisposable = Expression.Convert(this_, binder.Type);
                     return new DynamicMetaObject(makeIDisposable, restrictions);
                 }
-
-                //if (CastFromOperators.TryGetValue(binder.Type, out MethodInfo? castOperator))
-                //{
-                //    MethodCallExpression cast = Expression.Call(castOperator, this_);
-                //    return new DynamicMetaObject(cast, restrictions);
-                //}
 
                 MethodCallExpression convertTo = Expression.Call(this_, nameof(ConvertTo), new Type[] { binder.Type });
                 return new DynamicMetaObject(convertTo, restrictions);

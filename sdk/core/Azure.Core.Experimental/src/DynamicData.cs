@@ -6,7 +6,6 @@ using System.Collections;
 using System.Dynamic;
 using System.IO;
 using System.Reflection;
-using System.Xml.Linq;
 
 // TODO: remove
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
@@ -14,11 +13,11 @@ using System.Xml.Linq;
 // ** TODO
 //   - ToDynamic() extensions
 //   - Move casing logic into base class?  Should there be common Options?
-//   - Do we want these APIs public?
-//   - Should cast move into base type?
+//   - Do we want these to be public APIs?
+//   - Should casts move into base type?
+//   - Should operators move to the base class?
 //   - Is there stuff in MutableJsonElement that should move? E.g. validation of element type asumptions?
 //   - Should base class be IDisposable?
-//   - Should operators move to the base class?
 
 namespace Azure.Core.Dynamic
 {
@@ -52,13 +51,20 @@ namespace Azure.Core.Dynamic
         /// <param name="stream">The stream to which to write the document.</param>
         public abstract void WriteTo(Stream stream);
 
+        // TODO: It might be nice to have this return DynamicData, but
+        // TableEntity holding an object prevents it, unless we wanted
+        // to wrap that in DynamicData, but not sure there's value there.
         public abstract object? GetProperty(string name);
 
         public abstract object? GetElement(int index);
 
         public abstract object? SetProperty(string name, object value);
 
+        public abstract object? SetElement(int index, object value);
+
         public abstract IEnumerable GetEnumerable();
+
+        public abstract T ConvertTo<T>();
 
         public object? GetViaIndexer(object index)
         {
@@ -73,8 +79,6 @@ namespace Azure.Core.Dynamic
             throw new InvalidOperationException($"Tried to access indexer with an unsupported index type: {index}");
         }
 
-        public abstract object? SetElement(int index, object value);
-
         public object? SetViaIndexer(object index, object value)
         {
             return index switch
@@ -84,7 +88,5 @@ namespace Azure.Core.Dynamic
                 _ => throw new InvalidOperationException($"Tried to access indexer with an unsupported index type: {index}"),
             };
         }
-
-        public abstract T ConvertTo<T>();
     }
 }
