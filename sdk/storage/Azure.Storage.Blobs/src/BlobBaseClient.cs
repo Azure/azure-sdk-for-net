@@ -6665,7 +6665,7 @@ namespace Azure.Storage.Blobs.Specialized
                     nameof(builder.BlobVersionId),
                     nameof(BlobSasBuilder));
             }
-            BlobUriBuilder sasUri = new BlobUriBuilder(Uri)
+            BlobUriBuilder sasUri = new BlobUriBuilder(Uri, ClientConfiguration.TrimBlobNameSlashes)
             {
                 Sas = builder.ToSasQueryParameters(ClientConfiguration.SharedKeyCredential)
             };
