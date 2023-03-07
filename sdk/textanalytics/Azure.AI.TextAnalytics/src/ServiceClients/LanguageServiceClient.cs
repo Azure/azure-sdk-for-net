@@ -2477,7 +2477,7 @@ namespace Azure.AI.TextAnalytics.ServiceClients
                 ModelVersion = options.ModelVersion,
                 StringIndexType = Constants.DefaultStringIndexType,
                 LoggingOptOut = options.DisableServiceLogs,
-                SentenceCount = options.MaxSentenceCount,
+                SentenceCount = options.SentenceCount,
             };
 
             return new AbstractiveSummarizationLROTask(parameters);

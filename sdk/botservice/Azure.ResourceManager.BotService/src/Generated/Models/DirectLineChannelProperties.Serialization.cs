@@ -26,6 +26,16 @@ namespace Azure.ResourceManager.BotService.Models
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsDefined(ExtensionKey1))
+            {
+                writer.WritePropertyName("extensionKey1"u8);
+                writer.WriteStringValue(ExtensionKey1);
+            }
+            if (Optional.IsDefined(ExtensionKey2))
+            {
+                writer.WritePropertyName("extensionKey2"u8);
+                writer.WriteStringValue(ExtensionKey2);
+            }
             if (Optional.IsDefined(DirectLineEmbedCode))
             {
                 writer.WritePropertyName("DirectLineEmbedCode"u8);

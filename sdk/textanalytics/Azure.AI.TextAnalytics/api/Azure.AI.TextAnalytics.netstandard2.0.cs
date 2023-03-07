@@ -14,8 +14,8 @@ namespace Azure.AI.TextAnalytics
         public AbstractSummaryAction(Azure.AI.TextAnalytics.AbstractSummaryOptions options) { }
         public string ActionName { get { throw null; } set { } }
         public bool? DisableServiceLogs { get { throw null; } set { } }
-        public int? MaxSentenceCount { get { throw null; } set { } }
         public string ModelVersion { get { throw null; } set { } }
+        public int? SentenceCount { get { throw null; } set { } }
     }
     public partial class AbstractSummaryActionResult : Azure.AI.TextAnalytics.TextAnalyticsActionResult
     {
@@ -49,7 +49,7 @@ namespace Azure.AI.TextAnalytics
         public AbstractSummaryOptions() { }
         public string AutoDetectionDefaultLanguage { get { throw null; } set { } }
         public string DisplayName { get { throw null; } set { } }
-        public int? MaxSentenceCount { get { throw null; } set { } }
+        public int? SentenceCount { get { throw null; } set { } }
     }
     public partial class AbstractSummaryResult : Azure.AI.TextAnalytics.TextAnalyticsResult
     {
@@ -283,11 +283,6 @@ namespace Azure.AI.TextAnalytics
     public abstract partial class BaseResolution
     {
         internal BaseResolution() { }
-    }
-    public partial class BooleanResolution : Azure.AI.TextAnalytics.BaseResolution
-    {
-        internal BooleanResolution() { }
-        public bool Value { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct CategorizedEntity
@@ -1765,7 +1760,6 @@ namespace Azure.AI.TextAnalytics
         public static Azure.AI.TextAnalytics.AnalyzeSentimentResultCollection AnalyzeSentimentResultCollection(System.Collections.Generic.IEnumerable<Azure.AI.TextAnalytics.AnalyzeSentimentResult> list, Azure.AI.TextAnalytics.TextDocumentBatchStatistics statistics, string modelVersion) { throw null; }
         public static Azure.AI.TextAnalytics.AreaResolution AreaResolution(Azure.AI.TextAnalytics.AreaUnit unit, double value) { throw null; }
         public static Azure.AI.TextAnalytics.AssessmentSentiment AssessmentSentiment(Azure.AI.TextAnalytics.TextSentiment sentiment, double positiveScore, double negativeScore, string text, bool isNegated, int offset, int length) { throw null; }
-        public static Azure.AI.TextAnalytics.BooleanResolution BooleanResolution(bool value) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.AI.TextAnalytics.CategorizedEntity CategorizedEntity(string text, string category, string subCategory, double score) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]

@@ -33,7 +33,6 @@ namespace Azure.AI.TextAnalytics
                 {
                     case "AgeResolution": return AgeResolution.DeserializeAgeResolution(element);
                     case "AreaResolution": return AreaResolution.DeserializeAreaResolution(element);
-                    case "BooleanResolution": return BooleanResolution.DeserializeBooleanResolution(element);
                     case "CurrencyResolution": return CurrencyResolution.DeserializeCurrencyResolution(element);
                     case "DateTimeResolution": return DateTimeResolution.DeserializeDateTimeResolution(element);
                     case "InformationResolution": return InformationResolution.DeserializeInformationResolution(element);

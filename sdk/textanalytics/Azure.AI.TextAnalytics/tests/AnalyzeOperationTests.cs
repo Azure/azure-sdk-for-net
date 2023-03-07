@@ -862,7 +862,7 @@ namespace Azure.AI.TextAnalytics.Tests
 
             TextAnalyticsActions batchActions = new TextAnalyticsActions()
             {
-                AbstractSummaryActions = new List<AbstractSummaryAction>() { new AbstractSummaryAction() { MaxSentenceCount = 2 } },
+                AbstractSummaryActions = new List<AbstractSummaryAction>() { new AbstractSummaryAction() { SentenceCount = 2 } },
                 DisplayName = "AnalyzeOperationAbstractSummary",
             };
 
