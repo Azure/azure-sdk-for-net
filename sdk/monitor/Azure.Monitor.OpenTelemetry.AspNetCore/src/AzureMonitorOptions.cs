@@ -7,7 +7,7 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Monitor.OpenTelemetry.Exporter;
 
-namespace Azure.Monitor.OpenTelemetry
+namespace Azure.Monitor.OpenTelemetry.AspNetCore
 {
     /// <summary>
     /// Options that allow users to configure the Azure Monitor.

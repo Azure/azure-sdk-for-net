@@ -4,7 +4,7 @@
 #if NET6_0_OR_GREATER
 using System.Diagnostics;
 using System.Net.Http;
-using Azure.Monitor.OpenTelemetry;
+using Azure.Monitor.OpenTelemetry.AspNetCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Logging;
 
@@ -15,7 +15,7 @@ builder.Services.AddAzureMonitor();
 /*
 builder.Services.AddAzureMonitor(o =>
 {
-    o.ConnectionString = "InstrumentationKey=00000000-0000-0000-0000-000000000000";
+    o.ConnectionString = "InstrumentationKey=00000000-0000-0000-0000-00000000CODE";
     // Set the Credential property to enable AAD based authentication:
     // o.Credential = new DefaultAzureCredential();
 });

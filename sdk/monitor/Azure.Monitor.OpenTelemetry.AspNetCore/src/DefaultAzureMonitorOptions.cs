@@ -5,7 +5,7 @@ using System;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
 
-namespace Azure.Monitor.OpenTelemetry
+namespace Azure.Monitor.OpenTelemetry.AspNetCore
 {
     internal class DefaultAzureMonitorOptions : IConfigureOptions<AzureMonitorOptions>
     {

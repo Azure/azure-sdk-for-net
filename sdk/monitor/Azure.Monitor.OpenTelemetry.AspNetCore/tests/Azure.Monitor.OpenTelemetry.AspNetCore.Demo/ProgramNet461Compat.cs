@@ -3,7 +3,7 @@
 
 #if NET461
 
-namespace Azure.Monitor.OpenTelemetry.Demo
+namespace Azure.Monitor.OpenTelemetry.AspNetCore.Demo
 {
     public partial class Program
     {
