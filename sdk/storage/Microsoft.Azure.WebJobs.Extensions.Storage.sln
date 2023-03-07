@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.30011.22
+# Visual Studio Version 17
+VisualStudioVersion = 17.4.33403.182
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution", "Solution", "{3B089351-285A-4829-8F60-30768A7469BD}"
 	ProjectSection(SolutionItems) = preProject
@@ -15,6 +15,9 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Storage.Queues", "Azure.Storage.Queues\src\Azure.Storage.Queues.csproj", "{E3D3BB3C-3A88-435C-91A1-63E90B86F3B3}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.WebJobs.Extensions.Storage.Blobs", "Microsoft.Azure.WebJobs.Extensions.Storage.Blobs\src\Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.csproj", "{DD47DD4C-48D4-41AA-99E7-D0E7CC8D4EA6}"
+	ProjectSection(ProjectDependencies) = postProject
+		{3AAC39AF-A6CF-459B-8948-4C2C347C0FA4} = {3AAC39AF-A6CF-459B-8948-4C2C347C0FA4}
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Tests", "Microsoft.Azure.WebJobs.Extensions.Storage.Blobs\tests\Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Tests.csproj", "{B3C2CA6A-0DB5-4EA3-B533-3B5F34988750}"
 EndProject
@@ -116,10 +119,6 @@ Global
 		{22D974DB-0B34-48F5-90EC-F65F9902E7D3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{22D974DB-0B34-48F5-90EC-F65F9902E7D3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{22D974DB-0B34-48F5-90EC-F65F9902E7D3}.Release|Any CPU.Build.0 = Release|Any CPU
-		{03A5BF93-27C7-4923-B006-004DFD0795C0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{03A5BF93-27C7-4923-B006-004DFD0795C0}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{03A5BF93-27C7-4923-B006-004DFD0795C0}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{03A5BF93-27C7-4923-B006-004DFD0795C0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
