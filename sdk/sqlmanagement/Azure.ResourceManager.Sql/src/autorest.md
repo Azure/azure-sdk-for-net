@@ -137,7 +137,7 @@ list-exception:
 - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/schemas/{schemaName}/tables/{tableName}/columns/{columnName}/sensitivityLabels/{sensitivityLabelSource}
 - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/vulnerabilityAssessments/{vulnerabilityAssessmentName}/rules/{ruleId}/baselines/{baselineName}
 
-no-property-type-replacement: ResourceMoveDefinition
+# no-property-type-replacement: ResourceMoveDefinition
 
 override-operation-name:
   ServerTrustGroups_ListByInstance: GetSqlServerTrustGroups
