@@ -114,16 +114,28 @@ namespace Azure.Core.Dynamic
         public static dynamic ToDynamic(this System.BinaryData data, Azure.Core.Dynamic.DynamicJsonNameMapping propertyNameCasing) { throw null; }
         public static dynamic ToDynamic(this System.BinaryData data, Azure.Core.Dynamic.DynamicJsonOptions options) { throw null; }
     }
-    public abstract partial class DynamicData
+    public abstract partial class DynamicData : System.Dynamic.IDynamicMetaObjectProvider
     {
         protected DynamicData() { }
-        internal abstract void WriteTo(System.IO.Stream stream);
-        public static void WriteTo(System.IO.Stream stream, Azure.Core.Dynamic.DynamicData data) { }
+        public abstract T ConvertTo<T>();
+        public abstract object? GetElement(int index);
+        public abstract System.Collections.IEnumerable GetEnumerable();
+        public abstract object? GetProperty(string name);
+        public object? GetViaIndexer(object index) { throw null; }
+        public abstract object? SetElement(int index, object value);
+        public abstract object? SetProperty(string name, object value);
+        public object? SetViaIndexer(object index, object value) { throw null; }
+        System.Dynamic.DynamicMetaObject System.Dynamic.IDynamicMetaObjectProvider.GetMetaObject(System.Linq.Expressions.Expression parameter) { throw null; }
+        public abstract void WriteTo(System.IO.Stream stream);
     }
-    public sealed partial class DynamicJson : Azure.Core.Dynamic.DynamicData, System.Dynamic.IDynamicMetaObjectProvider, System.IDisposable
+    public sealed partial class DynamicJson : Azure.Core.Dynamic.DynamicData, System.IDisposable
     {
         internal DynamicJson() { }
+        public override T ConvertTo<T>() { throw null; }
         public void Dispose() { }
+        public override object? GetElement(int index) { throw null; }
+        public override System.Collections.IEnumerable GetEnumerable() { throw null; }
+        public override object? GetProperty(string name) { throw null; }
         public static implicit operator bool (Azure.Core.Dynamic.DynamicJson value) { throw null; }
         public static implicit operator double (Azure.Core.Dynamic.DynamicJson value) { throw null; }
         public static implicit operator int (Azure.Core.Dynamic.DynamicJson value) { throw null; }
@@ -135,8 +147,10 @@ namespace Azure.Core.Dynamic
         public static implicit operator float? (Azure.Core.Dynamic.DynamicJson value) { throw null; }
         public static implicit operator float (Azure.Core.Dynamic.DynamicJson value) { throw null; }
         public static implicit operator string (Azure.Core.Dynamic.DynamicJson value) { throw null; }
-        System.Dynamic.DynamicMetaObject System.Dynamic.IDynamicMetaObjectProvider.GetMetaObject(System.Linq.Expressions.Expression parameter) { throw null; }
+        public override object? SetElement(int index, object value) { throw null; }
+        public override object? SetProperty(string name, object value) { throw null; }
         public override string ToString() { throw null; }
+        public override void WriteTo(System.IO.Stream stream) { }
         [System.Diagnostics.DebuggerDisplayAttribute("{Current,nq}")]
         [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
         public partial struct ArrayEnumerator : System.Collections.Generic.IEnumerable<Azure.Core.Dynamic.DynamicJson>, System.Collections.Generic.IEnumerator<Azure.Core.Dynamic.DynamicJson>, System.Collections.IEnumerable, System.Collections.IEnumerator, System.IDisposable
@@ -189,6 +203,17 @@ namespace Azure.Core.Dynamic
         private readonly int _dummyPrimitive;
         public string Name { get { throw null; } }
         public Azure.Core.Dynamic.DynamicJson Value { get { throw null; } }
+    }
+    public partial class DynamicTableEntity : Azure.Core.Dynamic.DynamicData
+    {
+        internal DynamicTableEntity() { }
+        public override T ConvertTo<T>() { throw null; }
+        public override object? GetElement(int index) { throw null; }
+        public override System.Collections.IEnumerable GetEnumerable() { throw null; }
+        public override object? GetProperty(string name) { throw null; }
+        public override object? SetElement(int index, object value) { throw null; }
+        public override object? SetProperty(string name, object value) { throw null; }
+        public override void WriteTo(System.IO.Stream stream) { }
     }
 }
 namespace Azure.Core.Json
