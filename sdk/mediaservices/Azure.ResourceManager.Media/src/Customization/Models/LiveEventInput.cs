@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 
+[assembly: CodeGenSuppressType("LiveEventInput")]
 namespace Azure.ResourceManager.Media.Models
 {
     /// <summary> The live event input. </summary>

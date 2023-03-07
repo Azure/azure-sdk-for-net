@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Media.Models
     {
         internal static LiveEventIngestInterruption DeserializeLiveEventIngestInterruption(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DateTimeOffset> begin = default;
             Optional<DateTimeOffset> end = default;
             Optional<TimeSpan> duration = default;

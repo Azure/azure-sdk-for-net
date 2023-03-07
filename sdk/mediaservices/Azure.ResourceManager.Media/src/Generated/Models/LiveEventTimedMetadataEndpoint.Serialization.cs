@@ -26,6 +26,10 @@ namespace Azure.ResourceManager.Media.Models
 
         internal static LiveEventTimedMetadataEndpoint DeserializeLiveEventTimedMetadataEndpoint(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<Uri> uri = default;
             foreach (var property in element.EnumerateObject())
             {

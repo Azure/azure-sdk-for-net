@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Media.Models
     {
         internal static LiveEventGetStatusResult DeserializeLiveEventGetStatusResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<LiveEventStatus>> value = default;
             foreach (var property in element.EnumerateObject())
             {

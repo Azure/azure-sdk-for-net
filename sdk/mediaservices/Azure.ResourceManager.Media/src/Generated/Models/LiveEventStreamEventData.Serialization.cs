@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.Media.Models
     {
         internal static LiveEventStreamEventData DeserializeLiveEventStreamEventData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> trackName = default;
             Optional<string> streamId = default;
             Optional<int> trackId = default;

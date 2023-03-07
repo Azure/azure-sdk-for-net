@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Media.Models
     {
         internal static LiveEventGetTrackIngestHeartbeatsResult DeserializeLiveEventGetTrackIngestHeartbeatsResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<LiveEventTrackEvent>> value = default;
             foreach (var property in element.EnumerateObject())
             {

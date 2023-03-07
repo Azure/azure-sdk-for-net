@@ -66,6 +66,10 @@ namespace Azure.ResourceManager.Media.Models
 
         internal static LiveEventInput DeserializeLiveEventInput(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             LiveEventInputProtocol streamingProtocol = default;
             Optional<LiveEventInputAccessControl> accessControl = default;
             Optional<TimeSpan> keyFrameIntervalDuration = default;

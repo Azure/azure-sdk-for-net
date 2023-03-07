@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Media.Models
     {
         internal static LiveEventGetStreamEventsResult DeserializeLiveEventGetStreamEventsResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<LiveEventStreamEvent>> value = default;
             foreach (var property in element.EnumerateObject())
             {

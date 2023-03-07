@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.Media.Models
     {
         internal static LiveEventIngestion DeserializeLiveEventIngestion(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> streamName = default;
             Optional<DateTimeOffset> begin = default;
             Optional<DateTimeOffset> end = default;

@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.Media.Models
     {
         internal static LiveEventTrackStatus DeserializeLiveEventTrackStatus(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> trackId = default;
             Optional<long> expectedBitrate = default;
             Optional<long> incomingBitrate = default;

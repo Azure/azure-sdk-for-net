@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Media.Models
     {
         internal static LiveEventStreamEvent DeserializeLiveEventStreamEvent(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<LiveEventStreamEventType> eventType = default;
             Optional<DateTimeOffset> eventTime = default;
             Optional<LiveEventStreamEventLevel> eventLevel = default;
