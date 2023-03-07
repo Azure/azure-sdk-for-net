@@ -575,20 +575,20 @@ namespace Azure.ResourceManager.CosmosDB
         }
         #endregion
 
-        #region DatabaseAccountCassandraKeyspaceViewThroughputSettingResource
+        #region CassandraViewThroughputSettingResource
         /// <summary>
-        /// Gets an object representing a <see cref="DatabaseAccountCassandraKeyspaceViewThroughputSettingResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DatabaseAccountCassandraKeyspaceViewThroughputSettingResource.CreateResourceIdentifier" /> to create a <see cref="DatabaseAccountCassandraKeyspaceViewThroughputSettingResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="CassandraViewThroughputSettingResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="CassandraViewThroughputSettingResource.CreateResourceIdentifier" /> to create a <see cref="CassandraViewThroughputSettingResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DatabaseAccountCassandraKeyspaceViewThroughputSettingResource" /> object. </returns>
-        public static DatabaseAccountCassandraKeyspaceViewThroughputSettingResource GetDatabaseAccountCassandraKeyspaceViewThroughputSettingResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="CassandraViewThroughputSettingResource" /> object. </returns>
+        public static CassandraViewThroughputSettingResource GetCassandraViewThroughputSettingResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                DatabaseAccountCassandraKeyspaceViewThroughputSettingResource.ValidateResourceId(id);
-                return new DatabaseAccountCassandraKeyspaceViewThroughputSettingResource(client, id);
+                CassandraViewThroughputSettingResource.ValidateResourceId(id);
+                return new CassandraViewThroughputSettingResource(client, id);
             }
             );
         }
