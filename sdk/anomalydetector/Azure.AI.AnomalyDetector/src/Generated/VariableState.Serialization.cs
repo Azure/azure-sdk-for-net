@@ -75,6 +75,10 @@ namespace Azure.AI.AnomalyDetector
 
         internal static VariableState DeserializeVariableState(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> variable = default;
             Optional<float?> filledNARatio = default;
             Optional<int?> effectiveCount = default;

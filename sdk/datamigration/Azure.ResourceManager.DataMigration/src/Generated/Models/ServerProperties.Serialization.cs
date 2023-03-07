@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.DataMigration.Models
     {
         internal static ServerProperties DeserializeServerProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> serverPlatform = default;
             Optional<string> serverName = default;
             Optional<string> serverVersion = default;

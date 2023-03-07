@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.DataShare.Models
     {
         internal static ShareSynchronizationList DeserializeShareSynchronizationList(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> nextLink = default;
             IReadOnlyList<ShareSynchronization> value = default;
             foreach (var property in element.EnumerateObject())

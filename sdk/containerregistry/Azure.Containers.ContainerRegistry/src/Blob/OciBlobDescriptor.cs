@@ -12,8 +12,10 @@ namespace Azure.Containers.ContainerRegistry.Specialized
     {
         /// <summary> Layer media type. </summary>
         public string MediaType { get; set; }
+
         /// <summary> Layer size. </summary>
-        public long? Size { get; set; }
+        [CodeGenMember("Size")]
+        public long? SizeInBytes { get; set; }
         /// <summary> Layer digest. </summary>
         public string Digest { get; set; }
 

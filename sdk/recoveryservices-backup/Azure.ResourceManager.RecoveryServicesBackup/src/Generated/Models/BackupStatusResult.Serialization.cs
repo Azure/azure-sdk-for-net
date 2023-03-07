@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     {
         internal static BackupStatusResult DeserializeBackupStatusResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<BackupProtectionStatus> protectionStatus = default;
             Optional<ResourceIdentifier> vaultId = default;
             Optional<BackupFabricName> fabricName = default;

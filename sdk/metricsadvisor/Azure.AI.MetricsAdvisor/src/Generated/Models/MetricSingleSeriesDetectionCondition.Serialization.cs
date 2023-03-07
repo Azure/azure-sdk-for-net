@@ -42,6 +42,10 @@ namespace Azure.AI.MetricsAdvisor.Models
 
         internal static MetricSingleSeriesDetectionCondition DeserializeMetricSingleSeriesDetectionCondition(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             SeriesIdentity series = default;
             Optional<DetectionConditionOperator> conditionOperator = default;
             Optional<SmartDetectionCondition> smartDetectionCondition = default;

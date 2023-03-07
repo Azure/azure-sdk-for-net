@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Cdn.Models
     {
         internal static UsagesListResult DeserializeUsagesListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<FrontDoorUsage>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

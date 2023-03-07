@@ -13,7 +13,10 @@ using Azure.ResourceManager.RecoveryServicesBackup.Models;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup
 {
-    /// <summary> A class representing the BackupPrivateEndpointConnection data model. </summary>
+    /// <summary>
+    /// A class representing the BackupPrivateEndpointConnection data model.
+    /// Private Endpoint Connection Response Properties
+    /// </summary>
     public partial class BackupPrivateEndpointConnectionData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of BackupPrivateEndpointConnectionData. </summary>

@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal static ConnectivityInformation DeserializeConnectivityInformation(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<ConnectivityHopInfo>> hops = default;
             Optional<NetworkConnectionStatus> connectionStatus = default;
             Optional<int> avgLatencyInMs = default;

@@ -61,6 +61,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static MicrosoftAccessSink DeserializeMicrosoftAccessSink(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<object> preCopyScript = default;
             string type = default;
             Optional<object> writeBatchSize = default;

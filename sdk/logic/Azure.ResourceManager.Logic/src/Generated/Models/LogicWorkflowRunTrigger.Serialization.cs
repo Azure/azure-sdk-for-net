@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Logic.Models
     {
         internal static LogicWorkflowRunTrigger DeserializeLogicWorkflowRunTrigger(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<BinaryData> inputs = default;
             Optional<LogicContentLink> inputsLink = default;

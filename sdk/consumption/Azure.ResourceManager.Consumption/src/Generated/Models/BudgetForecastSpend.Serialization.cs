@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.Consumption.Models
     {
         internal static BudgetForecastSpend DeserializeBudgetForecastSpend(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<decimal> amount = default;
             Optional<string> unit = default;
             foreach (var property in element.EnumerateObject())

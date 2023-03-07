@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     {
         internal static FailoverJobDetails DeserializeFailoverJobDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<FailoverReplicationProtectedItemDetails>> protectedItemDetails = default;
             string instanceType = default;
             Optional<IReadOnlyDictionary<string, string>> affectedObjectDetails = default;

@@ -36,6 +36,8 @@
     <Compile Include="$(AzureCoreSharedSources)Argument.cs" LinkBase="SharedSource\Azure.Core" />
     <Compile Include="$(AzureCoreSharedSources)AzureEventSource.cs" LinkBase="SharedSource\Azure.Core" />
     <Compile Include="$(AzureCoreSharedSources)TaskExtensions.cs" LinkBase="SharedSource\Azure.Core" />
+    <Compile Include="$(AzureCoreSharedSources)MessagingClientDiagnostics.cs" LinkBase="SharedSource\Azure.Core" />
+    <Compile Include="$(AzureCoreSharedSources)MessagingDiagnosticOperation.cs" LinkBase="SharedSource\Azure.Core" />
   </ItemGroup>
 
   <!--Embed the shared resources -->

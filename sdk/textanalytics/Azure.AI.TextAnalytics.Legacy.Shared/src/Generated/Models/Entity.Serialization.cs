@@ -14,6 +14,10 @@ namespace Azure.AI.TextAnalytics.Legacy
     {
         internal static Entity DeserializeEntity(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string text = default;
             string category = default;
             Optional<string> subcategory = default;

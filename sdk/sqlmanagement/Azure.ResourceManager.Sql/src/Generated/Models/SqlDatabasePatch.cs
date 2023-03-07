@@ -18,6 +18,7 @@ namespace Azure.ResourceManager.Sql.Models
         public SqlDatabasePatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
+            Keys = new ChangeTrackingDictionary<string, SqlDatabaseKey>();
         }
 
         /// <summary> The name and tier of the SKU. </summary>
@@ -120,7 +121,31 @@ namespace Azure.ResourceManager.Sql.Models
         public bool? IsInfraEncryptionEnabled { get; }
         /// <summary> The Client id used for cross tenant per database CMK scenario. </summary>
         public Guid? FederatedClientId { get; set; }
+        /// <summary> The resource ids of the user assigned identities to use. </summary>
+        public IDictionary<string, SqlDatabaseKey> Keys { get; }
+        /// <summary> The azure key vault URI of the database if it&apos;s configured with per Database Customer Managed Keys. </summary>
+        public string EncryptionProtector { get; set; }
         /// <summary> Type of enclave requested on the database i.e. Default or VBS enclaves. </summary>
         public SqlAlwaysEncryptedEnclaveType? PreferredEnclaveType { get; set; }
+        /// <summary>
+        /// Whether or not customer controlled manual cutover needs to be done during Update Database operation to Hyperscale tier.
+        /// 
+        /// This property is only applicable when scaling database from Business Critical/General Purpose/Premium/Standard tier to Hyperscale tier.
+        /// 
+        /// When manualCutover is specified, the scaling operation will wait for user input to trigger cutover to Hyperscale database.
+        /// 
+        /// To trigger cutover, please provide &apos;performCutover&apos; parameter when the Scaling operation is in Waiting state.
+        /// </summary>
+        public bool? ManualCutover { get; set; }
+        /// <summary>
+        /// To trigger customer controlled manual cutover during the wait state while Scaling operation is in progress.
+        /// 
+        /// This property parameter is only applicable for scaling operations that are initiated along with &apos;manualCutover&apos; parameter.
+        /// 
+        /// This property is only applicable when scaling database from Business Critical/General Purpose/Premium/Standard tier to Hyperscale tier is already in progress.
+        /// 
+        /// When performCutover is specified, the scaling operation will trigger cutover and perform role-change to Hyperscale database.
+        /// </summary>
+        public bool? PerformCutover { get; set; }
     }
 }

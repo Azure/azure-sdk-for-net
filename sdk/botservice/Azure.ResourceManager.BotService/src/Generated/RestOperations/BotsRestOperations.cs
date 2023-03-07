@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.BotService
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2022-06-15-preview";
+            _apiVersion = apiVersion ?? "2022-09-15";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -505,7 +505,7 @@ namespace Azure.ResourceManager.BotService
             }
         }
 
-        internal HttpMessage CreateGetCheckNameAvailabilityRequest(CheckNameAvailabilityRequestBody checkNameAvailabilityRequestBody)
+        internal HttpMessage CreateGetCheckNameAvailabilityRequest(BotServiceNameAvailabilityContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -517,30 +517,30 @@ namespace Azure.ResourceManager.BotService
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(checkNameAvailabilityRequestBody);
-            request.Content = content;
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(content);
+            request.Content = content0;
             _userAgent.Apply(message);
             return message;
         }
 
         /// <summary> Check whether a bot name is available. </summary>
-        /// <param name="checkNameAvailabilityRequestBody"> The request body parameters to provide for the check name availability request. </param>
+        /// <param name="content"> The request body parameters to provide for the check name availability request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="checkNameAvailabilityRequestBody"/> is null. </exception>
-        public async Task<Response<CheckNameAvailabilityResponseBody>> GetCheckNameAvailabilityAsync(CheckNameAvailabilityRequestBody checkNameAvailabilityRequestBody, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public async Task<Response<BotServiceNameAvailabilityResult>> GetCheckNameAvailabilityAsync(BotServiceNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(checkNameAvailabilityRequestBody, nameof(checkNameAvailabilityRequestBody));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateGetCheckNameAvailabilityRequest(checkNameAvailabilityRequestBody);
+            using var message = CreateGetCheckNameAvailabilityRequest(content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        CheckNameAvailabilityResponseBody value = default;
+                        BotServiceNameAvailabilityResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = CheckNameAvailabilityResponseBody.DeserializeCheckNameAvailabilityResponseBody(document.RootElement);
+                        value = BotServiceNameAvailabilityResult.DeserializeBotServiceNameAvailabilityResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -549,22 +549,22 @@ namespace Azure.ResourceManager.BotService
         }
 
         /// <summary> Check whether a bot name is available. </summary>
-        /// <param name="checkNameAvailabilityRequestBody"> The request body parameters to provide for the check name availability request. </param>
+        /// <param name="content"> The request body parameters to provide for the check name availability request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="checkNameAvailabilityRequestBody"/> is null. </exception>
-        public Response<CheckNameAvailabilityResponseBody> GetCheckNameAvailability(CheckNameAvailabilityRequestBody checkNameAvailabilityRequestBody, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public Response<BotServiceNameAvailabilityResult> GetCheckNameAvailability(BotServiceNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(checkNameAvailabilityRequestBody, nameof(checkNameAvailabilityRequestBody));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateGetCheckNameAvailabilityRequest(checkNameAvailabilityRequestBody);
+            using var message = CreateGetCheckNameAvailabilityRequest(content);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        CheckNameAvailabilityResponseBody value = default;
+                        BotServiceNameAvailabilityResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = CheckNameAvailabilityResponseBody.DeserializeCheckNameAvailabilityResponseBody(document.RootElement);
+                        value = BotServiceNameAvailabilityResult.DeserializeBotServiceNameAvailabilityResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

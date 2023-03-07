@@ -532,6 +532,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static ImageModelSettingsObjectDetection DeserializeImageModelSettingsObjectDetection(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int?> boxDetectionsPerImage = default;
             Optional<float?> boxScoreThreshold = default;
             Optional<int?> imageSize = default;

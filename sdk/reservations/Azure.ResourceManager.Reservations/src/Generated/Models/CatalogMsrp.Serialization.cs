@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.Reservations.Models
     {
         internal static CatalogMsrp DeserializeCatalogMsrp(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<PurchasePrice> p1Y = default;
             foreach (var property in element.EnumerateObject())
             {

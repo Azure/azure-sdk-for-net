@@ -24,6 +24,10 @@ namespace Azure.ResourceManager.Cdn.Models
 
         internal static UriRewriteAction DeserializeUriRewriteAction(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             UriRewriteActionProperties parameters = default;
             DeliveryRuleActionType name = default;
             foreach (var property in element.EnumerateObject())

@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.Compute.Models
     {
         internal static RegionalSharingStatus DeserializeRegionalSharingStatus(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> region = default;
             Optional<SharingState> state = default;
             Optional<string> details = default;

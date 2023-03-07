@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.Workloads.Models
 
         internal static NetworkConfiguration DeserializeNetworkConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> isSecondaryIPEnabled = default;
             foreach (var property in element.EnumerateObject())
             {

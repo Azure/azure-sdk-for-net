@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.ResourceGraph.Models
 
         public static ResultFormat ToResultFormat(this string value)
         {
-            if (string.Equals(value, "table", StringComparison.InvariantCultureIgnoreCase)) return ResultFormat.Table;
-            if (string.Equals(value, "objectArray", StringComparison.InvariantCultureIgnoreCase)) return ResultFormat.ObjectArray;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "table")) return ResultFormat.Table;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "objectArray")) return ResultFormat.ObjectArray;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ResultFormat value.");
         }
     }

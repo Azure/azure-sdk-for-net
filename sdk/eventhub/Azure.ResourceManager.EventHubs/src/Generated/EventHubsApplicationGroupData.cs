@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.EventHubs
 {
-    /// <summary> A class representing the EventHubsApplicationGroup data model. </summary>
+    /// <summary>
+    /// A class representing the EventHubsApplicationGroup data model.
+    /// The Application Group object
+    /// </summary>
     public partial class EventHubsApplicationGroupData : ResourceData
     {
         /// <summary> Initializes a new instance of EventHubsApplicationGroupData. </summary>

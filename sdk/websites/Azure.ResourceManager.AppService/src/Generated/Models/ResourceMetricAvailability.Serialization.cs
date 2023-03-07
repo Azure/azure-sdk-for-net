@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.AppService.Models
     {
         internal static ResourceMetricAvailability DeserializeResourceMetricAvailability(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> timeGrain = default;
             Optional<string> retention = default;
             foreach (var property in element.EnumerateObject())

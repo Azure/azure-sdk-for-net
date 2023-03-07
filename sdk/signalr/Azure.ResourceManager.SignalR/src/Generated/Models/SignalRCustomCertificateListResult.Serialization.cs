@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.SignalR.Models
     {
         internal static SignalRCustomCertificateListResult DeserializeSignalRCustomCertificateListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<SignalRCustomCertificateData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

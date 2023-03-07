@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.Storage.Models
 
         public static StorageAccountExpand ToStorageAccountExpand(this string value)
         {
-            if (string.Equals(value, "geoReplicationStats", StringComparison.InvariantCultureIgnoreCase)) return StorageAccountExpand.GeoReplicationStats;
-            if (string.Equals(value, "blobRestoreStatus", StringComparison.InvariantCultureIgnoreCase)) return StorageAccountExpand.BlobRestoreStatus;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "geoReplicationStats")) return StorageAccountExpand.GeoReplicationStats;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "blobRestoreStatus")) return StorageAccountExpand.BlobRestoreStatus;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown StorageAccountExpand value.");
         }
     }

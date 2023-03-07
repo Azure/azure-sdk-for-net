@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.DataFactory.Models
     {
         internal static FactoryDataFlowCreateDebugSessionResult DeserializeFactoryDataFlowCreateDebugSessionResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> status = default;
             Optional<Guid> sessionId = default;
             foreach (var property in element.EnumerateObject())

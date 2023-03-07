@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.Quantum.Models
     {
         internal static ProviderDescription DeserializeProviderDescription(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> id = default;
             Optional<string> name = default;
             Optional<ProviderProperties> properties = default;

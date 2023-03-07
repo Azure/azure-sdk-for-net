@@ -36,6 +36,10 @@ namespace Azure.ResourceManager.Logic.Models
 
         internal static LogicWorkflowRunCorrelation DeserializeLogicWorkflowRunCorrelation(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> clientTrackingId = default;
             Optional<IList<string>> clientKeywords = default;
             foreach (var property in element.EnumerateObject())

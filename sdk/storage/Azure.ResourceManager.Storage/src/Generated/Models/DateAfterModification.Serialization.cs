@@ -40,6 +40,10 @@ namespace Azure.ResourceManager.Storage.Models
 
         internal static DateAfterModification DeserializeDateAfterModification(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<float> daysAfterModificationGreaterThan = default;
             Optional<float> daysAfterLastAccessTimeGreaterThan = default;
             Optional<float> daysAfterLastTierChangeGreaterThan = default;

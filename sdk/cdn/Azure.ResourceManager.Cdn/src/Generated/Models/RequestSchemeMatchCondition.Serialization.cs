@@ -50,6 +50,10 @@ namespace Azure.ResourceManager.Cdn.Models
 
         internal static RequestSchemeMatchCondition DeserializeRequestSchemeMatchCondition(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             RequestSchemeMatchConditionType typeName = default;
             RequestSchemeOperator @operator = default;
             Optional<bool> negateCondition = default;

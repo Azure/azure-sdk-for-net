@@ -27,6 +27,10 @@ namespace Azure.ResourceManager.StorageMover.Models
 
         internal static EndpointBaseProperties DeserializeEndpointBaseProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             if (element.TryGetProperty("endpointType", out JsonElement discriminator))
             {
                 switch (discriminator.GetString())

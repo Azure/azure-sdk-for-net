@@ -45,6 +45,10 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static AppServiceSkuCapacity DeserializeAppServiceSkuCapacity(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> minimum = default;
             Optional<int> maximum = default;
             Optional<int> elasticMaximum = default;

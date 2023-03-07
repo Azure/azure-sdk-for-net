@@ -15,6 +15,10 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
     {
         internal static DocumentStyle DeserializeDocumentStyle(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> isHandwritten = default;
             IReadOnlyList<DocumentSpan> spans = default;
             float confidence = default;

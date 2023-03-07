@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     {
         internal static NetworkMappingCollection DeserializeNetworkMappingCollection(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<NetworkMappingData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

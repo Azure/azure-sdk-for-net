@@ -15,6 +15,10 @@ namespace Azure.Analytics.Synapse.Spark.Models
     {
         internal static SparkSessionCollection DeserializeSparkSessionCollection(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             int @from = default;
             int total = default;
             Optional<IReadOnlyList<SparkSession>> sessions = default;

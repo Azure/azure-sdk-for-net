@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.Cdn.Models
 
         internal static LoadBalancingSettings DeserializeLoadBalancingSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> sampleSize = default;
             Optional<int> successfulSamplesRequired = default;
             Optional<int> additionalLatencyInMilliseconds = default;

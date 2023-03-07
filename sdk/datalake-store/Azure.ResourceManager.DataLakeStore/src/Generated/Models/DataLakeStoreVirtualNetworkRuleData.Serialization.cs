@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.DataLakeStore
     {
         internal static DataLakeStoreVirtualNetworkRuleData DeserializeDataLakeStoreVirtualNetworkRuleData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;

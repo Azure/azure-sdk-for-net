@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.Cdn.Models
 
         internal static CdnSku DeserializeCdnSku(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<CdnSkuName> name = default;
             foreach (var property in element.EnumerateObject())
             {

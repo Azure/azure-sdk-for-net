@@ -11,7 +11,10 @@ using Azure.ResourceManager.Reservations.Models;
 
 namespace Azure.ResourceManager.Reservations
 {
-    /// <summary> A class representing the ReservationQuota data model. </summary>
+    /// <summary>
+    /// A class representing the ReservationQuota data model.
+    /// Quota properties.
+    /// </summary>
     public partial class ReservationQuotaData : ResourceData
     {
         /// <summary> Initializes a new instance of ReservationQuotaData. </summary>

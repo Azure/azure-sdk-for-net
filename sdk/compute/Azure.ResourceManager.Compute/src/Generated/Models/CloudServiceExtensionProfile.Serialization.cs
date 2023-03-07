@@ -31,6 +31,10 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static CloudServiceExtensionProfile DeserializeCloudServiceExtensionProfile(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<CloudServiceExtension>> extensions = default;
             foreach (var property in element.EnumerateObject())
             {

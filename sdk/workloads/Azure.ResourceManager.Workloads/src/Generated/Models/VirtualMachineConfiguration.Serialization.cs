@@ -26,6 +26,10 @@ namespace Azure.ResourceManager.Workloads.Models
 
         internal static VirtualMachineConfiguration DeserializeVirtualMachineConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string vmSize = default;
             ImageReference imageReference = default;
             OSProfile osProfile = default;

@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     {
         internal static SecurityCvss DeserializeSecurityCvss(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<float> @base = default;
             foreach (var property in element.EnumerateObject())
             {

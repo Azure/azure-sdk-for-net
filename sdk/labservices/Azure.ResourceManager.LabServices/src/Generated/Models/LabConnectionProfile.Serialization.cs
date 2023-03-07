@@ -40,6 +40,10 @@ namespace Azure.ResourceManager.LabServices.Models
 
         internal static LabConnectionProfile DeserializeLabConnectionProfile(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<LabVirtualMachineConnectionType> webSshAccess = default;
             Optional<LabVirtualMachineConnectionType> webRdpAccess = default;
             Optional<LabVirtualMachineConnectionType> clientSshAccess = default;

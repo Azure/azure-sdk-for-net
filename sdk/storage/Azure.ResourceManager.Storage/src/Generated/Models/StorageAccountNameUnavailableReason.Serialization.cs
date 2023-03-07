@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.Storage.Models
 
         public static StorageAccountNameUnavailableReason ToStorageAccountNameUnavailableReason(this string value)
         {
-            if (string.Equals(value, "AccountNameInvalid", StringComparison.InvariantCultureIgnoreCase)) return StorageAccountNameUnavailableReason.AccountNameInvalid;
-            if (string.Equals(value, "AlreadyExists", StringComparison.InvariantCultureIgnoreCase)) return StorageAccountNameUnavailableReason.AlreadyExists;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "AccountNameInvalid")) return StorageAccountNameUnavailableReason.AccountNameInvalid;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "AlreadyExists")) return StorageAccountNameUnavailableReason.AlreadyExists;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown StorageAccountNameUnavailableReason value.");
         }
     }

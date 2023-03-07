@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Compute.Models
     {
         internal static VirtualMachineScaleSetVmExtensionsSummary DeserializeVirtualMachineScaleSetVmExtensionsSummary(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<IReadOnlyList<VirtualMachineStatusCodeCount>> statusesSummary = default;
             foreach (var property in element.EnumerateObject())

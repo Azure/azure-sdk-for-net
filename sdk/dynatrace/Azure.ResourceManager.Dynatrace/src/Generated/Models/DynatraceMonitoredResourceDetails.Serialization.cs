@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.Dynatrace.Models
     {
         internal static DynatraceMonitoredResourceDetails DeserializeDynatraceMonitoredResourceDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ResourceIdentifier> id = default;
             Optional<MetricsSendingStatus> sendingMetrics = default;
             Optional<string> reasonForMetricsStatus = default;

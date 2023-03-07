@@ -30,6 +30,10 @@ namespace Azure.Communication.MediaComposition.Models
 
         internal static ImageInput DeserializeImageInput(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string uri = default;
             MediaInputType kind = default;
             Optional<string> placeholderImageUri = default;

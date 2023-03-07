@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.PolicyInsights.Models
     {
         internal static PolicyTrackedResourcesQueryResults DeserializePolicyTrackedResourcesQueryResults(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<PolicyTrackedResourceRecord>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.ArcScVmm.Models
     {
         internal static CloudCapacity DeserializeCloudCapacity(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<long> cpuCount = default;
             Optional<long> memoryMB = default;
             Optional<long> vmCount = default;

@@ -54,6 +54,10 @@ namespace Azure.Search.Documents.Indexes.Models
 
         internal static ShingleTokenFilter DeserializeShingleTokenFilter(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> maxShingleSize = default;
             Optional<int> minShingleSize = default;
             Optional<bool> outputUnigrams = default;

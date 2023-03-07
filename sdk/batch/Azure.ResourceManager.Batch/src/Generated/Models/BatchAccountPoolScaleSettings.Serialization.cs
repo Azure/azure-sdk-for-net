@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.Batch.Models
 
         internal static BatchAccountPoolScaleSettings DeserializeBatchAccountPoolScaleSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<BatchAccountFixedScaleSettings> fixedScale = default;
             Optional<BatchAccountAutoScaleSettings> autoScale = default;
             foreach (var property in element.EnumerateObject())

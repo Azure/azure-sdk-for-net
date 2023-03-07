@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.Avs.Models
     {
         internal static HcxEnterpriseSiteList DeserializeHcxEnterpriseSiteList(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<HcxEnterpriseSiteData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

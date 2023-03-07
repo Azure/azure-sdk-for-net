@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Automation.Models
     {
         internal static JobNavigation DeserializeJobNavigation(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<Guid> id = default;
             foreach (var property in element.EnumerateObject())
             {

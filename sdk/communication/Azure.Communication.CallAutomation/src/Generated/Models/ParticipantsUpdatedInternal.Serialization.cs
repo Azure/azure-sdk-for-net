@@ -15,6 +15,10 @@ namespace Azure.Communication.CallAutomation
     {
         internal static ParticipantsUpdatedInternal DeserializeParticipantsUpdatedInternal(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> callConnectionId = default;
             Optional<string> serverCallId = default;
             Optional<string> correlationId = default;

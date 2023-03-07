@@ -13,7 +13,10 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.MobileNetwork
 {
-    /// <summary> A class representing the Site data model. </summary>
+    /// <summary>
+    /// A class representing the Site data model.
+    /// Site resource. Must be created in the same location as its parent mobile network.
+    /// </summary>
     public partial class SiteData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of SiteData. </summary>

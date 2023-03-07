@@ -48,6 +48,10 @@ namespace Azure.ResourceManager.FrontDoor.Models
 
         internal static FrontDoorLoadBalancingSettingsData DeserializeFrontDoorLoadBalancingSettingsData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ResourceIdentifier> id = default;
             Optional<string> name = default;
             Optional<ResourceType> type = default;

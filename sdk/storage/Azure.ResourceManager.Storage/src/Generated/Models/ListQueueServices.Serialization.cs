@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.Storage.Models
     {
         internal static ListQueueServices DeserializeListQueueServices(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<QueueServiceData>> value = default;
             foreach (var property in element.EnumerateObject())
             {

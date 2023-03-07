@@ -51,6 +51,10 @@ namespace Azure.ResourceManager.Quantum.Models
 
         internal static Provider DeserializeProvider(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> providerId = default;
             Optional<string> providerSku = default;
             Optional<Uri> instanceUri = default;

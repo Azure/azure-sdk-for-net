@@ -1,0 +1,132 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://sanitized.communication.azure.com/emails:send?api-version=2023-01-15-preview",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "369",
+        "Content-Type": "application/json",
+        "Operation-Id": "Sanitized",
+        "traceparent": "00-3c5d83688ebd4c2843d2748585c18459-207d7776ef994732-00",
+        "User-Agent": "azsdk-net-Communication.Email/1.0.0-alpha.20230223.1 (.NET 6.0.14; Microsoft Windows 10.0.19045)",
+        "x-ms-client-request-id": "a750f475db56c7c55afbbe74744c977e",
+        "x-ms-content-sha256": "Sanitized",
+        "x-ms-date": "Thu, 23 Feb 2023 23:55:07 GMT",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "senderAddress": "donotreply@3773742c-28d1-4e0a-89b2-1678f84745e6.azurecomm-dev.net",
+        "content": {
+          "subject": "subject",
+          "plainText": "Test"
+        },
+        "recipients": {
+          "to": [
+            {
+              "address": "acseaastesting@gmail.com",
+              "displayName": "ToAddress"
+            }
+          ],
+          "cc": [
+            {
+              "address": "acseaastesting@gmail.com",
+              "displayName": "CcAddress"
+            }
+          ],
+          "bcc": [
+            {
+              "address": "acseaastesting@gmail.com",
+              "displayName": "BccAddress"
+            }
+          ]
+        }
+      },
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "api-supported-versions": "2021-10-01-preview, 2023-01-15-preview",
+        "Content-Length": "77",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 23 Feb 2023 23:55:07 GMT",
+        "mise-correlation-id": "26b1f4ab-ada8-4618-94e8-3d90c4c48457",
+        "Operation-Location": "https://sanitized.communication.azure.com/emails/operations/sanitizedId?api-version=2023-01-15-preview",
+        "Retry-After": "30",
+        "X-Azure-Ref": "02/z3YwAAAAAIQ9fIzHSpQYCZ9ePPItBAUERYMzFFREdFMDIxMABjYzkyNzU4ZC0wNWY3LTRhZDYtYWE1ZS0wZmE5NzE4ZDg5ODU=",
+        "X-Cache": "CONFIG_NOCACHE"
+      },
+      "ResponseBody": {
+        "id": "48277a7a-0e97-4986-8104-3346deada9de",
+        "status": "Running",
+        "error": null
+      }
+    },
+    {
+      "RequestUri": "https://sanitized.communication.azure.com/emails/operations/sanitizedId?api-version=2023-01-15-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-ba0e0fd77ed9550bf183a966cbdf947e-c44c3033b4f21ef8-00",
+        "User-Agent": "azsdk-net-Communication.Email/1.0.0-alpha.20230223.1 (.NET 6.0.14; Microsoft Windows 10.0.19045)",
+        "x-ms-client-request-id": "94358c8c0fbc766297643479c45c8f2b",
+        "x-ms-content-sha256": "Sanitized",
+        "x-ms-date": "Thu, 23 Feb 2023 23:55:07 GMT",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "api-supported-versions": "2021-10-01-preview, 2023-01-15-preview",
+        "Content-Length": "77",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 23 Feb 2023 23:55:07 GMT",
+        "mise-correlation-id": "cfc8a83b-4a94-42cb-b9a4-dd4a9be2d9e3",
+        "Retry-After": "30",
+        "X-Azure-Ref": "02/z3YwAAAADqKyGoI\u002BvoR6VARcf2xp2tUERYMzFFREdFMDIxMABjYzkyNzU4ZC0wNWY3LTRhZDYtYWE1ZS0wZmE5NzE4ZDg5ODU=",
+        "X-Cache": "CONFIG_NOCACHE"
+      },
+      "ResponseBody": {
+        "id": "48277a7a-0e97-4986-8104-3346deada9de",
+        "status": "Running",
+        "error": null
+      }
+    },
+    {
+      "RequestUri": "https://sanitized.communication.azure.com/emails/operations/sanitizedId?api-version=2023-01-15-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-2027935ccc803fe9d05421a4d64301d5-7c8d6d0ad2eb2f43-00",
+        "User-Agent": "azsdk-net-Communication.Email/1.0.0-alpha.20230223.1 (.NET 6.0.14; Microsoft Windows 10.0.19045)",
+        "x-ms-client-request-id": "fa4260448183be06c6a98f89854ac90f",
+        "x-ms-content-sha256": "Sanitized",
+        "x-ms-date": "Thu, 23 Feb 2023 23:55:37 GMT",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "api-supported-versions": "2021-10-01-preview, 2023-01-15-preview",
+        "Content-Length": "79",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 23 Feb 2023 23:55:37 GMT",
+        "mise-correlation-id": "bde1a5c1-9b74-4966-9acf-0d193b4a3a31",
+        "X-Azure-Ref": "0\u002Bfz3YwAAAACIy1tE\u002BzHaQ5mM4AlJdaMPUERYMzFFREdFMDIxMABjYzkyNzU4ZC0wNWY3LTRhZDYtYWE1ZS0wZmE5NzE4ZDg5ODU=",
+        "X-Cache": "CONFIG_NOCACHE"
+      },
+      "ResponseBody": {
+        "id": "48277a7a-0e97-4986-8104-3346deada9de",
+        "status": "Succeeded",
+        "error": null
+      }
+    }
+  ],
+  "Variables": {
+    "COMMUNICATION_CONNECTION_STRING_EMAIL": "endpoint=https://acs-email-functional-test-acs-resource.int.communication.azure.net/;accesskey=Kg==",
+    "RandomSeed": "455588648",
+    "RECIPIENT_ADDRESS": "acseaastesting@gmail.com",
+    "SENDER_ADDRESS": "donotreply@3773742c-28d1-4e0a-89b2-1678f84745e6.azurecomm-dev.net"
+  }
+}

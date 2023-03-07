@@ -29,16 +29,16 @@ namespace Azure.ResourceManager.Sql
         private CapabilitiesRestOperations _capabilitiesRestClient;
         private ClientDiagnostics _syncGroupClientDiagnostics;
         private SyncGroupsRestOperations _syncGroupRestClient;
-        private ClientDiagnostics _sqlServerServersClientDiagnostics;
-        private ServersRestOperations _sqlServerServersRestClient;
         private ClientDiagnostics _longTermRetentionBackupsClientDiagnostics;
         private LongTermRetentionBackupsRestOperations _longTermRetentionBackupsRestClient;
         private ClientDiagnostics _longTermRetentionManagedInstanceBackupsClientDiagnostics;
         private LongTermRetentionManagedInstanceBackupsRestOperations _longTermRetentionManagedInstanceBackupsRestClient;
-        private ClientDiagnostics _managedInstanceClientDiagnostics;
-        private ManagedInstancesRestOperations _managedInstanceRestClient;
         private ClientDiagnostics _virtualClusterClientDiagnostics;
         private VirtualClustersRestOperations _virtualClusterRestClient;
+        private ClientDiagnostics _managedInstanceClientDiagnostics;
+        private ManagedInstancesRestOperations _managedInstanceRestClient;
+        private ClientDiagnostics _sqlServerServersClientDiagnostics;
+        private ServersRestOperations _sqlServerServersRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="SubscriptionResourceExtensionClient"/> class for mocking. </summary>
         protected SubscriptionResourceExtensionClient()
@@ -60,16 +60,16 @@ namespace Azure.ResourceManager.Sql
         private CapabilitiesRestOperations CapabilitiesRestClient => _capabilitiesRestClient ??= new CapabilitiesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
         private ClientDiagnostics SyncGroupClientDiagnostics => _syncGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Sql", SyncGroupResource.ResourceType.Namespace, Diagnostics);
         private SyncGroupsRestOperations SyncGroupRestClient => _syncGroupRestClient ??= new SyncGroupsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(SyncGroupResource.ResourceType));
-        private ClientDiagnostics SqlServerServersClientDiagnostics => _sqlServerServersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Sql", SqlServerResource.ResourceType.Namespace, Diagnostics);
-        private ServersRestOperations SqlServerServersRestClient => _sqlServerServersRestClient ??= new ServersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(SqlServerResource.ResourceType));
         private ClientDiagnostics LongTermRetentionBackupsClientDiagnostics => _longTermRetentionBackupsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Sql", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private LongTermRetentionBackupsRestOperations LongTermRetentionBackupsRestClient => _longTermRetentionBackupsRestClient ??= new LongTermRetentionBackupsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
         private ClientDiagnostics LongTermRetentionManagedInstanceBackupsClientDiagnostics => _longTermRetentionManagedInstanceBackupsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Sql", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private LongTermRetentionManagedInstanceBackupsRestOperations LongTermRetentionManagedInstanceBackupsRestClient => _longTermRetentionManagedInstanceBackupsRestClient ??= new LongTermRetentionManagedInstanceBackupsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-        private ClientDiagnostics ManagedInstanceClientDiagnostics => _managedInstanceClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Sql", ManagedInstanceResource.ResourceType.Namespace, Diagnostics);
-        private ManagedInstancesRestOperations ManagedInstanceRestClient => _managedInstanceRestClient ??= new ManagedInstancesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(ManagedInstanceResource.ResourceType));
         private ClientDiagnostics VirtualClusterClientDiagnostics => _virtualClusterClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Sql", VirtualClusterResource.ResourceType.Namespace, Diagnostics);
         private VirtualClustersRestOperations VirtualClusterRestClient => _virtualClusterRestClient ??= new VirtualClustersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(VirtualClusterResource.ResourceType));
+        private ClientDiagnostics ManagedInstanceClientDiagnostics => _managedInstanceClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Sql", ManagedInstanceResource.ResourceType.Namespace, Diagnostics);
+        private ManagedInstancesRestOperations ManagedInstanceRestClient => _managedInstanceRestClient ??= new ManagedInstancesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(ManagedInstanceResource.ResourceType));
+        private ClientDiagnostics SqlServerServersClientDiagnostics => _sqlServerServersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Sql", SqlServerResource.ResourceType.Namespace, Diagnostics);
+        private ServersRestOperations SqlServerServersRestClient => _sqlServerServersRestClient ??= new ServersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(SqlServerResource.ResourceType));
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
@@ -320,114 +320,6 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary>
-        /// Gets a list of all servers in the subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Sql/servers</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Servers_List</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="expand"> The child resources to include in the response. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SqlServerResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SqlServerResource> GetSqlServersAsync(string expand = null, CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => SqlServerServersRestClient.CreateListRequest(Id.SubscriptionId, expand);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => SqlServerServersRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, expand);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SqlServerResource(Client, SqlServerData.DeserializeSqlServerData(e)), SqlServerServersClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetSqlServers", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets a list of all servers in the subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Sql/servers</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Servers_List</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="expand"> The child resources to include in the response. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SqlServerResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SqlServerResource> GetSqlServers(string expand = null, CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => SqlServerServersRestClient.CreateListRequest(Id.SubscriptionId, expand);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => SqlServerServersRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, expand);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SqlServerResource(Client, SqlServerData.DeserializeSqlServerData(e)), SqlServerServersClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetSqlServers", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Determines whether a resource can be created with the specified name.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Sql/checkNameAvailability</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Servers_CheckNameAvailability</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="content"> The name availability request parameters. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<SqlNameAvailabilityResponse>> CheckSqlServerNameAvailabilityAsync(SqlNameAvailabilityContent content, CancellationToken cancellationToken = default)
-        {
-            using var scope = SqlServerServersClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckSqlServerNameAvailability");
-            scope.Start();
-            try
-            {
-                var response = await SqlServerServersRestClient.CheckNameAvailabilityAsync(Id.SubscriptionId, content, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Determines whether a resource can be created with the specified name.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Sql/checkNameAvailability</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Servers_CheckNameAvailability</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="content"> The name availability request parameters. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<SqlNameAvailabilityResponse> CheckSqlServerNameAvailability(SqlNameAvailabilityContent content, CancellationToken cancellationToken = default)
-        {
-            using var scope = SqlServerServersClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckSqlServerNameAvailability");
-            scope.Start();
-            try
-            {
-                var response = SqlServerServersRestClient.CheckNameAvailability(Id.SubscriptionId, content, cancellationToken);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
         /// Lists the long term retention backups for a given location.
         /// <list type="bullet">
         /// <item>
@@ -632,6 +524,50 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary>
+        /// Gets a list of all virtualClusters in the subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Sql/virtualClusters</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>VirtualClusters_List</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="VirtualClusterResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<VirtualClusterResource> GetVirtualClustersAsync(CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => VirtualClusterRestClient.CreateListRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => VirtualClusterRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new VirtualClusterResource(Client, VirtualClusterData.DeserializeVirtualClusterData(e)), VirtualClusterClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetVirtualClusters", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets a list of all virtualClusters in the subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Sql/virtualClusters</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>VirtualClusters_List</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="VirtualClusterResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<VirtualClusterResource> GetVirtualClusters(CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => VirtualClusterRestClient.CreateListRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => VirtualClusterRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new VirtualClusterResource(Client, VirtualClusterData.DeserializeVirtualClusterData(e)), VirtualClusterClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetVirtualClusters", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
         /// Gets a list of all managed instances in the subscription.
         /// <list type="bullet">
         /// <item>
@@ -678,47 +614,111 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary>
-        /// Gets a list of all virtualClusters in the subscription.
+        /// Determines whether a resource can be created with the specified name.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Sql/virtualClusters</description>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Sql/checkNameAvailability</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>VirtualClusters_List</description>
+        /// <description>Servers_CheckNameAvailability</description>
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="content"> The name availability request parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="VirtualClusterResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<VirtualClusterResource> GetVirtualClustersAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SqlNameAvailabilityResponse>> CheckSqlServerNameAvailabilityAsync(SqlNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => VirtualClusterRestClient.CreateListRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => VirtualClusterRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new VirtualClusterResource(Client, VirtualClusterData.DeserializeVirtualClusterData(e)), VirtualClusterClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetVirtualClusters", "value", "nextLink", cancellationToken);
+            using var scope = SqlServerServersClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckSqlServerNameAvailability");
+            scope.Start();
+            try
+            {
+                var response = await SqlServerServersRestClient.CheckNameAvailabilityAsync(Id.SubscriptionId, content, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
-        /// Gets a list of all virtualClusters in the subscription.
+        /// Determines whether a resource can be created with the specified name.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Sql/virtualClusters</description>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Sql/checkNameAvailability</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>VirtualClusters_List</description>
+        /// <description>Servers_CheckNameAvailability</description>
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="content"> The name availability request parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="VirtualClusterResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<VirtualClusterResource> GetVirtualClusters(CancellationToken cancellationToken = default)
+        public virtual Response<SqlNameAvailabilityResponse> CheckSqlServerNameAvailability(SqlNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => VirtualClusterRestClient.CreateListRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => VirtualClusterRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new VirtualClusterResource(Client, VirtualClusterData.DeserializeVirtualClusterData(e)), VirtualClusterClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetVirtualClusters", "value", "nextLink", cancellationToken);
+            using var scope = SqlServerServersClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckSqlServerNameAvailability");
+            scope.Start();
+            try
+            {
+                var response = SqlServerServersRestClient.CheckNameAvailability(Id.SubscriptionId, content, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets a list of all servers in the subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Sql/servers</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Servers_List</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="expand"> The child resources to include in the response. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="SqlServerResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<SqlServerResource> GetSqlServersAsync(string expand = null, CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => SqlServerServersRestClient.CreateListRequest(Id.SubscriptionId, expand);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => SqlServerServersRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, expand);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SqlServerResource(Client, SqlServerData.DeserializeSqlServerData(e)), SqlServerServersClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetSqlServers", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets a list of all servers in the subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Sql/servers</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Servers_List</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="expand"> The child resources to include in the response. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="SqlServerResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<SqlServerResource> GetSqlServers(string expand = null, CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => SqlServerServersRestClient.CreateListRequest(Id.SubscriptionId, expand);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => SqlServerServersRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, expand);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SqlServerResource(Client, SqlServerData.DeserializeSqlServerData(e)), SqlServerServersClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetSqlServers", "value", "nextLink", cancellationToken);
         }
     }
 }

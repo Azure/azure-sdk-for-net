@@ -37,6 +37,10 @@ namespace Azure.ResourceManager.DigitalTwins.Models
 
         internal static DigitalTwinsManagedIdentityReference DeserializeDigitalTwinsManagedIdentityReference(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DigitalTwinsManagedIdentityType> type = default;
             Optional<string> userAssignedIdentity = default;
             foreach (var property in element.EnumerateObject())

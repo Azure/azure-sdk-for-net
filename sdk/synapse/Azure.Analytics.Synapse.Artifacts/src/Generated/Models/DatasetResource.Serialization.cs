@@ -25,6 +25,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static DatasetResource DeserializeDatasetResource(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Dataset properties = default;
             Optional<string> etag = default;
             Optional<string> id = default;

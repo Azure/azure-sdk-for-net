@@ -12,7 +12,10 @@ using Azure.ResourceManager.PostgreSql.FlexibleServers.Models;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers
 {
-    /// <summary> A class representing the PostgreSqlFlexibleServerActiveDirectoryAdministrator data model. </summary>
+    /// <summary>
+    /// A class representing the PostgreSqlFlexibleServerActiveDirectoryAdministrator data model.
+    /// Represents an Active Directory administrator.
+    /// </summary>
     public partial class PostgreSqlFlexibleServerActiveDirectoryAdministratorData : ResourceData
     {
         /// <summary> Initializes a new instance of PostgreSqlFlexibleServerActiveDirectoryAdministratorData. </summary>

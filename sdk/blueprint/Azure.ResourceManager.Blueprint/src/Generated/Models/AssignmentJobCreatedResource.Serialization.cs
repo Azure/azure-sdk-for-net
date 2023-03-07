@@ -33,6 +33,10 @@ namespace Azure.ResourceManager.Blueprint.Models
 
         internal static AssignmentJobCreatedResource DeserializeAssignmentJobCreatedResource(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IDictionary<string, string>> properties = default;
             ResourceIdentifier id = default;
             string name = default;

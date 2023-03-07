@@ -166,6 +166,10 @@ namespace Azure.AI.MetricsAdvisor.Models
 
         internal static MongoDBDataFeed DeserializeMongoDBDataFeed(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             MongoDBParameter dataSourceParameter = default;
             DataFeedSourceKind dataSourceType = default;
             Optional<string> dataFeedId = default;

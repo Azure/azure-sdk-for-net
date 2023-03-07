@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Cdn.Models
     {
         internal static ResourcesResponseEndpointsItem DeserializeResourcesResponseEndpointsItem(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> id = default;
             Optional<string> name = default;
             Optional<bool> history = default;

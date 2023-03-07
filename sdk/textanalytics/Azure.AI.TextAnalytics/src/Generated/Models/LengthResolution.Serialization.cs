@@ -27,6 +27,10 @@ namespace Azure.AI.TextAnalytics
 
         internal static LengthResolution DeserializeLengthResolution(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             LengthUnit unit = default;
             double value = default;
             ResolutionKind resolutionKind = default;

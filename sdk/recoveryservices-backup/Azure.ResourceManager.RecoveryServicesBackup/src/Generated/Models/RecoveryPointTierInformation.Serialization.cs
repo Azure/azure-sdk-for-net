@@ -42,6 +42,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         internal static RecoveryPointTierInformation DeserializeRecoveryPointTierInformation(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<RecoveryPointTierType> type = default;
             Optional<RecoveryPointTierStatus> status = default;
             Optional<IDictionary<string, string>> extendedInfo = default;

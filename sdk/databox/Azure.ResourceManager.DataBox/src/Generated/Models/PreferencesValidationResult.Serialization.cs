@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.DataBox.Models
     {
         internal static PreferencesValidationResult DeserializePreferencesValidationResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DataBoxValidationStatus> status = default;
             DataBoxValidationInputDiscriminator validationType = default;
             Optional<ResponseError> error = default;

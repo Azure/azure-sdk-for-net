@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Hci.Models
     {
         internal static ArcIdentityResult DeserializeArcIdentityResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<Guid> arcApplicationClientId = default;
             Optional<Guid> arcApplicationTenantId = default;
             Optional<Guid> arcServicePrincipalObjectId = default;

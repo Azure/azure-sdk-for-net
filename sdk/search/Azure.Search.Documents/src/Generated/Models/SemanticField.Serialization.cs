@@ -25,6 +25,10 @@ namespace Azure.Search.Documents.Indexes.Models
 
         internal static SemanticField DeserializeSemanticField(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> fieldName = default;
             foreach (var property in element.EnumerateObject())
             {

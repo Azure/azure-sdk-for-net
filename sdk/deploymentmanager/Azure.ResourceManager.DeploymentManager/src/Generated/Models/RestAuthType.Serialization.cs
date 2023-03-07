@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.DeploymentManager.Models
 
         public static RestAuthType ToRestAuthType(this string value)
         {
-            if (string.Equals(value, "ApiKey", StringComparison.InvariantCultureIgnoreCase)) return RestAuthType.ApiKey;
-            if (string.Equals(value, "RolloutIdentity", StringComparison.InvariantCultureIgnoreCase)) return RestAuthType.RolloutIdentity;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "ApiKey")) return RestAuthType.ApiKey;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "RolloutIdentity")) return RestAuthType.RolloutIdentity;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown RestAuthType value.");
         }
     }

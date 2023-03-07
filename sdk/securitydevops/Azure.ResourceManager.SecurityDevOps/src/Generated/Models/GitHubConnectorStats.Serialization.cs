@@ -26,6 +26,10 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
 
         internal static GitHubConnectorStats DeserializeGitHubConnectorStats(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<GitHubConnectorStatsProperties> properties = default;
             ResourceIdentifier id = default;
             string name = default;

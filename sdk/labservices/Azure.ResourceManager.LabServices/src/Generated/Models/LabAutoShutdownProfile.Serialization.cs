@@ -51,6 +51,10 @@ namespace Azure.ResourceManager.LabServices.Models
 
         internal static LabAutoShutdownProfile DeserializeLabAutoShutdownProfile(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<LabServicesEnableState> shutdownOnDisconnect = default;
             Optional<LabServicesEnableState> shutdownWhenNotConnected = default;
             Optional<LabVirtualMachineShutdownOnIdleMode> shutdownOnIdle = default;

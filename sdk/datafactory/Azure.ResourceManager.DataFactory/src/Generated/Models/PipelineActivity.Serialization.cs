@@ -58,6 +58,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static PipelineActivity DeserializePipelineActivity(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             if (element.TryGetProperty("type", out JsonElement discriminator))
             {
                 switch (discriminator.GetString())

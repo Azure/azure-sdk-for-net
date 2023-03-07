@@ -39,6 +39,10 @@ namespace Azure.ResourceManager.ManagedServices.Models
 
         internal static ManagedServicesJustInTimeAccessPolicy DeserializeManagedServicesJustInTimeAccessPolicy(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             MultiFactorAuthProvider multiFactorAuthProvider = default;
             Optional<TimeSpan> maximumActivationDuration = default;
             Optional<IList<ManagedServicesEligibleApprover>> managedByTenantApprovers = default;

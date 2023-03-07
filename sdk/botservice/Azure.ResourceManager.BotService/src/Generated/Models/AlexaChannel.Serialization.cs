@@ -45,6 +45,10 @@ namespace Azure.ResourceManager.BotService.Models
 
         internal static AlexaChannel DeserializeAlexaChannel(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<AlexaChannelProperties> properties = default;
             string channelName = default;
             Optional<ETag?> etag = default;

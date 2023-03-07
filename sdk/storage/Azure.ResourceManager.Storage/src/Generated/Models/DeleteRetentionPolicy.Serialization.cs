@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.Storage.Models
 
         internal static DeleteRetentionPolicy DeserializeDeleteRetentionPolicy(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> enabled = default;
             Optional<int> days = default;
             Optional<bool> allowPermanentDelete = default;

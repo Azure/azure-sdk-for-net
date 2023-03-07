@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.Marketplace.Models
     {
         internal static MarketplaceSubscription DeserializeMarketplaceSubscription(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> id = default;
             Optional<string> subscriptionId = default;
             Optional<string> displayName = default;

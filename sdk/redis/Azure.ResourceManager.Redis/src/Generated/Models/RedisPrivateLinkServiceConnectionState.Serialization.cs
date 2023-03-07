@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.Redis.Models
 
         internal static RedisPrivateLinkServiceConnectionState DeserializeRedisPrivateLinkServiceConnectionState(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<RedisPrivateEndpointServiceConnectionStatus> status = default;
             Optional<string> description = default;
             Optional<string> actionsRequired = default;

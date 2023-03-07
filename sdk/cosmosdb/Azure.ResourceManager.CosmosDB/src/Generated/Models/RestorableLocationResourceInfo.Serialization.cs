@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
     {
         internal static RestorableLocationResourceInfo DeserializeRestorableLocationResourceInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<AzureLocation> locationName = default;
             Optional<string> regionalDatabaseAccountInstanceId = default;
             Optional<DateTimeOffset> creationTime = default;

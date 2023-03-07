@@ -52,6 +52,10 @@ namespace Azure.ResourceManager.CustomerInsights.Models
 
         internal static StrongId DeserializeStrongId(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IList<string> keyPropertyNames = default;
             string strongIdName = default;
             Optional<IDictionary<string, string>> displayName = default;

@@ -21,8 +21,8 @@ namespace Azure.AI.TextAnalytics
             IReadOnlyCollection<SingleLabelClassifyActionResult> singleLabelClassifyActionResults,
             IReadOnlyCollection<MultiLabelClassifyActionResult> multiLabelClassifyActionResults,
             IReadOnlyCollection<AnalyzeHealthcareEntitiesActionResult> analyzeHealthcareEntitiesActionResults,
-            IReadOnlyCollection<ExtractiveSummarizeActionResult> extractiveSummarizeActionResults,
-            IReadOnlyCollection<AbstractiveSummarizeActionResult> abstractiveSummarizeActionResults
+            IReadOnlyCollection<ExtractSummaryActionResult> extractSummaryActionResults,
+            IReadOnlyCollection<AbstractSummaryActionResult> abstractSummaryActionResults
             )
         {
             ExtractKeyPhrasesResults = extractKeyPhrasesActionResults;
@@ -34,8 +34,8 @@ namespace Azure.AI.TextAnalytics
             SingleLabelClassifyResults = singleLabelClassifyActionResults;
             MultiLabelClassifyResults = multiLabelClassifyActionResults;
             AnalyzeHealthcareEntitiesResults = analyzeHealthcareEntitiesActionResults;
-            ExtractiveSummarizeResults = extractiveSummarizeActionResults;
-            AbstractiveSummarizeResults = abstractiveSummarizeActionResults;
+            ExtractSummaryResults = extractSummaryActionResults;
+            AbstractSummaryResults = abstractSummaryActionResults;
         }
 
         internal AnalyzeActionsResult(
@@ -55,8 +55,8 @@ namespace Azure.AI.TextAnalytics
             MultiLabelClassifyResults = Array.Empty<MultiLabelClassifyActionResult>();
             RecognizeCustomEntitiesResults = Array.Empty<RecognizeCustomEntitiesActionResult>();
             AnalyzeHealthcareEntitiesResults = Array.Empty<AnalyzeHealthcareEntitiesActionResult>();
-            ExtractiveSummarizeResults = Array.Empty<ExtractiveSummarizeActionResult>();
-            AbstractiveSummarizeResults = Array.Empty<AbstractiveSummarizeActionResult>();
+            ExtractSummaryResults = Array.Empty<ExtractSummaryActionResult>();
+            AbstractSummaryResults = Array.Empty<AbstractSummaryActionResult>();
         }
 
         /// <summary>
@@ -105,13 +105,13 @@ namespace Azure.AI.TextAnalytics
         public IReadOnlyCollection<AnalyzeHealthcareEntitiesActionResult> AnalyzeHealthcareEntitiesResults { get; }
 
         /// <summary>
-        /// Determines the collection of <see cref="ExtractiveSummarizeActionResult"/>.
+        /// Determines the collection of <see cref="ExtractSummaryActionResult"/>.
         /// </summary>
-        public IReadOnlyCollection<ExtractiveSummarizeActionResult> ExtractiveSummarizeResults { get; }
+        public IReadOnlyCollection<ExtractSummaryActionResult> ExtractSummaryResults { get; }
 
         /// <summary>
-        /// Determines the collection of <see cref="AbstractiveSummarizeActionResult"/>.
+        /// Determines the collection of <see cref="AbstractSummaryActionResult"/>.
         /// </summary>
-        public IReadOnlyCollection<AbstractiveSummarizeActionResult> AbstractiveSummarizeResults { get; }
+        public IReadOnlyCollection<AbstractSummaryActionResult> AbstractSummaryResults { get; }
     }
 }

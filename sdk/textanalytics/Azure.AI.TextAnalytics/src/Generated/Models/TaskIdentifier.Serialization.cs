@@ -25,6 +25,10 @@ namespace Azure.AI.TextAnalytics.Models
 
         internal static TaskIdentifier DeserializeTaskIdentifier(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> taskName = default;
             foreach (var property in element.EnumerateObject())
             {

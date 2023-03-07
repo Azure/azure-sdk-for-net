@@ -114,6 +114,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static AzureDataExplorerSink DeserializeAzureDataExplorerSink(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<BinaryData> ingestionMappingName = default;
             Optional<BinaryData> ingestionMappingAsJson = default;
             Optional<BinaryData> flushImmediately = default;

@@ -95,6 +95,10 @@ namespace Azure.ResourceManager.Logic.Models
 
         internal static EdifactEnvelopeOverride DeserializeEdifactEnvelopeOverride(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> messageId = default;
             Optional<string> messageVersion = default;
             Optional<string> messageRelease = default;

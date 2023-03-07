@@ -13,7 +13,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Confluent
 {
-    /// <summary> A class representing the ConfluentOrganization data model. </summary>
+    /// <summary>
+    /// A class representing the ConfluentOrganization data model.
+    /// Organization resource.
+    /// </summary>
     public partial class ConfluentOrganizationData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of ConfluentOrganizationData. </summary>

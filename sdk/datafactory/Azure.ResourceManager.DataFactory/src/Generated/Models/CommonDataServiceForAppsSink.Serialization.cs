@@ -107,6 +107,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static CommonDataServiceForAppsSink DeserializeCommonDataServiceForAppsSink(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             DynamicsSinkWriteBehavior writeBehavior = default;
             Optional<BinaryData> ignoreNullValues = default;
             Optional<BinaryData> alternateKeyName = default;

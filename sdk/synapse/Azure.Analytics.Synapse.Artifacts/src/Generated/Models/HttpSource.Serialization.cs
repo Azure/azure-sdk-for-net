@@ -51,6 +51,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static HttpSource DeserializeHttpSource(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<object> httpRequestTimeout = default;
             string type = default;
             Optional<object> sourceRetryCount = default;

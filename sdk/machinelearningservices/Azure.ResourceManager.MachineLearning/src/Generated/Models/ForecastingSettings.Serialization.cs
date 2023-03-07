@@ -140,6 +140,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static ForecastingSettings DeserializeForecastingSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> countryOrRegionForHolidays = default;
             Optional<int?> cvStepSize = default;
             Optional<MachineLearningFeatureLag> featureLags = default;

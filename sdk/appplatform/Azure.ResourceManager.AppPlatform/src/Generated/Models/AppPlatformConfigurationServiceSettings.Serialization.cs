@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.AppPlatform.Models
 
         internal static AppPlatformConfigurationServiceSettings DeserializeAppPlatformConfigurationServiceSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ConfigurationServiceGitProperty> gitProperty = default;
             foreach (var property in element.EnumerateObject())
             {

@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.Reservations.Models
     {
         internal static RenewProperties DeserializeRenewProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ReservationPurchaseContent> purchaseProperties = default;
             Optional<RenewPropertiesPricingCurrencyTotal> pricingCurrencyTotal = default;
             Optional<RenewPropertiesBillingCurrencyTotal> billingCurrencyTotal = default;

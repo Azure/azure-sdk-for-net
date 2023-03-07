@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static AutoHealActions DeserializeAutoHealActions(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<AutoHealActionType> actionType = default;
             Optional<AutoHealCustomAction> customAction = default;
             Optional<string> minProcessExecutionTime = default;

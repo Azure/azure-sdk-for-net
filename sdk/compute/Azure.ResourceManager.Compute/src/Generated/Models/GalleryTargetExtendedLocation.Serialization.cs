@@ -45,6 +45,10 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static GalleryTargetExtendedLocation DeserializeGalleryTargetExtendedLocation(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<GalleryExtendedLocation> extendedLocation = default;
             Optional<int> extendedLocationReplicaCount = default;

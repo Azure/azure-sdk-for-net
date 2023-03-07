@@ -42,6 +42,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static MachineLearningNoneAuthTypeWorkspaceConnection DeserializeMachineLearningNoneAuthTypeWorkspaceConnection(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             MachineLearningConnectionAuthType authType = default;
             Optional<MachineLearningConnectionCategory> category = default;
             Optional<string> target = default;

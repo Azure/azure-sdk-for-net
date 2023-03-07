@@ -12,7 +12,10 @@ using Azure.ResourceManager.VoiceServices.Models;
 
 namespace Azure.ResourceManager.VoiceServices
 {
-    /// <summary> A class representing the TestLine data model. </summary>
+    /// <summary>
+    /// A class representing the TestLine data model.
+    /// A TestLine resource
+    /// </summary>
     public partial class TestLineData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of TestLineData. </summary>

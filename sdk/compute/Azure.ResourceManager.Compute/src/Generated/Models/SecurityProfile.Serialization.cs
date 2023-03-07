@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static SecurityProfile DeserializeSecurityProfile(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<UefiSettings> uefiSettings = default;
             Optional<bool> encryptionAtHost = default;
             Optional<SecurityType> securityType = default;
