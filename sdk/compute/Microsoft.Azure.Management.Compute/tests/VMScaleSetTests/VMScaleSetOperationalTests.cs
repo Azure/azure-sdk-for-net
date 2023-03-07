@@ -473,5 +473,48 @@ namespace Compute.Tests
                 Assert.True(passed);
             }
         }
+
+
+        /// <summary>
+        /// Covers following Operations:
+        /// Create RG
+        /// Create Storage Account
+        /// Create VMScaleSet
+        /// Reapply VMScaleSet
+        /// Delete RG
+        /// </summary>
+        [Fact]
+        public void TestVMScaleSetOperations_Reapply()
+        {
+            using (MockContext context = MockContext.Start(this.GetType()))
+            {
+                string rgName = TestUtilities.GenerateName("VMSSReapplyTestRG");
+                string vmssName = TestUtilities.GenerateName("ReapplyTestVMSS");
+                string storageAccountName = TestUtilities.GenerateName("ReapllyTestVMSS-SA");
+                VirtualMachineScaleSet inputVMScaleSet;
+                bool passed = false;
+
+                try
+                {
+                    EnsureClientsInitialized(context);
+
+                    ImageReference imageRef = GetPlatformVMImage(useWindowsImage: true);
+                    StorageAccount storageAccountOutput = CreateStorageAccount(rgName, storageAccountName);
+
+                    VirtualMachineScaleSet vmScaleSet = CreateVMScaleSet_NoAsyncTracking(rgName, vmssName,
+                        storageAccountOutput, imageRef, out inputVMScaleSet, createWithManagedDisks: true);
+
+                    m_CrpClient.VirtualMachineScaleSets.Reapply(rgName, vmScaleSet.Name);
+
+                    passed = true;
+                }
+                finally
+                {
+                    var deleteRgResponse = m_ResourcesClient.ResourceGroups.BeginDeleteWithHttpMessagesAsync(rgName);
+                }
+
+                Assert.True(passed);
+            }
+        }
     }
 }
