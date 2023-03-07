@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.Logic.Models
     {
         internal static LogicExpression DeserializeLogicExpression(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> text = default;
             Optional<BinaryData> value = default;
             Optional<IReadOnlyList<LogicExpression>> subexpressions = default;

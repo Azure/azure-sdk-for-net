@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.EdgeOrder.Models
     {
         internal static ProductFamiliesMetadataListResult DeserializeProductFamiliesMetadataListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<ProductFamiliesMetadata>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

@@ -27,6 +27,10 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static ConnectionSharedKey DeserializeConnectionSharedKey(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string value = default;
             Optional<ResourceIdentifier> id = default;
             foreach (var property in element.EnumerateObject())

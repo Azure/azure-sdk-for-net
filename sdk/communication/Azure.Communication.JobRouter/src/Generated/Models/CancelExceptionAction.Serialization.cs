@@ -32,6 +32,10 @@ namespace Azure.Communication.JobRouter
 
         internal static CancelExceptionAction DeserializeCancelExceptionAction(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> note = default;
             Optional<string> dispositionCode = default;
             string kind = default;

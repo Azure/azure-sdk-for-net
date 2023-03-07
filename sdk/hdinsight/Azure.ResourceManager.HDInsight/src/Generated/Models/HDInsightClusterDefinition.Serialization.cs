@@ -52,6 +52,10 @@ namespace Azure.ResourceManager.HDInsight.Models
 
         internal static HDInsightClusterDefinition DeserializeHDInsightClusterDefinition(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> blueprint = default;
             Optional<string> kind = default;
             Optional<IDictionary<string, string>> componentVersion = default;

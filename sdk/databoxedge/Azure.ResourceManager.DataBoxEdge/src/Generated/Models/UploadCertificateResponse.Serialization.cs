@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     {
         internal static UploadCertificateResponse DeserializeUploadCertificateResponse(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DataBoxEdgeAuthenticationType> authType = default;
             Optional<string> resourceId = default;
             Optional<string> aadAuthority = default;

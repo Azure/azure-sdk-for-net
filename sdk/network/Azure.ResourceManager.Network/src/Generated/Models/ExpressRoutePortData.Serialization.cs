@@ -80,6 +80,10 @@ namespace Azure.ResourceManager.Network
 
         internal static ExpressRoutePortData DeserializeExpressRoutePortData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ETag> etag = default;
             Optional<ManagedServiceIdentity> identity = default;
             Optional<ResourceIdentifier> id = default;

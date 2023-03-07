@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static ConnectionMonitorEndpointFilterItem DeserializeConnectionMonitorEndpointFilterItem(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ConnectionMonitorEndpointFilterItemType> type = default;
             Optional<string> address = default;
             foreach (var property in element.EnumerateObject())

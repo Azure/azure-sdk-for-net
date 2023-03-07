@@ -22,6 +22,10 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 
         internal static ApplicationTypeVersionsCleanupPolicy DeserializeApplicationTypeVersionsCleanupPolicy(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             int maxUnusedVersionsToKeep = default;
             foreach (var property in element.EnumerateObject())
             {

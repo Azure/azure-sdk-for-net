@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal static LoadBalancerFrontendIPConfigurationListResult DeserializeLoadBalancerFrontendIPConfigurationListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<FrontendIPConfigurationData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

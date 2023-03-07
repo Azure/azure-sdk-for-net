@@ -61,6 +61,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static BlobSource DeserializeBlobSource(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<object> treatEmptyAsNull = default;
             Optional<object> skipHeaderLineCount = default;
             Optional<object> recursive = default;

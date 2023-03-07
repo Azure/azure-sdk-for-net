@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static FactoryPipelinePolicy DeserializeFactoryPipelinePolicy(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<PipelineElapsedTimeMetricPolicy> elapsedTimeMetric = default;
             foreach (var property in element.EnumerateObject())
             {

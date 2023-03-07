@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.ExtendedLocations.Models
 
         internal static CustomLocationAuthentication DeserializeCustomLocationAuthentication(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> type = default;
             Optional<string> value = default;
             foreach (var property in element.EnumerateObject())

@@ -42,6 +42,10 @@ namespace Azure.ResourceManager.MySql.Models
 
         internal static MySqlSku DeserializeMySqlSku(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string name = default;
             Optional<MySqlSkuTier> tier = default;
             Optional<int> capacity = default;

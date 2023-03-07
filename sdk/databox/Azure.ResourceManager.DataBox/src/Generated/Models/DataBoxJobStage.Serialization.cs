@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.DataBox.Models
     {
         internal static DataBoxJobStage DeserializeDataBoxJobStage(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DataBoxStageName> stageName = default;
             Optional<string> displayName = default;
             Optional<DataBoxStageStatus> stageStatus = default;

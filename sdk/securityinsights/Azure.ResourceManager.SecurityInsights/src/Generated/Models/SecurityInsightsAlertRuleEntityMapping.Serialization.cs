@@ -36,6 +36,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         internal static SecurityInsightsAlertRuleEntityMapping DeserializeSecurityInsightsAlertRuleEntityMapping(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<SecurityInsightsAlertRuleEntityMappingType> entityType = default;
             Optional<IList<SecurityInsightsFieldMapping>> fieldMappings = default;
             foreach (var property in element.EnumerateObject())

@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
 
         internal static EdgeIotAddon DeserializeEdgeIotAddon(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             AddonType kind = default;
             ResourceIdentifier id = default;
             string name = default;

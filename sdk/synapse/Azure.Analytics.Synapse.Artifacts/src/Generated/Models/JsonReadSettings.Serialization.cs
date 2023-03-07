@@ -36,6 +36,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static JsonReadSettings DeserializeJsonReadSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<CompressionReadSettings> compressionProperties = default;
             string type = default;
             IDictionary<string, object> additionalProperties = default;

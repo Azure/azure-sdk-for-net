@@ -28,6 +28,10 @@ namespace Azure.ResourceManager.ProviderHub.Models
 
         internal static OperationsDefinitionDisplay DeserializeOperationsDefinitionDisplay(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string provider = default;
             string resource = default;
             string operation = default;

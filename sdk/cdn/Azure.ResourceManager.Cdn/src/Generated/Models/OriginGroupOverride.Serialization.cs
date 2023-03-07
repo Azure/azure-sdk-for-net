@@ -31,6 +31,10 @@ namespace Azure.ResourceManager.Cdn.Models
 
         internal static OriginGroupOverride DeserializeOriginGroupOverride(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<WritableSubResource> originGroup = default;
             Optional<ForwardingProtocol> forwardingProtocol = default;
             foreach (var property in element.EnumerateObject())

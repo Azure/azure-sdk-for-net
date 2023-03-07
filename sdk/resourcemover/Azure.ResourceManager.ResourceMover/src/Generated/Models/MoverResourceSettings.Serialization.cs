@@ -24,6 +24,10 @@ namespace Azure.ResourceManager.ResourceMover.Models
 
         internal static MoverResourceSettings DeserializeMoverResourceSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             if (element.TryGetProperty("resourceType", out JsonElement discriminator))
             {
                 switch (discriminator.GetString())

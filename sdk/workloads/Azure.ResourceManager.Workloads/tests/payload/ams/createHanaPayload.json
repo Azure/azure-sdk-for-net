@@ -1,0 +1,14 @@
+{
+    "properties": {
+        "providerSettings": {
+            "sslPreference": "Disabled",
+            "providerType": "SapHana",
+            "hostname": "10.0.81.4",
+            "sapSid": "X00",
+            "dbUsername": "SYSTEM",
+            "dbPassword": "Sanitized",
+            "dbName": "SYSTEMDB",
+            "instanceNumber": "00"
+        }
+    }
+}

@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.AppService.Models
     {
         internal static WebAppBackupItemListResult DeserializeWebAppBackupItemListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IReadOnlyList<WebAppBackupData> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

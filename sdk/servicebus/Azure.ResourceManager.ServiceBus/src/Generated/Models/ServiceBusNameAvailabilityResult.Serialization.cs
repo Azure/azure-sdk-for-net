@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.ServiceBus.Models
     {
         internal static ServiceBusNameAvailabilityResult DeserializeServiceBusNameAvailabilityResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> message = default;
             Optional<bool> nameAvailable = default;
             Optional<ServiceBusNameUnavailableReason> reason = default;

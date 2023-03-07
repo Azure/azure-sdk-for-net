@@ -51,6 +51,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static UnknownDatasetLocation DeserializeUnknownDatasetLocation(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string type = "Unknown";
             Optional<BinaryData> folderPath = default;
             Optional<BinaryData> fileName = default;

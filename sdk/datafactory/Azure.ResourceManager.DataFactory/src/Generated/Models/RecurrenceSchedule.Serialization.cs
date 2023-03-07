@@ -81,6 +81,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static RecurrenceSchedule DeserializeRecurrenceSchedule(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<int>> minutes = default;
             Optional<IList<int>> hours = default;
             Optional<IList<FactoryDayOfWeek>> weekDays = default;

@@ -88,6 +88,10 @@ namespace Azure.ResourceManager.BotService.Models
 
         internal static ListChannelWithKeysResponse DeserializeListChannelWithKeysResponse(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<Channel> resource = default;
             Optional<ChannelSettings> setting = default;
             Optional<string> provisioningState = default;

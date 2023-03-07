@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.DataMigration.Models
     {
         internal static MigrateSqlServerSqlMITaskOutputAgentJobLevel DeserializeMigrateSqlServerSqlMITaskOutputAgentJobLevel(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<bool> isEnabled = default;
             Optional<MigrationState> state = default;

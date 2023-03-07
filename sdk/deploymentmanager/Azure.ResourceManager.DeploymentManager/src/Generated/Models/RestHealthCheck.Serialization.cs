@@ -29,6 +29,10 @@ namespace Azure.ResourceManager.DeploymentManager.Models
 
         internal static RestHealthCheck DeserializeRestHealthCheck(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string name = default;
             RestRequest request = default;
             Optional<RestResponse> response = default;

@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.ServiceLinker.Models
     {
         internal static SourceConfigurationResult DeserializeSourceConfigurationResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<SourceConfiguration>> configurations = default;
             foreach (var property in element.EnumerateObject())
             {

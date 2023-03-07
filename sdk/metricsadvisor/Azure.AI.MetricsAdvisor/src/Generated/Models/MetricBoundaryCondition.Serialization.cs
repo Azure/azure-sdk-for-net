@@ -47,6 +47,10 @@ namespace Azure.AI.MetricsAdvisor.Models
 
         internal static MetricBoundaryCondition DeserializeMetricBoundaryCondition(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<double> lower = default;
             Optional<double> upper = default;
             BoundaryDirection direction = default;

@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 
         internal static CognitiveServicesRegionSetting DeserializeCognitiveServicesRegionSetting(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<float> value = default;
             Optional<string> customsubdomain = default;

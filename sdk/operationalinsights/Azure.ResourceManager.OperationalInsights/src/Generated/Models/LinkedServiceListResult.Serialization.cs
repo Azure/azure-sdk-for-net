@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.OperationalInsights.Models
     {
         internal static LinkedServiceListResult DeserializeLinkedServiceListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<OperationalInsightsLinkedServiceData>> value = default;
             foreach (var property in element.EnumerateObject())
             {

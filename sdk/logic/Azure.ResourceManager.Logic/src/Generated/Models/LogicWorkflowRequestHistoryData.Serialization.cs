@@ -41,6 +41,10 @@ namespace Azure.ResourceManager.Logic
 
         internal static LogicWorkflowRequestHistoryData DeserializeLogicWorkflowRequestHistoryData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<LogicWorkflowRequestHistoryProperties> properties = default;
             Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;

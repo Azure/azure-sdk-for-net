@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
 
         internal static StreamingJobFunctionOutput DeserializeStreamingJobFunctionOutput(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> dataType = default;
             foreach (var property in element.EnumerateObject())
             {

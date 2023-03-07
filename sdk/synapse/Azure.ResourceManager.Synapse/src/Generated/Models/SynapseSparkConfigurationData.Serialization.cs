@@ -76,6 +76,10 @@ namespace Azure.ResourceManager.Synapse
 
         internal static SynapseSparkConfigurationData DeserializeSynapseSparkConfigurationData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ETag> etag = default;
             ResourceIdentifier id = default;
             string name = default;

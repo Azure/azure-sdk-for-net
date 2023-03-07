@@ -96,6 +96,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static AzureBlobSource DeserializeAzureBlobSource(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<BinaryData> treatEmptyAsNull = default;
             Optional<BinaryData> skipHeaderLineCount = default;
             Optional<BinaryData> recursive = default;

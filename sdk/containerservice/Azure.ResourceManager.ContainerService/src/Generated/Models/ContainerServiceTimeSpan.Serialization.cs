@@ -31,6 +31,10 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         internal static ContainerServiceTimeSpan DeserializeContainerServiceTimeSpan(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DateTimeOffset> start = default;
             Optional<DateTimeOffset> end = default;
             foreach (var property in element.EnumerateObject())

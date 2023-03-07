@@ -28,6 +28,10 @@ namespace Azure.ResourceManager.EventHubs.Models
 
         internal static EventHubsThrottlingPolicy DeserializeEventHubsThrottlingPolicy(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             long rateLimitThreshold = default;
             EventHubsMetricId metricId = default;
             string name = default;

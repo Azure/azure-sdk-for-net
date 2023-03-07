@@ -76,6 +76,10 @@ namespace Azure.ResourceManager.Sql
 
         internal static SyncGroupData DeserializeSyncGroupData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<SqlSku> sku = default;
             ResourceIdentifier id = default;
             string name = default;

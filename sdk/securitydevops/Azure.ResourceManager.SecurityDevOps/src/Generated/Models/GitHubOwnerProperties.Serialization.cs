@@ -31,6 +31,10 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
 
         internal static GitHubOwnerProperties DeserializeGitHubOwnerProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ProvisioningState> provisioningState = default;
             Optional<Uri> ownerUrl = default;
             foreach (var property in element.EnumerateObject())

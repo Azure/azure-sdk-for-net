@@ -28,6 +28,10 @@ namespace Azure.ResourceManager.IotHub.Models
 
         internal static IotHubPrivateEndpointConnectionProperties DeserializeIotHubPrivateEndpointConnectionProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<SubResource> privateEndpoint = default;
             IotHubPrivateLinkServiceConnectionState privateLinkServiceConnectionState = default;
             foreach (var property in element.EnumerateObject())

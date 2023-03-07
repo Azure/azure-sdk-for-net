@@ -27,6 +27,10 @@ namespace Azure.ResourceManager.IotHub.Models
 
         internal static IotHubSkuInfo DeserializeIotHubSkuInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IotHubSku name = default;
             Optional<IotHubSkuTier> tier = default;
             Optional<long> capacity = default;

@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     {
         internal static RestoreJobRecoveryPointDetails DeserializeRestoreJobRecoveryPointDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> recoveryPointId = default;
             Optional<DateTimeOffset> recoveryPointTime = default;
             foreach (var property in element.EnumerateObject())

@@ -87,6 +87,10 @@ namespace Azure.ResourceManager.Monitor.Models
 
         internal static RuleManagementEventDataSource DeserializeRuleManagementEventDataSource(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> eventName = default;
             Optional<string> eventSource = default;
             Optional<string> level = default;

@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
     {
         internal static SourceUploadDefinition DeserializeSourceUploadDefinition(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<Uri> uploadUrl = default;
             Optional<string> relativePath = default;
             foreach (var property in element.EnumerateObject())

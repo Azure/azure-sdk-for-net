@@ -27,6 +27,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static Expression DeserializeExpression(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ExpressionType type = default;
             string value = default;
             foreach (var property in element.EnumerateObject())

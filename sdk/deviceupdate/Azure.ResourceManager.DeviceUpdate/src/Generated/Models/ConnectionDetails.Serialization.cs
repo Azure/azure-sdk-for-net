@@ -20,6 +20,10 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
 
         internal static ConnectionDetails DeserializeConnectionDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> id = default;
             Optional<string> privateIPAddress = default;
             Optional<string> linkIdentifier = default;

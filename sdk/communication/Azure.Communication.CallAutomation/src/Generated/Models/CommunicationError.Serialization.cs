@@ -15,6 +15,10 @@ namespace Azure.Communication.CallAutomation
     {
         internal static CommunicationError DeserializeCommunicationError(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> code = default;
             Optional<string> message = default;
             Optional<string> target = default;

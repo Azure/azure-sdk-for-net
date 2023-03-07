@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.Media.Models
     {
         internal static EdgeUsageDataEventHub DeserializeEdgeUsageDataEventHub(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<string> @namespace = default;
             Optional<string> token = default;

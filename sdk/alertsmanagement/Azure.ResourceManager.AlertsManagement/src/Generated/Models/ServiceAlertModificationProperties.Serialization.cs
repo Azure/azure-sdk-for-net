@@ -32,6 +32,10 @@ namespace Azure.ResourceManager.AlertsManagement.Models
 
         internal static ServiceAlertModificationProperties DeserializeServiceAlertModificationProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<Guid> alertId = default;
             Optional<IList<ServiceAlertModificationItemInfo>> modifications = default;
             foreach (var property in element.EnumerateObject())

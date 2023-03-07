@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Automation.Models
     {
         internal static SourceControlSyncJobStream DeserializeSourceControlSyncJobStream(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ResourceIdentifier> id = default;
             Optional<string> sourceControlSyncJobStreamId = default;
             Optional<string> summary = default;

@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.ServiceLinker.Models
     {
         internal static LinkerValidateOperationResult DeserializeLinkerValidateOperationResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ResourceIdentifier> resourceId = default;
             Optional<string> status = default;
             Optional<string> linkerName = default;

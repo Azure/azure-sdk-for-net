@@ -28,6 +28,10 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 
         internal static NamedPartitionAddOrRemoveScalingMechanism DeserializeNamedPartitionAddOrRemoveScalingMechanism(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             int minPartitionCount = default;
             int maxPartitionCount = default;
             int scaleIncrement = default;

@@ -59,6 +59,10 @@ namespace Azure.ResourceManager.Media.Models
 
         internal static ContentKeyPolicyFairPlayConfiguration DeserializeContentKeyPolicyFairPlayConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             byte[] ask = default;
             string fairPlayPfxPassword = default;
             string fairPlayPfx = default;

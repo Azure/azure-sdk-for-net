@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     {
         internal static AlertProperties DeserializeAlertProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> sendToOwners = default;
             Optional<IReadOnlyList<string>> customEmailAddresses = default;
             Optional<string> locale = default;

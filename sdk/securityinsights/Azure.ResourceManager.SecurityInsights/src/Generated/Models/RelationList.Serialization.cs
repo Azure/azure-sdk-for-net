@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     {
         internal static RelationList DeserializeRelationList(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> nextLink = default;
             IReadOnlyList<SecurityInsightsIncidentRelationData> value = default;
             foreach (var property in element.EnumerateObject())

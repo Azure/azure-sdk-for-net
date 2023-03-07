@@ -48,6 +48,10 @@ namespace Azure.AI.TextAnalytics.Models
 
         internal static AbstractiveSummaryDocumentResultWithDetectedLanguage DeserializeAbstractiveSummaryDocumentResultWithDetectedLanguage(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DetectedLanguageInternal> detectedLanguage = default;
             IList<AbstractiveSummaryInternal> summaries = default;
             string id = default;

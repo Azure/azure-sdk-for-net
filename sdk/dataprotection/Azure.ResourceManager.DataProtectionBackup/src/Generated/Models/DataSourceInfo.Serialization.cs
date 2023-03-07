@@ -53,6 +53,10 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 
         internal static DataSourceInfo DeserializeDataSourceInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> datasourceType = default;
             Optional<string> objectType = default;
             ResourceIdentifier resourceId = default;

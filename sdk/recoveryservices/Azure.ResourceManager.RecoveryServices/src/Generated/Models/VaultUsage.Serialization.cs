@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.RecoveryServices.Models
     {
         internal static VaultUsage DeserializeVaultUsage(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<VaultUsageUnit> unit = default;
             Optional<string> quotaPeriod = default;
             Optional<DateTimeOffset> nextResetTime = default;

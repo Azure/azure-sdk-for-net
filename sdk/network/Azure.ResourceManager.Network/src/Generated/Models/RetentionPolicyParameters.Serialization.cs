@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static RetentionPolicyParameters DeserializeRetentionPolicyParameters(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> days = default;
             Optional<bool> enabled = default;
             foreach (var property in element.EnumerateObject())

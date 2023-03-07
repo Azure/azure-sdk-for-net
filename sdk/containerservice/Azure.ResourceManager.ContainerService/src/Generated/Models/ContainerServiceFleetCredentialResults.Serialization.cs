@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.ContainerService.Models
     {
         internal static ContainerServiceFleetCredentialResults DeserializeContainerServiceFleetCredentialResults(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<ContainerServiceFleetCredentialResult>> kubeconfigs = default;
             foreach (var property in element.EnumerateObject())
             {

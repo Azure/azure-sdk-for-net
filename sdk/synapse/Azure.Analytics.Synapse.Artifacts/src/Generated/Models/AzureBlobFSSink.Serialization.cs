@@ -61,6 +61,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static AzureBlobFSSink DeserializeAzureBlobFSSink(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<object> copyBehavior = default;
             string type = default;
             Optional<object> writeBatchSize = default;

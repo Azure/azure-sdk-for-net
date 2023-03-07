@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
     {
         internal static MySqlFlexibleServerCapabilitiesListResult DeserializeMySqlFlexibleServerCapabilitiesListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<MySqlFlexibleServerCapabilityProperties>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

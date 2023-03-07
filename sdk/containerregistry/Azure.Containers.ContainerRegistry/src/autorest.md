@@ -111,7 +111,7 @@ directive:
     $["x-ms-client-name"] = "nextLink"
 ```
 
-# Updates to OciManifest
+# Updates to OciImageManifest
 ``` yaml
 directive:
   from: swagger-document
@@ -155,48 +155,4 @@ directive:
   where: $.definitions.Annotations
   transform: >
     delete $["x-accessibility"]
-```
-
-# Add OciMediaType extensible enum
-``` yaml
-directive:
-  from: swagger-document
-  where: $.definitions
-  transform: >
-    $["OciMediaType"] = {
-        "type": "string",
-        "enum": [
-            "application/vnd.oci.descriptor.v1+json",
-            "application/vnd.oci.image.manifest.v1+json",
-            "application/vnd.oci.image.config.v1+json",
-            "application/vnd.oci.image.layer.v1.tar",
-        ],
-        "x-ms-enum": {
-            "name": "OciMediaType",
-            "modelAsString": true,
-            "values": [
-            {
-                "value": "application/vnd.oci.descriptor.v1+json",
-                "name": "ContentDescriptor",
-                "description": ""
-            },
-            {
-                "value": "application/vnd.oci.image.manifest.v1+json",
-                "name": "ImageManifest",
-                "description": ""
-            },
-            {
-                "value": "application/vnd.oci.image.config.v1+json",
-                "name": "ImageConfig",
-                "description": ""
-            },
-            {
-                "value": "application/vnd.oci.image.layer.v1.tar",
-                "name": "ImageLayer",
-                "description": ""
-            }
-            ]
-        },
-        "x-accessibility": "public"
-        };
 ```
