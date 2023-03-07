@@ -41,11 +41,12 @@ namespace Azure.ResourceManager.Maintenance.Tests
         }
 
         [RecordedTest]
-        public async Task DeleteTest()
+        public async Task Delete()
         {
-            MaintenanceConfigurationResource maintenanceConfigurationResource = await Create();
+            MaintenanceConfigurationResource maintenanceConfigurationResource = await CreateMaintenanceConfiguration();
 
-            await maintenanceConfigurationResource.DeleteAsync(WaitUntil.Completed);
+            var deleted = await maintenanceConfigurationResource.DeleteAsync(WaitUntil.Completed);
+            Assert.IsNotEmpty(deleted.Value.Data.Id);
 
             MaintenanceConfigurationCollection collection = _resourceGroup.GetMaintenanceConfigurations();
 
@@ -54,17 +55,17 @@ namespace Azure.ResourceManager.Maintenance.Tests
         }
 
         [RecordedTest]
-        public async Task CreateTest()
+        public async Task Create()
         {
-            MaintenanceConfigurationResource maintenanceConfigurationResource = await Create();
+            MaintenanceConfigurationResource maintenanceConfigurationResource = await CreateMaintenanceConfiguration();
             Assert.IsNotEmpty(maintenanceConfigurationResource.Data.Id);
         }
 
         [RecordedTest]
-        public async Task ListTest()
+        public async Task List()
         {
-            MaintenanceConfigurationResource config1 = await Create();
-            MaintenanceConfigurationResource config2 = await Create();
+            MaintenanceConfigurationResource config1 = await CreateMaintenanceConfiguration();
+            MaintenanceConfigurationResource config2 = await CreateMaintenanceConfiguration();
 
             var list = await _configCollection.GetAllAsync().ToEnumerableAsync();
             Assert.IsTrue(list.Count >= 2);
@@ -74,15 +75,15 @@ namespace Azure.ResourceManager.Maintenance.Tests
         }
 
         [RecordedTest]
-        public async Task GetTest()
+        public async Task Get()
         {
-            MaintenanceConfigurationResource config = await Create();
+            MaintenanceConfigurationResource config = await CreateMaintenanceConfiguration();
 
             var retrieveConfig = await _configCollection.GetAsync(config.Data.Name);
             Assert.IsNotEmpty(retrieveConfig.Value.Data.Id);
         }
 
-        private async Task<MaintenanceConfigurationResource> Create()
+        private async Task<MaintenanceConfigurationResource> CreateMaintenanceConfiguration()
         {
             string resourceName = Recording.GenerateAssetName("maintenance-config-");
             MaintenanceConfigurationData data = new MaintenanceConfigurationData(Location)
