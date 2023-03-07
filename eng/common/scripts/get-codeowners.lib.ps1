@@ -91,7 +91,7 @@ function Get-Codeowners(
     $CodeownersFileLocation = (Resolve-Path $PSScriptRoot/../../../.github/CODEOWNERS)
   }
 
-  # Backward compaitiblity: if $TargetPath is not provided, fall-back to the legacy $TargetDirectory
+  # Backward compatibility: if $TargetPath is not provided, fall-back to the legacy $TargetDirectory
   if ([string]::IsNullOrWhiteSpace($TargetPath)) {
     $TargetPath = $TargetDirectory
   }
