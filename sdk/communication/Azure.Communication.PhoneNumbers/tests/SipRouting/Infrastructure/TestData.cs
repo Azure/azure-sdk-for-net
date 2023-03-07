@@ -21,15 +21,15 @@ namespace Azure.Communication.PhoneNumbers.SipRouting.Tests
         public readonly SipTrunkRoute RuleNavigateToNewTrunk;
         public readonly SipTrunkRoute RuleWithoutTrunks;
 
-        public TestData(string domain)
+        public TestData(string domain, string randomGuid)
         {
-            Fqdns = new List<string>() { "sbs1." + domain + ".com", "sbs2." + domain + ".com" };
+            Fqdns = new List<string>() { "sbs1-" + randomGuid + "." + domain, "sbs2-" + randomGuid + "." + domain };
             TrunkList = new List<SipTrunk>
             {
                 new SipTrunk(Fqdns[0], TrunkPorts[0]),
                 new SipTrunk(Fqdns[1], TrunkPorts[1])
             };
-            NewTrunk = new SipTrunk("newsbs." + domain + ".com", 3333);
+            NewTrunk = new SipTrunk("newsbs-" + randomGuid + "." + domain, 3333);
 
             RuleNavigateToTrunk1 = new SipTrunkRoute(
                 name: "First rule",
