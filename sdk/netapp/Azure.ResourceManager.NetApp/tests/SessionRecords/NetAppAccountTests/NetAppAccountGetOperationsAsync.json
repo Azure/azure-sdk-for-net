@@ -6,9 +6,9 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-1d2688302138886ec7e483386051e558-50711c12cbee36bc-00",
+        "traceparent": "00-8f2867d7e8a6491bb0d25521c24b23e2-be655c50e1bb6b7e-00",
         "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET 6.0.14; Microsoft Windows 10.0.22000)",
-        "x-ms-client-request-id": "687e6742581033873763a150855e2526",
+        "x-ms-client-request-id": "8237e38cebcf7c3a034b72c65eac0856",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -17,15 +17,15 @@
         "Cache-Control": "no-cache",
         "Content-Length": "422",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Thu, 02 Mar 2023 14:59:45 GMT",
+        "Date": "Mon, 06 Mar 2023 14:15:31 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "e6f90a59-b329-4d11-9fe2-9bf7e3760df4",
-        "x-ms-ratelimit-remaining-subscription-reads": "11972",
-        "x-ms-request-id": "e6f90a59-b329-4d11-9fe2-9bf7e3760df4",
-        "x-ms-routing-request-id": "WESTEUROPE:20230302T145945Z:e6f90a59-b329-4d11-9fe2-9bf7e3760df4"
+        "x-ms-correlation-request-id": "4fd84c82-d8af-4bdb-954f-7c5f972d6a64",
+        "x-ms-ratelimit-remaining-subscription-reads": "11960",
+        "x-ms-request-id": "4fd84c82-d8af-4bdb-954f-7c5f972d6a64",
+        "x-ms-routing-request-id": "WESTEUROPE:20230306T141531Z:4fd84c82-d8af-4bdb-954f-7c5f972d6a64"
       },
       "ResponseBody": {
         "id": "/subscriptions/69a75bda-882e-44d5-8431-63421204132a",
@@ -51,26 +51,26 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-bbdb748a200976135a5656b9316a6634-1aa9d62cb8f6835c-00",
+        "traceparent": "00-4d3348d0b0b1541c38938e2f7f38b6d9-06085bd03f2a8894-00",
         "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET 6.0.14; Microsoft Windows 10.0.22000)",
-        "x-ms-client-request-id": "dbe8f61a568407fe615b6f496d9fde60",
+        "x-ms-client-request-id": "5ce07321494d224dc3e207d8eba89b6d",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "25240",
+        "Content-Length": "25532",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Thu, 02 Mar 2023 14:59:45 GMT",
+        "Date": "Mon, 06 Mar 2023 14:15:31 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "cd370ccb-ebc1-4af8-a6e4-5c2437f69c02",
-        "x-ms-ratelimit-remaining-subscription-reads": "11971",
-        "x-ms-request-id": "cd370ccb-ebc1-4af8-a6e4-5c2437f69c02",
-        "x-ms-routing-request-id": "WESTEUROPE:20230302T145945Z:cd370ccb-ebc1-4af8-a6e4-5c2437f69c02"
+        "x-ms-correlation-request-id": "10729763-a07c-49cd-a04a-ea6c971029d2",
+        "x-ms-ratelimit-remaining-subscription-reads": "11959",
+        "x-ms-request-id": "10729763-a07c-49cd-a04a-ea6c971029d2",
+        "x-ms-routing-request-id": "WESTEUROPE:20230306T141531Z:10729763-a07c-49cd-a04a-ea6c971029d2"
       },
       "ResponseBody": {
         "id": "/subscriptions/69a75bda-882e-44d5-8431-63421204132a/providers/Microsoft.NetApp",
@@ -112,6 +112,7 @@
               "North Europe",
               "Norway East",
               "Norway West",
+              "Qatar Central",
               "South Central US",
               "South Africa North",
               "South India",
@@ -134,7 +135,6 @@
               "West US 2 (Stage)",
               "Brazil Southeast",
               "Central US EUAP",
-              "Qatar Central",
               "Sweden South"
             ],
             "apiVersions": [
@@ -194,6 +194,7 @@
               "North Europe",
               "Norway East",
               "Norway West",
+              "Qatar Central",
               "South Central US",
               "South Africa North",
               "South India",
@@ -216,7 +217,6 @@
               "West US 2 (Stage)",
               "Brazil Southeast",
               "Central US EUAP",
-              "Qatar Central",
               "Sweden South"
             ],
             "apiVersions": [
@@ -267,6 +267,7 @@
               "North Europe",
               "Norway East",
               "Norway West",
+              "Qatar Central",
               "South Central US",
               "South Africa North",
               "South India",
@@ -289,7 +290,6 @@
               "West US 2 (Stage)",
               "Brazil Southeast",
               "Central US EUAP",
-              "Qatar Central",
               "Sweden South"
             ],
             "apiVersions": [
@@ -332,6 +332,7 @@
               "North Europe",
               "Norway East",
               "Norway West",
+              "Qatar Central",
               "South Central US",
               "South Africa North",
               "South India",
@@ -354,7 +355,6 @@
               "West US 2 (Stage)",
               "Brazil Southeast",
               "Central US EUAP",
-              "Qatar Central",
               "Sweden South"
             ],
             "apiVersions": [
@@ -415,6 +415,7 @@
               "North Europe",
               "Norway East",
               "Norway West",
+              "Qatar Central",
               "South Central US",
               "South Africa North",
               "South India",
@@ -437,7 +438,6 @@
               "West US 2 (Stage)",
               "Brazil Southeast",
               "Central US EUAP",
-              "Qatar Central",
               "Sweden South"
             ],
             "apiVersions": [
@@ -716,6 +716,7 @@
               "North Europe",
               "Norway East",
               "Norway West",
+              "Qatar Central",
               "South Central US",
               "South Africa North",
               "South India",
@@ -738,7 +739,6 @@
               "West US 2 (Stage)",
               "Brazil Southeast",
               "Central US EUAP",
-              "Qatar Central",
               "Sweden South"
             ],
             "apiVersions": [
@@ -777,6 +777,7 @@
               "North Europe",
               "Norway East",
               "Norway West",
+              "Qatar Central",
               "South Central US",
               "South Africa North",
               "South India",
@@ -799,7 +800,6 @@
               "West US 2 (Stage)",
               "Brazil Southeast",
               "Central US EUAP",
-              "Qatar Central",
               "Sweden South"
             ],
             "apiVersions": [
@@ -859,6 +859,7 @@
               "North Europe",
               "Norway East",
               "Norway West",
+              "Qatar Central",
               "South Africa North",
               "South Central US",
               "South India",
@@ -879,7 +880,6 @@
               "West US (Stage)",
               "West US 2 (Stage)",
               "Brazil Southeast",
-              "Qatar Central",
               "Sweden South",
               "Central US EUAP",
               "East US 2 EUAP"
@@ -941,6 +941,7 @@
               "North Europe",
               "Norway East",
               "Norway West",
+              "Qatar Central",
               "South Central US",
               "South Africa North",
               "South India",
@@ -963,7 +964,6 @@
               "West US 2 (Stage)",
               "Brazil Southeast",
               "Central US EUAP",
-              "Qatar Central",
               "Sweden South"
             ],
             "apiVersions": [
@@ -1023,6 +1023,7 @@
               "North Europe",
               "Norway East",
               "Norway West",
+              "Qatar Central",
               "South Central US",
               "South Africa North",
               "South India",
@@ -1045,7 +1046,6 @@
               "West US 2 (Stage)",
               "Brazil Southeast",
               "Central US EUAP",
-              "Qatar Central",
               "Sweden South"
             ],
             "apiVersions": [
@@ -1188,6 +1188,7 @@
               "North Europe",
               "Norway East",
               "Norway West",
+              "Qatar Central",
               "South Central US",
               "South Africa North",
               "South India",
@@ -1210,7 +1211,6 @@
               "West US 2 (Stage)",
               "Brazil Southeast",
               "Central US EUAP",
-              "Qatar Central",
               "Sweden South"
             ],
             "apiVersions": [
@@ -1260,6 +1260,7 @@
               "North Europe",
               "Norway East",
               "Norway West",
+              "Qatar Central",
               "South Central US",
               "South Africa North",
               "South India",
@@ -1282,7 +1283,6 @@
               "West US 2 (Stage)",
               "Brazil Southeast",
               "Central US EUAP",
-              "Qatar Central",
               "Sweden South"
             ],
             "apiVersions": [
@@ -1316,6 +1316,7 @@
               "North Europe",
               "Norway East",
               "Norway West",
+              "Qatar Central",
               "South Central US",
               "South Africa North",
               "South India",
@@ -1338,7 +1339,6 @@
               "West US 2 (Stage)",
               "Brazil Southeast",
               "Central US EUAP",
-              "Qatar Central",
               "Sweden South"
             ],
             "apiVersions": [
@@ -1379,6 +1379,7 @@
               "North Europe",
               "Norway East",
               "Norway West",
+              "Qatar Central",
               "South Central US",
               "South Africa North",
               "South India",
@@ -1401,7 +1402,6 @@
               "West US 2 (Stage)",
               "Brazil Southeast",
               "Central US EUAP",
-              "Qatar Central",
               "Sweden South"
             ],
             "apiVersions": [
@@ -1441,6 +1441,7 @@
               "North Europe",
               "Norway East",
               "Norway West",
+              "Qatar Central",
               "South Central US",
               "South Africa North",
               "South India",
@@ -1463,7 +1464,6 @@
               "West US 2 (Stage)",
               "Brazil Southeast",
               "Central US EUAP",
-              "Qatar Central",
               "Sweden South"
             ],
             "apiVersions": [
@@ -1506,14 +1506,18 @@
               "South Central US (Stage)",
               "West Central US",
               "West US 2 (Stage)",
+              "Australia Central",
               "Australia East",
+              "Brazil South",
               "Canada East",
+              "East Asia",
               "East US",
               "East US 2",
               "France Central",
               "Germany West Central",
               "Japan East",
               "North Europe",
+              "Qatar Central",
               "South Central US",
               "South Africa North",
               "Southeast Asia",
@@ -1552,14 +1556,18 @@
               "South Central US (Stage)",
               "West Central US",
               "West US 2 (Stage)",
+              "Australia Central",
               "Australia East",
+              "Brazil South",
               "Canada East",
+              "East Asia",
               "East US",
               "East US 2",
               "France Central",
               "Germany West Central",
               "Japan East",
               "North Europe",
+              "Qatar Central",
               "South Central US",
               "South Africa North",
               "Southeast Asia",
@@ -1594,7 +1602,8 @@
             "resourceType": "netAppAccounts/backupVaults",
             "locations": [
               "East US 2 EUAP",
-              "West Central US"
+              "West Central US",
+              "West US 2 (Stage)"
             ],
             "apiVersions": [
               "2022-11-01-preview"
@@ -1605,7 +1614,8 @@
             "resourceType": "netAppAccounts/backupVaults/backups",
             "locations": [
               "East US 2 EUAP",
-              "West Central US"
+              "West Central US",
+              "West US 2 (Stage)"
             ],
             "apiVersions": [
               "2022-11-01-preview"
@@ -1620,14 +1630,18 @@
               "South Central US (Stage)",
               "West Central US",
               "West US 2 (Stage)",
+              "Australia Central",
               "Australia East",
+              "Brazil South",
               "Canada East",
+              "East Asia",
               "East US",
               "East US 2",
               "France Central",
               "Germany West Central",
               "Japan East",
               "North Europe",
+              "Qatar Central",
               "South Central US",
               "South Africa North",
               "Southeast Asia",
@@ -1666,14 +1680,18 @@
               "South Central US (Stage)",
               "West Central US",
               "West US 2 (Stage)",
+              "Australia Central",
               "Australia East",
+              "Brazil South",
               "Canada East",
+              "East Asia",
               "East US",
               "East US 2",
               "France Central",
               "Germany West Central",
               "Japan East",
               "North Europe",
+              "Qatar Central",
               "South Central US",
               "South Africa North",
               "Southeast Asia",
@@ -1864,9 +1882,9 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-bbdb748a200976135a5656b9316a6634-398ad1e029c2fde4-00",
+        "traceparent": "00-4d3348d0b0b1541c38938e2f7f38b6d9-3afb70ca7b4bd189-00",
         "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET 6.0.14; Microsoft Windows 10.0.22000)",
-        "x-ms-client-request-id": "e621b6dee720b94acd9f76557ee96ca6",
+        "x-ms-client-request-id": "b7bd7eeaaa25abd3dbf333d4475415f5",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -1875,16 +1893,16 @@
         "Cache-Control": "no-cache",
         "Content-Length": "44285",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Thu, 02 Mar 2023 14:59:45 GMT",
+        "Date": "Mon, 06 Mar 2023 14:15:42 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Server": "Microsoft-IIS/10.0",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "cb038084-01e5-4112-a645-2dcc15fee897",
+        "x-ms-correlation-request-id": "10017cc2-7e55-4ca1-b7ac-ba57b7ee551e",
         "x-ms-ratelimit-remaining-tenant-reads": "11999",
-        "x-ms-request-id": "2d25f3c3-f1be-496c-ab9f-de9f173f89ad",
-        "x-ms-routing-request-id": "WESTEUROPE:20230302T145945Z:cb038084-01e5-4112-a645-2dcc15fee897",
+        "x-ms-request-id": "ebea1eaf-2894-4b3e-9d5a-8137987d64e4",
+        "x-ms-routing-request-id": "WESTEUROPE:20230306T141542Z:10017cc2-7e55-4ca1-b7ac-ba57b7ee551e",
         "X-Powered-By": "ASP.NET"
       },
       "ResponseBody": {
@@ -3679,7 +3697,7 @@
   ],
   "Variables": {
     "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
-    "RandomSeed": "1516150796",
+    "RandomSeed": "1716243835",
     "RESOURCE_MANAGER_URL": null,
     "SUBSCRIPTION_ID": "69a75bda-882e-44d5-8431-63421204132a"
   }
