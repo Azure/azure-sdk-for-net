@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Description>This is the Microsoft Azure Key Vault Keys client library</Description>
     <AssemblyTitle>Microsoft Azure.Security.KeyVault.Keys client library</AssemblyTitle>
-    <Version>4.5.0-beta.2</Version>
+    <Version>4.5.0</Version>
     <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
     <ApiCompatVersion>4.4.0</ApiCompatVersion>
     <PackageTags>Microsoft Azure Key Vault Keys;$(PackageCommonTags)</PackageTags>
