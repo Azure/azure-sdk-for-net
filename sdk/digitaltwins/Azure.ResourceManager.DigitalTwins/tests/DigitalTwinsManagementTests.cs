@@ -39,34 +39,31 @@ namespace Azure.ResourceManager.DigitalTwins.Tests
             Assert.AreEqual(digitalTwinsInstanceName, digitalTwinsResource.Data.Name);
             Assert.AreEqual(ManagedServiceIdentityType.SystemAssigned, digitalTwinsResource.Data.Identity.ManagedServiceIdentityType);
 
-            // delete one
-            await digitalTwinsResource.DeleteAsync(WaitUntil.Completed);
+            // Create an egress endpoint
+            string endpointName = Recording.GenerateAssetName("sdkTestEndpoint");
+            Uri eventHubNamespaceUri = new Uri("sb://myeventhubnamespace.servicebus.windows.net");
+            string eventHubName = "MyEventHub";
 
-            //// Create an egress endpoint
-            //string endpointName = Recording.GenerateAssetName("sdkTestEndpoint");
-            //Uri eventHubNamespaceUri = new Uri("sb://myeventhubnamespace.servicebus.windows.net");
-            //string eventHubName = "MyEventHub";
+            ArmOperation<DigitalTwinsEndpointResource> createEndpointResponse = await digitalTwinsResource.GetDigitalTwinsEndpointResources().CreateOrUpdateAsync(
+                WaitUntil.Completed,
+                endpointName,
+                new DigitalTwinsEndpointResourceData(
+                    new DigitalTwinsEventHubProperties
+                    {
+                        AuthenticationType = DigitalTwinsAuthenticationType.IdentityBased,
+                        EndpointUri = eventHubNamespaceUri,
+                        EntityPath = eventHubName,
+                    }));
 
-            //ArmOperation<DigitalTwinsEndpointResource> createEndpointResponse = await digitalTwinsResource.GetDigitalTwinsEndpointResources().CreateOrUpdateAsync(
-            //    WaitUntil.Completed,
-            //    endpointName,
-            //    new DigitalTwinsEndpointResourceData(
-            //        new DigitalTwinsEventHubProperties
-            //        {
-            //            AuthenticationType = DigitalTwinsAuthenticationType.IdentityBased,
-            //            EndpointUri = eventHubNamespaceUri,
-            //            EntityPath = eventHubName,
-            //        }));
+            DigitalTwinsEndpointResource endpointResource = createEndpointResponse.Value;
 
-            //DigitalTwinsEndpointResource endpointResource = createEndpointResponse.Value;
-
-            //// Ensure endpoint configuration was stored correctly
-            //Assert.AreEqual(endpointName, endpointResource.Data.Name);
-            //Assert.AreEqual(DigitalTwinsAuthenticationType.IdentityBased, endpointResource.Data.Properties.AuthenticationType);
-            //Assert.IsAssignableFrom<DigitalTwinsEventHubProperties>(endpointResource.Data.Properties);
-            //DigitalTwinsEventHubProperties eventHubEndpointProperties = (DigitalTwinsEventHubProperties)endpointResource.Data.Properties;
-            //Assert.AreEqual(eventHubNamespaceUri, eventHubEndpointProperties.EndpointUri);
-            //Assert.AreEqual(eventHubName, eventHubEndpointProperties.EntityPath);
+            // Ensure endpoint configuration was stored correctly
+            Assert.AreEqual(endpointName, endpointResource.Data.Name);
+            Assert.AreEqual(DigitalTwinsAuthenticationType.IdentityBased, endpointResource.Data.Properties.AuthenticationType);
+            Assert.IsAssignableFrom<DigitalTwinsEventHubProperties>(endpointResource.Data.Properties);
+            DigitalTwinsEventHubProperties eventHubEndpointProperties = (DigitalTwinsEventHubProperties)endpointResource.Data.Properties;
+            Assert.AreEqual(eventHubNamespaceUri, eventHubEndpointProperties.EndpointUri);
+            Assert.AreEqual(eventHubName, eventHubEndpointProperties.EntityPath);
         }
     }
 }
