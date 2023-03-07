@@ -14,8 +14,8 @@
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
-        "model": "text-embedding-ada-002",
-        "input": "Your text string goes here"
+        "input": "Your text string goes here",
+        "model": "text-embedding-ada-002"
       },
       "StatusCode": 200,
       "ResponseHeaders": {
