@@ -9,10 +9,10 @@ using System.Reflection;
 
 namespace Azure.Core.Dynamic
 {
-    public partial class DynamicJson : IDynamicMetaObjectProvider
+    public partial class DynamicJson : DynamicData
     {
         /// <inheritdoc />
-        DynamicMetaObject IDynamicMetaObjectProvider.GetMetaObject(Expression parameter) => new MetaObject(parameter, this);
+        public override DynamicMetaObject GetMetaObject(Expression parameter) => new MetaObject(parameter, this);
 
         private class MetaObject : DynamicMetaObject
         {

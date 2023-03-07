@@ -1,7 +1,9 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Dynamic;
 using System.IO;
+using System.Linq.Expressions;
 
 namespace Azure.Core.Dynamic
 {
@@ -11,7 +13,7 @@ namespace Azure.Core.Dynamic
     ///
     /// This and related types are not intended to be mocked.
     /// </summary>
-    public abstract class DynamicData
+    public abstract class DynamicData : IDynamicMetaObjectProvider
     {
         /// <summary>
         /// Writes the data to the provided stream.
@@ -23,6 +25,13 @@ namespace Azure.Core.Dynamic
             data.WriteTo(stream);
         }
 
-        internal abstract void WriteTo(Stream stream);
+        /// <inheritdoc />
+        public abstract DynamicMetaObject GetMetaObject(Expression parameter);
+
+        /// <summary>
+        /// Writes the data to the provided stream.
+        /// </summary>
+        /// <param name="stream">The stream to which to write the document.</param>
+        public abstract void WriteTo(Stream stream);
     }
 }

@@ -32,7 +32,8 @@ namespace Azure.Core.Dynamic
             _options = options;
         }
 
-        internal override void WriteTo(Stream stream)
+        /// <inheritdoc/>
+        public override void WriteTo(Stream stream)
         {
             Utf8JsonWriter writer = new(stream);
             _element.WriteTo(writer);
