@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.DataMigration.Models
     {
         internal static DataMigrationServiceList DeserializeDataMigrationServiceList(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<DataMigrationServiceData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

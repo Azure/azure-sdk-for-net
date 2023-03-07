@@ -59,6 +59,10 @@ namespace Azure.Security.KeyVault.Administration
 
         internal static KeyVaultRoleDefinition DeserializeKeyVaultRoleDefinition(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> id = default;
             Optional<string> name = default;
             Optional<KeyVaultRoleDefinitionType> type = default;

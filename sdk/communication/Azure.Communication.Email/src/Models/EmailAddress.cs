@@ -4,45 +4,31 @@
 #nullable disable
 
 using System;
-using System.Net.Mail;
 using Azure.Core;
 
-namespace Azure.Communication.Email.Models
+namespace Azure.Communication.Email
 {
     [CodeGenModel("EmailAddress")]
-    public partial class EmailAddress
+    public partial struct EmailAddress
     {
         /// <summary> Initializes a new instance of EmailAddress. </summary>
-        /// <param name="email"> Email address of the receipient</param>
+        /// <param name="address"> Email address of the receipient</param>
         /// <param name="displayName">The display name of the recepient</param>
-        /// <exception cref="ArgumentNullException"> <paramref name="email"/> is null. </exception>
-        public EmailAddress(string email, string displayName = null)
-            :this(email)
+        /// <exception cref="ArgumentNullException"> <paramref name="address"/> is null. </exception>
+        public EmailAddress(string address, string displayName)
+            : this(address)
         {
             DisplayName = displayName;
         }
 
-        internal void ValidateEmailAddress()
+        /// <summary> Initializes a new instance of EmailAddress. </summary>
+        /// <param name="address"> Email address of the receipient</param>
+        /// <exception cref="ArgumentNullException"> <paramref name="address"/> is null. </exception>
+        public EmailAddress(string address)
         {
-            MailAddress mailAddress = ToMailAddress();
-
-            var hostParts = mailAddress.Host.Trim().Split('.');
-            if (hostParts.Length < 2)
-            {
-                throw new ArgumentException($"{Email}" + ErrorMessages.InvalidEmailAddress);
-            }
-        }
-
-        private MailAddress ToMailAddress()
-        {
-            try
-            {
-                return new MailAddress(Email);
-            }
-            catch
-            {
-                throw new ArgumentException($"{Email}" + ErrorMessages.InvalidEmailAddress);
-            }
+            Argument.AssertNotNullOrWhiteSpace(address, nameof(address));
+            Address = address;
+            DisplayName = string.Empty;
         }
     }
 }

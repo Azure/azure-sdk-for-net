@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
     {
         internal static SkuEnumerationForExistingResourceResult DeserializeSkuEnumerationForExistingResourceResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<SkuDetailsForExistingResource>> value = default;
             foreach (var property in element.EnumerateObject())
             {

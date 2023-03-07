@@ -22,6 +22,10 @@ namespace Azure.ResourceManager.ProviderHub.Models
 
         internal static ResourceTypeFeaturesRule DeserializeResourceTypeFeaturesRule(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             FeaturesPolicy requiredFeaturesPolicy = default;
             foreach (var property in element.EnumerateObject())
             {

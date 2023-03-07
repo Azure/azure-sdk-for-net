@@ -63,6 +63,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static MachineLearningComputeInstance DeserializeMachineLearningComputeInstance(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<MachineLearningComputeInstanceProperties> properties = default;
             ComputeType computeType = default;
             Optional<string> computeLocation = default;

@@ -56,6 +56,10 @@ namespace Azure.ResourceManager.ArcScVmm.Models
 
         internal static NetworkInterfaces DeserializeNetworkInterfaces(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<string> displayName = default;
             Optional<IReadOnlyList<string>> ipv4Addresses = default;

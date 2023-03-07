@@ -1,16 +1,21 @@
 # Release History
 
-## 1.1.0-beta.7 (Unreleased)
+## 1.1.0-beta.7 (2023-03-07)
 
 ### Features Added
 
+- Added overloads to `ContainerRegistryBlobClient.DownloadManifest()` method that allow caller to specify multiple manifest media types in a collection.
+- Added overloads to `ContainerRegistryBlobClient` methods `UploadBlob()` and `UploadManifest()` that take the content to upload as a `BinaryData`.
+
 ### Breaking Changes
 
-### Bugs Fixed
-
-### Other Changes
+- Removed `UploadBlobOptions` type and moved chunk size configuration into ClientOptions.
+- Reordered parameters in `ContainerRegistryBlobClient` constructor for consistency with other SDK clients.
+- Renamed `OciAnnotations.Size` to `OciAnnotations.SizeInBytes` and removed `Size` parameter from `UploadBlobResult` type.
+- Changed the name of `OciManifest` to `OciImageManifest`.
 
 ## 1.1.0-beta.6 (2023-02-07)
+
 ### Features Added
 
 - Added method `DownloadBlobTo()` to `ContainerRegistryBlobClient`.  This method downloads a blob to a provided Stream, using multiple requests if the blob size exceeds the maximum chunk size.

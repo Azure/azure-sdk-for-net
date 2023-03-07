@@ -166,6 +166,10 @@ namespace Azure.AI.MetricsAdvisor.Models
 
         internal static AzureLogAnalyticsDataFeed DeserializeAzureLogAnalyticsDataFeed(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             AzureLogAnalyticsParameter dataSourceParameter = default;
             DataFeedSourceKind dataSourceType = default;
             Optional<string> dataFeedId = default;

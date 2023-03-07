@@ -44,6 +44,10 @@ namespace Azure.AI.TextAnalytics.Models
 
         internal static DynamicClassificationTaskParameters DeserializeDynamicClassificationTaskParameters(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ClassificationType> classificationType = default;
             IList<string> categories = default;
             Optional<string> modelVersion = default;

@@ -48,6 +48,10 @@ namespace Azure.ResourceManager.Logic.Models
 
         internal static EdifactAcknowledgementSettings DeserializeEdifactAcknowledgementSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             bool needTechnicalAcknowledgement = default;
             bool batchTechnicalAcknowledgements = default;
             bool needFunctionalAcknowledgement = default;

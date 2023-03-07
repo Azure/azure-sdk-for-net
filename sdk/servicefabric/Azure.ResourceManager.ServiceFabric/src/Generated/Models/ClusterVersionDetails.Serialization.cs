@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.ServiceFabric.Models
     {
         internal static ClusterVersionDetails DeserializeClusterVersionDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> codeVersion = default;
             Optional<DateTimeOffset> supportExpiryUtc = default;
             Optional<ClusterEnvironment> environment = default;

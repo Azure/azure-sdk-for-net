@@ -107,6 +107,10 @@ namespace Azure.ResourceManager.DigitalTwins.Models
 
         internal static DataExplorerConnectionProperties DeserializeDataExplorerConnectionProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier adxResourceId = default;
             Uri adxEndpointUri = default;
             string adxDatabaseName = default;

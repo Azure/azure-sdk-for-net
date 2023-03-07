@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.Monitor.Models
     {
         internal static AutoscaleSettingResourceCollection DeserializeAutoscaleSettingResourceCollection(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IReadOnlyList<AutoscaleSettingData> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

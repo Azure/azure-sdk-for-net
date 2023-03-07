@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     {
         internal static UnknownNetworkMappingFabricSpecificSettings DeserializeUnknownNetworkMappingFabricSpecificSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string instanceType = "Unknown";
             foreach (var property in element.EnumerateObject())
             {

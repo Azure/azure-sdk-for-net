@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Compute.Models
     {
         internal static AvailablePatchSummary DeserializeAvailablePatchSummary(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<PatchOperationStatus> status = default;
             Optional<string> assessmentActivityId = default;
             Optional<bool> rebootPending = default;

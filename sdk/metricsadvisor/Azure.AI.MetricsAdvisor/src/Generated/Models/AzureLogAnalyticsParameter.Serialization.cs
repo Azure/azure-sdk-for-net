@@ -39,6 +39,10 @@ namespace Azure.AI.MetricsAdvisor.Models
 
         internal static AzureLogAnalyticsParameter DeserializeAzureLogAnalyticsParameter(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> tenantId = default;
             Optional<string> clientId = default;
             Optional<string> clientSecret = default;

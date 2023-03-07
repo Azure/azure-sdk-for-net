@@ -27,6 +27,10 @@ namespace Azure.ResourceManager.Datadog
 
         internal static DatadogSingleSignOnResourceData DeserializeDatadogSingleSignOnResourceData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DatadogSingleSignOnProperties> properties = default;
             ResourceIdentifier id = default;
             string name = default;

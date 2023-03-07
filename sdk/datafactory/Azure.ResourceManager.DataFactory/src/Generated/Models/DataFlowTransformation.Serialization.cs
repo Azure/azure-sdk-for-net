@@ -42,6 +42,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static DataFlowTransformation DeserializeDataFlowTransformation(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string name = default;
             Optional<string> description = default;
             Optional<DatasetReference> dataset = default;

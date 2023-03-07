@@ -45,6 +45,10 @@ namespace Azure.ResourceManager.EventGrid.Models
 
         internal static EventTypeUnderTopic DeserializeEventTypeUnderTopic(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;

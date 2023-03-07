@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.IotHub.Models
     {
         internal static IotHubEndpointHealthInfo DeserializeIotHubEndpointHealthInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> endpointId = default;
             Optional<IotHubEndpointHealthStatus> healthStatus = default;
             Optional<string> lastKnownError = default;

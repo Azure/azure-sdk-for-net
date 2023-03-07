@@ -11,7 +11,10 @@ using Azure.ResourceManager.Subscription.Models;
 
 namespace Azure.ResourceManager.Subscription
 {
-    /// <summary> A class representing the BillingAccountPolicy data model. </summary>
+    /// <summary>
+    /// A class representing the BillingAccountPolicy data model.
+    /// Billing account policies information.
+    /// </summary>
     public partial class BillingAccountPolicyData : ResourceData
     {
         /// <summary> Initializes a new instance of BillingAccountPolicyData. </summary>

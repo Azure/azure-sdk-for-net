@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.HybridCompute.Models
 
         internal static OSProfile DeserializeOSProfile(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> computerName = default;
             Optional<OSProfileWindowsConfiguration> windowsConfiguration = default;
             Optional<OSProfileLinuxConfiguration> linuxConfiguration = default;

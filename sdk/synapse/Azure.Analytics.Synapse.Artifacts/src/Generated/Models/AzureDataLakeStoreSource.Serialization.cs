@@ -51,6 +51,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static AzureDataLakeStoreSource DeserializeAzureDataLakeStoreSource(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<object> recursive = default;
             string type = default;
             Optional<object> sourceRetryCount = default;

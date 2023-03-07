@@ -43,6 +43,10 @@ namespace Azure.ResourceManager.SignalR.Models
 
         internal static SignalRPrivateEndpointAcl DeserializeSignalRPrivateEndpointAcl(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string name = default;
             Optional<IList<SignalRRequestType>> allow = default;
             Optional<IList<SignalRRequestType>> deny = default;

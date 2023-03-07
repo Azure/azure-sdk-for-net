@@ -33,6 +33,10 @@ namespace Azure.ResourceManager.Models
 
         internal static EncryptionProperties DeserializeEncryptionProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<EncryptionStatus> status = default;
             Optional<KeyVaultProperties> keyVaultProperties = default;
             foreach (var property in element.EnumerateObject())

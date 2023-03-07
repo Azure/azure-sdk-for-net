@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     {
         internal static A2AExtendedLocationDetails DeserializeA2AExtendedLocationDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ExtendedLocation> primaryExtendedLocation = default;
             Optional<ExtendedLocation> recoveryExtendedLocation = default;
             foreach (var property in element.EnumerateObject())

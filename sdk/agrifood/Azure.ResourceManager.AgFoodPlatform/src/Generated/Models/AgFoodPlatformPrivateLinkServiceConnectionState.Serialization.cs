@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.AgFoodPlatform.Models
 
         internal static AgFoodPlatformPrivateLinkServiceConnectionState DeserializeAgFoodPlatformPrivateLinkServiceConnectionState(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<AgFoodPlatformPrivateEndpointServiceConnectionStatus> status = default;
             Optional<string> description = default;
             Optional<string> actionsRequired = default;

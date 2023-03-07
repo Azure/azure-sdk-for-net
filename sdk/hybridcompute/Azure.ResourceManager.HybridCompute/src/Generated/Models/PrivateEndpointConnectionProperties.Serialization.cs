@@ -32,6 +32,10 @@ namespace Azure.ResourceManager.HybridCompute.Models
 
         internal static PrivateEndpointConnectionProperties DeserializePrivateEndpointConnectionProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<WritableSubResource> privateEndpoint = default;
             Optional<HybridComputePrivateLinkServiceConnectionStateProperty> privateLinkServiceConnectionState = default;
             Optional<string> provisioningState = default;

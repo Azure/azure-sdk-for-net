@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.BotService.Models
     {
         internal static CreateEmailSignInUrlResponse DeserializeCreateEmailSignInUrlResponse(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> id = default;
             Optional<AzureLocation> location = default;
             Optional<CreateEmailSignInUrlResponseProperties> properties = default;

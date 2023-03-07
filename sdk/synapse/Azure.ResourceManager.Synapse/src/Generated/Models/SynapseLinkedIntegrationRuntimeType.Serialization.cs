@@ -22,6 +22,10 @@ namespace Azure.ResourceManager.Synapse.Models
 
         internal static SynapseLinkedIntegrationRuntimeType DeserializeSynapseLinkedIntegrationRuntimeType(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             if (element.TryGetProperty("authorizationType", out JsonElement discriminator))
             {
                 switch (discriminator.GetString())

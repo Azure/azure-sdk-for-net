@@ -66,6 +66,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static JsonFormat DeserializeJsonFormat(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<object> filePattern = default;
             Optional<object> nestingSeparator = default;
             Optional<object> encodingName = default;

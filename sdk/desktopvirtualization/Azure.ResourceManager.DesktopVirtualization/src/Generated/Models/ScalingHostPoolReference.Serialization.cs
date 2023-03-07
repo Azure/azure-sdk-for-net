@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
 
         internal static ScalingHostPoolReference DeserializeScalingHostPoolReference(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ResourceIdentifier> hostPoolArmPath = default;
             Optional<bool> scalingPlanEnabled = default;
             foreach (var property in element.EnumerateObject())

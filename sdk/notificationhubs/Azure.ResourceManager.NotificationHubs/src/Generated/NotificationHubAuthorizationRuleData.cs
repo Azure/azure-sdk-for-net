@@ -13,7 +13,10 @@ using Azure.ResourceManager.NotificationHubs.Models;
 
 namespace Azure.ResourceManager.NotificationHubs
 {
-    /// <summary> A class representing the NotificationHubAuthorizationRule data model. </summary>
+    /// <summary>
+    /// A class representing the NotificationHubAuthorizationRule data model.
+    /// Description of a Namespace AuthorizationRules.
+    /// </summary>
     public partial class NotificationHubAuthorizationRuleData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of NotificationHubAuthorizationRuleData. </summary>

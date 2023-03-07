@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.PolicyInsights.Models
     {
         internal static PolicySummaryResults DeserializePolicySummaryResults(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<Uri> queryResultsUri = default;
             Optional<int> nonCompliantResources = default;
             Optional<int> nonCompliantPolicies = default;

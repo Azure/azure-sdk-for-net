@@ -164,6 +164,10 @@ namespace Azure.AI.MetricsAdvisor.Models
 
         internal static UnknownDataFeedDetail DeserializeUnknownDataFeedDetail(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             DataFeedSourceKind dataSourceType = "Unknown";
             Optional<string> dataFeedId = default;
             string dataFeedName = default;

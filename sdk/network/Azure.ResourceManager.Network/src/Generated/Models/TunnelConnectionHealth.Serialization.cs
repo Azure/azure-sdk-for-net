@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal static TunnelConnectionHealth DeserializeTunnelConnectionHealth(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> tunnel = default;
             Optional<VirtualNetworkGatewayConnectionStatus> connectionStatus = default;
             Optional<long> ingressBytesTransferred = default;

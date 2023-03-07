@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.HybridCompute.Models
     {
         internal static MachineExtensionsListResult DeserializeMachineExtensionsListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<HybridComputeMachineExtensionData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

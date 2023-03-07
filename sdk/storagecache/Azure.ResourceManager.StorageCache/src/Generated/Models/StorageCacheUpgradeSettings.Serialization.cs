@@ -31,6 +31,10 @@ namespace Azure.ResourceManager.StorageCache.Models
 
         internal static StorageCacheUpgradeSettings DeserializeStorageCacheUpgradeSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> upgradeScheduleEnabled = default;
             Optional<DateTimeOffset> scheduledTime = default;
             foreach (var property in element.EnumerateObject())

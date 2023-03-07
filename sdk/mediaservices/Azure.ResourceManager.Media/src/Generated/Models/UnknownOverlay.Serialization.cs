@@ -50,6 +50,10 @@ namespace Azure.ResourceManager.Media.Models
 
         internal static UnknownOverlay DeserializeUnknownOverlay(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string odataType = "Unknown";
             string inputLabel = default;
             Optional<TimeSpan> start = default;

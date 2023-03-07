@@ -63,6 +63,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static MachineLearningHDInsightCompute DeserializeMachineLearningHDInsightCompute(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<MachineLearningHDInsightProperties> properties = default;
             ComputeType computeType = default;
             Optional<string> computeLocation = default;

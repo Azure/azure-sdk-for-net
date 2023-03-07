@@ -11,7 +11,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.NetApp
 {
-    /// <summary> A class representing the NetAppVolumeSnapshot data model. </summary>
+    /// <summary>
+    /// A class representing the NetAppVolumeSnapshot data model.
+    /// Snapshot of a Volume
+    /// </summary>
     public partial class NetAppVolumeSnapshotData : ResourceData
     {
         /// <summary> Initializes a new instance of NetAppVolumeSnapshotData. </summary>

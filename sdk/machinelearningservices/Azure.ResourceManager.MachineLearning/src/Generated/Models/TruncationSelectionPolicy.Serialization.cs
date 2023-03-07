@@ -37,6 +37,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static TruncationSelectionPolicy DeserializeTruncationSelectionPolicy(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> truncationPercentage = default;
             Optional<int> delayEvaluation = default;
             Optional<int> evaluationInterval = default;

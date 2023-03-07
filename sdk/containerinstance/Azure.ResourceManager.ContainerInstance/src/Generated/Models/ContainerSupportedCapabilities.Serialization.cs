@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.ContainerInstance.Models
     {
         internal static ContainerSupportedCapabilities DeserializeContainerSupportedCapabilities(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<float> maxMemoryInGB = default;
             Optional<float> maxCpu = default;
             Optional<float> maxGpuCount = default;

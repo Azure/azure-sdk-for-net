@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
     {
         internal static Control DeserializeControl(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> controlId = default;
             Optional<string> controlShortName = default;
             Optional<string> controlFullName = default;

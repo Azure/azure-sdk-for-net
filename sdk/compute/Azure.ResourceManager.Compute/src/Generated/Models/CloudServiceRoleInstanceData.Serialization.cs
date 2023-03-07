@@ -17,6 +17,10 @@ namespace Azure.ResourceManager.Compute
     {
         internal static CloudServiceRoleInstanceData DeserializeCloudServiceRoleInstanceData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<AzureLocation> location = default;
             Optional<IReadOnlyDictionary<string, string>> tags = default;
             Optional<InstanceSku> sku = default;

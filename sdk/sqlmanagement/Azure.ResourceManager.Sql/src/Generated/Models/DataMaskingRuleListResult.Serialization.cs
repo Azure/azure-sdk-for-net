@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Sql.Models
     {
         internal static DataMaskingRuleListResult DeserializeDataMaskingRuleListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<DataMaskingRule>> value = default;
             foreach (var property in element.EnumerateObject())
             {

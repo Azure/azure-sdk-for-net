@@ -105,6 +105,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static SapCloudForCustomerSource DeserializeSapCloudForCustomerSource(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<BinaryData> query = default;
             Optional<BinaryData> httpRequestTimeout = default;
             Optional<BinaryData> queryTimeout = default;

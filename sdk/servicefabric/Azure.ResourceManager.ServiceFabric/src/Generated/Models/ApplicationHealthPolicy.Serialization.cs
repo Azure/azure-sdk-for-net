@@ -37,6 +37,10 @@ namespace Azure.ResourceManager.ServiceFabric.Models
 
         internal static ApplicationHealthPolicy DeserializeApplicationHealthPolicy(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ServiceTypeHealthPolicy> defaultServiceTypeHealthPolicy = default;
             Optional<IDictionary<string, ServiceTypeHealthPolicy>> serviceTypeHealthPolicies = default;
             foreach (var property in element.EnumerateObject())

@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
     {
         internal static SessionHostHealthCheckFailureDetails DeserializeSessionHostHealthCheckFailureDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> message = default;
             Optional<int> errorCode = default;
             Optional<DateTimeOffset> lastHealthCheckDateTime = default;

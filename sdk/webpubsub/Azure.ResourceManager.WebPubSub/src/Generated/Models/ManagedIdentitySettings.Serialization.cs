@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.WebPubSub.Models
 
         internal static ManagedIdentitySettings DeserializeManagedIdentitySettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> resource = default;
             foreach (var property in element.EnumerateObject())
             {

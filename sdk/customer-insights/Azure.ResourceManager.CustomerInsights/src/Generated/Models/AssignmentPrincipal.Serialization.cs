@@ -36,6 +36,10 @@ namespace Azure.ResourceManager.CustomerInsights.Models
 
         internal static AssignmentPrincipal DeserializeAssignmentPrincipal(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string principalId = default;
             string principalType = default;
             Optional<IDictionary<string, string>> principalMetadata = default;

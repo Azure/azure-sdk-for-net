@@ -46,6 +46,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         internal static WorkloadItemResource DeserializeWorkloadItemResource(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<WorkloadItem> properties = default;
             Optional<ETag> eTag = default;
             Optional<IDictionary<string, string>> tags = default;

@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.BotService.Models
     {
         internal static OperationResultsDescription DeserializeOperationResultsDescription(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> id = default;
             Optional<string> name = default;
             Optional<OperationResultStatus> status = default;

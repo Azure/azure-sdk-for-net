@@ -33,6 +33,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static UnknownCompressionReadSettings DeserializeUnknownCompressionReadSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string type = "Unknown";
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();

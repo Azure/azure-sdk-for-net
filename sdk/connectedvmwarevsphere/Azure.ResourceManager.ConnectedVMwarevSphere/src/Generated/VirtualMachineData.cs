@@ -13,7 +13,10 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.ConnectedVMwarevSphere
 {
-    /// <summary> A class representing the VirtualMachine data model. </summary>
+    /// <summary>
+    /// A class representing the VirtualMachine data model.
+    /// Define the virtualMachine.
+    /// </summary>
     public partial class VirtualMachineData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of VirtualMachineData. </summary>

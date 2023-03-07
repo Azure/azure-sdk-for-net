@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.EventGrid.Models
     {
         internal static DeliveryAttributeListResult DeserializeDeliveryAttributeListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<DeliveryAttributeMapping>> value = default;
             foreach (var property in element.EnumerateObject())
             {

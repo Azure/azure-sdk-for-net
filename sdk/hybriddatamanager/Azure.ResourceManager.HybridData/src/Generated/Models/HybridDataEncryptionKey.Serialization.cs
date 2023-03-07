@@ -26,6 +26,10 @@ namespace Azure.ResourceManager.HybridData.Models
 
         internal static HybridDataEncryptionKey DeserializeHybridDataEncryptionKey(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string keyModulus = default;
             string keyExponent = default;
             int encryptionChunkSizeInBytes = default;

@@ -12,7 +12,10 @@ using Azure.ResourceManager.Synapse.Models;
 
 namespace Azure.ResourceManager.Synapse
 {
-    /// <summary> A class representing the SynapsePrivateLinkHub data model. </summary>
+    /// <summary>
+    /// A class representing the SynapsePrivateLinkHub data model.
+    /// A privateLinkHub
+    /// </summary>
     public partial class SynapsePrivateLinkHubData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of SynapsePrivateLinkHubData. </summary>

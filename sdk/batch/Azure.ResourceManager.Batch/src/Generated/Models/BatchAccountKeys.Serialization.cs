@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.Batch.Models
     {
         internal static BatchAccountKeys DeserializeBatchAccountKeys(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> accountName = default;
             Optional<string> primary = default;
             Optional<string> secondary = default;

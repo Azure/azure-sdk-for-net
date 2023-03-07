@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.ContainerService.Models
     {
         internal static ManagedClusterPoolUpgradeProfile DeserializeManagedClusterPoolUpgradeProfile(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string kubernetesVersion = default;
             Optional<string> name = default;
             ContainerServiceOSType osType = default;

@@ -96,6 +96,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static DatasetJsonFormat DeserializeDatasetJsonFormat(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<BinaryData> filePattern = default;
             Optional<BinaryData> nestingSeparator = default;
             Optional<BinaryData> encodingName = default;

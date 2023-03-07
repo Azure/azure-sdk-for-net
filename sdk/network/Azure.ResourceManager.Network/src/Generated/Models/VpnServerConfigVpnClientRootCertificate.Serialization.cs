@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static VpnServerConfigVpnClientRootCertificate DeserializeVpnServerConfigVpnClientRootCertificate(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<BinaryData> publicCertData = default;
             foreach (var property in element.EnumerateObject())

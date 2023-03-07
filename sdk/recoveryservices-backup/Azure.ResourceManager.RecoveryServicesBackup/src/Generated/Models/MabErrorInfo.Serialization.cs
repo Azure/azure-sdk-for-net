@@ -21,6 +21,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         internal static MabErrorInfo DeserializeMabErrorInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> errorString = default;
             Optional<IReadOnlyList<string>> recommendations = default;
             foreach (var property in element.EnumerateObject())

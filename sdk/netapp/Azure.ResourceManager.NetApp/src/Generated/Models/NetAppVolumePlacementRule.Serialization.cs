@@ -24,6 +24,10 @@ namespace Azure.ResourceManager.NetApp.Models
 
         internal static NetAppVolumePlacementRule DeserializeNetAppVolumePlacementRule(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string key = default;
             string value = default;
             foreach (var property in element.EnumerateObject())

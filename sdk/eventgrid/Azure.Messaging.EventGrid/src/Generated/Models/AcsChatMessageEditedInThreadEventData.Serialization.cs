@@ -18,6 +18,10 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     {
         internal static AcsChatMessageEditedInThreadEventData DeserializeAcsChatMessageEditedInThreadEventData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> messageBody = default;
             Optional<IReadOnlyDictionary<string, string>> metadata = default;
             Optional<DateTimeOffset> editTime = default;

@@ -28,6 +28,10 @@ namespace Azure.ResourceManager.DataMigration.Models
 
         internal static MongoDBRestartCommand DeserializeMongoDBRestartCommand(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<MongoDBCommandInput> input = default;
             CommandType commandType = default;
             Optional<IReadOnlyList<ODataError>> errors = default;

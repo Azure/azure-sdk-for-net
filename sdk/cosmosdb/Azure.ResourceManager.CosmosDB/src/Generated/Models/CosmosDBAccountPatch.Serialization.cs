@@ -176,6 +176,11 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WriteStartArray();
                 foreach (var item in NetworkAclBypassResourceIds)
                 {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();

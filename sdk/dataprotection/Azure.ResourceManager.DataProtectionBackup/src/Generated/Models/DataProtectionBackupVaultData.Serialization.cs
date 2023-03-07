@@ -49,6 +49,10 @@ namespace Azure.ResourceManager.DataProtectionBackup
 
         internal static DataProtectionBackupVaultData DeserializeDataProtectionBackupVaultData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             DataProtectionBackupVaultProperties properties = default;
             Optional<ManagedServiceIdentity> identity = default;
             Optional<ETag> eTag = default;

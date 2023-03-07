@@ -9,6 +9,7 @@ using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Core.Shared;
 using Azure.Messaging.EventHubs.Authorization;
 using Azure.Messaging.EventHubs.Core;
 using Azure.Messaging.EventHubs.Producer;
@@ -1982,7 +1983,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var completionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
             var mockTransportBatch = new Mock<TransportEventBatch>();
             var mockTransportProducer = new Mock<TransportProducer>();
-            var batch = new EventDataBatch(mockTransportBatch.Object, "ns", "eh", batchOptions);
+            var batch = new EventDataBatch(mockTransportBatch.Object, "ns", "eh", batchOptions, new MessagingClientDiagnostics("mock", "mock", "mock", "mock", "mock"));
             var producer = new EventHubProducerClient(new MockConnection(() => mockTransportProducer.Object));
 
             mockTransportBatch

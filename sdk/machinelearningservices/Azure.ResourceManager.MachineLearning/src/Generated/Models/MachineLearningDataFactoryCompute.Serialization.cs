@@ -58,6 +58,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static MachineLearningDataFactoryCompute DeserializeMachineLearningDataFactoryCompute(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ComputeType computeType = default;
             Optional<string> computeLocation = default;
             Optional<MachineLearningProvisioningState> provisioningState = default;

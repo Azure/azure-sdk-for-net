@@ -22,6 +22,10 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static VirtualNetworkBgpCommunities DeserializeVirtualNetworkBgpCommunities(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string virtualNetworkCommunity = default;
             Optional<string> regionalCommunity = default;
             foreach (var property in element.EnumerateObject())

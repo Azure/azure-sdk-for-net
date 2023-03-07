@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.Logic.Models
     {
         internal static IntegrationServiceEnvironmentManagedApiListResult DeserializeIntegrationServiceEnvironmentManagedApiListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<IntegrationServiceEnvironmentManagedApiData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

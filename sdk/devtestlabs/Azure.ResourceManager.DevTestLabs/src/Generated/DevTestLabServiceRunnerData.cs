@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DevTestLabs
 {
-    /// <summary> A class representing the DevTestLabServiceRunner data model. </summary>
+    /// <summary>
+    /// A class representing the DevTestLabServiceRunner data model.
+    /// A container for a managed identity to execute DevTest lab services.
+    /// </summary>
     public partial class DevTestLabServiceRunnerData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of DevTestLabServiceRunnerData. </summary>

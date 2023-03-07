@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         internal static CefExternalSecuritySolution DeserializeCefExternalSecuritySolution(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<CefSolutionProperties> properties = default;
             ExternalSecuritySolutionKind? kind = default;
             Optional<AzureLocation> location = default;

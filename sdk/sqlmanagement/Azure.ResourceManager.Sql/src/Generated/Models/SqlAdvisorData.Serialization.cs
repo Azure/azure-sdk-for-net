@@ -32,6 +32,10 @@ namespace Azure.ResourceManager.Sql
 
         internal static SqlAdvisorData DeserializeSqlAdvisorData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> kind = default;
             Optional<AzureLocation> location = default;
             ResourceIdentifier id = default;

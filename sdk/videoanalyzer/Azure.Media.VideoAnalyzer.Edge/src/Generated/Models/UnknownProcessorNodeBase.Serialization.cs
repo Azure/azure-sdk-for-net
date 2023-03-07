@@ -32,6 +32,10 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
 
         internal static UnknownProcessorNodeBase DeserializeUnknownProcessorNodeBase(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string type = "Unknown";
             string name = default;
             IList<NodeInput> inputs = default;

@@ -3,7 +3,7 @@
 
 #nullable disable // TODO: remove and fix errors
 
-namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
+namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat
 {
     internal class VmMetadataResponse
     {

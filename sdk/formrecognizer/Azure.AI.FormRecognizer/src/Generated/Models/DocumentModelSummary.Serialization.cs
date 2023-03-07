@@ -16,6 +16,10 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
     {
         internal static DocumentModelSummary DeserializeDocumentModelSummary(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string modelId = default;
             Optional<string> description = default;
             DateTimeOffset createdDateTime = default;

@@ -55,6 +55,10 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 
         internal static ApplicationUpgradePolicy DeserializeApplicationUpgradePolicy(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ApplicationHealthPolicy> applicationHealthPolicy = default;
             Optional<bool> forceRestart = default;
             Optional<RollingUpgradeMonitoringPolicy> rollingUpgradeMonitoringPolicy = default;

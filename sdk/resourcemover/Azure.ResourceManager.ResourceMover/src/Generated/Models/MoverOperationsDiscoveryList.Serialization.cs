@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.ResourceMover.Models
     {
         internal static MoverOperationsDiscoveryList DeserializeMoverOperationsDiscoveryList(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<MoverOperationsDiscovery>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

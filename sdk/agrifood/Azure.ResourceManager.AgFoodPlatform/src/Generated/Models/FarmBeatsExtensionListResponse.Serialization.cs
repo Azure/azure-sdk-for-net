@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.AgFoodPlatform.Models
     {
         internal static FarmBeatsExtensionListResponse DeserializeFarmBeatsExtensionListResponse(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<FarmBeatsExtensionData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

@@ -17,6 +17,10 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     {
         internal static MediaLiveEventIncomingStreamReceivedEventData DeserializeMediaLiveEventIncomingStreamReceivedEventData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> ingestUrl = default;
             Optional<string> trackType = default;
             Optional<string> trackName = default;

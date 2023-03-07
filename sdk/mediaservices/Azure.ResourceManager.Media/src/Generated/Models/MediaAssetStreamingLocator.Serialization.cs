@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Media.Models
     {
         internal static MediaAssetStreamingLocator DeserializeMediaAssetStreamingLocator(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<string> assetName = default;
             Optional<DateTimeOffset> created = default;

@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static SoftDeletePolicy DeserializeSoftDeletePolicy(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> isSoftDeleteEnabled = default;
             foreach (var property in element.EnumerateObject())
             {

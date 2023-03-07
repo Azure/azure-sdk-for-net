@@ -65,6 +65,11 @@ namespace Azure.ResourceManager.DataFactory.Models
                 foreach (var item in GlobalParameters)
                 {
                     writer.WritePropertyName(item.Key);
+                    if (item.Value == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
@@ -110,6 +115,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static AzureMLBatchExecutionActivity DeserializeAzureMLBatchExecutionActivity(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<FactoryLinkedServiceReference> linkedServiceName = default;
             Optional<ActivityPolicy> policy = default;
             string name = default;
@@ -208,7 +217,14 @@ namespace Azure.ResourceManager.DataFactory.Models
                             Dictionary<string, BinaryData> dictionary = new Dictionary<string, BinaryData>();
                             foreach (var property1 in property0.Value.EnumerateObject())
                             {
-                                dictionary.Add(property1.Name, BinaryData.FromString(property1.Value.GetRawText()));
+                                if (property1.Value.ValueKind == JsonValueKind.Null)
+                                {
+                                    dictionary.Add(property1.Name, null);
+                                }
+                                else
+                                {
+                                    dictionary.Add(property1.Name, BinaryData.FromString(property1.Value.GetRawText()));
+                                }
                             }
                             globalParameters = dictionary;
                             continue;

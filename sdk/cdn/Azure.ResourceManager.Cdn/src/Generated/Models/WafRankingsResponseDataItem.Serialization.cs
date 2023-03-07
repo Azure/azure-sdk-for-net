@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Cdn.Models
     {
         internal static WafRankingsResponseDataItem DeserializeWafRankingsResponseDataItem(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<string>> groupValues = default;
             Optional<IReadOnlyList<ComponentsKpo1PjSchemasWafrankingsresponsePropertiesDataItemsPropertiesMetricsItems>> metrics = default;
             foreach (var property in element.EnumerateObject())

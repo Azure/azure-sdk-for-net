@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.DataMigration.Models
     {
         internal static MigrateSchemaSqlServerSqlDBTaskOutputMigrationLevel DeserializeMigrateSchemaSqlServerSqlDBTaskOutputMigrationLevel(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<MigrationState> state = default;
             Optional<DateTimeOffset> startedOn = default;
             Optional<DateTimeOffset> endedOn = default;
