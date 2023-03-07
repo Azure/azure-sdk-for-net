@@ -118,5 +118,49 @@ namespace Azure.ResourceManager.CosmosDB
         {
             return new DatabaseRestoreResourceInfo(value.DatabaseName, value.CollectionNames.ToList());
         }
+
+        /// <summary>
+        /// Show the event feed of all mutations done on all the Azure Cosmos DB MongoDB collections under a specific database.  This helps in scenario where container was accidentally deleted.  This API requires &apos;Microsoft.DocumentDB/locations/restorableDatabaseAccounts/.../read&apos; permission
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DocumentDB/locations/{location}/restorableDatabaseAccounts/{instanceId}/restorableMongodbCollections</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RestorableMongodbCollections_List</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="restorableMongoDBDatabaseRid"> The resource ID of the MongoDB database. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="RestorableMongoDBCollection" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<RestorableMongoDBCollection> GetRestorableMongoDBCollectionsAsync(string restorableMongoDBDatabaseRid, CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _restorableMongoDBCollectionsRestClient.CreateListRequest(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Guid.Parse(Id.Name), restorableMongoDBDatabaseRid, null, null);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, RestorableMongoDBCollection.DeserializeRestorableMongoDBCollection, _restorableMongoDBCollectionsClientDiagnostics, Pipeline, "RestorableCosmosDBAccountResource.GetRestorableMongoDBCollections", "value", null, cancellationToken);
+        }
+
+        /// <summary>
+        /// Show the event feed of all mutations done on all the Azure Cosmos DB MongoDB collections under a specific database.  This helps in scenario where container was accidentally deleted.  This API requires &apos;Microsoft.DocumentDB/locations/restorableDatabaseAccounts/.../read&apos; permission
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DocumentDB/locations/{location}/restorableDatabaseAccounts/{instanceId}/restorableMongodbCollections</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RestorableMongodbCollections_List</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="restorableMongoDBDatabaseRid"> The resource ID of the MongoDB database. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="RestorableMongoDBCollection" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<RestorableMongoDBCollection> GetRestorableMongoDBCollections(string restorableMongoDBDatabaseRid = null, CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _restorableMongoDBCollectionsRestClient.CreateListRequest(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Guid.Parse(Id.Name), restorableMongoDBDatabaseRid, null, null);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, RestorableMongoDBCollection.DeserializeRestorableMongoDBCollection, _restorableMongoDBCollectionsClientDiagnostics, Pipeline, "RestorableCosmosDBAccountResource.GetRestorableMongoDBCollections", "value", null, cancellationToken);
+        }
     }
 }

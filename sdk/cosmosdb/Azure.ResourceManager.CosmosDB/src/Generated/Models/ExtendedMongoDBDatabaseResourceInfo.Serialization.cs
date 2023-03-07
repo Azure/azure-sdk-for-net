@@ -18,6 +18,16 @@ namespace Azure.ResourceManager.CosmosDB.Models
             writer.WriteStartObject();
             writer.WritePropertyName("id"u8);
             writer.WriteStringValue(DatabaseName);
+            if (Optional.IsDefined(RestoreParameters))
+            {
+                writer.WritePropertyName("restoreParameters"u8);
+                writer.WriteObjectValue(RestoreParameters);
+            }
+            if (Optional.IsDefined(CreateMode))
+            {
+                writer.WritePropertyName("createMode"u8);
+                writer.WriteStringValue(CreateMode.Value.ToString());
+            }
             writer.WriteEndObject();
         }
 
@@ -27,6 +37,8 @@ namespace Azure.ResourceManager.CosmosDB.Models
             Optional<float> ts = default;
             Optional<ETag> etag = default;
             string id = default;
+            Optional<ResourceRestoreParameters> restoreParameters = default;
+            Optional<CosmosDBAccountCreateMode> createMode = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("_rid"u8))
@@ -59,8 +71,28 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     id = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("restoreParameters"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    restoreParameters = ResourceRestoreParameters.DeserializeResourceRestoreParameters(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("createMode"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    createMode = new CosmosDBAccountCreateMode(property.Value.GetString());
+                    continue;
+                }
             }
-            return new ExtendedMongoDBDatabaseResourceInfo(id, rid.Value, Optional.ToNullable(ts), Optional.ToNullable(etag));
+            return new ExtendedMongoDBDatabaseResourceInfo(id, restoreParameters.Value, Optional.ToNullable(createMode), rid.Value, Optional.ToNullable(ts), Optional.ToNullable(etag));
         }
     }
 }

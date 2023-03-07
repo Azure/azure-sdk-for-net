@@ -105,6 +105,20 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public NetworkAclBypass? NetworkAclBypass { get; set; }
         /// <summary> An array that contains the Resource Ids for Network Acl Bypass for the Cosmos DB account. </summary>
         public IList<ResourceIdentifier> NetworkAclBypassResourceIds { get; }
+        /// <summary> The Object representing the different Diagnostic log settings for the Cosmos DB Account. </summary>
+        internal DiagnosticLogSettings DiagnosticLogSettings { get; set; }
+        /// <summary> Describe the level of detail with which queries are to be logged. </summary>
+        public EnableFullTextQuery? DiagnosticLogEnableFullTextQuery
+        {
+            get => DiagnosticLogSettings is null ? default : DiagnosticLogSettings.EnableFullTextQuery;
+            set
+            {
+                if (DiagnosticLogSettings is null)
+                    DiagnosticLogSettings = new DiagnosticLogSettings();
+                DiagnosticLogSettings.EnableFullTextQuery = value;
+            }
+        }
+
         /// <summary> Opt-out of local authentication and ensure only MSI and AAD can be used exclusively for authentication. </summary>
         public bool? DisableLocalAuth { get; set; }
         /// <summary> The object that represents all properties related to capacity enforcement on an account. </summary>
@@ -121,9 +135,15 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
         }
 
+        /// <summary> Flag to indicate whether to enable MaterializedViews on the Cosmos DB account. </summary>
+        public bool? EnableMaterializedViews { get; set; }
         /// <summary> This property is ignored during the update operation, as the metadata is read-only. The object represents the metadata for the Account Keys of the Cosmos DB account. </summary>
         public DatabaseAccountKeysMetadata KeysMetadata { get; }
         /// <summary> Flag to indicate enabling/disabling of Partition Merge feature on the account. </summary>
         public bool? EnablePartitionMerge { get; set; }
+        /// <summary> Flag to indicate enabling/disabling of Burst Capacity Preview feature on the account. </summary>
+        public bool? EnableBurstCapacity { get; set; }
+        /// <summary> Indicates the minimum allowed Tls version. The default is Tls 1.0, except for Cassandra and Mongo API&apos;s, which only work with Tls 1.2. </summary>
+        public MinimalTlsVersion? MinimalTlsVersion { get; set; }
     }
 }

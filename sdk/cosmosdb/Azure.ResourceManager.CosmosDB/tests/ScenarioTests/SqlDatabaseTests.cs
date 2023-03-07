@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.CosmosDB.Models;
+using Azure.ResourceManager.Models;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.CosmosDB.Tests
@@ -77,10 +78,11 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             //Assert.AreEqual(TestThroughput1, database2.Data.Options.Throughput);
 
             VerifyDatabases(database, database2);
+            Optional<ManagedServiceIdentity> identity = default;
 
             var updateOptions = new CosmosDBSqlDatabaseCreateOrUpdateContent(database.Id, _databaseName, database.Data.ResourceType, null,
                 new Dictionary<string, string>(),// TODO: use original tags see defect: https://github.com/Azure/autorest.csharp/issues/1590
-                AzureLocation.WestUS, database.Data.Resource, new CosmosDBCreateUpdateConfig { Throughput = TestThroughput2 });
+                AzureLocation.WestUS, database.Data.Resource, new CosmosDBCreateUpdateConfig { Throughput = TestThroughput2 }, identity);
 
             database = (await SqlDatabaseContainer.CreateOrUpdateAsync(WaitUntil.Completed, _databaseName, updateOptions)).Value;
             Assert.AreEqual(_databaseName, database.Data.Resource.DatabaseName);
