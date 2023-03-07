@@ -40,7 +40,7 @@ Obsolete. Replaced by $TargetPath. Kept for backward-compatibility.
 If both $TargetPath and $TargetDirectory are provided, $TargetDirectory is
 ignored.
 
-.PARAMETER CodeOwnerFileLocation
+.PARAMETER CodeownersFileLocation
 Optional. An absolute path to the CODEOWNERS file against which the $TargetPath param
 will be checked to determine its owners.
 
@@ -61,7 +61,7 @@ Pipeline publishing the NuGet package to the feed, "tools - code-owners-parser":
 https://dev.azure.com/azure-sdk/internal/_build?definitionId=3188
 
 .PARAMETER VsoVariable 
-Optional. If provided, the determined owners, based on $TargetPath matched against CODEOWNERS file at $CodeOwnerFileLocation, 
+Optional. If provided, the determined owners, based on $TargetPath matched against CODEOWNERS file at $CodeownersFileLocation, 
 will be output to Azure DevOps pipeline log as variable named $VsoVariable.
 
 Reference:
@@ -83,7 +83,7 @@ function Get-Codeowners(
   [string] $ToolVersion = "1.0.0-dev.20230306.3",
   [string] $VsoVariable = "",
   # The default path assumes the script is located in azure-sdk-tools/eng/common/scripts/get-codeowners/get-codeowners.ps1
-  [string] $CodeOwnerFileLocation = (Resolve-Path $PSScriptRoot/../../../../.github/CODEOWNERS),
+  [string] $CodeownersFileLocation = (Resolve-Path $PSScriptRoot/../../../../.github/CODEOWNERS),
   [bool] $IncludeNonUserAliases = $false
   )
 {
@@ -97,10 +97,10 @@ function Get-Codeowners(
   }
 
   $codeownersToolCommand = Get-CodeownersTool -ToolPath $ToolPath -DevOpsFeed $DevOpsFeed -ToolVersion $ToolVersion
-  Write-Host "Executing: & $codeownersToolCommand --target-path $TargetPath --codeowners-file-path-or-url $codeownersFileLocation --exclude-non-user-aliases:$(!$IncludeNonUserAliases)"
+  Write-Host "Executing: & $codeownersToolCommand --target-path $TargetPath --codeowners-file-path-or-url $CodeownersFileLocation --exclude-non-user-aliases:$(!$IncludeNonUserAliases)"
   $commandOutput = & $codeownersToolCommand `
       --target-path $TargetPath `
-      --codeowners-file-path-or-url $codeownersFileLocation `
+      --codeowners-file-path-or-url $CodeownersFileLocation `
       --exclude-non-user-aliases:$(!$IncludeNonUserAliases) `
       2>&1
 
