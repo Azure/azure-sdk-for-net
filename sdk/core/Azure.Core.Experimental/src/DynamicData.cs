@@ -1,10 +1,10 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections;
 using System.Dynamic;
 using System.IO;
-using System.Linq.Expressions;
 
 // TODO: remove
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
@@ -46,7 +46,20 @@ namespace Azure.Core.Dynamic
 
         public abstract object? GetViaIndexer(object index);
 
-        public abstract object? SetViaIndexer(object index, object value);
+        public abstract object? SetElement(int index, object value);
+
+        public object? SetViaIndexer(object index, object value)
+        {
+            switch (index)
+            {
+                case string propertyName:
+                    return SetProperty(propertyName, value);
+                case int arrayIndex:
+                    return SetElement(arrayIndex, value);
+            }
+
+            throw new InvalidOperationException($"Tried to access indexer with an unsupported index type: {index}");
+        }
 
         public abstract T ConvertTo<T>();
     }

@@ -12,6 +12,7 @@
 
   <ItemGroup>
     <PackageReference Include="Azure.Core" />
+    <PackageReference Include="Azure.Data.Tables"/>
     <PackageReference Include="Microsoft.CSharp" />
   </ItemGroup>
 

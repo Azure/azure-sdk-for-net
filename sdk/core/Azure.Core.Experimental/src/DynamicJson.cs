@@ -141,19 +141,11 @@ namespace Azure.Core.Dynamic
             return null;
         }
 
-        public override object? SetViaIndexer(object index, object value)
+        public override object? SetElement(int index, object value)
         {
-            switch (index)
-            {
-                case string propertyName:
-                    return SetProperty(propertyName, value);
-                case int arrayIndex:
-                    MutableJsonElement element = _element.GetIndexElement(arrayIndex);
-                    element.Set(value);
-                    return new DynamicJson(element);
-            }
-
-            throw new InvalidOperationException($"Tried to access indexer with an unsupported index type: {index}");
+            MutableJsonElement element = _element.GetIndexElement(index);
+            element.Set(value);
+            return new DynamicJson(element);
         }
 
         public override T ConvertTo<T>()
