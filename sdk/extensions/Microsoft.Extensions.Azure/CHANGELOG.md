@@ -1,10 +1,6 @@
 # Release History
 
-## 1.7.0-beta.1 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
+## 1.6.2 (2023-03-07)
 
 ### Bugs Fixed
 
@@ -33,7 +29,7 @@
 
 ### Features Added
 
-- Added the `AddAzureClientsCore` method overload that has a parameter to allow enabling log 
+- Added the `AddAzureClientsCore` method overload that has a parameter to allow enabling log
   forwarding to `ILogger`.
 
 ## 1.3.0 (2022-07-12)
@@ -85,19 +81,19 @@
 - The `AzureEventSourceLogForwarder` class that allows manual control over the log forwarding.
 - The `AddAzureClientsCore` extension method.
 
-## 1.0.0 
+## 1.0.0
 
 - Updated Azure.Identity dependency version
 
-## 1.0.0-preview.3 
+## 1.0.0-preview.3
 
 - Updated Azure.Identity dependency version
 
-## 1.0.0-preview.2 
+## 1.0.0-preview.2
 
 - Minor bug fixes and code improvements.
 
-## 1.0.0-preview.1 
+## 1.0.0-preview.1
 
 - Added TokenCredential support.
 - Added client version support.
