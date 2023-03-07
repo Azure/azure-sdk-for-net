@@ -45,14 +45,14 @@ namespace Azure.Core.Dynamic
 
             if (_element.TryGetProperty(name, out MutableJsonElement element))
             {
-                return new DynamicJson(element);
+                return new DynamicJson(element, _options);
             }
 
             if (PascalCaseGetters() && char.IsUpper(name[0]))
             {
                 if (_element.TryGetProperty(GetAsCamelCase(name), out element))
                 {
-                    return new DynamicJson(element);
+                    return new DynamicJson(element, _options);
                 }
             }
 
@@ -88,7 +88,7 @@ namespace Azure.Core.Dynamic
                 case string propertyName:
                     return GetProperty(propertyName);
                 case int arrayIndex:
-                    return new DynamicJson(_element.GetIndexElement(arrayIndex));
+                    return new DynamicJson(_element.GetIndexElement(arrayIndex), _options);
             }
 
             throw new InvalidOperationException($"Tried to access indexer with an unsupported index type: {index}");
@@ -152,7 +152,7 @@ namespace Azure.Core.Dynamic
                 case int arrayIndex:
                     MutableJsonElement element = _element.GetIndexElement(arrayIndex);
                     element.Set(value);
-                    return new DynamicJson(element);
+                    return new DynamicJson(element, _options);
             }
 
             throw new InvalidOperationException($"Tried to access indexer with an unsupported index type: {index}");
