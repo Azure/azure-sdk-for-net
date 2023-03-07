@@ -6,7 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Options;
 
-namespace Azure.Monitor.OpenTelemetry
+namespace Azure.Monitor.OpenTelemetry.AspNetCore
 {
     /// <summary>
     /// Extension methods for setting up Azure Monitor in an <see cref="IServiceCollection" />.

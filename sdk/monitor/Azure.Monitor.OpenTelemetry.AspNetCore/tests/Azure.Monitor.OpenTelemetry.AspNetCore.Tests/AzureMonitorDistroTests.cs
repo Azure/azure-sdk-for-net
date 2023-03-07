@@ -11,7 +11,7 @@ using Azure.Core.TestFramework;
 using System.Net.Http;
 using System;
 
-namespace Azure.Monitor.OpenTelemetry.Tests
+namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests
 {
     public class AzureMonitorDistroTests
     {

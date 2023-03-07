@@ -15,7 +15,7 @@ The Azure Monitor Distro is a client library that sends telemetry data to Azure 
 Install the Azure Monitor Distro for .NET from [NuGet](https://www.nuget.org/):
 
 ```dotnetcli
-dotnet add package Azure.Monitor.OpenTelemetry --prerelease
+dotnet add package Azure.Monitor.OpenTelemetry.AspNetCore --prerelease
 ```
 
 #### Nightly builds

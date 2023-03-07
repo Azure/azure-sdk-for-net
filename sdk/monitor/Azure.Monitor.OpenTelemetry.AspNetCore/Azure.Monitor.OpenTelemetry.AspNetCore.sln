@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.5.33318.248
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Monitor.OpenTelemetry", "src\Azure.Monitor.OpenTelemetry.csproj", "{4CFE3074-F921-403D-9ADE-D12B0C07F3DF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Monitor.OpenTelemetry.AspNetCore", "src\Azure.Monitor.OpenTelemetry.AspNetCore.csproj", "{4CFE3074-F921-403D-9ADE-D12B0C07F3DF}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{5B9B1B20-4408-4BFC-9D9A-22C74ABD328F}"
 	ProjectSection(SolutionItems) = preProject
@@ -16,9 +16,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Dependent Projects", "Depen
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Monitor.OpenTelemetry.Exporter", "..\Azure.Monitor.OpenTelemetry.Exporter\src\Azure.Monitor.OpenTelemetry.Exporter.csproj", "{4158B8A7-971D-4A57-B4C8-5077BFD10AE6}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Monitor.OpenTelemetry.Demo", "tests\Azure.Monitor.OpenTelemetry.Demo\Azure.Monitor.OpenTelemetry.Demo.csproj", "{6F094CAA-F6BB-4A9C-9D1F-1165F0758C99}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Monitor.OpenTelemetry.AspNetCore.Demo", "tests\Azure.Monitor.OpenTelemetry.AspNetCore.Demo\Azure.Monitor.OpenTelemetry.AspNetCore.Demo.csproj", "{6F094CAA-F6BB-4A9C-9D1F-1165F0758C99}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Monitor.OpenTelemetry.Tests", "tests\Azure.Monitor.OpenTelemetry.Tests\Azure.Monitor.OpenTelemetry.Tests.csproj", "{E047E7C5-F248-49DF-BC2C-A690BC5F0F71}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Monitor.OpenTelemetry.AspNetCore.Tests", "tests\Azure.Monitor.OpenTelemetry.AspNetCore.Tests\Azure.Monitor.OpenTelemetry.AspNetCore.Tests.csproj", "{E047E7C5-F248-49DF-BC2C-A690BC5F0F71}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Core.TestFramework", "..\..\core\Azure.Core.TestFramework\src\Azure.Core.TestFramework.csproj", "{3E77BE70-A052-44F1-9E79-CB6D266DB1B3}"
 EndProject
