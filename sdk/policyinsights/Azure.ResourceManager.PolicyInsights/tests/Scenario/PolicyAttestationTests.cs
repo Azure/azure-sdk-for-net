@@ -10,46 +10,134 @@ using Azure.Core.TestFramework;
 using Azure.Core;
 using Azure.ResourceManager.PolicyInsights.Models;
 using Newtonsoft.Json.Linq;
+using NUnit.Framework;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.PolicyInsights.Tests
 {
     internal class PolicyAttestationTests : PolicyInsightsManagementTestBase
     {
-        public PolicyAttestationTests(bool isAsync) : base(isAsync, RecordedTestMode.Record)
+        private PolicyAssignmentResource _policyAssignment;
+        private SubscriptionPolicyDefinitionResource _policyDefinition;
+        public PolicyAttestationTests(bool isAsync) : base(isAsync)//, RecordedTestMode.Record)
         {
         }
 
-        [RecordedTest]
-        public async Task CreateOrUpdateExistGetGetAllDelete()
+        [TearDown]
+        public async Task TearDown()
         {
-            var sub = await Client.GetDefaultSubscriptionAsync();
-            var subid = sub.Data.Id;
-            string assignmentid = subid + "/providers/microsoft.authorization/policyassignments/3bbee6571e0340dba6df72bf";
-            var collection = Client.GetPolicyAttestations(subid);
+            await _policyAssignment?.DeleteAsync(WaitUntil.Completed);
+            await _policyDefinition?.DeleteAsync(WaitUntil.Completed);
+        }
 
-            var defination =  Client.GetSubscriptionPolicyDefinitionResource(new ResourceIdentifier("/providers/Microsoft.Authorization/policyDefinitions/0004bbf0-5099-4179-869e-e9ffe5fb0945"));
-
-            // create
-            //var rg = await CreateResourceGroup();
-            string attestationName = Recording.GenerateAssetName("attestation");
-            attestationName = "attestationSdkTestSub";
-            PolicyAttestationData data = new PolicyAttestationData(new ResourceIdentifier(assignmentid))
+        private async Task<PolicyAttestationResource> CreateAttestaion(PolicyAttestationCollection policyAttestationCollection, string attestationName)
+        {
+            PolicyAttestationData data = new PolicyAttestationData(new ResourceIdentifier(_policyAssignment.Id))
             {
                 Comments = ".NET SDK Test",
                 ComplianceState = "Compliant",
                 ExpireOn = new DateTime(2030, 12, 10),
+                AssessOn = new DateTime(2022, 12, 5),
                 Owner = "Test Owner",
-                PolicyAssignmentId = new ResourceIdentifier(assignmentid),
+                PolicyAssignmentId = new ResourceIdentifier(_policyAssignment.Id),
                 Evidence =
                 {
                     new AttestationEvidence(){ Description = "Evidence 1", SourceUri = new Uri("http://www.contoso.com/evidence1") },
                     new AttestationEvidence(){ Description = "Evidence 2", SourceUri = new Uri("http://www.contoso.com/evidence2") },
                 },
-                AssessOn = new DateTime(2022, 12, 5),
-                //Metadata = BinaryData.FromString("{\"DEPT_ID\", \"NYC4-MARKETING\"}")
+                Metadata = BinaryData.FromString("{\"DEPT_ID\": \"NYC4-MARKETING\"}")
             };
-            var attestation = await collection.CreateOrUpdateAsync(WaitUntil.Completed, attestationName, data);
-            var list = await collection.GetAllAsync().ToEnumerableAsync();
+            var attestationLro = await policyAttestationCollection.CreateOrUpdateAsync(WaitUntil.Completed, attestationName, data);
+            return attestationLro.Value;
+        }
+
+        [RecordedTest]
+        public async Task Attestation_SubscriptionCrud()
+        {
+            // Create a custom definition
+            string policyDefinitionName = Recording.GenerateAssetName("PolicyInsightsDefinitionTest");
+            _policyDefinition = await CreatePolicyDefinition(policyDefinitionName, "Microsoft.Resources/subscriptions");
+
+            // Assign a policy for test
+            string policyAssignmentName = Recording.GenerateAssetName("PolicyInsightsAssignmentTest");
+            _policyAssignment = await CreatePolicyAssignment(DefaultSubscription, policyAssignmentName, _policyDefinition.Id);
+
+            // Trigger an evaluation on the resource group to ensure the policy states results are updated
+            await DefaultSubscription.TriggerPolicyStateEvaluationAsync(WaitUntil.Completed);
+
+            // CreateOrUpdate
+            var policyAttestationCollection = Client.GetPolicyAttestations(DefaultSubscription.Id);
+            string attestationName = Recording.GenerateAssetName("attestationtest");
+            var attestation = await CreateAttestaion(policyAttestationCollection, attestationName);
+            ValidateAttestation(attestation.Data, attestationName);
+
+            // Exist
+            var flag = await policyAttestationCollection.ExistsAsync(attestationName);
+            Assert.IsTrue(flag);
+
+            // Get
+            var getattestation = await policyAttestationCollection.GetAsync(attestationName);
+            ValidateAttestation(getattestation.Value.Data, attestationName);
+
+            // GetAll
+            var list = await policyAttestationCollection.GetAllAsync().ToEnumerableAsync();
+            Assert.IsNotEmpty(list);
+            ValidateAttestation(list.FirstOrDefault(item  => attestationName == item.Data.Name).Data, attestationName);
+
+            // Delete
+            await attestation.DeleteAsync(WaitUntil.Completed);
+            flag = await policyAttestationCollection.ExistsAsync(attestationName);
+            Assert.IsFalse(flag);
+        }
+
+        [RecordedTest]
+        public async Task Attestation_ResourceGroupCrud()
+        {
+            // Create a custom definition
+            string policyDefinitionName = Recording.GenerateAssetName("PolicyInsightsDefinitionTest");
+            _policyDefinition = await CreatePolicyDefinition(policyDefinitionName, "Microsoft.Resources/subscriptions/resourceGroups");
+
+            // Assign a policy for test
+            var resourceGroup = await CreateResourceGroup();
+            string policyAssignmentName = Recording.GenerateAssetName("PolicyInsightsAssignmentTest");
+            _policyAssignment = await CreatePolicyAssignment(resourceGroup, policyAssignmentName, _policyDefinition.Id);
+
+            // Trigger an evaluation on the resource group to ensure the policy states results are updated
+            await resourceGroup.TriggerPolicyStateEvaluationAsync(WaitUntil.Completed);
+
+            // CreateOrUpdate
+            var policyAttestationCollection = Client.GetPolicyAttestations(resourceGroup.Id);
+            string attestationName = Recording.GenerateAssetName("attestationtest");
+            var attestation = await CreateAttestaion(policyAttestationCollection, attestationName);
+            ValidateAttestation(attestation.Data, attestationName);
+
+            // Exist
+            var flag = await policyAttestationCollection.ExistsAsync(attestationName);
+            Assert.IsTrue(flag);
+
+            // Get
+            var getattestation = await policyAttestationCollection.GetAsync(attestationName);
+            ValidateAttestation(getattestation.Value.Data, attestationName);
+
+            // GetAll
+            var list = await policyAttestationCollection.GetAllAsync().ToEnumerableAsync();
+            Assert.IsNotEmpty(list);
+            ValidateAttestation(list.FirstOrDefault().Data, attestationName);
+
+            // Delete
+            await attestation.DeleteAsync(WaitUntil.Completed);
+            flag = await policyAttestationCollection.ExistsAsync(attestationName);
+            Assert.IsFalse(flag);
+        }
+
+        private void ValidateAttestation(PolicyAttestationData attestation, string attestationName)
+        {
+            Assert.IsNotNull(attestation);
+            Assert.AreEqual(attestationName, attestation.Name);
+            Assert.AreEqual(".NET SDK Test", attestation.Comments);
+            Assert.AreEqual("Compliant", attestation.ComplianceState.ToString());
+            Assert.AreEqual("Test Owner", attestation.Owner);
+            Assert.AreEqual(2, attestation.Evidence.Count);
         }
     }
 }

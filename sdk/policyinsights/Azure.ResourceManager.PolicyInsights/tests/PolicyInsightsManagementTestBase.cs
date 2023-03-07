@@ -6,6 +6,8 @@ using Azure.Core.TestFramework;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.TestFramework;
 using NUnit.Framework;
+using System.Collections.Generic;
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -54,6 +56,33 @@ namespace Azure.ResourceManager.PolicyInsights.Tests
                 PolicyDefinitionId = PolicyDefinitionId
             };
             ArmOperation<PolicyAssignmentResource> lro = await armResource.GetPolicyAssignments().CreateOrUpdateAsync(WaitUntil.Completed, policyAssignmentName, input);
+            return lro.Value;
+        }
+
+        protected async Task<SubscriptionPolicyDefinitionResource> CreatePolicyDefinition(string policyDefinitionName,string scope)
+        {
+            PolicyDefinitionData data = new PolicyDefinitionData()
+            {
+                DisplayName = $"PolicyInsights Test ${policyDefinitionName}",
+                Mode = "All",
+                PolicyRule = BinaryData.FromObjectAsJson(new Dictionary<string, object>
+                {
+                    {
+                        "if", new Dictionary<string, object>()
+                        {
+                            { "field", "type" },
+                            { "equals", $"{scope}" }
+                        }
+                    },
+                    {
+                        "then", new Dictionary<string, object>()
+                        {
+                            { "effect", "manual" }
+                        }
+                    }
+                })
+            };
+            ArmOperation<SubscriptionPolicyDefinitionResource> lro = await DefaultSubscription.GetSubscriptionPolicyDefinitions().CreateOrUpdateAsync(WaitUntil.Completed, policyDefinitionName, data);
             return lro.Value;
         }
     }
