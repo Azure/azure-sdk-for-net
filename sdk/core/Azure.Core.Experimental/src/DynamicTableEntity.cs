@@ -34,6 +34,12 @@ namespace Azure.Core.Dynamic
         {
             if (_entity.TryGetValue(name, out object value))
             {
+                // TODO: is there a cleaner way to support nested values?
+                if (value is TableEntity te)
+                {
+                    return new DynamicTableEntity(te);
+                }
+
                 return value;
             }
 
@@ -42,7 +48,7 @@ namespace Azure.Core.Dynamic
 
         public override object? GetElement(int index)
         {
-            throw new NotImplementedException();
+            throw new InvalidOperationException("DynamicTableEntity does not support int indexers.");
         }
 
         public override object? SetProperty(string name, object value)
@@ -54,7 +60,7 @@ namespace Azure.Core.Dynamic
 
         public override object? SetElement(int index, object value)
         {
-            throw new NotImplementedException();
+            throw new InvalidOperationException("DynamicTableEntity does not support int indexers.");
         }
 
         public override void WriteTo(Stream stream)
