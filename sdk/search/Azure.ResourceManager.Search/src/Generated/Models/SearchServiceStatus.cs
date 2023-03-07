@@ -21,8 +21,6 @@ namespace Azure.ResourceManager.Search.Models
         /// <summary> The search service is disabled and all API requests will be rejected. </summary>
         Disabled,
         /// <summary> The search service is in error state, indicating either a failure to provision or to be deleted. </summary>
-        Error,
-        /// <summary> The search service is in a subscription that&apos;s disabled. </summary>
-        Stopped
+        Error
     }
 }

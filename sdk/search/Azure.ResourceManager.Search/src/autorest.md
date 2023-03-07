@@ -80,4 +80,13 @@ rename-rules:
 override-operation-name:
   Services_CheckNameAvailability: CheckSearchServiceNameAvailability
 
+# Remove "stopped" enum from SearchServiceStatus
+
+directive:
+  - from: search.json
+    where: $.definitions.SearchServiceProperties.properties.status
+    transform: >
+      $.enum.includes('stopped') ? $.enum.splice($.enum.indexOf('stopped'), 1) : undefined;
+      $['x-ms-enum'].values.map(e => e.value).includes('stopped') ? $['x-ms-enum'].values.splice($['x-ms-enum'].values.map(e => e.value).indexOf('stopped'), 1) : undefined;
+
 ```
