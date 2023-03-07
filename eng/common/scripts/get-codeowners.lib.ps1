@@ -82,12 +82,12 @@ function Get-Codeowners(
   [string] $DevOpsFeed = "https://pkgs.dev.azure.com/azure-sdk/public/_packaging/azure-sdk-for-net/nuget/v3/index.json",
   [string] $ToolVersion = "1.0.0-dev.20230306.3",
   [string] $VsoVariable = "",
-  [string] $CodeownersFileLocation = $null,
+  [string] $CodeownersFileLocation = "",
   [bool] $IncludeNonUserAliases = $false
   )
 {
-  if ($null -eq $CodeownersFileLocation) {
-    # The $PSCriptRoot is asssumed to be azure-sdk-tools/eng/common/scripts/get-codeowners.ps1
+  if ([string]::IsNullOrWhiteSpace($CodeownersFileLocation)) {
+    # The $PSScriptRoot is assumed to be azure-sdk-tools/eng/common/scripts/get-codeowners.ps1
     $CodeOwnersFileLocation = (Resolve-Path $PSScriptRoot/../../../.github/CODEOWNERS)
   }
 
@@ -113,7 +113,7 @@ function Get-Codeowners(
     return ,@()
   } else
   {
-    Write-Host "Command $codeownersToolCommand executed successfully (exit code = 0). Output string length: $($commandOutput.length)"
+    Write-Host "Command $codeownersToolCommand executed successfully (exit code = 0). Command output string length: $($commandOutput.length)"
   }
 
 # Assert: $commandOutput is a valid JSON representing:

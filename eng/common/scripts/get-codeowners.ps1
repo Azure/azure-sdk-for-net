@@ -3,9 +3,9 @@
 Please see the comment on Get-Codeowners defined in ./get-codeowners.lib.ps1 
 #>
 param (
-  [string] $TargetPath = $null,
-  [string] $TargetDirectory = $null,
-  [string] $CodeownersFileLocation = $null
+  [string] $TargetPath = "",
+  [string] $TargetDirectory = "",
+  [string] $CodeownersFileLocation = ""
 )
 
 . $PSScriptRoot/get-codeowners.lib.ps1
