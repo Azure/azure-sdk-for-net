@@ -23,31 +23,85 @@ function Get-CodeownersTool([string] $ToolPath, [string] $DevOpsFeed, [string] $
   return $codeownersToolCommand
 }
 
+<#
+.SYNOPSIS
+A function that given as input $TargetPath param, returns the owners
+of that path, as determined by CODEOWNERS file passed in $CodeOwnersFileLocation
+param.
+
+.PARAMETER TargetPath
+Required*. Path to file or directory whose owners are to be determined from a 
+CODEOWNERS file. e.g. sdk/core/azure-amqp/ or sdk/core/foo.txt.
+
+*for backward compatibility, you might provide $TargetDirectory instead.
+
+.PARAMETER TargetDirectory
+Obsolete. Replaced by $TargetPath. Kept for backward-compatibility.
+If both $TargetPath and $TargetDirectory are provided, $TargetDirectory is
+ignored.
+
+.PARAMETER CodeOwnerFileLocation
+Optional. An absolute path to the CODEOWNERS file against which the $TargetPath param
+will be checked to determine its owners.
+
+.PARAMETER ToolVersion
+Optional. The NuGet package version of the package containing the "retrieve-codeowners" 
+tool, around which this script is a wrapper.
+
+.PARAMETER ToolPath
+Optional. The place to check the "retrieve-codeowners" tool existence.
+
+.PARAMETER DevOpsFeed
+Optional. The NuGet package feed from which the "retrieve-codeowners" tool is to be installed.
+
+NuGet feed:
+https://dev.azure.com/azure-sdk/public/_artifacts/feed/azure-sdk-for-net/NuGet/Azure.Sdk.Tools.RetrieveCodeOwners
+
+Pipeline publishing the NuGet package to the feed, "tools - code-owners-parser":
+https://dev.azure.com/azure-sdk/internal/_build?definitionId=3188
+
+.PARAMETER VsoVariable 
+Optional. If provided, the determined owners, based on $TargetPath matched against CODEOWNERS file at $CodeOwnerFileLocation, 
+will be output to Azure DevOps pipeline log as variable named $VsoVariable.
+
+Reference:
+https://learn.microsoft.com/en-us/azure/devops/pipelines/process/variables?view=azure-devops&tabs=yaml%2Cbatch
+https://learn.microsoft.com/en-us/azure/devops/pipelines/scripts/logging-commands?view=azure-devops&tabs=bash#logging-command-format
+
+.PARAMETER IncludeNonUserAliases
+Optional. Whether to include in the returned owners list aliases that are team aliases, e.g. Azure/azure-sdk-team
+
+.PARAMETER Test
+Optional. Whether to run the script against hard-coded tests.
+
+#>
 function Get-Codeowners(
-  [string] $ToolPath, 
-  [string] $DevOpsFeed,
-  [string] $ToolVersion,
-  [string] $VsoVariable,
-  [string] $targetPath,
-  [string] $targetDirectory,
-  [string] $codeownersFileLocation,
-  [bool] $includeNonUserAliases = $false)
+  [string] $TargetPath,
+  [string] $TargetDirectory,
+  [string] $ToolPath = (Join-Path ([System.IO.Path]::GetTempPath()) "codeowners-tool"),
+  [string] $DevOpsFeed = "https://pkgs.dev.azure.com/azure-sdk/public/_packaging/azure-sdk-for-net/nuget/v3/index.json",
+  [string] $ToolVersion = "1.0.0-dev.20230306.3",
+  [string] $VsoVariable = "",
+  # The default path assumes the script is located in azure-sdk-tools/eng/common/scripts/get-codeowners/get-codeowners.ps1
+  [string] $CodeOwnerFileLocation = (Resolve-Path $PSScriptRoot/../../../../.github/CODEOWNERS),
+  [bool] $IncludeNonUserAliases = $false
+  )
 {
-  # Backward compaitiblity: if $targetPath is not provided, fall-back to the legacy $targetDirectory
-  if ([string]::IsNullOrWhiteSpace($targetPath)) {
-    $targetPath = $targetDirectory
+  # Backward compaitiblity: if $TargetPath is not provided, fall-back to the legacy $TargetDirectory
+  if ([string]::IsNullOrWhiteSpace($TargetPath)) {
+    $TargetPath = $TargetDirectory
   }
-  if ([string]::IsNullOrWhiteSpace($targetPath)) {
+  if ([string]::IsNullOrWhiteSpace($TargetPath)) {
     Write-Error "TargetPath (or TargetDirectory) parameter must be neither null nor whitespace."
     return ,@()
   }
 
   $codeownersToolCommand = Get-CodeownersTool -ToolPath $ToolPath -DevOpsFeed $DevOpsFeed -ToolVersion $ToolVersion
-  Write-Host "Executing: & $codeownersToolCommand --target-path $targetPath --codeowners-file-path-or-url $codeownersFileLocation --exclude-non-user-aliases:$(!$includeNonUserAliases)"
+  Write-Host "Executing: & $codeownersToolCommand --target-path $TargetPath --codeowners-file-path-or-url $codeownersFileLocation --exclude-non-user-aliases:$(!$IncludeNonUserAliases)"
   $commandOutput = & $codeownersToolCommand `
-      --target-path $targetPath `
+      --target-path $TargetPath `
       --codeowners-file-path-or-url $codeownersFileLocation `
-      --exclude-non-user-aliases:$(!$includeNonUserAliases) `
+      --exclude-non-user-aliases:$(!$IncludeNonUserAliases) `
       2>&1
 
   if ($LASTEXITCODE -ne 0) {
@@ -59,8 +113,8 @@ function Get-Codeowners(
   }
 
 # Assert: $commandOutput is a valid JSON representing:
-# - a single CodeownersEntry, if the $targetPath was a single path
-# - or a dictionary of CodeownerEntries, keyes by each path resolved from a $targetPath glob path.
+# - a single CodeownersEntry, if the $TargetPath was a single path
+# - or a dictionary of CodeownerEntries, keyes by each path resolved from a $TargetPath glob path.
 #
 # For implementation details, see Azure.Sdk.Tools.RetrieveCodeOwners.Program.Main
 
