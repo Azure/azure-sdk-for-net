@@ -41,7 +41,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
         /// <param name="kind"> Indicates the type of database account. This can only be set at database account creation. </param>
-        /// <param name="identity"> Identity for the resource. </param>
         /// <param name="consistencyPolicy"> The consistency policy for the Cosmos DB account. </param>
         /// <param name="locations"> An array that contains the georeplication locations enabled for the Cosmos DB account. </param>
         /// <param name="databaseAccountOfferType"> The offer type for the database. </param>
@@ -70,15 +69,19 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="cors"> The CORS policy for the Cosmos DB database account. </param>
         /// <param name="networkAclBypass"> Indicates what services are allowed to bypass firewall checks. </param>
         /// <param name="networkAclBypassResourceIds"> An array that contains the Resource Ids for Network Acl Bypass for the Cosmos DB account. </param>
+        /// <param name="diagnosticLogSettings"> The Object representing the different Diagnostic log settings for the Cosmos DB Account. </param>
         /// <param name="disableLocalAuth"> Opt-out of local authentication and ensure only MSI and AAD can be used exclusively for authentication. </param>
         /// <param name="restoreParameters"> Parameters to indicate the information about the restore. </param>
         /// <param name="capacity"> The object that represents all properties related to capacity enforcement on an account. </param>
+        /// <param name="enableMaterializedViews"> Flag to indicate whether to enable MaterializedViews on the Cosmos DB account. </param>
         /// <param name="keysMetadata"> This property is ignored during the update/create operation, as the metadata is read-only. The object represents the metadata for the Account Keys of the Cosmos DB account. </param>
         /// <param name="enablePartitionMerge"> Flag to indicate enabling/disabling of Partition Merge feature on the account. </param>
-        internal CosmosDBAccountCreateOrUpdateContent(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, CosmosDBAccountKind? kind, ManagedServiceIdentity identity, ConsistencyPolicy consistencyPolicy, IList<CosmosDBAccountLocation> locations, CosmosDBAccountOfferType databaseAccountOfferType, IList<CosmosDBIPAddressOrRange> ipRules, bool? isVirtualNetworkFilterEnabled, bool? enableAutomaticFailover, IList<CosmosDBAccountCapability> capabilities, IList<CosmosDBVirtualNetworkRule> virtualNetworkRules, bool? enableMultipleWriteLocations, bool? enableCassandraConnector, ConnectorOffer? connectorOffer, bool? disableKeyBasedMetadataWriteAccess, Uri keyVaultKeyUri, string defaultIdentity, CosmosDBPublicNetworkAccess? publicNetworkAccess, bool? isFreeTierEnabled, ApiProperties apiProperties, bool? isAnalyticalStorageEnabled, AnalyticalStorageConfiguration analyticalStorageConfiguration, CosmosDBAccountCreateMode? createMode, CosmosDBAccountBackupPolicy backupPolicy, IList<CosmosDBAccountCorsPolicy> cors, NetworkAclBypass? networkAclBypass, IList<ResourceIdentifier> networkAclBypassResourceIds, bool? disableLocalAuth, CosmosDBAccountRestoreParameters restoreParameters, CosmosDBAccountCapacity capacity, DatabaseAccountKeysMetadata keysMetadata, bool? enablePartitionMerge) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="enableBurstCapacity"> Flag to indicate enabling/disabling of Burst Capacity Preview feature on the account. </param>
+        /// <param name="minimalTlsVersion"> Indicates the minimum allowed Tls version. The default is Tls 1.0, except for Cassandra and Mongo API&apos;s, which only work with Tls 1.2. </param>
+        /// <param name="identity"> Identity for the resource. </param>
+        internal CosmosDBAccountCreateOrUpdateContent(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, CosmosDBAccountKind? kind, ConsistencyPolicy consistencyPolicy, IList<CosmosDBAccountLocation> locations, CosmosDBAccountOfferType databaseAccountOfferType, IList<CosmosDBIPAddressOrRange> ipRules, bool? isVirtualNetworkFilterEnabled, bool? enableAutomaticFailover, IList<CosmosDBAccountCapability> capabilities, IList<CosmosDBVirtualNetworkRule> virtualNetworkRules, bool? enableMultipleWriteLocations, bool? enableCassandraConnector, ConnectorOffer? connectorOffer, bool? disableKeyBasedMetadataWriteAccess, Uri keyVaultKeyUri, string defaultIdentity, CosmosDBPublicNetworkAccess? publicNetworkAccess, bool? isFreeTierEnabled, ApiProperties apiProperties, bool? isAnalyticalStorageEnabled, AnalyticalStorageConfiguration analyticalStorageConfiguration, CosmosDBAccountCreateMode? createMode, CosmosDBAccountBackupPolicy backupPolicy, IList<CosmosDBAccountCorsPolicy> cors, NetworkAclBypass? networkAclBypass, IList<ResourceIdentifier> networkAclBypassResourceIds, DiagnosticLogSettings diagnosticLogSettings, bool? disableLocalAuth, CosmosDBAccountRestoreParameters restoreParameters, CosmosDBAccountCapacity capacity, bool? enableMaterializedViews, DatabaseAccountKeysMetadata keysMetadata, bool? enablePartitionMerge, bool? enableBurstCapacity, MinimalTlsVersion? minimalTlsVersion, ManagedServiceIdentity identity) : base(id, name, resourceType, systemData, tags, location)
         {
             Kind = kind;
-            Identity = identity;
             ConsistencyPolicy = consistencyPolicy;
             Locations = locations;
             DatabaseAccountOfferType = databaseAccountOfferType;
@@ -103,17 +106,20 @@ namespace Azure.ResourceManager.CosmosDB.Models
             Cors = cors;
             NetworkAclBypass = networkAclBypass;
             NetworkAclBypassResourceIds = networkAclBypassResourceIds;
+            DiagnosticLogSettings = diagnosticLogSettings;
             DisableLocalAuth = disableLocalAuth;
             RestoreParameters = restoreParameters;
             Capacity = capacity;
+            EnableMaterializedViews = enableMaterializedViews;
             KeysMetadata = keysMetadata;
             EnablePartitionMerge = enablePartitionMerge;
+            EnableBurstCapacity = enableBurstCapacity;
+            MinimalTlsVersion = minimalTlsVersion;
+            Identity = identity;
         }
 
         /// <summary> Indicates the type of database account. This can only be set at database account creation. </summary>
         public CosmosDBAccountKind? Kind { get; set; }
-        /// <summary> Identity for the resource. </summary>
-        public ManagedServiceIdentity Identity { get; set; }
         /// <summary> The consistency policy for the Cosmos DB account. </summary>
         public ConsistencyPolicy ConsistencyPolicy { get; set; }
         /// <summary> An array that contains the georeplication locations enabled for the Cosmos DB account. </summary>
@@ -190,6 +196,20 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public NetworkAclBypass? NetworkAclBypass { get; set; }
         /// <summary> An array that contains the Resource Ids for Network Acl Bypass for the Cosmos DB account. </summary>
         public IList<ResourceIdentifier> NetworkAclBypassResourceIds { get; }
+        /// <summary> The Object representing the different Diagnostic log settings for the Cosmos DB Account. </summary>
+        internal DiagnosticLogSettings DiagnosticLogSettings { get; set; }
+        /// <summary> Describe the level of detail with which queries are to be logged. </summary>
+        public EnableFullTextQuery? DiagnosticLogEnableFullTextQuery
+        {
+            get => DiagnosticLogSettings is null ? default : DiagnosticLogSettings.EnableFullTextQuery;
+            set
+            {
+                if (DiagnosticLogSettings is null)
+                    DiagnosticLogSettings = new DiagnosticLogSettings();
+                DiagnosticLogSettings.EnableFullTextQuery = value;
+            }
+        }
+
         /// <summary> Opt-out of local authentication and ensure only MSI and AAD can be used exclusively for authentication. </summary>
         public bool? DisableLocalAuth { get; set; }
         /// <summary> Parameters to indicate the information about the restore. </summary>
@@ -208,9 +228,17 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
         }
 
+        /// <summary> Flag to indicate whether to enable MaterializedViews on the Cosmos DB account. </summary>
+        public bool? EnableMaterializedViews { get; set; }
         /// <summary> This property is ignored during the update/create operation, as the metadata is read-only. The object represents the metadata for the Account Keys of the Cosmos DB account. </summary>
         public DatabaseAccountKeysMetadata KeysMetadata { get; }
         /// <summary> Flag to indicate enabling/disabling of Partition Merge feature on the account. </summary>
         public bool? EnablePartitionMerge { get; set; }
+        /// <summary> Flag to indicate enabling/disabling of Burst Capacity Preview feature on the account. </summary>
+        public bool? EnableBurstCapacity { get; set; }
+        /// <summary> Indicates the minimum allowed Tls version. The default is Tls 1.0, except for Cassandra and Mongo API&apos;s, which only work with Tls 1.2. </summary>
+        public MinimalTlsVersion? MinimalTlsVersion { get; set; }
+        /// <summary> Identity for the resource. </summary>
+        public ManagedServiceIdentity Identity { get; set; }
     }
 }

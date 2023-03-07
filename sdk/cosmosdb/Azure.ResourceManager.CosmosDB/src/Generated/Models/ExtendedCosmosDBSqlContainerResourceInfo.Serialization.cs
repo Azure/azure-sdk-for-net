@@ -43,10 +43,25 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WritePropertyName("conflictResolutionPolicy"u8);
                 writer.WriteObjectValue(ConflictResolutionPolicy);
             }
+            if (Optional.IsDefined(ClientEncryptionPolicy))
+            {
+                writer.WritePropertyName("clientEncryptionPolicy"u8);
+                writer.WriteObjectValue(ClientEncryptionPolicy);
+            }
             if (Optional.IsDefined(AnalyticalStorageTtl))
             {
                 writer.WritePropertyName("analyticalStorageTtl"u8);
                 writer.WriteNumberValue(AnalyticalStorageTtl.Value);
+            }
+            if (Optional.IsDefined(RestoreParameters))
+            {
+                writer.WritePropertyName("restoreParameters"u8);
+                writer.WriteObjectValue(RestoreParameters);
+            }
+            if (Optional.IsDefined(CreateMode))
+            {
+                writer.WritePropertyName("createMode"u8);
+                writer.WriteStringValue(CreateMode.Value.ToString());
             }
             writer.WriteEndObject();
         }
@@ -66,7 +81,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
             Optional<int> defaultTtl = default;
             Optional<CosmosDBUniqueKeyPolicy> uniqueKeyPolicy = default;
             Optional<ConflictResolutionPolicy> conflictResolutionPolicy = default;
+            Optional<ClientEncryptionPolicy> clientEncryptionPolicy = default;
             Optional<long> analyticalStorageTtl = default;
+            Optional<ResourceRestoreParameters> restoreParameters = default;
+            Optional<CosmosDBAccountCreateMode> createMode = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("_rid"u8))
@@ -149,6 +167,16 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     conflictResolutionPolicy = ConflictResolutionPolicy.DeserializeConflictResolutionPolicy(property.Value);
                     continue;
                 }
+                if (property.NameEquals("clientEncryptionPolicy"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    clientEncryptionPolicy = ClientEncryptionPolicy.DeserializeClientEncryptionPolicy(property.Value);
+                    continue;
+                }
                 if (property.NameEquals("analyticalStorageTtl"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -159,8 +187,28 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     analyticalStorageTtl = property.Value.GetInt64();
                     continue;
                 }
+                if (property.NameEquals("restoreParameters"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    restoreParameters = ResourceRestoreParameters.DeserializeResourceRestoreParameters(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("createMode"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    createMode = new CosmosDBAccountCreateMode(property.Value.GetString());
+                    continue;
+                }
             }
-            return new ExtendedCosmosDBSqlContainerResourceInfo(id, indexingPolicy.Value, partitionKey.Value, Optional.ToNullable(defaultTtl), uniqueKeyPolicy.Value, conflictResolutionPolicy.Value, Optional.ToNullable(analyticalStorageTtl), rid.Value, Optional.ToNullable(ts), Optional.ToNullable(etag));
+            return new ExtendedCosmosDBSqlContainerResourceInfo(id, indexingPolicy.Value, partitionKey.Value, Optional.ToNullable(defaultTtl), uniqueKeyPolicy.Value, conflictResolutionPolicy.Value, clientEncryptionPolicy.Value, Optional.ToNullable(analyticalStorageTtl), restoreParameters.Value, Optional.ToNullable(createMode), rid.Value, Optional.ToNullable(ts), Optional.ToNullable(etag));
         }
     }
 }
