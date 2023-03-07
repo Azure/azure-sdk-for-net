@@ -9,10 +9,16 @@ using System.Reflection;
 
 namespace Azure.Core.Dynamic
 {
-    public partial class DynamicJson : DynamicData
+    public partial class DynamicData
     {
+        private static readonly MethodInfo GetPropertyMethod = typeof(DynamicData).GetMethod(nameof(GetProperty), BindingFlags.NonPublic | BindingFlags.Instance)!;
+        private static readonly MethodInfo SetPropertyMethod = typeof(DynamicData).GetMethod(nameof(SetProperty), BindingFlags.NonPublic | BindingFlags.Instance)!;
+        private static readonly MethodInfo GetEnumerableMethod = typeof(DynamicData).GetMethod(nameof(GetEnumerable), BindingFlags.NonPublic | BindingFlags.Instance)!;
+        private static readonly MethodInfo GetViaIndexerMethod = typeof(DynamicData).GetMethod(nameof(GetViaIndexer), BindingFlags.NonPublic | BindingFlags.Instance)!;
+        private static readonly MethodInfo SetViaIndexerMethod = typeof(DynamicData).GetMethod(nameof(SetViaIndexer), BindingFlags.NonPublic | BindingFlags.Instance)!;
+
         /// <inheritdoc />
-        public override DynamicMetaObject GetMetaObject(Expression parameter) => new MetaObject(parameter, this);
+        DynamicMetaObject IDynamicMetaObjectProvider.GetMetaObject(Expression parameter) => new MetaObject(parameter, this);
 
         private class MetaObject : DynamicMetaObject
         {
@@ -59,11 +65,11 @@ namespace Azure.Core.Dynamic
                     return new DynamicMetaObject(makeIDisposable, restrictions);
                 }
 
-                if (CastFromOperators.TryGetValue(binder.Type, out MethodInfo? castOperator))
-                {
-                    MethodCallExpression cast = Expression.Call(castOperator, this_);
-                    return new DynamicMetaObject(cast, restrictions);
-                }
+                //if (CastFromOperators.TryGetValue(binder.Type, out MethodInfo? castOperator))
+                //{
+                //    MethodCallExpression cast = Expression.Call(castOperator, this_);
+                //    return new DynamicMetaObject(cast, restrictions);
+                //}
 
                 MethodCallExpression convertTo = Expression.Call(this_, nameof(ConvertTo), new Type[] { binder.Type });
                 return new DynamicMetaObject(convertTo, restrictions);

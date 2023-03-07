@@ -1,9 +1,13 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Collections;
 using System.Dynamic;
 using System.IO;
 using System.Linq.Expressions;
+
+// TODO: remove
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
 
 namespace Azure.Core.Dynamic
 {
@@ -13,7 +17,7 @@ namespace Azure.Core.Dynamic
     ///
     /// This and related types are not intended to be mocked.
     /// </summary>
-    public abstract class DynamicData : IDynamicMetaObjectProvider
+    public abstract partial class DynamicData : IDynamicMetaObjectProvider
     {
         /// <summary>
         /// Writes the data to the provided stream.
@@ -25,13 +29,25 @@ namespace Azure.Core.Dynamic
             data.WriteTo(stream);
         }
 
-        /// <inheritdoc />
-        public abstract DynamicMetaObject GetMetaObject(Expression parameter);
+        ///// <inheritdoc />
+        //public abstract DynamicMetaObject GetMetaObject(Expression parameter);
 
         /// <summary>
         /// Writes the data to the provided stream.
         /// </summary>
         /// <param name="stream">The stream to which to write the document.</param>
         public abstract void WriteTo(Stream stream);
+
+        public abstract object? GetProperty(string name);
+
+        public abstract object? SetProperty(string name, object value);
+
+        public abstract IEnumerable GetEnumerable();
+
+        public abstract object? GetViaIndexer(object index);
+
+        public abstract object? SetViaIndexer(object index, object value);
+
+        public abstract T ConvertTo<T>();
     }
 }

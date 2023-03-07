@@ -9,6 +9,9 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using Azure.Core.Json;
 
+// TODO: remove
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
+
 namespace Azure.Core.Dynamic
 {
     /// <summary>
@@ -17,12 +20,6 @@ namespace Azure.Core.Dynamic
     [JsonConverter(typeof(JsonConverter))]
     public sealed partial class DynamicJson : DynamicData, IDisposable
     {
-        private static readonly MethodInfo GetPropertyMethod = typeof(DynamicJson).GetMethod(nameof(GetProperty), BindingFlags.NonPublic | BindingFlags.Instance)!;
-        private static readonly MethodInfo SetPropertyMethod = typeof(DynamicJson).GetMethod(nameof(SetProperty), BindingFlags.NonPublic | BindingFlags.Instance)!;
-        private static readonly MethodInfo GetEnumerableMethod = typeof(DynamicJson).GetMethod(nameof(GetEnumerable), BindingFlags.NonPublic | BindingFlags.Instance)!;
-        private static readonly MethodInfo GetViaIndexerMethod = typeof(DynamicJson).GetMethod(nameof(GetViaIndexer), BindingFlags.NonPublic | BindingFlags.Instance)!;
-        private static readonly MethodInfo SetViaIndexerMethod = typeof(DynamicJson).GetMethod(nameof(SetViaIndexer), BindingFlags.NonPublic | BindingFlags.Instance)!;
-
         private MutableJsonElement _element;
         private DynamicJsonOptions _options;
 
@@ -40,7 +37,7 @@ namespace Azure.Core.Dynamic
             writer.Flush();
         }
 
-        private object? GetProperty(string name)
+        public override object? GetProperty(string name)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
@@ -82,7 +79,7 @@ namespace Azure.Core.Dynamic
             return $"{char.ToLowerInvariant(value[0])}{value.Substring(1)}";
         }
 
-        private object? GetViaIndexer(object index)
+        public override object? GetViaIndexer(object index)
         {
             switch (index)
             {
@@ -95,7 +92,7 @@ namespace Azure.Core.Dynamic
             throw new InvalidOperationException($"Tried to access indexer with an unsupported index type: {index}");
         }
 
-        private IEnumerable GetEnumerable()
+        public override IEnumerable GetEnumerable()
         {
             return _element.ValueKind switch
             {
@@ -105,7 +102,7 @@ namespace Azure.Core.Dynamic
             };
         }
 
-        private object? SetProperty(string name, object value)
+        public override object? SetProperty(string name, object value)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
@@ -144,7 +141,7 @@ namespace Azure.Core.Dynamic
             return null;
         }
 
-        private object? SetViaIndexer(object index, object value)
+        public override object? SetViaIndexer(object index, object value)
         {
             switch (index)
             {
@@ -159,8 +156,14 @@ namespace Azure.Core.Dynamic
             throw new InvalidOperationException($"Tried to access indexer with an unsupported index type: {index}");
         }
 
-        private T ConvertTo<T>()
+        public override T ConvertTo<T>()
         {
+            // TODO: is this better at the root?
+            if (CastFromOperators.TryGetValue(typeof(T), out MethodInfo? _))
+            {
+                return (T)(dynamic)this;
+            }
+
 #if NET6_0_OR_GREATER
             return JsonSerializer.Deserialize<T>(_element.GetJsonElement(), MutableJsonDocument.DefaultJsonSerializerOptions)!;
 #else
@@ -170,16 +173,10 @@ namespace Azure.Core.Dynamic
         }
 
         /// <inheritdoc/>
-        public override string ToString()
-        {
-            return _element.ToString();
-        }
+        public override string ToString() => _element.ToString();
 
         /// <inheritdoc/>
-        public void Dispose()
-        {
-            _element.DisposeRoot();
-        }
+        public void Dispose() => _element.DisposeRoot();
 
         private class JsonConverter : JsonConverter<DynamicJson>
         {
