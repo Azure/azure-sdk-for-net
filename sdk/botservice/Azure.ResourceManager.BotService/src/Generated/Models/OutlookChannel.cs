@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.BotService.Models
 {
     /// <summary> Outlook channel definition. </summary>
-    public partial class OutlookChannel : Channel
+    public partial class OutlookChannel : BotChannelProperties
     {
         /// <summary> Initializes a new instance of OutlookChannel. </summary>
         public OutlookChannel()
