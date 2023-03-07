@@ -5,23 +5,15 @@
 
 #nullable disable
 
-using System;
-using System.Threading;
-using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Resources.Models;
+using Azure.ResourceManager.Resources;
 
-namespace Azure.ResourceManager.Resources
+namespace Azure.ResourceManager.Resources.Mock
 {
     /// <summary> A class to add extension methods to TenantResource. </summary>
-    internal partial class TenantResourceExtensionClient : ArmResource
+    public partial class TenantResourceExtensionClient : ArmResource
     {
-        private ClientDiagnostics _armDeploymentDeploymentsClientDiagnostics;
-        private DeploymentsRestOperations _armDeploymentDeploymentsRestClient;
-
         /// <summary> Initializes a new instance of the <see cref="TenantResourceExtensionClient"/> class for mocking. </summary>
         protected TenantResourceExtensionClient()
         {
@@ -34,9 +26,6 @@ namespace Azure.ResourceManager.Resources
         {
         }
 
-        private ClientDiagnostics ArmDeploymentDeploymentsClientDiagnostics => _armDeploymentDeploymentsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Resources", ArmDeploymentResource.ResourceType.Namespace, Diagnostics);
-        private DeploymentsRestOperations ArmDeploymentDeploymentsRestClient => _armDeploymentDeploymentsRestClient ??= new DeploymentsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(ArmDeploymentResource.ResourceType));
-
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
             TryGetApiVersion(resourceType, out string apiVersion);
@@ -48,68 +37,6 @@ namespace Azure.ResourceManager.Resources
         public virtual ArmDeploymentCollection GetArmDeployments()
         {
             return GetCachedClient(Client => new ArmDeploymentCollection(Client, Id));
-        }
-
-        /// <summary>
-        /// Calculate the hash of the given template.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Resources/calculateTemplateHash</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Deployments_CalculateTemplateHash</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="template"> The template provided to calculate hash. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<TemplateHashResult>> CalculateDeploymentTemplateHashAsync(BinaryData template, CancellationToken cancellationToken = default)
-        {
-            using var scope = ArmDeploymentDeploymentsClientDiagnostics.CreateScope("TenantResourceExtensionClient.CalculateDeploymentTemplateHash");
-            scope.Start();
-            try
-            {
-                var response = await ArmDeploymentDeploymentsRestClient.CalculateTemplateHashAsync(template, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Calculate the hash of the given template.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Resources/calculateTemplateHash</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Deployments_CalculateTemplateHash</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="template"> The template provided to calculate hash. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<TemplateHashResult> CalculateDeploymentTemplateHash(BinaryData template, CancellationToken cancellationToken = default)
-        {
-            using var scope = ArmDeploymentDeploymentsClientDiagnostics.CreateScope("TenantResourceExtensionClient.CalculateDeploymentTemplateHash");
-            scope.Start();
-            try
-            {
-                var response = ArmDeploymentDeploymentsRestClient.CalculateTemplateHash(template, cancellationToken);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
         }
     }
 }

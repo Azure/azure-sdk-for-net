@@ -421,6 +421,64 @@ namespace Azure.ResourceManager.Resources
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Resources.TemplateSpecVersionResource>> UpdateAsync(Azure.ResourceManager.Resources.Models.TemplateSpecVersionPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
 }
+namespace Azure.ResourceManager.Resources.Mock
+{
+    public partial class ArmApplicationResourceExtensionClient : Azure.ResourceManager.ArmResource
+    {
+        protected ArmApplicationResourceExtensionClient() { }
+        public virtual Azure.Pageable<Azure.ResourceManager.Resources.ArmApplicationResource> GetArmApplications(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Resources.ArmApplicationResource> GetArmApplicationsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class ArmDeploymentResourceExtensionClient : Azure.ResourceManager.ArmResource
+    {
+        protected ArmDeploymentResourceExtensionClient() { }
+        public virtual Azure.Response<Azure.ResourceManager.Resources.Models.TemplateHashResult> CalculateDeploymentTemplateHash(System.BinaryData template, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Resources.Models.TemplateHashResult>> CalculateDeploymentTemplateHashAsync(System.BinaryData template, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class ArmDeploymentScriptResourceExtensionClient : Azure.ResourceManager.ArmResource
+    {
+        protected ArmDeploymentScriptResourceExtensionClient() { }
+        public virtual Azure.Pageable<Azure.ResourceManager.Resources.ArmDeploymentScriptResource> GetArmDeploymentScripts(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Resources.ArmDeploymentScriptResource> GetArmDeploymentScriptsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class JitRequestResourceExtensionClient : Azure.ResourceManager.ArmResource
+    {
+        protected JitRequestResourceExtensionClient() { }
+        public virtual Azure.Pageable<Azure.ResourceManager.Resources.JitRequestResource> GetJitRequestDefinitions(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Resources.JitRequestResource> GetJitRequestDefinitionsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class ManagementGroupResourceExtensionClient : Azure.ResourceManager.ArmResource
+    {
+        protected ManagementGroupResourceExtensionClient() { }
+        public virtual Azure.ResourceManager.Resources.ArmDeploymentCollection GetArmDeployments() { throw null; }
+    }
+    public partial class ResourceGroupResourceExtensionClient : Azure.ResourceManager.ArmResource
+    {
+        protected ResourceGroupResourceExtensionClient() { }
+        public virtual Azure.ResourceManager.Resources.ArmApplicationDefinitionCollection GetArmApplicationDefinitions() { throw null; }
+        public virtual Azure.ResourceManager.Resources.ArmApplicationCollection GetArmApplications() { throw null; }
+        public virtual Azure.ResourceManager.Resources.ArmDeploymentCollection GetArmDeployments() { throw null; }
+        public virtual Azure.ResourceManager.Resources.ArmDeploymentScriptCollection GetArmDeploymentScripts() { throw null; }
+        public virtual Azure.ResourceManager.Resources.JitRequestCollection GetJitRequests() { throw null; }
+        public virtual Azure.ResourceManager.Resources.TemplateSpecCollection GetTemplateSpecs() { throw null; }
+    }
+    public partial class SubscriptionResourceExtensionClient : Azure.ResourceManager.ArmResource
+    {
+        protected SubscriptionResourceExtensionClient() { }
+        public virtual Azure.ResourceManager.Resources.ArmDeploymentCollection GetArmDeployments() { throw null; }
+    }
+    public partial class TemplateSpecResourceExtensionClient : Azure.ResourceManager.ArmResource
+    {
+        protected TemplateSpecResourceExtensionClient() { }
+        public virtual Azure.Pageable<Azure.ResourceManager.Resources.TemplateSpecResource> GetTemplateSpecs(Azure.ResourceManager.Resources.Models.TemplateSpecExpandKind? expand = default(Azure.ResourceManager.Resources.Models.TemplateSpecExpandKind?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Resources.TemplateSpecResource> GetTemplateSpecsAsync(Azure.ResourceManager.Resources.Models.TemplateSpecExpandKind? expand = default(Azure.ResourceManager.Resources.Models.TemplateSpecExpandKind?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class TenantResourceExtensionClient : Azure.ResourceManager.ArmResource
+    {
+        protected TenantResourceExtensionClient() { }
+        public virtual Azure.ResourceManager.Resources.ArmDeploymentCollection GetArmDeployments() { throw null; }
+    }
+}
 namespace Azure.ResourceManager.Resources.Models
 {
     public partial class ArmApplicationArtifact
