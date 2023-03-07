@@ -203,12 +203,7 @@ namespace Azure.AI.TextAnalytics.Tests
         {
             TextAnalyticsClient client = GetClient();
 
-            AbstractSummaryOptions options = new()
-            {
-                AutoDetectionDefaultLanguage = "en"
-            };
-
-            AbstractSummaryOperation operation = await client.StartAbstractSummaryAsync(s_batchConvenienceDocuments, "en", options);
+            AbstractSummaryOperation operation = await client.StartAbstractSummaryAsync(s_batchConvenienceDocuments, "en");
             await operation.WaitForCompletionAsync();
             ValidateOperationProperties(operation);
 
