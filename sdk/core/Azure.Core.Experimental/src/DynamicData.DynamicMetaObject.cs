@@ -5,11 +5,18 @@ using System;
 using System.Collections;
 using System.Dynamic;
 using System.Linq.Expressions;
+using System.Reflection;
 
 namespace Azure.Core.Dynamic
 {
     public partial class DynamicData
     {
+        private static readonly MethodInfo GetPropertyMethod = typeof(DynamicData).GetMethod(nameof(GetProperty), BindingFlags.Public | BindingFlags.Instance)!;
+        private static readonly MethodInfo SetPropertyMethod = typeof(DynamicData).GetMethod(nameof(SetProperty), BindingFlags.Public | BindingFlags.Instance)!;
+        private static readonly MethodInfo GetEnumerableMethod = typeof(DynamicData).GetMethod(nameof(GetEnumerable), BindingFlags.Public | BindingFlags.Instance)!;
+        private static readonly MethodInfo GetViaIndexerMethod = typeof(DynamicData).GetMethod(nameof(GetViaIndexer), BindingFlags.Public | BindingFlags.Instance)!;
+        private static readonly MethodInfo SetViaIndexerMethod = typeof(DynamicData).GetMethod(nameof(SetViaIndexer), BindingFlags.Public | BindingFlags.Instance)!;
+
         /// <inheritdoc />
         DynamicMetaObject IDynamicMetaObjectProvider.GetMetaObject(Expression parameter) => new MetaObject(parameter, this);
 

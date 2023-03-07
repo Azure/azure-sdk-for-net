@@ -5,7 +5,6 @@ using System;
 using System.Collections;
 using System.Dynamic;
 using System.IO;
-using System.Reflection;
 
 // TODO: remove
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
@@ -29,22 +28,6 @@ namespace Azure.Core.Dynamic
     /// </summary>
     public abstract partial class DynamicData : IDynamicMetaObjectProvider
     {
-        private static readonly MethodInfo GetPropertyMethod = typeof(DynamicData).GetMethod(nameof(GetProperty), BindingFlags.Public | BindingFlags.Instance)!;
-        private static readonly MethodInfo SetPropertyMethod = typeof(DynamicData).GetMethod(nameof(SetProperty), BindingFlags.Public | BindingFlags.Instance)!;
-        private static readonly MethodInfo GetEnumerableMethod = typeof(DynamicData).GetMethod(nameof(GetEnumerable), BindingFlags.Public | BindingFlags.Instance)!;
-        private static readonly MethodInfo GetViaIndexerMethod = typeof(DynamicData).GetMethod(nameof(GetViaIndexer), BindingFlags.Public | BindingFlags.Instance)!;
-        private static readonly MethodInfo SetViaIndexerMethod = typeof(DynamicData).GetMethod(nameof(SetViaIndexer), BindingFlags.Public | BindingFlags.Instance)!;
-
-        /// <summary>
-        /// Writes the data to the provided stream.
-        /// </summary>
-        /// <param name="stream">The stream to which to write the document.</param>
-        /// <param name="data">The dynamic data value to write.</param>
-        public static void WriteTo(Stream stream, DynamicData data)
-        {
-            data.WriteTo(stream);
-        }
-
         /// <summary>
         /// Writes the data to the provided stream.
         /// </summary>
