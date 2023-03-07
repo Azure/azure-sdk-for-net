@@ -26,7 +26,7 @@ function Get-CodeownersTool([string] $ToolPath, [string] $DevOpsFeed, [string] $
 <#
 .SYNOPSIS
 A function that given as input $TargetPath param, returns the owners
-of that path, as determined by CODEOWNERS file passed in $CodeOwnersFileLocation
+of that path, as determined by CODEOWNERS file passed in $CodeownersFileLocation
 param.
 
 .PARAMETER TargetPath
@@ -88,7 +88,7 @@ function Get-Codeowners(
 {
   if ([string]::IsNullOrWhiteSpace($CodeownersFileLocation)) {
     # The $PSScriptRoot is assumed to be azure-sdk-tools/eng/common/scripts/get-codeowners.ps1
-    $CodeOwnersFileLocation = (Resolve-Path $PSScriptRoot/../../../.github/CODEOWNERS)
+    $CodeownersFileLocation = (Resolve-Path $PSScriptRoot/../../../.github/CODEOWNERS)
   }
 
   # Backward compaitiblity: if $TargetPath is not provided, fall-back to the legacy $TargetDirectory
