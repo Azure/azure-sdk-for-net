@@ -130,9 +130,29 @@ namespace Azure.Storage.Files.DataLake
                 ExpiresOn = blobPropertiesResponse.Value.ExpiresOn,
                 EncryptionScope = blobPropertiesResponse.Value.EncryptionScope,
             };
-            if (blobPropertiesResponse.GetRawResponse().Headers.TryGetValue(Constants.DataLake.EncryptionContextHeaderName, out string encryptionContext))
+            if (blobPropertiesResponse.GetRawResponse().Headers.TryGetValue(
+                Constants.DataLake.EncryptionContextHeaderName,
+                out string encryptionContext))
             {
                 pathProperties.EncryptionContext = encryptionContext;
+            }
+            if (blobPropertiesResponse.GetRawResponse().Headers.TryGetValue(
+                Constants.DataLake.OwnerHeaderName,
+                out string owner))
+            {
+                pathProperties.Owner = owner;
+            }
+            if (blobPropertiesResponse.GetRawResponse().Headers.TryGetValue(
+                Constants.DataLake.GroupHeaderName,
+                out string group))
+            {
+                pathProperties.Group = group;
+            }
+            if (blobPropertiesResponse.GetRawResponse().Headers.TryGetValue(
+                Constants.DataLake.PermissionsHeaderName,
+                out string permissions))
+            {
+                pathProperties.Permissions = permissions;
             }
             return pathProperties;
         }

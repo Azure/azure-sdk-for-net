@@ -380,6 +380,12 @@ namespace Azure.Storage
             public const string DirectoryResourceType = "directory";
 
             public const string EncryptionContextHeaderName = "x-ms-encryption-context";
+
+            public const string OwnerHeaderName = "x-ms-owner";
+
+            public const string GroupHeaderName = "x-ms-group";
+
+            public const string PermissionsHeaderName = "x-ms-permissions";
         }
 
         /// <summary>
