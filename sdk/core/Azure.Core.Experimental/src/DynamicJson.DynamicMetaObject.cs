@@ -3,9 +3,12 @@
 
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Dynamic;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
+using System.Text.Json;
 
 namespace Azure.Core.Dynamic
 {
@@ -16,8 +19,21 @@ namespace Azure.Core.Dynamic
 
         private class MetaObject : DynamicMetaObject
         {
+            private DynamicJson _value;
+
             internal MetaObject(Expression parameter, IDynamicMetaObjectProvider value) : base(parameter, BindingRestrictions.Empty, value)
             {
+                _value = (DynamicJson)value;
+            }
+
+            public override IEnumerable<string> GetDynamicMemberNames()
+            {
+                if (_value._element.ValueKind != JsonValueKind.Object)
+                {
+                    return Array.Empty<string>();
+                }
+
+                return _value._element.EnumerateObject().Select(p => p.Name);
             }
 
             public override DynamicMetaObject BindGetMember(GetMemberBinder binder)
