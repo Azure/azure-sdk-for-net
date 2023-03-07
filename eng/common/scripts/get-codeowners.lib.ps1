@@ -83,7 +83,7 @@ function Get-Codeowners(
   [string] $ToolVersion = "1.0.0-dev.20230306.3",
   [string] $VsoVariable = "",
   [string] $CodeownersFileLocation = "",
-  [bool] $IncludeNonUserAliases = $false
+  [switch] $IncludeNonUserAliases
   )
 {
   if ([string]::IsNullOrWhiteSpace($CodeownersFileLocation)) {
