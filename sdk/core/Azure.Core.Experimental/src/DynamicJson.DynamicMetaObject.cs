@@ -28,12 +28,12 @@ namespace Azure.Core.Dynamic
 
             public override IEnumerable<string> GetDynamicMemberNames()
             {
-                if (_value._element.ValueKind != JsonValueKind.Object)
+                if (_value._element.ValueKind == JsonValueKind.Object)
                 {
-                    return Array.Empty<string>();
+                    return _value._element.EnumerateObject().Select(p => p.Name);
                 }
 
-                return _value._element.EnumerateObject().Select(p => p.Name);
+                return Array.Empty<string>();
             }
 
             public override DynamicMetaObject BindGetMember(GetMemberBinder binder)
