@@ -1,9 +1,10 @@
 ﻿using Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework;
+using NUnit.Framework;
 using System;
 using System.Net;
 using System.Net.Http;
 using System.Threading;
-using Xunit;
+using System.Threading.Tasks;
 using static Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests.TestHelper;
 
 namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests
@@ -25,21 +26,21 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests
         ValidCloudEvent
     }
 
-
     /// <summary>Class to house all payload tests</summary>
+    [TestFixture]
     public class PayloadTests
     {
         /// <summary>Tests the specified payload based on TestType</summary>
         /// <param name="testType">Type of the test.</param>
-        [Theory]
-        [InlineData(TestTypes.Valid)]
-        [InlineData(TestTypes.InvalidAction)]
-        [InlineData(TestTypes.NoAction)]
-        [InlineData(TestTypes.Empty)]
-        [InlineData(TestTypes.Conversion)]
-        [InlineData(TestTypes.ValidCloudEvent)]
+        [Test]
+        [TestCase(TestTypes.Valid)]
+        [TestCase(TestTypes.InvalidAction)]
+        [TestCase(TestTypes.NoAction)]
+        [TestCase(TestTypes.Empty)]
+        [TestCase(TestTypes.Conversion)]
+        [TestCase(TestTypes.ValidCloudEvent)]
         [Obsolete]
-        public async void Tests(TestTypes testType)
+        public async Task Tests(TestTypes testType)
         {
             var (payload, expected, expectedStatus) = GetTestData(testType);
 
@@ -48,7 +49,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests
                 eventsResponseHandler.SetValueAsync(payload, CancellationToken.None);
             }, testType);
 
-            Assert.Equal(expectedStatus, httpResponseMessage.StatusCode);
+            Assert.AreEqual(expectedStatus, httpResponseMessage.StatusCode);
             Assert.True(DoesPayloadMatch(expected, httpResponseMessage.Content.ReadAsStringAsync().Result));
         }
 
