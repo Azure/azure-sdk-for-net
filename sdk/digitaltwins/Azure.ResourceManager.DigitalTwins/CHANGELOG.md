@@ -1,12 +1,14 @@
 # Release History
 
-## 1.3.0-beta.1 (Unreleased)
+## 1.2.1 (Unreleased)
 
 ### Features Added
 
 ### Breaking Changes
 
 ### Bugs Fixed
+
+- Fixed the response resource in DELETE operation for `DigitalTwinsEndpoint`, `DigitalTwins` and `TimeSeriesDatabaseConnections`.
 
 ### Other Changes
 
