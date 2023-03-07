@@ -87,8 +87,8 @@ function Get-Codeowners(
   )
 {
   if ($null -eq $CodeownersFileLocation) {
-    # The default path assumes the script is located in azure-sdk-tools/eng/common/scripts/get-codeowners/get-codeowners.ps1
-    $CodeOwnersFileLocation = (Resolve-Path $PSScriptRoot/../../../../.github/CODEOWNERS)
+    # The $PSCriptRoot is asssumed to be azure-sdk-tools/eng/common/scripts/get-codeowners.ps1
+    $CodeOwnersFileLocation = (Resolve-Path $PSScriptRoot/../../../.github/CODEOWNERS)
   }
 
   # Backward compaitiblity: if $TargetPath is not provided, fall-back to the legacy $TargetDirectory
