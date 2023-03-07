@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
@@ -17,6 +18,11 @@ namespace Azure.ResourceManager.BotService.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
+            if (Optional.IsDefined(TenantId))
+            {
+                writer.WritePropertyName("tenantId"u8);
+                writer.WriteStringValue(TenantId.Value);
+            }
             writer.WritePropertyName("siteName"u8);
             writer.WriteStringValue(SiteName);
             writer.WritePropertyName("isEnabled"u8);
@@ -83,6 +89,11 @@ namespace Azure.ResourceManager.BotService.Models
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsDefined(IsWebChatSpeechEnabled))
+            {
+                writer.WritePropertyName("isWebChatSpeechEnabled"u8);
+                writer.WriteBooleanValue(IsWebChatSpeechEnabled.Value);
+            }
             if (Optional.IsDefined(IsWebchatPreviewEnabled))
             {
                 writer.WritePropertyName("isWebchatPreviewEnabled"u8);
@@ -97,6 +108,7 @@ namespace Azure.ResourceManager.BotService.Models
             {
                 return null;
             }
+            Optional<Guid> tenantId = default;
             Optional<string> siteId = default;
             string siteName = default;
             Optional<string> key = default;
@@ -113,9 +125,20 @@ namespace Azure.ResourceManager.BotService.Models
             Optional<bool> isV3Enabled = default;
             Optional<bool> isSecureSiteEnabled = default;
             Optional<IList<string>> trustedOrigins = default;
+            Optional<bool> isWebChatSpeechEnabled = default;
             Optional<bool> isWebchatPreviewEnabled = default;
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("tenantId"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    tenantId = property.Value.GetGuid();
+                    continue;
+                }
                 if (property.NameEquals("siteId"u8))
                 {
                     siteId = property.Value.GetString();
@@ -251,6 +274,16 @@ namespace Azure.ResourceManager.BotService.Models
                     trustedOrigins = array;
                     continue;
                 }
+                if (property.NameEquals("isWebChatSpeechEnabled"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    isWebChatSpeechEnabled = property.Value.GetBoolean();
+                    continue;
+                }
                 if (property.NameEquals("isWebchatPreviewEnabled"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -262,7 +295,7 @@ namespace Azure.ResourceManager.BotService.Models
                     continue;
                 }
             }
-            return new DirectLineSite(siteId.Value, siteName, key.Value, key2.Value, isEnabled, Optional.ToNullable(isTokenEnabled), Optional.ToNullable(isEndpointParametersEnabled), Optional.ToNullable(isDetailedLoggingEnabled), Optional.ToNullable(isBlockUserUploadEnabled), Optional.ToNullable(isNoStorageEnabled), Optional.ToNullable(eTag), appId.Value, Optional.ToNullable(isV1Enabled), Optional.ToNullable(isV3Enabled), Optional.ToNullable(isSecureSiteEnabled), Optional.ToList(trustedOrigins), Optional.ToNullable(isWebchatPreviewEnabled));
+            return new DirectLineSite(Optional.ToNullable(tenantId), siteId.Value, siteName, key.Value, key2.Value, isEnabled, Optional.ToNullable(isTokenEnabled), Optional.ToNullable(isEndpointParametersEnabled), Optional.ToNullable(isDetailedLoggingEnabled), Optional.ToNullable(isBlockUserUploadEnabled), Optional.ToNullable(isNoStorageEnabled), Optional.ToNullable(eTag), appId.Value, Optional.ToNullable(isV1Enabled), Optional.ToNullable(isV3Enabled), Optional.ToNullable(isSecureSiteEnabled), Optional.ToList(trustedOrigins), Optional.ToNullable(isWebChatSpeechEnabled), Optional.ToNullable(isWebchatPreviewEnabled));
         }
     }
 }

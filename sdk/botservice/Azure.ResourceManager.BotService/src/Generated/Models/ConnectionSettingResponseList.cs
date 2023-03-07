@@ -17,13 +17,13 @@ namespace Azure.ResourceManager.BotService.Models
         /// <summary> Initializes a new instance of ConnectionSettingResponseList. </summary>
         internal ConnectionSettingResponseList()
         {
-            Value = new ChangeTrackingList<ConnectionSettingData>();
+            Value = new ChangeTrackingList<BotConnectionSettingData>();
         }
 
         /// <summary> Initializes a new instance of ConnectionSettingResponseList. </summary>
         /// <param name="nextLink"> The link used to get the next page of bot service connection setting resources. </param>
         /// <param name="value"> Gets the list of bot service connection settings and their properties. </param>
-        internal ConnectionSettingResponseList(string nextLink, IReadOnlyList<ConnectionSettingData> value)
+        internal ConnectionSettingResponseList(string nextLink, IReadOnlyList<BotConnectionSettingData> value)
         {
             NextLink = nextLink;
             Value = value;
@@ -32,6 +32,6 @@ namespace Azure.ResourceManager.BotService.Models
         /// <summary> The link used to get the next page of bot service connection setting resources. </summary>
         public string NextLink { get; }
         /// <summary> Gets the list of bot service connection settings and their properties. </summary>
-        public IReadOnlyList<ConnectionSettingData> Value { get; }
+        public IReadOnlyList<BotConnectionSettingData> Value { get; }
     }
 }
