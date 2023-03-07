@@ -22,45 +22,45 @@ namespace Azure.AI.TextTranslator
         /// <summary>
         /// Initializes a new instance of the <see cref="TranslatorClient"/> class.
         /// </summary>
-        /// <param name="endpoint">Endpoint</param>
-        /// <param name="key">Security key</param>
+        /// <param name="endpoint">Service Endpoint</param>
+        /// <param name="key">Azure Key Credential</param>
         /// <param name="region">Region</param>
-#pragma warning disable AZC0007 // DO provide a minimal constructor that takes only the parameters required to connect to the service.
-        public TranslatorClient(Uri endpoint, AzureKeyCredential key, string region) : this(endpoint)
-#pragma warning restore AZC0007 // DO provide a minimal constructor that takes only the parameters required to connect to the service.
+        /// <param name="options">Translate Client Options</param>
+        public TranslatorClient(Uri endpoint, AzureKeyCredential key, string region, TranslatorClientOptions options = null) : this(endpoint, options)
         {
             var policy = new GlobalEndpointAuthenticationPolicy(key, region);
+            options = options ?? new TranslatorClientOptions();
 
-            this._pipeline = HttpPipelineBuilder.Build(new TranslatorClientOptions(), new[] { policy }, Array.Empty<HttpPipelinePolicy>(), new ResponseClassifier());
+            this._pipeline = HttpPipelineBuilder.Build(options, new[] { policy }, Array.Empty<HttpPipelinePolicy>(), new ResponseClassifier());
         }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="TranslatorClient"/> class.
         /// </summary>
-        /// <param name="endpoint">Endpoint</param>
+        /// <param name="endpoint">Service Endpoint</param>
         /// <param name="key">Security key</param>
-#pragma warning disable AZC0007 // DO provide a minimal constructor that takes only the parameters required to connect to the service.
-        public TranslatorClient(Uri endpoint, AzureKeyCredential key) : this(endpoint)
-#pragma warning restore AZC0007 // DO provide a minimal constructor that takes only the parameters required to connect to the service.
+        /// <param name="options">Translate Client Options</param>
+        public TranslatorClient(Uri endpoint, AzureKeyCredential key, TranslatorClientOptions options = null) : this(endpoint, options)
         {
             var policy = new AzureKeyCredentialPolicy(key, KEY_HEADER_NAME);
+            options = options ?? new TranslatorClientOptions();
 
-            this._pipeline = HttpPipelineBuilder.Build(new TranslatorClientOptions(), new[] { policy }, Array.Empty<HttpPipelinePolicy>(), new ResponseClassifier());
+            this._pipeline = HttpPipelineBuilder.Build(options, new[] { policy }, Array.Empty<HttpPipelinePolicy>(), new ResponseClassifier());
             this._endpoint = new Uri(endpoint, "/translator/text/v3.0");
         }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="TranslatorClient"/> class.
         /// </summary>
-        /// <param name="endpoint">Endpoint</param>
+        /// <param name="endpoint">Service Endpoint</param>
         /// <param name="token">Cognitive Services Token</param>
-#pragma warning disable AZC0007 // DO provide a minimal constructor that takes only the parameters required to connect to the service.
-        public TranslatorClient(Uri endpoint, TokenCredential token) : this(endpoint)
-#pragma warning restore AZC0007 // DO provide a minimal constructor that takes only the parameters required to connect to the service.
+        /// <param name="options">Translate Client Options</param>
+        public TranslatorClient(Uri endpoint, TokenCredential token, TranslatorClientOptions options = null) : this(endpoint, options)
         {
             var policy = new BearerTokenAuthenticationPolicy(token, TOKEN_SCOPE);
+            options = options ?? new TranslatorClientOptions();
 
-            this._pipeline = HttpPipelineBuilder.Build(new TranslatorClientOptions(), new[] { policy }, Array.Empty<HttpPipelinePolicy>(), new ResponseClassifier());
+            this._pipeline = HttpPipelineBuilder.Build(options, new[] { policy }, Array.Empty<HttpPipelinePolicy>(), new ResponseClassifier());
         }
 
         /// <summary> Translate Text. </summary>
