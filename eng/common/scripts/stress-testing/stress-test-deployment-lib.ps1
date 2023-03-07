@@ -98,6 +98,7 @@ function DeployStressTests(
     })]
     [System.IO.FileInfo]$LocalAddonsPath,
     [Parameter(Mandatory=$False)][switch]$Template,
+    [Parameter(Mandatory=$False)][switch]$RerunFailedJobs,
     [Parameter(Mandatory=$False)][string]$MatrixFileName,
     [Parameter(Mandatory=$False)][string]$MatrixSelection = "sparse",
     [Parameter(Mandatory=$False)][string]$MatrixDisplayNameFilter,
