@@ -14,7 +14,7 @@ namespace Azure.Communication.CallAutomation
         }
 
         /// <summary>
-        /// Wait for <see cref="CancelAllMediaOperationsEventResult"/> using <see cref="EventProcessor"/>.
+        /// Wait for <see cref="CancelAllMediaOperationsEventResult"/> using <see cref="CallAutomationEventProcessor"/>.
         /// </summary>
         /// <returns>Returns <see cref="CancelAllMediaOperationsEventResult"/> which contains either <see cref="PlayCanceled"/> or <see cref="RecognizeCanceled"/> event.</returns>
         public async Task<CancelAllMediaOperationsEventResult> WaitForEvent(TimeSpan eventTimeout = default)

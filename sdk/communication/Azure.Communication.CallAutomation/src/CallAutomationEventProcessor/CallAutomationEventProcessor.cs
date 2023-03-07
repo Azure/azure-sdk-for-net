@@ -14,7 +14,7 @@ namespace Azure.Communication.CallAutomation
     /// <summary>
     /// Call Automation's EventProcessor for incoming events for ease of use.
     /// </summary>
-    public class EventProcessor
+    public class CallAutomationEventProcessor
     {
         private const int DEFAULT_EVENT_EXPIRATION_SECONDS = 40;
 
@@ -23,9 +23,9 @@ namespace Azure.Communication.CallAutomation
         private ConcurrentDictionary<(string, Type), EventHandler<EventProcessorArgs>> _ongoingEvents;
         private event EventHandler<EventProcessorArgs> _eventReceived;
 
-        internal EventProcessor(EventProcessorOptions options)
+        internal CallAutomationEventProcessor()
         {
-            _exceptionTimeout = options.EventTimeout == default ? TimeSpan.FromSeconds(DEFAULT_EVENT_EXPIRATION_SECONDS) : options.EventTimeout;
+            _exceptionTimeout = TimeSpan.FromSeconds(DEFAULT_EVENT_EXPIRATION_SECONDS);
             _eventBacklog = new EventBacklog();
             _ongoingEvents = new ConcurrentDictionary<(string, Type), EventHandler<EventProcessorArgs>>();
         }

@@ -14,7 +14,7 @@ namespace Azure.Communication.CallAutomation
         }
 
         /// <summary>
-        /// Wait for <see cref="StartRecognizingEventResult"/> using <see cref="EventProcessor"/>.
+        /// Wait for <see cref="StartRecognizingEventResult"/> using <see cref="CallAutomationEventProcessor"/>.
         /// </summary>
         /// <returns>Returns <see cref="StartRecognizingEventResult"/> which contains either <see cref="RecognizeCompleted"/> event or <see cref="RecognizeFailed"/> event.</returns>
         public async Task<StartRecognizingEventResult> WaitForEvent(TimeSpan eventTimeout = default)

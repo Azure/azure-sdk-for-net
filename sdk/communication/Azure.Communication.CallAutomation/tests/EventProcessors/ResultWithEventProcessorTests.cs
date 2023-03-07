@@ -23,7 +23,7 @@ namespace Azure.Communication.CallAutomation.Tests.EventProcessors
                 responseCode: successCode,
                 responseContent: CreateOrAnswerCallOrGetCallConnectionPayload,
                 options: new CallAutomationClientOptions(source: new CommunicationUserIdentifier("12345")));
-            EventProcessor handler = callAutomationClient.GetEventProcessor();
+            CallAutomationEventProcessor handler = callAutomationClient.GetEventProcessor();
 
             var response = callAutomationClient.CreateCall(new CreateCallOptions(CreateMockInvite(), new Uri(CallBackUri)));
             Assert.AreEqual(successCode, response.GetRawResponse().Status);
@@ -51,7 +51,7 @@ namespace Azure.Communication.CallAutomation.Tests.EventProcessors
                 responseCode: successCode,
                 responseContent: CreateOrAnswerCallOrGetCallConnectionPayload,
                 options: new CallAutomationClientOptions(source: new CommunicationUserIdentifier("12345")));
-            EventProcessor handler = callAutomationClient.GetEventProcessor();
+            CallAutomationEventProcessor handler = callAutomationClient.GetEventProcessor();
 
             var response = callAutomationClient.CreateCall(new CreateCallOptions(CreateMockInvite(), new Uri(CallBackUri)));
             Assert.AreEqual(successCode, response.GetRawResponse().Status);
@@ -79,7 +79,7 @@ namespace Azure.Communication.CallAutomation.Tests.EventProcessors
                 responseCode: successCode,
                 responseContent: CreateOrAnswerCallOrGetCallConnectionPayload,
                 options: new CallAutomationClientOptions(source: new CommunicationUserIdentifier("12345")));
-            EventProcessor handler = callAutomationClient.GetEventProcessor();
+            CallAutomationEventProcessor handler = callAutomationClient.GetEventProcessor();
 
             var response = callAutomationClient.AnswerCall("incomingCallContext", new Uri(CallBackUri));
             Assert.AreEqual(successCode, response.GetRawResponse().Status);
@@ -107,7 +107,7 @@ namespace Azure.Communication.CallAutomation.Tests.EventProcessors
                 responseCode: successCode,
                 responseContent: CreateOrAnswerCallOrGetCallConnectionPayload,
                 options: new CallAutomationClientOptions(source: new CommunicationUserIdentifier("12345")));
-            EventProcessor handler = callAutomationClient.GetEventProcessor();
+            CallAutomationEventProcessor handler = callAutomationClient.GetEventProcessor();
 
             var response = callAutomationClient.AnswerCall("incomingCallContext", new Uri(CallBackUri));
             Assert.AreEqual(successCode, response.GetRawResponse().Status);
@@ -132,7 +132,7 @@ namespace Azure.Communication.CallAutomation.Tests.EventProcessors
             int successCode = (int)HttpStatusCode.Accepted;
 
             var callConnection = CreateMockCallConnection(successCode, TransferCallOrRemoveParticipantsPayload);
-            EventProcessor handler = callConnection.EventProcessor;
+            CallAutomationEventProcessor handler = callConnection.EventProcessor;
 
             var callInvite = new CallInvite(new CommunicationUserIdentifier(TargetUser));
             var response = callConnection.TransferCallToParticipant(new TransferToParticipantOptions(callInvite));
@@ -159,7 +159,7 @@ namespace Azure.Communication.CallAutomation.Tests.EventProcessors
             int successCode = (int)HttpStatusCode.Accepted;
 
             var callConnection = CreateMockCallConnection(successCode, TransferCallOrRemoveParticipantsPayload);
-            EventProcessor handler = callConnection.EventProcessor;
+            CallAutomationEventProcessor handler = callConnection.EventProcessor;
 
             var callInvite = new CallInvite(new CommunicationUserIdentifier(TargetUser));
             var response = callConnection.TransferCallToParticipant(new TransferToParticipantOptions(callInvite));
@@ -186,7 +186,7 @@ namespace Azure.Communication.CallAutomation.Tests.EventProcessors
             int successCode = (int)HttpStatusCode.Accepted;
 
             var callConnection = CreateMockCallConnection(successCode, AddParticipantsPayload);
-            EventProcessor handler = callConnection.EventProcessor;
+            CallAutomationEventProcessor handler = callConnection.EventProcessor;
             var callInvite = CreateMockInvite();
 
             var response = callConnection.AddParticipant(new AddParticipantOptions(callInvite));
@@ -213,7 +213,7 @@ namespace Azure.Communication.CallAutomation.Tests.EventProcessors
             int successCode = (int)HttpStatusCode.Accepted;
 
             var callConnection = CreateMockCallConnection(successCode, AddParticipantsPayload);
-            EventProcessor handler = callConnection.EventProcessor;
+            CallAutomationEventProcessor handler = callConnection.EventProcessor;
 
             var callInvite = CreateMockInvite();
             var response = callConnection.AddParticipant(new AddParticipantOptions(callInvite));
@@ -240,7 +240,7 @@ namespace Azure.Communication.CallAutomation.Tests.EventProcessors
             int successCode = (int)HttpStatusCode.Accepted;
 
             var callConnection = CreateMockCallConnection(successCode, AddParticipantsPayload);
-            EventProcessor handler = callConnection.EventProcessor;
+            CallAutomationEventProcessor handler = callConnection.EventProcessor;
 
             var response = callConnection.GetCallMedia().PlayToAll(new FileSource(new Uri(CallBackUri)), new PlayOptions() { OperationContext = OperationContext });
             Assert.AreEqual(successCode, response.GetRawResponse().Status);
@@ -266,7 +266,7 @@ namespace Azure.Communication.CallAutomation.Tests.EventProcessors
             int successCode = (int)HttpStatusCode.Accepted;
 
             var callConnection = CreateMockCallConnection(successCode, AddParticipantsPayload);
-            EventProcessor handler = callConnection.EventProcessor;
+            CallAutomationEventProcessor handler = callConnection.EventProcessor;
 
             var response = callConnection.GetCallMedia().PlayToAll(new FileSource(new Uri(CallBackUri)), new PlayOptions() { OperationContext = OperationContext });
             Assert.AreEqual(successCode, response.GetRawResponse().Status);
@@ -292,7 +292,7 @@ namespace Azure.Communication.CallAutomation.Tests.EventProcessors
             int successCode = (int)HttpStatusCode.Accepted;
 
             var callConnection = CreateMockCallConnection(successCode, AddParticipantsPayload);
-            EventProcessor handler = callConnection.EventProcessor;
+            CallAutomationEventProcessor handler = callConnection.EventProcessor;
 
             var response = callConnection.GetCallMedia().CancelAllMediaOperations();
             Assert.AreEqual(successCode, response.GetRawResponse().Status);
@@ -317,7 +317,7 @@ namespace Azure.Communication.CallAutomation.Tests.EventProcessors
             int successCode = (int)HttpStatusCode.Accepted;
 
             var callConnection = CreateMockCallConnection(successCode, AddParticipantsPayload);
-            EventProcessor handler = callConnection.EventProcessor;
+            CallAutomationEventProcessor handler = callConnection.EventProcessor;
 
             var response = callConnection.GetCallMedia().CancelAllMediaOperations();
             Assert.AreEqual(successCode, response.GetRawResponse().Status);
@@ -342,7 +342,7 @@ namespace Azure.Communication.CallAutomation.Tests.EventProcessors
             int successCode = (int)HttpStatusCode.Accepted;
 
             var callConnection = CreateMockCallConnection(successCode, AddParticipantsPayload);
-            EventProcessor handler = callConnection.EventProcessor;
+            CallAutomationEventProcessor handler = callConnection.EventProcessor;
 
             var response = callConnection.GetCallMedia().StartRecognizing(new CallMediaRecognizeDtmfOptions(new CommunicationUserIdentifier(TargetId), 1) { OperationContext = OperationContext });
             Assert.AreEqual(successCode, response.GetRawResponse().Status);
@@ -368,7 +368,7 @@ namespace Azure.Communication.CallAutomation.Tests.EventProcessors
             int successCode = (int)HttpStatusCode.Accepted;
 
             var callConnection = CreateMockCallConnection(successCode, AddParticipantsPayload);
-            EventProcessor handler = callConnection.EventProcessor;
+            CallAutomationEventProcessor handler = callConnection.EventProcessor;
 
             var response = callConnection.GetCallMedia().StartRecognizing(new CallMediaRecognizeDtmfOptions(new CommunicationUserIdentifier(TargetId), 1) { OperationContext = OperationContext });
             Assert.AreEqual(successCode, response.GetRawResponse().Status);

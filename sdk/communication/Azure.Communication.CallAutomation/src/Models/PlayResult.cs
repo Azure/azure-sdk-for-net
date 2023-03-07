@@ -14,7 +14,7 @@ namespace Azure.Communication.CallAutomation
         }
 
         /// <summary>
-        /// Wait for <see cref="PlayEventResult"/> using <see cref="EventProcessor"/>.
+        /// Wait for <see cref="PlayEventResult"/> using <see cref="CallAutomationEventProcessor"/>.
         /// </summary>
         /// <returns>Returns <see cref="PlayEventResult"/> which contains either <see cref="PlayCompleted"/> event or <see cref="PlayFailed"/> event.</returns>
         public async Task<PlayEventResult> WaitForEvent(TimeSpan eventTimeout = default)

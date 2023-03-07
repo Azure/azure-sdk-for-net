@@ -11,7 +11,7 @@ namespace Azure.Communication.CallAutomation
     public partial class TransferCallToParticipantResult : ResultWithWaitForEventBase
     {
         /// <summary>
-        /// Wait for <see cref="TransferCallToParticipantEventResult"/> using <see cref="EventProcessor"/>.
+        /// Wait for <see cref="TransferCallToParticipantEventResult"/> using <see cref="CallAutomationEventProcessor"/>.
         /// </summary>
         /// <returns>Returns <see cref="TransferCallToParticipantEventResult"/> which contains either <see cref="CallTransferAccepted"/> event or <see cref="CallTransferFailed"/> event.</returns>
         public async Task<TransferCallToParticipantEventResult> WaitForEvent(TimeSpan eventTimeout = default)

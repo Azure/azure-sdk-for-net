@@ -22,7 +22,7 @@ namespace Azure.Communication.CallAutomation
         public CallConnectionProperties CallConnectionProperties { get; }
 
         /// <summary>
-        /// Wait for <see cref="CreateCallEventResult"/> using <see cref="EventProcessor"/>.
+        /// Wait for <see cref="CreateCallEventResult"/> using <see cref="CallAutomationEventProcessor"/>.
         /// </summary>
         /// <returns>Returns <see cref="CreateCallEventResult"/> which contains <see cref="CallConnected"/> event.</returns>
         public async Task<CreateCallEventResult> WaitForEvent(TimeSpan eventTimeout = default)

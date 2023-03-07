@@ -29,7 +29,7 @@ namespace Azure.Communication.CallAutomation
         public string OperationContext { get; }
 
         /// <summary>
-        /// Wait for <see cref="AddParticipantsEventResult"/> using <see cref="EventProcessor"/>.
+        /// Wait for <see cref="AddParticipantsEventResult"/> using <see cref="CallAutomationEventProcessor"/>.
         /// </summary>
         /// <returns>Returns <see cref="AddParticipantsEventResult"/> which contains either <see cref="AddParticipantSucceeded"/> event or <see cref="AddParticipantFailed"/> event.</returns>
         public async Task<AddParticipantsEventResult> WaitForEvent(TimeSpan eventTimeout = default)
