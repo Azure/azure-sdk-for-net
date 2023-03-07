@@ -40,7 +40,7 @@ namespace Azure.Core.Dynamic
             return null;
         }
 
-        public override object? GetViaIndexer(object index)
+        public override object? GetElement(int index)
         {
             throw new NotImplementedException();
         }

@@ -79,18 +79,7 @@ namespace Azure.Core.Dynamic
             return $"{char.ToLowerInvariant(value[0])}{value.Substring(1)}";
         }
 
-        public override object? GetViaIndexer(object index)
-        {
-            switch (index)
-            {
-                case string propertyName:
-                    return GetProperty(propertyName);
-                case int arrayIndex:
-                    return new DynamicJson(_element.GetIndexElement(arrayIndex));
-            }
-
-            throw new InvalidOperationException($"Tried to access indexer with an unsupported index type: {index}");
-        }
+        public override object? GetElement(int index) => new DynamicJson(_element.GetIndexElement(index));
 
         public override IEnumerable GetEnumerable()
         {
