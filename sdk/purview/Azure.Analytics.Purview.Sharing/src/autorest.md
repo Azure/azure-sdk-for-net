@@ -6,8 +6,8 @@ Run `dotnet build /t:GenerateCode` to generate code.
 > see https://aka.ms/autorest
 
 ``` yaml
-input-file: 
-- https://github.com/Azure/azure-rest-api-specs/blob/12cbd66750c4dfe302e9eca42b1fc727f8c02700/specification/purview/data-plane/Azure.Analytics.Purview.Share/preview/2023-02-15-preview/share.json
+require:
+- /mnt/vss/_work/1/s/azure-rest-api-specs/specification/purview/data-plane/readme.md
 namespace: Azure.Analytics.Purview.Sharing
 ```
 
@@ -57,3 +57,4 @@ directive:
     from: ReceivedShares_ListDetached
     to: ReceivedShares_GetAllDetachedReceivedShares
 ```
+
