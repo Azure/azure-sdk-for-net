@@ -45,7 +45,7 @@ You can ommit source languge of the input text. In this case, API will try to au
 
 > Note you can use `suggestedFrom` paramter that specifies a fallback language if the language of the input text can't be identified. Language autodetection is applied when the from parameter is omitted. If detection fails, the suggestedFrom language will be assumed.
 
-```C# Snippet:Sample2_Translate
+```C# Snippet:Sample2_TranslateDetection
 try
 {
     IEnumerable<string> targetLanguages = new[] { "cs" };
@@ -132,7 +132,7 @@ catch (RequestFailedException exception)
 ### Translate multiple target languages
 You can provide multiple target languages which results to each input element be translated to all target languages.
 
-```C# Snippet:Sample2_TranslateMultipleSources
+```C# Snippet:Sample2_TranslateMultipleTargets
 try
 {
     IEnumerable<string> targetLanguages = new[] { "cs", "es", "de" };
@@ -189,7 +189,7 @@ catch (RequestFailedException exception)
 ### Don’t translate specific entity name in a text
 It's sometimes useful to exclude specific content from translation. You can use the attribute class=notranslate to specify content that should remain in its original language. In the following example, the content inside the first div element won't be translated, while the content in the second div element will be translated.
 
-```C# Snippet:Sample2_TranslateTextType
+```C# Snippet:Sample2_TranslateNoTranslate
 try
 {
     TextTypes textType = TextTypes.Html;
@@ -220,7 +220,7 @@ If you already know the translation you want to apply to a word or a phrase, you
 
 > Note You must include the From parameter in your API translation request instead of using the autodetect feature.
 
-```C# Snippet:Sample2_TranslateTextType
+```C# Snippet:Sample2_TranslateDictionary
 try
 {
     string from = "en";
@@ -249,7 +249,7 @@ catch (RequestFailedException exception)
 
 If you want to avoid getting profanity in the translation, regardless of the presence of profanity in the source text, you can use the profanity filtering option. The option allows you to choose whether you want to see profanity deleted, whether you want to mark profanities with appropriate tags (giving you the option to add your own post-processing), or you want no action taken. The accepted values of `ProfanityAction` are `Deleted`, `Marked` and `NoAction` (default).
 
-```C# Snippet:Sample2_TranslatePrfanity
+```C# Snippet:Sample2_TranslateProfanity
 try
 {
     ProfanityActions profanityAction = ProfanityActions.Marked;
@@ -344,7 +344,7 @@ It is possible to set `allowFalback` paramter. It specifies that the service is 
 
 `allowFallback=false` specifies that the translation should only use systems trained for the category specified by the request. If a translation for language X to language Y requires chaining through a pivot language E, then all the systems in the chain (X → E and E → Y) will need to be custom and have the same category. If no system is found with the specific category, the request will return a 400 status code. `allowFallback=true` specifies that the service is allowed to fall back to a general system when a custom system doesn't exist.
 
-```C# Snippet:Sample2_Translate
+```C# Snippet:Sample2_TranslateCustom
 try
 {
     string category = "<<Category ID>>";
