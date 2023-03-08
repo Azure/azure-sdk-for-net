@@ -16,7 +16,7 @@ namespace Azure.Data.AppConfiguration
     /// </summary>
     public class CreateSnapshotOperation : Operation<ConfigurationSettingsSnapshot>
     {
-        HttpPipeline _httpPipeline;
+        //private HttpPipeline _httpPipeline;
 
         /// <summary>
         /// TODO

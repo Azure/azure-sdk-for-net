@@ -6,7 +6,7 @@ Run `dotnet build /t:GenerateCode` to generate code.
 > see https://aka.ms/autorest
 ``` yaml
 input-file:
-- https://github.com/Azure/azure-rest-api-specs/blob/c1bf995dbab472761ba4da53ed33c7b621ff8bd9/specification/appconfiguration/data-plane/Microsoft.AppConfiguration/preview/2022-11-01-preview/appconfiguration.json
+- https://github.com/Azure/azure-rest-api-specs/blob/1e7b408f3323e7f5424745718fe62c7a043a2337/specification/appconfiguration/data-plane/Microsoft.AppConfiguration/preview/2022-11-01-preview/appconfiguration.json
 namespace: Azure.Data.AppConfiguration
 title: ConfigurationClient
 ```
@@ -102,6 +102,10 @@ directive:
     $["x-accessibility"] = "internal";
 - from: swagger-document
   where: $..[?(@.operationId=='SetConfigurationSetting')]
+  transform: >
+    $["x-accessibility"] = "internal";
+- from: swagger-document
+  where: $..[?(@.operationId=='GetConfigurationSettings')]
   transform: >
     $["x-accessibility"] = "internal";
 - from: swagger-document
