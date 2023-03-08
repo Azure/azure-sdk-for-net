@@ -1,38 +1,41 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://management.azure.com/subscriptions/6d5e2387-bdf5-4ca1-83db-795fd2398b93?api-version=2021-01-01",
+      "RequestUri": "https://management.azure.com/subscriptions/aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee?api-version=2021-01-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-35e1306e0a7dfaef300e59fb47e5237b-161981c44fe24ea6-00",
-        "User-Agent": "azsdk-net-ResourceManager/1.0.0 (.NET 6.0.5; Microsoft Windows 10.0.19044)",
-        "x-ms-client-request-id": "2c7b2000dd6f11d51cac6bef91bc7d93",
+        "traceparent": "00-241b0a617361bb9253ea23a33d1c618e-ccf70ea4b4228647-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET 6.0.14; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "4579c0f220fba1b297b0cccc38d70cd5",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "400",
+        "Content-Length": "429",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 16 May 2022 23:10:04 GMT",
+        "Date": "Wed, 08 Mar 2023 01:34:22 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "e186569d-dfa2-40ad-b895-faa3e42b4144",
-        "x-ms-ratelimit-remaining-subscription-reads": "11973",
-        "x-ms-request-id": "e186569d-dfa2-40ad-b895-faa3e42b4144",
-        "x-ms-routing-request-id": "WESTUS:20220516T231005Z:e186569d-dfa2-40ad-b895-faa3e42b4144"
+        "x-ms-correlation-request-id": "1124b362-c105-44e7-ac7f-ff605421effd",
+        "x-ms-ratelimit-remaining-subscription-reads": "11966",
+        "x-ms-request-id": "1124b362-c105-44e7-ac7f-ff605421effd",
+        "x-ms-routing-request-id": "SOUTHCENTRALUS:20230308T013422Z:1124b362-c105-44e7-ac7f-ff605421effd"
       },
       "ResponseBody": {
-        "id": "/subscriptions/6d5e2387-bdf5-4ca1-83db-795fd2398b93",
+        "id": "/subscriptions/aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee",
         "authorizationSource": "RoleBased",
         "managedByTenants": [],
-        "subscriptionId": "6d5e2387-bdf5-4ca1-83db-795fd2398b93",
-        "tenantId": "2fc06c85-616c-4845-9d37-2faa8091e955",
+        "tags": {
+          "costcenter": "1000"
+        },
+        "subscriptionId": "aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee",
+        "tenantId": "ba5ed788-ddc6-429c-a6a2-0277f01dbee7",
         "displayName": "Azure subscription 1",
         "state": "Enabled",
         "subscriptionPolicies": {
@@ -43,40 +46,1020 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/6d5e2387-bdf5-4ca1-83db-795fd2398b93/providers/Microsoft.Capacity/catalogs?api-version=2022-03-01\u0026reservedResourceType=RedisCache\u0026location=westus",
+      "RequestUri": "https://management.azure.com/subscriptions/aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee/providers/Microsoft.Capacity/catalogs?api-version=2022-11-01-beta\u0026reservedResourceType=RedisCache\u0026location=westus",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-25c820b7676514ffd9a07c27cb001712-a469cdcdd9e107aa-00",
-        "User-Agent": "azsdk-net-ResourceManager.Reservations/1.0.0-alpha.20220516.1 (.NET 6.0.5; Microsoft Windows 10.0.19044)",
-        "x-ms-client-request-id": "5de3cb71b0cc20a69e01da2eea7f8e12",
+        "traceparent": "00-3377f19be5acaf39930b8f0f447603d0-4f7614fd61554f2f-00",
+        "User-Agent": "azsdk-net-ResourceManager.Reservations/1.3.0-alpha.20230307.1 (.NET 6.0.14; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "e059f712fa1ed441dc58b6a71adba793",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "4056",
+        "Content-Length": "10487",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 16 May 2022 23:10:04 GMT",
+        "Date": "Wed, 08 Mar 2023 01:34:23 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Vary": "Accept-Encoding",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "2da7e82f-c663-4114-b5c3-e24de3cdc5d8",
-        "x-ms-ratelimit-remaining-subscription-reads": "11972",
-        "x-ms-request-id": "5de3cb71b0cc20a69e01da2eea7f8e12",
-        "x-ms-routing-request-id": "WESTUS:20220516T231005Z:2da7e82f-c663-4114-b5c3-e24de3cdc5d8",
-        "x-ms-version": "1.0.1957.1107"
+        "x-ms-correlation-request-id": "e33d0458-5465-4762-b722-f780b040829e",
+        "x-ms-ratelimit-remaining-subscription-reads": "11965",
+        "x-ms-request-id": "e059f712fa1ed441dc58b6a71adba793",
+        "x-ms-routing-request-id": "SOUTHCENTRALUS:20230308T013423Z:e33d0458-5465-4762-b722-f780b040829e",
+        "x-ms-version": "1.0.2257.119"
       },
-      "ResponseBody": "[{\u0022resourceType\u0022:\u0022RedisCache\u0022,\u0022name\u0022:\u0022azure_redis_cache_premium_p2_cache\u0022,\u0022terms\u0022:[\u0022P1Y\u0022,\u0022P3Y\u0022,\u0022P5Y\u0022],\u0022locations\u0022:[\u0022westus\u0022],\u0022billingPlans\u0022:{\u0022p1Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022],\u0022p3Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022],\u0022p5Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022]},\u0022msrp\u0022:{\u0022p1Y\u0022:{\u0022currencyCode\u0022:\u0022USD\u0022,\u0022amount\u0022:3112.0},\u0022p3Y\u0022:{\u0022currencyCode\u0022:\u0022USD\u0022,\u0022amount\u0022:6563.0}},\u0022skuProperties\u0022:[{\u0022name\u0022:\u0022ProductShortName\u0022,\u0022value\u0022:\u0022Azure Redis Cache Premium\u0022},{\u0022name\u0022:\u0022ProductTitle\u0022,\u0022value\u0022:\u0022Azure Redis Cache Premium\u0022},{\u0022name\u0022:\u0022SkuName\u0022,\u0022value\u0022:\u0022P2\u0022},{\u0022name\u0022:\u0022MeterId\u0022,\u0022value\u0022:\u0022585b6ab7-b236-48ea-80b2-5e6550d48c11\u0022},{\u0022name\u0022:\u0022MeterType\u0022,\u0022value\u0022:\u00221 Cache Instance Hour\u0022},{\u0022name\u0022:\u0022SkuDisplayName\u0022,\u0022value\u0022:\u0022P2\u0022},{\u0022name\u0022:\u0022billingPlans\u0022,\u0022value\u0022:\u0022[\\\u0022Upfront\\\u0022,\\\u0022Monthly\\\u0022]\u0022}],\u0022restrictions\u0022:[{\u0022type\u0022:\u0022Term\u0022,\u0022values\u0022:[\u0022P5Y\u0022],\u0022reasonCode\u0022:\u0022NotAvailableForSubscription\u0022}]},{\u0022resourceType\u0022:\u0022RedisCache\u0022,\u0022name\u0022:\u0022azure_redis_cache_premium_p3_cache\u0022,\u0022terms\u0022:[\u0022P1Y\u0022,\u0022P3Y\u0022,\u0022P5Y\u0022],\u0022locations\u0022:[\u0022westus\u0022],\u0022billingPlans\u0022:{\u0022p1Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022],\u0022p3Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022],\u0022p5Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022]},\u0022msrp\u0022:{\u0022p1Y\u0022:{\u0022currencyCode\u0022:\u0022USD\u0022,\u0022amount\u0022:6217.0},\u0022p3Y\u0022:{\u0022currencyCode\u0022:\u0022USD\u0022,\u0022amount\u0022:13115.0}},\u0022skuProperties\u0022:[{\u0022name\u0022:\u0022ProductShortName\u0022,\u0022value\u0022:\u0022Azure Redis Cache Premium\u0022},{\u0022name\u0022:\u0022ProductTitle\u0022,\u0022value\u0022:\u0022Azure Redis Cache Premium\u0022},{\u0022name\u0022:\u0022SkuName\u0022,\u0022value\u0022:\u0022P3\u0022},{\u0022name\u0022:\u0022MeterId\u0022,\u0022value\u0022:\u0022a7c10107-3c81-48ac-8684-c6f1dd74e11d\u0022},{\u0022name\u0022:\u0022MeterType\u0022,\u0022value\u0022:\u00221 Cache Instance Hour\u0022},{\u0022name\u0022:\u0022SkuDisplayName\u0022,\u0022value\u0022:\u0022P3\u0022},{\u0022name\u0022:\u0022billingPlans\u0022,\u0022value\u0022:\u0022[\\\u0022Upfront\\\u0022,\\\u0022Monthly\\\u0022]\u0022}],\u0022restrictions\u0022:[{\u0022type\u0022:\u0022Term\u0022,\u0022values\u0022:[\u0022P5Y\u0022],\u0022reasonCode\u0022:\u0022NotAvailableForSubscription\u0022}]},{\u0022resourceType\u0022:\u0022RedisCache\u0022,\u0022name\u0022:\u0022azure_redis_cache_premium_p5_cache\u0022,\u0022terms\u0022:[\u0022P1Y\u0022,\u0022P3Y\u0022,\u0022P5Y\u0022],\u0022locations\u0022:[\u0022westus\u0022],\u0022billingPlans\u0022:{\u0022p1Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022],\u0022p3Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022],\u0022p5Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022]},\u0022msrp\u0022:{\u0022p1Y\u0022:{\u0022currencyCode\u0022:\u0022USD\u0022,\u0022amount\u0022:28172.0},\u0022p3Y\u0022:{\u0022currencyCode\u0022:\u0022USD\u0022,\u0022amount\u0022:59426.0}},\u0022skuProperties\u0022:[{\u0022name\u0022:\u0022ProductShortName\u0022,\u0022value\u0022:\u0022Azure Redis Cache Premium\u0022},{\u0022name\u0022:\u0022ProductTitle\u0022,\u0022value\u0022:\u0022Azure Redis Cache Premium\u0022},{\u0022name\u0022:\u0022SkuName\u0022,\u0022value\u0022:\u0022P5\u0022},{\u0022name\u0022:\u0022MeterId\u0022,\u0022value\u0022:\u0022b0f1e28c-e48a-43cd-bf26-47f7858e0898\u0022},{\u0022name\u0022:\u0022MeterType\u0022,\u0022value\u0022:\u00221 Cache Instance Hour\u0022},{\u0022name\u0022:\u0022SkuDisplayName\u0022,\u0022value\u0022:\u0022P5\u0022},{\u0022name\u0022:\u0022billingPlans\u0022,\u0022value\u0022:\u0022[\\\u0022Upfront\\\u0022,\\\u0022Monthly\\\u0022]\u0022}],\u0022restrictions\u0022:[{\u0022type\u0022:\u0022Term\u0022,\u0022values\u0022:[\u0022P5Y\u0022],\u0022reasonCode\u0022:\u0022NotAvailableForSubscription\u0022}]},{\u0022resourceType\u0022:\u0022RedisCache\u0022,\u0022name\u0022:\u0022azure_redis_cache_premium_p1_cache\u0022,\u0022terms\u0022:[\u0022P1Y\u0022,\u0022P3Y\u0022,\u0022P5Y\u0022],\u0022locations\u0022:[\u0022westus\u0022],\u0022billingPlans\u0022:{\u0022p1Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022],\u0022p3Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022],\u0022p5Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022]},\u0022msrp\u0022:{\u0022p1Y\u0022:{\u0022currencyCode\u0022:\u0022USD\u0022,\u0022amount\u0022:1553.0},\u0022p3Y\u0022:{\u0022currencyCode\u0022:\u0022USD\u0022,\u0022amount\u0022:3276.0}},\u0022skuProperties\u0022:[{\u0022name\u0022:\u0022ProductShortName\u0022,\u0022value\u0022:\u0022Azure Redis Cache Premium\u0022},{\u0022name\u0022:\u0022ProductTitle\u0022,\u0022value\u0022:\u0022Azure Redis Cache Premium\u0022},{\u0022name\u0022:\u0022SkuName\u0022,\u0022value\u0022:\u0022P1\u0022},{\u0022name\u0022:\u0022MeterId\u0022,\u0022value\u0022:\u002298fdf6d9-caff-4589-b47d-43bf19af41b2\u0022},{\u0022name\u0022:\u0022MeterType\u0022,\u0022value\u0022:\u00221 Cache Instance Hour\u0022},{\u0022name\u0022:\u0022SkuDisplayName\u0022,\u0022value\u0022:\u0022P1\u0022},{\u0022name\u0022:\u0022billingPlans\u0022,\u0022value\u0022:\u0022[\\\u0022Upfront\\\u0022,\\\u0022Monthly\\\u0022]\u0022}],\u0022restrictions\u0022:[{\u0022type\u0022:\u0022Term\u0022,\u0022values\u0022:[\u0022P5Y\u0022],\u0022reasonCode\u0022:\u0022NotAvailableForSubscription\u0022}]},{\u0022resourceType\u0022:\u0022RedisCache\u0022,\u0022name\u0022:\u0022azure_redis_cache_premium_p4_cache\u0022,\u0022terms\u0022:[\u0022P1Y\u0022,\u0022P3Y\u0022,\u0022P5Y\u0022],\u0022locations\u0022:[\u0022westus\u0022],\u0022billingPlans\u0022:{\u0022p1Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022],\u0022p3Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022],\u0022p5Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022]},\u0022msrp\u0022:{\u0022p1Y\u0022:{\u0022currencyCode\u0022:\u0022USD\u0022,\u0022amount\u0022:12446.0},\u0022p3Y\u0022:{\u0022currencyCode\u0022:\u0022USD\u0022,\u0022amount\u0022:26254.0}},\u0022skuProperties\u0022:[{\u0022name\u0022:\u0022ProductShortName\u0022,\u0022value\u0022:\u0022Azure Redis Cache Premium\u0022},{\u0022name\u0022:\u0022ProductTitle\u0022,\u0022value\u0022:\u0022Azure Redis Cache Premium\u0022},{\u0022name\u0022:\u0022SkuName\u0022,\u0022value\u0022:\u0022P4\u0022},{\u0022name\u0022:\u0022MeterId\u0022,\u0022value\u0022:\u0022e3b4ef21-a644-408c-997d-2bc0c9e4e3d2\u0022},{\u0022name\u0022:\u0022MeterType\u0022,\u0022value\u0022:\u00221 Cache Instance Hour\u0022},{\u0022name\u0022:\u0022SkuDisplayName\u0022,\u0022value\u0022:\u0022P4\u0022},{\u0022name\u0022:\u0022billingPlans\u0022,\u0022value\u0022:\u0022[\\\u0022Upfront\\\u0022,\\\u0022Monthly\\\u0022]\u0022}],\u0022restrictions\u0022:[{\u0022type\u0022:\u0022Term\u0022,\u0022values\u0022:[\u0022P5Y\u0022],\u0022reasonCode\u0022:\u0022NotAvailableForSubscription\u0022}]}]"
+      "ResponseBody": {
+        "value": [
+          {
+            "resourceType": "RedisCache",
+            "name": "azure_redis_cache_enterprise_e50",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "locations": [
+              "westus"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p3Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p5Y": [
+                "Upfront",
+                "Monthly"
+              ]
+            },
+            "msrp": {
+              "p1Y": {
+                "currencyCode": "USD",
+                "amount": 10568.0
+              },
+              "p3Y": {
+                "currencyCode": "USD",
+                "amount": 22293.0
+              }
+            },
+            "skuProperties": [
+              {
+                "name": "ProductShortName",
+                "value": "Az Redis Ent"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "Azure Redis Cache Enterprise"
+              },
+              {
+                "name": "SkuName",
+                "value": "E50"
+              },
+              {
+                "name": "MeterId",
+                "value": "1fc129d5-de49-5dc0-8443-16ec16c124e3"
+              },
+              {
+                "name": "MeterType",
+                "value": "1 Cache Hour"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "E50"
+              },
+              {
+                "name": "billingPlans",
+                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForSubscription"
+              }
+            ]
+          },
+          {
+            "resourceType": "RedisCache",
+            "name": "azure_redis_cache_enterprise_e100",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "locations": [
+              "westus"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p3Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p5Y": [
+                "Upfront",
+                "Monthly"
+              ]
+            },
+            "msrp": {
+              "p1Y": {
+                "currencyCode": "USD",
+                "amount": 27899.0
+              },
+              "p3Y": {
+                "currencyCode": "USD",
+                "amount": 57944.0
+              }
+            },
+            "skuProperties": [
+              {
+                "name": "ProductShortName",
+                "value": "Az Redis Ent"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "Azure Redis Cache Enterprise"
+              },
+              {
+                "name": "SkuName",
+                "value": "E100"
+              },
+              {
+                "name": "MeterId",
+                "value": "7f07b6fe-20a5-5e82-ad46-c9f7f85ec306"
+              },
+              {
+                "name": "MeterType",
+                "value": "1 Cache Hour"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "E100"
+              },
+              {
+                "name": "billingPlans",
+                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForSubscription"
+              }
+            ]
+          },
+          {
+            "resourceType": "RedisCache",
+            "name": "azure_redis_cache_enterprise_e10",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "locations": [
+              "westus"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p3Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p5Y": [
+                "Upfront",
+                "Monthly"
+              ]
+            },
+            "msrp": {
+              "p1Y": {
+                "currencyCode": "USD",
+                "amount": 2696.0
+              },
+              "p3Y": {
+                "currencyCode": "USD",
+                "amount": 5690.0
+              }
+            },
+            "skuProperties": [
+              {
+                "name": "ProductShortName",
+                "value": "Az Redis Ent"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "Azure Redis Cache Enterprise"
+              },
+              {
+                "name": "SkuName",
+                "value": "E10"
+              },
+              {
+                "name": "MeterId",
+                "value": "12c3a5b6-7011-5b38-a7a9-18178c0812f2"
+              },
+              {
+                "name": "MeterType",
+                "value": "1 Cache Hour"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "E10"
+              },
+              {
+                "name": "billingPlans",
+                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForSubscription"
+              }
+            ]
+          },
+          {
+            "resourceType": "RedisCache",
+            "name": "azure_redis_cache_enterprise_e1",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "locations": [
+              "westus"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p3Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p5Y": [
+                "Upfront",
+                "Monthly"
+              ]
+            },
+            "msrp": {
+              "p1Y": {
+                "currencyCode": "USD",
+                "amount": 1847.0
+              },
+              "p3Y": {
+                "currencyCode": "USD",
+                "amount": 3836.0
+              }
+            },
+            "skuProperties": [
+              {
+                "name": "ProductShortName",
+                "value": "Az Redis Ent"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "Azure Redis Cache Enterprise"
+              },
+              {
+                "name": "SkuName",
+                "value": "E1"
+              },
+              {
+                "name": "MeterId",
+                "value": "e09333f7-46ce-509d-845b-da584ef23b4d"
+              },
+              {
+                "name": "MeterType",
+                "value": "1 Cache Hour"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "E1"
+              },
+              {
+                "name": "billingPlans",
+                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForSubscription"
+              }
+            ]
+          },
+          {
+            "resourceType": "RedisCache",
+            "name": "azure_redis_cache_enterprise_e20",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "locations": [
+              "westus"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p3Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p5Y": [
+                "Upfront",
+                "Monthly"
+              ]
+            },
+            "msrp": {
+              "p1Y": {
+                "currencyCode": "USD",
+                "amount": 5380.0
+              },
+              "p3Y": {
+                "currencyCode": "USD",
+                "amount": 11348.0
+              }
+            },
+            "skuProperties": [
+              {
+                "name": "ProductShortName",
+                "value": "Az Redis Ent"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "Azure Redis Cache Enterprise"
+              },
+              {
+                "name": "SkuName",
+                "value": "E20"
+              },
+              {
+                "name": "MeterId",
+                "value": "6ac216e1-bc97-5614-bdcc-ea63a92959da"
+              },
+              {
+                "name": "MeterType",
+                "value": "1 Cache Hour"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "E20"
+              },
+              {
+                "name": "billingPlans",
+                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForSubscription"
+              }
+            ]
+          },
+          {
+            "resourceType": "RedisCache",
+            "name": "azure_redis_cache_enterprise_flash_f300",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "locations": [
+              "westus"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p3Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p5Y": [
+                "Upfront",
+                "Monthly"
+              ]
+            },
+            "msrp": {
+              "p1Y": {
+                "currencyCode": "USD",
+                "amount": 11244.0
+              },
+              "p3Y": {
+                "currencyCode": "USD",
+                "amount": 23720.0
+              }
+            },
+            "skuProperties": [
+              {
+                "name": "ProductShortName",
+                "value": "Az Redis Ent Flash"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "Azure Redis Cache Enterprise Flash"
+              },
+              {
+                "name": "SkuName",
+                "value": "F300"
+              },
+              {
+                "name": "MeterId",
+                "value": "1d0a06b1-39c8-58ac-bdf5-16792e529cbe"
+              },
+              {
+                "name": "MeterType",
+                "value": "1 Cache Hour"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "F300"
+              },
+              {
+                "name": "billingPlans",
+                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForSubscription"
+              }
+            ]
+          },
+          {
+            "resourceType": "RedisCache",
+            "name": "azure_redis_cache_enterprise_flash_f700",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "locations": [
+              "westus"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p3Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p5Y": [
+                "Upfront",
+                "Monthly"
+              ]
+            },
+            "msrp": {
+              "p1Y": {
+                "currencyCode": "USD",
+                "amount": 22489.0
+              },
+              "p3Y": {
+                "currencyCode": "USD",
+                "amount": 47438.0
+              }
+            },
+            "skuProperties": [
+              {
+                "name": "ProductShortName",
+                "value": "Az Redis Ent Flash"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "Azure Redis Cache Enterprise Flash"
+              },
+              {
+                "name": "SkuName",
+                "value": "F700"
+              },
+              {
+                "name": "MeterId",
+                "value": "5ffde5e0-34fe-5ce7-93ba-eaec20690343"
+              },
+              {
+                "name": "MeterType",
+                "value": "1 Cache Hour"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "F700"
+              },
+              {
+                "name": "billingPlans",
+                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForSubscription"
+              }
+            ]
+          },
+          {
+            "resourceType": "RedisCache",
+            "name": "azure_redis_cache_enterprise_flash_f1500",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "locations": [
+              "westus"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p3Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p5Y": [
+                "Upfront",
+                "Monthly"
+              ]
+            },
+            "msrp": {
+              "p1Y": {
+                "currencyCode": "USD",
+                "amount": 44980.0
+              },
+              "p3Y": {
+                "currencyCode": "USD",
+                "amount": 94881.0
+              }
+            },
+            "skuProperties": [
+              {
+                "name": "ProductShortName",
+                "value": "Az Redis Ent Flash"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "Azure Redis Cache Enterprise Flash"
+              },
+              {
+                "name": "SkuName",
+                "value": "F1500"
+              },
+              {
+                "name": "MeterId",
+                "value": "26d6aa97-828d-5c5d-a7aa-8670800784e2"
+              },
+              {
+                "name": "MeterType",
+                "value": "1 Cache Hour"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "F1500"
+              },
+              {
+                "name": "billingPlans",
+                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForSubscription"
+              }
+            ]
+          },
+          {
+            "resourceType": "RedisCache",
+            "name": "azure_redis_cache_premium_p5_cache",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "locations": [
+              "westus"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p3Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p5Y": [
+                "Upfront",
+                "Monthly"
+              ]
+            },
+            "msrp": {
+              "p1Y": {
+                "currencyCode": "USD",
+                "amount": 28172.0
+              },
+              "p3Y": {
+                "currencyCode": "USD",
+                "amount": 59426.0
+              }
+            },
+            "skuProperties": [
+              {
+                "name": "ProductShortName",
+                "value": "Azure Redis Cache Premium"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "Azure Redis Cache Premium"
+              },
+              {
+                "name": "SkuName",
+                "value": "P5"
+              },
+              {
+                "name": "MeterId",
+                "value": "b0f1e28c-e48a-43cd-bf26-47f7858e0898"
+              },
+              {
+                "name": "MeterType",
+                "value": "1 Cache Instance Hour"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "P5"
+              },
+              {
+                "name": "billingPlans",
+                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForSubscription"
+              }
+            ]
+          },
+          {
+            "resourceType": "RedisCache",
+            "name": "azure_redis_cache_premium_p4_cache",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "locations": [
+              "westus"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p3Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p5Y": [
+                "Upfront",
+                "Monthly"
+              ]
+            },
+            "msrp": {
+              "p1Y": {
+                "currencyCode": "USD",
+                "amount": 12446.0
+              },
+              "p3Y": {
+                "currencyCode": "USD",
+                "amount": 26254.0
+              }
+            },
+            "skuProperties": [
+              {
+                "name": "ProductShortName",
+                "value": "Azure Redis Cache Premium"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "Azure Redis Cache Premium"
+              },
+              {
+                "name": "SkuName",
+                "value": "P4"
+              },
+              {
+                "name": "MeterId",
+                "value": "e3b4ef21-a644-408c-997d-2bc0c9e4e3d2"
+              },
+              {
+                "name": "MeterType",
+                "value": "1 Cache Instance Hour"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "P4"
+              },
+              {
+                "name": "billingPlans",
+                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForSubscription"
+              }
+            ]
+          },
+          {
+            "resourceType": "RedisCache",
+            "name": "azure_redis_cache_premium_p1_cache",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "locations": [
+              "westus"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p3Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p5Y": [
+                "Upfront",
+                "Monthly"
+              ]
+            },
+            "msrp": {
+              "p1Y": {
+                "currencyCode": "USD",
+                "amount": 1553.0
+              },
+              "p3Y": {
+                "currencyCode": "USD",
+                "amount": 3276.0
+              }
+            },
+            "skuProperties": [
+              {
+                "name": "ProductShortName",
+                "value": "Azure Redis Cache Premium"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "Azure Redis Cache Premium"
+              },
+              {
+                "name": "SkuName",
+                "value": "P1"
+              },
+              {
+                "name": "MeterId",
+                "value": "98fdf6d9-caff-4589-b47d-43bf19af41b2"
+              },
+              {
+                "name": "MeterType",
+                "value": "1 Cache Instance Hour"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "P1"
+              },
+              {
+                "name": "billingPlans",
+                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForSubscription"
+              }
+            ]
+          },
+          {
+            "resourceType": "RedisCache",
+            "name": "azure_redis_cache_premium_p3_cache",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "locations": [
+              "westus"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p3Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p5Y": [
+                "Upfront",
+                "Monthly"
+              ]
+            },
+            "msrp": {
+              "p1Y": {
+                "currencyCode": "USD",
+                "amount": 6217.0
+              },
+              "p3Y": {
+                "currencyCode": "USD",
+                "amount": 13115.0
+              }
+            },
+            "skuProperties": [
+              {
+                "name": "ProductShortName",
+                "value": "Azure Redis Cache Premium"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "Azure Redis Cache Premium"
+              },
+              {
+                "name": "SkuName",
+                "value": "P3"
+              },
+              {
+                "name": "MeterId",
+                "value": "a7c10107-3c81-48ac-8684-c6f1dd74e11d"
+              },
+              {
+                "name": "MeterType",
+                "value": "1 Cache Instance Hour"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "P3"
+              },
+              {
+                "name": "billingPlans",
+                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForSubscription"
+              }
+            ]
+          },
+          {
+            "resourceType": "RedisCache",
+            "name": "azure_redis_cache_premium_p2_cache",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "locations": [
+              "westus"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p3Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p5Y": [
+                "Upfront",
+                "Monthly"
+              ]
+            },
+            "msrp": {
+              "p1Y": {
+                "currencyCode": "USD",
+                "amount": 3112.0
+              },
+              "p3Y": {
+                "currencyCode": "USD",
+                "amount": 6563.0
+              }
+            },
+            "skuProperties": [
+              {
+                "name": "ProductShortName",
+                "value": "Azure Redis Cache Premium"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "Azure Redis Cache Premium"
+              },
+              {
+                "name": "SkuName",
+                "value": "P2"
+              },
+              {
+                "name": "MeterId",
+                "value": "585b6ab7-b236-48ea-80b2-5e6550d48c11"
+              },
+              {
+                "name": "MeterType",
+                "value": "1 Cache Instance Hour"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "P2"
+              },
+              {
+                "name": "billingPlans",
+                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForSubscription"
+              }
+            ]
+          }
+        ],
+        "totalItems": 13
+      }
     }
   ],
   "Variables": {
-    "RandomSeed": "1503789501",
-    "RESOURCE_MANAGER_URL": "https://management.azure.com/",
-    "SUBSCRIPTION_ID": "6d5e2387-bdf5-4ca1-83db-795fd2398b93"
+    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
+    "RandomSeed": "209747316",
+    "RESOURCE_MANAGER_URL": null,
+    "SUBSCRIPTION_ID": "aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee"
   }
 }

@@ -1,38 +1,41 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://management.azure.com/subscriptions/6d5e2387-bdf5-4ca1-83db-795fd2398b93?api-version=2021-01-01",
+      "RequestUri": "https://management.azure.com/subscriptions/aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee?api-version=2021-01-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-31c625935be4789a8c4a6536ed340f34-794a3270cc33fac0-00",
-        "User-Agent": "azsdk-net-ResourceManager/1.0.0 (.NET 6.0.5; Microsoft Windows 10.0.19044)",
-        "x-ms-client-request-id": "0957603c7341bd344dc3b60a1ece5a40",
+        "traceparent": "00-af7779602700bfab4c2db46182836451-525050a05427c73a-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET 6.0.14; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "483f1b464fa366427b20616f1c1890f1",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "400",
+        "Content-Length": "429",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 16 May 2022 23:13:19 GMT",
+        "Date": "Wed, 08 Mar 2023 01:34:19 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "c287f9e6-f72b-4488-9ac1-72b8d7847dee",
-        "x-ms-ratelimit-remaining-subscription-reads": "11997",
-        "x-ms-request-id": "c287f9e6-f72b-4488-9ac1-72b8d7847dee",
-        "x-ms-routing-request-id": "WESTUS:20220516T231319Z:c287f9e6-f72b-4488-9ac1-72b8d7847dee"
+        "x-ms-correlation-request-id": "a45897f0-49c9-4717-9b7c-e619c9922856",
+        "x-ms-ratelimit-remaining-subscription-reads": "11984",
+        "x-ms-request-id": "a45897f0-49c9-4717-9b7c-e619c9922856",
+        "x-ms-routing-request-id": "SOUTHCENTRALUS:20230308T013419Z:a45897f0-49c9-4717-9b7c-e619c9922856"
       },
       "ResponseBody": {
-        "id": "/subscriptions/6d5e2387-bdf5-4ca1-83db-795fd2398b93",
+        "id": "/subscriptions/aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee",
         "authorizationSource": "RoleBased",
         "managedByTenants": [],
-        "subscriptionId": "6d5e2387-bdf5-4ca1-83db-795fd2398b93",
-        "tenantId": "2fc06c85-616c-4845-9d37-2faa8091e955",
+        "tags": {
+          "costcenter": "1000"
+        },
+        "subscriptionId": "aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee",
+        "tenantId": "ba5ed788-ddc6-429c-a6a2-0277f01dbee7",
         "displayName": "Azure subscription 1",
         "state": "Enabled",
         "subscriptionPolicies": {
@@ -43,40 +46,211 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/6d5e2387-bdf5-4ca1-83db-795fd2398b93/providers/Microsoft.Capacity/catalogs?api-version=2022-03-01\u0026reservedResourceType=DataFactory\u0026location=eastus",
+      "RequestUri": "https://management.azure.com/subscriptions/aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee/providers/Microsoft.Capacity/catalogs?api-version=2022-11-01-beta\u0026reservedResourceType=DataFactory\u0026location=eastus",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-900440dc4e6601c21d39259d7db8d051-a8100200ab500d3f-00",
-        "User-Agent": "azsdk-net-ResourceManager.Reservations/1.0.0-alpha.20220516.1 (.NET 6.0.5; Microsoft Windows 10.0.19044)",
-        "x-ms-client-request-id": "eb3ac6408c07046d5e96a6f8ed4fc412",
+        "traceparent": "00-3e851c97c96d310bbb911e16f78ff2f3-cd5288da9087d931-00",
+        "User-Agent": "azsdk-net-ResourceManager.Reservations/1.3.0-alpha.20230307.1 (.NET 6.0.14; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "1acbe15a7eb33d08812ea0be282bc2d0",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "1957",
+        "Content-Length": "1955",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 16 May 2022 23:13:19 GMT",
+        "Date": "Wed, 08 Mar 2023 01:34:19 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Vary": "Accept-Encoding",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "7fd470fd-5a76-4627-80bd-2fb0de305e2f",
-        "x-ms-ratelimit-remaining-subscription-reads": "11996",
-        "x-ms-request-id": "eb3ac6408c07046d5e96a6f8ed4fc412",
-        "x-ms-routing-request-id": "WESTUS:20220516T231320Z:7fd470fd-5a76-4627-80bd-2fb0de305e2f",
-        "x-ms-version": "1.0.1957.1107"
+        "x-ms-correlation-request-id": "d3ec70da-ffa0-434f-aeb2-fcfdc8955ecf",
+        "x-ms-ratelimit-remaining-subscription-reads": "11983",
+        "x-ms-request-id": "1acbe15a7eb33d08812ea0be282bc2d0",
+        "x-ms-routing-request-id": "SOUTHCENTRALUS:20230308T013419Z:d3ec70da-ffa0-434f-aeb2-fcfdc8955ecf",
+        "x-ms-version": "1.0.2257.119"
       },
-      "ResponseBody": "[{\u0022resourceType\u0022:\u0022DataFactory\u0022,\u0022name\u0022:\u0022datafactory_general_purpose_optimized\u0022,\u0022terms\u0022:[\u0022P1Y\u0022,\u0022P3Y\u0022,\u0022P5Y\u0022],\u0022locations\u0022:[\u0022eastus\u0022],\u0022billingPlans\u0022:{\u0022p1Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022],\u0022p3Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022],\u0022p5Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022]},\u0022msrp\u0022:{\u0022p1Y\u0022:{\u0022currencyCode\u0022:\u0022USD\u0022,\u0022amount\u0022:1795.0},\u0022p3Y\u0022:{\u0022currencyCode\u0022:\u0022USD\u0022,\u0022amount\u0022:4668.0}},\u0022skuProperties\u0022:[{\u0022name\u0022:\u0022Type\u0022,\u0022value\u0022:\u0022Data Flow - General Purpose\u0022},{\u0022name\u0022:\u0022ProductShortName\u0022,\u0022value\u0022:\u0022Azure Data Factory v2 Data Flow - General Purpose\u0022},{\u0022name\u0022:\u0022DeploymentType\u0022,\u0022value\u0022:\u0022Azure Data Factory v2 Data Flow\u0022},{\u0022name\u0022:\u0022ProductTitle\u0022,\u0022value\u0022:\u0022Azure Data Factory v2 Data Flow - General Purpose\u0022},{\u0022name\u0022:\u0022SkuName\u0022,\u0022value\u0022:\u0022vCore\u0022},{\u0022name\u0022:\u0022MeterId\u0022,\u0022value\u0022:\u00223942310a-a1e3-4df6-854c-70a18805957e\u0022},{\u0022name\u0022:\u0022MeterType\u0022,\u0022value\u0022:\u00221 vCore Hour\u0022},{\u0022name\u0022:\u0022SkuDisplayName\u0022,\u0022value\u0022:\u0022vCore\u0022},{\u0022name\u0022:\u0022billingPlans\u0022,\u0022value\u0022:\u0022[\\\u0022Upfront\\\u0022,\\\u0022Monthly\\\u0022]\u0022}],\u0022restrictions\u0022:[{\u0022type\u0022:\u0022Term\u0022,\u0022values\u0022:[\u0022P5Y\u0022],\u0022reasonCode\u0022:\u0022NotAvailableForSubscription\u0022}]},{\u0022resourceType\u0022:\u0022DataFactory\u0022,\u0022name\u0022:\u0022datafactory_memory_optimized\u0022,\u0022terms\u0022:[\u0022P1Y\u0022,\u0022P3Y\u0022,\u0022P5Y\u0022],\u0022locations\u0022:[\u0022eastus\u0022],\u0022billingPlans\u0022:{\u0022p1Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022],\u0022p3Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022],\u0022p5Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022]},\u0022msrp\u0022:{\u0022p1Y\u0022:{\u0022currencyCode\u0022:\u0022USD\u0022,\u0022amount\u0022:2252.0},\u0022p3Y\u0022:{\u0022currencyCode\u0022:\u0022USD\u0022,\u0022amount\u0022:5855.0}},\u0022skuProperties\u0022:[{\u0022name\u0022:\u0022Type\u0022,\u0022value\u0022:\u0022Data Flow - Memory Optimized\u0022},{\u0022name\u0022:\u0022ProductShortName\u0022,\u0022value\u0022:\u0022Azure Data Factory v2 Data Flow - Memory Optimized\u0022},{\u0022name\u0022:\u0022DeploymentType\u0022,\u0022value\u0022:\u0022Azure Data Factory v2 Data Flow\u0022},{\u0022name\u0022:\u0022ProductTitle\u0022,\u0022value\u0022:\u0022Azure Data Factory v2 Data Flow - Memory Optimized\u0022},{\u0022name\u0022:\u0022SkuName\u0022,\u0022value\u0022:\u0022vCore\u0022},{\u0022name\u0022:\u0022MeterId\u0022,\u0022value\u0022:\u0022a000728c-9ca8-42e7-a4b1-85b5f8957006\u0022},{\u0022name\u0022:\u0022MeterType\u0022,\u0022value\u0022:\u00221 vCore Hour\u0022},{\u0022name\u0022:\u0022SkuDisplayName\u0022,\u0022value\u0022:\u0022vCore\u0022},{\u0022name\u0022:\u0022billingPlans\u0022,\u0022value\u0022:\u0022[\\\u0022Upfront\\\u0022,\\\u0022Monthly\\\u0022]\u0022}],\u0022restrictions\u0022:[{\u0022type\u0022:\u0022Term\u0022,\u0022values\u0022:[\u0022P5Y\u0022],\u0022reasonCode\u0022:\u0022NotAvailableForSubscription\u0022}]}]"
+      "ResponseBody": {
+        "value": [
+          {
+            "resourceType": "DataFactory",
+            "name": "datafactory_general_purpose_optimized",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "locations": [
+              "eastus"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p3Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p5Y": [
+                "Upfront",
+                "Monthly"
+              ]
+            },
+            "msrp": {
+              "p1Y": {
+                "currencyCode": "USD",
+                "amount": 1690.0
+              },
+              "p3Y": {
+                "currencyCode": "USD",
+                "amount": 4394.0
+              }
+            },
+            "skuProperties": [
+              {
+                "name": "Type",
+                "value": "Data Flow - General Purpose"
+              },
+              {
+                "name": "ProductShortName",
+                "value": "Az Dta Factry v2 Dta Flow-GP"
+              },
+              {
+                "name": "DeploymentType",
+                "value": "Azure Data Factory v2 Data Flow"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "Azure Data Factory v2 Data Flow - General Purpose"
+              },
+              {
+                "name": "SkuName",
+                "value": "vCore"
+              },
+              {
+                "name": "MeterId",
+                "value": "3942310a-a1e3-4df6-854c-70a18805957e"
+              },
+              {
+                "name": "MeterType",
+                "value": "1 vCore Hour"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "vCore"
+              },
+              {
+                "name": "billingPlans",
+                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForSubscription"
+              }
+            ]
+          },
+          {
+            "resourceType": "DataFactory",
+            "name": "datafactory_memory_optimized",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "locations": [
+              "eastus"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p3Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p5Y": [
+                "Upfront",
+                "Monthly"
+              ]
+            },
+            "msrp": {
+              "p1Y": {
+                "currencyCode": "USD",
+                "amount": 2134.0
+              },
+              "p3Y": {
+                "currencyCode": "USD",
+                "amount": 5547.0
+              }
+            },
+            "skuProperties": [
+              {
+                "name": "Type",
+                "value": "Data Flow - Memory Optimized"
+              },
+              {
+                "name": "ProductShortName",
+                "value": "Az Data Factory v2 Data Flow - Mem Optimized"
+              },
+              {
+                "name": "DeploymentType",
+                "value": "Azure Data Factory v2 Data Flow"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "Azure Data Factory v2 Data Flow - Memory Optimized"
+              },
+              {
+                "name": "SkuName",
+                "value": "vCore"
+              },
+              {
+                "name": "MeterId",
+                "value": "a000728c-9ca8-42e7-a4b1-85b5f8957006"
+              },
+              {
+                "name": "MeterType",
+                "value": "1 vCore Hour"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "vCore"
+              },
+              {
+                "name": "billingPlans",
+                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForSubscription"
+              }
+            ]
+          }
+        ],
+        "totalItems": 2
+      }
     }
   ],
   "Variables": {
-    "RandomSeed": "1314356771",
-    "RESOURCE_MANAGER_URL": "https://management.azure.com/",
-    "SUBSCRIPTION_ID": "6d5e2387-bdf5-4ca1-83db-795fd2398b93"
+    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
+    "RandomSeed": "1443094838",
+    "RESOURCE_MANAGER_URL": null,
+    "SUBSCRIPTION_ID": "aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee"
   }
 }

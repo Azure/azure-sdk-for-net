@@ -1,38 +1,41 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://management.azure.com/subscriptions/6d5e2387-bdf5-4ca1-83db-795fd2398b93?api-version=2021-01-01",
+      "RequestUri": "https://management.azure.com/subscriptions/aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee?api-version=2021-01-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-a223890a6f1945c6cb624958ae4dc688-537312041ef12360-00",
-        "User-Agent": "azsdk-net-ResourceManager/1.0.0 (.NET 6.0.5; Microsoft Windows 10.0.19044)",
-        "x-ms-client-request-id": "d5714a2a99d7be83485681903a55a986",
+        "traceparent": "00-2fe76a6b041bd23b9c09b5556e464376-0fab602024dc5900-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET 6.0.14; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "80b8410067fd97a72acf02a4040b0fb2",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "400",
+        "Content-Length": "429",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 16 May 2022 23:10:06 GMT",
+        "Date": "Wed, 08 Mar 2023 01:34:24 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "7f8e53a5-a907-4f6d-a855-093bea78dde7",
-        "x-ms-ratelimit-remaining-subscription-reads": "11967",
-        "x-ms-request-id": "7f8e53a5-a907-4f6d-a855-093bea78dde7",
-        "x-ms-routing-request-id": "WESTUS:20220516T231006Z:7f8e53a5-a907-4f6d-a855-093bea78dde7"
+        "x-ms-correlation-request-id": "6ee321b3-8828-4898-bf2f-e76967d01ba2",
+        "x-ms-ratelimit-remaining-subscription-reads": "11998",
+        "x-ms-request-id": "6ee321b3-8828-4898-bf2f-e76967d01ba2",
+        "x-ms-routing-request-id": "SOUTHCENTRALUS:20230308T013425Z:6ee321b3-8828-4898-bf2f-e76967d01ba2"
       },
       "ResponseBody": {
-        "id": "/subscriptions/6d5e2387-bdf5-4ca1-83db-795fd2398b93",
+        "id": "/subscriptions/aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee",
         "authorizationSource": "RoleBased",
         "managedByTenants": [],
-        "subscriptionId": "6d5e2387-bdf5-4ca1-83db-795fd2398b93",
-        "tenantId": "2fc06c85-616c-4845-9d37-2faa8091e955",
+        "tags": {
+          "costcenter": "1000"
+        },
+        "subscriptionId": "aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee",
+        "tenantId": "ba5ed788-ddc6-429c-a6a2-0277f01dbee7",
         "displayName": "Azure subscription 1",
         "state": "Enabled",
         "subscriptionPolicies": {
@@ -43,40 +46,120 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/6d5e2387-bdf5-4ca1-83db-795fd2398b93/providers/Microsoft.Capacity/catalogs?api-version=2022-03-01\u0026reservedResourceType=SqlDataWarehouse\u0026location=eastus",
+      "RequestUri": "https://management.azure.com/subscriptions/aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee/providers/Microsoft.Capacity/catalogs?api-version=2022-11-01-beta\u0026reservedResourceType=SqlDataWarehouse\u0026location=eastus",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-138385833f6e3f2d72c874f59a3d6760-557bfdcaece65326-00",
-        "User-Agent": "azsdk-net-ResourceManager.Reservations/1.0.0-alpha.20220516.1 (.NET 6.0.5; Microsoft Windows 10.0.19044)",
-        "x-ms-client-request-id": "3f3415e2a57f1194c7cc9cff64ee4555",
+        "traceparent": "00-91778135904488bc4df7f67ea8dfd618-3f1080638a55e390-00",
+        "User-Agent": "azsdk-net-ResourceManager.Reservations/1.3.0-alpha.20230307.1 (.NET 6.0.14; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "e9a2eac00f7b28d4ee508e34e2fe6935",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "813",
+        "Content-Length": "838",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 16 May 2022 23:10:06 GMT",
+        "Date": "Wed, 08 Mar 2023 01:34:25 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Vary": "Accept-Encoding",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "3d8aabe8-02f0-4351-bcac-38e357af7597",
-        "x-ms-ratelimit-remaining-subscription-reads": "11966",
-        "x-ms-request-id": "3f3415e2a57f1194c7cc9cff64ee4555",
-        "x-ms-routing-request-id": "WESTUS:20220516T231007Z:3d8aabe8-02f0-4351-bcac-38e357af7597",
-        "x-ms-version": "1.0.1957.1107"
+        "x-ms-correlation-request-id": "ce4bf8c2-dba8-4f9b-8b29-5d4edc4e8a84",
+        "x-ms-ratelimit-remaining-subscription-reads": "11997",
+        "x-ms-request-id": "e9a2eac00f7b28d4ee508e34e2fe6935",
+        "x-ms-routing-request-id": "SOUTHCENTRALUS:20230308T013425Z:ce4bf8c2-dba8-4f9b-8b29-5d4edc4e8a84",
+        "x-ms-version": "1.0.2257.119"
       },
-      "ResponseBody": "[{\u0022resourceType\u0022:\u0022SqlDataWarehouse\u0022,\u0022name\u0022:\u0022sql_dw100c\u0022,\u0022terms\u0022:[\u0022P1Y\u0022,\u0022P3Y\u0022,\u0022P5Y\u0022],\u0022locations\u0022:[\u0022eastus\u0022],\u0022billingPlans\u0022:{\u0022p1Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022],\u0022p3Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022],\u0022p5Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022]},\u0022msrp\u0022:{\u0022p1Y\u0022:{\u0022currencyCode\u0022:\u0022USD\u0022,\u0022amount\u0022:8333.0},\u0022p3Y\u0022:{\u0022currencyCode\u0022:\u0022USD\u0022,\u0022amount\u0022:13889.0}},\u0022skuProperties\u0022:[{\u0022name\u0022:\u0022ProductShortName\u0022,\u0022value\u0022:\u0022Synapse Dedicated SQL Pool\u0022},{\u0022name\u0022:\u0022ProductTitle\u0022,\u0022value\u0022:\u0022Azure Synapse Analytics\u00A0Dedicated SQL Pool\u0022},{\u0022name\u0022:\u0022SkuName\u0022,\u0022value\u0022:\u0022DW100c\u0022},{\u0022name\u0022:\u0022MeterId\u0022,\u0022value\u0022:\u0022cc5e0b3e-9ebc-451a-8b78-904f230e975b\u0022},{\u0022name\u0022:\u0022MeterType\u0022,\u0022value\u0022:\u0022100 DWUs/Hour\u0022},{\u0022name\u0022:\u0022SkuDisplayName\u0022,\u0022value\u0022:\u0022DW100c\u0022},{\u0022name\u0022:\u0022billingPlans\u0022,\u0022value\u0022:\u0022[\\\u0022Upfront\\\u0022,\\\u0022Monthly\\\u0022]\u0022}],\u0022restrictions\u0022:[{\u0022type\u0022:\u0022Term\u0022,\u0022values\u0022:[\u0022P5Y\u0022],\u0022reasonCode\u0022:\u0022NotAvailableForSubscription\u0022}]}]"
+      "ResponseBody": {
+        "value": [
+          {
+            "resourceType": "SqlDataWarehouse",
+            "name": "sql_dw100c",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "locations": [
+              "eastus"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p3Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p5Y": [
+                "Upfront",
+                "Monthly"
+              ]
+            },
+            "msrp": {
+              "p1Y": {
+                "currencyCode": "USD",
+                "amount": 6623.0
+              },
+              "p3Y": {
+                "currencyCode": "USD",
+                "amount": 11038.0
+              }
+            },
+            "skuProperties": [
+              {
+                "name": "ProductShortName",
+                "value": "Synapse Dedicated SQL Pool"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "Azure Synapse Analytics\u00A0Dedicated SQL Pool"
+              },
+              {
+                "name": "SkuName",
+                "value": "DW100c"
+              },
+              {
+                "name": "MeterId",
+                "value": "cc5e0b3e-9ebc-451a-8b78-904f230e975b"
+              },
+              {
+                "name": "MeterType",
+                "value": "100 DWUs/Hour"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "DW100c"
+              },
+              {
+                "name": "billingPlans",
+                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForSubscription"
+              }
+            ]
+          }
+        ],
+        "totalItems": 1
+      }
     }
   ],
   "Variables": {
-    "RandomSeed": "1900851186",
-    "RESOURCE_MANAGER_URL": "https://management.azure.com/",
-    "SUBSCRIPTION_ID": "6d5e2387-bdf5-4ca1-83db-795fd2398b93"
+    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
+    "RandomSeed": "236177414",
+    "RESOURCE_MANAGER_URL": null,
+    "SUBSCRIPTION_ID": "aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee"
   }
 }
