@@ -467,7 +467,7 @@ namespace Azure.Communication.CallAutomation
         public static bool operator ==(Azure.Communication.CallAutomation.DtmfTone left, Azure.Communication.CallAutomation.DtmfTone right) { throw null; }
         public static implicit operator Azure.Communication.CallAutomation.DtmfTone (string value) { throw null; }
         public static bool operator !=(Azure.Communication.CallAutomation.DtmfTone left, Azure.Communication.CallAutomation.DtmfTone right) { throw null; }
-        public string ToChar() { throw null; }
+        public char ToChar() { throw null; }
         public override string ToString() { throw null; }
     }
     public partial class EventProcessor
