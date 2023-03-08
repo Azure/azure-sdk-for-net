@@ -140,9 +140,9 @@ namespace Azure.Core.Dynamic
             throw new InvalidOperationException();
         }
 
-        public string GetString()
+        public string? GetString()
         {
-            if (_document.TryGetString(_element, out string value))
+            if (_document.TryGetString(_element, out string? value))
             {
                 return value;
             }
@@ -170,6 +170,11 @@ namespace Azure.Core.Dynamic
         public void DisposeRoot()
         {
             _document.Dispose();
+        }
+
+        public override string? ToString()
+        {
+            return _document.ToString(_element);
         }
     }
 }

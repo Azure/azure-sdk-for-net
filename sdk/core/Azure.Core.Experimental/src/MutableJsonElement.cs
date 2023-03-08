@@ -171,6 +171,8 @@ namespace Azure.Core.Json
             {
                 switch (change.Value)
                 {
+                    case int i:
+                        return i;
                     case long l:
                         return l;
                     case JsonElement element:

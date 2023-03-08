@@ -34,7 +34,7 @@ namespace Azure.Core.Dynamic
         public abstract bool TryGetBoolean(object element, out bool value);
         public abstract bool TryGetDouble(object element, out double value);
         public abstract bool TryGetInt64(object element, out long value);
-        public abstract bool TryGetString(object element, out string value);
+        public abstract bool TryGetString(object element, out string? value);
         public abstract bool HasValue(object element);
 
         // Setters
@@ -48,5 +48,7 @@ namespace Azure.Core.Dynamic
         public abstract T As<T>(object element);
 
         public abstract void Dispose();
+
+        public abstract string? ToString(object element);
     }
 }

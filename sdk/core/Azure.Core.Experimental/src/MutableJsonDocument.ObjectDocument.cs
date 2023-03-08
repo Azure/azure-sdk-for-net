@@ -6,7 +6,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Text.Json;
-using System.Xml.Linq;
 using Azure.Core.Dynamic;
 
 // TODO: Remove when prototyping complete
@@ -30,67 +29,131 @@ namespace Azure.Core.Json
 
         public override ObjectElement GetIndexElement(object element, int index)
         {
-            throw new NotImplementedException();
+            MutableJsonElement value = (MutableJsonElement)element;
+
+            return new ObjectElement(this, value.GetIndexElement(index));
         }
 
         public override int GetArrayLength(object element)
         {
-            throw new NotImplementedException();
+            MutableJsonElement value = (MutableJsonElement)element;
+
+            return value.GetJsonElement().GetArrayLength();
         }
 
         public override bool HasValue(object element)
         {
-            throw new NotImplementedException();
+            MutableJsonElement value = (MutableJsonElement)element;
+
+            return value.ValueKind != JsonValueKind.Null;
         }
 
         public override bool TryGetProperty(object element, string name, out ObjectElement value)
         {
-            throw new NotImplementedException();
+            MutableJsonElement mje = (MutableJsonElement)element;
+
+            if (mje.TryGetProperty(name, out MutableJsonElement propertyValue))
+            {
+                value = new ObjectElement(this, propertyValue);
+                return true;
+            }
+
+            value = default;
+            return false;
         }
 
         public override bool TryGetArrayEnumerator(object element, out IEnumerable enumerable)
         {
-            throw new NotImplementedException();
+            MutableJsonElement value = (MutableJsonElement)element;
+
+            if (value.ValueKind != JsonValueKind.Array)
+            {
+                enumerable = Array.Empty<ObjectElement>();
+                return false;
+            }
+
+            enumerable = value.EnumerateArray();
+            return true;
         }
 
         public override bool TryGetObjectEnumerator(object element, out IEnumerable<(string Name, ObjectElement Value)> enumerable)
         {
+            MutableJsonElement value = (MutableJsonElement)element;
+
+            if (value.ValueKind != JsonValueKind.Object)
+            {
+                enumerable = Array.Empty<(string Name, ObjectElement Value)>();
+                return false;
+            }
+
             throw new NotImplementedException();
+            //return true;
         }
 
         public override bool TryGetBoolean(object element, out bool value)
         {
-            throw new NotImplementedException();
+            MutableJsonElement mje = (MutableJsonElement)element;
+
+            // TODO: implement try/get
+            value = mje.GetBoolean();
+            return true;
         }
 
         public override bool TryGetDouble(object element, out double value)
         {
-            throw new NotImplementedException();
+            MutableJsonElement mje = (MutableJsonElement)element;
+
+            // TODO: implement try/get
+            value = mje.GetDouble();
+            return true;
         }
 
         public override bool TryGetInt64(object element, out long value)
         {
-            throw new NotImplementedException();
+            MutableJsonElement mje = (MutableJsonElement)element;
+
+            // TODO: implement try/get
+            value = mje.GetInt64();
+            return true;
         }
 
-        public override bool TryGetString(object element, out string value)
+        public override bool TryGetString(object element, out string? value)
         {
-            throw new NotImplementedException();
+            MutableJsonElement mje = (MutableJsonElement)element;
+
+            // TODO: implement try/get
+            value = mje.GetString();
+            return true;
         }
 
         public override ObjectElement SetProperty(object element, string name, object value)
         {
-            throw new NotImplementedException();
+            MutableJsonElement mje = (MutableJsonElement)element;
+
+            return new ObjectElement(this, mje.SetProperty(name, value));
         }
 
         public override void Set(object element, object value)
         {
-            throw new NotImplementedException();
+            MutableJsonElement mje = (MutableJsonElement)element;
+
+            mje.Set(value);
         }
 
         public override void WriteTo(object element, Stream stream)
         {
-            throw new NotImplementedException();
+            MutableJsonElement mje = (MutableJsonElement)element;
+
+            Utf8JsonWriter writer = new(stream);
+            mje.WriteTo(writer);
+            writer.Flush();
+        }
+
+        public override string? ToString(object element)
+        {
+            MutableJsonElement mje = (MutableJsonElement)element;
+
+            return mje.ToString();
         }
     }
 }
