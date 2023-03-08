@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.HybridContainerService.Models
     {
         internal static AgentPoolListResult DeserializeAgentPoolListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<HybridContainerServiceAgentPoolData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

@@ -48,6 +48,10 @@ namespace Azure.ResourceManager.DataMigration.Models
 
         internal static MongoDBMigrationSettings DeserializeMongoDBMigrationSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> boostRUs = default;
             IDictionary<string, MongoDBDatabaseSettings> databases = default;
             Optional<MongoDBReplication> replication = default;

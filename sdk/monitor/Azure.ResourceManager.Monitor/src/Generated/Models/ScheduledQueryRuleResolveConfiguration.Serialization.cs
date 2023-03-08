@@ -31,6 +31,10 @@ namespace Azure.ResourceManager.Monitor.Models
 
         internal static ScheduledQueryRuleResolveConfiguration DeserializeScheduledQueryRuleResolveConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> autoResolved = default;
             Optional<TimeSpan> timeToResolve = default;
             foreach (var property in element.EnumerateObject())

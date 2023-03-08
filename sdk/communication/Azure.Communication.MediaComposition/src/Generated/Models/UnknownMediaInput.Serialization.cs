@@ -27,6 +27,10 @@ namespace Azure.Communication.MediaComposition
 
         internal static UnknownMediaInput DeserializeUnknownMediaInput(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             MediaInputType kind = "Unknown";
             Optional<string> placeholderImageUri = default;
             foreach (var property in element.EnumerateObject())

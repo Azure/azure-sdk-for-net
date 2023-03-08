@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Compute
 {
-    /// <summary> A class representing the GalleryApplicationVersion data model. </summary>
+    /// <summary>
+    /// A class representing the GalleryApplicationVersion data model.
+    /// Specifies information about the gallery Application Version that you want to create or update.
+    /// </summary>
     public partial class GalleryApplicationVersionData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of GalleryApplicationVersionData. </summary>

@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         internal static InstantRPAdditionalDetails DeserializeInstantRPAdditionalDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> azureBackupRGNamePrefix = default;
             Optional<string> azureBackupRGNameSuffix = default;
             foreach (var property in element.EnumerateObject())

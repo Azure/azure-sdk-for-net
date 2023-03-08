@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.Sql.Models
 
         internal static AutomaticTuningOptions DeserializeAutomaticTuningOptions(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<AutomaticTuningOptionModeDesired> desiredState = default;
             Optional<AutomaticTuningOptionModeActual> actualState = default;
             Optional<int> reasonCode = default;

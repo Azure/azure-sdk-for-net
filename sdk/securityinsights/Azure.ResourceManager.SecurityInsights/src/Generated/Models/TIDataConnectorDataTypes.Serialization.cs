@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         internal static TIDataConnectorDataTypes DeserializeTIDataConnectorDataTypes(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<TIDataConnectorDataTypesIndicators> indicators = default;
             foreach (var property in element.EnumerateObject())
             {

@@ -27,6 +27,10 @@ namespace Azure.ResourceManager.Storage.Models
 
         internal static StorageCustomDomain DeserializeStorageCustomDomain(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string name = default;
             Optional<bool> useSubDomainName = default;
             foreach (var property in element.EnumerateObject())

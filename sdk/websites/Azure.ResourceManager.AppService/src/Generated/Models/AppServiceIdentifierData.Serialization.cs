@@ -34,6 +34,10 @@ namespace Azure.ResourceManager.AppService
 
         internal static AppServiceIdentifierData DeserializeAppServiceIdentifierData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> kind = default;
             ResourceIdentifier id = default;
             string name = default;

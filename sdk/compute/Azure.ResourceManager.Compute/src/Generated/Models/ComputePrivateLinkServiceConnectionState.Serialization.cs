@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static ComputePrivateLinkServiceConnectionState DeserializeComputePrivateLinkServiceConnectionState(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ComputePrivateEndpointServiceConnectionStatus> status = default;
             Optional<string> description = default;
             Optional<string> actionsRequired = default;

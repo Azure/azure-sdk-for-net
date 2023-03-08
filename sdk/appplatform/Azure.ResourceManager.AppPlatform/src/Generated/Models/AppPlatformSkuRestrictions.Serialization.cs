@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.AppPlatform.Models
     {
         internal static AppPlatformSkuRestrictions DeserializeAppPlatformSkuRestrictions(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<AppPlatformSkuRestrictionsType> type = default;
             Optional<IReadOnlyList<string>> values = default;
             Optional<AppPlatformSkuRestrictionInfo> restrictionInfo = default;

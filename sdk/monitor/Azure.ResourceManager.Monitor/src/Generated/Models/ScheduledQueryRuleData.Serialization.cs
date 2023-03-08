@@ -146,6 +146,10 @@ namespace Azure.ResourceManager.Monitor
 
         internal static ScheduledQueryRuleData DeserializeScheduledQueryRuleData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ManagedServiceIdentity> identity = default;
             Optional<ScheduledQueryRuleKind> kind = default;
             Optional<ETag> etag = default;

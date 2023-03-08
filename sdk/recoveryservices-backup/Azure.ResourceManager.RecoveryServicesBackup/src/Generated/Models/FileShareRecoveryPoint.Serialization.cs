@@ -48,6 +48,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         internal static FileShareRecoveryPoint DeserializeFileShareRecoveryPoint(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> recoveryPointType = default;
             Optional<DateTimeOffset> recoveryPointTime = default;
             Optional<Uri> fileShareSnapshotUri = default;

@@ -62,6 +62,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         internal static YearlyRetentionSchedule DeserializeYearlyRetentionSchedule(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<RetentionScheduleFormat> retentionScheduleFormatType = default;
             Optional<IList<BackupMonthOfYear>> monthsOfYear = default;
             Optional<DailyRetentionFormat> retentionScheduleDaily = default;

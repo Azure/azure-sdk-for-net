@@ -11,7 +11,10 @@ using Azure.ResourceManager.Purview.Models;
 
 namespace Azure.ResourceManager.Purview
 {
-    /// <summary> A class representing the PurviewPrivateLinkResource data model. </summary>
+    /// <summary>
+    /// A class representing the PurviewPrivateLinkResource data model.
+    /// A privately linkable resource.
+    /// </summary>
     public partial class PurviewPrivateLinkResourceData : ResourceData
     {
         /// <summary> Initializes a new instance of PurviewPrivateLinkResourceData. </summary>

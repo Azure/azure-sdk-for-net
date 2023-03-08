@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Automation.Models
     {
         internal static DeletedAutomationAccountListResult DeserializeDeletedAutomationAccountListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<DeletedAutomationAccount>> value = default;
             foreach (var property in element.EnumerateObject())
             {

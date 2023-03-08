@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.Media.Models
     {
         internal static StreamingEndpointListResult DeserializeStreamingEndpointListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<StreamingEndpointData>> value = default;
             Optional<int> odataCount = default;
             Optional<string> odataNextLink = default;

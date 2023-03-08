@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.Monitor.Models
     {
         internal static SubscriptionScopeMetricResponse DeserializeSubscriptionScopeMetricResponse(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> cost = default;
             string timespan = default;
             Optional<TimeSpan> interval = default;

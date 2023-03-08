@@ -31,6 +31,10 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static ApplicationProfile DeserializeApplicationProfile(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<VirtualMachineGalleryApplication>> galleryApplications = default;
             foreach (var property in element.EnumerateObject())
             {

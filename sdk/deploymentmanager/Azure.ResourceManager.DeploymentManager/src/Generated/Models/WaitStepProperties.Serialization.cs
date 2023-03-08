@@ -24,6 +24,10 @@ namespace Azure.ResourceManager.DeploymentManager.Models
 
         internal static WaitStepProperties DeserializeWaitStepProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             WaitStepAttributes attributes = default;
             StepType stepType = default;
             foreach (var property in element.EnumerateObject())

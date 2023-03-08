@@ -41,6 +41,10 @@ namespace Azure.ResourceManager.Batch.Models
 
         internal static BatchAccountFixedScaleSettings DeserializeBatchAccountFixedScaleSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<TimeSpan> resizeTimeout = default;
             Optional<int> targetDedicatedNodes = default;
             Optional<int> targetLowPriorityNodes = default;

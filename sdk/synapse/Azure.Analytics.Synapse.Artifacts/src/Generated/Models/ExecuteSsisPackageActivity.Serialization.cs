@@ -113,6 +113,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 foreach (var item in ProjectConnectionManagers)
                 {
                     writer.WritePropertyName(item.Key);
+                    if (item.Value == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStartObject();
                     foreach (var item0 in item.Value)
                     {
@@ -130,6 +135,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 foreach (var item in PackageConnectionManagers)
                 {
                     writer.WritePropertyName(item.Key);
+                    if (item.Value == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStartObject();
                     foreach (var item0 in item.Value)
                     {
@@ -167,6 +177,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static ExecuteSsisPackageActivity DeserializeExecuteSsisPackageActivity(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<LinkedServiceReference> linkedServiceName = default;
             Optional<ActivityPolicy> policy = default;
             string name = default;
@@ -354,12 +368,19 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                             Dictionary<string, IDictionary<string, SsisExecutionParameter>> dictionary = new Dictionary<string, IDictionary<string, SsisExecutionParameter>>();
                             foreach (var property1 in property0.Value.EnumerateObject())
                             {
-                                Dictionary<string, SsisExecutionParameter> dictionary0 = new Dictionary<string, SsisExecutionParameter>();
-                                foreach (var property2 in property1.Value.EnumerateObject())
+                                if (property1.Value.ValueKind == JsonValueKind.Null)
                                 {
-                                    dictionary0.Add(property2.Name, SsisExecutionParameter.DeserializeSsisExecutionParameter(property2.Value));
+                                    dictionary.Add(property1.Name, null);
                                 }
-                                dictionary.Add(property1.Name, dictionary0);
+                                else
+                                {
+                                    Dictionary<string, SsisExecutionParameter> dictionary0 = new Dictionary<string, SsisExecutionParameter>();
+                                    foreach (var property2 in property1.Value.EnumerateObject())
+                                    {
+                                        dictionary0.Add(property2.Name, SsisExecutionParameter.DeserializeSsisExecutionParameter(property2.Value));
+                                    }
+                                    dictionary.Add(property1.Name, dictionary0);
+                                }
                             }
                             projectConnectionManagers = dictionary;
                             continue;
@@ -374,12 +395,19 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                             Dictionary<string, IDictionary<string, SsisExecutionParameter>> dictionary = new Dictionary<string, IDictionary<string, SsisExecutionParameter>>();
                             foreach (var property1 in property0.Value.EnumerateObject())
                             {
-                                Dictionary<string, SsisExecutionParameter> dictionary0 = new Dictionary<string, SsisExecutionParameter>();
-                                foreach (var property2 in property1.Value.EnumerateObject())
+                                if (property1.Value.ValueKind == JsonValueKind.Null)
                                 {
-                                    dictionary0.Add(property2.Name, SsisExecutionParameter.DeserializeSsisExecutionParameter(property2.Value));
+                                    dictionary.Add(property1.Name, null);
                                 }
-                                dictionary.Add(property1.Name, dictionary0);
+                                else
+                                {
+                                    Dictionary<string, SsisExecutionParameter> dictionary0 = new Dictionary<string, SsisExecutionParameter>();
+                                    foreach (var property2 in property1.Value.EnumerateObject())
+                                    {
+                                        dictionary0.Add(property2.Name, SsisExecutionParameter.DeserializeSsisExecutionParameter(property2.Value));
+                                    }
+                                    dictionary.Add(property1.Name, dictionary0);
+                                }
                             }
                             packageConnectionManagers = dictionary;
                             continue;

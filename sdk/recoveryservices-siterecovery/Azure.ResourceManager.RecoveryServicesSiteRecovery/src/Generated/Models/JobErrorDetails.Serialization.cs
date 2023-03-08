@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     {
         internal static JobErrorDetails DeserializeJobErrorDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ServiceError> serviceErrorDetails = default;
             Optional<ProviderError> providerErrorDetails = default;
             Optional<string> errorLevel = default;

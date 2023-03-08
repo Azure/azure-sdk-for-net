@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.Quantum.Models
     {
         internal static SkuDescription DeserializeSkuDescription(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> id = default;
             Optional<string> name = default;
             Optional<string> version = default;

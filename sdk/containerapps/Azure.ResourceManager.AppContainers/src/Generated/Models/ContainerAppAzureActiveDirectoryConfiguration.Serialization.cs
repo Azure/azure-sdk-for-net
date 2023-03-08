@@ -45,6 +45,10 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         internal static ContainerAppAzureActiveDirectoryConfiguration DeserializeContainerAppAzureActiveDirectoryConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> enabled = default;
             Optional<ContainerAppAzureActiveDirectoryRegistrationConfiguration> registration = default;
             Optional<ContainerAppAzureActiveDirectoryLoginConfiguration> login = default;

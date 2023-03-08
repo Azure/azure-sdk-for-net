@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.Grafana.Models
     {
         internal static GrafanaPrivateLinkResourceListResult DeserializeGrafanaPrivateLinkResourceListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<GrafanaPrivateLinkResourceData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

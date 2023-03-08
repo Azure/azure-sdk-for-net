@@ -12,7 +12,10 @@ using Azure.ResourceManager.StorageMover.Models;
 
 namespace Azure.ResourceManager.StorageMover
 {
-    /// <summary> A class representing the JobDefinition data model. </summary>
+    /// <summary>
+    /// A class representing the JobDefinition data model.
+    /// The Job Definition resource.
+    /// </summary>
     public partial class JobDefinitionData : ResourceData
     {
         /// <summary> Initializes a new instance of JobDefinitionData. </summary>

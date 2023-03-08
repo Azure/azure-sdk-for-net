@@ -22,6 +22,10 @@ namespace Azure.ResourceManager.AlertsManagement.Models
 
         internal static UnknownAction DeserializeUnknownAction(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             AlertProcessingRuleActionType actionType = "Unknown";
             foreach (var property in element.EnumerateObject())
             {

@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.EventGrid.Models
     {
         internal static DomainsListResult DeserializeDomainsListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<EventGridDomainData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

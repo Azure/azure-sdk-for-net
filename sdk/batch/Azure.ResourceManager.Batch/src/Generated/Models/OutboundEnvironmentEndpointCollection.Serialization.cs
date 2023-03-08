@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Batch.Models
     {
         internal static OutboundEnvironmentEndpointCollection DeserializeOutboundEnvironmentEndpointCollection(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<BatchAccountOutboundEnvironmentEndpoint>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

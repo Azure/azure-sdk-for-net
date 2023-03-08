@@ -15,6 +15,10 @@ namespace Azure.Communication.Chat
     {
         internal static AddChatParticipantsResult DeserializeAddChatParticipantsResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<ChatError>> invalidParticipants = default;
             foreach (var property in element.EnumerateObject())
             {

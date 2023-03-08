@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.Media.Models
     {
         internal static ContentKeyPolicyProperties DeserializeContentKeyPolicyProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<Guid> policyId = default;
             Optional<DateTimeOffset> created = default;
             Optional<DateTimeOffset> lastModified = default;

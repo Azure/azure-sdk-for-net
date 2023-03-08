@@ -13,7 +13,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.MixedReality
 {
-    /// <summary> A class representing the SpatialAnchorsAccount data model. </summary>
+    /// <summary>
+    /// A class representing the SpatialAnchorsAccount data model.
+    /// SpatialAnchorsAccount Response.
+    /// </summary>
     public partial class SpatialAnchorsAccountData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of SpatialAnchorsAccountData. </summary>

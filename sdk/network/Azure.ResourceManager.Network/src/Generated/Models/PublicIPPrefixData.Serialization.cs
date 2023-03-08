@@ -99,6 +99,10 @@ namespace Azure.ResourceManager.Network
 
         internal static PublicIPPrefixData DeserializePublicIPPrefixData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ExtendedLocation> extendedLocation = default;
             Optional<PublicIPPrefixSku> sku = default;
             Optional<ETag> etag = default;

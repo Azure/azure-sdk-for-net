@@ -13,7 +13,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.IotHub
 {
-    /// <summary> A class representing the EventHubConsumerGroupInfo data model. </summary>
+    /// <summary>
+    /// A class representing the EventHubConsumerGroupInfo data model.
+    /// The properties of the EventHubConsumerGroupInfo object.
+    /// </summary>
     public partial class EventHubConsumerGroupInfoData : ResourceData
     {
         /// <summary> Initializes a new instance of EventHubConsumerGroupInfoData. </summary>

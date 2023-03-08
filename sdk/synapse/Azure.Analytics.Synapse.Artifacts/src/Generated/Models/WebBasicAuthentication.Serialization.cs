@@ -31,6 +31,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static WebBasicAuthentication DeserializeWebBasicAuthentication(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             object username = default;
             SecretBase password = default;
             object url = default;

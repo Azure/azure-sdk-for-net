@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.Storage.Models
 
         internal static StorageRoutingPreference DeserializeStorageRoutingPreference(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<StorageRoutingChoice> routingChoice = default;
             Optional<bool> publishMicrosoftEndpoints = default;
             Optional<bool> publishInternetEndpoints = default;

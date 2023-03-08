@@ -48,6 +48,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         internal static MabProtectionPolicy DeserializeMabProtectionPolicy(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<BackupSchedulePolicy> schedulePolicy = default;
             Optional<BackupRetentionPolicy> retentionPolicy = default;
             Optional<int> protectedItemsCount = default;

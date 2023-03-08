@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
     {
         internal static StreamAnalyticsClusterJobListResult DeserializeStreamAnalyticsClusterJobListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<StreamAnalyticsClusterJob>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

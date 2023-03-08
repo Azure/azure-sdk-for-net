@@ -38,6 +38,10 @@ namespace Azure.ResourceManager.Cdn.Models
 
         internal static UriSigningActionProperties DeserializeUriSigningActionProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             UriSigningActionType typeName = default;
             Optional<UriSigningAlgorithm> algorithm = default;
             Optional<IList<UriSigningParamIdentifier>> parameterNameOverride = default;

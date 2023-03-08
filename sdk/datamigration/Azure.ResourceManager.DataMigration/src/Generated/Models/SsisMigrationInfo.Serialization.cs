@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.DataMigration.Models
 
         internal static SsisMigrationInfo DeserializeSsisMigrationInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<SsisStoreType> ssisStoreType = default;
             Optional<SsisMigrationOverwriteOption> projectOverwriteOption = default;
             Optional<SsisMigrationOverwriteOption> environmentOverwriteOption = default;

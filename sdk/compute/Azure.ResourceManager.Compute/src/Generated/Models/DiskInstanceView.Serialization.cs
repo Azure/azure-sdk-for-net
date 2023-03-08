@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Compute.Models
     {
         internal static DiskInstanceView DeserializeDiskInstanceView(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<IReadOnlyList<DiskEncryptionSettings>> encryptionSettings = default;
             Optional<IReadOnlyList<InstanceViewStatus>> statuses = default;

@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     {
         internal static HyperVReplicaAzureManagedDiskDetails DeserializeHyperVReplicaAzureManagedDiskDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> diskId = default;
             Optional<string> seedManagedDiskId = default;
             Optional<string> replicaDiskType = default;

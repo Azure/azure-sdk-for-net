@@ -12,7 +12,10 @@ using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> A class representing the NetworkWatcher data model. </summary>
+    /// <summary>
+    /// A class representing the NetworkWatcher data model.
+    /// Network watcher in a resource group.
+    /// </summary>
     public partial class NetworkWatcherData : NetworkTrackedResourceData
     {
         /// <summary> Initializes a new instance of NetworkWatcherData. </summary>

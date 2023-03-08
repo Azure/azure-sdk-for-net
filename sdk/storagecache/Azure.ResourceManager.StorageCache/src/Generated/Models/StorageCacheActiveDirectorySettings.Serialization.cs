@@ -39,6 +39,10 @@ namespace Azure.ResourceManager.StorageCache.Models
 
         internal static StorageCacheActiveDirectorySettings DeserializeStorageCacheActiveDirectorySettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IPAddress primaryDnsIPAddress = default;
             Optional<IPAddress> secondaryDnsIPAddress = default;
             string domainName = default;

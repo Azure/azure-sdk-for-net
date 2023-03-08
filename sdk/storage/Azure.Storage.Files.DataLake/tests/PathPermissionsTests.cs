@@ -53,14 +53,14 @@ namespace Azure.Storage.Files.DataLake.Tests
             AssertPathPermissionsEquality(new PathPermissions(
                     owner: AllPermissions,
                     group: AllPermissions,
-                    other: RolePermissions.Read | RolePermissions.Write,
+                    other: AllPermissions,
                     stickyBit: true),
                 PathPermissions.ParseSymbolicPermissions("rwxrwxrwt"));
 
             AssertPathPermissionsEquality(new PathPermissions(
                     owner: AllPermissions,
                     group: AllPermissions,
-                    other: AllPermissions,
+                    other: RolePermissions.Read | RolePermissions.Write,
                     stickyBit: true),
                 PathPermissions.ParseSymbolicPermissions("rwxrwxrwT"));
 
@@ -74,15 +74,16 @@ namespace Azure.Storage.Files.DataLake.Tests
             AssertPathPermissionsEquality(new PathPermissions(
                     owner: AllPermissions,
                     group: AllPermissions,
-                    other: RolePermissions.Read | RolePermissions.Write,
+                    other: AllPermissions,
                     stickyBit: true,
                     extendedInfoInAcl: true),
                 PathPermissions.ParseSymbolicPermissions("rwxrwxrwt+"));
+            ;
 
             AssertPathPermissionsEquality(new PathPermissions(
                     owner: AllPermissions,
                     group: AllPermissions,
-                    other: AllPermissions,
+                    other: RolePermissions.Read | RolePermissions.Write,
                     stickyBit: true,
                     extendedInfoInAcl: true),
                 PathPermissions.ParseSymbolicPermissions("rwxrwxrwT+"));
@@ -122,13 +123,13 @@ namespace Azure.Storage.Files.DataLake.Tests
             Assert.AreEqual("rwxrwxrwt", new PathPermissions(
                 owner: AllPermissions,
                 group: AllPermissions,
-                other: RolePermissions.Read | RolePermissions.Write,
+                other: AllPermissions,
                 stickyBit: true).ToSymbolicPermissions());
 
             Assert.AreEqual("rwxrwxrwT", new PathPermissions(
                 owner: AllPermissions,
                 group: AllPermissions,
-                other: AllPermissions,
+                other: RolePermissions.Read | RolePermissions.Write,
                 stickyBit: true).ToSymbolicPermissions());
 
             Assert.AreEqual("rwxrwxrwx+", new PathPermissions(
@@ -140,14 +141,14 @@ namespace Azure.Storage.Files.DataLake.Tests
             Assert.AreEqual("rwxrwxrwt+", new PathPermissions(
                 owner: AllPermissions,
                 group: AllPermissions,
-                other: RolePermissions.Read | RolePermissions.Write,
+                other: AllPermissions,
                 stickyBit: true,
                 extendedInfoInAcl: true).ToSymbolicPermissions());
 
             Assert.AreEqual("rwxrwxrwT+", new PathPermissions(
                 owner: AllPermissions,
                 group: AllPermissions,
-                other: AllPermissions,
+                other: RolePermissions.Read | RolePermissions.Write,
                 stickyBit: true,
                 extendedInfoInAcl: true).ToSymbolicPermissions());
         }

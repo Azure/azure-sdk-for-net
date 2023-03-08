@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
     {
         internal static ContainerRegistryWebhookEventContent DeserializeContainerRegistryWebhookEventContent(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<Guid> id = default;
             Optional<DateTimeOffset> timestamp = default;
             Optional<string> action = default;

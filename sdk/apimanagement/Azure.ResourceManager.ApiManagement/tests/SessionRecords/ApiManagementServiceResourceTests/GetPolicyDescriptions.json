@@ -1,0 +1,744 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c?api-version=2021-01-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-70f5d21d8667da4fba6399b53bc54f5b-7895809727de964f-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.2.1 (.NET Core 3.1.27; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "2e638698ca0400ad592fb38b7b302f13",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "747",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 03 Aug 2022 12:20:03 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "946ba861-be6a-452d-80d0-c2ae761bac5a",
+        "x-ms-ratelimit-remaining-subscription-reads": "11999",
+        "x-ms-request-id": "946ba861-be6a-452d-80d0-c2ae761bac5a",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20220803T122004Z:946ba861-be6a-452d-80d0-c2ae761bac5a"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+        "authorizationSource": "RoleBased",
+        "managedByTenants": [],
+        "tags": {
+          "TagKey-9823": "TagValue-566",
+          "TagKey-3481": "TagValue-320",
+          "TagKey-4926": "TagValue-1187",
+          "TagKey-751": "TagValue-3921",
+          "TagKey-1866": "TagValue-8559",
+          "TagKey-3094": "TagValue-9190",
+          "TagKey-2449": "TagValue-9",
+          "TagKey-8379": "TagValue-164",
+          "TagKey-7470": "TagValue-2205",
+          "TagKey-4236": "TagValue-3698",
+          "TagKey-5316": "TagValue-2725"
+        },
+        "subscriptionId": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+        "tenantId": "72f988bf-86f1-41af-91ab-2d7cd011db47",
+        "displayName": ".NET Mgmt SDK Test with TTL = 1 Day",
+        "state": "Enabled",
+        "subscriptionPolicies": {
+          "locationPlacementId": "Internal_2014-09-01",
+          "quotaId": "Internal_2014-09-01",
+          "spendingLimit": "Off"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/sdktestrg?api-version=**",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-a67049cd056cdd4fbdc94aa2ea6e5498-9043042ad05b2d42-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.2.1 (.NET Core 3.1.27; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "57fde21e167a91391b434260e2e55e05",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "225",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 03 Aug 2022 12:20:05 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "a9d67c9a-3fa6-487d-b09a-1711558ff4e5",
+        "x-ms-ratelimit-remaining-subscription-reads": "11998",
+        "x-ms-request-id": "a9d67c9a-3fa6-487d-b09a-1711558ff4e5",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20220803T122005Z:a9d67c9a-3fa6-487d-b09a-1711558ff4e5"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/sdktestrg",
+        "name": "sdktestrg",
+        "type": "Microsoft.Resources/resourceGroups",
+        "location": "eastus",
+        "tags": {},
+        "properties": {
+          "provisioningState": "Succeeded"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/sdktestrg/providers/Microsoft.ApiManagement/service/sdktestapi?api-version=2021-08-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-befac8034f8bb54ca868c844b5cecaca-08ddc4f9e85b8549-00",
+        "User-Agent": "azsdk-net-ResourceManager.ApiManagement/1.0.0-alpha.20220803.1 (.NET Core 3.1.27; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "121082df3b4af6143a1918fe2b894d77",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "2666",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 03 Aug 2022 12:20:05 GMT",
+        "ETag": "\u0022AAAAAABs9l8=\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "cd778362-2eb2-4bbc-93d3-3a3d66410dc4",
+        "x-ms-ratelimit-remaining-subscription-reads": "11997",
+        "x-ms-request-id": "cd778362-2eb2-4bbc-93d3-3a3d66410dc4",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20220803T122005Z:cd778362-2eb2-4bbc-93d3-3a3d66410dc4"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/sdktestrg/providers/Microsoft.ApiManagement/service/sdktestapi",
+        "name": "sdktestapi",
+        "type": "Microsoft.ApiManagement/service",
+        "tags": {
+          "testkey": "testvalue"
+        },
+        "location": "East US",
+        "etag": "AAAAAABs9l8=",
+        "properties": {
+          "publisherEmail": "sample@sample.com",
+          "publisherName": "sample",
+          "notificationSenderEmail": "apimgmt-noreply@mail.windowsazure.com",
+          "provisioningState": "Succeeded",
+          "targetProvisioningState": "",
+          "createdAtUtc": "2022-07-29T01:46:08.5936782Z",
+          "gatewayUrl": "https://sdktestapi.azure-api.net",
+          "gatewayRegionalUrl": "https://sdktestapi-eastus-01.regional.azure-api.net",
+          "portalUrl": "https://sdktestapi.portal.azure-api.net",
+          "developerPortalUrl": "https://sdktestapi.developer.azure-api.net",
+          "managementApiUrl": "https://sdktestapi.management.azure-api.net",
+          "scmUrl": "https://sdktestapi.scm.azure-api.net",
+          "hostnameConfigurations": [
+            {
+              "type": "Proxy",
+              "hostName": "sdktestapi.azure-api.net",
+              "encodedCertificate": null,
+              "keyVaultId": null,
+              "certificatePassword": null,
+              "negotiateClientCertificate": false,
+              "certificate": null,
+              "defaultSslBinding": true,
+              "identityClientId": null,
+              "certificateSource": "BuiltIn",
+              "certificateStatus": null
+            }
+          ],
+          "publicIPAddresses": [
+            "20.121.88.195"
+          ],
+          "privateIPAddresses": null,
+          "additionalLocations": null,
+          "virtualNetworkConfiguration": null,
+          "customProperties": {
+            "Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Protocols.Tls11": "false",
+            "Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Protocols.Tls10": "false",
+            "Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Backend.Protocols.Tls11": "false",
+            "Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Backend.Protocols.Tls10": "false",
+            "Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Backend.Protocols.Ssl30": "false",
+            "Microsoft.WindowsAzure.ApiManagement.Gateway.Protocols.Server.Http2": "false",
+            "Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Ciphers.TripleDes168": "false",
+            "Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Protocols.Ssl30": "false"
+          },
+          "virtualNetworkType": "None",
+          "certificates": null,
+          "disableGateway": false,
+          "apiVersionConstraint": {
+            "minApiVersion": null
+          },
+          "publicIpAddressId": null,
+          "publicNetworkAccess": "Enabled",
+          "privateEndpointConnections": null,
+          "platformVersion": "stv2"
+        },
+        "sku": {
+          "name": "Developer",
+          "capacity": 1
+        },
+        "identity": {
+          "type": "SystemAssigned",
+          "principalId": "fda48897-d655-42d9-a14b-50d24f97639b",
+          "tenantId": "72f988bf-86f1-41af-91ab-2d7cd011db47"
+        },
+        "zones": null,
+        "systemData": {
+          "createdBy": "v-minghc@microsoft.com",
+          "createdByType": "User",
+          "createdAt": "2022-07-29T01:46:08.1531742Z",
+          "lastModifiedBy": "v-minghc@microsoft.com",
+          "lastModifiedByType": "User",
+          "lastModifiedAt": "2022-07-29T01:46:08.1531742Z"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/sdktestrg/providers/Microsoft.ApiManagement/service/sdktestapi/policyDescriptions?api-version=2021-08-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-61b66b912bdcfa498f5ff5e367472c4a-fb33cf0ed278624c-00",
+        "User-Agent": "azsdk-net-ResourceManager.ApiManagement/1.0.0-alpha.20220803.1 (.NET Core 3.1.27; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "0b2639f195b682184cd113c0874c1e74",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "27665",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 03 Aug 2022 12:20:06 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "c5f2617e-5d0a-4176-bd26-9b578de01d97",
+        "x-ms-ratelimit-remaining-subscription-reads": "11996",
+        "x-ms-request-id": "c5f2617e-5d0a-4176-bd26-9b578de01d97",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20220803T122006Z:c5f2617e-5d0a-4176-bd26-9b578de01d97"
+      },
+      "ResponseBody": {
+        "value": [
+          {
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/sdktestrg/providers/Microsoft.ApiManagement/service/sdktestapi/policyDescriptions/authentication-basic",
+            "type": "Microsoft.ApiManagement/service/policyDescriptions",
+            "name": "authentication-basic",
+            "properties": {
+              "description": "Authenticate with the backend service using Basic authentication. Use in the inbound section at API scope.",
+              "scope": 268435487
+            }
+          },
+          {
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/sdktestrg/providers/Microsoft.ApiManagement/service/sdktestapi/policyDescriptions/authentication-certificate",
+            "type": "Microsoft.ApiManagement/service/policyDescriptions",
+            "name": "authentication-certificate",
+            "properties": {
+              "description": "Authenticate with the backend service using a client certificate. Use in the inbound section at API scope.",
+              "scope": 268435487
+            }
+          },
+          {
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/sdktestrg/providers/Microsoft.ApiManagement/service/sdktestapi/policyDescriptions/authentication-managed-identity",
+            "type": "Microsoft.ApiManagement/service/policyDescriptions",
+            "name": "authentication-managed-identity",
+            "properties": {
+              "description": "Authenticate backend with managed identity OAuth2 token. This can be used to access OAuth protected services.",
+              "scope": 268435487
+            }
+          },
+          {
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/sdktestrg/providers/Microsoft.ApiManagement/service/sdktestapi/policyDescriptions/cache-lookup",
+            "type": "Microsoft.ApiManagement/service/policyDescriptions",
+            "name": "cache-lookup",
+            "properties": {
+              "description": "Perform cache lookup and return a valid cached response when available. Appropriately respond to cache validation requests from callers. Use anywhere in the inbound section at Product, API, or Operation scopes.",
+              "scope": 268435487
+            }
+          },
+          {
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/sdktestrg/providers/Microsoft.ApiManagement/service/sdktestapi/policyDescriptions/cache-lookup-value",
+            "type": "Microsoft.ApiManagement/service/policyDescriptions",
+            "name": "cache-lookup-value",
+            "properties": {
+              "description": "Perform cache lookup and returned value under the key, if available, or default. If value is not present and no default is specified, variable will not be set. Use at any scope in any section except \u003Cbackend\u003E.",
+              "scope": 268435487
+            }
+          },
+          {
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/sdktestrg/providers/Microsoft.ApiManagement/service/sdktestapi/policyDescriptions/cache-remove-value",
+            "type": "Microsoft.ApiManagement/service/policyDescriptions",
+            "name": "cache-remove-value",
+            "properties": {
+              "description": "Remove value from cache under the key. Use at any scope in any section except \u003Cbackend\u003E.",
+              "scope": 268435487
+            }
+          },
+          {
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/sdktestrg/providers/Microsoft.ApiManagement/service/sdktestapi/policyDescriptions/cache-store",
+            "type": "Microsoft.ApiManagement/service/policyDescriptions",
+            "name": "cache-store",
+            "properties": {
+              "description": "Cache responses according to the specified cache configuration. Use anywhere in the outbound section at Product, API, or Operation scopes.",
+              "scope": 268435487
+            }
+          },
+          {
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/sdktestrg/providers/Microsoft.ApiManagement/service/sdktestapi/policyDescriptions/cache-store-value",
+            "type": "Microsoft.ApiManagement/service/policyDescriptions",
+            "name": "cache-store-value",
+            "properties": {
+              "description": "Store value in cache under a key for duration. Use at any scope in any section except \u003Cbackend\u003E.",
+              "scope": 268435487
+            }
+          },
+          {
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/sdktestrg/providers/Microsoft.ApiManagement/service/sdktestapi/policyDescriptions/check-header",
+            "type": "Microsoft.ApiManagement/service/policyDescriptions",
+            "name": "check-header",
+            "properties": {
+              "description": "Check header and return specified HTTP status code if it doesn\u0027t exist or match expected value. Works for both response and request headers \u2013 policy can be applied in inbound or outbound sections at any scope.",
+              "scope": 268435487
+            }
+          },
+          {
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/sdktestrg/providers/Microsoft.ApiManagement/service/sdktestapi/policyDescriptions/choose",
+            "type": "Microsoft.ApiManagement/service/policyDescriptions",
+            "name": "choose",
+            "properties": {
+              "description": "Conditionally apply policy statements based on the results of the evaluation of Boolean expressions. Use at any scope in the inbound and outbound sections.",
+              "scope": 268435487
+            }
+          },
+          {
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/sdktestrg/providers/Microsoft.ApiManagement/service/sdktestapi/policyDescriptions/cors",
+            "type": "Microsoft.ApiManagement/service/policyDescriptions",
+            "name": "cors",
+            "properties": {
+              "description": "CORS stands for cross-origin resource sharing. Add CORS support to an operation or an API to allow cross-domain calls from browser-based clients. Use in the inbound section only.",
+              "scope": 268435487
+            }
+          },
+          {
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/sdktestrg/providers/Microsoft.ApiManagement/service/sdktestapi/policyDescriptions/cross-domain",
+            "type": "Microsoft.ApiManagement/service/policyDescriptions",
+            "name": "cross-domain",
+            "properties": {
+              "description": "Make the API accessible from Adobe Flash and Microsoft Silverlight browser-based clients. Use in the inbound section at Global scope.",
+              "scope": "tenant"
+            }
+          },
+          {
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/sdktestrg/providers/Microsoft.ApiManagement/service/sdktestapi/policyDescriptions/emit-metric",
+            "type": "Microsoft.ApiManagement/service/policyDescriptions",
+            "name": "emit-metric",
+            "properties": {
+              "description": "Emits custom metric to Application Insights",
+              "scope": 268435487
+            }
+          },
+          {
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/sdktestrg/providers/Microsoft.ApiManagement/service/sdktestapi/policyDescriptions/find-and-replace",
+            "type": "Microsoft.ApiManagement/service/policyDescriptions",
+            "name": "find-and-replace",
+            "properties": {
+              "description": "Find a request or response substring and replace it with a different substring. Use in the inbound and outbound sections at any scope.",
+              "scope": 268435487
+            }
+          },
+          {
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/sdktestrg/providers/Microsoft.ApiManagement/service/sdktestapi/policyDescriptions/forward-request",
+            "type": "Microsoft.ApiManagement/service/policyDescriptions",
+            "name": "forward-request",
+            "properties": {
+              "description": "Forward request to the backend service using information in the context and receive a response, waiting no longer then specified timeout value. Use at any scope in the backend section.",
+              "scope": 268435487
+            }
+          },
+          {
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/sdktestrg/providers/Microsoft.ApiManagement/service/sdktestapi/policyDescriptions/invoke-dapr-binding",
+            "type": "Microsoft.ApiManagement/service/policyDescriptions",
+            "name": "invoke-dapr-binding",
+            "properties": {
+              "description": "Use API Management as a dapr output binding app",
+              "scope": 268435487
+            }
+          },
+          {
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/sdktestrg/providers/Microsoft.ApiManagement/service/sdktestapi/policyDescriptions/invoke-request",
+            "type": "Microsoft.ApiManagement/service/policyDescriptions",
+            "name": "invoke-request",
+            "properties": {
+              "description": "Redirect incoming request to a different gateway URI restarting request processing.",
+              "scope": 268435487
+            }
+          },
+          {
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/sdktestrg/providers/Microsoft.ApiManagement/service/sdktestapi/policyDescriptions/ip-filter",
+            "type": "Microsoft.ApiManagement/service/policyDescriptions",
+            "name": "ip-filter",
+            "properties": {
+              "description": "Allow calls only from specific IP addresses and/or address ranges. Forbid calls from specific IP addresses and/or address ranges. Use in the inbound section at any scope.",
+              "scope": 268435487
+            }
+          },
+          {
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/sdktestrg/providers/Microsoft.ApiManagement/service/sdktestapi/policyDescriptions/jsonp",
+            "type": "Microsoft.ApiManagement/service/policyDescriptions",
+            "name": "jsonp",
+            "properties": {
+              "description": "Add support for JSONP to an operation or an API to allow cross-domain calls from JavaScript browser-based clients. Use in the outbound section only.",
+              "scope": 268435487
+            }
+          },
+          {
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/sdktestrg/providers/Microsoft.ApiManagement/service/sdktestapi/policyDescriptions/json-to-xml",
+            "type": "Microsoft.ApiManagement/service/policyDescriptions",
+            "name": "json-to-xml",
+            "properties": {
+              "description": "Convert request or response body from JSON to XML. Use in the inbound or outbound sections at API or Operation scopes.",
+              "scope": 268435487
+            }
+          },
+          {
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/sdktestrg/providers/Microsoft.ApiManagement/service/sdktestapi/policyDescriptions/limit-concurrency",
+            "type": "Microsoft.ApiManagement/service/policyDescriptions",
+            "name": "limit-concurrency",
+            "properties": {
+              "description": "Limit how many calls may be processed in parallel for the duration of this policy\u0027s body.",
+              "scope": 268435487
+            }
+          },
+          {
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/sdktestrg/providers/Microsoft.ApiManagement/service/sdktestapi/policyDescriptions/log-to-eventhub",
+            "type": "Microsoft.ApiManagement/service/policyDescriptions",
+            "name": "log-to-eventhub",
+            "properties": {
+              "description": "Send custom messages to Event Hub. Use at any scope in the inbound or outbound sections.",
+              "scope": 268435487
+            }
+          },
+          {
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/sdktestrg/providers/Microsoft.ApiManagement/service/sdktestapi/policyDescriptions/mock-response",
+            "type": "Microsoft.ApiManagement/service/policyDescriptions",
+            "name": "mock-response",
+            "properties": {
+              "description": "Mock response based on operation responses samples/schemas. Use at any scope in the inbound or outbound sections.",
+              "scope": 268435487
+            }
+          },
+          {
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/sdktestrg/providers/Microsoft.ApiManagement/service/sdktestapi/policyDescriptions/proxy",
+            "type": "Microsoft.ApiManagement/service/policyDescriptions",
+            "name": "proxy",
+            "properties": {
+              "description": "Specify http proxy location and credentials.",
+              "scope": 268435487
+            }
+          },
+          {
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/sdktestrg/providers/Microsoft.ApiManagement/service/sdktestapi/policyDescriptions/publish-to-dapr",
+            "type": "Microsoft.ApiManagement/service/policyDescriptions",
+            "name": "publish-to-dapr",
+            "properties": {
+              "description": "Publish messages through dapr\u0027s pub-sub feature. Other apps on dapr runtime can consume these messages if they are subscribed to the specific topic.",
+              "scope": 268435487
+            }
+          },
+          {
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/sdktestrg/providers/Microsoft.ApiManagement/service/sdktestapi/policyDescriptions/quota",
+            "type": "Microsoft.ApiManagement/service/policyDescriptions",
+            "name": "quota",
+            "properties": {
+              "description": "Enforce a renewable or lifetime call volume and/or bandwidth quota per subscription. Use in the inbound section at Product scope.",
+              "scope": "product"
+            }
+          },
+          {
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/sdktestrg/providers/Microsoft.ApiManagement/service/sdktestapi/policyDescriptions/quota-by-key",
+            "type": "Microsoft.ApiManagement/service/policyDescriptions",
+            "name": "quota-by-key",
+            "properties": {
+              "description": "Enforce a renewable or lifetime call volume and/or bandwidth quota per calculated key. Use in the inbound section at any scope.",
+              "scope": 268435487
+            }
+          },
+          {
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/sdktestrg/providers/Microsoft.ApiManagement/service/sdktestapi/policyDescriptions/rate-limit",
+            "type": "Microsoft.ApiManagement/service/policyDescriptions",
+            "name": "rate-limit",
+            "properties": {
+              "description": "Arrest usage spikes by limiting calls and/or bandwidth consumption rate per subscription. Use in the inbound section at Product scope.",
+              "scope": 14
+            }
+          },
+          {
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/sdktestrg/providers/Microsoft.ApiManagement/service/sdktestapi/policyDescriptions/rate-limit-by-key",
+            "type": "Microsoft.ApiManagement/service/policyDescriptions",
+            "name": "rate-limit-by-key",
+            "properties": {
+              "description": "Arrest usage spikes by limiting calls and/or bandwidth consumption rate per calculated key. Use in the inbound section at any scope.",
+              "scope": 268435487
+            }
+          },
+          {
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/sdktestrg/providers/Microsoft.ApiManagement/service/sdktestapi/policyDescriptions/redirect-content-urls",
+            "type": "Microsoft.ApiManagement/service/policyDescriptions",
+            "name": "redirect-content-urls",
+            "properties": {
+              "description": "Use in the outbound section to re-write response body links and Location header values making them point to the proxy. Use in the inbound section for an opposite effect. Apply at API or Operation scopes.",
+              "scope": 268435487
+            }
+          },
+          {
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/sdktestrg/providers/Microsoft.ApiManagement/service/sdktestapi/policyDescriptions/retry",
+            "type": "Microsoft.ApiManagement/service/policyDescriptions",
+            "name": "retry",
+            "properties": {
+              "description": "Retry execution of the enclosed policy statements, if and until the condition is met. Execution will repeat at the specified time interval, up to the specified count.",
+              "scope": 268435487
+            }
+          },
+          {
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/sdktestrg/providers/Microsoft.ApiManagement/service/sdktestapi/policyDescriptions/return-response",
+            "type": "Microsoft.ApiManagement/service/policyDescriptions",
+            "name": "return-response",
+            "properties": {
+              "description": "Abort pipeline execution and return the specified response directly to the caller. Use at any scope in the inbound and outbound sections.",
+              "scope": 268435487
+            }
+          },
+          {
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/sdktestrg/providers/Microsoft.ApiManagement/service/sdktestapi/policyDescriptions/rewrite-uri",
+            "type": "Microsoft.ApiManagement/service/policyDescriptions",
+            "name": "rewrite-uri",
+            "properties": {
+              "description": "Convert request URL from its public form to the form expected by the web service. Use anywhere in the inbound section at Operation scope only.",
+              "scope": 268435487
+            }
+          },
+          {
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/sdktestrg/providers/Microsoft.ApiManagement/service/sdktestapi/policyDescriptions/send-one-way-request",
+            "type": "Microsoft.ApiManagement/service/policyDescriptions",
+            "name": "send-one-way-request",
+            "properties": {
+              "description": "Send provided request to the specified URL, without waiting for response. Use at any scope in the inbound and outbound sections.",
+              "scope": 268435487
+            }
+          },
+          {
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/sdktestrg/providers/Microsoft.ApiManagement/service/sdktestapi/policyDescriptions/send-request",
+            "type": "Microsoft.ApiManagement/service/policyDescriptions",
+            "name": "send-request",
+            "properties": {
+              "description": "Send provided request to the specified URL, waiting no longer then set timeout value. Use at any scope in the inbound and outbound sections.",
+              "scope": 268435487
+            }
+          },
+          {
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/sdktestrg/providers/Microsoft.ApiManagement/service/sdktestapi/policyDescriptions/set-backend-service",
+            "type": "Microsoft.ApiManagement/service/policyDescriptions",
+            "name": "set-backend-service",
+            "properties": {
+              "description": "Change backend service where the incoming calls will be directed. Use in the inbound section only at any scope.",
+              "scope": 268435487
+            }
+          },
+          {
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/sdktestrg/providers/Microsoft.ApiManagement/service/sdktestapi/policyDescriptions/set-body",
+            "type": "Microsoft.ApiManagement/service/policyDescriptions",
+            "name": "set-body",
+            "properties": {
+              "description": "Set message body to a specific string value. The policy has no effect on the Content-Type header value. Use at any scope in the inbound or outbound sections.",
+              "scope": 268435487
+            }
+          },
+          {
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/sdktestrg/providers/Microsoft.ApiManagement/service/sdktestapi/policyDescriptions/set-graphql-resolver",
+            "type": "Microsoft.ApiManagement/service/policyDescriptions",
+            "name": "set-graphql-resolver",
+            "properties": {
+              "description": "Set GraphQL resolver",
+              "scope": 268435487
+            }
+          },
+          {
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/sdktestrg/providers/Microsoft.ApiManagement/service/sdktestapi/policyDescriptions/set-header",
+            "type": "Microsoft.ApiManagement/service/policyDescriptions",
+            "name": "set-header",
+            "properties": {
+              "description": "Add a new header, change the value of an existing header or remove a header. Works for both response and request headers \u2013 policy can be applied in inbound or outbound sections at any scope.",
+              "scope": 268435487
+            }
+          },
+          {
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/sdktestrg/providers/Microsoft.ApiManagement/service/sdktestapi/policyDescriptions/set-method",
+            "type": "Microsoft.ApiManagement/service/policyDescriptions",
+            "name": "set-method",
+            "properties": {
+              "description": "Change HTTP method to the specified value",
+              "scope": 268435487
+            }
+          },
+          {
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/sdktestrg/providers/Microsoft.ApiManagement/service/sdktestapi/policyDescriptions/set-query-parameter",
+            "type": "Microsoft.ApiManagement/service/policyDescriptions",
+            "name": "set-query-parameter",
+            "properties": {
+              "description": "Add a new query string parameter, change the value of an existing parameter or remove a parameter. Can be applied in the inbound section at any scope.",
+              "scope": 268435487
+            }
+          },
+          {
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/sdktestrg/providers/Microsoft.ApiManagement/service/sdktestapi/policyDescriptions/set-request-metric-dimension-value",
+            "type": "Microsoft.ApiManagement/service/policyDescriptions",
+            "name": "set-request-metric-dimension-value",
+            "properties": {
+              "description": "Set custom dimension value for first party request mdm metric",
+              "scope": 268435487
+            }
+          },
+          {
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/sdktestrg/providers/Microsoft.ApiManagement/service/sdktestapi/policyDescriptions/set-status",
+            "type": "Microsoft.ApiManagement/service/policyDescriptions",
+            "name": "set-status",
+            "properties": {
+              "description": "Change HTTP status code to the specified value. Use at any scope in the outbound sections.",
+              "scope": 268435487
+            }
+          },
+          {
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/sdktestrg/providers/Microsoft.ApiManagement/service/sdktestapi/policyDescriptions/set-variable",
+            "type": "Microsoft.ApiManagement/service/policyDescriptions",
+            "name": "set-variable",
+            "properties": {
+              "description": "Persist a value in a named context variable for later access from expressions. Use at any scope in the inbound and outbound sections.",
+              "scope": 268435487
+            }
+          },
+          {
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/sdktestrg/providers/Microsoft.ApiManagement/service/sdktestapi/policyDescriptions/trace",
+            "type": "Microsoft.ApiManagement/service/policyDescriptions",
+            "name": "trace",
+            "properties": {
+              "description": "Output information into trace logs (if request is executed with tracing enabled) or diagnsotic logs (if diagnostic is enabled).",
+              "scope": 268435487
+            }
+          },
+          {
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/sdktestrg/providers/Microsoft.ApiManagement/service/sdktestapi/policyDescriptions/validate-client-certificate",
+            "type": "Microsoft.ApiManagement/service/policyDescriptions",
+            "name": "validate-client-certificate",
+            "properties": {
+              "description": "Validate client certificate.",
+              "scope": 268435487
+            }
+          },
+          {
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/sdktestrg/providers/Microsoft.ApiManagement/service/sdktestapi/policyDescriptions/validate-content",
+            "type": "Microsoft.ApiManagement/service/policyDescriptions",
+            "name": "validate-content",
+            "properties": {
+              "description": "Validate content against OpenApi schema",
+              "scope": 268435487
+            }
+          },
+          {
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/sdktestrg/providers/Microsoft.ApiManagement/service/sdktestapi/policyDescriptions/validate-graphql-request",
+            "type": "Microsoft.ApiManagement/service/policyDescriptions",
+            "name": "validate-graphql-request",
+            "properties": {
+              "description": "Validate GraphQL request",
+              "scope": 268435487
+            }
+          },
+          {
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/sdktestrg/providers/Microsoft.ApiManagement/service/sdktestapi/policyDescriptions/validate-headers",
+            "type": "Microsoft.ApiManagement/service/policyDescriptions",
+            "name": "validate-headers",
+            "properties": {
+              "description": "Validate response headers against OpenApi schema",
+              "scope": 268435487
+            }
+          },
+          {
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/sdktestrg/providers/Microsoft.ApiManagement/service/sdktestapi/policyDescriptions/validate-jwt",
+            "type": "Microsoft.ApiManagement/service/policyDescriptions",
+            "name": "validate-jwt",
+            "properties": {
+              "description": "Check and validate a JWT in a header or query parameter. Use in the inbound section at any scope.",
+              "scope": 268435487
+            }
+          },
+          {
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/sdktestrg/providers/Microsoft.ApiManagement/service/sdktestapi/policyDescriptions/validate-parameters",
+            "type": "Microsoft.ApiManagement/service/policyDescriptions",
+            "name": "validate-parameters",
+            "properties": {
+              "description": "Validate parameters against OpenApi schema",
+              "scope": 268435487
+            }
+          },
+          {
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/sdktestrg/providers/Microsoft.ApiManagement/service/sdktestapi/policyDescriptions/validate-status-code",
+            "type": "Microsoft.ApiManagement/service/policyDescriptions",
+            "name": "validate-status-code",
+            "properties": {
+              "description": "Validate response status code against OpenApi schema",
+              "scope": 268435487
+            }
+          },
+          {
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/sdktestrg/providers/Microsoft.ApiManagement/service/sdktestapi/policyDescriptions/wait",
+            "type": "Microsoft.ApiManagement/service/policyDescriptions",
+            "name": "wait",
+            "properties": {
+              "description": "Wait for all or any of the send request policies to complete before proceeding. Use at any scope in the inbound and outbound sections.",
+              "scope": 268435487
+            }
+          },
+          {
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/sdktestrg/providers/Microsoft.ApiManagement/service/sdktestapi/policyDescriptions/xml-to-json",
+            "type": "Microsoft.ApiManagement/service/policyDescriptions",
+            "name": "xml-to-json",
+            "properties": {
+              "description": "Convert request or response body from XML to either \u0022JSON friendly\u0022 or \u0022XML faithful\u0022 form of JSON. Use in the inbound or outbound sections at API or Operation scopes.",
+              "scope": 268435487
+            }
+          },
+          {
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/sdktestrg/providers/Microsoft.ApiManagement/service/sdktestapi/policyDescriptions/xsl-transform",
+            "type": "Microsoft.ApiManagement/service/policyDescriptions",
+            "name": "xsl-transform",
+            "properties": {
+              "description": "Transform request or response body using XSLTransform. Use in the inbound, outbound and on-error sections at any scope.",
+              "scope": 268435487
+            }
+          }
+        ],
+        "count": 55
+      }
+    }
+  ],
+  "Variables": {
+    "RandomSeed": "2021236809",
+    "RESOURCE_MANAGER_URL": null,
+    "SUBSCRIPTION_ID": "db1ab6f0-4769-4b27-930e-01e2ef9c123c"
+  }
+}

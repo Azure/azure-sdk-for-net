@@ -50,6 +50,10 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static StatusCodesBasedTrigger DeserializeStatusCodesBasedTrigger(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> status = default;
             Optional<int> subStatus = default;
             Optional<int> win32Status = default;

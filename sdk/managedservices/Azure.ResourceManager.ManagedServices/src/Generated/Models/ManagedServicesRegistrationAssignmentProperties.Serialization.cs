@@ -22,6 +22,10 @@ namespace Azure.ResourceManager.ManagedServices.Models
 
         internal static ManagedServicesRegistrationAssignmentProperties DeserializeManagedServicesRegistrationAssignmentProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier registrationDefinitionId = default;
             Optional<ManagedServicesProvisioningState> provisioningState = default;
             Optional<ManagedServicesRegistrationAssignmentRegistrationData> registrationDefinition = default;

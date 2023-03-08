@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     {
         internal static SupportedOSProperty DeserializeSupportedOSProperty(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> instanceType = default;
             Optional<IReadOnlyList<SupportedOSDetails>> supportedOS = default;
             foreach (var property in element.EnumerateObject())

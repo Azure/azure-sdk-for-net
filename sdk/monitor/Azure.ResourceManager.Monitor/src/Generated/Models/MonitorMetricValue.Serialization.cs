@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Monitor.Models
     {
         internal static MonitorMetricValue DeserializeMonitorMetricValue(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             DateTimeOffset timeStamp = default;
             Optional<double> average = default;
             Optional<double> minimum = default;

@@ -156,6 +156,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static SqlDWSink DeserializeSqlDWSink(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<BinaryData> preCopyScript = default;
             Optional<BinaryData> allowPolyBase = default;
             Optional<PolybaseSettings> polyBaseSettings = default;

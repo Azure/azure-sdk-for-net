@@ -62,6 +62,10 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
 
         internal static HostCapacity DeserializeHostCapacity(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> hostName = default;
             Optional<long> effectiveAvailableMemoryMbOnHost = default;
             Optional<int> availableGpuCount = default;

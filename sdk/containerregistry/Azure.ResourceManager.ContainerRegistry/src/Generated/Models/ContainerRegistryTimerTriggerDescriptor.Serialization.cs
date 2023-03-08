@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
 
         internal static ContainerRegistryTimerTriggerDescriptor DeserializeContainerRegistryTimerTriggerDescriptor(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> timerTriggerName = default;
             Optional<string> scheduleOccurrence = default;
             foreach (var property in element.EnumerateObject())

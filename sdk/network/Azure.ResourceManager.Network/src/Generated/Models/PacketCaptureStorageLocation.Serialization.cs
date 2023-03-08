@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static PacketCaptureStorageLocation DeserializePacketCaptureStorageLocation(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ResourceIdentifier> storageId = default;
             Optional<string> storagePath = default;
             Optional<string> filePath = default;

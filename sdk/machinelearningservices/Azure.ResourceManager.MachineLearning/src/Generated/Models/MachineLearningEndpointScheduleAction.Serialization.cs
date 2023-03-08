@@ -29,6 +29,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static MachineLearningEndpointScheduleAction DeserializeMachineLearningEndpointScheduleAction(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             BinaryData endpointInvocationDefinition = default;
             ScheduleActionType actionType = default;
             foreach (var property in element.EnumerateObject())

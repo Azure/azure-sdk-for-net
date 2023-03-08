@@ -13,7 +13,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Maps
 {
-    /// <summary> A class representing the MapsCreator data model. </summary>
+    /// <summary>
+    /// A class representing the MapsCreator data model.
+    /// An Azure resource which represents Maps Creator product and provides ability to manage private location data.
+    /// </summary>
     public partial class MapsCreatorData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of MapsCreatorData. </summary>

@@ -40,6 +40,10 @@ namespace Azure.ResourceManager.Media.Models
 
         internal static ContentKeyPolicyPlayReadyConfiguration DeserializeContentKeyPolicyPlayReadyConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IList<ContentKeyPolicyPlayReadyLicense> licenses = default;
             Optional<BinaryData> responseCustomData = default;
             string odataType = default;

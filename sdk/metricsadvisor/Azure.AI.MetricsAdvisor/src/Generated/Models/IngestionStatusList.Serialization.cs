@@ -15,6 +15,10 @@ namespace Azure.AI.MetricsAdvisor.Models
     {
         internal static IngestionStatusList DeserializeIngestionStatusList(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> nextLink = default;
             Optional<IReadOnlyList<DataFeedIngestionStatus>> value = default;
             foreach (var property in element.EnumerateObject())

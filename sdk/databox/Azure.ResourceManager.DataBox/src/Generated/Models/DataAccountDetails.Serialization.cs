@@ -27,6 +27,10 @@ namespace Azure.ResourceManager.DataBox.Models
 
         internal static DataAccountDetails DeserializeDataAccountDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             if (element.TryGetProperty("dataAccountType", out JsonElement discriminator))
             {
                 switch (discriminator.GetString())

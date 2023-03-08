@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         internal static AutomationRulePropertyArrayChangedValuesCondition DeserializeAutomationRulePropertyArrayChangedValuesCondition(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<AutomationRulePropertyArrayChangedConditionSupportedArrayType> arrayType = default;
             Optional<AutomationRulePropertyArrayChangedConditionSupportedChangeType> changeType = default;
             foreach (var property in element.EnumerateObject())

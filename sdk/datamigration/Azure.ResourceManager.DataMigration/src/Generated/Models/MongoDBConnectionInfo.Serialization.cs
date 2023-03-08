@@ -84,6 +84,10 @@ namespace Azure.ResourceManager.DataMigration.Models
 
         internal static MongoDBConnectionInfo DeserializeMongoDBConnectionInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string connectionString = default;
             Optional<string> dataSource = default;
             Optional<bool> encryptConnection = default;

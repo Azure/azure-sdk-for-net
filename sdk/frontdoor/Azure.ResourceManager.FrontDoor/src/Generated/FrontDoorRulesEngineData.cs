@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.FrontDoor
 {
-    /// <summary> A class representing the FrontDoorRulesEngine data model. </summary>
+    /// <summary>
+    /// A class representing the FrontDoorRulesEngine data model.
+    /// A rules engine configuration containing a list of rules that will run to modify the runtime behavior of the request and response.
+    /// </summary>
     public partial class FrontDoorRulesEngineData : ResourceData
     {
         /// <summary> Initializes a new instance of FrontDoorRulesEngineData. </summary>

@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.DevTestLabs.Models
 
         internal static DevTestLabSubnet DeserializeDevTestLabSubnet(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ResourceIdentifier> resourceId = default;
             Optional<string> labSubnetName = default;
             Optional<DevTestLabUsagePermissionType> allowPublicIP = default;

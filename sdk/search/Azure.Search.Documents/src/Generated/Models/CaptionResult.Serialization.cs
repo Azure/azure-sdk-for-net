@@ -15,6 +15,10 @@ namespace Azure.Search.Documents.Models
     {
         internal static CaptionResult DeserializeCaptionResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> text = default;
             Optional<string> highlights = default;
             IReadOnlyDictionary<string, object> additionalProperties = default;

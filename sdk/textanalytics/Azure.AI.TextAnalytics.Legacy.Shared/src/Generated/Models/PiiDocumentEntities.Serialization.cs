@@ -15,6 +15,10 @@ namespace Azure.AI.TextAnalytics.Legacy
     {
         internal static PiiDocumentEntities DeserializePiiDocumentEntities(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string id = default;
             string redactedText = default;
             IReadOnlyList<Entity> entities = default;

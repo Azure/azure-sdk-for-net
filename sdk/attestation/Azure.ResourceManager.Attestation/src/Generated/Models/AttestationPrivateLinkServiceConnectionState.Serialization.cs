@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.Attestation.Models
 
         internal static AttestationPrivateLinkServiceConnectionState DeserializeAttestationPrivateLinkServiceConnectionState(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<AttestationPrivateEndpointServiceConnectionStatus> status = default;
             Optional<string> description = default;
             Optional<string> actionsRequired = default;

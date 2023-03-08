@@ -37,6 +37,10 @@ namespace Azure.ResourceManager.Kusto.Models
 
         internal static KustoReadOnlyFollowingDatabase DeserializeKustoReadOnlyFollowingDatabase(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<AzureLocation> location = default;
             KustoKind kind = default;
             ResourceIdentifier id = default;

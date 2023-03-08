@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.ServiceFabric.Models
 
         internal static ServiceTypeHealthPolicy DeserializeServiceTypeHealthPolicy(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> maxPercentUnhealthyServices = default;
             foreach (var property in element.EnumerateObject())
             {

@@ -32,6 +32,10 @@ namespace Azure.ResourceManager.ServiceBus.Models
 
         internal static ServiceBusSku DeserializeServiceBusSku(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ServiceBusSkuName name = default;
             Optional<ServiceBusSkuTier> tier = default;
             Optional<int> capacity = default;

@@ -49,6 +49,11 @@ namespace Azure.ResourceManager.Marketplace
                 foreach (var item in IconFileUris)
                 {
                     writer.WritePropertyName(item.Key);
+                    if (item.Value == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStringValue(item.Value.AbsoluteUri);
                 }
                 writer.WriteEndObject();
@@ -69,6 +74,10 @@ namespace Azure.ResourceManager.Marketplace
 
         internal static PrivateStoreOfferData DeserializePrivateStoreOfferData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -210,7 +219,14 @@ namespace Azure.ResourceManager.Marketplace
                             Dictionary<string, Uri> dictionary = new Dictionary<string, Uri>();
                             foreach (var property1 in property0.Value.EnumerateObject())
                             {
-                                dictionary.Add(property1.Name, new Uri(property1.Value.GetString()));
+                                if (property1.Value.ValueKind == JsonValueKind.Null)
+                                {
+                                    dictionary.Add(property1.Name, null);
+                                }
+                                else
+                                {
+                                    dictionary.Add(property1.Name, new Uri(property1.Value.GetString()));
+                                }
                             }
                             iconFileUris = dictionary;
                             continue;

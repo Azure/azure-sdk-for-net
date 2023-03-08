@@ -33,6 +33,10 @@ namespace Azure.ResourceManager.DataMigration
 
         internal static ProjectTaskData DeserializeProjectTaskData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ETag> etag = default;
             Optional<ProjectTaskProperties> properties = default;
             ResourceIdentifier id = default;

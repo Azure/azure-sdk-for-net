@@ -27,6 +27,10 @@ namespace Azure.ResourceManager.AppContainers
 
         internal static ContainerAppDiagnosticData DeserializeContainerAppDiagnosticData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ContainerAppDiagnosticsProperties> properties = default;
             ResourceIdentifier id = default;
             string name = default;

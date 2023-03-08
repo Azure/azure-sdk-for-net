@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Monitor.Models
     {
         internal static MonitorTimeSeriesElement DeserializeMonitorTimeSeriesElement(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<MonitorMetadataValue>> metadatavalues = default;
             Optional<IReadOnlyList<MonitorMetricValue>> data = default;
             foreach (var property in element.EnumerateObject())

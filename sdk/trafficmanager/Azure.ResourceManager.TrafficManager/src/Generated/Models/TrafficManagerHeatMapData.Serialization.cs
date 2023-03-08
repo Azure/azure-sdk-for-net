@@ -71,6 +71,10 @@ namespace Azure.ResourceManager.TrafficManager
 
         internal static TrafficManagerHeatMapData DeserializeTrafficManagerHeatMapData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ResourceIdentifier> id = default;
             Optional<string> name = default;
             Optional<ResourceType> type = default;

@@ -56,6 +56,10 @@ namespace Azure.ResourceManager.RedisEnterprise
 
         internal static RedisEnterpriseClusterData DeserializeRedisEnterpriseClusterData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             RedisEnterpriseSku sku = default;
             Optional<IList<string>> zones = default;
             Optional<IDictionary<string, string>> tags = default;

@@ -29,10 +29,20 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 foreach (var item in AddonConfigs)
                 {
                     writer.WritePropertyName(item.Key);
+                    if (item.Value == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStartObject();
                     foreach (var item0 in item.Value)
                     {
                         writer.WritePropertyName(item0.Key);
+                        if (item0.Value == null)
+                        {
+                            writer.WriteNullValue();
+                            continue;
+                        }
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item0.Value);
 #else
@@ -98,6 +108,10 @@ namespace Azure.ResourceManager.AppPlatform.Models
 
         internal static AppPlatformAppProperties DeserializeAppPlatformAppProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> @public = default;
             Optional<Uri> uri = default;
             Optional<IDictionary<string, IDictionary<string, BinaryData>>> addonConfigs = default;
@@ -143,12 +157,26 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     Dictionary<string, IDictionary<string, BinaryData>> dictionary = new Dictionary<string, IDictionary<string, BinaryData>>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        Dictionary<string, BinaryData> dictionary0 = new Dictionary<string, BinaryData>();
-                        foreach (var property1 in property0.Value.EnumerateObject())
+                        if (property0.Value.ValueKind == JsonValueKind.Null)
                         {
-                            dictionary0.Add(property1.Name, BinaryData.FromString(property1.Value.GetRawText()));
+                            dictionary.Add(property0.Name, null);
                         }
-                        dictionary.Add(property0.Name, dictionary0);
+                        else
+                        {
+                            Dictionary<string, BinaryData> dictionary0 = new Dictionary<string, BinaryData>();
+                            foreach (var property1 in property0.Value.EnumerateObject())
+                            {
+                                if (property1.Value.ValueKind == JsonValueKind.Null)
+                                {
+                                    dictionary0.Add(property1.Name, null);
+                                }
+                                else
+                                {
+                                    dictionary0.Add(property1.Name, BinaryData.FromString(property1.Value.GetRawText()));
+                                }
+                            }
+                            dictionary.Add(property0.Name, dictionary0);
+                        }
                     }
                     addonConfigs = dictionary;
                     continue;

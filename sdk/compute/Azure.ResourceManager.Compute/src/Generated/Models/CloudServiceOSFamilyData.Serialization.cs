@@ -17,6 +17,10 @@ namespace Azure.ResourceManager.Compute
     {
         internal static CloudServiceOSFamilyData DeserializeCloudServiceOSFamilyData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<AzureLocation> location = default;
             ResourceIdentifier id = default;

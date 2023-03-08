@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Monitor.Models
     {
         internal static MonitorMetric DeserializeMonitorMetric(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string id = default;
             string type = default;
             MonitorLocalizableString name = default;

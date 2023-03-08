@@ -43,6 +43,10 @@ namespace Azure.AI.TextAnalytics.Models
 
         internal static KeyPhrasesDocumentResult DeserializeKeyPhrasesDocumentResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IList<string> keyPhrases = default;
             string id = default;
             IList<DocumentWarning> warnings = default;

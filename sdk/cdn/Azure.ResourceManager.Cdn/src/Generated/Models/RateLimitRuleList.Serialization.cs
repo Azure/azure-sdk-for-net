@@ -31,6 +31,10 @@ namespace Azure.ResourceManager.Cdn.Models
 
         internal static RateLimitRuleList DeserializeRateLimitRuleList(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<RateLimitRule>> rules = default;
             foreach (var property in element.EnumerateObject())
             {

@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.Monitor.Models
     {
         internal static MonitorMetadataValue DeserializeMonitorMetadataValue(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<MonitorLocalizableString> name = default;
             Optional<string> value = default;
             foreach (var property in element.EnumerateObject())

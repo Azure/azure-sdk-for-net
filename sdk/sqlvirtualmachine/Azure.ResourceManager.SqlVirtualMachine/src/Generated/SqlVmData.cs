@@ -13,7 +13,10 @@ using Azure.ResourceManager.SqlVirtualMachine.Models;
 
 namespace Azure.ResourceManager.SqlVirtualMachine
 {
-    /// <summary> A class representing the SqlVm data model. </summary>
+    /// <summary>
+    /// A class representing the SqlVm data model.
+    /// A SQL virtual machine.
+    /// </summary>
     public partial class SqlVmData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of SqlVmData. </summary>

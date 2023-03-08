@@ -32,6 +32,10 @@ namespace Azure.ResourceManager.Media.Models
 
         internal static ContentKeyPolicyPlayReadyContentEncryptionKeyFromKeyIdentifier DeserializeContentKeyPolicyPlayReadyContentEncryptionKeyFromKeyIdentifier(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Guid? keyId = default;
             string odataType = default;
             foreach (var property in element.EnumerateObject())

@@ -52,6 +52,10 @@ namespace Azure.ResourceManager.AppPlatform.Models
 
         internal static AppPlatformGatewayProperties DeserializeAppPlatformGatewayProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<AppPlatformGatewayProvisioningState> provisioningState = default;
             Optional<bool> @public = default;
             Optional<Uri> uri = default;

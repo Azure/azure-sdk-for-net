@@ -34,6 +34,10 @@ namespace Azure.ResourceManager.Media.Models
 
         internal static StreamingLocatorContentKey DeserializeStreamingLocatorContentKey(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Guid id = default;
             Optional<StreamingLocatorContentKeyType> type = default;
             Optional<string> labelReferenceInStreamingPolicy = default;

@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.Avs.Models
     {
         internal static DatastoreList DeserializeDatastoreList(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<AvsPrivateCloudDatastoreData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

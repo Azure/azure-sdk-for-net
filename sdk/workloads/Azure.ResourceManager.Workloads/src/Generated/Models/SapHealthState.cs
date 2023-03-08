@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Workloads.Models
 {
-    /// <summary> Defines the SAP Instance health. </summary>
+    /// <summary> Defines the health of SAP Instances. </summary>
     public readonly partial struct SapHealthState : IEquatable<SapHealthState>
     {
         private readonly string _value;

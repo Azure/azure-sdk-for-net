@@ -40,6 +40,10 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static AppServiceGoogleProvider DeserializeAppServiceGoogleProvider(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> enabled = default;
             Optional<ClientRegistration> registration = default;
             Optional<LoginScopes> login = default;

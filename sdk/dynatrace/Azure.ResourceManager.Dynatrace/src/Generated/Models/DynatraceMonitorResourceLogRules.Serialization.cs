@@ -46,6 +46,10 @@ namespace Azure.ResourceManager.Dynatrace.Models
 
         internal static DynatraceMonitorResourceLogRules DeserializeDynatraceMonitorResourceLogRules(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<AadLogsSendingStatus> sendAadLogs = default;
             Optional<SubscriptionLogsSendingStatus> sendSubscriptionLogs = default;
             Optional<ActivityLogsSendingStatus> sendActivityLogs = default;

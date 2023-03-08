@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.Resources.Models
     {
         internal static ArmDeploymentOperation DeserializeArmDeploymentOperation(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> id = default;
             Optional<string> operationId = default;
             Optional<ArmDeploymentOperationProperties> properties = default;

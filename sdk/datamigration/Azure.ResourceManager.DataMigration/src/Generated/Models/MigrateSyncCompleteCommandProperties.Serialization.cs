@@ -33,6 +33,10 @@ namespace Azure.ResourceManager.DataMigration.Models
 
         internal static MigrateSyncCompleteCommandProperties DeserializeMigrateSyncCompleteCommandProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<MigrateSyncCompleteCommandInput> input = default;
             Optional<MigrateSyncCompleteCommandOutput> output = default;
             Optional<string> commandId = default;

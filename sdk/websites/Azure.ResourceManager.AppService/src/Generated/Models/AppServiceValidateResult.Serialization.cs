@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.AppService.Models
     {
         internal static AppServiceValidateResult DeserializeAppServiceValidateResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> status = default;
             Optional<ValidateResponseError> error = default;
             foreach (var property in element.EnumerateObject())

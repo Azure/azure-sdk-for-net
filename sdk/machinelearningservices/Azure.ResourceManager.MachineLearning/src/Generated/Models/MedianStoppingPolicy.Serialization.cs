@@ -32,6 +32,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static MedianStoppingPolicy DeserializeMedianStoppingPolicy(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> delayEvaluation = default;
             Optional<int> evaluationInterval = default;
             EarlyTerminationPolicyType policyType = default;

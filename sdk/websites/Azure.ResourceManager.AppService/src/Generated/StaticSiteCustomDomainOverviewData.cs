@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary> A class representing the StaticSiteCustomDomainOverview data model. </summary>
+    /// <summary>
+    /// A class representing the StaticSiteCustomDomainOverview data model.
+    /// Static Site Custom Domain Overview ARM resource.
+    /// </summary>
     public partial class StaticSiteCustomDomainOverviewData : ResourceData
     {
         /// <summary> Initializes a new instance of StaticSiteCustomDomainOverviewData. </summary>

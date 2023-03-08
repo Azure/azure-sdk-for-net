@@ -40,6 +40,10 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         internal static ContainerServiceMaintenanceSchedule DeserializeContainerServiceMaintenanceSchedule(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DailySchedule> daily = default;
             Optional<ContainerServiceMaintenanceWeeklySchedule> weekly = default;
             Optional<ContainerServiceMaintenanceAbsoluteMonthlySchedule> absoluteMonthly = default;
